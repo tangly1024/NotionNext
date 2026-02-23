@@ -39,6 +39,10 @@ const AlgoliaSearchModal = dynamic(
   { ssr: false }
 )
 
+const BookLibrary = dynamic(() => import('@/components/BookLibrary'), {
+  ssr: false
+})
+
 // 主题组件
 const BlogListScroll = dynamic(() => import('./components/BlogListScroll'), {
   ssr: false
@@ -87,7 +91,7 @@ const pinyinNav = [
     mm: 'ဗျည်း',
     icon: Mic,
     href: '/pinyin/initials',
-    bg: 'bg-blue-100/90',
+    bg: 'bg-blue-100',
     iconColor: 'text-blue-600'
   },
   {
@@ -95,7 +99,7 @@ const pinyinNav = [
     mm: 'သရ',
     icon: Music2,
     href: '/pinyin/finals',
-    bg: 'bg-emerald-100/90',
+    bg: 'bg-emerald-100',
     iconColor: 'text-emerald-600'
   },
   {
@@ -103,7 +107,7 @@ const pinyinNav = [
     mm: 'အသံတွဲ',
     icon: Layers3,
     href: '/pinyin/syllables',
-    bg: 'bg-purple-100/90',
+    bg: 'bg-purple-100',
     iconColor: 'text-purple-600'
   },
   {
@@ -111,7 +115,7 @@ const pinyinNav = [
     mm: 'အသံ',
     icon: FileText,
     href: '/pinyin/tones',
-    bg: 'bg-orange-100/90',
+    bg: 'bg-orange-100',
     iconColor: 'text-orange-600'
   }
 ]
@@ -122,7 +126,8 @@ const coreTools = [
     mm: 'AI ဘာသာပြန်',
     icon: Globe,
     href: '/ai-translate',
-    bg: 'bg-indigo-100/90',
+    action: 'open-translator',
+    bg: 'bg-indigo-100',
     iconColor: 'text-indigo-600'
   },
   {
@@ -130,7 +135,7 @@ const coreTools = [
     mm: 'စာကြည့်တိုက်',
     icon: Library,
     action: 'open-library',
-    bg: 'bg-cyan-100/90',
+    bg: 'bg-cyan-100',
     iconColor: 'text-cyan-600'
   },
   {
@@ -138,7 +143,7 @@ const coreTools = [
     mm: 'မှတ်ထားသော စာလုံး',
     icon: Star,
     href: '/words',
-    bg: 'bg-slate-200/90',
+    bg: 'bg-slate-200',
     iconColor: 'text-slate-700'
   },
   {
@@ -146,7 +151,7 @@ const coreTools = [
     mm: 'မှတ်ထားသော စကားပြော',
     icon: Volume2,
     href: '/oral',
-    bg: 'bg-slate-200/90',
+    bg: 'bg-slate-200',
     iconColor: 'text-slate-700'
   }
 ]
@@ -154,6 +159,7 @@ const coreTools = [
 const drawerLinks = [
   { label: '首页', href: '/' },
   { label: 'HSK 课程', href: '/course/hsk1' },
+  { label: 'AI 翻译', href: '/ai-translate', action: 'open-translator' },
   { label: '免费书籍', action: 'open-library' },
   { label: '设置', href: '/settings' }
 ]
@@ -191,75 +197,21 @@ const systemCourses = [
   }
 ]
 
-const freeBooks = [
-  { title: 'HSK1 词汇手册', desc: '入门高频词汇', href: '/course/hsk1' },
-  { title: '拼音速查总表', desc: '声母 / 韵母 / 声调', href: '/pinyin/initials' },
-  { title: '日常口语 100 句', desc: '生活会话训练', href: '/course/oral' },
-  { title: '汉字基础练习', desc: '常见字形 + 发音', href: '/course/words' }
-]
-
 const drawerWidth = 288
 
-const BookLibraryModal = ({ isOpen, onClose }) => {
-  useEffect(() => {
-    if (!isOpen || !isBrowser) return undefined
-    const oldOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    const onKeyDown = e => {
-      if (e.key === 'Escape') onClose?.()
-    }
-    document.addEventListener('keydown', onKeyDown)
-    return () => {
-      document.body.style.overflow = oldOverflow
-      document.removeEventListener('keydown', onKeyDown)
-    }
-  }, [isOpen, onClose])
-
-  if (!isOpen) return null
-
-  return (
-    <div className='fixed inset-0 z-[80]'>
-      <div
-        className='absolute inset-0 bg-black/35 backdrop-blur-[2px]'
-        onClick={onClose}
-      />
-      <div className='absolute left-1/2 top-1/2 w-[92%] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/40 bg-white/70 p-4 shadow-2xl backdrop-blur-2xl'>
-        <div className='mb-3 flex items-center justify-between'>
-          <h3 className='text-base font-bold text-slate-800'>免费书籍</h3>
-          <button
-            type='button'
-            onClick={onClose}
-            className='rounded-md px-2 py-1 text-sm text-slate-500 hover:bg-white/60'>
-            关闭
-          </button>
-        </div>
-
-        <div className='space-y-2'>
-          {freeBooks.map(item => (
-            <Link
-              key={item.title}
-              href={item.href}
-              onClick={onClose}
-              className='block rounded-xl border border-white/50 bg-white/60 p-3 backdrop-blur-md hover:bg-white/80'>
-              <p className='text-sm font-semibold text-slate-800'>{item.title}</p>
-              <p className='mt-1 text-xs text-slate-600'>{item.desc}</p>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
-
 const LayoutLearningHome = () => {
+  const router = useRouter()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [drawerX, setDrawerX] = useState(-drawerWidth)
   const [isDragging, setIsDragging] = useState(false)
   const [isLibraryOpen, setIsLibraryOpen] = useState(false)
 
-  // 只在抽屉已打开时支持滑动关闭，避免和系统返回手势冲突
   const touchStartXRef = useRef(null)
   const drawerStartXRef = useRef(-drawerWidth)
+
+  // 手势模式：none | back | drawer
+  const gestureTypeRef = useRef('none')
+  const gestureStartRef = useRef({ x: 0, y: 0 })
 
   const openDrawer = () => {
     setIsDrawerOpen(true)
@@ -271,16 +223,36 @@ const LayoutLearningHome = () => {
     setDrawerX(-drawerWidth)
   }
 
-  const handleDrawerTouchStart = e => {
-    if (!isDrawerOpen) return
-    const startX = e.touches?.[0]?.clientX ?? 0
+  const handleTouchStart = e => {
+    const touch = e.touches?.[0]
+    if (!touch) return
+
+    const startX = touch.clientX
+    const startY = touch.clientY
+    gestureStartRef.current = { x: startX, y: startY }
+
+    // 最左侧边缘右滑：返回上一级（优先）
+    if (startX <= 12) {
+      gestureTypeRef.current = 'back'
+      return
+    }
+
+    // 抽屉手势区域
+    if (!isDrawerOpen && startX > 28) {
+      gestureTypeRef.current = 'none'
+      return
+    }
+
+    gestureTypeRef.current = 'drawer'
     touchStartXRef.current = startX
     drawerStartXRef.current = drawerX
     setIsDragging(true)
   }
 
-  const handleDrawerTouchMove = e => {
+  const handleTouchMove = e => {
+    if (gestureTypeRef.current !== 'drawer') return
     if (!isDragging || touchStartXRef.current === null) return
+
     const currentX = e.touches?.[0]?.clientX ?? 0
     const deltaX = currentX - touchStartXRef.current
     const nextX = Math.max(
@@ -290,43 +262,71 @@ const LayoutLearningHome = () => {
     setDrawerX(nextX)
   }
 
-  const handleDrawerTouchEnd = () => {
+  const handleTouchEnd = e => {
+    if (gestureTypeRef.current === 'back') {
+      const touch = e.changedTouches?.[0]
+      const endX = touch?.clientX ?? gestureStartRef.current.x
+      const endY = touch?.clientY ?? gestureStartRef.current.y
+      const deltaX = endX - gestureStartRef.current.x
+      const deltaY = Math.abs(endY - gestureStartRef.current.y)
+
+      if (deltaX > 85 && deltaY < 50) {
+        if (isLibraryOpen) {
+          setIsLibraryOpen(false)
+        } else if (isDrawerOpen) {
+          closeDrawer()
+        } else if (window.history.length > 1) {
+          router.back()
+        }
+      }
+
+      gestureTypeRef.current = 'none'
+      return
+    }
+
+    if (gestureTypeRef.current !== 'drawer') return
     if (!isDragging) return
+
     setIsDragging(false)
     touchStartXRef.current = null
-    if (drawerX < -drawerWidth * 0.45) closeDrawer()
-    else openDrawer()
+
+    if (drawerX > -drawerWidth * 0.55) openDrawer()
+    else closeDrawer()
+
+    gestureTypeRef.current = 'none'
   }
 
   const openProgress = (drawerX + drawerWidth) / drawerWidth
   const overlayOpacity = Math.max(0, Math.min(0.5, openProgress * 0.5))
-  const showDrawerLayer = isDrawerOpen || isDragging
+  const showDrawerLayer = isDrawerOpen || isDragging || drawerX > -drawerWidth
 
+  // 玻璃卡
   const glassCard =
-    'rounded-2xl border border-white/45 bg-white/55 backdrop-blur-2xl shadow-[0_10px_28px_rgba(15,23,42,0.12)]'
-  const glassCardHover = `${glassCard} transition-all duration-200 hover:bg-white/70`
+    'rounded-2xl border border-white/45 bg-white/48 backdrop-blur-xl shadow-[0_10px_26px_rgba(15,23,42,0.14)]'
+  const glassCardHover = `${glassCard} transition-all duration-200 hover:bg-white/56`
 
   return (
-    <main className='relative isolate min-h-screen overflow-x-hidden text-slate-900'>
-      {/* 背景层 */}
-      <div className='fixed inset-0 z-0 overflow-hidden pointer-events-none'>
-        <div
-          className='absolute inset-[-36px] scale-110 bg-cover bg-center blur-[16px]'
-          style={{ backgroundImage: "url('/images/home-bg.jpg')" }}
-        />
-        <div className='absolute inset-0 bg-slate-900/30' />
-        <div className='absolute inset-0 bg-white/8' />
-      </div>
-
+    <main
+      className='relative min-h-screen overflow-x-hidden text-slate-900'
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}>
+      {/* 背景图 + 磨砂层（背景可见但不清晰） */}
       <div
-        className='fixed inset-0 z-0 pointer-events-none'
+        className='fixed inset-0 -z-30 bg-cover bg-center'
+        style={{ backgroundImage: "url('/images/home-bg.jpg')" }}
+      />
+      <div className='fixed inset-0 -z-20 bg-black/26 backdrop-blur-[14px]' />
+      <div className='fixed inset-0 -z-10 bg-white/8' />
+      <div
+        className='fixed inset-0 -z-10'
         style={{
           background:
-            'radial-gradient(circle at 18% 8%, rgba(255,255,255,0.18), transparent 34%), radial-gradient(circle at 92% 0%, rgba(59,130,246,0.16), transparent 30%)'
+            'radial-gradient(circle at 18% 8%, rgba(255,255,255,0.14), transparent 34%), radial-gradient(circle at 92% 0%, rgba(59,130,246,0.12), transparent 30%)'
         }}
       />
 
-      {/* 抽屉 */}
+      {/* Telegram 风格侧边栏 */}
       <div className={`fixed inset-0 z-40 ${showDrawerLayer ? '' : 'pointer-events-none'}`}>
         <div
           className='absolute inset-0 bg-black transition-opacity duration-200'
@@ -334,13 +334,10 @@ const LayoutLearningHome = () => {
           onClick={closeDrawer}
         />
         <aside
-          className={`absolute inset-y-0 left-0 w-72 border-r border-white/60 bg-white/78 backdrop-blur-3xl shadow-2xl ${
+          className={`absolute inset-y-0 left-0 w-72 border-r border-white/70 bg-white/92 backdrop-blur-2xl shadow-2xl ${
             isDragging ? '' : 'transition-transform duration-300 ease-out'
           }`}
-          style={{ transform: `translateX(${drawerX}px)` }}
-          onTouchStart={handleDrawerTouchStart}
-          onTouchMove={handleDrawerTouchMove}
-          onTouchEnd={handleDrawerTouchEnd}>
+          style={{ transform: `translateX(${drawerX}px)` }}>
           <div className='flex items-center justify-between p-5'>
             <div>
               <p className='text-xs font-semibold text-slate-500'>菜单</p>
@@ -350,39 +347,58 @@ const LayoutLearningHome = () => {
               type='button'
               onClick={closeDrawer}
               aria-label='关闭菜单'
-              className='rounded-lg p-1 text-slate-500 hover:bg-white/70'>
+              className='rounded-lg p-1 text-slate-500 hover:bg-slate-100'>
               <X className='h-5 w-5' />
             </button>
           </div>
 
           <nav className='space-y-1 px-3'>
-            {drawerLinks.map(item =>
-              item.action === 'open-library' ? (
-                <button
-                  key={item.label}
-                  type='button'
-                  onClick={() => {
-                    setIsLibraryOpen(true)
-                    closeDrawer()
-                  }}
-                  className='block w-full rounded-xl px-4 py-3 text-left text-sm font-medium text-slate-700 hover:bg-white/65'>
-                  {item.label}
-                </button>
-              ) : (
+            {drawerLinks.map(item => {
+              if (item.action === 'open-library') {
+                return (
+                  <button
+                    key={item.label}
+                    type='button'
+                    onClick={() => {
+                      setIsLibraryOpen(true)
+                      closeDrawer()
+                    }}
+                    className='block w-full rounded-xl px-4 py-3 text-left text-sm font-medium text-slate-700 hover:bg-slate-100'>
+                    {item.label}
+                  </button>
+                )
+              }
+
+              if (item.action === 'open-translator') {
+                return (
+                  <button
+                    key={item.label}
+                    type='button'
+                    onClick={() => {
+                      closeDrawer()
+                      router.push(item.href ?? '/ai-translate')
+                    }}
+                    className='block w-full rounded-xl px-4 py-3 text-left text-sm font-medium text-slate-700 hover:bg-slate-100'>
+                    {item.label}
+                  </button>
+                )
+              }
+
+              return (
                 <Link
                   key={item.label}
                   href={item.href ?? '/'}
-                  className='block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 hover:bg-white/65'>
+                  className='block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100'>
                   {item.label}
                 </Link>
               )
-            )}
+            })}
           </nav>
         </aside>
       </div>
 
       <div className='relative z-10 mx-auto w-full max-w-lg px-4 pb-36 pt-3'>
-        <header className='mb-4 flex items-center gap-3 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]'>
+        <header className='mb-4 flex items-center gap-3 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)]'>
           <button type='button' onClick={openDrawer} aria-label='打开菜单' className='p-0.5'>
             <Menu className='h-7 w-7' />
           </button>
@@ -395,7 +411,7 @@ const LayoutLearningHome = () => {
         <section className='grid grid-cols-4 gap-3'>
           {pinyinNav.map(item => (
             <Link key={item.zh} href={item.href} className={`${glassCardHover} px-1 py-4`}>
-              <div className='flex flex-col items-center gap-2'>
+              <div className='flex flex-col items-center-2'>
                 <div className={`flex h-8 w-8 items-center justify-center rounded-full ${item.bg}`}>
                   <item.icon className={`h-4 w-4 ${item.iconColor}`} />
                 </div>
@@ -413,7 +429,7 @@ const LayoutLearningHome = () => {
             href='/tips'
             className={`${glassCardHover} flex items-center justify-between px-4 py-3`}>
             <div className='flex items-center gap-3'>
-              <div className='rounded-full bg-orange-100/90 p-1.5'>
+              <div className='rounded-full bg-orange-100 p-1.5'>
                 <Lightbulb className='h-4 w-4 text-orange-500' />
               </div>
               <div>
@@ -451,14 +467,21 @@ const LayoutLearningHome = () => {
               )
             }
 
+            if (tool.action === 'open-translator') {
+              return (
+                <button
+                  key={tool.zh}
+                  type='button'
+                  onClick={() => router.push(tool.href ?? '/ai-translate')}
+                  className={`${glassCardHover} flex items-center gap-3 p-3.5 text-left`}>
+                  {content}
+                </button>
+              )
+            }
+
             if (tool.external && tool.href) {
               return (
-                <a
-                  key={tool.zh}
-                  href={tool.href}
-                  target='_blank'
-                  rel='noreferrer'
-                  className={`${glassCardHover} flex items-center gap-3 p-3.5`}>
+                <a key={tool.zh} href={tool.href} className={`${glassCardHover} flex items-center gap-3 p-3.5`}>
                   {content}
                 </a>
               )
@@ -477,8 +500,8 @@ const LayoutLearningHome = () => {
 
         <section className='mt-8'>
           <div className='mb-3 flex items-center gap-2 px-1'>
-            <BookText className='h-4 w-4 text-slate-100' />
-            <h2 className='text-[13px] font-bold tracking-wider text-slate-100'>
+            <BookText className='h-4 w-4 text-slate-700' />
+            <h2 className='text-[13px] font-bold tracking-wider text-slate-700'>
               SYSTEM COURSES (သင်ရိုး)
             </h2>
           </div>
@@ -488,15 +511,15 @@ const LayoutLearningHome = () => {
               <Link
                 key={course.title}
                 href={course.href}
-                className='group relative block overflow-hidden rounded-3xl border border-white/45 shadow-[0_12px_30px_rgba(2,6,23,0.30)]'>
+                className='group relative block overflow-hidden rounded-3xl border border-white/45 shadow-[0_12px_30px_rgba(2,6,23,0.20)]'>
                 <div className='absolute inset-0 bg-slate-800' />
                 <div
-                  className='absolute inset-0 bg-cover bg-center opacity-[0.86] transition-transform duration-700 group-hover:scale-105'
+                  className='absolute inset-0 bg-cover bg-center opacity-[0.82] transition-transform duration-700 group-hover:scale-105'
                   style={{ backgroundImage: `url(${course.bgImg})` }}
                 />
                 <div className='absolute inset-0 bg-gradient-to-t from-black/88 via-black/42 to-transparent' />
                 <div className='relative flex min-h-[170px] flex-col justify-between p-4'>
-                  <span className='w-fit rounded-full bg-white/95 px-3 py-1 text-[11px] font-black text-slate-800'>
+                  <span className='w-fit rounded-full bg-white/92 px-3 py-1 text-[11px] font-black text-slate-800'>
                     {course.badge}
                   </span>
                   <div className='mt-8'>
@@ -512,38 +535,38 @@ const LayoutLearningHome = () => {
         </section>
       </div>
 
-      <nav className='fixed bottom-0 left-0 right-0 z-30 mx-auto w-full max-w-lg border-t border-white/55 bg-white/72 px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+10px)] shadow-[0_-10px_22px_rgba(15,23,42,0.18)] backdrop-blur-2xl sm:hidden'>
+      <nav className='fixed bottom-0 left-0 right-0 z-30 mx-auto w-full max-w-lg border-t border-slate-200 bg-white px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+10px)] shadow-[0_-10px_22px_rgba(15,23,42,0.10)] sm:hidden'>
         <div className='flex items-center justify-between'>
           <a
             href='https://bbs.886.best/user/mei/chats'
-            className='flex flex-1 flex-col items-center justify-center gap-1 text-slate-700'>
+            className='flex flex-1 flex-col items-center justify-center gap-1 text-slate-600'>
             <MessageCircle className='h-6 w-6' />
             <span className='text-[12px] font-semibold leading-none'>消息</span>
           </a>
 
           <a
             href='https://bbs.886.best'
-            className='flex flex-1 flex-col items-center justify-center gap-1 text-slate-700'>
+            className='flex flex-1 flex-col items-center justify-center gap-1 text-slate-600'>
             <Globe2 className='h-6 w-6' />
             <span className='text-[12px] font-semibold leading-none'>社区</span>
           </a>
 
           <a
             href='https://bbs.886.best/partners'
-            className='flex flex-1 flex-col items-center justify-center gap-1 text-slate-700'>
+            className='flex flex-1 flex-col items-center justify-center gap-1 text-slate-600'>
             <Users className='h-6 w-6' />
             <span className='text-[12px] font-semibold leading-none'>语伴</span>
           </a>
 
           <a
             href='https://bbs.886.best/category/5/%E5%8A%A8%E6%80%81'
-            className='flex flex-1 flex-col items-center justify-center gap-1 text-slate-700'>
+            className='flex flex-1 flex-col items-center justify-center gap-1 text-slate-600'>
             <Compass className='h-6 w-6' />
             <span className='text-[12px] font-semibold leading-none'>动态</span>
           </a>
 
           <Link href='/' className='flex flex-1 flex-col items-center justify-center gap-1 text-indigo-600'>
-            <div className='rounded-lg bg-indigo-100/90 p-1.5'>
+            <div className='rounded-lg bg-indigo-100 p-1.5'>
               <BookOpen className='h-6 w-6' />
             </div>
             <span className='text-[12px] font-bold leading-none'>学习</span>
@@ -551,10 +574,7 @@ const LayoutLearningHome = () => {
         </div>
       </nav>
 
-      <BookLibraryModal
-        isOpen={isLibraryOpen}
-        onClose={() => setIsLibraryOpen(false)}
-      />
+      <BookLibrary isOpen={isLibraryOpen} onClose={() => setIsLibraryOpen(false)} />
     </main>
   )
 }
@@ -574,10 +594,7 @@ const LayoutBase = props => {
   if (isLearningHome) {
     return (
       <ThemeGlobalSimple.Provider value={{ searchModal }}>
-        <div
-          id='theme-simple'
-          className={`${siteConfig('FONT_STYLE')} min-h-screen bg-transparent`}
-          style={{ background: 'transparent' }}>
+        <div id='theme-simple' className={`${siteConfig('FONT_STYLE')} min-h-screen`}>
           <Style />
           {children}
         </div>
@@ -600,13 +617,14 @@ const LayoutBase = props => {
         <div
           id='container-wrapper'
           className={
-            (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') +
-            ' w-full flex-1 flex items-start max-w-9/10 mx-auto pt-12'
+            (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
+              ? 'flex-row-reverse'
+              : '') + ' w-full flex-1 flex items-start max-w-9/10 mx-auto pt-12'
           }>
           <div id='container-inner ' className='w-full flex-grow min-h-fit'>
             <Transition
               show={!onLoading}
-              appear
+              appear={true}
               enter='transition ease-in-out duration-700 transform order-first'
               enterFrom='opacity-0 translate-y-16'
               enterTo='opacity-100'
@@ -654,9 +672,11 @@ const LayoutPostList = props => {
   return (
     <>
       <BlogPostBar {...props} />
-      {siteConfig('POST_LIST_STYLE') === 'page'
-        ? <BlogListPage {...props} />
-        : <BlogListScroll {...props} />}
+      {siteConfig('POST_LIST_STYLE') === 'page' ? (
+        <BlogListPage {...props} />
+      ) : (
+        <BlogListScroll {...props} />
+      )}
     </>
   )
 }
@@ -680,7 +700,10 @@ const LayoutSearch = props => {
     }
   }, [keyword])
 
-  const slotTop = siteConfig('ALGOLIA_APP_ID') ? null : <SearchInput {...props} />
+  const slotTop = siteConfig('ALGOLIA_APP_ID') ? null : (
+    <SearchInput {...props} />
+  )
+
   return <LayoutPostList {...props} slotTop={slotTop} />
 }
 
@@ -691,7 +714,7 @@ const LayoutArchive = props => {
   const { archivePosts } = props
   return (
     <div className='mb-10 pb-20 md:py-12 p-3 min-h-screen w-full'>
-      {Object.keys(archivePosts || {}).map(archiveTitle => (
+      {Object.keys(archivePosts).map(archiveTitle => (
         <BlogArchiveItem
           key={archiveTitle}
           archiveTitle={archiveTitle}
@@ -720,10 +743,11 @@ const LayoutSlug = props => {
           <WWAds orientation='horizontal' className='w-full' />
 
           <div id='article-wrapper'>
-            <NotionPage post={post} />
+            {!lock && <NotionPage post={post} />}
           </div>
 
           <ShareBar post={post} />
+
           <AdSlot type='in-article' />
 
           {post?.type === 'Post' && (
@@ -773,18 +797,20 @@ const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   return (
     <div id='category-list' className='duration-200 flex flex-wrap'>
-      {categoryOptions?.map(category => (
-        <SmartLink
-          key={category.name}
-          href={`/category/${category.name}`}
-          passHref
-          legacyBehavior>
-          <div className='hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'>
-            <i className='mr-4 fas fa-folder' />
-            {category.name}({category.count})
-          </div>
-        </SmartLink>
-      ))}
+      {categoryOptions?.map(category => {
+        return (
+          <SmartLink
+            key={category.name}
+            href={`/category/${category.name}`}
+            passHref
+            legacyBehavior>
+            <div className='hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'>
+              <i className='mr-4 fas fa-folder' />
+              {category.name}({category.count})
+            </div>
+          </SmartLink>
+        )
+      })}
     </div>
   )
 }
@@ -796,18 +822,21 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props
   return (
     <div id='tags-list' className='duration-200 flex flex-wrap'>
-      {(tagOptions || []).map(tag => (
-        <div key={tag.name} className='p-2'>
-          <SmartLink
-            href={`/tag/${encodeURIComponent(tag.name)}`}
-            passHref
-            className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200 mr-2 py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}>
-            <div className='font-light dark:text-gray-400'>
-              <i className='mr-1 fas fa-tag' /> {tag.name + (tag.count ? `(${tag.count})` : '')}
-            </div>
-          </SmartLink>
-        </div>
-      ))}
+      {tagOptions.map(tag => {
+        return (
+          <div key={tag.name} className='p-2'>
+            <SmartLink
+              href={`/tag/${encodeURIComponent(tag.name)}`}
+              passHref
+              className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200 mr-2 py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}>
+              <div className='font-light dark:text-gray-400'>
+                <i className='mr-1 fas fa-tag' />{' '}
+                {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}
+              </div>
+            </SmartLink>
+          </div>
+        )
+      })}
     </div>
   )
 }
