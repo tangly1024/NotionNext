@@ -39,10 +39,6 @@ const AlgoliaSearchModal = dynamic(
   { ssr: false }
 )
 
-const BookLibrary = dynamic(() => import('@/components/BookLibrary'), {
-  ssr: false
-})
-
 // 主题组件
 const BlogListScroll = dynamic(() => import('./components/BlogListScroll'), {
   ssr: false
@@ -91,7 +87,7 @@ const pinyinNav = [
     mm: 'ဗျည်း',
     icon: Mic,
     href: '/pinyin/initials',
-    bg: 'bg-blue-100',
+    bg: 'bg-blue-100/90',
     iconColor: 'text-blue-600'
   },
   {
@@ -99,7 +95,7 @@ const pinyinNav = [
     mm: 'သရ',
     icon: Music2,
     href: '/pinyin/finals',
-    bg: 'bg-emerald-100',
+    bg: 'bg-emerald-100/90',
     iconColor: 'text-emerald-600'
   },
   {
@@ -107,7 +103,7 @@ const pinyinNav = [
     mm: 'အသံတွဲ',
     icon: Layers3,
     href: '/pinyin/syllables',
-    bg: 'bg-purple-100',
+    bg: 'bg-purple-100/90',
     iconColor: 'text-purple-600'
   },
   {
@@ -115,7 +111,7 @@ const pinyinNav = [
     mm: 'အသံ',
     icon: FileText,
     href: '/pinyin/tones',
-    bg: 'bg-orange-100',
+    bg: 'bg-orange-100/90',
     iconColor: 'text-orange-600'
   }
 ]
@@ -126,7 +122,7 @@ const coreTools = [
     mm: 'AI ဘာသာပြန်',
     icon: Globe,
     href: '/ai-translate',
-    bg: 'bg-indigo-100',
+    bg: 'bg-indigo-100/90',
     iconColor: 'text-indigo-600'
   },
   {
@@ -134,7 +130,7 @@ const coreTools = [
     mm: 'စာကြည့်တိုက်',
     icon: Library,
     action: 'open-library',
-    bg: 'bg-cyan-100',
+    bg: 'bg-cyan-100/90',
     iconColor: 'text-cyan-600'
   },
   {
@@ -142,7 +138,7 @@ const coreTools = [
     mm: 'မှတ်ထားသော စာလုံး',
     icon: Star,
     href: '/words',
-    bg: 'bg-slate-200',
+    bg: 'bg-slate-200/90',
     iconColor: 'text-slate-700'
   },
   {
@@ -150,7 +146,7 @@ const coreTools = [
     mm: 'မှတ်ထားသော စကားပြော',
     icon: Volume2,
     href: '/oral',
-    bg: 'bg-slate-200',
+    bg: 'bg-slate-200/90',
     iconColor: 'text-slate-700'
   }
 ]
@@ -195,7 +191,61 @@ const systemCourses = [
   }
 ]
 
+const freeBooks = [
+  { title: 'HSK1 词汇手册', desc: '入门高频词汇', href: '/course/hsk1' },
+  { title: '拼音速查总表', desc: '声母 / 韵母 / 声调', href: '/pinyin/initials' },
+  { title: '日常口语 100 句', desc: '生活会话训练', href: '/course/oral' },
+  { title: '汉字基础练习', desc: '常见字形+发音', href: '/course/words' }
+]
+
 const drawerWidth = 288
+
+const BookLibraryModal = ({ isOpen, onClose }) => {
+  useEffect(() => {
+    if (!isOpen || !isBrowser) return
+    const old = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const onKeyDown = e => {
+      if (e.key === 'Escape') onClose?.()
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.body.style.overflow = old
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [isOpen, onClose])
+
+  if (!isOpen) return null
+
+  return (
+    <div className='fixed inset-0 z-[80]'>
+      <div className='absolute inset-0 bg-black/35 backdrop-blur-[2px]' onClick={onClose} />
+      <div className='absolute left-1/2 top-1/2 w-[92%] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/40 bg-white/70 p-4 shadow-2xl backdrop-blur-2xl'>
+        <div className='mb-3 flex items-center justify-between'>
+          <h3 className='text-base font-bold text-slate-800'>免费书籍</h3>
+          <button
+            type='button'
+            onClick={onClose}
+            className='rounded-md px-2 py-1 text-sm text-slate-500 hover:bg-white/60'>
+            关闭
+          </button>
+        </div>
+        <div className='space-y-2'>
+          {freeBooks.map(item => (
+            <Link
+              key={item.title}
+              href={item.href}
+              onClick={onClose}
+              className='block rounded-xl border border-white/50 bg-white/60 p-3 backdrop-blur-md hover:bg-white/80'>
+              <p className='text-sm font-semibold text-slate-800'>{item.title}</p>
+              <p className='mt-1 text-xs text-slate-600'>{item.desc}</p>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const LayoutLearningHome = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -203,6 +253,7 @@ const LayoutLearningHome = () => {
   const [isDragging, setIsDragging] = useState(false)
   const [isLibraryOpen, setIsLibraryOpen] = useState(false)
 
+  // 只在抽屉已打开时支持滑动关闭，避免和系统返回手势冲突
   const touchStartXRef = useRef(null)
   const drawerStartXRef = useRef(-drawerWidth)
 
@@ -216,64 +267,60 @@ const LayoutLearningHome = () => {
     setDrawerX(-drawerWidth)
   }
 
-  const handleTouchStart = e => {
+  const handleDrawerTouchStart = e => {
+    if (!isDrawerOpen) return
     const startX = e.touches?.[0]?.clientX ?? 0
-    if (!isDrawerOpen && startX > 24) return
     touchStartXRef.current = startX
     drawerStartXRef.current = drawerX
     setIsDragging(true)
   }
 
-  const handleTouchMove = e => {
+  const handleDrawerTouchMove = e => {
     if (!isDragging || touchStartXRef.current === null) return
     const currentX = e.touches?.[0]?.clientX ?? 0
     const deltaX = currentX - touchStartXRef.current
-    const nextX = Math.max(
-      -drawerWidth,
-      Math.min(0, drawerStartXRef.current + deltaX)
-    )
+    // 打开的抽屉只允许往左拖（0 到 -drawerWidth）
+    const nextX = Math.max(-drawerWidth, Math.min(0, drawerStartXRef.current + deltaX))
     setDrawerX(nextX)
   }
 
-  const handleTouchEnd = () => {
+  const handleDrawerTouchEnd = () => {
     if (!isDragging) return
     setIsDragging(false)
     touchStartXRef.current = null
-    if (drawerX > -drawerWidth * 0.55) openDrawer()
-    else closeDrawer()
+    if (drawerX < -drawerWidth * 0.45) closeDrawer()
+    else openDrawer()
   }
 
   const openProgress = (drawerX + drawerWidth) / drawerWidth
   const overlayOpacity = Math.max(0, Math.min(0.5, openProgress * 0.5))
-  const showDrawerLayer = isDrawerOpen || isDragging || drawerX > -drawerWidth
+  const showDrawerLayer = isDrawerOpen || isDragging
 
   const glassCard =
-    'rounded-2xl border border-white/80 bg-white/94 backdrop-blur-2xl shadow-[0_10px_26px_rgba(15,23,42,0.12)]'
-  const glassCardHover = `${glassCard} transition-all duration-200 hover:bg-white/97`
+    'rounded-2xl border border-white/45 bg-white/55 backdrop-blur-2xl shadow-[0_10px_28px_rgba(15,23,42,0.12)]'
+  const glassCardHover = `${glassCard} transition-all duration-200 hover:bg-white/70`
 
   return (
-    <main
-      className='relative min-h-screen overflow-x-hidden text-slate-900'
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}>
-      <div className='fixed inset-0 -z-20 overflow-hidden'>
+    <main className='relative isolate min-h-screen overflow-x-hidden text-slate-900'>
+      {/* 背景层（修复白底遮挡） */}
+      <div className='fixed inset-0 z-0 overflow-hidden pointer-events-none'>
         <div
-          className='absolute inset-[-36px] scale-110 bg-cover bg-center blur-[18px]'
+          className='absolute inset-[-36px] scale-110 bg-cover bg-center blur-[16px]'
           style={{ backgroundImage: "url('/images/home-bg.jpg')" }}
         />
-        <div className='absolute inset-0 bg-slate-900/32' />
-        <div className='absolute inset-0 bg-white/10' />
+        <div className='absolute inset-0 bg-slate-900/30' />
+        <div className='absolute inset-0 bg-white/8' />
       </div>
 
       <div
-        className='fixed inset-0 -z-10'
+        className='fixed inset-0 z-0 pointer-events-none'
         style={{
           background:
-            'radial-gradient(circle at 18% 8%, rgba(255,255,255,0.14), transparent 34%), radial-gradient(circle at 92% 0%, rgba(59,130,246,0.12), transparent 30%)'
+            'radial-gradient(circle at 18% 8%, rgba(255,255,255,0.18), transparent 34%), radial-gradient(circle at 92% 0%, rgba(59,130,246,0.16), transparent 30%)'
         }}
       />
 
+      {/* 抽屉 */}
       <div className={`fixed inset-0 z-40 ${showDrawerLayer ? '' : 'pointer-events-none'}`}>
         <div
           className='absolute inset-0 bg-black transition-opacity duration-200'
@@ -281,10 +328,13 @@ const LayoutLearningHome = () => {
           onClick={closeDrawer}
         />
         <aside
-          className={`absolute inset-y-0 left-0 w-72 border-r border-white/70 bg-white/96 backdrop-blur-3xl shadow-2xl ${
+          className={`absolute inset-y-0 left-0 w-72 border-r border-white/60 bg-white/78 backdrop-blur-3xl shadow-2xl ${
             isDragging ? '' : 'transition-transform duration-300 ease-out'
           }`}
-          style={{ transform: `translateX(${drawerX}px)` }}>
+          style={{ transform: `translateX(${drawerX}px)` }}
+          onTouchStart={handleDrawerTouchStart}
+          onTouchMove={handleDrawerTouchMove}
+          onTouchEnd={handleDrawerTouchEnd}>
           <div className='flex items-center justify-between p-5'>
             <div>
               <p className='text-xs font-semibold text-slate-500'>菜单</p>
@@ -294,7 +344,7 @@ const LayoutLearningHome = () => {
               type='button'
               onClick={closeDrawer}
               aria-label='关闭菜单'
-              className='rounded-lg p-1 text-slate-500 hover:bg-slate-100'>
+              className='rounded-lg p-1 text-slate-500 hover:bg-white/70'>
               <X className='h-5 w-5' />
             </button>
           </div>
@@ -309,14 +359,14 @@ const LayoutLearningHome = () => {
                     setIsLibraryOpen(true)
                     closeDrawer()
                   }}
-                  className='block w-full rounded-xl px-4 py-3 text-left text-sm font-medium text-slate-700 hover:bg-slate-100'>
+                  className='block w-full rounded-xl px-4 py-3 text-left text-sm font-medium text-slate-700 hover:bg-white/65'>
                   {item.label}
                 </button>
               ) : (
                 <Link
                   key={item.label}
                   href={item.href ?? '/'}
-                  className='block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100'>
+                  className='block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 hover:bg-white/65'>
                   {item.label}
                 </Link>
               )
@@ -326,7 +376,7 @@ const LayoutLearningHome = () => {
       </div>
 
       <div className='relative z-10 mx-auto w-full max-w-lg px-4 pb-36 pt-3'>
-        <header className='mb-4 flex items-center gap-3 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)]'>
+        <header className='mb-4 flex items-center gap-3 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]'>
           <button type='button' onClick={openDrawer} aria-label='打开菜单' className='p-0.5'>
             <Menu className='h-7 w-7' />
           </button>
@@ -353,11 +403,9 @@ const LayoutLearningHome = () => {
         </section>
 
         <section className='mt-4'>
-          <Link
-            href='/tips'
-            className={`${glassCardHover} flex items-center justify-between px-4 py-3`}>
+          <Link href='/tips' className={`${glassCardHover} flex items-center justify-between px-4 py-3`}>
             <div className='flex items-center gap-3'>
-              <div className='rounded-full bg-orange-100 p-1.5'>
+              <div className='rounded-full bg-orange-100/90 p-1.5'>
                 <Lightbulb className='h-4 w-4 text-orange-500' />
               </div>
               <div>
@@ -397,7 +445,12 @@ const LayoutLearningHome = () => {
 
             if (tool.external && tool.href) {
               return (
-                <a key={tool.zh} href={tool.href} className={`${glassCardHover} flex items-center gap-3 p-3.5`}>
+                <a
+                  key={tool.zh}
+                  href={tool.href}
+                  target='_blank'
+                  rel='noreferrer'
+                  className={`${glassCardHover} flex items-center gap-3 p-3.5`}>
                   {content}
                 </a>
               )
@@ -407,7 +460,7 @@ const LayoutLearningHome = () => {
               <Link
                 key={tool.zh}
                 href={tool.href ?? '/'}
-                className={`${glassCardHover} flex items-center gap-3 p-3.5`}>
+                className={`${glassCardHover} flex items-center gap-3 p-3.5'}>
                 {content}
               </Link>
             )
@@ -416,8 +469,8 @@ const LayoutLearningHome = () => {
 
         <section className='mt-8'>
           <div className='mb-3 flex items-center gap-2 px-1'>
-            <BookText className='h-4 w-4 text-slate-700' />
-            <h2 className='text-[13px] font-bold tracking-wider text-slate-700'>
+            <BookText className='h-4 w-4 text-slate-100' />
+            <h2 className='text-[13px] font-bold tracking-wider text-slate-100'>
               SYSTEM COURSES (သင်ရိုး)
             </h2>
           </div>
@@ -427,7 +480,7 @@ const LayoutLearningHome = () => {
               <Link
                 key={course.title}
                 href={course.href}
-                className='group relative block overflow-hidden rounded-3xl border border-white/55 shadow-[0_12px_30px_rgba(2,6,23,0.20)]'>
+                className='group relative block overflow-hidden rounded-3xl border border-white/45 shadow-[0_12px_30px_rgba(2,6,23,0.30)]'>
                 <div className='absolute inset-0 bg-slate-800' />
                 <div
                   className='absolute inset-0 bg-cover bg-center opacity-[0.86] transition-transform duration-700 group-hover:scale-105'
@@ -451,38 +504,38 @@ const LayoutLearningHome = () => {
         </section>
       </div>
 
-      <nav className='fixed bottom-0 left-0 right-0 z-30 mx-auto w-full max-w-lg border-t border-slate-200 bg-white px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+10px)] shadow-[0_-10px_22px_rgba(15,23,42,0.10)] sm:hidden'>
+      <nav className='fixed bottom-0 left-0 right-0 z-30 mx-auto w-full max-w-lg border-t border-white/55 bg-white/72 px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+10px)] shadow-[0_-10px_22px_rgba(15,23,42,0.18)] backdrop-blur-2xl sm:hidden'>
         <div className='flex items-center justify-between'>
           <a
             href='https://bbs.886.best/user/mei/chats'
-            className='flex flex-1 flex-col items-center justify-center gap-1 text-slate-600'>
+            className='flex flex-1 flex-col items-center justify-center gap-1 text-slate-700'>
             <MessageCircle className='h-6 w-6' />
             <span className='text-[12px] font-semibold leading-none'>消息</span>
           </a>
 
           <a
             href='https://bbs.886.best'
-            className='flex flex-1 flex-col items-center justify-center gap-1 text-slate-600'>
+            className='flex flex-1 flex-col items-center justify-center gap-1 text-slate-700'>
             <Globe2 className='h-6 w-6' />
             <span className='text-[12px] font-semibold leading-none'>社区</span>
           </a>
 
           <a
             href='https://bbs.886.best/partners'
-            className='flex flex-1 flex-col items-center justify-center gap-1 text-slate-600'>
+            className='flex flex-1 flex-col items-center justify-center gap-1 text-slate-700'>
             <Users className='h-6 w-6' />
             <span className='text-[12px] font-semibold leading-none'>语伴</span>
           </a>
 
           <a
             href='https://bbs.886.best/category/5/%E5%8A%A8%E6%80%81'
-            className='flex flex-1 flex-col items-center justify-center gap-1 text-slate-600'>
+            className='flex flex-1 flex-col items-center justify-center gap-1 text-slate-700'>
             <Compass className='h-6 w-6' />
             <span className='text-[12px] font-semibold leading-none'>动态</span>
           </a>
 
           <Link href='/' className='flex flex-1 flex-col items-center justify-center gap-1 text-indigo-600'>
-            <div className='rounded-lg bg-indigo-100 p-1.5'>
+            <div className='rounded-lg bg-indigo-100/90 p-1.5'>
               <BookOpen className='h-6 w-6' />
             </div>
             <span className='text-[12px] font-bold leading-none'>学习</span>
@@ -490,7 +543,7 @@ const LayoutLearningHome = () => {
         </div>
       </nav>
 
-      <BookLibrary isOpen={isLibraryOpen} onClose={() => setIsLibraryOpen(false)} />
+      <BookLibraryModal isOpen={isLibraryOpen} onClose={() => setIsLibraryOpen(false)} />
     </main>
   )
 }
@@ -510,19 +563,17 @@ const LayoutBase = props => {
   if (isLearningHome) {
     return (
       <ThemeGlobalSimple.Provider value={{ searchModal }}>
-        <div id='theme-simple' className={`${siteConfig('FONT_STYLE')} min-h-screen`}>
-          <Style />
-          {children}
+        <div
+          id='theme-simple'
+          className={`${siteConfig('FONT_STYLE')} min-h-screen bg-transparent`}
+         ={{ background: 'transparent' }}>
+                   {children}
         </div>
-      </ThemeGlobalSimple.Provider>
-    )
-  }
-
-  return (
-    <ThemeGlobalSimple.Provider value={{ searchModal }}>
+ )
+Simple.Provider value={{ searchModal }}>
       <div
         id='theme-simple'
-        className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:text-gray-300  bg-white dark:bg-black scroll-smooth`}>
+        className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:text-gray-300 bg-white dark:bg-black scroll-smooth`}>
         <Style />
 
         {siteConfig('SIMPLE_TOP_BAR', null, CONFIG) && <TopBar {...props} />}
@@ -537,9 +588,8 @@ const LayoutBase = props => {
         <div
           id='container-wrapper'
           className={
-            (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
-              ? 'flex-row-reverse'
-              : '') + ' w-full flex-1 flex items-start max-w-9/10 mx-auto pt-12'
+            (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') +
+            ' w-full flex-1 flex items-start max-w-9/10 mx-auto pt-12'
           }>
           <div id='container-inner ' className='w-full flex-grow min-h-fit'>
             <Transition
@@ -594,11 +644,7 @@ const LayoutPostList = props => {
   return (
     <>
       <BlogPostBar {...props} />
-      {siteConfig('POST_LIST_STYLE') === 'page' ? (
-        <BlogListPage {...props} />
-      ) : (
-        <BlogListScroll {...props} />
-      )}
+      {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
     </>
   )
 }
@@ -622,9 +668,7 @@ const LayoutSearch = props => {
     }
   }, [])
 
-  const slotTop = siteConfig('ALGOLIA_APP_ID') ? null : (
-    <SearchInput {...props} />
-  )
+  const slotTop = siteConfig('ALGOLIA_APP_ID') ? null : <SearchInput {...props} />
 
   return <LayoutPostList {...props} slotTop={slotTop} />
 }
@@ -636,30 +680,16 @@ const LayoutArchive = props => {
   const { archivePosts } = props
   return (
     <div className='mb-10 pb-20 md:py-12 p-3 min-h-screen w-full'>
-      {Object.keys(archivePosts).map(archiveTitle => (
-        <BlogArchiveItem
-          key={archiveTitle}
-          archiveTitle={archiveTitle}
-          archivePosts={archivePosts}
-        />
-      ))}
-    </div>
-  )
-}
-
-/**
- * 文章详情
- */
-const LayoutSlug = props => {
-  const { post, lock, validPassword, prev, next, recommendPosts } = props
+      {Object.keys( (
+={ ))}
+详情 constPosts
   const { fullWidth } = useGlobal()
 
   return (
     <>
-      {lock && <ArticleLock validPassword={validPassword} />}
+      <ArticleLock}
 
-      {!lock && post && (
-        <div className={`px-2 ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
+       Name={`px-2 ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
           <ArticleInfo post={post} />
 
           <WWAds orientation='horizontal' className='w-full' />
@@ -721,11 +751,7 @@ const LayoutCategoryIndex = props => {
     <div id='category-list' className='duration-200 flex flex-wrap'>
       {categoryOptions?.map(category => {
         return (
-          <SmartLink
-            key={category.name}
-            href={`/category/${category.name}`}
-            passHref
-            legacyBehavior>
+          <SmartLink key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
             <div className='hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'>
               <i className='mr-4 fas fa-folder' />
               {category.name}({category.count})
@@ -751,10 +777,9 @@ const LayoutTagIndex = props => {
               key={tag}
               href={`/tag/${encodeURIComponent(tag.name)}`}
               passHref
-              className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200  mr-2 py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}>
+              className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200 mr-2 py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}>
               <div className='font-light dark:text-gray-400'>
-                <i className='mr-1 fas fa-tag' />{' '}
-                {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}
+                <i className='mr-1 fas fa-tag' /> {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}
               </div>
             </SmartLink>
           </div>
