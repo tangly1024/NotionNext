@@ -195,22 +195,22 @@ const freeBooks = [
   { title: 'HSK1 词汇手册', desc: '入门高频词汇', href: '/course/hsk1' },
   { title: '拼音速查总表', desc: '声母 / 韵母 / 声调', href: '/pinyin/initials' },
   { title: '日常口语 100 句', desc: '生活会话训练', href: '/course/oral' },
-  { title: '汉字基础练习', desc: '常见字形+发音', href: '/course/words' }
+  { title: '汉字基础练习', desc: '常见字形 + 发音', href: '/course/words' }
 ]
 
 const drawerWidth = 288
 
 const BookLibraryModal = ({ isOpen, onClose }) => {
   useEffect(() => {
-    if (!isOpen || !isBrowser) return
-    const old = document.body.style.overflow
+    if (!isOpen || !isBrowser) return undefined
+    const oldOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     const onKeyDown = e => {
       if (e.key === 'Escape') onClose?.()
     }
     document.addEventListener('keydown', onKeyDown)
     return () => {
-      document.body.style.overflow = old
+      document.body.style.overflow = oldOverflow
       document.removeEventListener('keydown', onKeyDown)
     }
   }, [isOpen, onClose])
@@ -219,7 +219,10 @@ const BookLibraryModal = ({ isOpen, onClose }) => {
 
   return (
     <div className='fixed inset-0 z-[80]'>
-      <div className='absolute inset-0 bg-black/35 backdrop-blur-[2px]' onClick={onClose} />
+      <div
+        className='absolute inset-0 bg-black/35 backdrop-blur-[2px]'
+        onClick={onClose}
+      />
       <div className='absolute left-1/2 top-1/2 w-[92%] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/40 bg-white/70 p-4 shadow-2xl backdrop-blur-2xl'>
         <div className='mb-3 flex items-center justify-between'>
           <h3 className='text-base font-bold text-slate-800'>免费书籍</h3>
@@ -230,6 +233,7 @@ const BookLibraryModal = ({ isOpen, onClose }) => {
             关闭
           </button>
         </div>
+
         <div className='space-y-2'>
           {freeBooks.map(item => (
             <Link
@@ -279,8 +283,10 @@ const LayoutLearningHome = () => {
     if (!isDragging || touchStartXRef.current === null) return
     const currentX = e.touches?.[0]?.clientX ?? 0
     const deltaX = currentX - touchStartXRef.current
-    // 打开的抽屉只允许往左拖（0 到 -drawerWidth）
-    const nextX = Math.max(-drawerWidth, Math.min(0, drawerStartXRef.current + deltaX))
+    const nextX = Math.max(
+      -drawerWidth,
+      Math.min(0, drawerStartXRef.current + deltaX)
+    )
     setDrawerX(nextX)
   }
 
@@ -302,7 +308,7 @@ const LayoutLearningHome = () => {
 
   return (
     <main className='relative isolate min-h-screen overflow-x-hidden text-slate-900'>
-      {/* 背景层（修复白底遮挡） */}
+      {/* 背景层 */}
       <div className='fixed inset-0 z-0 overflow-hidden pointer-events-none'>
         <div
           className='absolute inset-[-36px] scale-110 bg-cover bg-center blur-[16px]'
@@ -403,7 +409,9 @@ const LayoutLearningHome = () => {
         </section>
 
         <section className='mt-4'>
-          <Link href='/tips' className={`${glassCardHover} flex items-center justify-between px-4 py-3`}>
+          <Link
+            href='/tips'
+            className={`${glassCardHover} flex items-center justify-between px-4 py-3`}>
             <div className='flex items-center gap-3'>
               <div className='rounded-full bg-orange-100/90 p-1.5'>
                 <Lightbulb className='h-4 w-4 text-orange-500' />
@@ -460,7 +468,7 @@ const LayoutLearningHome = () => {
               <Link
                 key={tool.zh}
                 href={tool.href ?? '/'}
-                className={`${glassCardHover} flex items-center gap-3 p-3.5'}>
+                className={`${glassCardHover} flex items-center gap-3 p-3.5`}>
                 {content}
               </Link>
             )
@@ -543,7 +551,10 @@ const LayoutLearningHome = () => {
         </div>
       </nav>
 
-      <BookLibraryModal isOpen={isLibraryOpen} onClose={() => setIsLibraryOpen(false)} />
+      <BookLibraryModal
+        isOpen={isLibraryOpen}
+        onClose={() => setIsLibraryOpen(false)}
+      />
     </main>
   )
 }
@@ -566,11 +577,16 @@ const LayoutBase = props => {
         <div
           id='theme-simple'
           className={`${siteConfig('FONT_STYLE')} min-h-screen bg-transparent`}
-         ={{ background: 'transparent' }}>
-                   {children}
+          style={{ background: 'transparent' }}>
+          <Style />
+          {children}
         </div>
- )
-Simple.Provider value={{ searchModal }}>
+      </ThemeGlobalSimple.Provider>
+    )
+  }
+
+  return (
+    <ThemeGlobalSimple.Provider value={{ searchModal }}>
       <div
         id='theme-simple'
         className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:text-gray-300 bg-white dark:bg-black scroll-smooth`}>
@@ -578,13 +594,9 @@ Simple.Provider value={{ searchModal }}>
 
         {siteConfig('SIMPLE_TOP_BAR', null, CONFIG) && <TopBar {...props} />}
 
-        {/* 顶部LOGO */}
         <Header {...props} />
-
-        {/* 导航栏 */}
         <NavBar {...props} />
 
-        {/* 主体 */}
         <div
           id='container-wrapper'
           className={
@@ -594,7 +606,7 @@ Simple.Provider value={{ searchModal }}>
           <div id='container-inner ' className='w-full flex-grow min-h-fit'>
             <Transition
               show={!onLoading}
-              appear={true}
+              appear
               enter='transition ease-in-out duration-700 transform order-first'
               enterFrom='opacity-0 translate-y-16'
               enterTo='opacity-100'
@@ -621,9 +633,7 @@ Simple.Provider value={{ searchModal }}>
           <JumpToTopButton />
         </div>
 
-        {/* 搜索框 */}
         <AlgoliaSearchModal cRef={searchModal} {...props} />
-
         <Footer {...props} />
       </div>
     </ThemeGlobalSimple.Provider>
@@ -644,7 +654,9 @@ const LayoutPostList = props => {
   return (
     <>
       <BlogPostBar {...props} />
-      {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
+      {siteConfig('POST_LIST_STYLE') === 'page'
+        ? <BlogListPage {...props} />
+        : <BlogListScroll {...props} />}
     </>
   )
 }
@@ -666,10 +678,9 @@ const LayoutSearch = props => {
         }
       })
     }
-  }, [])
+  }, [keyword])
 
   const slotTop = siteConfig('ALGOLIA_APP_ID') ? null : <SearchInput {...props} />
-
   return <LayoutPostList {...props} slotTop={slotTop} />
 }
 
@@ -680,26 +691,39 @@ const LayoutArchive = props => {
   const { archivePosts } = props
   return (
     <div className='mb-10 pb-20 md:py-12 p-3 min-h-screen w-full'>
-      {Object.keys( (
-={ ))}
-详情 constPosts
+      {Object.keys(archivePosts || {}).map(archiveTitle => (
+        <BlogArchiveItem
+          key={archiveTitle}
+          archiveTitle={archiveTitle}
+          archivePosts={archivePosts}
+        />
+      ))}
+    </div>
+  )
+}
+
+/**
+ * 文章详情
+ */
+const LayoutSlug = props => {
+  const { post, lock, validPassword, prev, next, recommendPosts } = props
   const { fullWidth } = useGlobal()
 
   return (
     <>
-      <ArticleLock}
+      {lock && <ArticleLock validPassword={validPassword} />}
 
-       Name={`px-2 ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
+      {!lock && post && (
+        <div className={`px-2 ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
           <ArticleInfo post={post} />
 
           <WWAds orientation='horizontal' className='w-full' />
 
           <div id='article-wrapper'>
-            {!lock && <NotionPage post={post} />}
+            <NotionPage post={post} />
           </div>
 
           <ShareBar post={post} />
-
           <AdSlot type='in-article' />
 
           {post?.type === 'Post' && (
@@ -737,7 +761,7 @@ const Layout404 = props => {
         }
       }, waiting404)
     }
-  }, [post])
+  }, [post, router, waiting404])
 
   return <>404 Not found.</>
 }
@@ -749,16 +773,18 @@ const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   return (
     <div id='category-list' className='duration-200 flex flex-wrap'>
-      {categoryOptions?.map(category => {
-        return (
-          <SmartLink key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
-            <div className='hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'>
-              <i className='mr-4 fas fa-folder' />
-              {category.name}({category.count})
-            </div>
-          </SmartLink>
-        )
-      })}
+      {categoryOptions?.map(category => (
+        <SmartLink
+          key={category.name}
+          href={`/category/${category.name}`}
+          passHref
+          legacyBehavior>
+          <div className='hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'>
+            <i className='mr-4 fas fa-folder' />
+            {category.name}({category.count})
+          </div>
+        </SmartLink>
+      ))}
     </div>
   )
 }
@@ -770,21 +796,18 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props
   return (
     <div id='tags-list' className='duration-200 flex flex-wrap'>
-      {tagOptions.map(tag => {
-        return (
-          <div key={tag.name} className='p-2'>
-            <SmartLink
-              key={tag}
-              href={`/tag/${encodeURIComponent(tag.name)}`}
-              passHref
-              className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200 mr-2 py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}>
-              <div className='font-light dark:text-gray-400'>
-                <i className='mr-1 fas fa-tag' /> {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}
-              </div>
-            </SmartLink>
-          </div>
-        )
-      })}
+      {(tagOptions || []).map(tag => (
+        <div key={tag.name} className='p-2'>
+          <SmartLink
+            href={`/tag/${encodeURIComponent(tag.name)}`}
+            passHref
+            className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200 mr-2 py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}>
+            <div className='font-light dark:text-gray-400'>
+              <i className='mr-1 fas fa-tag' /> {tag.name + (tag.count ? `(${tag.count})` : '')}
+            </div>
+          </SmartLink>
+        </div>
+      ))}
     </div>
   )
 }
