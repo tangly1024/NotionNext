@@ -40,7 +40,7 @@ import { Style } from './style'
 // --- 动态导入组件 ---
 const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
 const BookLibrary = dynamic(() => import('@/components/BookLibrary'), { ssr: false })
-const AIChatDrawer = dynamic(() => import('@/components/AiChatAssistant'), { ssr: false }) // 新增 AI翻译组件导入
+const AIChatDrawer = dynamic(() => import('@/components/AIChatDrawer.jsx'), { ssr: false }) // 新增 AI翻译组件导入
 const BlogListScroll = dynamic(() => import('./components/BlogListScroll'), { ssr: false })
 const BlogArchiveItem = dynamic(() => import('./components/BlogArchiveItem'), { ssr: false })
 const ArticleLock = dynamic(() => import('./components/ArticleLock'), { ssr: false })
