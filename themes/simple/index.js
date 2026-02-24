@@ -1,3 +1,5 @@
+'use client';
+
 import { AdSlot } from '@/components/GoogleAdsense'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
@@ -9,11 +11,10 @@ import dynamic from 'next/dynamic'
 import SmartLink from '@/components/SmartLink'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion' // 引入动画
+import { createContext, useContext, useEffect, useRef, useState, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   BookOpen,
-  BookText,
   ChevronRight,
   Compass,
   FileText,
@@ -36,9 +37,10 @@ import BlogPostBar from './components/BlogPostBar'
 import CONFIG from './config'
 import { Style } from './style'
 
-// --- 动态导入原始组件 (保持功能完整) ---
+// --- 动态导入组件 ---
 const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
 const BookLibrary = dynamic(() => import('@/components/BookLibrary'), { ssr: false })
+const AIChatDrawer = dynamic(() => import('@/components/AiChatAssistant'), { ssr: false }) // 新增 AI翻译组件导入
 const BlogListScroll = dynamic(() => import('./components/BlogListScroll'), { ssr: false })
 const BlogArchiveItem = dynamic(() => import('./components/BlogArchiveItem'), { ssr: false })
 const ArticleLock = dynamic(() => import('./components/ArticleLock'), { ssr: false })
@@ -70,8 +72,9 @@ const pinyinNav = [
 ]
 
 const coreTools = [
-  { zh: 'AI 翻译', mm: 'AI ဘာသာပြန်', icon: Globe, href: '/ai-translate', action: 'open-translator', bg: 'bg-indigo-50', iconColor: 'text-indigo-600' },
-  { zh: '免费书籍', mm: 'စာကြည့်တိုက်', icon: Library, action: 'open-library', bg: 'bg-cyan-50', iconColor: 'text-cyan-600' },
+  // 注意：移除了 href，加入了 action 用于触发弹窗
+  { zh: 'AI 翻译', mm: 'AI ဘာသာပြန်', icon: Globe, action: 'translator', bg: 'bg-indigo-50', iconColor: 'text-indigo-600' },
+  { zh: '免费书籍', mm: 'စာကြည့်တိုက်', icon: Library, action: 'library', bg: 'bg-cyan-50', iconColor: 'text-cyan-600' },
   { zh: '单词收藏', mm: 'မှတ်ထားသော စာလုံး', icon: Star, href: '/words', bg: 'bg-slate-50', iconColor: 'text-slate-600' },
   { zh: '口语收藏', mm: 'မှတ်ထားသော စကားပြော', icon: Volume2, href: '/oral', bg: 'bg-slate-50', iconColor: 'text-slate-600' }
 ]
@@ -97,68 +100,69 @@ const systemCourses = [
   }
 ]
 
-// ===================== 2. 学习首页组件 (带手势返回) =====================
+// ===================== 2. 学习首页组件 (原生 App 级弹窗控制) =====================
 const LayoutLearningHome = () => {
   const router = useRouter()
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [isLibraryOpen, setIsLibraryOpen] = useState(false)
+  
+  // 核心：使用单个状态管理所有覆盖层 (弹窗/菜单)，避免状态冲突
+  const [activeOverlay, setActiveOverlay] = useState(null)
 
-  // 手势引用
-  const touchStartRef = useRef({ x: 0, y: 0 })
-  const isEdgeSwipe = useRef(false)
-
-  // 处理手势逻辑 (参考第二个代码)
-  const handleTouchStart = e => {
-    const x = e.touches[0].clientX
-    touchStartRef.current = { x, y: e.touches[0].clientY }
-    isEdgeSwipe.current = x < 25 // 判定是否从左边缘开始
-  }
-
-  const handleTouchEnd = e => {
-    if (!isEdgeSwipe.current) return
-    const deltaX = e.changedTouches[0].clientX - touchStartRef.current.x
-    const deltaY = Math.abs(e.changedTouches[0].clientY - touchStartRef.current.y)
-
-    // 右滑返回逻辑：如果滑动超过 85px 且非大幅垂直滑动
-    if (deltaX > 85 && deltaY < 50) {
-      if (isLibraryOpen) {
-        setIsLibraryOpen(false) // 优先关闭弹窗
-      } else if (isDrawerOpen) {
-        setIsDrawerOpen(false) // 其次关闭抽屉
-      } else if (window.history.length > 1) {
-        router.back() // 最后执行系统返回
+  // 极佳的路由劫持逻辑：解决安卓返回键和 iOS 侧滑返回问题
+  const openOverlay = useCallback((overlayType) => {
+    setActiveOverlay((prev) => {
+      if (prev === overlayType) return prev;
+      if (typeof window !== 'undefined') {
+        // 往浏览器历史记录推入一个虚拟状态，这样按返回键只会退回上一层(关闭弹窗)
+        window.history.pushState({ overlay: overlayType }, '', window.location.href);
       }
+      return overlayType;
+    });
+  }, []);
+
+  const closeOverlay = useCallback(() => {
+    if (activeOverlay && typeof window !== 'undefined') {
+      window.history.back(); // 触发后退，由 popstate 监听器负责清理状态
+      return;
     }
-    isEdgeSwipe.current = false
-  }
+    setActiveOverlay(null);
+  }, [activeOverlay]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onPopState = () => setActiveOverlay(null);
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
 
   // 样式：浅色系透明玻璃卡片
-  const glassCard = 'bg-white/70 backdrop-blur-md border border-white shadow-sm rounded-2xl transition-all active:scale-95'
+  const glassCard = 'bg-white/70 backdrop-blur-md border border-white shadow-sm rounded-2xl transition-all active:scale-95 cursor-pointer'
 
   return (
-    <main
-      className='relative min-h-screen overflow-x-hidden text-slate-900'
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}>
+    // 移除了危险的全局 onTouchStart / onTouchEnd，避免误触关闭网页
+    <main className='relative min-h-[100dvh] overflow-x-hidden text-slate-900'>
       
       {/* 全局背景图：固定透明感 */}
       <div className='fixed inset-0 -z-30 bg-cover bg-center' style={{ backgroundImage: "url('/images/home-bg.jpg')" }} />
       <div className='fixed inset-0 -z-20 bg-white/40 backdrop-blur-[2px]' />
 
-      {/* 侧边栏：侧边栏字体换深色 */}
+      {/* 侧边栏菜单 */}
       <AnimatePresence>
-        {isDrawerOpen && (
-          <>
+        {activeOverlay === 'menu' && (
+          <div className="fixed inset-0 z-[160] flex">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              onClick={() => setIsDrawerOpen(false)} className="fixed inset-0 z-[60] bg-black/30 backdrop-blur-sm" />
+              onClick={closeOverlay} className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" />
             <motion.aside initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
-              className="fixed inset-y-0 left-0 z-[70] w-72 bg-white shadow-2xl flex flex-col">
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              // Framer Motion 手势支持：向左滑动关闭菜单
+              drag="x" dragConstraints={{ left: 0, right: 0 }} dragElastic={{ left: 0.5, right: 0 }}
+              onDragEnd={(e, info) => { if (info.offset.x < -80 || info.velocity.x < -400) closeOverlay() }}
+              className="relative w-72 h-full bg-white shadow-2xl flex flex-col">
               <div className='p-6 border-b border-slate-100 flex items-center justify-between'>
                 <div>
                   <h2 className='text-xl font-black text-slate-900'>菜单</h2>
                   <p className='text-xs text-slate-500'>中缅学习中心</p>
                 </div>
-                <button onClick={() => setIsDrawerOpen(false)} className='p-2 bg-slate-100 rounded-lg'>
+                <button onClick={closeOverlay} className='p-2 bg-slate-100 rounded-full active:scale-90 transition-transform'>
                     <X size={20} className='text-slate-800' />
                 </button>
               </div>
@@ -170,14 +174,14 @@ const LayoutLearningHome = () => {
                 ))}
               </nav>
             </motion.aside>
-          </>
+          </div>
         )}
       </AnimatePresence>
 
       <div className='relative z-10 mx-auto w-full max-w-md px-4 pb-36 pt-6'>
         {/* Header */}
         <header className='mb-8 flex items-center gap-4'>
-          <button onClick={() => setIsDrawerOpen(true)} className='p-2.5 bg-white/80 rounded-2xl shadow-sm border border-white active:scale-90 transition-transform'>
+          <button onClick={() => openOverlay('menu')} className='p-2.5 bg-white/80 rounded-2xl shadow-sm border border-white active:scale-90 transition-transform'>
             <Menu className='h-6 w-6 text-slate-800' />
           </button>
           <div>
@@ -189,7 +193,7 @@ const LayoutLearningHome = () => {
           </div>
         </header>
 
-        {/* 拼音导航 - 浅色卡片 */}
+        {/* 拼音导航 */}
         <section className='grid grid-cols-4 gap-3'>
           {pinyinNav.map(item => (
             <Link key={item.zh} href={item.href} className={`${glassCard} flex flex-col items-center py-4`}>
@@ -200,6 +204,37 @@ const LayoutLearningHome = () => {
                 <p className='text-[9px] font-medium text-slate-400 mt-0.5'>{item.mm}</p>
             </Link>
           ))}
+        </section>
+
+        {/* 核心工具区 */}
+        <section className='mt-4 grid grid-cols-2 gap-3'>
+          {coreTools.map(tool => {
+            const content = (
+              <div className="flex items-center gap-3">
+                <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${tool.bg} ${tool.iconColor}`}>
+                  <tool.icon size={20} />
+                </div>
+                <div className='min-w-0'>
+                  <p className='truncate text-[13px] font-black text-slate-800'>{tool.zh}</p>
+                  <p className='truncate text-[9px] text-slate-400'>{tool.mm}</p>
+                </div>
+              </div>
+            )
+            // 如果是触发弹窗的按钮
+            if (tool.action) {
+              return (
+                <button key={tool.zh} onClick={() => openOverlay(tool.action)} className={`${glassCard} p-3.5 text-left`}>
+                  {content}
+                </button>
+              )
+            }
+            // 普通跳转链接
+            return (
+              <Link key={tool.zh} href={tool.href} className={`${glassCard} p-3.5`}>
+                {content}
+              </Link>
+            )
+          })}
         </section>
 
         {/* 发音技巧提示条 */}
@@ -216,35 +251,6 @@ const LayoutLearningHome = () => {
             </div>
             <ChevronRight className='h-5 w-5 text-slate-300' />
           </Link>
-        </section>
-
-        {/* 核心工具 */}
-        <section className='mt-4 grid grid-cols-2 gap-3'>
-          {coreTools.map(tool => {
-            const content = (
-              <div className="flex items-center gap-3">
-                <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${tool.bg} ${tool.iconColor}`}>
-                  <tool.icon size={20} />
-                </div>
-                <div className='min-w-0'>
-                  <p className='truncate text-[13px] font-black text-slate-800'>{tool.zh}</p>
-                  <p className='truncate text-[9px] text-slate-400'>{tool.mm}</p>
-                </div>
-              </div>
-            )
-            if (tool.action === 'open-library') {
-              return (
-                <button key={tool.zh} onClick={() => setIsLibraryOpen(true)} className={`${glassCard} p-3.5`}>
-                  {content}
-                </button>
-              )
-            }
-            return (
-              <Link key={tool.zh} href={tool.href} className={`${glassCard} p-3.5`}>
-                {content}
-              </Link>
-            )
-          })}
         </section>
 
         {/* 系统课程 */}
@@ -286,7 +292,25 @@ const LayoutLearningHome = () => {
         </div>
       </nav>
 
-      <BookLibrary isOpen={isLibraryOpen} onClose={() => setIsLibraryOpen(false)} />
+      {/* ================== 核心功能弹窗渲染 ================== */}
+      {/* 1. AI 翻译抽屉 */}
+      <AnimatePresence>
+        {activeOverlay === 'translator' && (
+          <div className="fixed inset-0 z-[150]">
+            <AIChatDrawer isOpen={true} onClose={closeOverlay} />
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* 2. 图书馆沉浸式弹窗 */}
+      <AnimatePresence>
+        {activeOverlay === 'library' && (
+          <div className="fixed inset-0 z-[150]">
+            <BookLibrary isOpen={true} onClose={closeOverlay} />
+          </div>
+        )}
+      </AnimatePresence>
+
     </main>
   )
 }
@@ -319,7 +343,6 @@ const LayoutBase = props => {
     )
   }
 
-  // 其他页面逻辑 (Notion文章、搜索页等) 保持不变
   return (
     <ThemeGlobalSimple.Provider value={{ searchModal }}>
       <div id='theme-simple' className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col bg-white dark:bg-black scroll-smooth`}>
@@ -349,7 +372,6 @@ const LayoutBase = props => {
   )
 }
 
-// --- 原始页面导出 (确保所有路径功能正常) ---
 const LayoutIndex = props => <LayoutLearningHome {...props} />
 const LayoutPostList = props => (
   <>
@@ -429,4 +451,4 @@ export {
   LayoutSlug,
   LayoutTagIndex,
   CONFIG as THEME_CONFIG
-            }
+}
