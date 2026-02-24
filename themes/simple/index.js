@@ -294,11 +294,10 @@ const LayoutLearningHome = () => {
 
       {/* ================== 核心功能弹窗渲染 ================== */}
       {/* 1. AI 翻译抽屉 */}
-      <AnimatePresence>
-        {activeOverlay === 'translator' && (
-          <AIChatDrawer onClose={closeOverlay} />
-        )}
-      </AnimatePresence>
+      <AIChatDrawer
+  isOpen={activeOverlay === 'translator'}
+  onClose={closeOverlay}
+/>
 
       {/* 2. 图书馆沉浸式弹窗 */}
       <AnimatePresence>
