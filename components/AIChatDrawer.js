@@ -8,7 +8,7 @@ import React, {
   memo
 } from 'react';
 // 假设这些库文件存在，如果没有请自行处理引用
-// import { loadCheatDict, matchCheatLoose } from '@/lib/cheatDict';
+import { loadCheatDict, matchCheatLoose } from '@/lib/cheatDict';
 
 // ----------------- 全局样式 -----------------
 const GlobalStyles = () => (
@@ -20,7 +20,6 @@ const GlobalStyles = () => (
     .slim-scrollbar::-webkit-scrollbar-track { background: transparent; }
     .slim-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.1); border-radius: 4px; }
 
-    /* 光标闪烁动画 */
     .blinking-cursor {
       display: inline-block;
       width: 2px;
@@ -39,11 +38,16 @@ const GlobalStyles = () => (
 );
 
 // ----------------- Helpers -----------------
-const safeLocalStorageGet = (key) => (typeof window !== 'undefined' ? localStorage.getItem(key) : null);
-const safeLocalStorageSet = (key, value) => { if (typeof window !== 'undefined') localStorage.setItem(key, value); };
+const safeLocalStorageGet = (key) => {
+  try { return typeof window !== 'undefined' ? localStorage.getItem(key) : null; } 
+  catch (e) { console.warn('localStorage get failed', e); return null; }
+};
+const safeLocalStorageSet = (key, value) => { 
+  try { if (typeof window !== 'undefined') localStorage.setItem(key, value); } 
+  catch (e) { console.warn('localStorage set failed, possibly quota exceeded', e); }
+};
 const nowId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
-// 生成简单的提示音 (Beep)
 const playBeep = () => {
     try {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -54,30 +58,32 @@ const playBeep = () => {
         osc.connect(gain);
         gain.connect(ctx.destination);
         
-        osc.frequency.value = 600; // 频率
-        gain.gain.value = 0.1; // 音量
+        osc.frequency.value = 600;
+        gain.gain.value = 0.1;
         
         osc.start();
         setTimeout(() => {
             osc.stop();
             ctx.close();
-        }, 150); // 持续时间
+        }, 150);
     } catch (e) {
         console.error("Audio Context Error", e);
     }
 };
 
-// 图片压缩
+// 增加 reject 兜底，防止坏图导致 Promise 永远 pending
 const compressImage = (file) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
+    reader.onerror = (e) => reject(e);
     reader.onload = (e) => {
       const img = new Image();
       img.src = e.target.result;
+      img.onerror = (e) => reject(e);
       img.onload = () => {
         const canvas = document.createElement('canvas');
-        const MAX_WIDTH = 1024;
+        const MAX_WIDTH = 1500; 
         let width = img.width;
         let height = img.height;
 
@@ -90,14 +96,13 @@ const compressImage = (file) => {
         canvas.height = height;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
-        // 压缩质量 0.6
-        resolve(canvas.toDataURL('image/jpeg', 0.6));
+        resolve(canvas.toDataURL('image/jpeg', 0.92));
       };
     };
   });
 };
 
-// 脚本检测 (简单正则)
+// 放宽英文匹配条件，允许常见标点和数字
 const detectScript = (text) => {
   if (!text) return null;
   if (/[\u1000-\u109F\uAA60-\uAA7F]+/.test(text)) return 'my-MM';
@@ -108,7 +113,7 @@ const detectScript = (text) => {
   if (/[\u0400-\u04FF]+/.test(text)) return 'ru-RU';
   if (/[\u0600-\u06FF]+/.test(text)) return 'ar-SA';
   if (/[\u0900-\u097F]+/.test(text)) return 'hi-IN';
-  if (/^[a-zA-Z\s,.?!]+$/.test(text)) return 'en-US';
+  if (/^[a-zA-Z0-9\s,.?!\-'"()@#$%^&*_+:;]+$/.test(text)) return 'en-US';
   return null;
 };
 
@@ -145,14 +150,12 @@ const DEFAULT_MODELS = [
   { id: 'm3', providerId: 'p1', name: 'GPT-4o', value: 'gpt-4o' }
 ];
 
-// 强调忠实原文，严禁加戏
-const BASE_SYSTEM_INSTRUCTION = `You are a professional translator. Translate user text into the target language.
+const BASE_SYSTEM_INSTRUCTION = `You are a professional, strictly literal translator.
 Requirements:
-1. Style: Natural and fluent. Maintain the original meaning and structure while following target language conventions.
-2. NO back_translation.
-3. Output ONLY strict JSON.
-4. Format: {"data": [{"translation": "..."}]}
-5. NO Markdown (e.g., \`\`\`json) or any extra explanation.`;
+1. FAITHFULNESS: Maintain the EXACT original meaning, structure, tone, punctuation, and line breaks. DO NOT add, omit, or explain anything. Retain all numbers, proper nouns, and untranslated terms as they are.
+2. FORMAT: Output ONLY strict JSON. NO Markdown, NO conversational filler.
+3. SCHEMA: {"data": [{"translation": "...", "back_translation": "..."}]}
+4. BACK TRANSLATION: "back_translation" MUST translate your result back to the Source language to verify accuracy.`;
 
 const DEFAULT_SETTINGS = {
   providers: DEFAULT_PROVIDERS,
@@ -172,7 +175,7 @@ const DEFAULT_SETTINGS = {
 
 // ----------------- TTS Engine -----------------
 const ttsCache = new Map();
-const MAX_TTS_CACHE = 20; // 限制缓存大小防止内存泄漏
+const MAX_TTS_CACHE = 20; 
 
 const AVAILABLE_VOICES = {
   'zh-CN': [{ id: 'zh-CN-XiaoyouNeural', name: '小悠 (女)' }, { id: 'zh-CN-YunxiNeural', name: '云希 (男)' }],
@@ -213,11 +216,14 @@ const playTTS = async (text, lang, settings) => {
       if (!res.ok) return;
       const blob = await res.blob();
       
-      // 清理超额缓存
+      // 防止 Blob 导致的内存泄漏，淘汰时释放 URL
       if (ttsCache.size >= MAX_TTS_CACHE) {
           const firstKey = ttsCache.keys().next().value;
           const oldAudio = ttsCache.get(firstKey);
-          if (oldAudio) oldAudio.src = ""; // 释放 blob 引用
+          if (oldAudio && oldAudio.src) {
+             URL.revokeObjectURL(oldAudio.src); 
+             oldAudio.src = ""; 
+          }
           ttsCache.delete(firstKey);
       }
       
@@ -237,9 +243,11 @@ const normalizeTranslations = (raw) => {
   let data = [];
   try {
     let cleanRaw = typeof raw === 'string' ? raw.trim() : '';
-    // 强制提取大括号中间的部分，防止模型加上额外的 Markdown 或前言后语
-    const match = cleanRaw.match(/\{[\s\S]*\}/);
-    if (match) cleanRaw = match[0];
+    const start = cleanRaw.indexOf('{');
+    const end = cleanRaw.lastIndexOf('}');
+    if (start >= 0 && end > start) {
+      cleanRaw = cleanRaw.substring(start, end + 1);
+    }
     
     const json = cleanRaw ? JSON.parse(cleanRaw) : raw;
     data = Array.isArray(json?.data) ? json.data : (Array.isArray(json) ? json : []);
@@ -248,7 +256,7 @@ const normalizeTranslations = (raw) => {
   }
   const validData = data.filter(x => x && x.translation);
   if (validData.length === 0) return [{ translation: typeof raw === 'string' ? raw : '无有效译文', back_translation: '' }];
-  return validData.slice(0, 4); // 最多取4个结果
+  return validData.slice(0, 4);
 };
 
 const getLangName = (c) => SUPPORTED_LANGUAGES.find(l => l.code === c)?.name || c;
@@ -256,7 +264,6 @@ const getLangFlag = (c) => SUPPORTED_LANGUAGES.find(l => l.code === c)?.flag || 
 
 // ----------------- Components -----------------
 
-// 1. 结果卡片容器
 const TranslationCard = memo(({ data, onPlay }) => {
   const [copied, setCopied] = useState(false);
   const handleClick = async () => {
@@ -286,7 +293,6 @@ const TranslationCard = memo(({ data, onPlay }) => {
   );
 });
 
-// 2. 模型选择器 (已精简，仅选择主翻译模型)
 const ModelSelectorModal = ({ settings, onClose, onSave }) => {
   const [localSettings, setLocalSettings] = useState(settings);
   const activeModelObj = settings.models.find(m => m.id === localSettings.mainModelId);
@@ -343,7 +349,6 @@ const ModelSelectorModal = ({ settings, onClose, onSave }) => {
   );
 };
 
-// 3. 设置弹窗
 const SettingsModal = ({ settings, onSave, onClose }) => {
   const [data, setData] = useState(settings);
   const [tab, setTab] = useState('common');
@@ -351,17 +356,32 @@ const SettingsModal = ({ settings, onSave, onClose }) => {
 
   const updateProvider = (idx, f, v) => { const arr=[...data.providers]; arr[idx]={...arr[idx],[f]:v}; setData({...data,providers:arr}); };
   const addProvider = () => setData(prev=>({...prev,providers:[...prev.providers,{id:nowId(),name:'新供应商',url:'',key:''}]}));
-  const delProvider = (id) => { if(data.providers.length>1) setData(prev=>({...prev,providers:prev.providers.filter(p=>p.id!==id)})); };
+  
+  const delProvider = (id) => setData(prev => {
+    if (prev.providers.length <= 1) return prev;
+    const newProviders = prev.providers.filter(p => p.id !== id);
+    const newModels = prev.models.filter(m => m.providerId !== id);
+    const isMainDeleted = !newModels.find(m => m.id === prev.mainModelId);
+    return {...prev, providers: newProviders, models: newModels, mainModelId: isMainDeleted ? (newModels[0]?.id || null) : prev.mainModelId};
+  });
+
   const getModelsByProv = (pid) => data.models.filter(m=>m.providerId===pid);
   const addModel = (pid) => setData(prev=>({...prev,models:[...prev.models,{id:nowId(),providerId:pid,name:'新模型',value:''}]}));
+  
   const updateModel = (mid,f,v) => setData(prev=>({...prev,models:prev.models.map(m=>m.id===mid?{...m,[f]:v}:m)}));
-  const delModel = (mid) => setData(prev=>({...prev,models:prev.models.filter(m=>m.id!==mid)}));
+  const delModel = (mid) => setData(prev => {
+    const newModels = prev.models.filter(m => m.id !== mid);
+    const newMainId = (prev.mainModelId === mid) ? (newModels[0]?.id || null) : prev.mainModelId;
+    return {...prev, models: newModels, mainModelId: newMainId};
+  });
 
   const handleBgUpload = async (e) => {
     const file = e.target.files[0];
     if(file) {
-      const base64 = await compressImage(file);
-      setData({...data, chatBackgroundUrl: base64});
+      try {
+        const base64 = await compressImage(file);
+        setData({...data, chatBackgroundUrl: base64});
+      } catch (err) { console.error(err); }
     }
   };
 
@@ -402,6 +422,8 @@ const SettingsModal = ({ settings, onSave, onClose }) => {
             )}
             {tab === 'provider' && (
               <div className="space-y-6">
+                {/* 仅做纯前端保存展示，生产环境建议由服务端代发 API Key 以防泄漏 */}
+                <div className="text-[10px] text-gray-400 -mb-2">注: 密钥仅保存在本地浏览器</div>
                 {data.providers.map((p, idx) => (
                   <div key={p.id} className="bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-sm">
                     <div className="flex justify-between items-center mb-2">
@@ -479,7 +501,11 @@ const AiChatContent = ({ onClose }) => {
   const [history, setHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  
+  // 新增防竞态引用的 ref
   const recognitionRef = useRef(null);
+  const abortControllerRef = useRef(null);
+  const currentRequestIdRef = useRef(null);
   const scrollRef = useRef(null);
 
   const [showSettings, setShowSettings] = useState(false);
@@ -490,10 +516,14 @@ const AiChatContent = ({ onClose }) => {
   useEffect(() => {
     const s = safeLocalStorageGet('ai886_settings');
     if (s) {
-      const parsed = JSON.parse(s);
-      setSettings({ ...DEFAULT_SETTINGS, ...parsed });
-      if (parsed.lastSourceLang) setSourceLang(parsed.lastSourceLang);
-      if (parsed.lastTargetLang) setTargetLang(parsed.lastTargetLang);
+      try {
+        const parsed = JSON.parse(s);
+        setSettings({ ...DEFAULT_SETTINGS, ...parsed });
+        if (parsed.lastSourceLang) setSourceLang(parsed.lastSourceLang);
+        if (parsed.lastTargetLang) setTargetLang(parsed.lastTargetLang);
+      } catch (e) {
+        console.error("Parse settings error, fallback to default", e);
+      }
     }
     setHistory([]);
   }, []);
@@ -509,6 +539,9 @@ const AiChatContent = ({ onClose }) => {
         recognitionRef.current.stop();
         recognitionRef.current = null;
       }
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
     };
   }, []);
 
@@ -519,19 +552,31 @@ const AiChatContent = ({ onClose }) => {
     }, 100);
   };
 
-  const fetchAi = async (messages, modelId, jsonMode = true) => {
+  const fetchAi = async (messages, modelId, jsonMode = true, signal) => {
     const model = settings.models.find(m => m.id === modelId);
-    if (!model) throw new Error(`未配置模型 ${modelId}`);
+    if (!model) throw new Error(`未配置模型或模型已被删除，请重新选择`);
     const provider = settings.providers.find(p => p.id === model.providerId);
     if (!provider || !provider.key) throw new Error(`${provider?.name || '供应商'} 缺少 API Key`);
 
-    const body = { model: model.value, messages, stream: false };
+    const body = { 
+        model: model.value, 
+        messages, 
+        stream: false,
+        temperature: 0,
+        top_p: 1,
+        presence_penalty: 0,
+        frequency_penalty: 0
+    };
     if (jsonMode) body.response_format = { type: 'json_object' };
 
-    const res = await fetch(`${provider.url}/chat/completions`, {
+    // 清理可能导致错误的结尾多余斜杠
+    const baseUrl = provider.url.replace(/\/+$/, '');
+    
+    const res = await fetch(`${baseUrl}/chat/completions`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${provider.key}` },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
+      signal
     });
 
     if (!res.ok) {
@@ -552,19 +597,31 @@ const AiChatContent = ({ onClose }) => {
     let text = (textOverride || inputVal).trim();
     if (!text && inputImages.length === 0) return;
 
-    // 自动语言检测与交换
+    // 取消前一个进行中的请求，防竞态
+    if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+    }
+    abortControllerRef.current = new AbortController();
+    const signal = abortControllerRef.current.signal;
+    
+    // 生成当次请求唯一 ID
+    const requestId = nowId();
+    currentRequestIdRef.current = requestId;
+
     let currentSource = sourceLang;
     let currentTarget = targetLang;
     if (text) {
         const detected = detectScript(text);
-        if (detected && detected !== currentSource && detected === currentTarget) {
-            currentSource = currentTarget;
-            currentTarget = sourceLang;
-            setSourceLang(currentSource);
-            setTargetLang(currentTarget);
-        } else if (detected && detected !== currentSource && detected !== 'en-US') {
-            setSourceLang(detected);
-            currentSource = detected;
+        if (detected && detected !== currentSource) {
+            if (detected === currentTarget) {
+                currentSource = currentTarget;
+                currentTarget = sourceLang;
+                setSourceLang(currentSource);
+                setTargetLang(currentTarget);
+            } else {
+                setSourceLang(detected);
+                currentSource = detected;
+            }
         }
     }
 
@@ -573,7 +630,6 @@ const AiChatContent = ({ onClose }) => {
         id: nowId(), role: 'user', text, images: inputImages, ts: Date.now() 
     };
 
-    // 每次都清空历史，只显示当前这一轮
     setHistory([userMsg]);
     setInputVal('');
     setInputImages([]);
@@ -583,9 +639,8 @@ const AiChatContent = ({ onClose }) => {
     if (settings.useCustomPrompt && settings.customPromptText) {
       sysPrompt += `\nAdditional instructions: ${settings.customPromptText}`;
     }
-    sysPrompt += `\nback_translation MUST translate back to: ${getLangName(currentSource)}`;
 
-    const userPromptText = `Source: ${getLangName(currentSource)}\nTarget: ${getLangName(currentTarget)}\nContent:\n${text || '[Image Content]'}`;
+    const userPromptText = `Source Language: ${currentSource} (${getLangName(currentSource)})\nTarget Language: ${currentTarget} (${getLangName(currentTarget)})\nContent to translate:\n${text || '[Image Content]'}`;
 
     let finalUserMessage;
     if (inputImages.length > 0) {
@@ -607,38 +662,49 @@ const AiChatContent = ({ onClose }) => {
          dictHit = matchCheatLoose(dict, text, currentTarget);
       }
       
-      let aiMsg = { id: nowId(), role: 'ai', results: [], modelName: '', ts: Date.now() };
+      let aiMsg = { id: nowId(), role: 'ai', results: [], modelName: '', ts: Date.now(), tgtLang: currentTarget };
 
       if (dictHit) {
         aiMsg.results = normalizeTranslations(dictHit);
         aiMsg.modelName = '本地字典库';
       } else {
-        const res = await fetchAi(messages, settings.mainModelId, true);
+        const res = await fetchAi(messages, settings.mainModelId, true, signal);
         aiMsg.results = normalizeTranslations(res.content);
         aiMsg.modelName = res.modelName;
       }
 
-      setHistory(prev => [...prev, aiMsg]);
-      scrollToResult();
-      
-      if (settings.autoPlayTTS && aiMsg.results && aiMsg.results.length > 0) {
-        playTTS(aiMsg.results[0].translation, currentTarget, settings);
+      // 【关键】验证当前请求是否仍是最新活跃请求
+      if (currentRequestIdRef.current === requestId) {
+          setHistory(prev => [...prev, aiMsg]);
+          scrollToResult();
+          
+          if (settings.autoPlayTTS && aiMsg.results && aiMsg.results.length > 0) {
+            playTTS(aiMsg.results[0].translation, currentTarget, settings);
+          }
       }
     } catch (e) {
-      setHistory(prev => [...prev, { id: nowId(), role: 'error', text: e.message || '未知错误', ts: Date.now() }]);
+      if (e.name !== 'AbortError' && currentRequestIdRef.current === requestId) {
+         setHistory(prev => [...prev, { id: nowId(), role: 'error', text: e.message || '未知错误', ts: Date.now() }]);
+      }
     } finally {
-      setIsLoading(false);
+      if (currentRequestIdRef.current === requestId) {
+         setIsLoading(false);
+      }
     }
   };
 
   const handleImageSelect = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
-    const newImages = [];
-    for (const file of files) {
-        try { newImages.push(await compressImage(file)); } catch (err) { console.error(err); }
+    
+    // 增加 Promise.all 并发压缩多图，大幅降低 UI 阻塞感
+    try {
+        const compressedImages = await Promise.all(files.map(file => compressImage(file)));
+        setInputImages(prev => [...prev, ...compressedImages]);
+    } catch (err) {
+        console.error("图片压缩失败", err);
     }
-    setInputImages(prev => [...prev, ...newImages]);
+    
     e.target.value = '';
   };
 
@@ -755,7 +821,7 @@ const AiChatContent = ({ onClose }) => {
                <div key={item.id} className="mb-6 animate-in slide-in-from-bottom-4 duration-500">
                   {item.modelName && <div className="text-[10px] text-center text-gray-400 mb-1 font-mono">{item.modelName}</div>}
                   {item.results.map((res, i) => (
-                      <TranslationCard key={i} data={res} onPlay={() => playTTS(res.translation, targetLang, settings)} />
+                      <TranslationCard key={i} data={res} onPlay={() => playTTS(res.translation, item.tgtLang, settings)} />
                   ))}
                </div>
              );
