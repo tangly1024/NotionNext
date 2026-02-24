@@ -296,7 +296,6 @@ const LayoutLearningHome = () => {
       {/* 1. AI 翻译抽屉 */}
       <AnimatePresence>
         {activeOverlay === 'translator' && (
-          <div className="fixed inset-0 z-[150]">
             <AIChatDrawer isOpen={true} onClose={closeOverlay} />
           </div>
         )}
