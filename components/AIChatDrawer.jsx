@@ -8,7 +8,7 @@ import React, {
   memo
 } from 'react';
 // 假设这些库文件存在，如果没有请自行处理引用
-import { loadCheatDict, matchCheatLoose } from '@/lib/cheatDict';
+// import { loadCheatDict, matchCheatLoose } from '@/lib/cheatDict';
 
 // ----------------- IndexedDB Helper -----------------
 // 仅用于存储消息以便发送时的缓存，不用于展示历史列表
