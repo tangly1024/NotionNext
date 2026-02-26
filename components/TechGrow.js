@@ -41,6 +41,10 @@ const resolveCaptchaGenerateUrl = (url, blogId) => {
   const separator = url.includes('?') ? '&' : '?'
   return `${url}${separator}blogId=${blogId}`
 }
+
+const getReadmoreWrapper = () =>
+  document.getElementById('readmore-wrapper') ||
+  document.getElementById('read-more-wrap')
 /**
  * 公众号导流插件（TechGrow）
  * @returns
@@ -103,6 +107,14 @@ const TechGrow = () => {
         console.warn(`Readmore 未找到内容容器: #${id}`)
         return
       }
+      const target = document.getElementById(id)
+      if (target) {
+        const position = window.getComputedStyle(target).position
+        if (!position || position === 'static') {
+          // TechGrow 的 #readmore-wrapper 使用 absolute 定位，父容器需为 relative
+          target.style.position = 'relative'
+        }
+      }
       if (cssUrl) {
         await loadExternalResource(cssUrl, 'css')
       }
@@ -136,11 +148,11 @@ const TechGrow = () => {
 
         // btw初始化后，开始监听read-more-wrap何时消失
         const intervalId = setInterval(() => {
-          const readMoreWrapElement = document.getElementById('read-more-wrap')
+          const readMoreWrapElement = getReadmoreWrapper()
           const articleWrapElement = document.getElementById(id)
 
           if (!readMoreWrapElement && articleWrapElement) {
-            toggleTocItems(false) // 恢复目录项的点击
+            toggleTocItems(false, tocSelector) // 恢复目录项的点击
             // 自动调整文章区域的高度
             articleWrapElement.style.height = 'auto'
             // 停止定时器
@@ -190,7 +202,7 @@ const TechGrow = () => {
       toggleTocItems(true) // 禁止目录项的点击
 
       // 检查是否已加载
-      const readMoreWrap = document.getElementById('read-more-wrap')
+      const readMoreWrap = getReadmoreWrapper()
       if (!readMoreWrap) {
         loadReadmore()
       }
