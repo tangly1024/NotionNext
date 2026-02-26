@@ -3,43 +3,84 @@ import { useGlobal } from '@/lib/global'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+
+const DEFAULT_TECH_GROW_JS = 'https://qiniu.techgrow.cn/readmore/dist/readmore.js'
+const DEFAULT_TECH_GROW_CSS = 'https://qiniu.techgrow.cn/readmore/dist/hexo.css'
+const DEFAULT_TECH_GROW_CAPTCHA_URL =
+  'https://open.techgrow.cn/#/readmore/captcha/generate?blogId='
+
+const hasValue = value => value !== undefined && value !== null && value !== ''
+
+const getFirstConfig = (keys, defaultVal = null) => {
+  for (const key of keys) {
+    const value = siteConfig(key)
+    if (hasValue(value)) {
+      return value
+    }
+  }
+  return defaultVal
+}
+
+const resolveCaptchaGenerateUrl = (url, blogId) => {
+  if (!url) {
+    return ''
+  }
+
+  if (!blogId) {
+    return url
+  }
+
+  if (url.includes('{blogId}')) {
+    return url.replace('{blogId}', blogId)
+  }
+
+  if (url.includes('blogId=')) {
+    return url.replace(/blogId=([^&]*)/, `blogId=${blogId}`)
+  }
+
+  const separator = url.includes('?') ? '&' : '?'
+  return `${url}${separator}blogId=${blogId}`
+}
 /**
- * OpenWrite公众号导流插件
- * 使用介绍：https://openwrite.cn/guide/readmore/readmore.html#%E4%BA%8C%E3%80%81%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8
- * 登录后台配置你的博客：https://readmore.openwrite.cn/
+ * 公众号导流插件（TechGrow）
  * @returns
  */
-const OpenWrite = () => {
+const TechGrow = () => {
   const router = useRouter()
-  const qrcode = siteConfig('OPEN_WRITE_QRCODE', '请配置公众号二维码')
-  const blogId = siteConfig('OPEN_WRITE_BLOG_ID')
-  const name = siteConfig('OPEN_WRITE_NAME', '请配置公众号名')
+  const qrcode = getFirstConfig(['TECH_GROW_QRCODE'], '请配置公众号二维码')
+  const blogId = getFirstConfig(['TECH_GROW_BLOG_ID'])
+  const name = getFirstConfig(['TECH_GROW_NAME'], '请配置公众号名')
   const id = 'article-wrapper'
-  const keyword = siteConfig('OPEN_WRITE_KEYWORD', '请配置公众号关键词')
-  const btnText = siteConfig(
-    'OPEN_WRITE_BTN_TEXT',
-    '原创不易，完成人机检测，阅读全文'
-  )
+  const keyword = getFirstConfig(['TECH_GROW_KEYWORD'], '请配置公众号关键词')
+  const btnText = getFirstConfig(['TECH_GROW_BTN_TEXT'], '原创不易，完成人机检测，阅读全文')
   // 验证一次后的有效时长，单位小时
-  const cookieAge = siteConfig('OPEN_WRITE_VALIDITY_DURATION', 1)
+  const cookieAge = getFirstConfig(['TECH_GROW_VALIDITY_DURATION'], 1)
   // 白名单，想要放行的页面
-  const whiteList = siteConfig('OPEN_WRITE_WHITE_LIST', '')
+  const whiteList = getFirstConfig(['TECH_GROW_WHITE_LIST'], '')
   // 黄名单，优先级最高，设置后只有这里的路径会被上锁，其他页面自动全部放行
-  const yellowList = siteConfig('OPEN_WRITE_YELLOW_LIST', '')
+  const yellowList = getFirstConfig(['TECH_GROW_YELLOW_LIST'], '')
+  const jsUrl = getFirstConfig(['TECH_GROW_JS_URL'], DEFAULT_TECH_GROW_JS)
+  const cssUrl = getFirstConfig(['TECH_GROW_CSS_URL'], DEFAULT_TECH_GROW_CSS)
+  const captchaTemplateUrl = getFirstConfig(
+    ['TECH_GROW_CAPTCHA_URL'],
+    DEFAULT_TECH_GROW_CAPTCHA_URL
+  )
+  const captchaGenerateUrl = resolveCaptchaGenerateUrl(captchaTemplateUrl, blogId)
+  const baseUrl = getFirstConfig(['TECH_GROW_BASE_URL'], '')
 
   // 登录信息
   const { isLoaded, isSignedIn } = useGlobal()
 
-  const loadOpenWrite = async () => {
+  const loadReadmore = async () => {
     try {
-      await loadExternalResource(
-        'https://readmore.openwrite.cn/js/readmore-2.0.js',
-        'js'
-      )
-      const BTWPlugin = window?.BTWPlugin
+      if (cssUrl) {
+        await loadExternalResource(cssUrl, 'css')
+      }
+      await loadExternalResource(jsUrl, 'js')
+      const ReadmorePlugin = window?.ReadmorePlugin
 
-      if (BTWPlugin) {
-        const btw = new BTWPlugin()
+      if (ReadmorePlugin) {
+        const btw = new ReadmorePlugin()
         window.btw = btw
         btw.init({
           qrcode,
@@ -48,7 +89,12 @@ const OpenWrite = () => {
           btnText,
           keyword,
           blogId,
-          cookieAge
+          cookieAge,
+          type: 'hexo',
+          baseUrl,
+          captchaUrl: captchaGenerateUrl,
+          generateCodeUrl: captchaGenerateUrl,
+          codeUrl: captchaGenerateUrl
         })
 
         // btw初始化后，开始监听read-more-wrap何时消失
@@ -67,15 +113,18 @@ const OpenWrite = () => {
 
         // Return cleanup function to clear the interval if the component unmounts
         return () => clearInterval(intervalId)
+      } else {
+        console.warn(`Readmore 插件加载成功但构造器不存在: ${jsUrl}`)
       }
     } catch (error) {
-      console.error('OpenWrite 加载异常', error)
+      console.error('Readmore 加载异常', error)
     }
   }
+
   useEffect(() => {
     const isInYellowList = isPathInList(router.asPath, yellowList)
     const isInWhiteList = isPathInList(router.asPath, whiteList)
-  
+
     // 优先判断黄名单
     if (yellowList && yellowList.length > 0) {
       if (!isInYellowList) {
@@ -87,26 +136,26 @@ const OpenWrite = () => {
       console.log('当前路径在白名单中，放行')
       return
     }
-  
+
     if (isSignedIn) {
       // 用户已登录免检
       console.log('用户已登录，放行')
       return
     }
-  
+
     if (process.env.NODE_ENV === 'development') {
       // 开发环境免检
-      console.log('开发环境:屏蔽OpenWrite')
+      console.log('开发环境:屏蔽Readmore')
       return
     }
-  
+
     if (isBrowser && blogId && !isSignedIn) {
       toggleTocItems(true) // 禁止目录项的点击
-  
+
       // 检查是否已加载
       const readMoreWrap = document.getElementById('read-more-wrap')
       if (!readMoreWrap) {
-        loadOpenWrite()
+        loadReadmore()
       }
     }
   }, [isLoaded, router])
@@ -154,4 +203,4 @@ function isPathInList(path, listStr) {
   return isInList
 }
 
-export default OpenWrite
+export default TechGrow
