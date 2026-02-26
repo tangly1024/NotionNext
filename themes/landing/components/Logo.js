@@ -1,8 +1,8 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 export default function Logo() {
   return (
-        <Link href="/" className="block" aria-label="Cruip">
+        <SmartLink href="/" className="block" aria-label="Cruip">
             <svg className="w-8 h-8" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <radialGradient cx="21.152%" cy="86.063%" fx="21.152%" fy="86.063%" r="79.941%" id="footer-logo">
@@ -16,6 +16,6 @@ export default function Logo() {
                     N
                 </text>
             </svg>
-        </Link>
+        </SmartLink>
   )
 }

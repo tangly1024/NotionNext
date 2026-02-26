@@ -1,15 +1,15 @@
-import busuanzi from '@/lib/busuanzi'
+import busuanzi from '@/lib/plugins/busuanzi'
 import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
 // import { useRouter } from 'next/router'
-import React from 'react'
+import { useEffect } from 'react'
 
 let path = ''
 
 export default function Busuanzi () {
   const { theme } = useGlobal()
-  const Router = useRouter()
-  Router.events.on('routeChangeComplete', (url, option) => {
+  const router = useRouter()
+  router.events.on('routeChangeComplete', (url, option) => {
     if (url !== path) {
       path = url
       busuanzi.fetch()
@@ -17,7 +17,7 @@ export default function Busuanzi () {
   })
 
   // 更换主题时更新
-  React.useEffect(() => {
+  useEffect(() => {
     if (theme) {
       busuanzi.fetch()
     }
