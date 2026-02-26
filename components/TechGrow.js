@@ -45,6 +45,31 @@ const resolveCaptchaGenerateUrl = (url, blogId) => {
 const getReadmoreWrapper = () =>
   document.getElementById('readmore-wrapper') ||
   document.getElementById('read-more-wrap')
+
+const isReadmoreWrapperInactive = wrapper => {
+  if (!wrapper) {
+    return true
+  }
+  const style = window.getComputedStyle(wrapper)
+  return style.display === 'none' || style.visibility === 'hidden'
+}
+
+const normalizePreviewHeight = height => {
+  if (height === undefined || height === null || height === '') {
+    return null
+  }
+  if (typeof height === 'number') {
+    return `${height}px`
+  }
+  const raw = String(height).trim()
+  if (!raw) {
+    return null
+  }
+  if (raw.toLowerCase() === 'auto') {
+    return null
+  }
+  return /^\d+$/.test(raw) ? `${raw}px` : raw
+}
 /**
  * 公众号导流插件（TechGrow）
  * @returns
@@ -114,6 +139,12 @@ const TechGrow = () => {
           // TechGrow 的 #readmore-wrapper 使用 absolute 定位，父容器需为 relative
           target.style.position = 'relative'
         }
+        const previewHeight = normalizePreviewHeight(height)
+        if (previewHeight) {
+          // NotionNext 兜底：明确正文预览高度，防止按钮跑到页面末尾
+          target.style.height = previewHeight
+          target.style.overflow = 'hidden'
+        }
       }
       if (cssUrl) {
         await loadExternalResource(cssUrl, 'css')
@@ -146,15 +177,46 @@ const TechGrow = () => {
           codeUrl: captchaGenerateUrl
         })
 
+        const fixReadmoreWrapperPosition = () => {
+          const container = document.getElementById(id)
+          const wrapper = getReadmoreWrapper()
+          if (!container || !wrapper) {
+            return false
+          }
+
+          if (wrapper.parentElement !== container) {
+            container.appendChild(wrapper)
+          }
+
+          wrapper.style.position = 'absolute'
+          wrapper.style.left = '0'
+          wrapper.style.right = '0'
+          wrapper.style.bottom = '0'
+          wrapper.style.width = '100%'
+          wrapper.style.zIndex = '9999'
+          return true
+        }
+
+        // 插件在不同模式下创建 wrapper 的时机不同，分批兜底修正
+        ;[0, 150, 400, 900].forEach(delay => {
+          setTimeout(() => {
+            fixReadmoreWrapperPosition()
+          }, delay)
+        })
+
         // btw初始化后，开始监听read-more-wrap何时消失
         const intervalId = setInterval(() => {
           const readMoreWrapElement = getReadmoreWrapper()
           const articleWrapElement = document.getElementById(id)
 
-          if (!readMoreWrapElement && articleWrapElement) {
+          if (
+            isReadmoreWrapperInactive(readMoreWrapElement) &&
+            articleWrapElement
+          ) {
             toggleTocItems(false, tocSelector) // 恢复目录项的点击
             // 自动调整文章区域的高度
             articleWrapElement.style.height = 'auto'
+            articleWrapElement.style.overflow = 'visible'
             // 停止定时器
             clearInterval(intervalId)
           }
@@ -205,6 +267,13 @@ const TechGrow = () => {
       const readMoreWrap = getReadmoreWrapper()
       if (!readMoreWrap) {
         loadReadmore()
+      } else if (isReadmoreWrapperInactive(readMoreWrap)) {
+        toggleTocItems(false, tocSelector)
+        const articleWrapElement = document.getElementById(id)
+        if (articleWrapElement) {
+          articleWrapElement.style.height = 'auto'
+          articleWrapElement.style.overflow = 'visible'
+        }
       }
     }
   }, [isLoaded, router, id])
