@@ -46,14 +46,6 @@ const getReadmoreWrapper = () =>
   document.getElementById('readmore-wrapper') ||
   document.getElementById('read-more-wrap')
 
-const isReadmoreWrapperInactive = wrapper => {
-  if (!wrapper) {
-    return true
-  }
-  const style = window.getComputedStyle(wrapper)
-  return style.display === 'none' || style.visibility === 'hidden'
-}
-
 const normalizePreviewHeight = height => {
   if (height === undefined || height === null || height === '') {
     return null
@@ -74,7 +66,7 @@ const normalizePreviewHeight = height => {
  * 公众号导流插件（TechGrow）
  * @returns
  */
-const TechGrow = () => {
+const TechGrow = ({ lock } = {}) => {
   const router = useRouter()
   const qrcode = getFirstConfig(['TECH_GROW_QRCODE'], '请配置公众号二维码')
   const blogId = getFirstConfig(['TECH_GROW_BLOG_ID'])
@@ -109,7 +101,9 @@ const TechGrow = () => {
   const waitForContentReady = () =>
     new Promise(resolve => {
       let attempts = 0
-      const maxAttempts = 20
+      // Password 解锁后，内容容器子元素出现可能有延迟；
+      // 这里适当拉长轮询窗口以提升稳定性（避免“解锁后不再触发初始化”）。
+      const maxAttempts = 60
       const timer = setInterval(() => {
         const target = document.getElementById(id)
         if (target && target.childElementCount > 0) {
@@ -138,12 +132,6 @@ const TechGrow = () => {
         if (!position || position === 'static') {
           // TechGrow 的 #readmore-wrapper 使用 absolute 定位，父容器需为 relative
           target.style.position = 'relative'
-        }
-        const previewHeight = normalizePreviewHeight(height)
-        if (previewHeight) {
-          // NotionNext 兜底：明确正文预览高度，防止按钮跑到页面末尾
-          target.style.height = previewHeight
-          target.style.overflow = 'hidden'
         }
       }
       if (cssUrl) {
@@ -194,6 +182,12 @@ const TechGrow = () => {
           wrapper.style.bottom = '0'
           wrapper.style.width = '100%'
           wrapper.style.zIndex = '9999'
+          const previewHeight = normalizePreviewHeight(height)
+          if (previewHeight) {
+            // 只有在 readmore wrapper 已生成时才裁剪正文，避免误解锁
+            container.style.height = previewHeight
+            container.style.overflow = 'hidden'
+          }
           return true
         }
 
@@ -204,26 +198,7 @@ const TechGrow = () => {
           }, delay)
         })
 
-        // btw初始化后，开始监听read-more-wrap何时消失
-        const intervalId = setInterval(() => {
-          const readMoreWrapElement = getReadmoreWrapper()
-          const articleWrapElement = document.getElementById(id)
-
-          if (
-            isReadmoreWrapperInactive(readMoreWrapElement) &&
-            articleWrapElement
-          ) {
-            toggleTocItems(false, tocSelector) // 恢复目录项的点击
-            // 自动调整文章区域的高度
-            articleWrapElement.style.height = 'auto'
-            articleWrapElement.style.overflow = 'visible'
-            // 停止定时器
-            clearInterval(intervalId)
-          }
-        }, 1000) // 每秒检查一次
-
-        // Return cleanup function to clear the interval if the component unmounts
-        return () => clearInterval(intervalId)
+        return undefined
       } else {
         console.warn(`Readmore 插件加载成功但构造器不存在: ${jsUrl}`)
       }
@@ -260,25 +235,21 @@ const TechGrow = () => {
       return
     }
 
+    // 文章密码锁定时，页面内容容器可能暂时为空；
+    // 延后到锁状态解除后再尝试初始化，避免初始化失败后“不会再触发”。
+    if (lock) {
+      return
+    }
+
     if (isBrowser && blogId && !isSignedIn) {
       toggleTocItems(true) // 禁止目录项的点击
-
       // 检查是否已加载
       const readMoreWrap = getReadmoreWrapper()
       if (!readMoreWrap) {
         loadReadmore()
-      } else if (isReadmoreWrapperInactive(readMoreWrap)) {
-        toggleTocItems(false, tocSelector)
-        const articleWrapElement = document.getElementById(id)
-        if (articleWrapElement) {
-          articleWrapElement.style.height = 'auto'
-          articleWrapElement.style.overflow = 'visible'
-        }
       }
     }
-  }, [isLoaded, router, id])
-
-  // 启动一个监听器，当页面上存在#read-more-wrap对象时，所有的 a .catalog-item 对象都禁止点击
+  }, [isLoaded, router, id, lock])
 
   return <></>
 }
@@ -296,7 +267,6 @@ const toggleTocItems = disable => {
     }
   })
 }
-
 /**
  * 检查路径是否在名单中
  * @param {*} path 当前url的字符串
@@ -312,13 +282,32 @@ function isPathInList(path, listStr) {
     .replace(/\?.*$/, '') // 移除查询参数
     .replace(/.*\/([^/]+)(?:\.html)?$/, '$1') // 提取最后部分
 
-  const isInList = listStr.includes(processedPath)
+  // 兼容 config 里常见的多分隔符写法：逗号、换行、空白
+  const tokens = String(listStr)
+    .split(/[,\n\r\s]+/)
+    .map(t => t.trim())
+    .filter(Boolean)
 
-  if (isInList) {
-    // console.log(`当前路径在名单中: ${processedPath}`)
+  if (tokens.includes(processedPath)) {
+    return true
   }
 
-  return isInList
+  // 兼容带通配符（*）的配置：支持前缀/后缀匹配
+  return tokens.some(token => {
+    if (!token.includes('*')) {
+      return false
+    }
+    if (token.startsWith('*') && token.endsWith('*')) {
+      return processedPath.includes(token.slice(1, -1))
+    }
+    if (token.endsWith('*')) {
+      return processedPath.startsWith(token.slice(0, -1))
+    }
+    if (token.startsWith('*')) {
+      return processedPath.endsWith(token.slice(1))
+    }
+    return false
+  })
 }
 
 export default TechGrow
