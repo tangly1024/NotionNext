@@ -44,7 +44,16 @@ const Style = () => {
         column-gap: .5rem;
         }
     }
+
+    .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+            padding: 10px;
+        }
+
   `}</style>
 }
 
 export { Style }
+

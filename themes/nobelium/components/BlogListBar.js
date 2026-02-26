@@ -1,7 +1,8 @@
+import { useNobeliumGlobal } from '..'
 import Tags from './Tags'
 
 export default function BlogListBar(props) {
-  const { tag, setFilterKey } = props
+  const { tag, setFilterKey } = useNobeliumGlobal()
   const handleSearchChange = (val) => {
     setFilterKey(val)
   }
