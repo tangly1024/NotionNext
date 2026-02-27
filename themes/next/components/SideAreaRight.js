@@ -1,5 +1,5 @@
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import Card from './Card'
 import CategoryGroup from './CategoryGroup'
 import TagGroups from './TagGroups'
@@ -56,14 +56,14 @@ const SideAreaRight = (props) => {
                 <Card>
                     <div className='text-sm px-2 flex flex-nowrap justify-between font-light'>
                         <div className='pb-2 text-gray-600 dark:text-gray-300'><i className='mr-2 fas fa-th-list' />{locale.COMMON.CATEGORY}</div>
-                        <Link
+                        <SmartLink
                             href={'/category'}
                             passHref
                             className='text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
 
                             {locale.COMMON.MORE} <i className='fas fa-angle-double-right' />
 
-                        </Link>
+                        </SmartLink>
                     </div>
                     <CategoryGroup currentCategory={currentCategory} categories={categoryOptions} />
                 </Card>
@@ -76,7 +76,7 @@ const SideAreaRight = (props) => {
                             <i className="mr-2 fas fa-tag" />
                             {locale.COMMON.TAGS}
                         </div>
-                        <Link
+                        <SmartLink
                             href={'/tag'}
                             passHref
                             className="text-gray-500 hover:text-black  dark:hover:text-white hover:underline cursor-pointer">
@@ -84,7 +84,7 @@ const SideAreaRight = (props) => {
                             {locale.COMMON.MORE}{' '}
                             <i className='fas fa-angle-double-right' />
 
-                        </Link>
+                        </SmartLink>
                     </div>
                     <div className="px-2 pt-2">
                         <TagGroups tags={tagOptions} currentTag={currentTag} />

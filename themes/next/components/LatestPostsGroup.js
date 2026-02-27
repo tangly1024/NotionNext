@@ -1,8 +1,7 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
-import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 
 /**
  * 最新文章列表
@@ -19,39 +18,38 @@ const LatestPostsGroup = ({ latestPosts }) => {
     return <></>
   }
 
-  return <>
-    <div className="text-sm pb-1 px-2 flex flex-nowrap justify-between">
-      <div className="font-light text-gray-600  dark:text-gray-200">
-        <i className="mr-2 fas fa-history" />
-        {locale.COMMON.LATEST_POSTS}
+  return (
+    <>
+      <div className='text-sm pb-1 px-2 flex flex-nowrap justify-between'>
+        <div className='font-light text-gray-600  dark:text-gray-200'>
+          <i className='mr-2 fas fa-history' />
+          {locale.COMMON.LATEST_POSTS}
+        </div>
       </div>
-    </div>
-    {latestPosts.map(post => {
-      const selected = currentPath === `${siteConfig('SUB_PATH', '')}/${post.slug}`
-      const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
-      return (
-        (<Link
-          key={post.id}
-          title={post.title}
-          href={url}
-          passHref
-          className={'my-1 flex font-light'}>
-
-          <div
-            className={
-              (selected
-                ? 'text-white  bg-gray-600 '
-                : 'text-gray-500 dark:text-gray-400 ') +
-              ' text-xs py-1.5 flex hover:bg-gray-500 px-2 duration-200 w-full ' +
-              'hover:text-white dark:hover:text-white cursor-pointer'
-            }
-          >
-            <li className="line-clamp-2">{post.title}</li>
-          </div>
-
-        </Link>)
-      )
-    })}
-  </>
+      {latestPosts.map(post => {
+        const selected =
+          currentPath === `${siteConfig('SUB_PATH', '')}/${post.slug}`
+        return (
+          <SmartLink
+            key={post.id}
+            title={post.title}
+            href={post?.href}
+            passHref
+            className={'my-1 flex font-light'}>
+            <div
+              className={
+                (selected
+                  ? 'text-white  bg-gray-600 '
+                  : 'text-gray-500 dark:text-gray-400 ') +
+                ' text-xs py-1.5 flex hover:bg-gray-500 px-2 duration-200 w-full ' +
+                'hover:text-white dark:hover:text-white cursor-pointer'
+              }>
+              <li className='line-clamp-2'>{post.title}</li>
+            </div>
+          </SmartLink>
+        )
+      })}
+    </>
+  )
 }
 export default LatestPostsGroup
