@@ -59,6 +59,19 @@ const BLOG = {
   CAN_COPY: process.env.NEXT_PUBLIC_CAN_COPY || true, // 是否允许复制页面内容 默认允许，如果设置为false、则全栈禁止复制内容。
 
   // 公众号导流插件（TechGrow）
+  // 可在 Notion 的 Config 页面用“同名键”覆盖这里的值（Config 优先级更高）。
+  // 建议在 Config 页面至少配置以下四项：
+  // - TECH_GROW_BLOG_ID: TechGrow 后台的 blogId
+  // - TECH_GROW_NAME: 公众号名称
+  // - TECH_GROW_QRCODE: 公众号二维码图片地址
+  // - TECH_GROW_KEYWORD: 公众号回复关键词
+  // 常用可选项：
+  // - TECH_GROW_ARTICLE_CONTENT_ID: 需要被锁定的正文容器 id（默认 notion-article）
+  // - TECH_GROW_BTN_TEXT: 引导按钮文案
+  // - TECH_GROW_VALIDITY_DURATION: 验证通过后的有效时长（小时）
+  // 名单规则：
+  // - TECH_GROW_WHITE_LIST: 白名单（这些路径直接放行）
+  // - TECH_GROW_YELLOW_LIST: 黄名单（仅这些路径启用拦截，优先级高于白名单）
   TECH_GROW_BLOG_ID:
     process.env.NEXT_PUBLIC_TECH_GROW_BLOG_ID ||
     process.env.TECH_GROW_BLOG_ID ||
