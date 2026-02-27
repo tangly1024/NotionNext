@@ -8,6 +8,8 @@ NotionNext is a static blog system built with Next.js and Notion API, deployed o
 
 **Requirements**: Node.js >=20 (specified in package.json engines)
 
+**Project Directory**: The actual project code is in the `NotionNext/` subdirectory
+
 ## Development Commands
 
 ### Initial Setup
@@ -15,30 +17,61 @@ NotionNext is a static blog system built with Next.js and Notion API, deployed o
 npm install              # Install dependencies
 cp .env.example .env.local   # Create local environment file
 # Edit .env.local and set NOTION_PAGE_ID to your Notion database ID
+
+# Optional: Initialize development environment and Git hooks
+npm run init-dev         # Initialize development environment
+npm run setup-hooks      # Install Git pre-commit and pre-push hooks
 ```
 
 ### Core Development
 - `npm run dev` - Start development server (default: http://localhost:3000)
-- `npm run build` - Build for production
+- `npm run build` - Build for production (sets BUILD_MODE=true)
 - `npm start` - Start production server
-- `npm run export` - Export as static site (sets EXPORT=true)
+- `npm run export` - Export as static site (sets EXPORT=true, BUILD_MODE=true)
 
 ### Special Build Commands
-- `npm run build-all-in-dev` - Build with production environment variables in dev
+- `npm run build-all-in-dev` - Build with production environment variables in dev (sets VERCEL_ENV=production)
 - `npm run bundle-report` - Analyze bundle size with webpack-bundle-analyzer (sets ANALYZE=true)
 - `npm run post-build` - Generate sitemap after build
 - `npm run version` - Display current package version
 
 ### Code Quality & Analysis
 - **ESLint**: Configured with TypeScript support and Prettier integration
-  - Run: `npx eslint .` (no npm script available)
+  - Run: `npm run lint` - Check code quality
+  - Run: `npm run lint:fix` - Auto-fix ESLint errors
   - Config: `.eslintrc.js` with TypeScript rules, ignores errors during builds
 - **Prettier**: Code formatting with `.prettierrc.json` configuration
-  - Run: `npx prettier --write .` (no npm script available)
+  - Run: `npm run format` - Format all files
+  - Run: `npm run format:check` - Check formatting without making changes
 - **TypeScript**: Partial TypeScript support enabled
+  - Run: `npm run type-check` - Check TypeScript types
   - Config: `tsconfig.json` and `tsconfig.eslint.json`
-  - Type checking: `npx tsc --noEmit`
-- **Bundle Analysis**: `npm run bundle-report` - Analyze bundle size with webpack-bundle-analyzer
+- **Bundle Analysis**: `npm run bundle-report` - Analyze bundle size
+
+### Testing
+- `npm test` - Run Jest tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:coverage` - Run tests with coverage report
+- `npm run test:ci` - Run tests in CI mode (no watch, with coverage)
+- **Test Structure**: Tests located in `__tests__/` directory with subdirectories for `components/` and `lib/`
+- **Configuration**: `jest.config.js`, `jest.setup.js`, `jest.env.js`
+- **Coverage Threshold**: 70% for branches, functions, lines, and statements
+
+### Development Utilities
+- `npm run dev-tools` - Show available development tools
+- `npm run clean` - Clean project files (cache, build artifacts)
+- `npm run check-updates` - Check for dependency updates
+- `npm run docs` - Generate project documentation
+- `npm run quality` - Run comprehensive quality checks (lint + format + type-check)
+- `npm run pre-commit` - Run pre-commit checks (lint:fix + format + type-check)
+- `npm run health-check` - Check project health
+- `npm run validate` - Alias for health-check
+- `npm run final-validation` - Final validation before deployment
+
+### Git Hooks Management
+- `npm run setup-hooks` - Install Git hooks (pre-commit, pre-push)
+- `npm run check-hooks` - Check Git hooks status
+- `npm run remove-hooks` - Remove Git hooks
 
 ## Architecture Overview
 
@@ -52,7 +85,7 @@ The project implements a sophisticated theme system where each theme is a comple
   - `style.js` - Theme-specific styles
   - `components/` - Theme-specific components
 
-**Current Theme**: Set via `THEME` in `blog.config.js` (default: 'heo')
+**Current Theme**: Set via `THEME` in `blog.config.js` (default: 'simple')
 
 **Available Themes**: commerce, example, fukasawa, game, gitbook, heo, hexo, landing, magzine, matery, medium, movie, nav, next, nobelium, photo, plog, proxio, simple, starter, typography
 
@@ -75,6 +108,14 @@ Reusable components used across themes for features like:
 - Dynamic routing with `[prefix]/[slug]/[...suffix].js` pattern
 - Multi-language support through URL prefixes
 - API routes for subscriptions and caching
+
+#### `/scripts/` - Development Utilities
+Contains helper scripts for project management:
+- `dev-tools.js` - Development tools menu (init, clean, docs, check-updates)
+- `health-check.js` - Project health validation
+- `quality-check.js` - Code quality checks (lint + format + type-check)
+- `setup-git-hooks.js` - Git hooks management (install/remove/check)
+- `final-validation.js` - Pre-deployment validation
 
 #### `/conf/` - Modular Configuration
 Configuration is split into focused modules:
@@ -149,6 +190,42 @@ Configuration is split into focused modules:
 - **Notion API**: Some files use TypeScript (`CustomNotionApi.ts`)
 - **Webpack Aliases**: Use `@` for root imports, `@theme-components` for current theme
 
+### Naming Conventions
+- **Components**: PascalCase (e.g., `LazyImage`)
+- **Files**: kebab-case (e.g., `lazy-image.js`)
+- **Variables/Functions**: camelCase (e.g., `getUserData`)
+- **Constants**: UPPER_SNAKE_CASE (e.g., `API_BASE_URL`)
+
+### Commit Message Standards
+Follow Conventional Commits format:
+```
+<type>(<scope>): <description>
+
+[optional body]
+
+[optional footer]
+```
+
+**Commit Types**:
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation updates
+- `style`: Code formatting (no functional changes)
+- `refactor`: Code restructuring
+- `test`: Test-related changes
+- `chore`: Build tools or auxiliary changes
+- `perf`: Performance optimization
+- `ci`: CI configuration changes
+- `build`: Build system or dependency changes
+- `revert`: Revert previous commits
+
+**Examples**:
+```
+feat(auth): add user authentication
+fix(ui): resolve button alignment issue
+docs: update installation guide
+```
+
 ### Notion Content Structure
 - The system expects specific Notion database properties
 - Custom properties can be configured in `/conf/notion.config.js`
@@ -168,9 +245,11 @@ Environment variables can be configured in three ways:
 
 ### Critical Environment Variables
 - `NOTION_PAGE_ID` - Your Notion database ID (required)
-  - Format for multi-language: `pageId` or `pageId,lang:pageId,lang:pageId`
-  - Example: `abc123,zh:def456,en:ghi789`
-- `NEXT_PUBLIC_THEME` - Current theme name (default: 'heo')
+  - **Single language format**: `NOTION_PAGE_ID=097e5f674880459d8e1b4407758dc4fb`
+  - **Multi-language format (recommended)**: `NOTION_PAGE_ID=中文数据库ID,en:英文数据库ID`
+  - **Example**: `NOTION_PAGE_ID=2a2f7026d6674bd19c5aec3c94bfd453,en:13e00092b9778002a3e2d5278bab3cd9`
+  - **Access**: `yoursite.com/` (default language), `yoursite.com/en/` (English)
+- `NEXT_PUBLIC_THEME` - Current theme name (default: 'simple')
 - `NEXT_PUBLIC_LANG` - Default language (default: 'zh-CN')
 
 ### Build-Time Environment Variables
@@ -180,6 +259,23 @@ Environment variables can be configured in three ways:
 - `NEXT_BUILD_STANDALONE=true` - Generates standalone build output
 
 See `.env.example` for a complete list of available environment variables.
+
+### Third-Party Service Integration
+
+#### Algolia Full-Text Search (Optional)
+Free tier: 10,000 searches/month, 10,000 records
+```bash
+NEXT_PUBLIC_ALGOLIA_APP_ID=your_app_id
+ALGOLIA_ADMIN_APP_KEY=your_admin_key  # Server-side only, keep secret
+NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_APP_KEY=your_search_only_key
+NEXT_PUBLIC_ALGOLIA_INDEX=your_index_name
+```
+
+#### Chatbase AI Chatbot (Optional)
+Free tier: 20 messages/month, 1 chatbot, 400,000 characters/bot
+```bash
+NEXT_PUBLIC_CHATBASE_ID=your_chatbase_id  # Get from chatbase.co "Embed on site"
+```
 
 ## Next.js Configuration Details
 
@@ -248,4 +344,32 @@ The caching system has three layers:
 To disable caching during development, set in `/conf/dev.config.js`:
 ```javascript
 ENABLE_CACHE: false
+```
+
+## Project File Structure Reference
+
+```
+NotionNext/
+├── blog.config.js          # Main configuration (imports all conf/*.config.js)
+├── next.config.js          # Next.js configuration with theme aliasing
+├── package.json            # Dependencies and npm scripts
+├── /components/            # Shared React components
+├── /conf/                  # Modular configuration files
+├── /lib/                   # Core business logic
+│   ├── /cache/            # Multi-layer caching
+│   ├── /db/               # Database operations
+│   ├── /lang/             # i18n translations
+│   ├── /notion/           # Notion API integration
+│   ├── /plugins/          # Third-party integrations
+│   └── /utils/            # Helper utilities
+├── /pages/                 # Next.js routing
+├── /public/                # Static assets
+├── /scripts/               # Development scripts
+├── /styles/                # Global styles
+├── /themes/                # Theme implementations
+│   ├── /simple/           # Simple theme (default)
+│   ├── /hexo/             # Hexo-style theme
+│   ├── /medium/           # Medium-style theme
+│   └── /[theme-name]/     # Other themes
+└── /types/                 # TypeScript type definitions
 ```
