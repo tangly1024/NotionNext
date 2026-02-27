@@ -56,7 +56,12 @@ export async function getStaticProps({ params: { page }, locale }) {
       if (post.password && post.password !== '') {
         continue
       }
-      post.blockMap = await getPostBlocks(post.id, 'slug', POST_PREVIEW_LINES)
+      // 跳过fallback错误页面
+      if (post.id === 'oops-page-fallback') {
+        post.blockMap = { block: {} }
+      } else {
+        post.blockMap = await getPostBlocks(post.id, 'slug', POST_PREVIEW_LINES)
+      }
     }
   }
 
