@@ -162,6 +162,7 @@ const SEO = props => {
 
       {/* Twitter Card 元数据 */}
       <meta name='twitter:card' content='summary_large_image' />
+      <meta name='twitter:site' content='@茉灵智库' />
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={description?.substring(0, 200)} />
       <meta name='twitter:image' content={toAbsolute(image)} />
