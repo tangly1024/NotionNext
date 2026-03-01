@@ -45,11 +45,11 @@ const SocialButton = () => {
           <a
             target='_blank'
             rel='noreferrer'
-            title='xiaohongshu'
-            href=''>
+            title='douyin'
+            href='https://v.douyin.com/nDD4_ACPRiY'>
             <img
-              src='https://cdn.jsdmirror.com/gh/88lin/picx-images-hosting@master/xiaohongshu.b9cpfgij9.svg'
-              alt='xiaohongshu'
+              src='https://p-pc-weboff.byteimg.com/tos-cn-i-9r5gewecjs/logo-horizontal-small.svg'
+              alt='douyin'
               className='inline-block transform hover:scale-125 duration-150 dark:hover:opacity-90 hover:opacity-90'
               style={{ width: '1em', height: '1em', verticalAlign: '-0.125em' }}
             />
