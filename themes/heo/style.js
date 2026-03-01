@@ -297,6 +297,13 @@ const Style = () => {
           transform: none !important;
         }
       }
+
+      @media (max-width: 768px) {
+        #loading-box.loaded .loading-bg,
+        #loading-box.loaded .loading-animation {
+          transition-duration: 0.7s;
+        }
+      }
     `}</style>
   )
 }
