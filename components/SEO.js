@@ -144,7 +144,7 @@ const SEO = props => {
       <meta name='generator' content='茉灵智库' />
 
       {/* 语言和地区 */}
-      <meta httpEquiv='content-language' content='zh-CN' />
+      <meta httpEquiv='content-language' content={siteConfig('LANG')} />
       <meta name='geo.region' content={siteConfig('GEO_REGION', 'CN')} />
       <meta name='geo.country' content={siteConfig('GEO_COUNTRY', 'CN')} />
       {/* Open Graph 元数据 */}
