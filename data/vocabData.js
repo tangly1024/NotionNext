@@ -37,7 +37,7 @@ export const vocabCategories = [
     description: 'HSK词汇',
     cover: '/images/vocab/bg-hsk.jpg',
     items: [
-      { id: 'hsk1_basic', title: 'HSK1 常用', subtitle: '基础高频', cover: '/images/vocab/hsk1.jpg', locked: false },
+      { id: 'hsk1', title: 'HSK1 常用', subtitle: '基础高频', cover: '/images/vocab/hsk1.jpg', locked: false },
     ],
   },
 ];
