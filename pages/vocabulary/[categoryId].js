@@ -2,28 +2,26 @@ import { useRouter } from 'next/router';
 import { vocabCategories } from '@/data/vocabData';
 
 const pick = (v) => (Array.isArray(v) ? v[0] : v);
-const getCategoryByIdLocal = (id) =>
-  vocabCategories.find((c) => c.id === id) || null;
 
 export default function CategoryPage() {
   const router = useRouter();
 
-  if (!router.isReady) return <div>加载中...</div>;
+  if (!router.isReady) return <div style={{ padding: 16 }}>加载中...</div>;
 
   const categoryId = pick(router.query.categoryId);
-  const categoryData = getCategoryByIdLocal(categoryId);
+  const categoryData = vocabCategories.find((c) => c.id === categoryId) || null;
 
-  if (!categoryData) return <div>分类不存在：{String(categoryId || '')}</div>;
+  if (!categoryData) {
+    return <div style={{ padding: 16 }}>分类不存在：{String(categoryId || '')}</div>;
+  }
 
   const handleItemClick = (item) => {
     if (item.locked) return;
-    router.push({
-      pathname: '/vocabulary/player',
-      query: {
-        category: categoryData.id,
-        listId: item.id,
-      },
-    });
+
+    // 用字符串 URL，避免对象 query 在某些场景下不稳定
+    router.push(
+      `/vocabulary/player?category=${encodeURIComponent(categoryData.id)}&listId=${encodeURIComponent(item.id)}`
+    );
   };
 
   return (
