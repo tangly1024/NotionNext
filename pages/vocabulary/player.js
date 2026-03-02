@@ -25,26 +25,30 @@ export default function VocabularyPlayerPage() {
         setError('');
 
         if (!category || !listId) throw new Error('缺少参数 category/listId');
-        const loader = wordDataMap[category];
-        if (!loader) throw new Error(`未找到分类：${category}`);
 
-        const allLists = await loader();
-        const list = allLists[listId];
+        // 关键：按二级分类组合 key
+        const loaderKey = `${category}/${listId}`;
+        const loader = wordDataMap[loaderKey];
+        if (!loader) throw new Error(`未找到词库：${loaderKey}`);
+
+        // 关键：每个二级分类文件直接导出数组
+        const list = await loader();
         if (!Array.isArray(list) || list.length === 0) {
-          throw new Error(`列表不存在或为空：${listId}`);
+          throw new Error(`列表不存在或为空：${loaderKey}`);
         }
 
-        // 不需要拼音字段，WordCard里会自动生成
         setWords(list);
       } catch (e) {
-        if (!cancel) setError(e.message || '加载失败');
+        if (!cancel) setError(e?.message || '加载失败');
       } finally {
         if (!cancel) setLoading(false);
       }
     }
 
     run();
-    return () => { cancel = true; };
+    return () => {
+      cancel = true;
+    };
   }, [router.isReady, category, listId]);
 
   if (loading) return <div style={{ padding: 20 }}>正在加载词库...</div>;
