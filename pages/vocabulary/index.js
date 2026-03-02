@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { wordDataMap } from '@/data/words';
 
@@ -8,8 +9,9 @@ const pick = (v) => (Array.isArray(v) ? v[0] : v);
 
 export default function VocabularyPlayerPage() {
   const router = useRouter();
-  const category = pick(router.query.category)?.trim();
-  const listId = pick(router.query.listId)?.trim();
+
+  const category = useMemo(() => (pick(router.query.category) || '').trim(), [router.query.category]);
+  const listId = useMemo(() => (pick(router.query.listId) || '').trim(), [router.query.listId]);
 
   const [words, setWords] = useState([]);
   const [error, setError] = useState('');
@@ -25,11 +27,9 @@ export default function VocabularyPlayerPage() {
         setError('');
         setWords([]);
 
-        if (!category || !listId) {
-          throw new Error('缺少参数 category/listId');
-        }
+        // 注意：这里不抛错，交给页面提示处理
+        if (!category || !listId) return;
 
-        // 二级分类独立文件：key 形如 "health/hospital"
         const loaderKey = `${category}/${listId}`;
         const loader = wordDataMap?.[loaderKey];
 
@@ -37,7 +37,6 @@ export default function VocabularyPlayerPage() {
           throw new Error(`未找到词库：${loaderKey}`);
         }
 
-        // 每个二级文件默认导出数组
         const list = await loader();
 
         if (!Array.isArray(list)) {
@@ -56,11 +55,20 @@ export default function VocabularyPlayerPage() {
     };
 
     run();
-
     return () => {
       cancelled = true;
     };
   }, [router.isReady, category, listId]);
+
+  // 缺参数的友好提示（避免红字报错体验）
+  if (router.isReady && (!category || !listId)) {
+    return (
+      <div style={{ padding: 20 }}>
+        <div style={{ marginBottom: 12 }}>缺少参数，请从分类页进入。</div>
+        <Link href="/vocabulary">返回词库首页</Link>
+      </div>
+    );
+  }
 
   if (loading) return <div style={{ padding: 20 }}>正在加载词库...</div>;
   if (error) return <div style={{ padding: 20, color: 'red' }}>{error}</div>;
