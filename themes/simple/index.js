@@ -67,7 +67,7 @@ export const useSimpleGlobal = () => useContext(ThemeGlobalSimple)
 const pinyinNav = [
   { zh: '声母', mm: 'ဗျည်း', icon: Mic, href: '/pinyin/initials', bg: 'bg-blue-100/80', color: 'text-blue-600' },
   { zh: '韵母', mm: 'သရ', icon: Music2, href: '/pinyin/finals', bg: 'bg-emerald-100/80', color: 'text-emerald-600' },
-  { zh: '整体', mm: 'အသံတွဲ', icon: Layers3, href: '/pinyin/syllables', bg: 'bg-purple-100/80', color: 'text-purple-600' },
+  { zh: '整体', mm: 'အသံတွဲ', icon: Layers3, href: '/pinyin/whole', bg: 'bg-purple-100/80', color: 'text-purple-600' },
   { zh: '声调', mm: 'အသံ', icon: FileText, href: '/pinyin/tones', bg: 'bg-orange-100/80', color: 'text-orange-600' }
 ]
 
