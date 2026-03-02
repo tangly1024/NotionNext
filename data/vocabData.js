@@ -3,29 +3,41 @@ export const vocabCategories = [
     id: 'health',
     title: '医疗汉语',
     description: '医院就诊与治疗相关',
+    cover: '/images/vocab/bg-health.jpg', // 大分类背景（可选）
     items: [
-      { id: 'hospital', title: '医院就诊', locked: false },
-      { id: 'treatment', title: '治疗相关', locked: false },
+      {
+        id: 'hospital',
+        title: '医院就诊',
+        subtitle: '挂号 / 排队 / 医生',
+        cover: '/images/vocab/hospital.jpg', // 二级分类小封面
+        locked: false,
+      },
+      {
+        id: 'treatment',
+        title: '治疗相关',
+        subtitle: '治疗 / 手术 / 药物',
+        cover: '/images/vocab/treatment.jpg',
+        locked: false,
+      },
     ],
   },
   {
     id: 'travel',
     title: '旅游汉语',
     description: '机场酒店出行',
+    cover: '/images/vocab/bg-travel.jpg',
     items: [
-      { id: 'airport', title: '机场', locked: false },
-      { id: 'hotel', title: '酒店', locked: false },
+      { id: 'airport', title: '机场', subtitle: '登机牌 / 安检', cover: '/images/vocab/airport.jpg', locked: false },
+      { id: 'hotel', title: '酒店', subtitle: '入住 / 退房', cover: '/images/vocab/hotel.jpg', locked: false },
     ],
   },
   {
     id: 'hsk',
-    title: 'HSK 词汇',
-    description: '带 hsk_level + id，可走音频',
+    title: 'HSK',
+    description: 'HSK词汇',
+    cover: '/images/vocab/bg-hsk.jpg',
     items: [
-      { id: 'hsk1_basic', title: 'HSK1 常用', locked: false },
+      { id: 'hsk1_basic', title: 'HSK1 常用', subtitle: '基础高频', cover: '/images/vocab/hsk1.jpg', locked: false },
     ],
   },
 ];
-
-export const getCategoryById = (id) =>
-  vocabCategories.find((c) => c.id === id) || null;
