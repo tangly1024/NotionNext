@@ -85,7 +85,7 @@ const systemCourses = [
     title: '日常高频词汇',
     mmDesc: 'အခြေခံ စကားလုံးများကို လေ့လာပါ。',
     bgImg: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=1200',
-    href: '/course/words',
+    href: '/vocabulary',
     color: 'from-blue-600/90'
   },
   {
