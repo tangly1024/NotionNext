@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { wordDataMap } from '@/data/words';
 
@@ -8,8 +9,9 @@ const pick = (v) => (Array.isArray(v) ? v[0] : v);
 
 export default function VocabularyPlayerPage() {
   const router = useRouter();
-  const category = pick(router.query.category);
-  const listId = pick(router.query.listId);
+
+  const category = useMemo(() => (pick(router.query.category) || '').trim(), [router.query.category]);
+  const listId = useMemo(() => (pick(router.query.listId) || '').trim(), [router.query.listId]);
 
   const [words, setWords] = useState([]);
   const [error, setError] = useState('');
@@ -17,39 +19,60 @@ export default function VocabularyPlayerPage() {
 
   useEffect(() => {
     if (!router.isReady) return;
-    let cancel = false;
+    let cancelled = false;
 
-    async function run() {
+    const run = async () => {
       try {
         setLoading(true);
         setError('');
+        setWords([]);
 
-        if (!category || !listId) throw new Error('缺少参数 category/listId');
-
-        // 关键：按二级分类组合 key
-        const loaderKey = `${category}/${listId}`;
-        const loader = wordDataMap[loaderKey];
-        if (!loader) throw new Error(`未找到词库：${loaderKey}`);
-
-        // 关键：每个二级分类文件直接导出数组
-        const list = await loader();
-        if (!Array.isArray(list) || list.length === 0) {
-          throw new Error(`列表不存在或为空：${loaderKey}`);
+        // 参数缺失：给友好提示，不直接抛异常
+        if (!category || !listId) {
+          setLoading(false);
+          return;
         }
 
-        setWords(list);
+        // 二级分类 key：category/listId
+        const loaderKey = `${category}/${listId}`;
+        const loader = wordDataMap?.[loaderKey];
+        if (typeof loader !== 'function') {
+          throw new Error(`未找到词库：${loaderKey}`);
+        }
+
+        const list = await loader(); // JSON 默认导出数组
+        if (!Array.isArray(list)) {
+          throw new Error(`词库格式错误（应为数组）：${loaderKey}`);
+        }
+        if (list.length === 0) {
+          throw new Error(`列表为空：${loaderKey}`);
+        }
+
+        if (!cancelled) setWords(list);
       } catch (e) {
-        if (!cancel) setError(e?.message || '加载失败');
+        if (!cancelled) setError(e?.message || '加载失败');
       } finally {
-        if (!cancel) setLoading(false);
+        if (!cancelled) setLoading(false);
       }
-    }
+    };
 
     run();
     return () => {
-      cancel = true;
+      cancelled = true;
     };
   }, [router.isReady, category, listId]);
+
+  // 缺参数时：引导返回，不报错
+  if (router.isReady && (!category || !listId)) {
+    return (
+      <div style={{ padding: 20 }}>
+        <div style={{ marginBottom: 12, color: '#334155' }}>缺少参数，请从分类页进入。</div>
+        <Link href="/vocabulary" style={{ color: '#2563eb' }}>
+          返回词库首页
+        </Link>
+      </div>
+    );
+  }
 
   if (loading) return <div style={{ padding: 20 }}>正在加载词库...</div>;
   if (error) return <div style={{ padding: 20, color: 'red' }}>{error}</div>;
