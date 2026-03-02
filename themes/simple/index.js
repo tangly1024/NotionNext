@@ -331,18 +331,23 @@ const LayoutBase = props => {
   const { onLoading, fullWidth } = useGlobal()
   const searchModal = useRef(null)
   const router = useRouter()
-  const isLearningHome = router?.pathname === '/'
+  const pathname = router?.pathname || ''
+const isLearningRoute =
+  pathname === '/' ||
+  pathname.startsWith('/vocabulary') ||
+  pathname.startsWith('/pinyin') ||
+  pathname.startsWith('/course')
 
-  if (isLearningHome) {
-    return (
-      <ThemeGlobalSimple.Provider value={{ searchModal }}>
-        <div id='theme-simple' className={`${siteConfig('FONT_STYLE')} min-h-screen`}>
-          <Style />
-          {children}
-        </div>
-      </ThemeGlobalSimple.Provider>
-    )
-  }
+if (isLearningRoute) {
+  return (
+    <ThemeGlobalSimple.Provider value={{ searchModal }}>
+      <div id='theme-simple' className={`${siteConfig('FONT_STYLE')} min-h-screen`}>
+        <Style />
+        {children}
+      </div>
+    </ThemeGlobalSimple.Provider>
+  )
+}
 
   return (
     <ThemeGlobalSimple.Provider value={{ searchModal }}>
