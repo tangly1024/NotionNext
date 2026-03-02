@@ -1,19 +1,29 @@
 import { useRouter } from 'next/router';
-import { getCategoryById } from '@/data/vocabData';
+import { vocabCategories } from '@/data/vocabData';
 
 const pick = (v) => (Array.isArray(v) ? v[0] : v);
+const getCategoryByIdLocal = (id) =>
+  vocabCategories.find((c) => c.id === id) || null;
 
 export default function CategoryPage() {
   const router = useRouter();
-  const categoryId = pick(router.query.categoryId);
-  const categoryData = getCategoryById(categoryId);
 
   if (!router.isReady) return <div>加载中...</div>;
-  if (!categoryData) return <div>分类不存在</div>;
+
+  const categoryId = pick(router.query.categoryId);
+  const categoryData = getCategoryByIdLocal(categoryId);
+
+  if (!categoryData) return <div>分类不存在：{String(categoryId || '')}</div>;
 
   const handleItemClick = (item) => {
     if (item.locked) return;
-    router.push(`/vocabulary/player?category=${categoryData.id}&listId=${item.id}`);
+    router.push({
+      pathname: '/vocabulary/player',
+      query: {
+        category: categoryData.id,
+        listId: item.id,
+      },
+    });
   };
 
   return (
@@ -22,7 +32,7 @@ export default function CategoryPage() {
       <p>{categoryData.description}</p>
 
       <div style={{ marginTop: 12, display: 'grid', gap: 8 }}>
-        {categoryData.items.map((item) => (
+        {(categoryData.items || []).map((item) => (
           <button
             key={item.id}
             disabled={item.locked}
