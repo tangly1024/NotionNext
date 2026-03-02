@@ -3,62 +3,54 @@ import Link from 'next/link';
 import { vocabCategories } from '@/data/vocabData';
 import { wordDataMap } from '@/data/words';
 
-const CATEGORY_COVERS = {
-  health:
-    'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=900&q=80',
-  travel:
-    'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80',
-  hsk:
-    'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=900&q=80',
-  default:
-    'https://images.unsplash.com/photo-1516542076529-1ea3854896f?auto=format&fit=crop&w=900&q=80',
-};
+const FALLBACK_BG =
+  'https://images.unsplash.com/photo-1516542076529-1ea3854896f2?auto=format&fit=crop&w=1200&q=80';
+const FALLBACK_THUMB =
+  'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=400&q=80';
 
-const getProgressStorageKey = (categoryId, listId) =>
-  `word_progress_vocab_${categoryId}_${listId}`;
+const getTitle = (obj) => obj?.title || obj?.name || obj?.zh || obj?.id || '未命名';
+const getDesc = (obj) => obj?.description || obj?.desc || '';
+const getSub = (obj) => obj?.subtitle || obj?.sub || '';
+
+const progressKey = (categoryId, listId) => `word_progress_vocab_${categoryId}_${listId}`;
 
 export default function VocabularyIndexPage() {
-  const [openId, setOpenId] = useState(null);
-  const [progressMap, setProgressMap] = useState({});
+  const [openId, setOpenId] = useState(vocabCategories?.[0]?.id || null);
   const [totalsMap, setTotalsMap] = useState({});
+  const [progressMap, setProgressMap] = useState({});
   const loadedRef = useRef(new Set());
 
-  const currentBg = useMemo(() => {
-    if (!openId) return CATEGORY_COVERS.default;
-    return CATEGORY_COVERS[openId] || CATEGORY_COVERS.default;
-  }, [openId]);
+  const currentCategory = useMemo(
+    () => vocabCategories.find((c) => c.id === openId),
+    [openId]
+  );
 
-  // 读取本地进度（WordCard 保存的 currentIndex）
-  useEffect(() => {
+  const bgImage = currentCategory?.cover || FALLBACK_BG;
+
+  const loadProgress = () => {
     if (typeof window === 'undefined') return;
-
-    const readProgress = () => {
-      const next = {};
-      vocabCategories.forEach((cat) => {
-        (cat.items || []).forEach((item) => {
-          const key = `${cat.id}_${item.id}`;
-          const raw = localStorage.getItem(getProgressStorageKey(cat.id, item.id));
-          if (raw === null) {
-            next[key] = null; // 未开始
-            return;
-          }
-          const num = Number(raw);
-          next[key] = Number.isFinite(num) && num >= 0 ? num : null;
-        });
+    const next = {};
+    vocabCategories.forEach((cat) => {
+      (cat.items || []).forEach((item) => {
+        const raw = localStorage.getItem(progressKey(cat.id, item.id));
+        const idx = Number(raw);
+        next[`${cat.id}_${item.id}`] = Number.isFinite(idx) && idx >= 0 ? idx + 1 : 0; // done = index+1
       });
-      setProgressMap(next);
-    };
+    });
+    setProgressMap(next);
+  };
 
-    readProgress();
-    window.addEventListener('focus', readProgress);
-    window.addEventListener('storage', readProgress);
+  useEffect(() => {
+    loadProgress();
+    window.addEventListener('focus', loadProgress);
+    window.addEventListener('storage', loadProgress);
     return () => {
-      window.removeEventListener('focus', readProgress);
-      window.removeEventListener('storage', readProgress);
+      window.removeEventListener('focus', loadProgress);
+      window.removeEventListener('storage', loadProgress);
     };
   }, []);
 
-  // 展开某个大分类时，按需加载该分类词库，计算每个二级列表总词数
+  // 展开时按需加载该分类，统计每个二级列表总词数
   useEffect(() => {
     if (!openId) return;
     if (loadedRef.current.has(openId)) return;
@@ -68,25 +60,22 @@ export default function VocabularyIndexPage() {
     if (!loader) return;
 
     let cancelled = false;
-
     (async () => {
       try {
-        const categoryWords = await loader();
+        const data = await loader();
         if (cancelled) return;
 
-        const category = vocabCategories.find((c) => c.id === openId);
-        if (!category) return;
+        const cat = vocabCategories.find((c) => c.id === openId);
+        if (!cat) return;
 
         const next = {};
-        (category.items || []).forEach((item) => {
-          const arr = categoryWords?.[item.id];
+        (cat.items || []).forEach((item) => {
+          const arr = data?.[item.id];
           next[`${openId}_${item.id}`] = Array.isArray(arr) ? arr.length : 0;
         });
 
         setTotalsMap((prev) => ({ ...prev, ...next }));
-      } catch (e) {
-        // 静默失败，页面照常显示
-      }
+      } catch (_) {}
     })();
 
     return () => {
@@ -95,125 +84,188 @@ export default function VocabularyIndexPage() {
   }, [openId]);
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden">
+    <main style={{ minHeight: '100vh', position: 'relative', overflowX: 'hidden' }}>
+      {/* 背景图 + 深色遮罩，确保文字可读 */}
       <div
-        className="fixed inset-0 -z-20 bg-cover bg-center"
-        style={{ backgroundImage: `url(${currentBg})` }}
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: -2,
+          backgroundImage: `linear-gradient(rgba(2,6,23,0.58), rgba(2,6,23,0.58)), url(${bgImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
       />
-      <div className="fixed inset-0 -z-10 bg-slate-900/35 backdrop-blur-[2px]" />
 
-      <div className="mx-auto w-full max-w-xl px-4 py-5">
-        <div className="rounded-2xl border border-white/40 bg-white/30 p-4 shadow-lg backdrop-blur-xl">
-          <h1 className="text-2xl font-extrabold text-white drop-shadow">单词分类</h1>
-          <p className="mt-1 text-sm text-white/90">点击大分类展开二级分类</p>
+      <div style={{ maxWidth: 720, margin: '0 auto', padding: 16 }}>
+        {/* 顶部标题卡 */}
+        <div
+          style={{
+            borderRadius: 16,
+            padding: 16,
+            background: 'rgba(255,255,255,0.90)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.8)',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+          }}
+        >
+          <h1 style={{ margin: 0, fontSize: 28, fontWeight: 800, color: '#0f172a' }}>单词分类</h1>
+          <p style={{ marginTop: 6, color: '#475569' }}>点击大分类展开二级分类</p>
         </div>
 
-        <div className="mt-4 space-y-3">
+        <div style={{ marginTop: 12, display: 'grid', gap: 12 }}>
           {vocabCategories.map((cat) => {
             const isOpen = openId === cat.id;
 
             return (
               <section
                 key={cat.id}
-                className="overflow-hidden rounded-2xl border border-white/40 bg-white/30 shadow-lg backdrop-blur-xl"
+                style={{
+                  borderRadius: 16,
+                  overflow: 'hidden',
+                  background: 'rgba(255,255,255,0.88)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255,255,255,0.85)',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.08)',
+                }}
               >
-                {/* 大分类头部 */}
                 <button
                   onClick={() => setOpenId((prev) => (prev === cat.id ? null : cat.id))}
-                  className="flex w-full items-center justify-between px-4 py-4 text-left"
+                  style={{
+                    width: '100%',
+                    textAlign: 'left',
+                    border: 'none',
+                    background: 'transparent',
+                    padding: 14,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                  }}
                 >
                   <div>
-                    <h2 className="text-base font-bold text-white">{cat.title}</h2>
-                    <p className="mt-1 text-xs text-white/85">{cat.description}</p>
+                    <div style={{ fontSize: 16, fontWeight: 800, color: '#0f172a' }}>
+                      {getTitle(cat)}
+                    </div>
+                    <div style={{ marginTop: 4, fontSize: 12, color: '#64748b' }}>
+                      {getDesc(cat)}
+                    </div>
                   </div>
-                  <span
-                    className={`text-white/80 transition-transform ${
-                      isOpen ? 'rotate-90' : ''
-                    }`}
+                  <div
+                    style={{
+                      transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+                      transition: 'transform 0.2s',
+                      color: '#64748b',
+                      fontWeight: 700,
+                    }}
                   >
                     ▶
-                  </span>
+                  </div>
                 </button>
 
-                {/* 二级分类 */}
                 {isOpen && (
-                  <div className="border-t border-white/30 bg-white/20 px-3 py-3">
-                    <div className="space-y-2">
+                  <div style={{ borderTop: '1px solid #e2e8f0', padding: 10, background: '#f8fafc' }}>
+                    <div style={{ display: 'grid', gap: 8 }}>
                       {(cat.items || []).map((item) => {
                         const rowKey = `${cat.id}_${item.id}`;
-                        const savedIndex = progressMap[rowKey]; // null 或 数字
-                        const total = totalsMap[rowKey]; // 可能 undefined（未加载到）
-                        const done = savedIndex === null ? 0 : savedIndex + 1;
-                        const safeDone =
-                          typeof total === 'number' && total > 0
-                            ? Math.min(done, total)
-                            : done;
-                        const percent =
-                          typeof total === 'number' && total > 0
-                            ? Math.round((safeDone / total) * 100)
-                            : 0;
+                        const total = totalsMap[rowKey] ?? 0;
+                        const done = Math.min(progressMap[rowKey] ?? 0, total || 0);
+                        const percent = total > 0 ? Math.round((done / total) * 100) : 0;
+                        const cover = item.cover || cat.cover || FALLBACK_THUMB;
 
-                        let progressText = '加载中...';
-                        if (typeof total === 'number') {
-                          if (total === 0) progressText = '暂无词条';
-                          else if (safeDone <= 0) progressText = `未开始 · 共 ${total} 词`;
-                          else progressText = `进度 ${safeDone}/${total} · ${percent}%`;
-                        }
-
-                        const cover =
-                          item.cover ||
-                          cat.cover ||
-                          CATEGORY_COVERS[cat.id] ||
-                          CATEGORY_COVERS.default;
-
-                        const disabled = !!item.locked;
-                        const href = `/vocabulary/player?category=${cat.id}&listId=${item.id}`;
-
-                        const card = (
+                        const row = (
                           <div
-                            className={`flex items-center gap-3 rounded-xl border px-3 py-3 ${
-                              disabled
-                                ? 'border-slate-200 bg-slate-100 opacity-60'
-                                : 'border-white/70 bg-white/85'
-                            }`}
+                            style={{
+                              display: 'flex',
+                              gap: 12,
+                              alignItems: 'center',
+                              background: '#fff',
+                              border: '1px solid #e2e8f0',
+                              borderRadius: 12,
+                              padding: 10,
+                              opacity: item.locked ? 0.55 : 1,
+                            }}
                           >
-                            {/* 左：小封面 */}
-                            <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
+                            {/* 左封面 */}
+                            <div
+                              style={{
+                                width: 68,
+                                height: 68,
+                                borderRadius: 10,
+                                overflow: 'hidden',
+                                flexShrink: 0,
+                                background: '#e2e8f0',
+                              }}
+                            >
                               <img
                                 src={cover}
-                                alt={item.title}
-                                className="h-full w-full object-cover"
+                                alt={getTitle(item)}
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                               />
                             </div>
 
-                            {/* 右：文字 + 进度 */}
-                            <div className="min-w-0 flex-1">
-                              <div className="truncate text-sm font-bold text-slate-800">
-                                {item.title}
+                            {/* 右文字 */}
+                            <div style={{ minWidth: 0, flex: 1 }}>
+                              <div
+                                style={{
+                                  fontSize: 14,
+                                  fontWeight: 700,
+                                  color: '#0f172a',
+                                  whiteSpace: 'nowrap',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                }}
+                              >
+                                {getTitle(item)}
                               </div>
-                              {item.subtitle ? (
-                                <div className="mt-0.5 truncate text-xs text-slate-500">
-                                  {item.subtitle}
-                                </div>
-                              ) : null}
+                              <div
+                                style={{
+                                  marginTop: 2,
+                                  fontSize: 12,
+                                  color: '#64748b',
+                                  whiteSpace: 'nowrap',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                }}
+                              >
+                                {getSub(item)}
+                              </div>
 
-                              <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+                              <div
+                                style={{
+                                  marginTop: 8,
+                                  height: 6,
+                                  borderRadius: 999,
+                                  background: '#e2e8f0',
+                                  overflow: 'hidden',
+                                }}
+                              >
                                 <div
-                                  className="h-full rounded-full bg-blue-500 transition-all"
-                                  style={{ width: `${percent}%` }}
+                                  style={{
+                                    width: `${percent}%`,
+                                    height: '100%',
+                                    background: '#3b82f6',
+                                  }}
                                 />
                               </div>
-                              <div className="mt-1 text-[11px] text-slate-600">
-                                {progressText}
+                              <div style={{ marginTop: 4, fontSize: 11, color: '#475569' }}>
+                                {total > 0 ? `进度 ${done}/${total} · ${percent}%` : '未开始'}
                               </div>
                             </div>
                           </div>
                         );
 
-                        if (disabled) return <div key={item.id}>{card}</div>;
+                        if (item.locked) return <div key={item.id}>{row}</div>;
+
                         return (
-                          <Link key={item.id} href={href} className="block">
-                            {card}
+                          <Link
+                            key={item.id}
+                            href={`/vocabulary/player?category=${cat.id}&listId=${item.id}`}
+                            style={{ textDecoration: 'none' }}
+                          >
+                            {row}
                           </Link>
                         );
                       })}
@@ -227,4 +279,4 @@ export default function VocabularyIndexPage() {
       </div>
     </main>
   );
-                          }
+}
