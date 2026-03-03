@@ -3,21 +3,19 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 
 // =========================
-// Global Styles (增加防长按选中和防菜单弹出)
+// 全局样式 (防长按选中和防菜单弹出)
 // =========================
 const GlobalStyles = () => (
   <style>{`
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* 核心修复：彻底屏蔽移动端长按选字和系统菜单 */
     .app-container {
       -webkit-touch-callout: none;
       -webkit-user-select: none;
       user-select: none;
     }
 
-    /* 允许文本框和聊天气泡内可以被选择（如果你需要的话） */
     .selectable {
       -webkit-user-select: text;
       user-select: text;
@@ -66,41 +64,48 @@ const RECOGNITION_LANGS = [
   { code: 'en-GB', name: 'English (UK)', flag: '🇬🇧' },
 ];
 
+const TTS_VOICES = [
+  { id: 'zh-CN-XiaoxiaoMultilingualNeural', name: '晓晓多语言 (女-推荐)' },
+  { id: 'zh-CN-XiaochenMultilingualNeural', name: '晓辰多语言 (男-推荐)' },
+  { id: 'zh-CN-XiaoxiaoNeural', name: '晓晓 (女-标准)' },
+  { id: 'zh-CN-YunxiNeural', name: '云希 (男-阳光)' },
+  { id: 'zh-CN-YunjianNeural', name: '云健 (男-影视)' },
+  { id: 'zh-CN-XiaoyiNeural', name: '晓伊 (女-亲切)' },
+];
+
+// 核心优化：强制要求中文和缅文使用句号分开
 const DEFAULT_PROMPT = `
 你是“Pingo”，缅甸人学中文口语教练。风格：毒舌+幽默+高压训练，但不做人身攻击。
 【绝对规则】
 1) 不是闲聊机器人。每轮必须围绕口语训练，不评价用户闲聊内容本身。
 2) 每轮最多3句，短句口语化。
 3) 输出语言：学习句(目标句/纠正句)用中文；其他说明一律缅文。
-4) 每轮必须包含：纠错结论 + 下一句目标句(Target Sentence)。
-5) 若ASR有错：不通过，要求重读同一句；若正确：升级下一句（难度+一点点）。
-6) 每轮至少1个情绪标签：[laughs] [sigh] [sneer] [angry] [surprised] [clapping]
-7) 优先场景教学：问候、课堂、点餐、问路、购物、请假、打车。
+4) 若ASR有错：要求重读同一句；若正确：升级下一句。
+5) 优先场景教学：问候、课堂、点餐、问路、购物、请假、打车。
+6) 【核心注意】：你的回复中，中文句子和缅文句子之间【必须使用句号（。）严格分开】，绝对不要在同一个短句内夹杂中缅双语。
 
 【输出模板（严格）】
-句1: [情绪] 缅文反馈（毒舌加侮辱）
-句2: 缅文纠错 + 错: "..." -> 对: "中文正确句"
-句3: Target Sentence: "中文目标句" | Meaning(MY): "缅文释义" | 缅文动作指令
+[情绪标签]。缅文毒舌反馈。
+缅文纠错说明。错："..." -> 对："中文正确句"。
+Target Sentence: "中文目标句"。Meaning(MY): "缅文释义"。
 `;
 
 const DEFAULT_SETTINGS = {
-  apiUrl: 'https://api.openai.com/v1',
-  apiKey: '',
-  model: 'gpt-4o',
+  apiUrl: 'https://api.mistral.ai/v1',
+  apiKey: 'xLnM3QMeVS1XoIG9LcdJUmzYLExYLvAq',
+  model: 'mistral-large-2512',
   temperature: 0.7,
   systemPrompt: DEFAULT_PROMPT,
   ttsApiUrl: 'https://t.leftsite.cn/tts',
-  ttsVoice: 'zh-CN-XiaochenMultilingualNeural',
+  ttsVoice: 'zh-CN-XiaoxiaoMultilingualNeural',
   ttsSpeed: -18,
+  ttsPitch: 0, // 新增音调调节
   showText: true,
-  autoConversation: true,
-  autoRestartAsr: true,
-  asrSilenceMs: 1200,
-  antiEchoCooldownMs: 700,
+  asrSilenceMs: 1500, // 增加静音判定时长，避免说一半提交
 };
 
 // =========================
-// TTS Queue (修复重叠播放、去除情绪标签朗读)
+// TTS Queue (修复重叠、去除情绪标签朗读)
 // =========================
 class ExternalTTSQueue {
   constructor() {
@@ -111,7 +116,6 @@ class ExternalTTSQueue {
     this.settingsRef = null;
     this.onStateChange = null;
     this.audioUnlocked = false;
-    this.onAllEnded = null;
     this.prefetching = false;
     this.prefetchAudio = null;
     this.prefetchToken = null;
@@ -119,7 +123,6 @@ class ExternalTTSQueue {
 
   setSettingsRef(ref) { this.settingsRef = ref; }
   setStateCallback(cb) { this.onStateChange = cb; }
-  setAllEndedCallback(cb) { this.onAllEnded = cb; }
 
   unlockAudio() {
     if (this.audioUnlocked) return;
@@ -130,38 +133,36 @@ class ExternalTTSQueue {
   }
 
   emitState() {
-    this.onStateChange?.({
-      isPlaying: this.isPlaying,
-      queueLength: this.queue.length,
-    });
+    this.onStateChange?.({ isPlaying: this.isPlaying });
   }
 
-  // 核心修复：净化用于朗读的文本（去掉 [] () 及 Emoji）
+  // 净化用于朗读的文本（去掉 [] () 及 Emoji）
   sanitizeText(text) {
     return text
-      .replace(/\[.*?\]/g, '') // 移除 [laughs] 等
-      .replace(/\(.*?\)/g, '') // 移除 (laughs) 等
-      .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '') // 移除 Emoji
+      .replace(/\[.*?\]/g, '') 
+      .replace(/\(.*?\)/g, '') 
+      .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '') 
       .trim();
   }
 
   detectVoice(text, fallback) {
     if (/[\u1000-\u109F]/.test(text)) return 'my-MM-NilarNeural';
     if (/[a-zA-Z]/.test(text) && !/[\u4e00-\u9fa5]/.test(text)) return 'en-US-JennyNeural';
-    return fallback || 'zh-CN-XiaoxiaoNeural';
+    return fallback || 'zh-CN-XiaoxiaoMultilingualNeural';
   }
 
   buildUrl(text) {
     const s = this.settingsRef || {};
     const voice = this.detectVoice(text, s.ttsVoice);
     const rate = s.ttsSpeed ?? 0;
+    const pitch = s.ttsPitch ?? 0;
     const baseUrl = s.ttsApiUrl || 'https://t.leftsite.cn/tts';
-    return `${baseUrl}?t=${encodeURIComponent(text)}&v=${encodeURIComponent(voice)}&r=${encodeURIComponent(rate)}`;
+    return `${baseUrl}?t=${encodeURIComponent(text)}&v=${encodeURIComponent(voice)}&r=${encodeURIComponent(rate)}&p=${encodeURIComponent(pitch)}`;
   }
 
   push(text) {
     const cleanText = this.sanitizeText(text || '');
-    if (!cleanText) return; // 如果全是表情包被过滤光了，就不读了
+    if (!cleanText) return; 
     this.queue.push(cleanText);
     this.emitState();
     this.playNext();
@@ -176,13 +177,12 @@ class ExternalTTSQueue {
     const audio = new Audio(this.buildUrl(nextText));
     audio.preload = 'auto';
     audio.crossOrigin = 'anonymous';
-    const done = () => {
+    audio.oncanplaythrough = () => {
       if (token !== this.playToken) return;
       this.prefetchAudio = audio;
       this.prefetchToken = token;
       this.prefetching = false;
     };
-    audio.oncanplaythrough = done;
     audio.onerror = () => { this.prefetching = false; };
     audio.load();
   }
@@ -191,7 +191,6 @@ class ExternalTTSQueue {
     if (this.isPlaying) return;
     if (this.queue.length === 0) {
       this.emitState();
-      this.onAllEnded?.();
       return;
     }
 
@@ -214,7 +213,7 @@ class ExternalTTSQueue {
 
     this.currentAudio = audio;
 
-    audio.onended = () => {
+    const onEndOrError = () => {
       if (token !== this.playToken) return;
       this.currentAudio = null;
       this.isPlaying = false;
@@ -223,27 +222,13 @@ class ExternalTTSQueue {
       this.playNext();
     };
 
-    audio.onerror = () => {
-      if (token !== this.playToken) return;
-      this.currentAudio = null;
-      this.isPlaying = false;
-      this.emitState();
-      this.prefetchNext();
-      this.playNext();
-    };
-
-    audio.play().catch(() => {
-      if (token !== this.playToken) return;
-      this.currentAudio = null;
-      this.isPlaying = false;
-      this.emitState();
-      this.playNext();
-    });
+    audio.onended = onEndOrError;
+    audio.onerror = onEndOrError;
+    audio.play().catch(onEndOrError);
 
     this.prefetchNext();
   }
 
-  // 核心修复：彻底清空播放和预加载，防止多音轨重叠
   stopAndClear() {
     this.playToken++;
     this.queue = [];
@@ -271,6 +256,7 @@ class ExternalTTSQueue {
 
 const ttsEngine = new ExternalTTSQueue();
 
+// 按句号切分文本，保障中缅文能分配给不同的语音引擎
 const splitSpeakable = (buf) => {
   const out = [];
   let last = 0;
@@ -308,35 +294,21 @@ export default function VoiceChat({ isOpen, onClose }) {
   const silenceTimerRef = useRef(null);
   const recordingFinalRef = useRef('');
 
-  const autoLoopRef = useRef(true);
-  const blockAsrUntilRef = useRef(0); 
-  const lastAiSpeakEndedAtRef = useRef(0);
-  const isManualStoppingRef = useRef(false);
-
   useEffect(() => {
-    const s = localStorage.getItem('ai_tutor_settings_v4');
+    const s = localStorage.getItem('ai_tutor_settings_v5');
     if (s) setSettings({ ...DEFAULT_SETTINGS, ...JSON.parse(s) });
 
     ttsEngine.setStateCallback(({ isPlaying }) => setIsAiSpeaking(isPlaying));
-    ttsEngine.setAllEndedCallback(() => {
-      lastAiSpeakEndedAtRef.current = Date.now();
-      blockAsrUntilRef.current = Date.now() + (settings.antiEchoCooldownMs || 700);
-
-      if (settings.autoConversation && !textMode && !isManualStoppingRef.current) {
-        safeAutoStartRecording();
-      }
-    });
 
     return () => {
-      stopEverything(true);
+      stopEverything();
       ttsEngine.setStateCallback(null);
-      ttsEngine.setAllEndedCallback(null);
     };
   }, []);
 
   useEffect(() => {
     ttsEngine.setSettingsRef(settings);
-    localStorage.setItem('ai_tutor_settings_v4', JSON.stringify(settings));
+    localStorage.setItem('ai_tutor_settings_v5', JSON.stringify(settings));
   }, [settings]);
 
   useEffect(() => {
@@ -350,10 +322,7 @@ export default function VoiceChat({ isOpen, onClose }) {
     }, 30);
   };
 
-  const stopEverything = (hard = false) => {
-    isManualStoppingRef.current = true;
-    autoLoopRef.current = !hard && settings.autoConversation;
-
+  const stopEverything = () => {
     if (recognitionRef.current) {
       try { recognitionRef.current.onend = null; recognitionRef.current.stop(); } catch {}
       recognitionRef.current = null;
@@ -372,24 +341,6 @@ export default function VoiceChat({ isOpen, onClose }) {
       abortControllerRef.current = null;
     }
     setIsAiSpeaking(false);
-
-    setTimeout(() => { isManualStoppingRef.current = false; }, 200);
-  };
-
-  const safeAutoStartRecording = () => {
-    if (!settings.autoConversation || isManualStoppingRef.current) return;
-    if (isAiSpeaking || recognitionRef.current) return;
-    
-    if (Date.now() < blockAsrUntilRef.current) {
-      const wait = blockAsrUntilRef.current - Date.now() + 20;
-      setTimeout(() => {
-        if (settings.autoConversation && !recognitionRef.current && !isAiSpeaking && !isManualStoppingRef.current) {
-          startRecording(true);
-        }
-      }, wait);
-      return;
-    }
-    startRecording(true);
   };
 
   const sendMessage = async (text) => {
@@ -447,7 +398,7 @@ export default function VoiceChat({ isOpen, onClose }) {
       let sentenceBuffer = '';
 
       while (true) {
-        if (abortControllerRef.current?.signal.aborted) break; // 核心修复：严格防止中断后继续推入TTS
+        if (abortControllerRef.current?.signal.aborted) break; 
 
         const { done, value } = await reader.read();
         if (done) break;
@@ -497,19 +448,15 @@ export default function VoiceChat({ isOpen, onClose }) {
   };
 
   // ===== ASR =====
-  const startRecording = (fromAuto = false) => {
+  const startRecording = () => {
     ttsEngine.unlockAudio();
     const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRec) {
-      if (!fromAuto) alert('当前浏览器不支持语音识别');
-      return;
+    if (!SpeechRec) return alert('当前浏览器不支持语音识别');
+
+    if (isAiSpeaking) {
+      ttsEngine.stopAndClear(); // 用户主动按录音，打断AI说话
     }
-
-    if (isAiSpeaking || isManualStoppingRef.current) return; 
-    if (Date.now() < blockAsrUntilRef.current) return;
     if (recognitionRef.current) return;
-
-    if (fromAuto && Date.now() - lastAiSpeakEndedAtRef.current < (settings.antiEchoCooldownMs || 700)) return;
 
     const rec = new SpeechRec();
     rec.lang = recLang;
@@ -533,22 +480,11 @@ export default function VoiceChat({ isOpen, onClose }) {
       setLiveInterim(interim.trim());
 
       if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
-      silenceTimerRef.current = setTimeout(() => manualSubmitRecording(), settings.asrSilenceMs || 1200);
+      silenceTimerRef.current = setTimeout(() => manualSubmitRecording(), settings.asrSilenceMs || 1500);
     };
 
-    rec.onerror = () => {
-      setIsRecording(false);
-      recognitionRef.current = null;
-    };
-
-    rec.onend = () => {
-      setIsRecording(false);
-      recognitionRef.current = null;
-      // 核心修复：防止静默断开后立即死循环重启，加入500ms缓冲
-      if (settings.autoConversation && !isAiSpeaking && !isManualStoppingRef.current) {
-        setTimeout(() => safeAutoStartRecording(), 500);
-      }
-    };
+    rec.onerror = () => { setIsRecording(false); recognitionRef.current = null; };
+    rec.onend = () => { setIsRecording(false); recognitionRef.current = null; };
 
     recognitionRef.current = rec;
     if (navigator.vibrate) navigator.vibrate(30);
@@ -556,14 +492,12 @@ export default function VoiceChat({ isOpen, onClose }) {
   };
 
   const stopRecordingOnly = () => {
-    isManualStoppingRef.current = true;
     if (recognitionRef.current) {
       try { recognitionRef.current.stop(); } catch {}
       recognitionRef.current = null;
     }
     if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
     setIsRecording(false);
-    setTimeout(() => { isManualStoppingRef.current = false; }, 500); // 稍微锁定一段时间防止自动重启
   };
 
   const manualSubmitRecording = () => {
@@ -573,12 +507,7 @@ export default function VoiceChat({ isOpen, onClose }) {
     setLiveInterim('');
     setRecordFinalText('');
     
-    if (finalText) {
-      sendMessage(finalText);
-    } else if (settings.autoConversation && !textMode) {
-      // 没有任何文本且开启了自动对话，等待一会再恢复侦听
-      setTimeout(() => safeAutoStartRecording(), 1000);
-    }
+    if (finalText) sendMessage(finalText);
   };
 
   const clearRecordingBuffer = () => {
@@ -587,9 +516,8 @@ export default function VoiceChat({ isOpen, onClose }) {
     setLiveInterim('');
   };
 
-  // 核心修复：触控逻辑优化，杜绝按钮按不动、出现菜单
-  const handleTouchStart = (e) => {
-    // 不调用 preventDefault，避免破坏本身滚动操作，交由 CSS 控制禁用菜单
+  // 纯净 Touch 事件：防误触、防系统菜单
+  const handleTouchStart = () => {
     if (pressTimerRef.current) clearTimeout(pressTimerRef.current);
     pressTimerRef.current = setTimeout(() => {
       if (navigator.vibrate) navigator.vibrate(45);
@@ -599,23 +527,12 @@ export default function VoiceChat({ isOpen, onClose }) {
   };
 
   const handleTouchEnd = (e) => {
-    e.preventDefault(); // 阻断后续可能触发的 onClick 幽灵点击
+    e.preventDefault();
     if (pressTimerRef.current) {
       clearTimeout(pressTimerRef.current);
       pressTimerRef.current = null;
-      
-      // 判断为短按
       if (isRecording) manualSubmitRecording();
-      else startRecording(false);
-    }
-  };
-
-  const pasteApiKey = async () => {
-    try {
-      const t = await navigator.clipboard.readText();
-      if (t) setSettings((s) => ({ ...s, apiKey: t.trim() }));
-    } catch {
-      alert('剪贴板读取失败，请手动粘贴');
+      else startRecording();
     }
   };
 
@@ -638,20 +555,13 @@ export default function VoiceChat({ isOpen, onClose }) {
       {/* Header */}
       <div className="relative z-20 flex items-center justify-between px-4 h-16 border-b border-white/10 backdrop-blur-sm">
         <button
-          onClick={() => { stopEverything(true); onClose?.(); }}
+          onClick={() => { stopEverything(); onClose?.(); }}
           className="w-10 h-10 flex items-center justify-center rounded-full bg-white/15 text-white active:scale-90"
         >
           <i className="fas fa-arrow-left" />
         </button>
         <div className="font-bold tracking-widest text-white text-sm">AI TUTOR</div>
         <div className="flex items-center gap-2">
-          <button
-            onClick={() => setSettings((s) => ({ ...s, autoConversation: !s.autoConversation }))}
-            className={`px-3 h-10 rounded-full text-xs font-bold ${settings.autoConversation ? 'bg-emerald-500/70 text-white' : 'bg-white/15 text-slate-300'}`}
-            title="自动连续对话"
-          >
-            AUTO
-          </button>
           <button onClick={() => setShowSettings(true)} className="w-10 h-10 flex items-center justify-center rounded-full bg-white/15 text-white">
             <i className="fas fa-sliders-h" />
           </button>
@@ -674,7 +584,7 @@ export default function VoiceChat({ isOpen, onClose }) {
                 <div className="tts-bars"><span /><span /><span /><span /><span /></div>
               ) : (
                 <span className="text-sm tracking-widest text-slate-300 font-medium">
-                  {isRecording ? '正在倾听...' : '请说话'} {/* 核心修复：文案更改 */}
+                  {isRecording ? '正在倾听...' : '请说话'}
                 </span>
               )}
             </div>
@@ -708,7 +618,7 @@ export default function VoiceChat({ isOpen, onClose }) {
         )}
       </div>
 
-      {/* Bottom */}
+      {/* Bottom Control */}
       <div className="absolute bottom-0 left-0 right-0 z-30 pb-[max(24px,env(safe-area-inset-bottom))] px-5 bg-gradient-to-t from-slate-950 via-slate-950/92 to-transparent pt-12">
         <div className="max-w-md mx-auto relative flex items-center justify-center h-20">
           
@@ -725,11 +635,10 @@ export default function VoiceChat({ isOpen, onClose }) {
                   </button>
                 ) : <div className="w-14" />}
 
-                {/* 核心修复：更纯净的 Touch 事件，防误触防菜单 */}
                 <button
                   onTouchStart={handleTouchStart}
                   onTouchEnd={handleTouchEnd}
-                  onMouseDown={(e) => { e.preventDefault(); handleTouchStart(e); }}
+                  onMouseDown={(e) => { e.preventDefault(); handleTouchStart(); }}
                   onMouseUp={(e) => { e.preventDefault(); handleTouchEnd(e); }}
                   className={`touch-none w-20 h-20 rounded-full flex items-center justify-center text-white shadow-2xl transition-all duration-300 ${
                     isRecording ? 'bg-red-500 animate-pulse-ring scale-95' : 'bg-gradient-to-r from-pink-500 to-rose-500 hover:scale-105 active:scale-95'
@@ -758,7 +667,7 @@ export default function VoiceChat({ isOpen, onClose }) {
                 className="flex-1 bg-transparent px-4 py-2 text-sm text-white outline-none placeholder-slate-300"
                 placeholder="打字回复..."
                 value={inputText}
-                onFocus={() => stopEverything(false)}
+                onFocus={stopEverything}
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
@@ -773,10 +682,9 @@ export default function VoiceChat({ isOpen, onClose }) {
             </div>
           )}
 
-          {/* 右侧操作按钮：根据状态切换为 "停止" 或 "字幕开关" */}
           <div className="absolute right-0">
             {(isAiSpeaking || isRecording) ? (
-              <button onClick={() => stopEverything(true)} className="w-12 h-12 rounded-full bg-white/15 text-white animate-[fadeIn_.2s_ease-out]" title="全部停止">
+              <button onClick={stopEverything} className="w-12 h-12 rounded-full bg-white/15 text-white animate-[fadeIn_.2s_ease-out]" title="全部停止">
                 <i className="fas fa-stop" />
               </button>
             ) : (
@@ -814,7 +722,7 @@ export default function VoiceChat({ isOpen, onClose }) {
         </div>
       )}
 
-      {/* Settings (保持原有逻辑) */}
+      {/* Settings */}
       {showSettings && (
         <div className="fixed inset-0 z-[300] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowSettings(false)} />
@@ -837,14 +745,8 @@ export default function VoiceChat({ isOpen, onClose }) {
                     className="flex-1 border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none"
                     placeholder="API Key"
                     value={settings.apiKey}
-                    onPaste={(e) => {
-                      e.preventDefault();
-                      const t = e.clipboardData?.getData('text') || '';
-                      setSettings((s) => ({ ...s, apiKey: t.trim() }));
-                    }}
                     onChange={(e) => setSettings({ ...settings, apiKey: e.target.value })}
                   />
-                  <button onClick={pasteApiKey} className="px-3 rounded-xl bg-white/10">粘贴</button>
                   <button onClick={() => setShowApiKey((v) => !v)} className="px-3 rounded-xl bg-white/10">{showApiKey ? '隐藏' : '显示'}</button>
                 </div>
                 <div className="flex gap-2">
@@ -867,29 +769,43 @@ export default function VoiceChat({ isOpen, onClose }) {
               <div className="space-y-4 border-t border-white/10 pt-4">
                 <div className="font-bold text-slate-400 text-xs">TTS 发音配置</div>
                 <input className="w-full border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none" placeholder="TTS API URL" value={settings.ttsApiUrl} onChange={(e) => setSettings({ ...settings, ttsApiUrl: e.target.value })} />
-                <input className="w-full border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none" placeholder="Voice" value={settings.ttsVoice} onChange={(e) => setSettings({ ...settings, ttsVoice: e.target.value })} />
-                <div>
-                  <label className="text-xs text-slate-400 block mb-1">语速: {settings.ttsSpeed}</label>
-                  <input type="range" min="-50" max="50" step="1" className="w-full accent-pink-500" value={settings.ttsSpeed} onChange={(e) => setSettings({ ...settings, ttsSpeed: parseInt(e.target.value, 10) })} />
+                
+                <select 
+                  className="w-full border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none appearance-none"
+                  value={settings.ttsVoice} 
+                  onChange={(e) => setSettings({ ...settings, ttsVoice: e.target.value })}
+                >
+                  {TTS_VOICES.map(v => <option key={v.id} value={v.id}>{v.name}</option>)}
+                </select>
+
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <label className="text-xs text-slate-400 w-10">语速</label>
+                    <input type="range" min="-50" max="50" step="1" className="flex-1 accent-pink-500" value={settings.ttsSpeed} onChange={(e) => setSettings({ ...settings, ttsSpeed: parseInt(e.target.value, 10) || 0 })} />
+                    <input type="number" className="w-14 bg-slate-900/50 border border-white/10 rounded-md px-1 py-1 text-center text-xs outline-none" value={settings.ttsSpeed} onChange={(e) => setSettings({ ...settings, ttsSpeed: parseInt(e.target.value, 10) || 0 })} />
+                  </div>
+                  
+                  <div className="flex items-center gap-3">
+                    <label className="text-xs text-slate-400 w-10">音调</label>
+                    <input type="range" min="-50" max="50" step="1" className="flex-1 accent-pink-500" value={settings.ttsPitch} onChange={(e) => setSettings({ ...settings, ttsPitch: parseInt(e.target.value, 10) || 0 })} />
+                    <input type="number" className="w-14 bg-slate-900/50 border border-white/10 rounded-md px-1 py-1 text-center text-xs outline-none" value={settings.ttsPitch} onChange={(e) => setSettings({ ...settings, ttsPitch: parseInt(e.target.value, 10) || 0 })} />
+                  </div>
                 </div>
               </div>
 
-              <div className="space-y-3 border-t border-white/10 pt-4">
+              <div className="space-y-3 border-t border-white/10 pt-4 pb-4">
                 <label className="flex items-center justify-between p-3 bg-slate-900/50 rounded-xl border border-white/10">
                   <span>显示字幕</span>
                   <input type="checkbox" className="w-5 h-5 accent-pink-500" checked={settings.showText} onChange={(e) => setSettings({ ...settings, showText: e.target.checked })} />
                 </label>
-                <label className="flex items-center justify-between p-3 bg-slate-900/50 rounded-xl border border-white/10">
-                  <span>自动连续对话</span>
-                  <input type="checkbox" className="w-5 h-5 accent-pink-500" checked={settings.autoConversation} onChange={(e) => setSettings({ ...settings, autoConversation: e.target.checked })} />
-                </label>
+                
                 <div className="p-3 bg-slate-900/50 rounded-xl border border-white/10">
-                  <div className="text-xs text-slate-400 mb-1">静音提交阈值: {settings.asrSilenceMs}ms</div>
-                  <input type="range" min="600" max="2500" step="100" className="w-full accent-pink-500" value={settings.asrSilenceMs} onChange={(e) => setSettings({ ...settings, asrSilenceMs: parseInt(e.target.value, 10) })} />
-                </div>
-                <div className="p-3 bg-slate-900/50 rounded-xl border border-white/10">
-                  <div className="text-xs text-slate-400 mb-1">防回声冷却: {settings.antiEchoCooldownMs}ms</div>
-                  <input type="range" min="300" max="1500" step="50" className="w-full accent-pink-500" value={settings.antiEchoCooldownMs} onChange={(e) => setSettings({ ...settings, antiEchoCooldownMs: parseInt(e.target.value, 10) })} />
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm">麦克风静默提交时间</span>
+                    <span className="text-xs text-slate-400">{settings.asrSilenceMs}ms</span>
+                  </div>
+                  <input type="range" min="600" max="3000" step="100" className="w-full accent-pink-500" value={settings.asrSilenceMs} onChange={(e) => setSettings({ ...settings, asrSilenceMs: parseInt(e.target.value, 10) })} />
+                  <p className="text-[10px] text-slate-500 mt-1">控制你不说话多久后自动发送消息</p>
                 </div>
               </div>
             </div>
