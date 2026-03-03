@@ -68,7 +68,7 @@ const DEFAULT_PROMPT = `
 7) 优先场景教学：问候、课堂、点餐、问路、购物、请假、打车。
 
 【输出模板（严格）】
-句1: [情绪] 缅文反馈（毒舌但不侮辱）
+句1: [情绪] 缅文反馈（毒舌加侮辱）
 句2: 缅文纠错 + 错: "..." -> 对: "中文正确句"
 句3: Target Sentence: "中文目标句" | Meaning(MY): "缅文释义" | 缅文动作指令
 `;
@@ -520,9 +520,12 @@ export default function VoiceChat({ isOpen, onClose }) {
     };
 
     rec.onend = () => {
-      setIsRecording(false);
-      recognitionRef.current =（说禁 if settings       rAiSpeakingisRef        !.is      set =>Auto(),140      }
-    };
+  setIsRecording(false);
+  recognitionRef.current = null;
+  if (settings.autoConversation && !isAiSpeaking) {
+    safeAutoStartRecording();
+  }
+};
 
     recognitionRef.current = rec;
     if (navigator.vibrate) navigator.vibrate(30);
