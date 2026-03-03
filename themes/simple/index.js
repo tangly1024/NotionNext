@@ -42,7 +42,7 @@ const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal
 const BookLibrary = dynamic(() => import('@/components/BookLibrary'), { ssr: false })
 const AIChatDrawer = dynamic(() => import('@/components/AIChatDrawer'), { ssr: false })
 
-// 【新增】引入你刚刚做好的 AI 口语对练组件
+// 【新增】指向刚才创建的单文件 VoiceChat.js
 const VoiceChat = dynamic(() => import('@/components/VoiceChat'), { ssr: false })
 
 const BlogListScroll = dynamic(() => import('./components/BlogListScroll'), { ssr: false })
@@ -63,11 +63,9 @@ const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 const BlogListPage = dynamic(() => import('./components/BlogListPage'), { ssr: false })
 const RecommendPosts = dynamic(() => import('./components/RecommendPosts'), { ssr: false })
 
-// 主题全局状态
 const ThemeGlobalSimple = createContext()
 export const useSimpleGlobal = () => useContext(ThemeGlobalSimple)
 
-// ===================== 1. 学习首页配置数据 =====================
 const pinyinNav =[
   { zh: '声母', mm: 'ဗျည်း', icon: Mic, href: '/pinyin/initials', bg: 'bg-blue-100/80', color: 'text-blue-600' },
   { zh: '韵母', mm: 'သရ', icon: Music2, href: '/pinyin/finals', bg: 'bg-emerald-100/80', color: 'text-emerald-600' },
@@ -103,7 +101,6 @@ const systemCourses =[
   }
 ]
 
-// ===================== 2. 学习首页组件 =====================
 const LayoutLearningHome = () => {
   const router = useRouter()
   const [activeOverlay, setActiveOverlay] = useState(null)
@@ -111,9 +108,7 @@ const LayoutLearningHome = () => {
   const openOverlay = useCallback((overlayType) => {
     setActiveOverlay((prev) => {
       if (prev === overlayType) return prev
-      if (typeof window !== 'undefined') {
-        window.history.pushState({ overlay: overlayType }, '', window.location.href)
-      }
+      if (typeof window !== 'undefined') window.history.pushState({ overlay: overlayType }, '', window.location.href)
       return overlayType
     })
   },[])
@@ -134,26 +129,17 @@ const LayoutLearningHome = () => {
   },[])
 
   const isTranslatorOpen = activeOverlay === 'translator'
-  const isAiTutorOpen = activeOverlay === 'ai-tutor' // 【新增】AI口语对练状态
+  const isAiTutorOpen = activeOverlay === 'ai-tutor'
 
-  // 防止弹窗层打开时底层滚动穿透
   useEffect(() => {
     if (typeof document === 'undefined') return
     const prev = document.body.style.overflow
     if (isTranslatorOpen || isAiTutorOpen) document.body.style.overflow = 'hidden'
-    return () => {
-      document.body.style.overflow = prev
-    }
+    return () => { document.body.style.overflow = prev }
   },[isTranslatorOpen, isAiTutorOpen])
 
-  // 关键：拦截渲染对应的全屏工具
-  if (isTranslatorOpen) {
-    return <AIChatDrawer isOpen={true} onClose={closeOverlay} />
-  }
-  
-  if (isAiTutorOpen) {
-    return <VoiceChat isOpen={true} onClose={closeOverlay} /> // 【新增】调用VoiceChat
-  }
+  if (isTranslatorOpen) return <AIChatDrawer isOpen={true} onClose={closeOverlay} />
+  if (isAiTutorOpen) return <VoiceChat isOpen={true} onClose={closeOverlay} />
 
   const glassCard = 'bg-white/70 backdrop-blur-md border border-white shadow-sm rounded-2xl transition-all active:scale-95 cursor-pointer'
 
@@ -165,41 +151,19 @@ const LayoutLearningHome = () => {
       <AnimatePresence>
         {activeOverlay === 'menu' && (
           <div className='fixed inset-0 z-[160] flex'>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={closeOverlay}
-              className='absolute inset-0 bg-slate-900/40 backdrop-blur-sm'
-            />
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={closeOverlay} className='absolute inset-0 bg-slate-900/40 backdrop-blur-sm' />
             <motion.aside
-              initial={{ x: '-100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '-100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              drag='x'
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={{ left: 0.5, right: 0 }}
-              onDragEnd={(e, info) => {
-                if (info.offset.x < -80 || info.velocity.x < -400) closeOverlay()
-              }}
+              initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              drag='x' dragConstraints={{ left: 0, right: 0 }} dragElastic={{ left: 0.5, right: 0 }}
+              onDragEnd={(e, info) => { if (info.offset.x < -80 || info.velocity.x < -400) closeOverlay() }}
               className='relative w-72 h-full bg-white shadow-2xl flex flex-col'
             >
               <div className='p-6 border-b border-slate-100 flex items-center justify-between'>
-                <div>
-                  <h2 className='text-xl font-black text-slate-900'>菜单</h2>
-                  <p className='text-xs text-slate-500'>中缅学习中心</p>
-                </div>
-                <button onClick={closeOverlay} className='p-2 bg-slate-100 rounded-full active:scale-90 transition-transform'>
-                  <X size={20} className='text-slate-800' />
-                </button>
+                <div><h2 className='text-xl font-black text-slate-900'>菜单</h2><p className='text-xs text-slate-500'>中缅学习中心</p></div>
+                <button onClick={closeOverlay} className='p-2 bg-slate-100 rounded-full active:scale-90 transition-transform'><X size={20} className='text-slate-800' /></button>
               </div>
               <nav className='p-4 space-y-2'>
-                {['首页', 'HSK 课程', 'AI 翻译', '书籍库', '设置'].map(item => (
-                  <button key={item} className='w-full text-left p-4 text-slate-800 font-bold hover:bg-slate-50 rounded-xl transition-colors'>
-                    {item}
-                  </button>
-                ))}
+                {['首页', 'HSK 课程', 'AI 翻译', '书籍库', '设置'].map(item => <button key={item} className='w-full text-left p-4 text-slate-800 font-bold hover:bg-slate-50 rounded-xl transition-colors'>{item}</button>)}
               </nav>
             </motion.aside>
           </div>
@@ -208,15 +172,13 @@ const LayoutLearningHome = () => {
 
       <div className='relative z-10 mx-auto w-full max-w-md px-4 pb-36 pt-6'>
         <header className='mb-8 flex items-center gap-4'>
-          {/* 【修改】去掉了 bg-white/80, shadow-sm, border 等背景样式，变为纯净透明图标 */}
           <button onClick={() => openOverlay('menu')} className='p-1.5 active:scale-90 transition-transform'>
             <Menu className='h-7 w-7 text-slate-800' />
           </button>
           <div>
             <h1 className='text-xl font-black text-slate-900 leading-none'>中缅文学习中心</h1>
             <div className='mt-1.5 flex items-center gap-1 text-[10px] font-bold text-slate-500 uppercase tracking-widest'>
-              <Sparkles size={12} className='text-blue-500' />
-              <span>Premium Hub</span>
+              <Sparkles size={12} className='text-blue-500' /><span>Premium Hub</span>
             </div>
           </div>
         </header>
@@ -224,9 +186,7 @@ const LayoutLearningHome = () => {
         <section className='grid grid-cols-4 gap-3'>
           {pinyinNav.map(item => (
             <Link key={item.zh} href={item.href} className={`${glassCard} flex flex-col items-center py-4`}>
-              <div className={`flex h-9 w-9 items-center justify-center rounded-full ${item.bg} mb-2`}>
-                <item.icon className={`h-4 w-4 ${item.color}`} />
-              </div>
+              <div className={`flex h-9 w-9 items-center justify-center rounded-full ${item.bg} mb-2`}><item.icon className={`h-4 w-4 ${item.color}`} /></div>
               <p className='text-[13px] font-black text-slate-800'>{item.zh}</p>
               <p className='text-[9px] font-medium text-slate-400 mt-0.5'>{item.mm}</p>
             </Link>
@@ -237,92 +197,37 @@ const LayoutLearningHome = () => {
           {coreTools.map(tool => {
             const content = (
               <div className='flex items-center gap-3'>
-                <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${tool.bg} ${tool.iconColor}`}>
-                  <tool.icon size={20} />
-                </div>
-                <div className='min-w-0'>
-                  <p className='truncate text-[13px] font-black text-slate-800'>{tool.zh}</p>
-                  <p className='truncate text-[9px] text-slate-400'>{tool.mm}</p>
-                </div>
+                <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${tool.bg} ${tool.iconColor}`}><tool.icon size={20} /></div>
+                <div className='min-w-0'><p className='truncate text-[13px] font-black text-slate-800'>{tool.zh}</p><p className='truncate text-[9px] text-slate-400'>{tool.mm}</p></div>
               </div>
             )
-
-            if (tool.action) {
-              return (
-                <button key={tool.zh} onClick={() => openOverlay(tool.action)} className={`${glassCard} p-3.5 text-left`}>
-                  {content}
-                </button>
-              )
-            }
-
-            return (
-              <Link key={tool.zh} href={tool.href} className={`${glassCard} p-3.5`}>
-                {content}
-              </Link>
-            )
+            return tool.action ? <button key={tool.zh} onClick={() => openOverlay(tool.action)} className={`${glassCard} p-3.5 text-left`}>{content}</button> : <Link key={tool.zh} href={tool.href} className={`${glassCard} p-3.5`}>{content}</Link>
           })}
         </section>
 
         <section className='mt-4'>
           <Link href='/tips' className={`${glassCard} flex items-center justify-between p-4`}>
             <div className='flex items-center gap-4'>
-              <div className='rounded-xl bg-orange-100 p-2 text-orange-600'>
-                <Lightbulb size={20} />
-              </div>
-              <div>
-                <p className='text-[14px] font-black text-slate-800'>发音技巧 (Tips)</p>
-                <p className='text-[10px] text-slate-400'>အသံထွက်နည်းလမ်းများ</p>
-              </div>
+              <div className='rounded-xl bg-orange-100 p-2 text-orange-600'><Lightbulb size={20} /></div>
+              <div><p className='text-[14px] font-black text-slate-800'>发音技巧 (Tips)</p><p className='text-[10px] text-slate-400'>အသံထွက်နည်းလမ်းများ</p></div>
             </div>
             <ChevronRight className='h-5 w-5 text-slate-300' />
           </Link>
         </section>
 
-        {/* ==================== 【新增】AI 口语对练醒目入口 ==================== */}
-        <section className='mt-8 mb-2'>
-          <button 
-            onClick={() => openOverlay('ai-tutor')} 
-            className='group relative w-full overflow-hidden rounded-[2rem] bg-gradient-to-br from-pink-500 to-rose-500 p-6 text-left shadow-xl shadow-pink-200/50 transition-all active:scale-95 border border-pink-400/30'
-          >
-            {/* 炫彩背景光晕装饰 */}
-            <div className='absolute -right-4 -top-4 h-32 w-32 rounded-full bg-white/10 blur-2xl group-hover:bg-white/20 transition-all'></div>
-            <div className='absolute -bottom-8 -left-8 h-24 w-24 rounded-full bg-rose-600/40 blur-xl'></div>
-            
-            <div className='relative z-10 flex items-center justify-between'>
-              <div>
-                <div className='mb-2 flex items-center gap-1.5'>
-                  <span className='rounded-full bg-white/20 px-2.5 py-0.5 text-[10px] font-black tracking-wider text-white backdrop-blur-md border border-white/20 shadow-sm'>
-                    AI TUTOR
-                  </span>
-                  <Sparkles size={14} className='text-yellow-300 animate-pulse' />
-                </div>
-                <h3 className='text-xl font-black text-white drop-shadow-sm'>毒舌 AI 私教练口语</h3>
-                <p className='mt-1 text-xs font-medium text-pink-50'>像打电话一样对话 · 支持多语种</p>
-              </div>
-              <div className='flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur-md border border-white/20 shadow-inner group-hover:scale-110 transition-transform'>
-                <Mic size={24} className='text-white' />
-              </div>
-            </div>
-          </button>
-        </section>
-        {/* ================================================================= */}
-
-        {/* 原有系统课程区（刚好在高频单词上方插入了AI入口） */}
-        <section className='mt-6'>
+        {/* 原有 System Courses */}
+        <section className='mt-8'>
           <div className='mb-4 flex items-center gap-2 px-1'>
             <BookOpen className='h-4 w-4 text-slate-400' />
             <h2 className='text-[11px] font-black tracking-[0.2em] text-slate-400 uppercase'>SYSTEM COURSES</h2>
           </div>
-
           <div className='flex flex-col gap-4'>
             {systemCourses.map(course => (
               <Link key={course.title} href={course.href} className='group relative h-40 overflow-hidden rounded-[2.5rem] shadow-lg border border-white'>
                 <img src={course.bgImg} className='absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110' />
                 <div className={`absolute inset-0 bg-gradient-to-r ${course.color} to-transparent`} />
                 <div className='relative flex h-full flex-col justify-center px-8'>
-                  <span className='w-fit rounded-lg bg-white/20 backdrop-blur-md px-2 py-0.5 text-[9px] font-black text-white mb-2 uppercase'>
-                    {course.badge}
-                  </span>
+                  <span className='w-fit rounded-lg bg-white/20 backdrop-blur-md px-2 py-0.5 text-[9px] font-black text-white mb-2 uppercase'>{course.badge}</span>
                   <h3 className='text-2xl font-black text-white'>{course.title}</h3>
                   <p className='text-xs font-medium text-white/80 mt-1'>{course.mmDesc}</p>
                 </div>
@@ -330,6 +235,31 @@ const LayoutLearningHome = () => {
             ))}
           </div>
         </section>
+
+        {/* ==================== 【更新】移到最下方的 AI 口语对练无按钮全图片入口 ==================== */}
+        <section className='mt-4 mb-2'>
+          <button 
+            onClick={() => openOverlay('ai-tutor')} 
+            className='group relative w-full h-[140px] overflow-hidden rounded-[2.5rem] shadow-xl text-left transition-all active:scale-95 border border-white/50'
+          >
+            {/* 更换为你喜欢的背景图 */}
+            <img src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&q=80&w=1200" className='absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105' />
+            <div className='absolute inset-0 bg-gradient-to-r from-slate-900/80 to-slate-900/20' />
+            
+            <div className='relative z-10 flex h-full flex-col justify-center px-6'>
+              <div className='mb-2 flex items-center gap-1.5'>
+                <span className='rounded-full bg-pink-500 px-2.5 py-0.5 text-[10px] font-black tracking-wider text-white shadow-sm'>
+                  AI TUTOR
+                </span>
+                <Sparkles size={14} className='text-pink-300 animate-pulse' />
+              </div>
+              <h3 className='text-xl font-black text-white drop-shadow-md'>AI 真人私教对练</h3>
+              <p className='mt-1 text-xs font-medium text-white/80 drop-shadow-sm'>沉浸式真实口语对话</p>
+            </div>
+          </button>
+        </section>
+        {/* =================================================================================== */}
+
       </div>
 
       <nav className='fixed bottom-0 left-0 right-0 z-[50] bg-white border-t border-slate-100 px-4 pt-3 pb-[calc(env(safe-area-inset-bottom)+10px)] shadow-[0_-10px_20px_rgba(0,0,0,0.05)]'>
@@ -347,9 +277,7 @@ const LayoutLearningHome = () => {
 
       <AnimatePresence>
         {activeOverlay === 'library' && (
-          <div className='fixed inset-0 z-[150]'>
-            <BookLibrary isOpen={true} onClose={closeOverlay} />
-          </div>
+          <div className='fixed inset-0 z-[150]'><BookLibrary isOpen={true} onClose={closeOverlay} /></div>
         )}
       </AnimatePresence>
     </main>
@@ -359,13 +287,12 @@ const LayoutLearningHome = () => {
 function FooterItem({ icon: Icon, label }) {
   return (
     <div className='flex flex-col items-center gap-1 text-slate-400'>
-      <Icon size={22} />
-      <span className='text-[10px] font-bold'>{label}</span>
+      <Icon size={22} /><span className='text-[10px] font-bold'>{label}</span>
     </div>
   )
 }
 
-// ===================== 3. 基础布局框架 (保持原始全功能) =====================
+// ===================== 3. 基础布局框架 =====================
 const LayoutBase = props => {
   const { children, slotTop } = props
   const { onLoading, fullWidth } = useGlobal()
@@ -373,22 +300,15 @@ const LayoutBase = props => {
   const router = useRouter()
   const pathname = router?.pathname || ''
   
-const isLearningRoute =
-  pathname === '/' ||
-  pathname.startsWith('/vocabulary') ||
-  pathname.startsWith('/pinyin') ||
-  pathname.startsWith('/course')
+  const isLearningRoute = pathname === '/' || pathname.startsWith('/vocabulary') || pathname.startsWith('/pinyin') || pathname.startsWith('/course')
 
-if (isLearningRoute) {
-  return (
-    <ThemeGlobalSimple.Provider value={{ searchModal }}>
-      <div id='theme-simple' className={`${siteConfig('FONT_STYLE')} min-h-screen`}>
-        <Style />
-        {children}
-      </div>
-    </ThemeGlobalSimple.Provider>
-  )
-}
+  if (isLearningRoute) {
+    return (
+      <ThemeGlobalSimple.Provider value={{ searchModal }}>
+        <div id='theme-simple' className={`${siteConfig('FONT_STYLE')} min-h-screen`}><Style />{children}</div>
+      </ThemeGlobalSimple.Provider>
+    )
+  }
 
   return (
     <ThemeGlobalSimple.Provider value={{ searchModal }}>
@@ -406,9 +326,7 @@ if (isLearningRoute) {
             <AdSlot type='native' />
           </div>
           {!fullWidth && (
-            <div id='right-sidebar' className='hidden xl:block flex-none sticky top-8 w-96 border-l border-gray-100 pl-12'>
-              <SideBar {...props} />
-            </div>
+            <div id='right-sidebar' className='hidden xl:block flex-none sticky top-8 w-96 border-l border-gray-100 pl-12'><SideBar {...props} /></div>
           )}
         </div>
         <div className='fixed right-4 bottom-4 z-20'><JumpToTopButton /></div>
@@ -421,10 +339,7 @@ if (isLearningRoute) {
 
 const LayoutIndex = props => <LayoutLearningHome {...props} />
 const LayoutPostList = props => (
-  <>
-    <BlogPostBar {...props} />
-    {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
-  </>
+  <><BlogPostBar {...props} />{siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}</>
 )
 const LayoutSearch = props => {
   const { keyword } = props
@@ -434,11 +349,7 @@ const LayoutSearch = props => {
   return <LayoutPostList {...props} slotTop={siteConfig('ALGOLIA_APP_ID') ? null : <SearchInput {...props} />} />
 }
 const LayoutArchive = props => (
-  <div className='mb-10 pb-20 md:py-12 p-3 min-h-screen w-full'>
-    {Object.keys(props.archivePosts).map(archiveTitle => (
-      <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={props.archivePosts} />
-    ))}
-  </div>
+  <div className='mb-10 pb-20 md:py-12 p-3 min-h-screen w-full'>{Object.keys(props.archivePosts).map(archiveTitle => <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={props.archivePosts} />)}</div>
 )
 const LayoutSlug = props => {
   const { post, lock, validPassword, prev, next, recommendPosts } = props
@@ -453,12 +364,7 @@ const LayoutSlug = props => {
           <div id='article-wrapper'>{!lock && <NotionPage post={post} />}</div>
           <ShareBar post={post} />
           <AdSlot type='in-article' />
-          {post?.type === 'Post' && (
-            <>
-              <ArticleAround prev={prev} next={next} />
-              <RecommendPosts recommendPosts={recommendPosts} />
-            </>
-          )}
+          {post?.type === 'Post' && (<><ArticleAround prev={prev} next={next} /><RecommendPosts recommendPosts={recommendPosts} /></>)}
           <Comment frontMatter={post} />
         </div>
       )}
@@ -467,35 +373,14 @@ const LayoutSlug = props => {
 }
 const Layout404 = props => <>404 Not found.</>
 const LayoutCategoryIndex = props => (
-  <div id='category-list' className='duration-200 flex flex-wrap'>
-    {props.categoryOptions?.map(c => (
-      <SmartLink key={c.name} href={`/category/${c.name}`} passHref legacyBehavior>
-        <div className='hover:bg-gray-100 px-5 cursor-pointer py-2'><i className='mr-4 fas fa-folder' />{c.name}({c.count})</div>
-      </SmartLink>
-    ))}
-  </div>
+  <div id='category-list' className='duration-200 flex flex-wrap'>{props.categoryOptions?.map(c => <SmartLink key={c.name} href={`/category/${c.name}`} passHref legacyBehavior><div className='hover:bg-gray-100 px-5 cursor-pointer py-2'><i className='mr-4 fas fa-folder' />{c.name}({c.count})</div></SmartLink>)}</div>
 )
 const LayoutTagIndex = props => (
   <div id='tags-list' className='duration-200 flex flex-wrap'>
     {props.tagOptions.map(t => (
-      <div key={t.name} className='p-2'>
-        <SmartLink href={`/tag/${encodeURIComponent(t.name)}`} className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200 mr-2 py-1 px-2 text-xs notion-${t.color}_background`}>
-          <div className='font-light'><i className='mr-1 fas fa-tag' /> {t.name + (t.count ? `(${t.count})` : '')} </div>
-        </SmartLink>
-      </div>
+      <div key={t.name} className='p-2'><SmartLink href={`/tag/${encodeURIComponent(t.name)}`} className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200 mr-2 py-1 px-2 text-xs notion-${t.color}_background`}><div className='font-light'><i className='mr-1 fas fa-tag' /> {t.name + (t.count ? `(${t.count})` : '')} </div></SmartLink></div>
     ))}
   </div>
 )
 
-export {
-  Layout404,
-  LayoutArchive,
-  LayoutBase,
-  LayoutCategoryIndex,
-  LayoutIndex,
-  LayoutPostList,
-  LayoutSearch,
-  LayoutSlug,
-  LayoutTagIndex,
-  CONFIG as THEME_CONFIG
-}
+export { Layout404, LayoutArchive, LayoutBase, LayoutCategoryIndex, LayoutIndex, LayoutPostList, LayoutSearch, LayoutSlug, LayoutTagIndex, CONFIG as THEME_CONFIG }
