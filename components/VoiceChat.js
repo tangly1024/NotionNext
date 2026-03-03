@@ -3,44 +3,38 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 
 // =========================
-// Global Styles
+// Global Styles & Animations
 // =========================
 const GlobalStyles = () => (
   <style>{`
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    @keyframes ping-slow {
-      75%, 100% { transform: scale(2); opacity: 0; }
-    }
-    .animate-ping-slow { animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite; }
-
     @keyframes pulse-red {
-      0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-      70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
-      100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
-    .btn-recording { animation: pulse-red 1.5s infinite; }
+    .recording-active { animation: pulse-red 1.5s infinite; }
 
     @keyframes bars {
-      0%,100% { transform: scaleY(.35); opacity:.45; }
+      0%,100% { transform: scaleY(.3); opacity:.5; }
       50% { transform: scaleY(1); opacity:1; }
     }
     .tts-bars span {
-      display:inline-block; width:4px; height:22px; border-radius:4px;
-      background: linear-gradient(180deg,#f9a8d4,#a78bfa);
-      margin:0 2px; transform-origin: bottom;
-      animation: bars 0.8s ease-in-out infinite;
+      display:inline-block; width:3px; height:20px; border-radius:3px;
+      background: #f472b6; margin:0 2px; transform-origin: bottom;
+      animation: bars 0.6s ease-in-out infinite;
     }
-    .tts-bars span:nth-child(2){ animation-delay:.08s; }
-    .tts-bars span:nth-child(3){ animation-delay:.16s; }
-    .tts-bars span:nth-child(4){ animation-delay:.24s; }
+    .tts-bars span:nth-child(2){ animation-delay: 0.1s; }
+    .tts-bars span:nth-child(3){ animation-delay: 0.2s; }
+    .tts-bars span:nth-child(4){ animation-delay: 0.3s; }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes bubble-in {
+      from { opacity: 0; transform: translateY(10px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
-    .fade-in { animation: fadeIn 0.3s ease-out; }
+    .bubble-animate { animation: bubble-in 0.25s ease-out forwards; }
   `}</style>
 );
 
@@ -58,14 +52,16 @@ const DEFAULT_SETTINGS = {
   apiKey: '',
   model: 'gpt-4o',
   temperature: 0.8,
-  systemPrompt: `你是Pingo，一个毒舌、幽默、但专业负责的中文口语教练，服务缅甸母语者。规则：练习句用中文，解释和反馈用缅文；每次1-3句；有错绝不放水。`,
-  ttsVoice: 'zh-CN-XiaoyouNeural',
-  ttsSpeed: -10, // 接口 r 参数：-50 到 50 之间
+  systemPrompt: `你是Pingo，一个毒舌、幽默、负责的中文口语教练。
+针对缅甸母语者。练习句用中文，解释用缅文。
+要求：回答简短（1-3句），拒绝机器味。发现发音或语法错误要犀利吐槽，纠正后强制要求重读。`,
+  ttsVoice: 'zh-CN-XiaochenMultilingualNeural',
+  ttsSpeed: -15, // 接口参数范围一般是 -100 到 100
   showText: true,
 };
 
 // =========================
-// TTS Engine (原生 Audio 播放器)
+// TTS Engine (原生 Audio 队列控制)
 // =========================
 class NativeTTSQueue {
   constructor() {
@@ -77,36 +73,34 @@ class NativeTTSQueue {
     this.onStateChange = null;
   }
 
-  setSettingsRef(ref) { this.settingsRef = ref; }
+  setSettings(s) { this.settingsRef = s; }
   setStateCallback(cb) { this.onStateChange = cb; }
 
   detectVoice(text, fallback) {
     if (/[\u1000-\u109F]/.test(text)) return 'my-MM-NilarNeural';
     if (/[a-zA-Z]/.test(text) && !/[\u4e00-\u9fa5]/.test(text)) return 'en-US-JennyNeural';
-    return fallback || 'zh-CN-XiaoyouNeural';
+    return fallback || 'zh-CN-XiaoxiaoNeural';
   }
 
   push(text) {
-    const t = (text || '').trim();
-    if (!t) return;
-    this.queue.push(t);
-    this.playNext();
+    if (!text.trim()) return;
+    this.queue.push(text.trim());
+    if (!this.isPlaying) this.playNext();
   }
 
   playNext() {
-    if (this.isPlaying || this.queue.length === 0) {
-      this.onStateChange?.(this.isPlaying);
+    if (this.queue.length === 0) {
+      this.isPlaying = false;
+      this.onStateChange?.(false);
       return;
     }
 
     this.isPlaying = true;
     this.onStateChange?.(true);
-
     const token = this.playToken;
     const text = this.queue.shift();
     const s = this.settingsRef;
-    
-    // 直接构造 URL，不使用 fetch 避免跨域
+
     const voice = this.detectVoice(text, s.ttsVoice);
     const url = `https://t.leftsite.cn/tts?t=${encodeURIComponent(text)}&v=${voice}&r=${s.ttsSpeed}`;
 
@@ -114,23 +108,20 @@ class NativeTTSQueue {
     this.currentAudio = audio;
 
     audio.onended = () => {
-      if (token !== this.playToken) return;
-      this.isPlaying = false;
-      this.playNext();
+      if (token === this.playToken) this.playNext();
     };
     audio.onerror = () => {
-      if (token !== this.playToken) return;
-      this.isPlaying = false;
-      this.playNext();
+      console.error("TTS Play Error");
+      if (token === this.playToken) this.playNext();
     };
 
-    audio.play().catch(() => {
-      this.isPlaying = false;
+    audio.play().catch(e => {
+      console.warn("Audio play blocked/failed", e);
       this.playNext();
     });
   }
 
-  stopAndClear() {
+  stop() {
     this.playToken++;
     this.queue = [];
     if (this.currentAudio) {
@@ -142,7 +133,7 @@ class NativeTTSQueue {
   }
 }
 
-const ttsEngine = new NativeTTSQueue();
+const ttsPlayer = new NativeTTSQueue();
 
 export default function VoiceChat({ isOpen, onClose }) {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
@@ -153,61 +144,67 @@ export default function VoiceChat({ isOpen, onClose }) {
   const [textMode, setTextMode] = useState(false);
   const [inputText, setInputText] = useState('');
   
-  const [showSettings, setShowSettings] = useState(false);
-  const [showLangPicker, setShowLangPicker] = useState(false);
   const [liveInterim, setLiveInterim] = useState('');
   const [recordFinalText, setRecordFinalText] = useState('');
+  const [showSettings, setShowSettings] = useState(false);
+  const [showLangPicker, setShowLangPicker] = useState(false);
 
   const recognitionRef = useRef(null);
-  const abortControllerRef = useRef(null);
+  const abortRef = useRef(null);
   const scrollRef = useRef(null);
-  const silenceTimerRef = useRef(null);
-  const recordingFinalRef = useRef('');
+  const silenceTimer = useRef(null);
 
   useEffect(() => {
-    const s = localStorage.getItem('pingo_settings_v4');
-    if (s) setSettings({ ...DEFAULT_SETTINGS, ...JSON.parse(s) });
-    ttsEngine.setStateCallback((playing) => setIsAiSpeaking(playing));
-    return () => stopEverything();
+    const saved = localStorage.getItem('pingo_v5_config');
+    if (saved) setSettings({ ...DEFAULT_SETTINGS, ...JSON.parse(saved) });
+    ttsPlayer.setStateCallback(setIsAiSpeaking);
+    return () => ttsPlayer.stop();
   }, []);
 
   useEffect(() => {
-    ttsEngine.setSettingsRef(settings);
-    localStorage.setItem('pingo_settings_v4', JSON.stringify(settings));
+    ttsPlayer.setSettings(settings);
+    localStorage.setItem('pingo_v5_config', JSON.stringify(settings));
   }, [settings]);
 
-  const stopEverything = () => {
-    if (recognitionRef.current) try { recognitionRef.current.stop(); } catch {}
-    if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+  const scrollToBottom = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
+    }
+  };
+
+  const stopAll = () => {
+    if (recognitionRef.current) { try { recognitionRef.current.stop(); } catch(e){} }
+    if (silenceTimer.current) clearTimeout(silenceTimer.current);
+    if (abortRef.current) abortRef.current.abort();
+    ttsPlayer.stop();
     setIsRecording(false);
-    ttsEngine.stopAndClear();
-    if (abortControllerRef.current) abortControllerRef.current.abort();
   };
 
   const sendMessage = async (text) => {
-    const content = text?.trim();
-    if (!content) return;
+    if (!text.trim()) return;
     if (!settings.apiKey) return setShowSettings(true);
 
-    ttsEngine.stopAndClear();
-    if (abortControllerRef.current) abortControllerRef.current.abort();
-
+    stopAll();
+    const userMsg = { id: nowId(), role: 'user', text: text.trim() };
     const aiMsgId = nowId();
-    const newHistory = [...history, { id: nowId(), role: 'user', text: content }];
-    setHistory([...newHistory, { id: aiMsgId, role: 'ai', text: '', isStreaming: true }]);
-    
-    abortControllerRef.current = new AbortController();
+    setHistory(prev => [...prev, userMsg, { id: aiMsgId, role: 'ai', text: '', isStreaming: true }]);
+    setTimeout(scrollToBottom, 50);
 
+    abortRef.current = new AbortController();
     try {
       const res = await fetch(`${settings.apiUrl.replace(/\/+$/, '')}/chat/completions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${settings.apiKey}` },
-        signal: abortControllerRef.current.signal,
+        signal: abortRef.current.signal,
         body: JSON.stringify({
           model: settings.model,
           temperature: settings.temperature,
           stream: true,
-          messages: [{ role: 'system', content: settings.systemPrompt }, ...newHistory.map(h => ({ role: h.role === 'ai' ? 'assistant' : 'user', content: h.text }))],
+          messages: [
+            { role: 'system', content: settings.systemPrompt },
+            ...history.slice(-6).map(h => ({ role: h.role === 'ai' ? 'assistant' : 'user', content: h.text })),
+            { role: 'user', content: text.trim() }
+          ],
         }),
       });
 
@@ -230,167 +227,192 @@ export default function VoiceChat({ isOpen, onClose }) {
             sentenceBuf += chunk;
             setHistory(prev => prev.map(m => m.id === aiMsgId ? { ...m, text: fullText } : m));
             
-            if (/[。！？.!?\n]/.test(sentenceBuf)) {
-              ttsEngine.push(sentenceBuf.trim());
+            if (/[。！？.!?\n]/.test(sentenceBuf) && sentenceBuf.length > 2) {
+              ttsPlayer.push(sentenceBuf);
               sentenceBuf = '';
             }
           } catch {}
         }
       }
-      if (sentenceBuf.trim()) ttsEngine.push(sentenceBuf.trim());
+      if (sentenceBuf.trim()) ttsPlayer.push(sentenceBuf);
       setHistory(prev => prev.map(m => m.id === aiMsgId ? { ...m, isStreaming: false } : m));
+      setTimeout(scrollToBottom, 100);
     } catch (e) {
-      if (e.name !== 'AbortError') alert(e.message);
+      if (e.name !== 'AbortError') alert("API请求失败: " + e.message);
     }
   };
 
-  const startRecording = () => {
+  const handleStartRecording = () => {
     const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRec) return alert('浏览器不支持语音识别');
+    if (!SpeechRec) return alert('当前浏览器环境不支持语音识别');
 
-    stopEverything();
+    stopAll();
     const rec = new SpeechRec();
     rec.lang = recLang;
     rec.interimResults = true;
     rec.continuous = true;
 
-    recordingFinalRef.current = '';
-    setIsRecording(true);
-
+    rec.onstart = () => setIsRecording(true);
     rec.onresult = (e) => {
       let interim = '';
+      let final = '';
       for (let i = e.resultIndex; i < e.results.length; i++) {
         const t = e.results[i][0].transcript;
-        if (e.results[i].isFinal) recordingFinalRef.current += t;
+        if (e.results[i].isFinal) final += t;
         else interim += t;
       }
-      setRecordFinalText(recordingFinalRef.current);
+      if (final) setRecordFinalText(prev => prev + final);
       setLiveInterim(interim);
-      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
-      silenceTimerRef.current = setTimeout(() => submitRecording(), 2000);
+      
+      if (silenceTimer.current) clearTimeout(silenceTimer.current);
+      silenceTimer.current = setTimeout(() => handleManualSubmit(), 2200);
     };
-
+    rec.onerror = () => setIsRecording(false);
     rec.onend = () => setIsRecording(false);
+
     recognitionRef.current = rec;
+    setRecordFinalText('');
+    setLiveInterim('');
     rec.start();
   };
 
-  const submitRecording = () => {
-    const text = (recordingFinalRef.current + liveInterim).trim();
-    stopEverything();
+  const handleManualSubmit = () => {
+    const text = (recordFinalText + liveInterim).trim();
+    if (recognitionRef.current) try { recognitionRef.current.stop(); } catch(e){}
+    setIsRecording(false);
     if (text) sendMessage(text);
   };
 
-  const handleMainBtn = () => {
-    if (isRecording) submitRecording(); // 正在录音时，点击直接发送
-    else startRecording(); // 没录音时，点击开始
-  };
+  if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[200] flex flex-col w-full h-[100dvh] bg-slate-950 text-slate-100 font-sans overflow-hidden">
+    <div className="fixed inset-0 z-[200] flex flex-col w-full h-[100dvh] bg-slate-950 text-slate-100 overflow-hidden font-sans">
       <GlobalStyles />
       
-      {/* 背景装饰 */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#1e293b,0%,#020617_100%)]" />
-      
+      {/* 霓虹背景 */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,#1e1b4b_0%,#020617_100%)]" />
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-pink-500/10 blur-[120px]" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-500/10 blur-[120px]" />
+
       {/* Header */}
-      <div className="relative z-20 flex items-center justify-between px-4 h-16 border-b border-white/5 backdrop-blur-md">
-        <button onClick={onClose} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"><i className="fas fa-times" /></button>
-        <div className="text-xs font-black tracking-widest text-slate-400">PINGO AI TUTOR</div>
-        <button onClick={() => setShowSettings(true)} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"><i className="fas fa-cog" /></button>
+      <div className="relative z-20 flex items-center justify-between px-6 h-16 border-b border-white/5 backdrop-blur-xl">
+        <button onClick={onClose} className="w-8 h-8 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity">
+          <i className="fas fa-chevron-left" />
+        </button>
+        <div className="text-[10px] font-black tracking-[0.3em] text-slate-400 uppercase">Pingo Tutor</div>
+        <button onClick={() => setShowSettings(true)} className="w-8 h-8 flex items-center justify-center opacity-70">
+          <i className="fas fa-sliders-h" />
+        </button>
       </div>
 
-      {/* 聊天内容区 */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 pb-40 relative z-10 no-scrollbar">
-        {history.length === 0 && !isRecording && (
-          <div className="h-full flex flex-col items-center justify-center text-slate-500 space-y-4">
-            <div className="w-20 h-20 rounded-3xl bg-white/5 flex items-center justify-center text-3xl">🎙️</div>
-            <p className="text-sm">点击下方麦克风开始练习</p>
-          </div>
-        )}
-
+      {/* 聊天区域 */}
+      <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 pt-4 pb-44 relative z-10 no-scrollbar">
         {history.map((msg) => (
-          <div key={msg.id} className={`flex mb-6 ${msg.role === 'user' ? 'justify-end' : 'justify-start'} fade-in`}>
-            <div className={`max-w-[85%] p-4 rounded-2xl shadow-2xl ${
+          <div key={msg.id} className={`flex mb-6 ${msg.role === 'user' ? 'justify-end' : 'justify-start'} bubble-animate`}>
+            <div className={`max-w-[85%] px-4 py-3 rounded-2xl shadow-xl ${
               msg.role === 'user' 
-                ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-tr-none' 
-                : 'bg-white/10 backdrop-blur-xl border border-white/10 rounded-tl-none'
+                ? 'bg-gradient-to-br from-pink-500 to-rose-600 text-white rounded-tr-none' 
+                : 'bg-white/10 backdrop-blur-md border border-white/10 rounded-tl-none'
             }`}>
-              <div className="text-[15px] leading-relaxed whitespace-pre-wrap">{msg.text}</div>
+              <div className="text-[15px] leading-relaxed break-words">{msg.text}</div>
+              {msg.isStreaming && <span className="inline-block w-2 h-2 ml-1 bg-pink-400 animate-pulse rounded-full" />}
             </div>
           </div>
         ))}
 
         {isAiSpeaking && !settings.showText && (
-          <div className="flex justify-center mt-10">
+          <div className="flex justify-center py-10">
             <div className="tts-bars"><span/><span/><span/><span/></div>
           </div>
         )}
       </div>
 
-      {/* 底部识别预览 */}
+      {/* 实时语音预览 */}
       {isRecording && (
-        <div className="absolute bottom-32 left-0 right-0 px-6 z-20 pointer-events-none">
-          <div className="bg-blue-500/20 backdrop-blur-md border border-blue-500/30 p-4 rounded-2xl text-blue-100 text-center shadow-2xl fade-in">
-            <span className="opacity-50 text-[10px] block mb-1 uppercase tracking-widest">Listening...</span>
-            {recordFinalText + liveInterim || '...'}
+        <div className="absolute bottom-36 left-0 right-0 px-8 z-20">
+          <div className="bg-indigo-500/20 backdrop-blur-2xl border border-indigo-400/30 p-4 rounded-2xl text-indigo-100 text-center shadow-2xl bubble-animate">
+            <div className="text-[9px] uppercase tracking-widest opacity-40 mb-2">识别中...</div>
+            <div className="text-sm font-medium">{recordFinalText + liveInterim || '请说话...'}</div>
           </div>
         </div>
       )}
 
-      {/* 操作栏 */}
-      <div className="absolute bottom-0 left-0 right-0 p-6 pb-10 z-30 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent">
-        <div className="max-w-md mx-auto flex items-center justify-between gap-4">
+      {/* 底部控制栏 */}
+      <div className="absolute bottom-0 left-0 right-0 px-6 pb-10 pt-10 z-30 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent">
+        <div className="max-w-md mx-auto flex items-center justify-between gap-6">
           
-          <button onClick={() => setTextMode(!textMode)} className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+          <button onClick={() => setTextMode(!textMode)} className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300">
             <i className={`fas ${textMode ? 'fa-microphone' : 'fa-keyboard'}`} />
           </button>
 
           {!textMode ? (
             <div className="flex-1 flex flex-col items-center">
-              <button 
-                onClick={handleMainBtn}
-                onLongPress={() => setShowLangPicker(true)}
-                className={`w-20 h-20 rounded-full flex items-center justify-center text-white transition-all duration-300 shadow-2xl ${
-                  isRecording ? 'bg-red-500 btn-recording' : 'bg-gradient-to-r from-pink-500 to-violet-500'
-                }`}
+              <div className="flex items-center gap-6">
+                {isRecording && (
+                  <button onClick={() => { stopAll(); }} className="w-10 h-10 rounded-full bg-white/5 text-slate-400 flex items-center justify-center text-xs">取消</button>
+                )}
+                
+                <button 
+                  onClick={isRecording ? handleManualSubmit : handleStartRecording}
+                  onContextMenu={(e) => { e.preventDefault(); setShowLangPicker(true); }}
+                  className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl ${
+                    isRecording ? 'bg-red-500 recording-active' : 'bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500'
+                  }`}
+                >
+                  <i className={`fas ${isRecording ? 'fa-paper-plane' : (isAiSpeaking ? 'fa-volume-up' : 'fa-microphone')} text-3xl text-white`} />
+                </button>
+
+                {isRecording && (
+                  <button onClick={() => { setRecordFinalText(''); setLiveInterim(''); }} className="w-10 h-10 rounded-full bg-white/5 text-slate-400 flex items-center justify-center text-xs">重录</button>
+                )}
+              </div>
+              
+              <div 
+                onClick={() => setShowLangPicker(true)}
+                className="mt-4 px-3 py-1 rounded-full bg-white/5 border border-white/5 text-[10px] font-bold text-slate-400 tracking-wider flex items-center gap-2 active:scale-95 transition-transform"
               >
-                <i className={`fas ${isRecording ? 'fa-paper-plane' : (isAiSpeaking ? 'fa-volume-up' : 'fa-microphone')} text-3xl`} />
-              </button>
-              <div className="mt-3 text-[10px] font-bold text-slate-500 tracking-tighter uppercase" onClick={() => setShowLangPicker(true)}>
-                {isRecording ? '点击发送' : `${RECOGNITION_LANGS.find(l=>l.code===recLang).flag} ${RECOGNITION_LANGS.find(l=>l.code===recLang).name}`}
+                {RECOGNITION_LANGS.find(l=>l.code===recLang)?.flag} {RECOGNITION_LANGS.find(l=>l.code===recLang)?.name}
+                <i className="fas fa-chevron-up text-[8px] opacity-40" />
               </div>
             </div>
           ) : (
-            <div className="flex-1 flex items-center bg-white/5 border border-white/10 rounded-2xl px-4 py-2">
+            <div className="flex-1 flex items-center bg-white/5 border border-white/10 rounded-2xl px-4 py-2 backdrop-blur-md">
               <input 
                 autoFocus
-                className="flex-1 bg-transparent outline-none text-sm h-10"
-                placeholder="输入回复..."
+                className="flex-1 bg-transparent outline-none text-sm h-10 text-white placeholder-slate-500"
+                placeholder="在此输入..."
                 value={inputText}
                 onChange={e => setInputText(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && (sendMessage(inputText), setInputText(''))}
               />
-              <button onClick={() => {sendMessage(inputText); setInputText('');}} className="text-indigo-400 p-2"><i className="fas fa-paper-plane"/></button>
+              <button onClick={() => {sendMessage(inputText); setInputText('');}} className="w-8 h-8 rounded-full bg-pink-500 text-white flex items-center justify-center ml-2">
+                <i className="fas fa-arrow-up text-xs"/>
+              </button>
             </div>
           )}
 
-          <button onClick={stopEverything} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${isAiSpeaking || isRecording ? 'bg-white/20' : 'bg-transparent text-transparent pointer-events-none'}`}>
+          <button 
+            onClick={stopAll} 
+            className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${isAiSpeaking || isRecording ? 'bg-white/10 text-rose-400' : 'bg-transparent text-transparent pointer-events-none'}`}
+          >
             <i className="fas fa-stop" />
           </button>
         </div>
       </div>
 
-      {/* 语言选择 */}
+      {/* 语言选择弹窗 */}
       {showLangPicker && (
         <div className="fixed inset-0 z-[400] flex items-end sm:items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setShowLangPicker(false)} />
-          <div className="relative bg-slate-900 w-full max-w-sm rounded-3xl p-6 border border-white/10">
-            <h3 className="text-center font-bold mb-6">识别语言选择</h3>
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-md" onClick={() => setShowLangPicker(false)} />
+          <div className="relative bg-slate-900 w-full max-w-sm rounded-3xl p-6 border border-white/10 shadow-2xl">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="font-bold">选择识别语言</h3>
+              <button onClick={() => setShowLangPicker(false)} className="opacity-50"><i className="fas fa-times"/></button>
+            </div>
             <div className="grid grid-cols-2 gap-3">
               {RECOGNITION_LANGS.map(lang => (
-                <button key={lang.code} onClick={() => {setRecLang(lang.code); setShowLangPicker(false);}} className={`p-4 rounded-2xl border ${recLang === lang.code ? 'border-indigo-500 bg-indigo-500/20' : 'border-white/5 bg-white/5'}`}>
-                  <div className="text-2xl mb-1">{lang.flag}</div>
+                <button key={lang.code} onClick={() => {setRecLang(lang.code); setShowLangPicker(false);}} className={`p-4 rounded-2xl border transition-all ${recLang === lang.code ? 'border-indigo-500 bg-indigo-500/20' : 'border-white/5 bg-white/5'}`}>
+                  <div className="text-2xl mb-2">{lang.flag}</div>
                   <div className="text-xs font-bold">{lang.name}</div>
                 </button>
               ))}
@@ -401,26 +423,37 @@ export default function VoiceChat({ isOpen, onClose }) {
 
       {/* 设置面板 */}
       {showSettings && (
-        <div className="fixed inset-0 z-[400] bg-slate-900/95 p-6 overflow-y-auto no-scrollbar">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-xl font-bold">配置</h2>
-            <button onClick={() => setShowSettings(false)} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"><i className="fas fa-times"/></button>
-          </div>
-          <div className="space-y-6 max-w-md mx-auto">
-            <div className="space-y-2">
-              <label className="text-xs text-slate-500 font-bold uppercase">OpenAI Key</label>
-              <input className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-indigo-500" type="password" value={settings.apiKey} onChange={e => setSettings({...settings, apiKey: e.target.value})} />
+        <div className="fixed inset-0 z-[400] bg-slate-950/98 p-6 overflow-y-auto no-scrollbar">
+          <div className="max-w-md mx-auto">
+            <div className="flex justify-between items-center mb-10">
+              <h2 className="text-xl font-black tracking-tighter uppercase">Settings</h2>
+              <button onClick={() => setShowSettings(false)} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center"><i className="fas fa-times"/></button>
             </div>
-            <div className="space-y-2">
-              <label className="text-xs text-slate-500 font-bold uppercase">TTS 语速 ({settings.ttsSpeed})</label>
-              <input type="range" min="-50" max="50" className="w-full accent-indigo-500" value={settings.ttsSpeed} onChange={e => setSettings({...settings, ttsSpeed: parseInt(e.target.value)})} />
-            </div>
-            <div className="pt-10">
-              <button onClick={() => setShowSettings(false)} className="w-full bg-indigo-600 py-4 rounded-2xl font-bold shadow-xl">保存设置</button>
+            
+            <div className="space-y-8">
+              <section className="space-y-3">
+                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">OpenAI API Key</label>
+                <input className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 outline-none focus:border-pink-500 transition-colors" type="password" placeholder="sk-..." value={settings.apiKey} onChange={e => setSettings({...settings, apiKey: e.target.value})} />
+              </section>
+
+              <section className="space-y-3">
+                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex justify-between">
+                  <span>TTS Speed</span>
+                  <span className="text-pink-500">{settings.ttsSpeed}</span>
+                </label>
+                <input type="range" min="-60" max="60" className="w-full accent-pink-500" value={settings.ttsSpeed} onChange={e => setSettings({...settings, ttsSpeed: parseInt(e.target.value)})} />
+              </section>
+
+              <section className="space-y-3">
+                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">System Prompt</label>
+                <textarea rows={5} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none text-sm leading-relaxed" value={settings.systemPrompt} onChange={e => setSettings({...settings, systemPrompt: e.target.value})} />
+              </section>
+
+              <button onClick={() => setShowSettings(false)} className="w-full bg-gradient-to-r from-indigo-600 to-pink-600 py-4 rounded-2xl font-bold mt-6 shadow-lg active:scale-[0.98] transition-transform">保存配置</button>
             </div>
           </div>
         </div>
       )}
     </div>
   );
-                  }
+}
