@@ -15,7 +15,6 @@ const GlobalStyles = () => (
       -webkit-user-select: none;
       user-select: none;
     }
-
     .selectable {
       -webkit-user-select: text;
       user-select: text;
@@ -73,7 +72,6 @@ const TTS_VOICES = [
   { id: 'zh-CN-XiaoyiNeural', name: '晓伊 (女-亲切)' },
 ];
 
-// 核心优化：强制要求中文和缅文使用句号分开
 const DEFAULT_PROMPT = `
 你是“Pingo”，缅甸人学中文口语教练。风格：毒舌+幽默+高压训练，但不做人身攻击。
 【绝对规则】
@@ -82,7 +80,6 @@ const DEFAULT_PROMPT = `
 3) 输出语言：学习句(目标句/纠正句)用中文；其他说明一律缅文。
 4) 若ASR有错：要求重读同一句；若正确：升级下一句。
 5) 优先场景教学：问候、课堂、点餐、问路、购物、请假、打车。
-6) 【核心注意】：你的回复中，中文句子和缅文句子之间【必须使用句号（。）严格分开】，绝对不要在同一个短句内夹杂中缅双语。
 
 【输出模板（严格）】
 [情绪标签]。缅文毒舌反馈。
@@ -99,13 +96,51 @@ const DEFAULT_SETTINGS = {
   ttsApiUrl: 'https://t.leftsite.cn/tts',
   ttsVoice: 'zh-CN-XiaoxiaoMultilingualNeural',
   ttsSpeed: -18,
-  ttsPitch: 0, // 新增音调调节
+  ttsPitch: 0,
   showText: true,
-  asrSilenceMs: 1500, // 增加静音判定时长，避免说一半提交
+  asrSilenceMs: 1500,
 };
 
 // =========================
-// TTS Queue (修复重叠、去除情绪标签朗读)
+// 智能语言分离算法 (Smart Splitter)
+// =========================
+// 解决标点符号被误判为"other"导致音频碎裂的问题。
+// 数字和标点会自动依附于当前的语言区间。
+const splitMixedLanguage = (text) => {
+  const segments = [];
+  let currentLang = null;
+  let currentBuffer = '';
+
+  for (let char of text) {
+    let type = 'neutral';
+    if (/[\u4e00-\u9fa5]/.test(char)) type = 'zh';
+    else if (/[\u1000-\u109F]/.test(char)) type = 'my';
+    else if (/[a-zA-Z]/.test(char)) type = 'en';
+
+    if (type !== 'neutral') {
+      if (currentLang !== type && currentLang !== null) {
+        // 语种发生切换，将旧的缓冲推入数组
+        segments.push({ text: currentBuffer, lang: currentLang });
+        currentBuffer = char;
+        currentLang = type;
+      } else {
+        currentLang = type;
+        currentBuffer += char;
+      }
+    } else {
+      // 遇到标点、数字、空格等中性字符，直接依附在当前语言区内
+      currentBuffer += char;
+    }
+  }
+  
+  if (currentBuffer.trim()) {
+    segments.push({ text: currentBuffer, lang: currentLang || 'zh' }); // 默认给 zh
+  }
+  return segments;
+};
+
+// =========================
+// 强大的预加载 TTS 引擎
 // =========================
 class ExternalTTSQueue {
   constructor() {
@@ -116,6 +151,8 @@ class ExternalTTSQueue {
     this.settingsRef = null;
     this.onStateChange = null;
     this.audioUnlocked = false;
+    
+    // 预加载相关
     this.prefetching = false;
     this.prefetchAudio = null;
     this.prefetchToken = null;
@@ -136,7 +173,7 @@ class ExternalTTSQueue {
     this.onStateChange?.({ isPlaying: this.isPlaying });
   }
 
-  // 净化用于朗读的文本（去掉 [] () 及 Emoji）
+  // 去除情绪标签和Emoji，防止读出来
   sanitizeText(text) {
     return text
       .replace(/\[.*?\]/g, '') 
@@ -145,25 +182,38 @@ class ExternalTTSQueue {
       .trim();
   }
 
-  detectVoice(text, fallback) {
-    if (/[\u1000-\u109F]/.test(text)) return 'my-MM-NilarNeural';
-    if (/[a-zA-Z]/.test(text) && !/[\u4e00-\u9fa5]/.test(text)) return 'en-US-JennyNeural';
-    return fallback || 'zh-CN-XiaoxiaoMultilingualNeural';
+  // 严格根据片段的语言匹配对应的专属发音人
+  getVoiceForLang(lang) {
+    const s = this.settingsRef || {};
+    if (lang === 'my') return 'my-MM-NilarNeural'; // 缅文专属发音人
+    if (lang === 'en') return 'en-US-JennyNeural'; // 英文专属发音人
+    return s.ttsVoice || 'zh-CN-XiaoxiaoMultilingualNeural'; // 用户设置的中文发音人
   }
 
-  buildUrl(text) {
+  buildUrl(text, voice) {
     const s = this.settingsRef || {};
-    const voice = this.detectVoice(text, s.ttsVoice);
     const rate = s.ttsSpeed ?? 0;
     const pitch = s.ttsPitch ?? 0;
     const baseUrl = s.ttsApiUrl || 'https://t.leftsite.cn/tts';
     return `${baseUrl}?t=${encodeURIComponent(text)}&v=${encodeURIComponent(voice)}&r=${encodeURIComponent(rate)}&p=${encodeURIComponent(pitch)}`;
   }
 
+  // 接收文本，先按语言分割，再推入队列
   push(text) {
-    const cleanText = this.sanitizeText(text || '');
-    if (!cleanText) return; 
-    this.queue.push(cleanText);
+    const cleanRawText = this.sanitizeText(text || '');
+    if (!cleanRawText) return;
+
+    // 智能分割中缅英文
+    const segments = splitMixedLanguage(cleanRawText);
+    
+    for (const seg of segments) {
+      const cleanSegText = seg.text.trim();
+      if (!cleanSegText) continue;
+      
+      const voice = this.getVoiceForLang(seg.lang);
+      this.queue.push({ text: cleanSegText, voice: voice });
+    }
+
     this.emitState();
     this.playNext();
     this.prefetchNext();
@@ -171,10 +221,12 @@ class ExternalTTSQueue {
 
   prefetchNext() {
     if (this.prefetching || this.prefetchAudio || this.queue.length === 0) return;
-    const nextText = this.queue[0];
+    
+    const nextItem = this.queue[0];
     this.prefetching = true;
     const token = this.playToken;
-    const audio = new Audio(this.buildUrl(nextText));
+    const audio = new Audio(this.buildUrl(nextItem.text, nextItem.voice));
+    
     audio.preload = 'auto';
     audio.crossOrigin = 'anonymous';
     audio.oncanplaythrough = () => {
@@ -197,10 +249,12 @@ class ExternalTTSQueue {
     this.isPlaying = true;
     this.emitState();
     const token = this.playToken;
-    const text = this.queue.shift();
+    const item = this.queue.shift();
 
     let audio = null;
-    const expectUrl = this.buildUrl(text);
+    const expectUrl = this.buildUrl(item.text, item.voice);
+    
+    // 如果预加载命中了，直接用
     if (this.prefetchAudio && this.prefetchToken === token && this.prefetchAudio.src === expectUrl) {
       audio = this.prefetchAudio;
       this.prefetchAudio = null;
@@ -218,8 +272,8 @@ class ExternalTTSQueue {
       this.currentAudio = null;
       this.isPlaying = false;
       this.emitState();
-      this.prefetchNext();
-      this.playNext();
+      this.prefetchNext(); // 立刻预取下一个
+      this.playNext();    // 播放下一个
     };
 
     audio.onended = onEndOrError;
@@ -256,7 +310,7 @@ class ExternalTTSQueue {
 
 const ttsEngine = new ExternalTTSQueue();
 
-// 按句号切分文本，保障中缅文能分配给不同的语音引擎
+// 简单的句号断句，用于把 LLM 的流式输出截断成完整句子
 const splitSpeakable = (buf) => {
   const out = [];
   let last = 0;
@@ -270,6 +324,9 @@ const splitSpeakable = (buf) => {
   return { sentences: out, rest: buf.slice(last) };
 };
 
+// =========================
+// 主组件
+// =========================
 export default function VoiceChat({ isOpen, onClose }) {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
   const [recLang, setRecLang] = useState('my-MM');
@@ -285,7 +342,6 @@ export default function VoiceChat({ isOpen, onClose }) {
 
   const [showSettings, setShowSettings] = useState(false);
   const [showLangPicker, setShowLangPicker] = useState(false);
-  const [showApiKey, setShowApiKey] = useState(false);
 
   const recognitionRef = useRef(null);
   const abortControllerRef = useRef(null);
@@ -295,7 +351,7 @@ export default function VoiceChat({ isOpen, onClose }) {
   const recordingFinalRef = useRef('');
 
   useEffect(() => {
-    const s = localStorage.getItem('ai_tutor_settings_v5');
+    const s = localStorage.getItem('ai_tutor_settings_v6');
     if (s) setSettings({ ...DEFAULT_SETTINGS, ...JSON.parse(s) });
 
     ttsEngine.setStateCallback(({ isPlaying }) => setIsAiSpeaking(isPlaying));
@@ -308,7 +364,7 @@ export default function VoiceChat({ isOpen, onClose }) {
 
   useEffect(() => {
     ttsEngine.setSettingsRef(settings);
-    localStorage.setItem('ai_tutor_settings_v5', JSON.stringify(settings));
+    localStorage.setItem('ai_tutor_settings_v6', JSON.stringify(settings));
   }, [settings]);
 
   useEffect(() => {
@@ -319,7 +375,7 @@ export default function VoiceChat({ isOpen, onClose }) {
     if (!scrollRef.current) return;
     setTimeout(() => {
       scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
-    }, 30);
+    }, 40);
   };
 
   const stopEverything = () => {
@@ -424,6 +480,7 @@ export default function VoiceChat({ isOpen, onClose }) {
             setHistory((prev) => prev.map((m) => (m.id === aiMsgId ? { ...m, text: fullText } : m)));
             scrollToBottom();
 
+            // 流式断句推给 TTS，TTS内部会自动做多语言分割
             const { sentences, rest } = splitSpeakable(sentenceBuffer);
             if (sentences.length) {
               for (const s of sentences) {
@@ -435,6 +492,7 @@ export default function VoiceChat({ isOpen, onClose }) {
         }
       }
 
+      // 最后残留的短句
       if (sentenceBuffer.trim() && !abortControllerRef.current?.signal.aborted) {
         ttsEngine.push(sentenceBuffer.trim());
       }
@@ -447,14 +505,14 @@ export default function VoiceChat({ isOpen, onClose }) {
     }
   };
 
-  // ===== ASR =====
+  // ===== ASR 语音识别 =====
   const startRecording = () => {
     ttsEngine.unlockAudio();
     const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRec) return alert('当前浏览器不支持语音识别');
 
     if (isAiSpeaking) {
-      ttsEngine.stopAndClear(); // 用户主动按录音，打断AI说话
+      ttsEngine.stopAndClear(); 
     }
     if (recognitionRef.current) return;
 
@@ -740,14 +798,13 @@ export default function VoiceChat({ isOpen, onClose }) {
                 <input className="w-full border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none" placeholder="API URL" value={settings.apiUrl} onChange={(e) => setSettings({ ...settings, apiUrl: e.target.value })} />
                 <div className="flex gap-2">
                   <input
-                    type={showApiKey ? 'text' : 'password'}
+                    type="password"
                     autoComplete="off"
-                    className="flex-1 border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none"
+                    className="flex-1 border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none text-slate-400"
                     placeholder="API Key"
                     value={settings.apiKey}
                     onChange={(e) => setSettings({ ...settings, apiKey: e.target.value })}
                   />
-                  <button onClick={() => setShowApiKey((v) => !v)} className="px-3 rounded-xl bg-white/10">{showApiKey ? '隐藏' : '显示'}</button>
                 </div>
                 <div className="flex gap-2">
                   <input className="flex-1 border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none" placeholder="Model" value={settings.model} onChange={(e) => setSettings({ ...settings, model: e.target.value })} />
