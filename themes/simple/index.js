@@ -41,6 +41,10 @@ import { Style } from './style'
 const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
 const BookLibrary = dynamic(() => import('@/components/BookLibrary'), { ssr: false })
 const AIChatDrawer = dynamic(() => import('@/components/AIChatDrawer'), { ssr: false })
+
+// 【新增】引入你刚刚做好的 AI 口语对练组件
+const VoiceChat = dynamic(() => import('@/components/VoiceChat'), { ssr: false })
+
 const BlogListScroll = dynamic(() => import('./components/BlogListScroll'), { ssr: false })
 const BlogArchiveItem = dynamic(() => import('./components/BlogArchiveItem'), { ssr: false })
 const ArticleLock = dynamic(() => import('./components/ArticleLock'), { ssr: false })
@@ -64,21 +68,21 @@ const ThemeGlobalSimple = createContext()
 export const useSimpleGlobal = () => useContext(ThemeGlobalSimple)
 
 // ===================== 1. 学习首页配置数据 =====================
-const pinyinNav = [
+const pinyinNav =[
   { zh: '声母', mm: 'ဗျည်း', icon: Mic, href: '/pinyin/initials', bg: 'bg-blue-100/80', color: 'text-blue-600' },
   { zh: '韵母', mm: 'သရ', icon: Music2, href: '/pinyin/finals', bg: 'bg-emerald-100/80', color: 'text-emerald-600' },
   { zh: '整体', mm: 'အသံတွဲ', icon: Layers3, href: '/pinyin/whole', bg: 'bg-purple-100/80', color: 'text-purple-600' },
   { zh: '声调', mm: 'အသံ', icon: FileText, href: '/pinyin/tones', bg: 'bg-orange-100/80', color: 'text-orange-600' }
 ]
 
-const coreTools = [
+const coreTools =[
   { zh: 'AI 翻译', mm: 'AI ဘာသာပြန်', icon: Globe, action: 'translator', bg: 'bg-indigo-50', iconColor: 'text-indigo-600' },
   { zh: '免费书籍', mm: 'စာကြည့်တိုက်', icon: Library, action: 'library', bg: 'bg-cyan-50', iconColor: 'text-cyan-600' },
   { zh: '单词收藏', mm: 'မှတ်ထားသော စာလုံး', icon: Star, href: '/words', bg: 'bg-slate-50', iconColor: 'text-slate-600' },
   { zh: '口语收藏', mm: 'မှတ်ထားသော စကားပြော', icon: Volume2, href: '/oral', bg: 'bg-slate-50', iconColor: 'text-slate-600' }
 ]
 
-const systemCourses = [
+const systemCourses =[
   {
     badge: 'Words',
     sub: '词汇 (VOCABULARY)',
@@ -112,7 +116,7 @@ const LayoutLearningHome = () => {
       }
       return overlayType
     })
-  }, [])
+  },[])
 
   const closeOverlay = useCallback(() => {
     if (activeOverlay && typeof window !== 'undefined') {
@@ -127,23 +131,28 @@ const LayoutLearningHome = () => {
     const onPopState = () => setActiveOverlay(null)
     window.addEventListener('popstate', onPopState)
     return () => window.removeEventListener('popstate', onPopState)
-  }, [])
+  },[])
 
   const isTranslatorOpen = activeOverlay === 'translator'
+  const isAiTutorOpen = activeOverlay === 'ai-tutor' // 【新增】AI口语对练状态
 
-  // 防止翻译层打开时底层滚动穿透
+  // 防止弹窗层打开时底层滚动穿透
   useEffect(() => {
     if (typeof document === 'undefined') return
     const prev = document.body.style.overflow
-    if (isTranslatorOpen) document.body.style.overflow = 'hidden'
+    if (isTranslatorOpen || isAiTutorOpen) document.body.style.overflow = 'hidden'
     return () => {
       document.body.style.overflow = prev
     }
-  }, [isTranslatorOpen])
+  },[isTranslatorOpen, isAiTutorOpen])
 
-  // 关键：翻译打开时只渲染翻译页
+  // 关键：拦截渲染对应的全屏工具
   if (isTranslatorOpen) {
     return <AIChatDrawer isOpen={true} onClose={closeOverlay} />
+  }
+  
+  if (isAiTutorOpen) {
+    return <VoiceChat isOpen={true} onClose={closeOverlay} /> // 【新增】调用VoiceChat
   }
 
   const glassCard = 'bg-white/70 backdrop-blur-md border border-white shadow-sm rounded-2xl transition-all active:scale-95 cursor-pointer'
@@ -199,8 +208,9 @@ const LayoutLearningHome = () => {
 
       <div className='relative z-10 mx-auto w-full max-w-md px-4 pb-36 pt-6'>
         <header className='mb-8 flex items-center gap-4'>
-          <button onClick={() => openOverlay('menu')} className='p-2.5 bg-white/80 rounded-2xl shadow-sm border border-white active:scale-90 transition-transform'>
-            <Menu className='h-6 w-6 text-slate-800' />
+          {/* 【修改】去掉了 bg-white/80, shadow-sm, border 等背景样式，变为纯净透明图标 */}
+          <button onClick={() => openOverlay('menu')} className='p-1.5 active:scale-90 transition-transform'>
+            <Menu className='h-7 w-7 text-slate-800' />
           </button>
           <div>
             <h1 className='text-xl font-black text-slate-900 leading-none'>中缅文学习中心</h1>
@@ -268,7 +278,37 @@ const LayoutLearningHome = () => {
           </Link>
         </section>
 
-        <section className='mt-8'>
+        {/* ==================== 【新增】AI 口语对练醒目入口 ==================== */}
+        <section className='mt-8 mb-2'>
+          <button 
+            onClick={() => openOverlay('ai-tutor')} 
+            className='group relative w-full overflow-hidden rounded-[2rem] bg-gradient-to-br from-pink-500 to-rose-500 p-6 text-left shadow-xl shadow-pink-200/50 transition-all active:scale-95 border border-pink-400/30'
+          >
+            {/* 炫彩背景光晕装饰 */}
+            <div className='absolute -right-4 -top-4 h-32 w-32 rounded-full bg-white/10 blur-2xl group-hover:bg-white/20 transition-all'></div>
+            <div className='absolute -bottom-8 -left-8 h-24 w-24 rounded-full bg-rose-600/40 blur-xl'></div>
+            
+            <div className='relative z-10 flex items-center justify-between'>
+              <div>
+                <div className='mb-2 flex items-center gap-1.5'>
+                  <span className='rounded-full bg-white/20 px-2.5 py-0.5 text-[10px] font-black tracking-wider text-white backdrop-blur-md border border-white/20 shadow-sm'>
+                    AI TUTOR
+                  </span>
+                  <Sparkles size={14} className='text-yellow-300 animate-pulse' />
+                </div>
+                <h3 className='text-xl font-black text-white drop-shadow-sm'>毒舌 AI 私教练口语</h3>
+                <p className='mt-1 text-xs font-medium text-pink-50'>像打电话一样对话 · 支持多语种</p>
+              </div>
+              <div className='flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur-md border border-white/20 shadow-inner group-hover:scale-110 transition-transform'>
+                <Mic size={24} className='text-white' />
+              </div>
+            </div>
+          </button>
+        </section>
+        {/* ================================================================= */}
+
+        {/* 原有系统课程区（刚好在高频单词上方插入了AI入口） */}
+        <section className='mt-6'>
           <div className='mb-4 flex items-center gap-2 px-1'>
             <BookOpen className='h-4 w-4 text-slate-400' />
             <h2 className='text-[11px] font-black tracking-[0.2em] text-slate-400 uppercase'>SYSTEM COURSES</h2>
@@ -332,6 +372,7 @@ const LayoutBase = props => {
   const searchModal = useRef(null)
   const router = useRouter()
   const pathname = router?.pathname || ''
+  
 const isLearningRoute =
   pathname === '/' ||
   pathname.startsWith('/vocabulary') ||
@@ -389,7 +430,7 @@ const LayoutSearch = props => {
   const { keyword } = props
   useEffect(() => {
     if (isBrowser) replaceSearchResult({ doms: document.getElementById('posts-wrapper'), search: keyword, target: { element: 'span', className: 'text-red-500' } })
-  }, [keyword])
+  },[keyword])
   return <LayoutPostList {...props} slotTop={siteConfig('ALGOLIA_APP_ID') ? null : <SearchInput {...props} />} />
 }
 const LayoutArchive = props => (
@@ -457,4 +498,4 @@ export {
   LayoutSlug,
   LayoutTagIndex,
   CONFIG as THEME_CONFIG
-              }
+}
