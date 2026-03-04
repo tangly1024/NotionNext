@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-// 必须安装 pinyin-pro 才能实现完美拼音包裹: npm install pinyin-pro
+// 必须安装 pinyin-pro: npm install pinyin-pro
 import { pinyin } from 'pinyin-pro';
 
 // =========================
@@ -12,7 +12,6 @@ const GlobalStyles = () => (
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* 核心交互修复 */
     .app-container {
       -webkit-touch-callout: none;
       -webkit-user-select: none;
@@ -20,7 +19,7 @@ const GlobalStyles = () => (
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
-    /* 拼音 Ruby 样式 */
+    /* 拼音 Ruby 样式：在正上方 */
     ruby { ruby-position: over; ruby-align: center; }
     rt { font-size: 0.55em; color: #f9a8d4; font-weight: 400; font-family: sans-serif; letter-spacing: 0; user-select: none; }
 
@@ -62,9 +61,9 @@ const TTS_VOICES = [
 
 const DEFAULT_PROMPT = `你是Pingo，缅甸人的中文口语私教。风格：毒舌、幽默、高要求。
 【绝对规则】
-1. 严禁生成拼音或注音（拼音由前端自动生成），只输出汉字和缅甸语。
+1. 严禁生成拼音或罗马音，只输出汉字和缅甸语（前端会自动加拼音）。
 2. 严禁中缅文混排，必须用句号严格隔开。
-3. 提示词标签如 Target Sentence: 或 Meaning: 请使用英文。
+3. 提示词标签如 Target Sentence: 或 Meaning: 请严格使用英文。
 4. 每轮回复包含：
    - 毒舌评价（缅文）
    - 纠错（如有）
@@ -74,7 +73,7 @@ const DEFAULT_PROMPT = `你是Pingo，缅甸人的中文口语私教。风格：
 
 const DEFAULT_SETTINGS = {
   apiUrl: 'https://api.mistral.ai/v1',
-  apiKey: 'xLnM3QMeVS1XoIG9LcdJUmzYLExYLvAq', // 请替换为你的真实 Key
+  apiKey: 'xLnM3QMeVS1XoIG9LcdJUmzYLExYLvAq',
   model: 'mistral-large-2512',
   temperature: 0.7,
   systemPrompt: DEFAULT_PROMPT,
@@ -86,21 +85,20 @@ const DEFAULT_SETTINGS = {
 };
 
 // =========================
-// 文本渲染组件 (智能拼音包裹 & 隐藏标签)
+// 文本渲染组件 (智能拼音包裹 & 彻底隐藏标签/Markdown)
 // =========================
 const MessageContent = ({ text, isAi }) => {
   // 1. 彻底清洗不需要显示的标签和符号
   let cleanText = text
-    .replace(/\*\*/g, '') // 移除加粗符号
-    .replace(/#/g, '') // 移除标题符号
-    .replace(/Target Sentence:|Meaning:|Correction:/gi, '') // 隐藏提示词
-    .replace(/\[.*?\]/g, '') // 隐藏情绪标签
+    .replace(/\*\*/g, '') 
+    .replace(/#/g, '') 
+    .replace(/Target Sentence:|Meaning:|Correction:/gi, '') 
+    .replace(/\[.*?\]/g, '') 
     .trim();
 
-  // 2. 拼音处理：遍历每个字符，如果是汉字就包裹 <ruby>，否则原样显示
+  // 2. 拼音处理：只给汉字加拼音
   const renderTextWithPinyin = (str) => {
     try {
-      // pinyin-pro 返回包含每个字符信息的数组
       const pyArray = pinyin(str, { type: 'all' });
       return pyArray.map((item, idx) => {
         if (item.isZh) {
@@ -109,8 +107,7 @@ const MessageContent = ({ text, isAi }) => {
         return <span key={idx}>{item.origin}</span>;
       });
     } catch (e) {
-      // 降级处理：如果没有安装 pinyin-pro 或报错，直接显示汉字
-      return str;
+      return str; // 降级处理
     }
   };
 
@@ -125,7 +122,7 @@ const MessageContent = ({ text, isAi }) => {
 };
 
 // =========================
-// TTS 引擎 (修复重叠 & 清洗提示词)
+// TTS 引擎 (修复重叠 & 清洗提示词，不读标签)
 // =========================
 class SmartTTSQueue {
   constructor() {
@@ -140,7 +137,6 @@ class SmartTTSQueue {
   setSettingsRef(ref) { this.settingsRef = ref; }
   setStateCallback(cb) { this.onStateChange = cb; }
 
-  // 预热音频上下文
   unlockAudio() {
     try {
       const a = new Audio('data:audio/mp3;base64,//MkxAAQAAAAgAAAAAAAAAAAAAAP//AwAAAAAAAAAAAAA=');
@@ -152,7 +148,7 @@ class SmartTTSQueue {
     this.onStateChange?.({ isPlaying: this.isPlaying });
   }
 
-  // 核心：彻底清洗掉 TTS 不该读出的内容（不读英文标签、Markdown）
+  // 核心：彻底清洗掉 TTS 不该读出的内容
   sanitizeForTTS(text) {
     return text
       .replace(/\*\*/g, '') 
@@ -165,9 +161,9 @@ class SmartTTSQueue {
 
   getVoiceForLang(text) {
     const s = this.settingsRef || {};
-    if (/[\u1000-\u109F]/.test(text)) return 'my-MM-NilarNeural'; // 缅文
-    if (/[a-zA-Z]/.test(text) && !/[\u4e00-\u9fa5]/.test(text)) return 'en-US-JennyNeural'; // 纯英文
-    return s.ttsVoice; // 中文或混合默认
+    if (/[\u1000-\u109F]/.test(text)) return 'my-MM-NilarNeural'; 
+    if (/[a-zA-Z]/.test(text) && !/[\u4e00-\u9fa5]/.test(text)) return 'en-US-JennyNeural'; 
+    return s.ttsVoice; 
   }
 
   buildUrl(text, voice) {
@@ -182,7 +178,7 @@ class SmartTTSQueue {
     const cleanText = this.sanitizeForTTS(text);
     if (!cleanText) return;
 
-    // 根据标点符号或语言拆分，避免单次请求过长
+    // 按标点分句送入队列
     const segments = cleanText.match(/[^。！？.!?]+[。！？.!?]?/g) || [cleanText];
     
     segments.forEach(seg => {
@@ -204,7 +200,6 @@ class SmartTTSQueue {
       return;
     }
     
-    // 立即加锁，防止连续调用导致多个音频同时加载
     this.isPlaying = true;
     this.emitState();
     
@@ -218,16 +213,13 @@ class SmartTTSQueue {
     const handleEnd = () => {
       if (token !== this.playToken) return;
       this.currentAudio = null;
-      this.playNext(); // 递归播放下一个
+      this.playNext(); 
     };
 
     audio.onended = handleEnd;
     audio.onerror = handleEnd;
 
-    audio.play().catch((e) => {
-      console.warn('Play blocked', e);
-      handleEnd();
-    });
+    audio.play().catch(() => handleEnd());
   }
 
   stop() {
@@ -256,6 +248,9 @@ export default function VoiceChat({ isOpen, onClose }) {
   const [status, setStatus] = useState('idle'); // idle | recording | processing | speaking
   const [interimText, setInterimText] = useState('');
   
+  // 文字模式与弹窗状态
+  const [textMode, setTextMode] = useState(false);
+  const [inputText, setInputText] = useState('');
   const [showSettings, setShowSettings] = useState(false);
   const [showLangPicker, setShowLangPicker] = useState(false);
   
@@ -264,15 +259,13 @@ export default function VoiceChat({ isOpen, onClose }) {
   const silenceTimer = useRef(null);
   const abortCtrl = useRef(null);
 
-  // 初始化
   useEffect(() => {
-    const saved = localStorage.getItem('ai_tutor_v8');
+    const saved = localStorage.getItem('ai_tutor_final');
     if (saved) setSettings({ ...DEFAULT_SETTINGS, ...JSON.parse(saved) });
     
     ttsEngine.setStateCallback(({ isPlaying }) => {
       setStatus(prev => {
         if (isPlaying) return 'speaking';
-        // 只有当前是 speaking 时才切回 idle，防止覆盖 processing
         if (prev === 'speaking') return 'idle';
         return prev;
       });
@@ -282,11 +275,10 @@ export default function VoiceChat({ isOpen, onClose }) {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('ai_tutor_v8', JSON.stringify(settings));
+    localStorage.setItem('ai_tutor_final', JSON.stringify(settings));
     ttsEngine.setSettingsRef(settings);
   }, [settings]);
 
-  // 滚动到底部
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
@@ -295,7 +287,7 @@ export default function VoiceChat({ isOpen, onClose }) {
 
   const stopAll = () => {
     if (recognitionRef.current) {
-      recognitionRef.current.onend = null; // 防止触发额外逻辑
+      recognitionRef.current.onend = null; 
       recognitionRef.current.stop();
       recognitionRef.current = null;
     }
@@ -315,14 +307,11 @@ export default function VoiceChat({ isOpen, onClose }) {
     if (!SpeechRec) return alert('当前浏览器不支持语音识别，请使用 Chrome。');
 
     const rec = new SpeechRec();
-    rec.lang = recLang; // 严格传递所选语言
+    rec.lang = recLang; 
     rec.interimResults = true;
     rec.continuous = true;
 
-    rec.onstart = () => {
-      setStatus('recording');
-      if (navigator.vibrate) navigator.vibrate(50);
-    };
+    rec.onstart = () => setStatus('recording');
 
     rec.onresult = (e) => {
       let final = '';
@@ -349,12 +338,8 @@ export default function VoiceChat({ isOpen, onClose }) {
       }, settings.asrSilenceMs);
     };
 
-    rec.onerror = (e) => console.error(e);
-    
-    rec.onend = () => {
-      // 只有在单纯因为静音断开时，才切回 idle。如果在 processing 就不管它
-      setStatus(prev => prev === 'recording' ? 'idle' : prev);
-    };
+    rec.onerror = () => setStatus('idle');
+    rec.onend = () => setStatus(prev => prev === 'recording' ? 'idle' : prev);
 
     recognitionRef.current = rec;
     rec.start();
@@ -367,8 +352,9 @@ export default function VoiceChat({ isOpen, onClose }) {
       return;
     }
 
-    setStatus('processing'); // 显示思考中
-    setInterimText('');
+    // 立即停止所有上一次的动作并显示思考中
+    stopAll();
+    setStatus('processing'); 
     
     const userMsg = { id: nowId(), role: 'user', text: cleanText };
     setHistory(prev => [...prev, userMsg]);
@@ -420,7 +406,6 @@ export default function VoiceChat({ isOpen, onClose }) {
                 
                 setHistory(prev => prev.map(m => m.id === aiMsgId ? { ...m, text: fullText } : m));
 
-                // 遇到标点推给 TTS
                 if (/[。！？\.\!\?]/.test(buffer)) {
                    ttsEngine.push(buffer);
                    buffer = '';
@@ -432,7 +417,6 @@ export default function VoiceChat({ isOpen, onClose }) {
       }
       if (buffer) ttsEngine.push(buffer);
 
-      // 如果流结束了且 TTS 还没开始播放，重置为 idle
       setTimeout(() => {
         if (!ttsEngine.isPlaying) setStatus('idle');
       }, 500);
@@ -451,7 +435,7 @@ export default function VoiceChat({ isOpen, onClose }) {
     <div className="app-container fixed inset-0 z-50 flex flex-col bg-slate-950 text-white overflow-hidden">
       <GlobalStyles />
       
-      {/* 沉浸式背景图 */}
+      {/* 绝对沉浸式背景图 */}
       <div className="absolute inset-0 bg-cover bg-center opacity-30 pointer-events-none" 
            style={{ backgroundImage: `url('https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=800&auto=format&fit=crop')` }} 
       />
@@ -467,16 +451,25 @@ export default function VoiceChat({ isOpen, onClose }) {
         </button>
       </div>
 
-      {/* 聊天内容区：无气泡、直接贴在背景上 */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto no-scrollbar relative z-10 p-5 flex flex-col gap-8 pb-40">
+      {/* 聊天内容区：无气泡、文字直接显示在背景图上、用户在左 */}
+      <div ref={scrollRef} className="flex-1 overflow-y-auto no-scrollbar relative z-10 p-5 flex flex-col gap-6 pb-48">
+        {history.length === 0 && (
+          <div className="mt-20 flex flex-col items-center justify-center opacity-40">
+            <i className="fas fa-comment-dots text-4xl mb-4"></i>
+            <p className="text-sm tracking-widest">请直接对我说话，或输入文字</p>
+          </div>
+        )}
+        
         {history.map((msg) => (
           <div key={msg.id} className="flex flex-col items-start fade-in w-full">
+            {/* 用户的文本：左边，淡色，加点左边框修饰 */}
             {msg.role === 'user' && (
-              <div className="text-[16px] pl-3 border-l-2 border-white/20 text-white/50 mb-2">
+              <div className="text-[16px] pl-3 border-l-2 border-white/20 text-white/50 mb-1">
                 {msg.text}
               </div>
             )}
             
+            {/* AI的文本：高亮，自动加拼音，带阴影 */}
             {msg.role === 'ai' && (
               <MessageContent text={msg.text} isAi={true} />
             )}
@@ -485,73 +478,110 @@ export default function VoiceChat({ isOpen, onClose }) {
           </div>
         ))}
         
+        {/* 识别中的临时文字显示 */}
         {interimText && (
-          <div className="text-xl text-emerald-400 font-light animate-pulse border-l-2 border-emerald-400 pl-3">
+          <div className="text-lg text-emerald-400 font-light animate-pulse border-l-2 border-emerald-400 pl-3">
             {interimText}...
           </div>
         )}
       </div>
 
       {/* 底部控制区 */}
-      <div className="absolute bottom-0 w-full z-20 pb-8 pt-12 bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent flex flex-col items-center justify-end">
+      <div className="absolute bottom-0 w-full z-20 pb-8 bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent flex flex-col items-center justify-end">
         
-        <div className="mb-6 h-6 flex items-center justify-center">
-          {status === 'recording' && <span className="text-red-400 font-bold tracking-widest text-xs uppercase animate-pulse">Recording...</span>}
-          {status === 'processing' && <span className="text-emerald-400 font-bold tracking-widest text-xs uppercase flex items-center gap-2"><i className="fas fa-circle-notch fa-spin"/> Thinking...</span>}
+        {/* 状态文案提示区 */}
+        <div className="h-8 mb-4 flex items-center justify-center">
+          {status === 'recording' && <span className="text-red-400 font-bold tracking-widest text-xs uppercase animate-pulse">正在倾听...</span>}
+          {status === 'processing' && <span className="text-emerald-400 font-bold tracking-widest text-xs uppercase flex items-center gap-2"><i className="fas fa-circle-notch fa-spin"/> 思考中...</span>}
           {status === 'speaking' && (
             <div className="voice-wave h-4 flex items-center">
               <span className="h-2" /><span className="h-4" /><span className="h-3" /><span className="h-2" />
             </div>
           )}
-          {status === 'idle' && <span className="text-white/40 text-xs font-medium tracking-widest uppercase">Tap to speak</span>}
+          {status === 'idle' && !textMode && <span className="text-white/30 text-xs font-medium tracking-widest uppercase">点击头像说话</span>}
         </div>
 
-        <div className="flex items-center gap-8">
-          {/* 语言切换 */}
-          <button 
-             onClick={() => setShowLangPicker(true)}
-             className="w-12 h-12 rounded-full bg-white/5 flex flex-col items-center justify-center border border-white/10 active:bg-white/10"
-          >
-            <span className="text-lg">{currentLang.flag}</span>
-            <span className="text-[9px] text-white/50 font-bold mt-[-2px]">{currentLang.code.split('-')[0]}</span>
-          </button>
+        {/* 控制面板：语音按钮 OR 键盘输入框 */}
+        <div className="w-full px-6">
+          {!textMode ? (
+            <div className="flex items-center justify-between max-w-sm mx-auto">
+              
+              {/* 语言切换 */}
+              <button 
+                onClick={() => setShowLangPicker(true)}
+                className="w-12 h-12 rounded-full bg-white/5 flex flex-col items-center justify-center border border-white/10 active:bg-white/10"
+              >
+                <span className="text-lg">{currentLang.flag}</span>
+              </button>
 
-          {/* 麦克风 / AI 教师头像按钮 - 使用纯 onClick */}
-          <button
-            onClick={(e) => { 
-              e.preventDefault(); 
-              if(status === 'speaking' || status === 'processing') stopAll(); 
-              else handleStartRecord(); 
-            }}
-            className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl relative z-30 touch-manipulation ${
-              status === 'recording' 
-                ? 'bg-red-500 scale-110 shadow-red-500/50' 
-                : status === 'speaking'
-                  ? 'scale-100 shadow-pink-500/30'
-                  : 'hover:scale-105 active:scale-95'
-            }`}
-          >
-            {status === 'speaking' ? (
-              <div className="w-full h-full rounded-full bg-amber-500 flex items-center justify-center border-2 border-white/20">
-                 <i className="fas fa-stop text-2xl text-white" />
-              </div>
-            ) : (
-              <div className="w-full h-full rounded-full overflow-hidden border-[3px] border-white/20 relative bg-slate-800">
-                 {/* 优美的 AI 女教师头像 */}
-                 <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=200&auto=format&fit=crop" className="w-full h-full object-cover" alt="AI Tutor" />
-                 {status === 'recording' && <div className="absolute inset-0 bg-red-500/40 animate-pulse" />}
-              </div>
-            )}
-            {status === 'recording' && <div className="absolute inset-0 rounded-full border-[3px] border-white opacity-50 animate-ping" />}
-          </button>
+              {/* AI 头像麦克风按钮 (女教师图片) */}
+              <button
+                onClick={(e) => { 
+                  e.preventDefault(); 
+                  if(status === 'speaking' || status === 'processing' || status === 'recording') stopAll(); 
+                  else handleStartRecord(); 
+                }}
+                className={`w-[85px] h-[85px] rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl relative z-30 touch-manipulation ${
+                  status === 'recording' 
+                    ? 'scale-110 shadow-red-500/50' 
+                    : status === 'speaking'
+                      ? 'scale-100 shadow-pink-500/30'
+                      : 'hover:scale-105 active:scale-95'
+                }`}
+              >
+                <div className="w-full h-full rounded-full overflow-hidden border-[3px] border-white/20 relative bg-slate-800">
+                    {/* 美观的女教师 AI 头像 */}
+                    <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=200&auto=format&fit=crop" className="w-full h-full object-cover" alt="AI Tutor" />
+                    
+                    {/* 录音时的红框呼吸效果 */}
+                    {status === 'recording' && <div className="absolute inset-0 bg-red-500/30 animate-pulse" />}
+                    
+                    {/* 说话或思考中时，显示停止按钮覆盖 */}
+                    {(status === 'speaking' || status === 'processing' || status === 'recording') && (
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center backdrop-blur-[2px]">
+                         <i className="fas fa-stop text-2xl text-white" />
+                      </div>
+                    )}
+                </div>
+                {status === 'recording' && <div className="absolute inset-0 rounded-full border-[3px] border-red-500 opacity-60 animate-ping" />}
+              </button>
 
-          {/* 清空历史 */}
-          <button 
-             onClick={() => { setHistory([]); stopAll(); }}
-             className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center border border-white/10 active:bg-white/10"
-          >
-            <i className="fas fa-trash-alt text-white/40 text-sm" />
-          </button>
+              {/* 切换到文字模式 */}
+              <button 
+                onClick={() => setTextMode(true)}
+                className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center border border-white/10 active:bg-white/10"
+              >
+                <i className="fas fa-keyboard text-white/60 text-lg" />
+              </button>
+
+            </div>
+          ) : (
+            /* 文字聊天输入框 */
+            <div className="flex items-center gap-2 bg-slate-900/80 border border-white/20 p-2 rounded-full backdrop-blur-md fade-in">
+              <button onClick={() => setTextMode(false)} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center shrink-0">
+                <i className="fas fa-microphone text-white/60" />
+              </button>
+              <input
+                type="text"
+                className="flex-1 bg-transparent px-2 py-2 text-[15px] text-white outline-none placeholder-white/30"
+                placeholder="输入你想说的..."
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSubmit(inputText);
+                    setInputText('');
+                  }
+                }}
+              />
+              <button 
+                onClick={() => { handleSubmit(inputText); setInputText(''); }} 
+                className="w-10 h-10 rounded-full bg-pink-500 text-white flex items-center justify-center shrink-0 active:scale-95"
+              >
+                <i className="fas fa-paper-plane" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -576,15 +606,15 @@ export default function VoiceChat({ isOpen, onClose }) {
       {/* 设置面板 */}
       {showSettings && (
         <div className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center" onClick={() => setShowSettings(false)}>
-          <div className="bg-slate-900 border-t sm:border border-white/10 w-full max-w-md h-[80vh] sm:h-auto sm:rounded-2xl rounded-t-2xl flex flex-col animate-[fadeIn_0.3s_ease-out]" onClick={e=>e.stopPropagation()}>
+          <div className="bg-slate-900 border-t sm:border border-white/10 w-full max-w-md h-[80vh] sm:h-auto sm:rounded-2xl rounded-t-2xl flex flex-col fade-in" onClick={e=>e.stopPropagation()}>
             <div className="p-4 border-b border-white/10 flex justify-between items-center">
-              <h3 className="font-bold text-white">Settings</h3>
+              <h3 className="font-bold text-white">⚙️ 设置</h3>
               <button onClick={() => setShowSettings(false)} className="w-8 h-8 bg-white/10 rounded-full text-sm">✕</button>
             </div>
             
             <div className="flex-1 overflow-y-auto p-5 space-y-6">
               <div>
-                <label className="text-xs text-slate-400 mb-2 block">Voice Persona</label>
+                <label className="text-xs text-slate-400 mb-2 block">发音人</label>
                 <div className="grid grid-cols-1 gap-2">
                   {TTS_VOICES.map(v => (
                     <button 
@@ -600,8 +630,8 @@ export default function VoiceChat({ isOpen, onClose }) {
 
               <div>
                 <div className="flex justify-between text-xs text-slate-400 mb-2">
-                  <span>Speed ({settings.ttsSpeed})</span>
-                  <span>Pitch ({settings.ttsPitch})</span>
+                  <span>语速 ({settings.ttsSpeed})</span>
+                  <span>音调 ({settings.ttsPitch})</span>
                 </div>
                 <div className="flex gap-4 items-center">
                    <input 
@@ -610,7 +640,7 @@ export default function VoiceChat({ isOpen, onClose }) {
                      value={settings.ttsSpeed}
                      onChange={e => setSettings({...settings, ttsSpeed: parseInt(e.target.value)})}
                    />
-                   {/* 修复音调无法设置小数的问题 */}
+                   {/* 音调：完美支持 0.89 这种小数 */}
                    <input 
                      type="number" step="0.01" min="0.1" max="2.0"
                      className="w-20 bg-black/30 border border-white/10 rounded p-2 text-center text-sm text-white"
@@ -621,7 +651,7 @@ export default function VoiceChat({ isOpen, onClose }) {
               </div>
 
               <div>
-                 <label className="text-xs text-slate-400 mb-2 block">System Prompt</label>
+                 <label className="text-xs text-slate-400 mb-2 block">Prompt 系统指令</label>
                  <textarea 
                     className="w-full bg-black/20 border border-white/10 rounded-lg p-3 text-xs leading-relaxed h-32 text-slate-300 focus:border-pink-500 outline-none resize-none"
                     value={settings.systemPrompt}
