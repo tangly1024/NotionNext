@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 // =========================
-// 全局样式 (防长按选中和防菜单弹出)
+// 全局样式
 // =========================
 const GlobalStyles = () => (
   <style>{`
@@ -21,8 +21,13 @@ const GlobalStyles = () => (
     }
 
     @keyframes ping-slow {
-); }
--plow0key     :); 0239 );%(:0( ); }
+      75%, 100% { transform: scale(2); opacity: 0; }
+    }
+    .animate-ping-slow { animation: ping-slow 1.6s cubic-bezier(0,0,0.2,1) infinite; }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(0.85); box-shadow: 0 0 0 0 rgba(239, 68, 68, .65); }
+      70% { transform: scale(1); box-shadow: 0 0 0 22px rgba(239, 68, 68, 0); }
       100% { transform: scale(0.85); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
     .animate-pulse-ring { animation: pulse-ring 1.3s infinite; }
@@ -50,8 +55,8 @@ const GlobalStyles = () => (
 );
 
 const nowId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
-const toFiniteNumber = (value, fallback = 0) => {
-  const n = Number(value);
+const toFinite = (v, fallback = 0) => {
+  const n = Number(v);
   return Number.isFinite(n) ? n : fallback;
 };
 
@@ -78,13 +83,13 @@ const DEFAULT_PROMPT = `
 2) 每轮最多3句，短句口语化。
 3) 学习句(目标句/纠正句)用中文；说明一律缅文。
 4) 若ASR有错：要求重读同一句；若正确：升级下一句。
-5) 优先场景：问候、课堂、点餐、问路、购物、请假、打车。
-6) 禁止输出英文标签、拼音、罗马音、音标、Markdown符号。
-7) 不要输出 Target Sentence、Meaning、**、[]、() 这些格式词。
+5) 优先场景教学：问候、课堂、点餐、问路、购物、请假、打车。
+6) 禁止输出英文标签、拼音、罗马音、音标、Markdown符号(**、[]、())。
+7) 不要输出 Target Sentence、Meaning 这些英文词。
 
 【输出格式（严格）】
 情绪：缅文反馈一句。
-纠错：缅文说明。错「...」→ 对「中文正确句」。
+纠错：缅文说明。错「...」-> 对「中文正确句」。
 目标句：中文目标句。
 缅文释义：缅文释义。
 `;
@@ -103,23 +108,26 @@ const DEFAULT_SETTINGS = {
   asrSilenceMs: 1500,
 };
 
+// =========================
+// 文本清理：隐藏标签/英文模板词/拼音/Markdown
+// =========================
 const LABEL_PREFIX_RE =
   /^\s*(情绪|反馈|纠错|目标句|缅文释义|Target Sentence|Meaning(?:\(MY\))?|Correction|Emotion|Feedback)\s*[:：]\s*/i;
-const TEMPLATE_WORD_RE =
+const EN_TEMPLATE_WORD_RE =
   /\b(Target Sentence|Meaning(?:\(MY\))?|Romanization|Pinyin|Correction|Emotion|Feedback|Hint)\b/gi;
-const PINYIN_OR_LATIN_LINE_RE = /^[a-zA-Z0-9\u00C0-\u024F\u1E00-\u1EFFüÜvV\s'’.,;:!?-]+$/;
+const EN_ONLY_LINE_RE = /^[a-zA-Z0-9\u00C0-\u024F\u1E00-\u1EFFüÜvV\s'’.,;:!?-]+$/;
 
 const shouldHideLine = (line) => {
   const t = line.trim();
   if (!t) return true;
-  if (/^[*#`_~\-\[$$(){}.,?!:;<>|\\\s]+$/.test(t)) return true;
+  if (/^[\s*#`_~\-\[\](){}<>|\\.,!?;:]+$/.test(t)) return true;
   if (/(拼音|罗马音|romanization|pinyin)/i.test(t)) return true;
 
   const hasZhOrMy = /[\u4e00-\u9fff\u1000-\u109F]/.test(t);
   const hasLatin = /[a-zA-Z]/.test(t);
-
   if (hasLatin && !hasZhOrMy) return true;
-  if (!hasZhOrMy && PINYIN_OR_LATIN_LINE_RE.test(t)) return true;
+  if (!hasZhOrMy && EN_ONLY_LINE_RE.test(t)) return true;
+
   return false;
 };
 
@@ -133,7 +141,7 @@ const normalizeAssistantText = (text = '') =>
     .map((line) =>
       line
         .replace(LABEL_PREFIX_RE, '')
-        .replace(TEMPLATE_WORD_RE, '')
+        .replace(EN_TEMPLATE_WORD_RE, '')
         .replace(/^\s*[-•]\s*/, '')
         .trim(),
     )
@@ -151,7 +159,7 @@ const sanitizeForTTS = (text = '') =>
     .trim();
 
 // =========================
-// 智能语言分离算法 (Smart Splitter)
+// 智能语言分离
 // =========================
 const splitMixedLanguage = (text) => {
   const segments = [];
@@ -185,7 +193,7 @@ const splitMixedLanguage = (text) => {
 };
 
 // =========================
-// TTS 引擎
+// TTS 队列
 // =========================
 class ExternalTTSQueue {
   constructor() {
@@ -216,11 +224,9 @@ class ExternalTTSQueue {
     if (this.audioUnlocked) return;
     try {
       const a = new Audio('data:audio/mp3;base64,//MkxAAQAAAAgAAAAAAAAAAAAAAP//AwAAAAAAAAAAAAA=');
-      a.play()
-        .then(() => {
-          this.audioUnlocked = true;
-        })
-        .catch(() => {});
+      a.play().then(() => {
+        this.audioUnlocked = true;
+      }).catch(() => {});
     } catch {}
   }
 
@@ -229,7 +235,7 @@ class ExternalTTSQueue {
   }
 
   sanitizeText(text) {
-    return sanitizeForTTS(text || '');
+    return sanitizeForTTS(text);
   }
 
   getVoiceForLang(lang) {
@@ -241,41 +247,38 @@ class ExternalTTSQueue {
 
   buildUrl(text, voice) {
     const s = this.settingsRef || {};
-    const rate = toFiniteNumber(s.ttsSpeed, 0);
-    const pitch = toFiniteNumber(s.ttsPitch, 0);
+    const rate = toFinite(s.ttsSpeed, 0);
+    const pitch = toFinite(s.ttsPitch, 0);
     const baseUrl = s.ttsApiUrl || 'https://t.leftsite.cn/tts';
     return `${baseUrl}?t=${encodeURIComponent(text)}&v=${encodeURIComponent(voice)}&r=${encodeURIComponent(rate)}&p=${encodeURIComponent(pitch)}`;
   }
 
-  isDuplicate(signature) {
+  seenRecently(key) {
     const now = Date.now();
-    this.recentSegments = this.recentSegments.filter((x) => now - x.time < 2500);
-    if (this.recentSegments.some((x) => x.key === signature)) return true;
-    this.recentSegments.push({ key: signature, time: now });
+    this.recentSegments = this.recentSegments.filter((x) => now - x.t < 2500);
+    if (this.recentSegments.some((x) => x.k === key)) return true;
+    this.recentSegments.push({ k: key, t: now });
     return false;
   }
 
   push(text) {
-    const cleanRawText = this.sanitizeText(text);
-    if (!cleanRawText) return;
+    const clean = this.sanitizeText(text || '');
+    if (!clean) return;
 
-    const segments = splitMixedLanguage(cleanRawText);
-
+    const segments = splitMixedLanguage(clean);
     for (const seg of segments) {
-      const cleanSegText = seg.text.trim();
-      if (!cleanSegText) continue;
-
-      const signature = `${seg.lang}:${cleanSegText.toLowerCase()}`;
-      if (this.isDuplicate(signature)) continue;
+      const segText = seg.text.trim();
+      if (!segText) continue;
+      const key = `${seg.lang}:${segText.toLowerCase()}`;
+      if (this.seenRecently(key)) continue;
 
       this.queue.push({
-        text: cleanSegText,
+        text: segText,
         voice: this.getVoiceForLang(seg.lang),
       });
     }
 
     if (this.queue.length === 0) return;
-
     this.emitState();
     this.playNext();
     this.prefetchNext();
@@ -374,7 +377,6 @@ class ExternalTTSQueue {
 
 const ttsEngine = new ExternalTTSQueue();
 
-// 简单断句：流式输出按句推给 TTS
 const splitSpeakable = (buf) => {
   const out = [];
   let last = 0;
@@ -388,6 +390,9 @@ const splitSpeakable = (buf) => {
   return { sentences: out, rest: buf.slice(last) };
 };
 
+// =========================
+// 主组件
+// =========================
 export default function VoiceChat({ isOpen, onClose }) {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
   const [recLang, setRecLang] = useState('zh-CN');
@@ -418,59 +423,10 @@ export default function VoiceChat({ isOpen, onClose }) {
   const recordingFinalRef = useRef('');
   const interimRef = useRef('');
 
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('ai_tutor_settings_v6');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        setSettings({
-          ...DEFAULT_SETTINGS,
-          ...parsed,
-          temperature: toFiniteNumber(parsed.temperature, DEFAULT_SETTINGS.temperature),
-          ttsSpeed: toFiniteNumber(parsed.ttsSpeed, DEFAULT_SETTINGS.ttsSpeed),
-          ttsPitch: toFiniteNumber(parsed.ttsPitch, DEFAULT_SETTINGS.ttsPitch),
-          asrSilenceMs: toFiniteNumber(parsed.asrSilenceMs, DEFAULT_SETTINGS.asrSilenceMs),
-        });
-      }
-
-      const savedRecLang = localStorage.getItem('ai_tutor_rec_lang_v1');
-      if (savedRecLang && RECOGNITION_LANGS.some((l) => l.code === savedRecLang)) {
-        setRecLang(savedRecLang);
-      }
-    } catch {}
-
-    ttsEngine.setStateCallback(({ isPlaying }) => setIsAiSpeaking(isPlaying));
-
-    return () => {
-      stopEverything();
-      ttsEngine.setStateCallback(null);
-    };
-  }, []);
-
-  useEffect(() => {
-    ttsEngine.setSettingsRef(settings);
-    try {
-      localStorage.setItem('ai_tutor_settings_v6', JSON.stringify(settings));
-    } catch {}
-  }, [settings]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('ai_tutor_rec_lang_v1', recLang);
-    } catch {}
-  }, [recLang]);
-
-  useEffect(() => {
-    historyRef.current = history;
-  }, [history]);
-
   const scrollToBottom = () => {
     if (!scrollRef.current) return;
     setTimeout(() => {
-      scrollRef.current?.scrollTo({
-        top: scrollRef.current.scrollHeight,
-        behavior: 'smooth',
-      });
+      scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
     }, 40);
   };
 
@@ -551,18 +507,12 @@ export default function VoiceChat({ isOpen, onClose }) {
     try {
       const messages = [
         { role: 'system', content: settings.systemPrompt },
-        ...newHistory.map((h) => ({
-          role: h.role === 'ai' ? 'assistant' : 'user',
-          content: h.text,
-        })),
+        ...newHistory.map((h) => ({ role: h.role === 'ai' ? 'assistant' : 'user', content: h.text })),
       ];
 
       const res = await fetch(`${settings.apiUrl.replace(/\/+$/, '')}/chat/completions`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${settings.apiKey}`,
-        },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${settings.apiKey}` },
         signal: controller.signal,
         body: JSON.stringify({
           model: settings.model,
@@ -595,7 +545,6 @@ export default function VoiceChat({ isOpen, onClose }) {
         for (const line of parts) {
           const ln = line.trim();
           if (!ln.startsWith('data:')) continue;
-
           const payload = ln.slice(5).trim();
           if (payload === '[DONE]') continue;
 
@@ -612,10 +561,8 @@ export default function VoiceChat({ isOpen, onClose }) {
             fullText += chunk;
             sentenceBuffer += chunk;
 
-            const visibleText = normalizeAssistantText(fullText);
-            setHistory((prev) =>
-              prev.map((m) => (m.id === aiMsgId ? { ...m, text: visibleText } : m)),
-            );
+            const visible = normalizeAssistantText(fullText);
+            setHistory((prev) => prev.map((m) => (m.id === aiMsgId ? { ...m, text: visible } : m)));
             scrollToBottom();
 
             const { sentences, rest } = splitSpeakable(sentenceBuffer);
@@ -639,21 +586,15 @@ export default function VoiceChat({ isOpen, onClose }) {
     } finally {
       setIsThinking(false);
       abortControllerRef.current = null;
-      setHistory((prev) =>
-        prev.map((m) => (m.id === aiMsgId ? { ...m, isStreaming: false } : m)),
-      );
+      setHistory((prev) => prev.map((m) => (m.id === aiMsgId ? { ...m, isStreaming: false } : m)));
     }
   };
 
-  // ===== ASR 语音识别 =====
+  // ===== ASR =====
   const startRecording = () => {
     ttsEngine.unlockAudio();
-
     const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRec) {
-      alert('当前浏览器不支持语音识别');
-      return;
-    }
+    if (!SpeechRec) return alert('当前浏览器不支持语音识别');
 
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -678,7 +619,6 @@ export default function VoiceChat({ isOpen, onClose }) {
 
     rec.onresult = (e) => {
       let interimText = '';
-
       for (let i = e.resultIndex; i < e.results.length; i++) {
         const t = e.results[i][0]?.transcript || '';
         if (e.results[i].isFinal) recordingFinalRef.current += `${t} `;
@@ -692,7 +632,7 @@ export default function VoiceChat({ isOpen, onClose }) {
       clearSilenceTimer();
       silenceTimerRef.current = setTimeout(
         () => manualSubmitRecording(),
-        toFiniteNumber(settings.asrSilenceMs, 1500),
+        toFinite(settings.asrSilenceMs, 1500),
       );
     };
 
@@ -700,7 +640,7 @@ export default function VoiceChat({ isOpen, onClose }) {
       setIsRecording(false);
       recognitionRef.current = null;
       if (e?.error === 'not-allowed') {
-        alert('麦克风权限被拒绝，请在浏览器设置里允许麦克风权限。');
+        alert('麦克风权限被拒绝，请在浏览器设置里允许麦克风权限');
       }
     };
 
@@ -711,7 +651,6 @@ export default function VoiceChat({ isOpen, onClose }) {
 
     recognitionRef.current = rec;
     if (navigator.vibrate) navigator.vibrate(30);
-
     try {
       rec.start();
     } catch {}
@@ -726,10 +665,9 @@ export default function VoiceChat({ isOpen, onClose }) {
 
   const handleMicPointerDown = (e) => {
     e.preventDefault();
-
     if (longPressTimerRef.current) clearTimeout(longPressTimerRef.current);
-    longPressTriggeredRef.current = false;
 
+    longPressTriggeredRef.current = false;
     longPressTimerRef.current = setTimeout(() => {
       longPressTriggeredRef.current = true;
       if (navigator.vibrate) navigator.vibrate(45);
@@ -740,7 +678,6 @@ export default function VoiceChat({ isOpen, onClose }) {
 
   const handleMicPointerUp = (e) => {
     e.preventDefault();
-
     if (longPressTimerRef.current) {
       clearTimeout(longPressTimerRef.current);
       longPressTimerRef.current = null;
@@ -769,6 +706,49 @@ export default function VoiceChat({ isOpen, onClose }) {
     longPressTriggeredRef.current = false;
   };
 
+  useEffect(() => {
+    try {
+      const s = localStorage.getItem('ai_tutor_settings_v6');
+      if (s) {
+        const parsed = JSON.parse(s);
+        setSettings({
+          ...DEFAULT_SETTINGS,
+          ...parsed,
+          temperature: toFinite(parsed.temperature, DEFAULT_SETTINGS.temperature),
+          ttsSpeed: toFinite(parsed.ttsSpeed, DEFAULT_SETTINGS.ttsSpeed),
+          ttsPitch: toFinite(parsed.ttsPitch, DEFAULT_SETTINGS.ttsPitch),
+          asrSilenceMs: toFinite(parsed.asrSilenceMs, DEFAULT_SETTINGS.asrSilenceMs),
+        });
+      }
+
+      const lang = localStorage.getItem('ai_tutor_rec_lang_v1');
+      if (lang && RECOGNITION_LANGS.some((l) => l.code === lang)) {
+        setRecLang(lang);
+      }
+    } catch {}
+
+    ttsEngine.setStateCallback(({ isPlaying }) => setIsAiSpeaking(isPlaying));
+
+    return () => {
+      stopEverything();
+      ttsEngine.setStateCallback(null);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    ttsEngine.setSettingsRef(settings);
+    localStorage.setItem('ai_tutor_settings_v6', JSON.stringify(settings));
+  }, [settings]);
+
+  useEffect(() => {
+    historyRef.current = history;
+  }, [history]);
+
+  useEffect(() => {
+    localStorage.setItem('ai_tutor_rec_lang_v1', recLang);
+  }, [recLang]);
+
   const liveText = [recordFinalText, liveInterim].filter(Boolean).join(' ');
   if (!isOpen) return null;
 
@@ -779,10 +759,8 @@ export default function VoiceChat({ isOpen, onClose }) {
       <GlobalStyles />
 
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-70 pointer-events-none"
-        style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1400')",
-        }}
+        className="absolute inset-0 bg-cover bg-center opacity-68 pointer-events-none"
+        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1400')" }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-slate-900/30 via-slate-900/48 to-slate-950/82 pointer-events-none" />
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_20%_20%,rgba(236,72,153,.16),transparent_35%),radial-gradient(circle_at_80%_25%,rgba(99,102,241,.16),transparent_35%)]" />
@@ -808,8 +786,12 @@ export default function VoiceChat({ isOpen, onClose }) {
       </div>
 
       {/* Body */}
-      <div ref={scrollRef} className="select- overflow-autobar- pb flex-        &&text (
-divName="flex-1 flex flex-col items-center justify-center">
+      <div
+        ref={scrollRef}
+        className="selectable flex-1 overflow-y-auto no-scrollbar relative p-4 pb-36 flex flex-col z-10"
+      >
+        {!settings.showText && !textMode ? (
+          <div className="flex-1 flex flex-col items-center justify-center">
             <div className="relative flex items-center justify-center w-56 h-56 pointer-events-none">
               {isAiSpeaking && <div className="absolute inset-0 rounded-full bg-pink-400/30 animate-ping-slow" />}
               {isAiSpeaking && <div className="absolute inset-6 rounded-full bg-violet-400/30 animate-ping-slow" style={{ animationDelay: '.4s' }} />}
@@ -817,7 +799,6 @@ divName="flex-1 flex flex-col items-center justify-center">
                 <i className={`fas fa-microphone-alt text-5xl ${isAiSpeaking ? 'text-white' : 'text-slate-300'}`} />
               </div>
             </div>
-
             <div className="mt-8 h-10 flex items-center justify-center">
               {isAiSpeaking ? (
                 <div className="tts-bars"><span /><span /><span /><span /><span /></div>
@@ -859,7 +840,9 @@ divName="flex-1 flex flex-col items-center justify-center">
                   </div>
                   <div className="flex-1 pt-0.5 text-[15px] leading-7 text-slate-100/92 whitespace-pre-wrap [text-shadow:0_1px_8px_rgba(0,0,0,.45)]">
                     {aiText || (msg.isStreaming ? '思考中...' : '')}
-                    {msg.isStreaming && aiText && <span className="inline-block w-1.5 h-4 ml-1 align-middle bg-pink-300 animate-pulse" />}
+                    {msg.isStreaming && aiText && (
+                      <span className="inline-block w-1.5 h-4 ml-1 align-middle bg-pink-300 animate-pulse" />
+                    )}
                   </div>
                 </div>
               );
@@ -880,7 +863,10 @@ divName="flex-1 flex flex-col items-center justify-center">
       {/* Bottom Control */}
       <div className="absolute bottom-0 left-0 right-0 z-30 pb-[max(24px,env(safe-area-inset-bottom))] px-5 bg-gradient-to-t from-slate-950 via-slate-950/92 to-transparent pt-12">
         <div className="max-w-md mx-auto relative flex items-center justify-center h-20">
-          <button onClick={() => setTextMode((v) => !v)} className="absolute left-0 w-12 h-12 rounded-full bg-white/15 text-white active:scale-95 transition-transform">
+          <button
+            onClick={() => setTextMode((v) => !v)}
+            className="absolute left-0 w-12 h-12 rounded-full bg-white/15 text-white active:scale-95 transition-transform"
+          >
             <i className={`fas ${textMode ? 'fa-microphone' : 'fa-keyboard'}`} />
           </button>
 
@@ -888,7 +874,10 @@ divName="flex-1 flex flex-col items-center justify-center">
             <div className="flex flex-col items-center w-full">
               <div className="flex items-center gap-4">
                 {isRecording ? (
-                  <button onClick={clearRecordingBuffer} className="h-11 w-14 rounded-full bg-white/15 text-white text-xs font-bold animate-[fadeIn_.2s_ease-out]">
+                  <button
+                    onClick={clearRecordingBuffer}
+                    className="h-11 w-14 rounded-full bg-white/15 text-white text-xs font-bold animate-[fadeIn_.2s_ease-out]"
+                  >
                     清空
                   </button>
                 ) : <div className="w-14" />}
@@ -906,7 +895,10 @@ divName="flex-1 flex flex-col items-center justify-center">
                 </button>
 
                 {isRecording ? (
-                  <button onClick={stopRecordingOnly} className="h-11 w-14 rounded-full bg-white/15 text-white text-xs font-bold animate-[fadeIn_.2s_ease-out]">
+                  <button
+                    onClick={stopRecordingOnly}
+                    className="h-11 w-14 rounded-full bg-white/15 text-white text-xs font-bold animate-[fadeIn_.2s_ease-out]"
+                  >
                     取消
                   </button>
                 ) : <div className="w-14" />}
@@ -936,7 +928,13 @@ divName="flex-1 flex flex-col items-center justify-center">
                   }
                 }}
               />
-              <button onClick={() => { sendMessage(inputText); setInputText(''); }} className="w-10 h-10 rounded-full bg-pink-500 text-white flex items-center justify-center shrink-0">
+              <button
+                onClick={() => {
+                  sendMessage(inputText);
+                  setInputText('');
+                }}
+                className="w-10 h-10 rounded-full bg-pink-500 text-white flex items-center justify-center shrink-0"
+              >
                 <i className="fas fa-paper-plane" />
               </button>
             </div>
@@ -944,7 +942,11 @@ divName="flex-1 flex flex-col items-center justify-center">
 
           <div className="absolute right-0">
             {(isAiSpeaking || isRecording || isThinking) ? (
-              <button onClick={stopEverything} className="w-12 h-12 rounded-full bg-white/15 text-white animate-[fadeIn_.2s_ease-out]" title="全部停止">
+              <button
+                onClick={stopEverything}
+                className="w-12 h-12 rounded-full bg-white/15 text-white animate-[fadeIn_.2s_ease-out]"
+                title="全部停止"
+              >
                 <i className="fas fa-stop" />
               </button>
             ) : (
@@ -970,7 +972,10 @@ divName="flex-1 flex flex-col items-center justify-center">
               {RECOGNITION_LANGS.map((lang) => (
                 <button
                   key={lang.code}
-                  onClick={() => { setRecLang(lang.code); setShowLangPicker(false); }}
+                  onClick={() => {
+                    setRecLang(lang.code);
+                    setShowLangPicker(false);
+                  }}
                   className={`p-4 rounded-2xl border flex flex-col gap-2 transition-colors ${recLang === lang.code ? 'border-pink-500 bg-pink-500/20' : 'border-white/10 bg-white/5 active:bg-white/10'}`}
                 >
                   <span className="text-2xl">{lang.flag}</span>
@@ -1010,7 +1015,7 @@ divName="flex-1 flex flex-col items-center justify-center">
                   <input className="flex-1 border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none" placeholder="Model" value={settings.model} onChange={(e) => setSettings({ ...settings, model: e.target.value })} />
                   <div className="w-28 flex items-center border border-white/10 rounded-xl px-2 bg-slate-900/50">
                     <span className="text-xs text-slate-400 mr-1">Temp</span>
-                    <input type="number" step="0.1" className="w-full bg-transparent outline-none" value={settings.temperature} onChange={(e) => setSettings({ ...settings, temperature: toFiniteNumber(e.target.value, 0.7) })} />
+                    <input type="number" step="0.1" className="w-full bg-transparent outline-none" value={settings.temperature} onChange={(e) => setSettings({ ...settings, temperature: toFinite(e.target.value, 0.7) })} />
                   </div>
                 </div>
               </div>
@@ -1025,27 +1030,32 @@ divName="flex-1 flex flex-col items-center justify-center">
 
               <div className="space-y-4 border-t border-white/10 pt-4">
                 <div className="font-bold text-slate-400 text-xs">TTS 发音配置</div>
-                <input className="w-full border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none" placeholder="TTS API URL" value={settings.ttsApiUrl} onChange={(e })} />
-                
-                <select 
+                <input
+                  className="w-full border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none"
+                  placeholder="TTS API URL"
+                  value={settings.ttsApiUrl}
+                  onChange={(e) => setSettings({ ...settings, ttsApiUrl: e.target.value })}
+                />
+
+                <select
                   className="w-full border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none appearance-none"
-                  value={settings.ttsVoice} 
+                  value={settings.ttsVoice}
                   onChange={(e) => setSettings({ ...settings, ttsVoice: e.target.value })}
                 >
-                  {TTS_VOICES.map(v => <option key={v.id} value={v.id}>{v.name}</option>)}
+                  {TTS_VOICES.map((v) => <option key={v.id} value={v.id}>{v.name}</option>)}
                 </select>
 
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <label className="text-xs text-slate-400 w-10">语速</label>
-                    <input type="range" min="-50" max="50" step="1" className="flex-1 accent-pink-500" value={settings.ttsSpeed} onChange={(e) => setSettings({ ...settings, ttsSpeed: toFiniteNumber(e.target.value, 0) })} />
-                    <input type="number" step="1" className="w-16 bg-slate-900/50 border border-white/10 rounded-md px-1 py-1 text-center text-xs outline-none" value={settings.ttsSpeed} onChange={(e) => setSettings({ ...settings, ttsSpeed: toFiniteNumber(e.target.value, 0) })} />
+                    <input type="range" min="-50" max="50" step="1" className="flex-1 accent-pink-500" value={settings.ttsSpeed} onChange={(e) => setSettings({ ...settings, ttsSpeed: toFinite(e.target.value, 0) })} />
+                    <input type="number" step="1" className="w-16 bg-slate-900/50 border border-white/10 rounded-md px-1 py-1 text-center text-xs outline-none" value={settings.ttsSpeed} onChange={(e) => setSettings({ ...settings, ttsSpeed: toFinite(e.target.value, 0) })} />
                   </div>
-                  
+
                   <div className="flex items-center gap-3">
                     <label className="text-xs text-slate-400 w-10">音调</label>
-                    <input type="range" min="-2" max="2" step="0.01" className="flex-1 accent-pink-500" value={settings.ttsPitch} onChange={(e) => setSettings({ ...settings, ttsPitch: toFiniteNumber(e.target.value, 0) })} />
-                    <input type="number" step="0.01" className="w-16 bg-slate-900/50 border border-white/10 rounded-md px-1 py-1 text-center text-xs outline-none" value={settings.ttsPitch} onChange={(e) => setSettings({ ...settings, ttsPitch: toFiniteNumber(e.target.value, 0) })} />
+                    <input type="range" min="-2" max="2" step="0.01" className="flex-1 accent-pink-500" value={settings.ttsPitch} onChange={(e) => setSettings({ ...settings, ttsPitch: toFinite(e.target.value, 0) })} />
+                    <input type="number" step="0.01" className="w-16 bg-slate-900/50 border border-white/10 rounded-md px-1 py-1 text-center text-xs outline-none" value={settings.ttsPitch} onChange={(e) => setSettings({ ...settings, ttsPitch: toFinite(e.target.value, 0) })} />
                   </div>
                 </div>
               </div>
@@ -1055,13 +1065,13 @@ divName="flex-1 flex flex-col items-center justify-center">
                   <span>显示字幕</span>
                   <input type="checkbox" className="w-5 h-5 accent-pink-500" checked={settings.showText} onChange={(e) => setSettings({ ...settings, showText: e.target.checked })} />
                 </label>
-                
+
                 <div className="p-3 bg-slate-900/50 rounded-xl border border-white/10">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-sm">麦克风静默提交时间</span>
                     <span className="text-xs text-slate-400">{settings.asrSilenceMs}ms</span>
                   </div>
-                  <input type="range" min="600" max="3000" step="100" className="w-full accent-pink-500" value={settings.asrSilenceMs} onChange={(e) => setSettings({ ...settings, asrSilenceMs: toFiniteNumber(e.target.value, 1500) })} />
+                  <input type="range" min="600" max="3000" step="100" className="w-full accent-pink-500" value={settings.asrSilenceMs} onChange={(e) => setSettings({ ...settings, asrSilenceMs: toFinite(e.target.value, 1500) })} />
                   <p className="text-[10px] text-slate-500 mt-1">控制你不说话多久后自动发送消息</p>
                 </div>
               </div>
