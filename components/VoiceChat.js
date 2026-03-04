@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-// 如需实现真正的自动拼音，请安装: npm install pinyin-pro
-// 然后取消下面这行的注释:
-// import { pinyin } from 'pinyin-pro';
+import React, { useState, useEffect, useRef } from 'react';
+// 必须安装 pinyin-pro 才能实现完美拼音包裹: npm install pinyin-pro
+import { pinyin } from 'pinyin-pro';
 
 // =========================
 // 全局样式
@@ -21,24 +20,11 @@ const GlobalStyles = () => (
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
-    /* 允许文本选择 */
-    .selectable {
-      -webkit-user-select: text;
-      user-select: text;
-    }
-
     /* 拼音 Ruby 样式 */
-    ruby { ruby-position: over; }
-    rt { font-size: 0.6em; color: #f9a8d4; font-weight: normal; }
+    ruby { ruby-position: over; ruby-align: center; }
+    rt { font-size: 0.55em; color: #f9a8d4; font-weight: 400; font-family: sans-serif; letter-spacing: 0; user-select: none; }
 
     /* 动画定义 */
-    @keyframes pulse-ring {
-      0% { transform: scale(0.85); box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7); }
-      70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(236, 72, 153, 0); }
-      100% { transform: scale(0.85); box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
-    }
-    .animate-pulse-ring { animation: pulse-ring 1.5s infinite; }
-
     @keyframes wave {
       0%, 100% { height: 4px; opacity: 0.5; }
       50% { height: 16px; opacity: 1; }
@@ -52,7 +38,7 @@ const GlobalStyles = () => (
     .voice-wave span:nth-child(4) { animation-delay: 0.3s; }
     
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(5px); }
       to { opacity: 1; transform: translateY(0); }
     }
     .fade-in { animation: fadeIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
@@ -72,72 +58,81 @@ const TTS_VOICES = [
   { id: 'zh-CN-XiaochenMultilingualNeural', name: '晓辰多语言 (男-推荐)' },
   { id: 'zh-CN-XiaoxiaoNeural', name: '晓晓 (女-标准)' },
   { id: 'zh-CN-YunxiNeural', name: '云希 (男-阳光)' },
-  { id: 'zh-CN-YunjianNeural', name: '云健 (男-影视)' },
 ];
 
-// 优化提示词：禁止生成拼音，要求严格分句
-const DEFAULT_PROMPT = `
-你是Pingo，缅甸人的中文口语私教。风格：毒舌、幽默、高要求。
+const DEFAULT_PROMPT = `你是Pingo，缅甸人的中文口语私教。风格：毒舌、幽默、高要求。
 【绝对规则】
-1. 严禁生成拼音或注音，只输出汉字。
-2. 严禁在中文和缅文之间混排，必须用句号"。"严格隔开。
-3. 提示词标签（如 Target Sentence）请使用英文，但我会在前端隐藏它们。
+1. 严禁生成拼音或注音（拼音由前端自动生成），只输出汉字和缅甸语。
+2. 严禁中缅文混排，必须用句号严格隔开。
+3. 提示词标签如 Target Sentence: 或 Meaning: 请使用英文。
 4. 每轮回复包含：
    - 毒舌评价（缅文）
    - 纠错（如有）
-   - 目标句（中文） + 解释（缅文）
-5. 不要输出 Markdown 标题（#），直接输出纯文本。
-`;
+   - Target Sentence: 目标句（中文）
+   - Meaning: 解释（缅文）
+5. 不要输出 Markdown 标题（#），直接纯文本。`;
 
 const DEFAULT_SETTINGS = {
   apiUrl: 'https://api.mistral.ai/v1',
-  apiKey: 'xLnM3QMeVS1XoIG9LcdJUmzYLExYLvAq',
+  apiKey: 'xLnM3QMeVS1XoIG9LcdJUmzYLExYLvAq', // 请替换为你的真实 Key
   model: 'mistral-large-2512',
   temperature: 0.7,
   systemPrompt: DEFAULT_PROMPT,
   ttsApiUrl: 'https://t.leftsite.cn/tts',
   ttsVoice: 'zh-CN-XiaoxiaoMultilingualNeural',
-  ttsSpeed: -15,
-  ttsPitch: 1.0, // 支持小数
-  showText: true,
+  ttsSpeed: -10,
+  ttsPitch: 1.0, 
   asrSilenceMs: 1500,
 };
 
 // =========================
-// 文本渲染组件 (处理拼音和隐藏标签)
+// 文本渲染组件 (智能拼音包裹 & 隐藏标签)
 // =========================
 const MessageContent = ({ text, isAi }) => {
-  // 1. 隐藏不需要显示的标签
-  let displayHtml = text
-    .replace(/\*\*(.*?)\*\*/g, '$1') // 去除加粗标记
+  // 1. 彻底清洗不需要显示的标签和符号
+  let cleanText = text
+    .replace(/\*\*/g, '') // 移除加粗符号
+    .replace(/#/g, '') // 移除标题符号
     .replace(/Target Sentence:|Meaning:|Correction:/gi, '') // 隐藏提示词
     .replace(/\[.*?\]/g, '') // 隐藏情绪标签
     .trim();
 
-  // 2. 简单的拼音处理逻辑 (如果没有安装 pinyin-pro，则只显示汉字)
-  // 如果你有 pinyin-pro，可以使用以下逻辑：
-  // const htmlWithPinyin = pinyin(displayHtml, { toneType: 'none', type: 'array' }).map(...)
-  // 这里为了演示演示单文件运行，我们只做简单的渲染，不带自动注音
-  // 实际项目中请引入 pinyin 库来包裹 <ruby> 标签
+  // 2. 拼音处理：遍历每个字符，如果是汉字就包裹 <ruby>，否则原样显示
+  const renderTextWithPinyin = (str) => {
+    try {
+      // pinyin-pro 返回包含每个字符信息的数组
+      const pyArray = pinyin(str, { type: 'all' });
+      return pyArray.map((item, idx) => {
+        if (item.isZh) {
+          return <ruby key={idx}>{item.origin}<rt>{item.pinyin}</rt></ruby>;
+        }
+        return <span key={idx}>{item.origin}</span>;
+      });
+    } catch (e) {
+      // 降级处理：如果没有安装 pinyin-pro 或报错，直接显示汉字
+      return str;
+    }
+  };
 
   return (
-    <div className={`text-[17px] leading-relaxed whitespace-pre-wrap font-medium ${isAi ? 'text-white/95 text-shadow-sm' : 'text-white/60'}`} style={{ textShadow: isAi ? '0 2px 4px rgba(0,0,0,0.5)' : 'none' }}>
-      {displayHtml}
+    <div 
+      className={`text-[18px] leading-[2.2] whitespace-pre-wrap font-medium tracking-wide ${isAi ? 'text-white' : 'text-white/50'}`} 
+      style={{ textShadow: isAi ? '0px 2px 6px rgba(0,0,0,0.8), 0px 1px 2px rgba(0,0,0,0.6)' : 'none' }}
+    >
+      {isAi ? renderTextWithPinyin(cleanText) : cleanText}
     </div>
   );
 };
 
 // =========================
-// TTS 引擎 (增强版)
+// TTS 引擎 (修复重叠 & 清洗提示词)
 // =========================
 class SmartTTSQueue {
   constructor() {
     this.queue = [];
     this.isPlaying = false;
-    this.audioUnlocked = false;
     this.settingsRef = null;
     this.onStateChange = null;
-    
     this.currentAudio = null;
     this.playToken = 0;
   }
@@ -145,11 +140,11 @@ class SmartTTSQueue {
   setSettingsRef(ref) { this.settingsRef = ref; }
   setStateCallback(cb) { this.onStateChange = cb; }
 
+  // 预热音频上下文
   unlockAudio() {
-    if (this.audioUnlocked) return;
     try {
       const a = new Audio('data:audio/mp3;base64,//MkxAAQAAAAgAAAAAAAAAAAAAAP//AwAAAAAAAAAAAAA=');
-      a.play().then(() => { this.audioUnlocked = true; }).catch(() => {});
+      a.play().catch(() => {});
     } catch {}
   }
 
@@ -157,28 +152,22 @@ class SmartTTSQueue {
     this.onStateChange?.({ isPlaying: this.isPlaying });
   }
 
-  // 核心：彻底清洗掉不应该读出来的东西
+  // 核心：彻底清洗掉 TTS 不该读出的内容（不读英文标签、Markdown）
   sanitizeForTTS(text) {
     return text
-      .replace(/Target Sentence:|Meaning:|Correction:/gi, '') // 英文标签不读
-      .replace(/\[.*?\]/g, '') // 情绪标签 [laughs] 不读
-      .replace(/\(.*?\)/g, '') // 括号内容不读
-      .replace(/\*\*/g, '') // Markdown 符号不读
-      .replace(/[a-zA-Z]+/g, (match) => {
-        // 可选：如果不想读任何英文单词，可以在这里过滤，但保留 Target Sentence 后的中文
-        // 这里我们保留英文单词，因为可能是英语教学，但前面的标签已经去掉了
-        return match; 
-      })
+      .replace(/\*\*/g, '') 
+      .replace(/#/g, '')
+      .replace(/Target Sentence:|Meaning:|Correction:/gi, '') 
+      .replace(/\[.*?\]/g, '') 
+      .replace(/\(.*?\)/g, '') 
       .trim();
   }
 
   getVoiceForLang(text) {
     const s = this.settingsRef || {};
-    // 简单的语言检测
     if (/[\u1000-\u109F]/.test(text)) return 'my-MM-NilarNeural'; // 缅文
-    if (/[\u4e00-\u9fa5]/.test(text)) return s.ttsVoice; // 中文 (用户设置)
-    if (/[a-zA-Z]/.test(text)) return 'en-US-JennyNeural'; // 英文
-    return s.ttsVoice;
+    if (/[a-zA-Z]/.test(text) && !/[\u4e00-\u9fa5]/.test(text)) return 'en-US-JennyNeural'; // 纯英文
+    return s.ttsVoice; // 中文或混合默认
   }
 
   buildUrl(text, voice) {
@@ -186,9 +175,6 @@ class SmartTTSQueue {
     const rate = s.ttsSpeed ?? 0;
     const pitch = s.ttsPitch ?? 1.0;
     const baseUrl = s.ttsApiUrl || 'https://t.leftsite.cn/tts';
-    
-    // 把 pitch 转换成 API 需要的格式 (假设 API 支持 p 参数)
-    // 很多 TTS API pitch 是 Hz 或 relative string，这里透传 p
     return `${baseUrl}?t=${encodeURIComponent(text)}&v=${encodeURIComponent(voice)}&r=${encodeURIComponent(rate)}&p=${encodeURIComponent(pitch)}`;
   }
 
@@ -196,55 +182,29 @@ class SmartTTSQueue {
     const cleanText = this.sanitizeForTTS(text);
     if (!cleanText) return;
 
-    // 智能拆分中缅文 (按语言块拆分)
-    const segments = this.smartSplit(cleanText);
+    // 根据标点符号或语言拆分，避免单次请求过长
+    const segments = cleanText.match(/[^。！？.!?]+[。！？.!?]?/g) || [cleanText];
     
     segments.forEach(seg => {
-      if (seg.text.trim()) {
+      if (seg.trim()) {
         this.queue.push({ 
-          text: seg.text, 
-          voice: this.getVoiceForLang(seg.text) 
+          text: seg.trim(), 
+          voice: this.getVoiceForLang(seg) 
         });
       }
     });
 
-    this.emitState();
-    this.playNext();
-  }
-
-  smartSplit(text) {
-    const segments = [];
-    let currLang = null;
-    let buffer = '';
-
-    for (const char of text) {
-      let type = 'other';
-      if (/[\u4e00-\u9fa5]/.test(char)) type = 'zh';
-      else if (/[\u1000-\u109F]/.test(char)) type = 'my';
-      else if (/[a-zA-Z]/.test(char)) type = 'en';
-      
-      // 标点符号跟随上一个语言
-      if (type === 'other') {
-        buffer += char;
-        continue;
-      }
-
-      if (currLang && type !== currLang) {
-        segments.push({ text: buffer, lang: currLang });
-        buffer = char;
-        currLang = type;
-      } else {
-        buffer += char;
-        currLang = type;
-      }
-    }
-    if (buffer) segments.push({ text: buffer, lang: currLang });
-    return segments;
+    if (!this.isPlaying) this.playNext();
   }
 
   playNext() {
-    if (this.isPlaying || this.queue.length === 0) return;
+    if (this.queue.length === 0) {
+      this.isPlaying = false;
+      this.emitState();
+      return;
+    }
     
+    // 立即加锁，防止连续调用导致多个音频同时加载
     this.isPlaying = true;
     this.emitState();
     
@@ -258,18 +218,13 @@ class SmartTTSQueue {
     const handleEnd = () => {
       if (token !== this.playToken) return;
       this.currentAudio = null;
-      this.isPlaying = false;
-      this.emitState();
-      this.playNext();
+      this.playNext(); // 递归播放下一个
     };
 
     audio.onended = handleEnd;
-    audio.onerror = (e) => {
-      console.error('TTS Error', e);
-      handleEnd();
-    };
+    audio.onerror = handleEnd;
 
-    audio.play().catch(e => {
+    audio.play().catch((e) => {
       console.warn('Play blocked', e);
       handleEnd();
     });
@@ -280,6 +235,7 @@ class SmartTTSQueue {
     this.queue = [];
     if (this.currentAudio) {
       this.currentAudio.pause();
+      this.currentAudio.src = '';
       this.currentAudio = null;
     }
     this.isPlaying = false;
@@ -295,9 +251,8 @@ const ttsEngine = new SmartTTSQueue();
 export default function VoiceChat({ isOpen, onClose }) {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
   const [recLang, setRecLang] = useState('my-MM');
-  const [history, setHistory] = useState([]); // {role, text}
+  const [history, setHistory] = useState([]); 
   
-  // 状态机
   const [status, setStatus] = useState('idle'); // idle | recording | processing | speaking
   const [interimText, setInterimText] = useState('');
   
@@ -308,23 +263,26 @@ export default function VoiceChat({ isOpen, onClose }) {
   const scrollRef = useRef(null);
   const silenceTimer = useRef(null);
   const abortCtrl = useRef(null);
-  const buttonLock = useRef(false); // 防止按钮连击
 
   // 初始化
   useEffect(() => {
-    const saved = localStorage.getItem('ai_tutor_v7');
+    const saved = localStorage.getItem('ai_tutor_v8');
     if (saved) setSettings({ ...DEFAULT_SETTINGS, ...JSON.parse(saved) });
     
     ttsEngine.setStateCallback(({ isPlaying }) => {
-      if (isPlaying) setStatus('speaking');
-      else setStatus(prev => prev === 'speaking' ? 'idle' : prev);
+      setStatus(prev => {
+        if (isPlaying) return 'speaking';
+        // 只有当前是 speaking 时才切回 idle，防止覆盖 processing
+        if (prev === 'speaking') return 'idle';
+        return prev;
+      });
     });
 
     return () => stopAll();
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('ai_tutor_v7', JSON.stringify(settings));
+    localStorage.setItem('ai_tutor_v8', JSON.stringify(settings));
     ttsEngine.setSettingsRef(settings);
   }, [settings]);
 
@@ -337,6 +295,7 @@ export default function VoiceChat({ isOpen, onClose }) {
 
   const stopAll = () => {
     if (recognitionRef.current) {
+      recognitionRef.current.onend = null; // 防止触发额外逻辑
       recognitionRef.current.stop();
       recognitionRef.current = null;
     }
@@ -349,16 +308,14 @@ export default function VoiceChat({ isOpen, onClose }) {
   };
 
   const handleStartRecord = () => {
-    if (buttonLock.current) return;
-    
     ttsEngine.unlockAudio();
-    stopAll(); // 先停止一切
+    stopAll(); 
 
     const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRec) return alert('No Speech API');
+    if (!SpeechRec) return alert('当前浏览器不支持语音识别，请使用 Chrome。');
 
     const rec = new SpeechRec();
-    rec.lang = recLang;
+    rec.lang = recLang; // 严格传递所选语言
     rec.interimResults = true;
     rec.continuous = true;
 
@@ -375,15 +332,14 @@ export default function VoiceChat({ isOpen, onClose }) {
         else interim += e.results[i][0].transcript;
       }
       
-      // 更新临时显示
       if (final) {
-        handleSubmit(final + interim); // 有结果直接提交，不等待
+        handleSubmit(final + interim);
         rec.stop();
         return;
       }
+      
       setInterimText(interim);
 
-      // 静音检测
       if (silenceTimer.current) clearTimeout(silenceTimer.current);
       silenceTimer.current = setTimeout(() => {
         if (interim) {
@@ -393,13 +349,11 @@ export default function VoiceChat({ isOpen, onClose }) {
       }, settings.asrSilenceMs);
     };
 
-    rec.onerror = (e) => {
-      console.error(e);
-      setStatus('idle');
-    };
+    rec.onerror = (e) => console.error(e);
     
     rec.onend = () => {
-      if (status === 'recording') setStatus('idle');
+      // 只有在单纯因为静音断开时，才切回 idle。如果在 processing 就不管它
+      setStatus(prev => prev === 'recording' ? 'idle' : prev);
     };
 
     recognitionRef.current = rec;
@@ -408,20 +362,20 @@ export default function VoiceChat({ isOpen, onClose }) {
 
   const handleSubmit = async (text) => {
     const cleanText = text.trim();
-    if (!cleanText) return;
+    if (!cleanText) {
+      setStatus('idle');
+      return;
+    }
 
-    setStatus('processing'); // 立即显示思考中
+    setStatus('processing'); // 显示思考中
     setInterimText('');
     
-    // 添加用户消息
     const userMsg = { id: nowId(), role: 'user', text: cleanText };
     setHistory(prev => [...prev, userMsg]);
     
-    // 准备 AI 消息
     const aiMsgId = nowId();
     setHistory(prev => [...prev, { id: aiMsgId, role: 'ai', text: '...' }]);
 
-    // 请求 LLM
     abortCtrl.current = new AbortController();
     try {
       const res = await fetch(`${settings.apiUrl}/chat/completions`, {
@@ -464,10 +418,9 @@ export default function VoiceChat({ isOpen, onClose }) {
                 fullText += content;
                 buffer += content;
                 
-                // 更新 UI
                 setHistory(prev => prev.map(m => m.id === aiMsgId ? { ...m, text: fullText } : m));
 
-                // 简单的流式断句推给 TTS
+                // 遇到标点推给 TTS
                 if (/[。！？\.\!\?]/.test(buffer)) {
                    ttsEngine.push(buffer);
                    buffer = '';
@@ -479,6 +432,11 @@ export default function VoiceChat({ isOpen, onClose }) {
       }
       if (buffer) ttsEngine.push(buffer);
 
+      // 如果流结束了且 TTS 还没开始播放，重置为 idle
+      setTimeout(() => {
+        if (!ttsEngine.isPlaying) setStatus('idle');
+      }, 500);
+
     } catch (e) {
       if (e.name !== 'AbortError') {
         setHistory(prev => [...prev, { id: nowId(), role: 'error', text: 'Error: ' + e.message }]);
@@ -487,18 +445,17 @@ export default function VoiceChat({ isOpen, onClose }) {
     }
   };
 
-  // 渲染界面
   const currentLang = RECOGNITION_LANGS.find(l => l.code === recLang) || RECOGNITION_LANGS[0];
 
   return (
     <div className="app-container fixed inset-0 z-50 flex flex-col bg-slate-950 text-white overflow-hidden">
       <GlobalStyles />
       
-      {/* 背景图 */}
-      <div className="absolute inset-0 bg-cover bg-center opacity-40 pointer-events-none transition-opacity duration-1000" 
-           style={{ backgroundImage: `url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800')` }} 
+      {/* 沉浸式背景图 */}
+      <div className="absolute inset-0 bg-cover bg-center opacity-30 pointer-events-none" 
+           style={{ backgroundImage: `url('https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=800&auto=format&fit=crop')` }} 
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/80 to-slate-900/40 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-slate-900/40 pointer-events-none" />
 
       {/* 顶部栏 */}
       <div className="relative z-10 flex items-center justify-between p-4">
@@ -510,38 +467,26 @@ export default function VoiceChat({ isOpen, onClose }) {
         </button>
       </div>
 
-      {/* 聊天内容区 (沉浸式字幕模式) */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto no-scrollbar relative z-10 p-5 flex flex-col gap-6 pb-40">
-        {history.length === 0 && (
-          <div className="flex-1 flex flex-col items-center justify-center opacity-60">
-            <div className="w-24 h-24 rounded-full bg-white/10 flex items-center justify-center mb-4">
-               <i className="fas fa-graduation-cap text-4xl" />
-            </div>
-            <p className="text-sm tracking-widest">AI TUTOR READY</p>
-          </div>
-        )}
-        
+      {/* 聊天内容区：无气泡、直接贴在背景上 */}
+      <div ref={scrollRef} className="flex-1 overflow-y-auto no-scrollbar relative z-10 p-5 flex flex-col gap-8 pb-40">
         {history.map((msg) => (
-          <div key={msg.id} className={`flex flex-col ${msg.role === 'user' ? 'items-start opacity-60' : 'items-start'} fade-in`}>
-            {/* 用户文字在左侧，淡化 */}
+          <div key={msg.id} className="flex flex-col items-start fade-in w-full">
             {msg.role === 'user' && (
-              <div className="text-lg font-light pl-1 border-l-2 border-white/30 mb-1">
+              <div className="text-[16px] pl-3 border-l-2 border-white/20 text-white/50 mb-2">
                 {msg.text}
               </div>
             )}
             
-            {/* AI 文字：高亮，无气泡，阴影 */}
             {msg.role === 'ai' && (
               <MessageContent text={msg.text} isAi={true} />
             )}
 
-            {msg.role === 'error' && <div className="text-red-400 text-sm">{msg.text}</div>}
+            {msg.role === 'error' && <div className="text-red-400 text-sm mt-2">{msg.text}</div>}
           </div>
         ))}
         
-        {/* 实时识别文字 */}
         {interimText && (
-          <div className="text-xl text-emerald-400 font-light animate-pulse">
+          <div className="text-xl text-emerald-400 font-light animate-pulse border-l-2 border-emerald-400 pl-3">
             {interimText}...
           </div>
         )}
@@ -550,7 +495,6 @@ export default function VoiceChat({ isOpen, onClose }) {
       {/* 底部控制区 */}
       <div className="absolute bottom-0 w-full z-20 pb-8 pt-12 bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent flex flex-col items-center justify-end">
         
-        {/* 状态提示文案 */}
         <div className="mb-6 h-6 flex items-center justify-center">
           {status === 'recording' && <span className="text-red-400 font-bold tracking-widest text-xs uppercase animate-pulse">Recording...</span>}
           {status === 'processing' && <span className="text-emerald-400 font-bold tracking-widest text-xs uppercase flex items-center gap-2"><i className="fas fa-circle-notch fa-spin"/> Thinking...</span>}
@@ -559,12 +503,10 @@ export default function VoiceChat({ isOpen, onClose }) {
               <span className="h-2" /><span className="h-4" /><span className="h-3" /><span className="h-2" />
             </div>
           )}
-          {status === 'idle' && <span className="text-white/30 text-xs font-medium tracking-widest uppercase">Tap to speak</span>}
+          {status === 'idle' && <span className="text-white/40 text-xs font-medium tracking-widest uppercase">Tap to speak</span>}
         </div>
 
-        {/* 核心操作按钮 */}
         <div className="flex items-center gap-8">
-          
           {/* 语言切换 */}
           <button 
              onClick={() => setShowLangPicker(true)}
@@ -574,31 +516,33 @@ export default function VoiceChat({ isOpen, onClose }) {
             <span className="text-[9px] text-white/50 font-bold mt-[-2px]">{currentLang.code.split('-')[0]}</span>
           </button>
 
-          {/* 麦克风 / 停止按钮 */}
+          {/* 麦克风 / AI 教师头像按钮 - 使用纯 onClick */}
           <button
-            // 解决移动端点击不灵敏：使用 touchStart
-            onTouchStart={(e) => { e.preventDefault(); if(status === 'speaking') stopAll(); else handleStartRecord(); }}
-            onMouseDown={(e) => { e.preventDefault(); if(status === 'speaking') stopAll(); else handleStartRecord(); }}
-            className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-200 shadow-2xl relative z-30 ${
+            onClick={(e) => { 
+              e.preventDefault(); 
+              if(status === 'speaking' || status === 'processing') stopAll(); 
+              else handleStartRecord(); 
+            }}
+            className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl relative z-30 touch-manipulation ${
               status === 'recording' 
                 ? 'bg-red-500 scale-110 shadow-red-500/50' 
                 : status === 'speaking'
-                  ? 'bg-amber-500 scale-100'
-                  : 'bg-gradient-to-br from-pink-500 to-rose-600 hover:scale-105 active:scale-95'
+                  ? 'scale-100 shadow-pink-500/30'
+                  : 'hover:scale-105 active:scale-95'
             }`}
-            style={{ touchAction: 'manipulation' }} // 关键：禁止双击缩放，提高响应
           >
-            {/* 头像或图标 */}
             {status === 'speaking' ? (
-              <i className="fas fa-stop text-2xl text-white" />
+              <div className="w-full h-full rounded-full bg-amber-500 flex items-center justify-center border-2 border-white/20">
+                 <i className="fas fa-stop text-2xl text-white" />
+              </div>
             ) : (
-              <div className="w-full h-full rounded-full overflow-hidden border-2 border-white/20 relative">
-                 <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200" className="w-full h-full object-cover opacity-90" alt="AI" />
-                 {status === 'recording' && <div className="absolute inset-0 bg-red-500/30 animate-pulse" />}
+              <div className="w-full h-full rounded-full overflow-hidden border-[3px] border-white/20 relative bg-slate-800">
+                 {/* 优美的 AI 女教师头像 */}
+                 <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=200&auto=format&fit=crop" className="w-full h-full object-cover" alt="AI Tutor" />
+                 {status === 'recording' && <div className="absolute inset-0 bg-red-500/40 animate-pulse" />}
               </div>
             )}
-            
-            {status === 'recording' && <div className="absolute inset-0 rounded-full border-2 border-white opacity-50 animate-ping" />}
+            {status === 'recording' && <div className="absolute inset-0 rounded-full border-[3px] border-white opacity-50 animate-ping" />}
           </button>
 
           {/* 清空历史 */}
@@ -614,7 +558,7 @@ export default function VoiceChat({ isOpen, onClose }) {
       {/* 语言选择弹窗 */}
       {showLangPicker && (
         <div className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm flex items-center justify-center p-6" onClick={() => setShowLangPicker(false)}>
-          <div className="bg-slate-900 border border-white/10 rounded-2xl w-full max-w-xs overflow-hidden">
+          <div className="bg-slate-900 border border-white/10 rounded-2xl w-full max-w-xs overflow-hidden" onClick={e=>e.stopPropagation()}>
             {RECOGNITION_LANGS.map(l => (
               <button 
                 key={l.code}
@@ -631,8 +575,8 @@ export default function VoiceChat({ isOpen, onClose }) {
 
       {/* 设置面板 */}
       {showSettings && (
-        <div className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center" onClick={(e) => e.target === e.currentTarget && setShowSettings(false)}>
-          <div className="bg-slate-900 border-t sm:border border-white/10 w-full max-w-md h-[80vh] sm:h-auto sm:rounded-2xl rounded-t-2xl flex flex-col animate-[fadeIn_0.3s_ease-out]">
+        <div className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center" onClick={() => setShowSettings(false)}>
+          <div className="bg-slate-900 border-t sm:border border-white/10 w-full max-w-md h-[80vh] sm:h-auto sm:rounded-2xl rounded-t-2xl flex flex-col animate-[fadeIn_0.3s_ease-out]" onClick={e=>e.stopPropagation()}>
             <div className="p-4 border-b border-white/10 flex justify-between items-center">
               <h3 className="font-bold text-white">Settings</h3>
               <button onClick={() => setShowSettings(false)} className="w-8 h-8 bg-white/10 rounded-full text-sm">✕</button>
@@ -659,20 +603,19 @@ export default function VoiceChat({ isOpen, onClose }) {
                   <span>Speed ({settings.ttsSpeed})</span>
                   <span>Pitch ({settings.ttsPitch})</span>
                 </div>
-                <div className="flex gap-4">
-                   {/* 语速 */}
+                <div className="flex gap-4 items-center">
                    <input 
                      type="range" min="-50" max="50" 
                      className="flex-1 accent-pink-500 h-2 bg-white/10 rounded-lg appearance-none cursor-pointer"
                      value={settings.ttsSpeed}
-                     onChange={e => setSettings({...settings, ttsSpeed: Number(e.target.value)})}
+                     onChange={e => setSettings({...settings, ttsSpeed: parseInt(e.target.value)})}
                    />
-                   {/* 音调：支持小数 */}
+                   {/* 修复音调无法设置小数的问题 */}
                    <input 
-                     type="number" step="0.01"
-                     className="w-16 bg-white/5 border border-white/10 rounded px-2 text-center text-sm"
+                     type="number" step="0.01" min="0.1" max="2.0"
+                     className="w-20 bg-black/30 border border-white/10 rounded p-2 text-center text-sm text-white"
                      value={settings.ttsPitch}
-                     onChange={e => setSettings({...settings, ttsPitch: Number(e.target.value)})}
+                     onChange={e => setSettings({...settings, ttsPitch: parseFloat(e.target.value)})}
                    />
                 </div>
               </div>
