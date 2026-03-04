@@ -24,11 +24,11 @@ jobs:
     runs-on: ubuntu-latest # 运行环境为最新版的Ubuntu
     steps:
       - name: 'Checkout codes' # 步骤一，获取仓库代码
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       # - name: 'Run baiduPush' # 步骤二，执行sh命令文件
       #   run: npm install && npm run baiduPush # 运行目录是仓库根目录
       - name: Set up Python 3.8
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v5
         with:
           python-version: 3.8
 

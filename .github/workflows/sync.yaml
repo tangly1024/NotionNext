@@ -17,7 +17,7 @@ jobs:
     steps:
       # Step 1: run a standard checkout action
       - name: Checkout target repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Step 2: run the sync action
       - name: Sync upstream changes
@@ -35,5 +35,5 @@ jobs:
       - name: Sync check
         if: failure()
         run: |
-          echo "[Error] 由于上游仓库的 workflow 文件变更，导致 GitHub 自动暂停了本次自动更新，你需要手动 Sync Fork 一次。
+          echo "[Error] 由于上游仓库的 workflow 文件变更，导致 GitHub 自动暂停了本次自动更新，你需要手动 Sync Fork 一次。"
           exit 1

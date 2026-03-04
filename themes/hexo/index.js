@@ -7,7 +7,7 @@ import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef } from 'react'
 import ArticleAdjacent from './components/ArticleAdjacent'
@@ -141,10 +141,7 @@ const LayoutBase = props => {
             </div>
 
             {/* 右侧栏 */}
-            <SideRight
-              {...props}
-              className={`space-y-4 lg:w-80 pt-4 ${post ? 'lg:pt-0' : 'lg:pt-4'}`}
-            />
+            <SideRight {...props} />
           </div>
         </main>
 
@@ -266,13 +263,14 @@ const LayoutArchive = props => {
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const router = useRouter()
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector('#article-wrapper #notion-article')
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -280,7 +278,7 @@ const LayoutSlug = props => {
             }
           }
         },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+        waiting404
       )
     }
   }, [post])
@@ -289,11 +287,10 @@ const LayoutSlug = props => {
       <div className='w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article'>
         {lock && <ArticleLock validPassword={validPassword} />}
 
-        {!lock && (
-          <div
-            id='article-wrapper'
-            className='overflow-x-auto flex-grow mx-auto md:w-full md:px-5 '>
+        {!lock && post && (
+          <div className='overflow-x-auto flex-grow mx-auto md:w-full md:px-5 '>
             <article
+              id='article-wrapper'
               itemScope
               itemType='https://schema.org/Movie'
               className='subpixel-antialiased overflow-y-hidden'>
@@ -333,11 +330,12 @@ const LayoutSlug = props => {
  */
 const Layout404 = props => {
   const router = useRouter()
+  const { locale } = useGlobal()
   useEffect(() => {
     // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
       if (isBrowser) {
-        const article = document.getElementById('notion-article')
+        const article = document.querySelector('#article-wrapper #notion-article')
         if (!article) {
           router.push('/').then(() => {
             // console.log('找不到页面', router.asPath)
@@ -354,7 +352,7 @@ const Layout404 = props => {
             404
           </h2>
           <div className='inline-block text-left h-32 leading-10 items-center'>
-            <h2 className='m-0 p-0'>页面未找到</h2>
+            <h2 className='m-0 p-0'>{locale.COMMON.NOT_FOUND}</h2>
           </div>
         </div>
       </div>
@@ -379,7 +377,7 @@ const LayoutCategoryIndex = props => {
         <div id='category-list' className='duration-200 flex flex-wrap mx-8'>
           {categoryOptions?.map(category => {
             return (
-              <Link
+              <SmartLink
                 key={category.name}
                 href={`/category/${category.name}`}
                 passHref
@@ -391,7 +389,7 @@ const LayoutCategoryIndex = props => {
                   <i className='mr-4 fas fa-folder' /> {category.name}(
                   {category.count})
                 </div>
-              </Link>
+              </SmartLink>
             )
           })}
         </div>

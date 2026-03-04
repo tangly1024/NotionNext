@@ -1,8 +1,7 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/db/getSiteData'
-import { getLayoutByTheme } from '@/themes/theme'
-import { useRouter } from 'next/router'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import { DynamicLayout } from '@/themes/theme'
 
 /**
  * 标签下的文章列表
@@ -10,18 +9,13 @@ import { useRouter } from 'next/router'
  * @returns
  */
 const Tag = props => {
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({
-    theme: siteConfig('THEME'),
-    router: useRouter()
-  })
-
-  return <Layout {...props} />
+  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+  return <DynamicLayout theme={theme} layoutName='LayoutPostList' {...props} />
 }
 
 export async function getStaticProps({ params: { tag }, locale }) {
   const from = 'tag-props'
-  const props = await getGlobalData({ from, locale })
+  const props = await fetchGlobalAllData({ from, locale })
 
   // 过滤状态
   props.posts = props.allPages
@@ -70,7 +64,7 @@ function getTagNames(tags) {
 
 export async function getStaticPaths() {
   const from = 'tag-static-path'
-  const { tagOptions } = await getGlobalData({ from })
+  const { tagOptions } = await fetchGlobalAllData({ from })
   const tagNames = getTagNames(tagOptions)
 
   return {

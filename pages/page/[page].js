@@ -1,8 +1,7 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
-import { getLayoutByTheme } from '@/themes/theme'
-import { useRouter } from 'next/router'
+import { fetchGlobalAllData, getPostBlocks } from '@/lib/db/SiteDataApi'
+import { DynamicLayout } from '@/themes/theme'
 
 /**
  * 文章列表分页
@@ -10,18 +9,13 @@ import { useRouter } from 'next/router'
  * @returns
  */
 const Page = props => {
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({
-    theme: siteConfig('THEME'),
-    router: useRouter()
-  })
-
-  return <Layout {...props} />
+  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+  return <DynamicLayout theme={theme} layoutName='LayoutPostList' {...props} />
 }
 
 export async function getStaticPaths({ locale }) {
   const from = 'page-paths'
-  const { postCount, NOTION_CONFIG } = await getGlobalData({ from, locale })
+  const { postCount, NOTION_CONFIG } = await fetchGlobalAllData({ from, locale })
   const totalPages = Math.ceil(
     postCount / siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
   )
@@ -34,9 +28,9 @@ export async function getStaticPaths({ locale }) {
   }
 }
 
-export async function getStaticProps({ params: { page } }) {
+export async function getStaticProps({ params: { page }, locale }) {
   const from = `page-${page}`
-  const props = await getGlobalData({ from })
+  const props = await fetchGlobalAllData({ from, locale })
   const { allPages } = props
   const POST_PREVIEW_LINES = siteConfig(
     'POST_PREVIEW_LINES',
