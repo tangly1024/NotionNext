@@ -1,11 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-// 必须安装 pinyin-pro: npm install pinyin-pro
-import { pinyin } from 'pinyin-pro';
+import React, { useEffect, useRef, useState } from 'react';
 
 // =========================
-// 全局样式
+// 全局样式 (防长按选中和防菜单弹出)
 // =========================
 const GlobalStyles = () => (
   <style>{`
@@ -16,40 +14,52 @@ const GlobalStyles = () => (
       -webkit-touch-callout: none;
       -webkit-user-select: none;
       user-select: none;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .selectable {
+      -webkit-user-select: text;
+      user-select: text;
     }
 
-    /* 拼音 Ruby 样式：在正上方 */
-    ruby { ruby-position: over; ruby-align: center; }
-    rt { font-size: 0.55em; color: #f9a8d4; font-weight: 400; font-family: sans-serif; letter-spacing: 0; user-select: none; }
+    @keyframes ping-slow {
+); }
+-plow0key     :); 0239 );%(:0( ); }
+      100% { transform: scale(0.85); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+    .animate-pulse-ring { animation: pulse-ring 1.3s infinite; }
 
-    /* 动画定义 */
-    @keyframes wave {
-      0%, 100% { height: 4px; opacity: 0.5; }
-      50% { height: 16px; opacity: 1; }
+    @keyframes bars {
+      0%,100% { transform: scaleY(.35); opacity:.45; }
+      50% { transform: scaleY(1); opacity:1; }
     }
-    .voice-wave span {
-      display: inline-block; width: 3px; background: #fff; margin: 0 1px; border-radius: 2px;
-      animation: wave 0.8s ease-in-out infinite;
+    .tts-bars span {
+      display:inline-block; width:4px; height:20px; border-radius:4px;
+      background: linear-gradient(180deg,#f9a8d4,#a78bfa);
+      margin:0 2px; transform-origin: bottom;
+      animation: bars 0.55s ease-in-out infinite;
     }
-    .voice-wave span:nth-child(2) { animation-delay: 0.1s; }
-    .voice-wave span:nth-child(3) { animation-delay: 0.2s; }
-    .voice-wave span:nth-child(4) { animation-delay: 0.3s; }
-    
+    .tts-bars span:nth-child(2){ animation-delay:.06s; }
+    .tts-bars span:nth-child(3){ animation-delay:.12s; }
+    .tts-bars span:nth-child(4){ animation-delay:.18s; }
+    .tts-bars span:nth-child(5){ animation-delay:.24s; }
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(5px); }
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .fade-in { animation: fadeIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
   `}</style>
 );
 
 const nowId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+const toFiniteNumber = (value, fallback = 0) => {
+  const n = Number(value);
+  return Number.isFinite(n) ? n : fallback;
+};
 
 const RECOGNITION_LANGS = [
-  { code: 'my-MM', name: 'မြန်မာ (缅语)', flag: '🇲🇲' },
   { code: 'zh-CN', name: '中文 (普通话)', flag: '🇨🇳' },
+  { code: 'my-MM', name: 'မြန်မာ (缅语)', flag: '🇲🇲' },
   { code: 'en-US', name: 'English (US)', flag: '🇺🇸' },
+  { code: 'en-GB', name: 'English (UK)', flag: '🇬🇧' },
 ];
 
 const TTS_VOICES = [
@@ -57,19 +67,27 @@ const TTS_VOICES = [
   { id: 'zh-CN-XiaochenMultilingualNeural', name: '晓辰多语言 (男-推荐)' },
   { id: 'zh-CN-XiaoxiaoNeural', name: '晓晓 (女-标准)' },
   { id: 'zh-CN-YunxiNeural', name: '云希 (男-阳光)' },
+  { id: 'zh-CN-YunjianNeural', name: '云健 (男-影视)' },
+  { id: 'zh-CN-XiaoyiNeural', name: '晓伊 (女-亲切)' },
 ];
 
-const DEFAULT_PROMPT = `你是Pingo，缅甸人的中文口语私教。风格：毒舌、幽默、高要求。
+const DEFAULT_PROMPT = `
+你是“Pingo”，缅甸人学中文口语教练。风格：毒舌+幽默+高压训练，但不做人身攻击。
 【绝对规则】
-1. 严禁生成拼音或罗马音，只输出汉字和缅甸语（前端会自动加拼音）。
-2. 严禁中缅文混排，必须用句号严格隔开。
-3. 提示词标签如 Target Sentence: 或 Meaning: 请严格使用英文。
-4. 每轮回复包含：
-   - 毒舌评价（缅文）
-   - 纠错（如有）
-   - Target Sentence: 目标句（中文）
-   - Meaning: 解释（缅文）
-5. 不要输出 Markdown 标题（#），直接纯文本。`;
+1) 不是闲聊机器人。每轮必须围绕口语训练，不评价闲聊内容本身。
+2) 每轮最多3句，短句口语化。
+3) 学习句(目标句/纠正句)用中文；说明一律缅文。
+4) 若ASR有错：要求重读同一句；若正确：升级下一句。
+5) 优先场景：问候、课堂、点餐、问路、购物、请假、打车。
+6) 禁止输出英文标签、拼音、罗马音、音标、Markdown符号。
+7) 不要输出 Target Sentence、Meaning、**、[]、() 这些格式词。
+
+【输出格式（严格）】
+情绪：缅文反馈一句。
+纠错：缅文说明。错「...」→ 对「中文正确句」。
+目标句：中文目标句。
+缅文释义：缅文释义。
+`;
 
 const DEFAULT_SETTINGS = {
   apiUrl: 'https://api.mistral.ai/v1',
@@ -79,68 +97,130 @@ const DEFAULT_SETTINGS = {
   systemPrompt: DEFAULT_PROMPT,
   ttsApiUrl: 'https://t.leftsite.cn/tts',
   ttsVoice: 'zh-CN-XiaoxiaoMultilingualNeural',
-  ttsSpeed: -10,
-  ttsPitch: 1.0, 
+  ttsSpeed: -18,
+  ttsPitch: 0,
+  showText: true,
   asrSilenceMs: 1500,
 };
 
-// =========================
-// 文本渲染组件 (智能拼音包裹 & 彻底隐藏标签/Markdown)
-// =========================
-const MessageContent = ({ text, isAi }) => {
-  // 1. 彻底清洗不需要显示的标签和符号
-  let cleanText = text
-    .replace(/\*\*/g, '') 
-    .replace(/#/g, '') 
-    .replace(/Target Sentence:|Meaning:|Correction:/gi, '') 
-    .replace(/\[.*?\]/g, '') 
+const LABEL_PREFIX_RE =
+  /^\s*(情绪|反馈|纠错|目标句|缅文释义|Target Sentence|Meaning(?:\(MY\))?|Correction|Emotion|Feedback)\s*[:：]\s*/i;
+const TEMPLATE_WORD_RE =
+  /\b(Target Sentence|Meaning(?:\(MY\))?|Romanization|Pinyin|Correction|Emotion|Feedback|Hint)\b/gi;
+const PINYIN_OR_LATIN_LINE_RE = /^[a-zA-Z0-9\u00C0-\u024F\u1E00-\u1EFFüÜvV\s'’.,;:!?-]+$/;
+
+const shouldHideLine = (line) => {
+  const t = line.trim();
+  if (!t) return true;
+  if (/^[*#`_~\-\[$$(){}.,?!:;<>|\\\s]+$/.test(t)) return true;
+  if (/(拼音|罗马音|romanization|pinyin)/i.test(t)) return true;
+
+  const hasZhOrMy = /[\u4e00-\u9fff\u1000-\u109F]/.test(t);
+  const hasLatin = /[a-zA-Z]/.test(t);
+
+  if (hasLatin && !hasZhOrMy) return true;
+  if (!hasZhOrMy && PINYIN_OR_LATIN_LINE_RE.test(t)) return true;
+  return false;
+};
+
+const normalizeAssistantText = (text = '') =>
+  text
+    .replace(/\r/g, '')
+    .replace(/\*\*/g, '')
+    .replace(/[`*_#~]/g, '')
+    .replace(/\[[^\]]*?\]/g, '')
+    .split('\n')
+    .map((line) =>
+      line
+        .replace(LABEL_PREFIX_RE, '')
+        .replace(TEMPLATE_WORD_RE, '')
+        .replace(/^\s*[-•]\s*/, '')
+        .trim(),
+    )
+    .filter((line) => !shouldHideLine(line))
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n')
     .trim();
 
-  // 2. 拼音处理：只给汉字加拼音
-  const renderTextWithPinyin = (str) => {
-    try {
-      const pyArray = pinyin(str, { type: 'all' });
-      return pyArray.map((item, idx) => {
-        if (item.isZh) {
-          return <ruby key={idx}>{item.origin}<rt>{item.pinyin}</rt></ruby>;
-        }
-        return <span key={idx}>{item.origin}</span>;
-      });
-    } catch (e) {
-      return str; // 降级处理
-    }
-  };
+const sanitizeForTTS = (text = '') =>
+  normalizeAssistantText(text)
+    .replace(/\([^)]*[a-zA-ZüÜvV][^)]*\)/g, '')
+    .replace(/[，。！？.!?,;:；：、]/g, ' ')
+    .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 
-  return (
-    <div 
-      className={`text-[18px] leading-[2.2] whitespace-pre-wrap font-medium tracking-wide ${isAi ? 'text-white' : 'text-white/50'}`} 
-      style={{ textShadow: isAi ? '0px 2px 6px rgba(0,0,0,0.8), 0px 1px 2px rgba(0,0,0,0.6)' : 'none' }}
-    >
-      {isAi ? renderTextWithPinyin(cleanText) : cleanText}
-    </div>
-  );
+// =========================
+// 智能语言分离算法 (Smart Splitter)
+// =========================
+const splitMixedLanguage = (text) => {
+  const segments = [];
+  let currentLang = null;
+  let currentBuffer = '';
+
+  for (const char of text) {
+    let type = 'neutral';
+    if (/[\u4e00-\u9fa5]/.test(char)) type = 'zh';
+    else if (/[\u1000-\u109F]/.test(char)) type = 'my';
+    else if (/[a-zA-Z]/.test(char)) type = 'en';
+
+    if (type !== 'neutral') {
+      if (currentLang !== type && currentLang !== null) {
+        segments.push({ text: currentBuffer, lang: currentLang });
+        currentBuffer = char;
+        currentLang = type;
+      } else {
+        currentLang = type;
+        currentBuffer += char;
+      }
+    } else {
+      currentBuffer += char;
+    }
+  }
+
+  if (currentBuffer.trim()) {
+    segments.push({ text: currentBuffer, lang: currentLang || 'zh' });
+  }
+  return segments;
 };
 
 // =========================
-// TTS 引擎 (修复重叠 & 清洗提示词，不读标签)
+// TTS 引擎
 // =========================
-class SmartTTSQueue {
+class ExternalTTSQueue {
   constructor() {
     this.queue = [];
     this.isPlaying = false;
-    this.settingsRef = null;
-    this.onStateChange = null;
     this.currentAudio = null;
     this.playToken = 0;
+    this.settingsRef = null;
+    this.onStateChange = null;
+    this.audioUnlocked = false;
+
+    this.prefetching = false;
+    this.prefetchAudio = null;
+    this.prefetchToken = null;
+
+    this.recentSegments = [];
   }
 
-  setSettingsRef(ref) { this.settingsRef = ref; }
-  setStateCallback(cb) { this.onStateChange = cb; }
+  setSettingsRef(ref) {
+    this.settingsRef = ref;
+  }
+
+  setStateCallback(cb) {
+    this.onStateChange = cb;
+  }
 
   unlockAudio() {
+    if (this.audioUnlocked) return;
     try {
       const a = new Audio('data:audio/mp3;base64,//MkxAAQAAAAgAAAAAAAAAAAAAAP//AwAAAAAAAAAAAAA=');
-      a.play().catch(() => {});
+      a.play()
+        .then(() => {
+          this.audioUnlocked = true;
+        })
+        .catch(() => {});
     } catch {}
   }
 
@@ -148,515 +228,842 @@ class SmartTTSQueue {
     this.onStateChange?.({ isPlaying: this.isPlaying });
   }
 
-  // 核心：彻底清洗掉 TTS 不该读出的内容
-  sanitizeForTTS(text) {
-    return text
-      .replace(/\*\*/g, '') 
-      .replace(/#/g, '')
-      .replace(/Target Sentence:|Meaning:|Correction:/gi, '') 
-      .replace(/\[.*?\]/g, '') 
-      .replace(/\(.*?\)/g, '') 
-      .trim();
+  sanitizeText(text) {
+    return sanitizeForTTS(text || '');
   }
 
-  getVoiceForLang(text) {
+  getVoiceForLang(lang) {
     const s = this.settingsRef || {};
-    if (/[\u1000-\u109F]/.test(text)) return 'my-MM-NilarNeural'; 
-    if (/[a-zA-Z]/.test(text) && !/[\u4e00-\u9fa5]/.test(text)) return 'en-US-JennyNeural'; 
-    return s.ttsVoice; 
+    if (lang === 'my') return 'my-MM-NilarNeural';
+    if (lang === 'en') return 'en-US-JennyNeural';
+    return s.ttsVoice || 'zh-CN-XiaoxiaoMultilingualNeural';
   }
 
   buildUrl(text, voice) {
     const s = this.settingsRef || {};
-    const rate = s.ttsSpeed ?? 0;
-    const pitch = s.ttsPitch ?? 1.0;
+    const rate = toFiniteNumber(s.ttsSpeed, 0);
+    const pitch = toFiniteNumber(s.ttsPitch, 0);
     const baseUrl = s.ttsApiUrl || 'https://t.leftsite.cn/tts';
     return `${baseUrl}?t=${encodeURIComponent(text)}&v=${encodeURIComponent(voice)}&r=${encodeURIComponent(rate)}&p=${encodeURIComponent(pitch)}`;
   }
 
+  isDuplicate(signature) {
+    const now = Date.now();
+    this.recentSegments = this.recentSegments.filter((x) => now - x.time < 2500);
+    if (this.recentSegments.some((x) => x.key === signature)) return true;
+    this.recentSegments.push({ key: signature, time: now });
+    return false;
+  }
+
   push(text) {
-    const cleanText = this.sanitizeForTTS(text);
-    if (!cleanText) return;
+    const cleanRawText = this.sanitizeText(text);
+    if (!cleanRawText) return;
 
-    // 按标点分句送入队列
-    const segments = cleanText.match(/[^。！？.!?]+[。！？.!?]?/g) || [cleanText];
-    
-    segments.forEach(seg => {
-      if (seg.trim()) {
-        this.queue.push({ 
-          text: seg.trim(), 
-          voice: this.getVoiceForLang(seg) 
-        });
-      }
-    });
+    const segments = splitMixedLanguage(cleanRawText);
 
-    if (!this.isPlaying) this.playNext();
+    for (const seg of segments) {
+      const cleanSegText = seg.text.trim();
+      if (!cleanSegText) continue;
+
+      const signature = `${seg.lang}:${cleanSegText.toLowerCase()}`;
+      if (this.isDuplicate(signature)) continue;
+
+      this.queue.push({
+        text: cleanSegText,
+        voice: this.getVoiceForLang(seg.lang),
+      });
+    }
+
+    if (this.queue.length === 0) return;
+
+    this.emitState();
+    this.playNext();
+    this.prefetchNext();
+  }
+
+  prefetchNext() {
+    if (this.prefetching || this.prefetchAudio || this.queue.length === 0) return;
+
+    const nextItem = this.queue[0];
+    this.prefetching = true;
+    const token = this.playToken;
+    const audio = new Audio(this.buildUrl(nextItem.text, nextItem.voice));
+
+    audio.preload = 'auto';
+    audio.crossOrigin = 'anonymous';
+    audio.oncanplaythrough = () => {
+      if (token !== this.playToken) return;
+      this.prefetchAudio = audio;
+      this.prefetchToken = token;
+      this.prefetching = false;
+    };
+    audio.onerror = () => {
+      this.prefetching = false;
+    };
+    audio.load();
   }
 
   playNext() {
+    if (this.isPlaying) return;
     if (this.queue.length === 0) {
-      this.isPlaying = false;
       this.emitState();
       return;
     }
-    
+
     this.isPlaying = true;
     this.emitState();
-    
-    const token = ++this.playToken;
-    const item = this.queue.shift();
-    
-    const audio = new Audio(this.buildUrl(item.text, item.voice));
-    this.currentAudio = audio;
-    audio.crossOrigin = 'anonymous';
 
-    const handleEnd = () => {
+    const token = this.playToken;
+    const item = this.queue.shift();
+    const expectUrl = this.buildUrl(item.text, item.voice);
+
+    let audio = null;
+    if (this.prefetchAudio && this.prefetchToken === token && this.prefetchAudio.src === expectUrl) {
+      audio = this.prefetchAudio;
+      this.prefetchAudio = null;
+      this.prefetchToken = null;
+    } else {
+      audio = new Audio(expectUrl);
+      audio.crossOrigin = 'anonymous';
+      audio.preload = 'auto';
+    }
+
+    this.currentAudio = audio;
+
+    const onEndOrError = () => {
       if (token !== this.playToken) return;
       this.currentAudio = null;
-      this.playNext(); 
+      this.isPlaying = false;
+      this.emitState();
+      this.prefetchNext();
+      this.playNext();
     };
 
-    audio.onended = handleEnd;
-    audio.onerror = handleEnd;
+    audio.onended = onEndOrError;
+    audio.onerror = onEndOrError;
+    audio.play().catch(onEndOrError);
 
-    audio.play().catch(() => handleEnd());
+    this.prefetchNext();
   }
 
-  stop() {
-    this.playToken++;
+  stopAndClear() {
+    this.playToken += 1;
     this.queue = [];
+    this.recentSegments = [];
+
     if (this.currentAudio) {
       this.currentAudio.pause();
-      this.currentAudio.src = '';
+      this.currentAudio.removeAttribute('src');
+      this.currentAudio.load();
       this.currentAudio = null;
     }
+
+    if (this.prefetchAudio) {
+      this.prefetchAudio.pause();
+      this.prefetchAudio.removeAttribute('src');
+      this.prefetchAudio.load();
+      this.prefetchAudio = null;
+    }
+
+    this.prefetching = false;
+    this.prefetchToken = null;
     this.isPlaying = false;
     this.emitState();
   }
 }
 
-const ttsEngine = new SmartTTSQueue();
+const ttsEngine = new ExternalTTSQueue();
 
-// =========================
-// 主程序
-// =========================
+// 简单断句：流式输出按句推给 TTS
+const splitSpeakable = (buf) => {
+  const out = [];
+  let last = 0;
+  for (let i = 0; i < buf.length; i++) {
+    if (/[。！？.!?\n]/.test(buf[i])) {
+      const s = buf.slice(last, i + 1).trim();
+      if (s) out.push(s);
+      last = i + 1;
+    }
+  }
+  return { sentences: out, rest: buf.slice(last) };
+};
+
 export default function VoiceChat({ isOpen, onClose }) {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
-  const [recLang, setRecLang] = useState('my-MM');
-  const [history, setHistory] = useState([]); 
-  
-  const [status, setStatus] = useState('idle'); // idle | recording | processing | speaking
-  const [interimText, setInterimText] = useState('');
-  
-  // 文字模式与弹窗状态
+  const [recLang, setRecLang] = useState('zh-CN');
+  const [history, setHistory] = useState([]);
+  const historyRef = useRef([]);
+
+  const [isRecording, setIsRecording] = useState(false);
+  const [isAiSpeaking, setIsAiSpeaking] = useState(false);
+  const [isThinking, setIsThinking] = useState(false);
+
   const [textMode, setTextMode] = useState(false);
   const [inputText, setInputText] = useState('');
+  const [liveInterim, setLiveInterim] = useState('');
+  const [recordFinalText, setRecordFinalText] = useState('');
+
   const [showSettings, setShowSettings] = useState(false);
   const [showLangPicker, setShowLangPicker] = useState(false);
-  
+
   const recognitionRef = useRef(null);
+  const abortControllerRef = useRef(null);
   const scrollRef = useRef(null);
-  const silenceTimer = useRef(null);
-  const abortCtrl = useRef(null);
+
+  const longPressTimerRef = useRef(null);
+  const longPressTriggeredRef = useRef(false);
+  const micActionLockRef = useRef(false);
+
+  const silenceTimerRef = useRef(null);
+  const recordingFinalRef = useRef('');
+  const interimRef = useRef('');
 
   useEffect(() => {
-    const saved = localStorage.getItem('ai_tutor_final');
-    if (saved) setSettings({ ...DEFAULT_SETTINGS, ...JSON.parse(saved) });
-    
-    ttsEngine.setStateCallback(({ isPlaying }) => {
-      setStatus(prev => {
-        if (isPlaying) return 'speaking';
-        if (prev === 'speaking') return 'idle';
-        return prev;
-      });
-    });
+    try {
+      const saved = localStorage.getItem('ai_tutor_settings_v6');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setSettings({
+          ...DEFAULT_SETTINGS,
+          ...parsed,
+          temperature: toFiniteNumber(parsed.temperature, DEFAULT_SETTINGS.temperature),
+          ttsSpeed: toFiniteNumber(parsed.ttsSpeed, DEFAULT_SETTINGS.ttsSpeed),
+          ttsPitch: toFiniteNumber(parsed.ttsPitch, DEFAULT_SETTINGS.ttsPitch),
+          asrSilenceMs: toFiniteNumber(parsed.asrSilenceMs, DEFAULT_SETTINGS.asrSilenceMs),
+        });
+      }
 
-    return () => stopAll();
+      const savedRecLang = localStorage.getItem('ai_tutor_rec_lang_v1');
+      if (savedRecLang && RECOGNITION_LANGS.some((l) => l.code === savedRecLang)) {
+        setRecLang(savedRecLang);
+      }
+    } catch {}
+
+    ttsEngine.setStateCallback(({ isPlaying }) => setIsAiSpeaking(isPlaying));
+
+    return () => {
+      stopEverything();
+      ttsEngine.setStateCallback(null);
+    };
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('ai_tutor_final', JSON.stringify(settings));
     ttsEngine.setSettingsRef(settings);
+    try {
+      localStorage.setItem('ai_tutor_settings_v6', JSON.stringify(settings));
+    } catch {}
   }, [settings]);
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
-    }
-  }, [history, interimText, status]);
+    try {
+      localStorage.setItem('ai_tutor_rec_lang_v1', recLang);
+    } catch {}
+  }, [recLang]);
 
-  const stopAll = () => {
+  useEffect(() => {
+    historyRef.current = history;
+  }, [history]);
+
+  const scrollToBottom = () => {
+    if (!scrollRef.current) return;
+    setTimeout(() => {
+      scrollRef.current?.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }, 40);
+  };
+
+  const clearSilenceTimer = () => {
+    if (silenceTimerRef.current) {
+      clearTimeout(silenceTimerRef.current);
+      silenceTimerRef.current = null;
+    }
+  };
+
+  const clearRecordingBuffer = () => {
+    recordingFinalRef.current = '';
+    interimRef.current = '';
+    setRecordFinalText('');
+    setLiveInterim('');
+  };
+
+  const stopRecordingOnly = () => {
     if (recognitionRef.current) {
-      recognitionRef.current.onend = null; 
-      recognitionRef.current.stop();
+      try {
+        recognitionRef.current.stop();
+      } catch {}
       recognitionRef.current = null;
     }
-    if (abortCtrl.current) abortCtrl.current.abort();
-    if (silenceTimer.current) clearTimeout(silenceTimer.current);
-    
-    ttsEngine.stop();
-    setStatus('idle');
-    setInterimText('');
+    clearSilenceTimer();
+    setIsRecording(false);
   };
 
-  const handleStartRecord = () => {
+  const stopEverything = () => {
+    stopRecordingOnly();
+    clearRecordingBuffer();
+
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+    longPressTriggeredRef.current = false;
+
+    ttsEngine.stopAndClear();
+
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+
+    setIsAiSpeaking(false);
+    setIsThinking(false);
+  };
+
+  const sendMessage = async (text) => {
+    const content = (text || '').trim();
+    if (!content) return;
+
     ttsEngine.unlockAudio();
-    stopAll(); 
 
-    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRec) return alert('当前浏览器不支持语音识别，请使用 Chrome。');
-
-    const rec = new SpeechRec();
-    rec.lang = recLang; 
-    rec.interimResults = true;
-    rec.continuous = true;
-
-    rec.onstart = () => setStatus('recording');
-
-    rec.onresult = (e) => {
-      let final = '';
-      let interim = '';
-      for (let i = e.resultIndex; i < e.results.length; i++) {
-        if (e.results[i].isFinal) final += e.results[i][0].transcript;
-        else interim += e.results[i][0].transcript;
-      }
-      
-      if (final) {
-        handleSubmit(final + interim);
-        rec.stop();
-        return;
-      }
-      
-      setInterimText(interim);
-
-      if (silenceTimer.current) clearTimeout(silenceTimer.current);
-      silenceTimer.current = setTimeout(() => {
-        if (interim) {
-          handleSubmit(interim);
-          rec.stop();
-        }
-      }, settings.asrSilenceMs);
-    };
-
-    rec.onerror = () => setStatus('idle');
-    rec.onend = () => setStatus(prev => prev === 'recording' ? 'idle' : prev);
-
-    recognitionRef.current = rec;
-    rec.start();
-  };
-
-  const handleSubmit = async (text) => {
-    const cleanText = text.trim();
-    if (!cleanText) {
-      setStatus('idle');
+    if (!settings.apiKey) {
+      alert('请先配置 API Key');
+      setShowSettings(true);
       return;
     }
 
-    // 立即停止所有上一次的动作并显示思考中
-    stopAll();
-    setStatus('processing'); 
-    
-    const userMsg = { id: nowId(), role: 'user', text: cleanText };
-    setHistory(prev => [...prev, userMsg]);
-    
-    const aiMsgId = nowId();
-    setHistory(prev => [...prev, { id: aiMsgId, role: 'ai', text: '...' }]);
+    if (recognitionRef.current) stopRecordingOnly();
+    clearRecordingBuffer();
 
-    abortCtrl.current = new AbortController();
+    ttsEngine.stopAndClear();
+    if (abortControllerRef.current) abortControllerRef.current.abort();
+
+    setIsThinking(true);
+
+    const aiMsgId = nowId();
+    const newHistory = [...historyRef.current, { id: nowId(), role: 'user', text: content }];
+    setHistory([...newHistory, { id: aiMsgId, role: 'ai', text: '', isStreaming: true }]);
+    scrollToBottom();
+
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
     try {
-      const res = await fetch(`${settings.apiUrl}/chat/completions`, {
+      const messages = [
+        { role: 'system', content: settings.systemPrompt },
+        ...newHistory.map((h) => ({
+          role: h.role === 'ai' ? 'assistant' : 'user',
+          content: h.text,
+        })),
+      ];
+
+      const res = await fetch(`${settings.apiUrl.replace(/\/+$/, '')}/chat/completions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${settings.apiKey}`
+          Authorization: `Bearer ${settings.apiKey}`,
         },
+        signal: controller.signal,
         body: JSON.stringify({
           model: settings.model,
           temperature: settings.temperature,
           stream: true,
-          messages: [
-            { role: 'system', content: settings.systemPrompt },
-            ...history.slice(-6).map(m => ({ role: m.role === 'ai'?'assistant':'user', content: m.text })),
-            { role: 'user', content: cleanText }
-          ]
+          messages,
         }),
-        signal: abortCtrl.current.signal
       });
 
+      if (!res.ok) throw new Error(`API Error: ${res.status}`);
+      if (!res.body) throw new Error('API 返回为空');
+
       const reader = res.body.getReader();
-      const decoder = new TextDecoder();
+      const decoder = new TextDecoder('utf-8');
+      let raw = '';
       let fullText = '';
-      let buffer = '';
+      let sentenceBuffer = '';
+      let gotFirstChunk = false;
 
       while (true) {
+        if (controller.signal.aborted) break;
+
         const { done, value } = await reader.read();
         if (done) break;
-        
-        const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split('\n');
-        
-        for (const line of lines) {
-          if (line.startsWith('data: ') && line !== 'data: [DONE]') {
-            try {
-              const data = JSON.parse(line.slice(6));
-              const content = data.choices[0]?.delta?.content || '';
-              if (content) {
-                fullText += content;
-                buffer += content;
-                
-                setHistory(prev => prev.map(m => m.id === aiMsgId ? { ...m, text: fullText } : m));
 
-                if (/[。！？\.\!\?]/.test(buffer)) {
-                   ttsEngine.push(buffer);
-                   buffer = '';
-                }
+        raw += decoder.decode(value, { stream: true });
+        const parts = raw.split('\n');
+        raw = parts.pop() || '';
+
+        for (const line of parts) {
+          const ln = line.trim();
+          if (!ln.startsWith('data:')) continue;
+
+          const payload = ln.slice(5).trim();
+          if (payload === '[DONE]') continue;
+
+          try {
+            const data = JSON.parse(payload);
+            const chunk = data.choices?.[0]?.delta?.content || '';
+            if (!chunk) continue;
+
+            if (!gotFirstChunk) {
+              setIsThinking(false);
+              gotFirstChunk = true;
+            }
+
+            fullText += chunk;
+            sentenceBuffer += chunk;
+
+            const visibleText = normalizeAssistantText(fullText);
+            setHistory((prev) =>
+              prev.map((m) => (m.id === aiMsgId ? { ...m, text: visibleText } : m)),
+            );
+            scrollToBottom();
+
+            const { sentences, rest } = splitSpeakable(sentenceBuffer);
+            if (sentences.length) {
+              for (const s of sentences) {
+                if (!controller.signal.aborted) ttsEngine.push(s);
               }
-            } catch (e) {}
-          }
+              sentenceBuffer = rest;
+            }
+          } catch {}
         }
       }
-      if (buffer) ttsEngine.push(buffer);
 
-      setTimeout(() => {
-        if (!ttsEngine.isPlaying) setStatus('idle');
-      }, 500);
-
+      if (sentenceBuffer.trim() && !controller.signal.aborted) {
+        ttsEngine.push(sentenceBuffer.trim());
+      }
     } catch (e) {
       if (e.name !== 'AbortError') {
-        setHistory(prev => [...prev, { id: nowId(), role: 'error', text: 'Error: ' + e.message }]);
-        setStatus('idle');
+        setHistory((prev) => [...prev, { id: nowId(), role: 'error', text: e.message }]);
       }
+    } finally {
+      setIsThinking(false);
+      abortControllerRef.current = null;
+      setHistory((prev) =>
+        prev.map((m) => (m.id === aiMsgId ? { ...m, isStreaming: false } : m)),
+      );
     }
   };
 
-  const currentLang = RECOGNITION_LANGS.find(l => l.code === recLang) || RECOGNITION_LANGS[0];
+  // ===== ASR 语音识别 =====
+  const startRecording = () => {
+    ttsEngine.unlockAudio();
+
+    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRec) {
+      alert('当前浏览器不支持语音识别');
+      return;
+    }
+
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+      setIsThinking(false);
+    }
+
+    if (isAiSpeaking) ttsEngine.stopAndClear();
+    if (recognitionRef.current) return;
+
+    const rec = new SpeechRec();
+    rec.lang = recLang;
+    rec.interimResults = true;
+    rec.continuous = true;
+    rec.maxAlternatives = 3;
+
+    recordingFinalRef.current = '';
+    interimRef.current = '';
+    setRecordFinalText('');
+    setLiveInterim('');
+    setIsRecording(true);
+
+    rec.onresult = (e) => {
+      let interimText = '';
+
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const t = e.results[i][0]?.transcript || '';
+        if (e.results[i].isFinal) recordingFinalRef.current += `${t} `;
+        else interimText += t;
+      }
+
+      interimRef.current = interimText.trim();
+      setRecordFinalText(recordingFinalRef.current.trim());
+      setLiveInterim(interimRef.current);
+
+      clearSilenceTimer();
+      silenceTimerRef.current = setTimeout(
+        () => manualSubmitRecording(),
+        toFiniteNumber(settings.asrSilenceMs, 1500),
+      );
+    };
+
+    rec.onerror = (e) => {
+      setIsRecording(false);
+      recognitionRef.current = null;
+      if (e?.error === 'not-allowed') {
+        alert('麦克风权限被拒绝，请在浏览器设置里允许麦克风权限。');
+      }
+    };
+
+    rec.onend = () => {
+      setIsRecording(false);
+      recognitionRef.current = null;
+    };
+
+    recognitionRef.current = rec;
+    if (navigator.vibrate) navigator.vibrate(30);
+
+    try {
+      rec.start();
+    } catch {}
+  };
+
+  const manualSubmitRecording = () => {
+    const finalText = `${recordingFinalRef.current} ${interimRef.current}`.trim();
+    stopRecordingOnly();
+    clearRecordingBuffer();
+    if (finalText) sendMessage(finalText);
+  };
+
+  const handleMicPointerDown = (e) => {
+    e.preventDefault();
+
+    if (longPressTimerRef.current) clearTimeout(longPressTimerRef.current);
+    longPressTriggeredRef.current = false;
+
+    longPressTimerRef.current = setTimeout(() => {
+      longPressTriggeredRef.current = true;
+      if (navigator.vibrate) navigator.vibrate(45);
+      setShowLangPicker(true);
+      longPressTimerRef.current = null;
+    }, 550);
+  };
+
+  const handleMicPointerUp = (e) => {
+    e.preventDefault();
+
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+
+    if (longPressTriggeredRef.current) {
+      longPressTriggeredRef.current = false;
+      return;
+    }
+
+    if (micActionLockRef.current) return;
+    micActionLockRef.current = true;
+    setTimeout(() => {
+      micActionLockRef.current = false;
+    }, 220);
+
+    if (isRecording) manualSubmitRecording();
+    else startRecording();
+  };
+
+  const handleMicPointerCancel = () => {
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+    longPressTriggeredRef.current = false;
+  };
+
+  const liveText = [recordFinalText, liveInterim].filter(Boolean).join(' ');
+  if (!isOpen) return null;
+
+  const currentLangObj = RECOGNITION_LANGS.find((l) => l.code === recLang) || RECOGNITION_LANGS[0];
 
   return (
-    <div className="app-container fixed inset-0 z-50 flex flex-col bg-slate-950 text-white overflow-hidden">
+    <div className="app-container fixed inset-0 z-[200] flex flex-col w-full h-[100dvh] bg-slate-950 text-slate-100 overflow-hidden">
       <GlobalStyles />
-      
-      {/* 绝对沉浸式背景图 */}
-      <div className="absolute inset-0 bg-cover bg-center opacity-30 pointer-events-none" 
-           style={{ backgroundImage: `url('https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=800&auto=format&fit=crop')` }} 
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-slate-900/40 pointer-events-none" />
 
-      {/* 顶部栏 */}
-      <div className="relative z-10 flex items-center justify-between p-4">
-        <button onClick={onClose} className="w-10 h-10 flex items-center justify-center bg-white/10 rounded-full backdrop-blur-md active:scale-95">
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-70 pointer-events-none"
+        style={{
+          backgroundImage: "url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1400')",
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/30 via-slate-900/48 to-slate-950/82 pointer-events-none" />
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_20%_20%,rgba(236,72,153,.16),transparent_35%),radial-gradient(circle_at_80%_25%,rgba(99,102,241,.16),transparent_35%)]" />
+
+      {/* Header */}
+      <div className="relative z-20 flex items-center justify-between px-4 h-16 border-b border-white/10 backdrop-blur-sm">
+        <button
+          onClick={() => {
+            stopEverything();
+            onClose?.();
+          }}
+          className="w-10 h-10 flex items-center justify-center rounded-full bg-white/15 text-white active:scale-90"
+        >
           <i className="fas fa-arrow-left" />
         </button>
-        <button onClick={() => setShowSettings(true)} className="w-10 h-10 flex items-center justify-center bg-white/10 rounded-full backdrop-blur-md active:scale-95">
+        <div className="font-bold tracking-widest text-white text-sm">AI TUTOR</div>
+        <button
+          onClick={() => setShowSettings(true)}
+          className="w-10 h-10 flex items-center justify-center rounded-full bg-white/15 text-white"
+        >
           <i className="fas fa-sliders-h" />
         </button>
       </div>
 
-      {/* 聊天内容区：无气泡、文字直接显示在背景图上、用户在左 */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto no-scrollbar relative z-10 p-5 flex flex-col gap-6 pb-48">
-        {history.length === 0 && (
-          <div className="mt-20 flex flex-col items-center justify-center opacity-40">
-            <i className="fas fa-comment-dots text-4xl mb-4"></i>
-            <p className="text-sm tracking-widest">请直接对我说话，或输入文字</p>
+      {/* Body */}
+      <div ref={scrollRef} className="select- overflow-autobar- pb flex-        &&text (
+divName="flex-1 flex flex-col items-center justify-center">
+            <div className="relative flex items-center justify-center w-56 h-56 pointer-events-none">
+              {isAiSpeaking && <div className="absolute inset-0 rounded-full bg-pink-400/30 animate-ping-slow" />}
+              {isAiSpeaking && <div className="absolute inset-6 rounded-full bg-violet-400/30 animate-ping-slow" style={{ animationDelay: '.4s' }} />}
+              <div className={`relative z-10 flex items-center justify-center w-32 h-32 rounded-full transition-all duration-300 ${isAiSpeaking ? 'scale-110 bg-pink-500 shadow-[0_0_30px_rgba(236,72,153,.6)]' : 'bg-white/10'}`}>
+                <i className={`fas fa-microphone-alt text-5xl ${isAiSpeaking ? 'text-white' : 'text-slate-300'}`} />
+              </div>
+            </div>
+
+            <div className="mt-8 h-10 flex items-center justify-center">
+              {isAiSpeaking ? (
+                <div className="tts-bars"><span /><span /><span /><span /><span /></div>
+              ) : (
+                <span className="text-sm tracking-widest text-slate-300 font-medium">
+                  {isRecording ? '正在倾听...' : isThinking ? '思考中...' : '请说话'}
+                </span>
+              )}
+            </div>
           </div>
-        )}
-        
-        {history.map((msg) => (
-          <div key={msg.id} className="flex flex-col items-start fade-in w-full">
-            {/* 用户的文本：左边，淡色，加点左边框修饰 */}
-            {msg.role === 'user' && (
-              <div className="text-[16px] pl-3 border-l-2 border-white/20 text-white/50 mb-1">
-                {msg.text}
+        ) : (
+          <div className="w-full max-w-2xl mx-auto min-h-full flex flex-col justify-end">
+            {history.map((msg) => {
+              if (msg.role === 'error') {
+                return (
+                  <div key={msg.id} className="mb-4 pl-12 text-red-200/85 text-sm">
+                    {msg.text}
+                  </div>
+                );
+              }
+
+              if (msg.role === 'user') {
+                return (
+                  <div
+                    key={msg.id}
+                    className="mb-3 pl-12 text-[15px] leading-7 text-slate-200/55 whitespace-pre-wrap [text-shadow:0_1px_8px_rgba(0,0,0,.45)]"
+                  >
+                    {msg.text}
+                  </div>
+                );
+              }
+
+              const aiText = normalizeAssistantText(msg.text || '');
+
+              return (
+                <div key={msg.id} className="mb-4 flex items-start gap-3">
+                  <div className="mt-0.5 w-9 h-9 rounded-full bg-pink-400/25 border border-pink-200/35 flex items-center justify-center text-lg shadow-[0_0_16px_rgba(236,72,153,.28)] shrink-0">
+                    👩
+                  </div>
+                  <div className="flex-1 pt-0.5 text-[15px] leading-7 text-slate-100/92 whitespace-pre-wrap [text-shadow:0_1px_8px_rgba(0,0,0,.45)]">
+                    {aiText || (msg.isStreaming ? '思考中...' : '')}
+                    {msg.isStreaming && aiText && <span className="inline-block w-1.5 h-4 ml-1 align-middle bg-pink-300 animate-pulse" />}
+                  </div>
+                </div>
+              );
+            })}
+
+            {isRecording && (
+              <div className="flex justify-start pl-12 mb-2">
+                <div className="max-w-[92%] text-cyan-100/90 rounded-xl px-3 py-2 text-sm animate-[fadeIn_.2s_ease-out] bg-cyan-500/10 border border-cyan-300/25">
+                  <span className="opacity-80 mr-2">识别中：</span>
+                  <span>{liveText || '...'}</span>
+                </div>
               </div>
             )}
-            
-            {/* AI的文本：高亮，自动加拼音，带阴影 */}
-            {msg.role === 'ai' && (
-              <MessageContent text={msg.text} isAi={true} />
-            )}
-
-            {msg.role === 'error' && <div className="text-red-400 text-sm mt-2">{msg.text}</div>}
-          </div>
-        ))}
-        
-        {/* 识别中的临时文字显示 */}
-        {interimText && (
-          <div className="text-lg text-emerald-400 font-light animate-pulse border-l-2 border-emerald-400 pl-3">
-            {interimText}...
           </div>
         )}
       </div>
 
-      {/* 底部控制区 */}
-      <div className="absolute bottom-0 w-full z-20 pb-8 bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent flex flex-col items-center justify-end">
-        
-        {/* 状态文案提示区 */}
-        <div className="h-8 mb-4 flex items-center justify-center">
-          {status === 'recording' && <span className="text-red-400 font-bold tracking-widest text-xs uppercase animate-pulse">正在倾听...</span>}
-          {status === 'processing' && <span className="text-emerald-400 font-bold tracking-widest text-xs uppercase flex items-center gap-2"><i className="fas fa-circle-notch fa-spin"/> 思考中...</span>}
-          {status === 'speaking' && (
-            <div className="voice-wave h-4 flex items-center">
-              <span className="h-2" /><span className="h-4" /><span className="h-3" /><span className="h-2" />
-            </div>
-          )}
-          {status === 'idle' && !textMode && <span className="text-white/30 text-xs font-medium tracking-widest uppercase">点击头像说话</span>}
-        </div>
+      {/* Bottom Control */}
+      <div className="absolute bottom-0 left-0 right-0 z-30 pb-[max(24px,env(safe-area-inset-bottom))] px-5 bg-gradient-to-t from-slate-950 via-slate-950/92 to-transparent pt-12">
+        <div className="max-w-md mx-auto relative flex items-center justify-center h-20">
+          <button onClick={() => setTextMode((v) => !v)} className="absolute left-0 w-12 h-12 rounded-full bg-white/15 text-white active:scale-95 transition-transform">
+            <i className={`fas ${textMode ? 'fa-microphone' : 'fa-keyboard'}`} />
+          </button>
 
-        {/* 控制面板：语音按钮 OR 键盘输入框 */}
-        <div className="w-full px-6">
           {!textMode ? (
-            <div className="flex items-center justify-between max-w-sm mx-auto">
-              
-              {/* 语言切换 */}
-              <button 
-                onClick={() => setShowLangPicker(true)}
-                className="w-12 h-12 rounded-full bg-white/5 flex flex-col items-center justify-center border border-white/10 active:bg-white/10"
-              >
-                <span className="text-lg">{currentLang.flag}</span>
-              </button>
+            <div className="flex flex-col items-center w-full">
+              <div className="flex items-center gap-4">
+                {isRecording ? (
+                  <button onClick={clearRecordingBuffer} className="h-11 w-14 rounded-full bg-white/15 text-white text-xs font-bold animate-[fadeIn_.2s_ease-out]">
+                    清空
+                  </button>
+                ) : <div className="w-14" />}
 
-              {/* AI 头像麦克风按钮 (女教师图片) */}
-              <button
-                onClick={(e) => { 
-                  e.preventDefault(); 
-                  if(status === 'speaking' || status === 'processing' || status === 'recording') stopAll(); 
-                  else handleStartRecord(); 
-                }}
-                className={`w-[85px] h-[85px] rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl relative z-30 touch-manipulation ${
-                  status === 'recording' 
-                    ? 'scale-110 shadow-red-500/50' 
-                    : status === 'speaking'
-                      ? 'scale-100 shadow-pink-500/30'
-                      : 'hover:scale-105 active:scale-95'
-                }`}
-              >
-                <div className="w-full h-full rounded-full overflow-hidden border-[3px] border-white/20 relative bg-slate-800">
-                    {/* 美观的女教师 AI 头像 */}
-                    <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=200&auto=format&fit=crop" className="w-full h-full object-cover" alt="AI Tutor" />
-                    
-                    {/* 录音时的红框呼吸效果 */}
-                    {status === 'recording' && <div className="absolute inset-0 bg-red-500/30 animate-pulse" />}
-                    
-                    {/* 说话或思考中时，显示停止按钮覆盖 */}
-                    {(status === 'speaking' || status === 'processing' || status === 'recording') && (
-                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center backdrop-blur-[2px]">
-                         <i className="fas fa-stop text-2xl text-white" />
-                      </div>
-                    )}
-                </div>
-                {status === 'recording' && <div className="absolute inset-0 rounded-full border-[3px] border-red-500 opacity-60 animate-ping" />}
-              </button>
+                <button
+                  onPointerDown={handleMicPointerDown}
+                  onPointerUp={handleMicPointerUp}
+                  onPointerCancel={handleMicPointerCancel}
+                  onContextMenu={(e) => e.preventDefault()}
+                  className={`touch-none w-20 h-20 rounded-full flex items-center justify-center text-white shadow-2xl transition-all duration-300 ${
+                    isRecording ? 'bg-red-500 animate-pulse-ring scale-95' : 'bg-gradient-to-r from-pink-500 to-rose-500 hover:scale-105 active:scale-95'
+                  }`}
+                >
+                  <i className={`fas ${isRecording ? 'fa-paper-plane' : 'fa-microphone'} text-3xl ${isRecording ? 'animate-pulse' : ''}`} />
+                </button>
 
-              {/* 切换到文字模式 */}
-              <button 
-                onClick={() => setTextMode(true)}
-                className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center border border-white/10 active:bg-white/10"
-              >
-                <i className="fas fa-keyboard text-white/60 text-lg" />
-              </button>
+                {isRecording ? (
+                  <button onClick={stopRecordingOnly} className="h-11 w-14 rounded-full bg-white/15 text-white text-xs font-bold animate-[fadeIn_.2s_ease-out]">
+                    取消
+                  </button>
+                ) : <div className="w-14" />}
+              </div>
 
+              <div className="absolute -bottom-6 text-[10px] font-bold text-slate-400 tracking-widest uppercase pointer-events-none">
+                {isRecording
+                  ? <span className="text-red-400">点击发送 · 静默自动发送</span>
+                  : isThinking
+                  ? <span className="text-amber-300">思考中...</span>
+                  : `长按切换语言 · ${currentLangObj.flag} ${currentLangObj.name}`}
+              </div>
             </div>
           ) : (
-            /* 文字聊天输入框 */
-            <div className="flex items-center gap-2 bg-slate-900/80 border border-white/20 p-2 rounded-full backdrop-blur-md fade-in">
-              <button onClick={() => setTextMode(false)} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center shrink-0">
-                <i className="fas fa-microphone text-white/60" />
-              </button>
+            <div className="flex-1 ml-16 mr-16 relative flex items-center bg-white/15 border border-white/20 rounded-full p-1 backdrop-blur-md">
               <input
                 type="text"
-                className="flex-1 bg-transparent px-2 py-2 text-[15px] text-white outline-none placeholder-white/30"
-                placeholder="输入你想说的..."
+                className="flex-1 bg-transparent px-4 py-2 text-sm text-white outline-none placeholder-slate-300"
+                placeholder="打字回复..."
                 value={inputText}
+                onFocus={stopEverything}
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
-                    handleSubmit(inputText);
+                    sendMessage(inputText);
                     setInputText('');
                   }
                 }}
               />
-              <button 
-                onClick={() => { handleSubmit(inputText); setInputText(''); }} 
-                className="w-10 h-10 rounded-full bg-pink-500 text-white flex items-center justify-center shrink-0 active:scale-95"
-              >
+              <button onClick={() => { sendMessage(inputText); setInputText(''); }} className="w-10 h-10 rounded-full bg-pink-500 text-white flex items-center justify-center shrink-0">
                 <i className="fas fa-paper-plane" />
               </button>
             </div>
           )}
+
+          <div className="absolute right-0">
+            {(isAiSpeaking || isRecording || isThinking) ? (
+              <button onClick={stopEverything} className="w-12 h-12 rounded-full bg-white/15 text-white animate-[fadeIn_.2s_ease-out]" title="全部停止">
+                <i className="fas fa-stop" />
+              </button>
+            ) : (
+              <button
+                onClick={() => setSettings((s) => ({ ...s, showText: !s.showText }))}
+                className={`w-12 h-12 rounded-full transition-colors ${settings.showText ? 'bg-pink-500/45 text-pink-100' : 'bg-white/15 text-white'}`}
+                title="字幕开关"
+              >
+                <i className={`fas ${settings.showText ? 'fa-closed-captioning' : 'fa-comment-slash'}`} />
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* 语言选择弹窗 */}
+      {/* Lang picker */}
       {showLangPicker && (
-        <div className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm flex items-center justify-center p-6" onClick={() => setShowLangPicker(false)}>
-          <div className="bg-slate-900 border border-white/10 rounded-2xl w-full max-w-xs overflow-hidden" onClick={e=>e.stopPropagation()}>
-            {RECOGNITION_LANGS.map(l => (
-              <button 
-                key={l.code}
-                onClick={() => { setRecLang(l.code); setShowLangPicker(false); }}
-                className={`w-full p-4 flex items-center gap-4 border-b border-white/5 last:border-0 ${recLang === l.code ? 'bg-pink-500/20 text-pink-300' : 'text-white'}`}
-              >
-                <span className="text-2xl">{l.flag}</span>
-                <span className="font-medium">{l.name}</span>
-              </button>
-            ))}
+        <div className="fixed inset-0 z-[300] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowLangPicker(false)} />
+          <div className="relative bg-slate-800 border border-white/10 rounded-3xl p-6 w-full max-w-sm shadow-2xl animate-[fadeIn_.2s_ease-out]">
+            <h3 className="font-bold text-lg mb-4 text-center text-white">选择识别语言</h3>
+            <div className="grid grid-cols-2 gap-3">
+              {RECOGNITION_LANGS.map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => { setRecLang(lang.code); setShowLangPicker(false); }}
+                  className={`p-4 rounded-2xl border flex flex-col gap-2 transition-colors ${recLang === lang.code ? 'border-pink-500 bg-pink-500/20' : 'border-white/10 bg-white/5 active:bg-white/10'}`}
+                >
+                  <span className="text-2xl">{lang.flag}</span>
+                  <span className="font-bold text-xs text-slate-300">{lang.name}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       )}
 
-      {/* 设置面板 */}
+      {/* Settings */}
       {showSettings && (
-        <div className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center" onClick={() => setShowSettings(false)}>
-          <div className="bg-slate-900 border-t sm:border border-white/10 w-full max-w-md h-[80vh] sm:h-auto sm:rounded-2xl rounded-t-2xl flex flex-col fade-in" onClick={e=>e.stopPropagation()}>
-            <div className="p-4 border-b border-white/10 flex justify-between items-center">
-              <h3 className="font-bold text-white">⚙️ 设置</h3>
-              <button onClick={() => setShowSettings(false)} className="w-8 h-8 bg-white/10 rounded-full text-sm">✕</button>
+        <div className="fixed inset-0 z-[300] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowSettings(false)} />
+          <div className="relative bg-slate-800 border border-white/10 rounded-3xl w-full max-w-md max-h-[88vh] flex flex-col shadow-2xl animate-[fadeIn_.2s_ease-out]">
+            <div className="px-5 py-4 border-b border-white/10 flex justify-between items-center">
+              <h3 className="font-bold text-white">⚙️ AI 设置</h3>
+              <button onClick={() => setShowSettings(false)} className="w-8 h-8 rounded-full bg-white/10 text-slate-300">
+                <i className="fas fa-times" />
+              </button>
             </div>
-            
-            <div className="flex-1 overflow-y-auto p-5 space-y-6">
-              <div>
-                <label className="text-xs text-slate-400 mb-2 block">发音人</label>
-                <div className="grid grid-cols-1 gap-2">
-                  {TTS_VOICES.map(v => (
-                    <button 
-                      key={v.id}
-                      onClick={() => setSettings({...settings, ttsVoice: v.id})}
-                      className={`p-3 rounded-lg text-left text-sm border ${settings.ttsVoice === v.id ? 'border-pink-500 bg-pink-500/10 text-white' : 'border-white/10 text-slate-400'}`}
-                    >
-                      {v.name}
-                    </button>
-                  ))}
+
+            <div className="selectable flex-1 overflow-y-auto p-5 space-y-5 no-scrollbar text-slate-200 text-sm">
+              <div className="space-y-3">
+                <div className="font-bold text-slate-400 text-xs">API 配置</div>
+                <input className="w-full border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none" placeholder="API URL" value={settings.apiUrl} onChange={(e) => setSettings({ ...settings, apiUrl: e.target.value })} />
+                <input
+                  type="password"
+                  autoComplete="off"
+                  className="w-full border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none text-slate-200"
+                  placeholder="API Key"
+                  value={settings.apiKey}
+                  onChange={(e) => setSettings({ ...settings, apiKey: e.target.value })}
+                />
+                <div className="flex gap-2">
+                  <input className="flex-1 border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none" placeholder="Model" value={settings.model} onChange={(e) => setSettings({ ...settings, model: e.target.value })} />
+                  <div className="w-28 flex items-center border border-white/10 rounded-xl px-2 bg-slate-900/50">
+                    <span className="text-xs text-slate-400 mr-1">Temp</span>
+                    <input type="number" step="0.1" className="w-full bg-transparent outline-none" value={settings.temperature} onChange={(e) => setSettings({ ...settings, temperature: toFiniteNumber(e.target.value, 0.7) })} />
+                  </div>
                 </div>
               </div>
 
-              <div>
-                <div className="flex justify-between text-xs text-slate-400 mb-2">
-                  <span>语速 ({settings.ttsSpeed})</span>
-                  <span>音调 ({settings.ttsPitch})</span>
+              <div className="space-y-2">
+                <div className="font-bold text-slate-400 text-xs flex justify-between">
+                  <span>系统提示词</span>
+                  <button onClick={() => setSettings({ ...settings, systemPrompt: DEFAULT_PROMPT })} className="text-pink-400">重置</button>
                 </div>
-                <div className="flex gap-4 items-center">
-                   <input 
-                     type="range" min="-50" max="50" 
-                     className="flex-1 accent-pink-500 h-2 bg-white/10 rounded-lg appearance-none cursor-pointer"
-                     value={settings.ttsSpeed}
-                     onChange={e => setSettings({...settings, ttsSpeed: parseInt(e.target.value)})}
-                   />
-                   {/* 音调：完美支持 0.89 这种小数 */}
-                   <input 
-                     type="number" step="0.01" min="0.1" max="2.0"
-                     className="w-20 bg-black/30 border border-white/10 rounded p-2 text-center text-sm text-white"
-                     value={settings.ttsPitch}
-                     onChange={e => setSettings({...settings, ttsPitch: parseFloat(e.target.value)})}
-                   />
+                <textarea rows={8} className="w-full border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none" value={settings.systemPrompt} onChange={(e) => setSettings({ ...settings, systemPrompt: e.target.value })} />
+              </div>
+
+              <div className="space-y-4 border-t border-white/10 pt-4">
+                <div className="font-bold text-slate-400 text-xs">TTS 发音配置</div>
+                <input className="w-full border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none" placeholder="TTS API URL" value={settings.ttsApiUrl} onChange={(e })} />
+                
+                <select 
+                  className="w-full border border-white/10 rounded-xl px-3 py-2 bg-slate-900/50 outline-none appearance-none"
+                  value={settings.ttsVoice} 
+                  onChange={(e) => setSettings({ ...settings, ttsVoice: e.target.value })}
+                >
+                  {TTS_VOICES.map(v => <option key={v.id} value={v.id}>{v.name}</option>)}
+                </select>
+
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <label className="text-xs text-slate-400 w-10">语速</label>
+                    <input type="range" min="-50" max="50" step="1" className="flex-1 accent-pink-500" value={settings.ttsSpeed} onChange={(e) => setSettings({ ...settings, ttsSpeed: toFiniteNumber(e.target.value, 0) })} />
+                    <input type="number" step="1" className="w-16 bg-slate-900/50 border border-white/10 rounded-md px-1 py-1 text-center text-xs outline-none" value={settings.ttsSpeed} onChange={(e) => setSettings({ ...settings, ttsSpeed: toFiniteNumber(e.target.value, 0) })} />
+                  </div>
+                  
+                  <div className="flex items-center gap-3">
+                    <label className="text-xs text-slate-400 w-10">音调</label>
+                    <input type="range" min="-2" max="2" step="0.01" className="flex-1 accent-pink-500" value={settings.ttsPitch} onChange={(e) => setSettings({ ...settings, ttsPitch: toFiniteNumber(e.target.value, 0) })} />
+                    <input type="number" step="0.01" className="w-16 bg-slate-900/50 border border-white/10 rounded-md px-1 py-1 text-center text-xs outline-none" value={settings.ttsPitch} onChange={(e) => setSettings({ ...settings, ttsPitch: toFiniteNumber(e.target.value, 0) })} />
+                  </div>
                 </div>
               </div>
 
-              <div>
-                 <label className="text-xs text-slate-400 mb-2 block">Prompt 系统指令</label>
-                 <textarea 
-                    className="w-full bg-black/20 border border-white/10 rounded-lg p-3 text-xs leading-relaxed h-32 text-slate-300 focus:border-pink-500 outline-none resize-none"
-                    value={settings.systemPrompt}
-                    onChange={e => setSettings({...settings, systemPrompt: e.target.value})}
-                 />
+              <div className="space-y-3 border-t border-white/10 pt-4 pb-4">
+                <label className="flex items-center justify-between p-3 bg-slate-900/50 rounded-xl border border-white/10">
+                  <span>显示字幕</span>
+                  <input type="checkbox" className="w-5 h-5 accent-pink-500" checked={settings.showText} onChange={(e) => setSettings({ ...settings, showText: e.target.checked })} />
+                </label>
+                
+                <div className="p-3 bg-slate-900/50 rounded-xl border border-white/10">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm">麦克风静默提交时间</span>
+                    <span className="text-xs text-slate-400">{settings.asrSilenceMs}ms</span>
+                  </div>
+                  <input type="range" min="600" max="3000" step="100" className="w-full accent-pink-500" value={settings.asrSilenceMs} onChange={(e) => setSettings({ ...settings, asrSilenceMs: toFiniteNumber(e.target.value, 1500) })} />
+                  <p className="text-[10px] text-slate-500 mt-1">控制你不说话多久后自动发送消息</p>
+                </div>
               </div>
             </div>
           </div>
