@@ -36,7 +36,7 @@ const CONFIG = {
   HEO_HERO_CATEGORY_3: { title: 'AI科创与落地', url: '/tag/AI落地' },
 
   // 英雄区右侧推荐文章标签
-  HEO_HERO_RECOMMEND_POST_TAG: '精选',
+  HEO_HERO_RECOMMEND_POST_TAG: 'Popular',
   HEO_HERO_RECOMMEND_POST_SORT_BY_UPDATE_TIME: true,
 
   // 右侧个人资料卡牌欢迎语（突出科创、落地、应用）
