@@ -240,7 +240,7 @@ class ExternalTTSQueue {
 
   getVoiceForLang(lang) {
     const s = this.settingsRef || {};
-    if (lang === 'my') return 'my-MM-NilarNeural';
+    if (lang === 'my') return 'zh-CN-XiaoxiaoMultilingualNeural';
     if (lang === 'en') return 'en-US-JennyNeural';
     return s.ttsVoice || 'zh-CN-XiaoxiaoMultilingualNeural';
   }
