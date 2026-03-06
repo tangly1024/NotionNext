@@ -1,18 +1,3 @@
-下面给你一份**“最小保命版完整文件”**，思路是：
-
-- **保留你原主题文件的大部分结构**
-- **只把高风险动态组件先断开，占位**
-- **保证 `useSimpleGlobal / LayoutBase / LayoutSlug / THEME_CONFIG` 这些导出结构不动**
-- 先目标：**恢复 build**
-- 等 build 通过后，再逐个把 `BookLibrary / AIChatDrawer / VoiceChat` 接回来
-
----
-
-# 你现在直接整份替换这个主题主文件
-
-> 这份就是你刚才发的那份文件的“保命版”。
-
-```jsx
 'use client';
 
 import { AdSlot } from '@/components/GoogleAdsense'
