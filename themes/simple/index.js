@@ -73,13 +73,37 @@ const pinyinNav = [
   { zh: '声调', mm: 'အသံ', icon: FileText, href: '/pinyin/tones', bg: 'bg-orange-100/80', color: 'text-orange-600' }
 ]
 
-const coreTools = [
-  { zh: 'AI 翻译', mm: 'AI ဘာသာပြန်', icon: Globe, action: 'translator', bg: 'bg-indigo-50', iconColor: 'text-indigo-600' },
-  { zh: '免费书籍', mm: 'စာကြည့်တိုက်', icon: Library, action: 'library', bg: 'bg-cyan-50', iconColor: 'text-cyan-600' },
-  { zh: '单词收藏', mm: ': '/words', bg: 'bg-slate-50', iconColor: 'text-slate-600' },
-  { zh: '口语收藏', mm: 'မှတ်ထားသော စကားပြော', icon: Volume2, href: '/oral', bg: 'bg-slate-50', iconColor: 'text-slate-600' }
+ const coreTools = [
+  {
+    zh: 'AI 翻译',
+    mm: 'AI ဘာသာပြန်',
+    icon: Globe,
+    action: 'translator',
+    bg: 'bg-indigo-50',
+    iconColor: 'text-indigo-600'
+  },
+  {
+    zh: '免费书籍',
+    mm: 'စာကြည့်တိုက်',
+    icon: Library,
+    action: 'library',
+    bg: 'bg-cyan-50',
+    iconColor: 'text-cyan-600'
+  },
+  {
+    zh: '单词收藏',
+    mm: 'မှတ်ထားသော စာလုံး',
+    icon: Star,
+    href: '/words',
+    bg: 'bg-slate-50',
+    iconColor: 'late',
+ Volume2,
+    href: '/oral',
+    bg: 'bg-slate-50',
+    iconColor: 'text-slate-600'
+  }
 ]
-
+const
 const systemCourses = [
   {
     badge: 'AI Tutor',
