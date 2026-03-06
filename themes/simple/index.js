@@ -80,7 +80,7 @@ const coreTools =[
   { zh: '口语收藏', mm: 'မှတ်ထားသော စကားပြော', icon: Volume2, href: '/oral', bg: 'bg-slate-50', iconColor: 'text-slate-600' }
 ]
 
-const systemCourses =[
+const systemCourses = [
   {
     badge: 'Words',
     sub: '词汇 (VOCABULARY)',
@@ -89,6 +89,15 @@ const systemCourses =[
     bgImg: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=1200',
     href: '/vocabulary',
     color: 'from-blue-600/90'
+  },
+  {
+    badge: 'Oral',
+    sub: '短句 (ORAL)',
+    title: '场景口语短句',
+    mmDesc: 'အခြေအနေလိုက် စကားပြော လေ့ကျင့်မှု',
+    bgImg: 'https://images.unsplash.com/photo-1528712306091-ed0763094c98?auto=format&fit=crop&q=80&w=1200',
+    href: '/oral',
+    color: 'from-emerald-600/90'
   },
   {
     badge: 'HSK 1',
@@ -300,8 +309,12 @@ const LayoutBase = props => {
   const router = useRouter()
   const pathname = router?.pathname || ''
   
-  const isLearningRoute = pathname === '/' || pathname.startsWith('/vocabulary') || pathname.startsWith('/pinyin') || pathname.startsWith('/course')
-
+  const isLearningRoute =
+  pathname === '/' ||
+  pathname.startsWith('/vocabulary') ||
+  pathname.startsWith('/pinyin') ||
+  pathname.startsWith('/course') ||
+  pathname.startsWith('/oral')
   if (isLearningRoute) {
     return (
       <ThemeGlobalSimple.Provider value={{ searchModal }}>
