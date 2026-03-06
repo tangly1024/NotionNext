@@ -1,52 +1,55 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  Mic,
-  StopCircle,
-  Sparkles,
+  ChevronLeft,
+  Settings2,
   X,
+  Loader2,
+  Sparkles,
   Volume2,
   Star,
-  Play,
-  Square,
+  Mic,
+  StopCircle,
   Menu,
-  Zap,
-  Lock,
-  Settings2,
-  ChevronLeft,
   ChevronDown,
   ChevronUp,
-  CheckCircle2,
-  BookOpen,
-  Loader2,
-  Heart
+  Play,
+  Square
 } from 'lucide-react';
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { pinyin } from 'pinyin-pro';
 
-// ============================================================================
-// 工具函数
-// ============================================================================
+// ============================
+// 工具
+// ============================
 function normalizePhrase(item, index) {
   const chinese = item?.chinese || item?.zh || item?.text || '';
-  const burmese = item?.burmese || item?.translation || item?.en || item?.meaning || '';
-  const xieyin = item?.xieyin || '';
-  const category = item?.category || '当前模块';
-  const sub = item?.sub || '短句列表';
-
+  const burmese = item?.burmese || item?.translation || item?.en || '';
   return {
     id: item?.id || `${index}`,
     chinese,
     burmese,
-    xieyin,
-    category,
-    sub,
-    pinyin: item?.pinyin || pinyin(String(chinese).replace(/[，。！？；：、,.!?;:]/g, ''), { toneType: 'symbol' }),
-    audioZh: item?.audioZh || item?.zhAudio || '',
-    audioMy: item?.audioMy || item?.myAudio || '',
-    locked: !!item?.locked
+    xieyin: item?.xieyin || '',
+    note: item?.note || '',
+    category: item?.category || '当前模块',
+    sub: item?.sub || '短句列表',
+    pinyin:
+      item?.pinyin ||
+      pinyin(String(chinese).replace(/[，。！？；：、,.!?;:]/g, ''), {
+        toneType: 'symbol'
+      }),
+    audioZh: item?.audioZh || '',
+    audioMy: item?.audioMy || ''
   };
+}
+
+function safeParseJSON(value, fallback) {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return fallback;
+  }
 }
 
 function getPinyinComparison(targetText, userText) {
@@ -69,18 +72,19 @@ function getPinyinComparison(targetText, userText) {
       targetChar: cleanTarget[i] || '',
       targetPy: t,
       userPy: u,
-      isMatch,
-      isMissing: !u
+      isMatch
     });
   }
 
-  const accuracy = targetPy.length > 0 ? correctCount / targetPy.length : 0;
-  return { accuracy, comparison: result, userText };
+  return {
+    accuracy: targetPy.length ? correctCount / targetPy.length : 0,
+    comparison: result
+  };
 }
 
-// ============================================================================
-// 核心音频引擎
-// ============================================================================
+// ============================
+// 音频
+// ============================
 const AudioEngine = {
   current: null,
 
@@ -95,6 +99,7 @@ const AudioEngine = {
   play(url) {
     return new Promise((resolve) => {
       this.stop();
+
       if (typeof window === 'undefined' || !url) {
         resolve();
         return;
@@ -107,10 +112,12 @@ const AudioEngine = {
         this.current = null;
         resolve();
       };
+
       audio.onerror = () => {
         this.current = null;
         resolve();
       };
+
       audio.play().catch(() => {
         this.current = null;
         resolve();
@@ -125,53 +132,20 @@ const AudioEngine = {
   }
 };
 
-// ============================================================================
-// 录音与识别
-// ============================================================================
-const RecorderEngine = {
-  mediaRecorder: null,
-  chunks: [],
-
-  async start() {
-    AudioEngine.stop();
-    if (typeof navigator === 'undefined' || !navigator.mediaDevices) return false;
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      this.mediaRecorder = new MediaRecorder(stream);
-      this.chunks = [];
-      this.mediaRecorder.ondataavailable = (e) => this.chunks.push(e.data);
-      this.mediaRecorder.start();
-      return true;
-    } catch (e) {
-      alert('请开启麦克风权限');
-      return false;
-    }
-  },
-
-  stop() {
-    return new Promise((resolve) => {
-      if (!this.mediaRecorder) return resolve(null);
-      this.mediaRecorder.onstop = () => {
-        const url = URL.createObjectURL(new Blob(this.chunks, { type: 'audio/webm' }));
-        this.mediaRecorder.stream.getTracks().forEach((t) => t.stop());
-        this.mediaRecorder = null;
-        resolve(url);
-      };
-      this.mediaRecorder.stop();
-    });
-  }
-};
-
+// ============================
+// 语音识别
+// ============================
 const SpeechEngine = {
   recognition: null,
 
   start(onResult, onError) {
     AudioEngine.stop();
     if (typeof window === 'undefined') return;
+
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) {
       alert('浏览器不支持语音识别');
-      if (onError) onError();
+      onError?.();
       return;
     }
 
@@ -179,60 +153,66 @@ const SpeechEngine = {
     this.recognition.lang = 'zh-CN';
     this.recognition.continuous = false;
     this.recognition.interimResults = false;
-    this.recognition.onresult = (e) => onResult(e.results[0][0].transcript);
-    this.recognition.onerror = () => {
-      if (onError) onError();
+
+    this.recognition.onresult = (e) => {
+      onResult?.(e.results[0][0].transcript);
     };
+
+    this.recognition.onerror = () => {
+      onError?.();
+    };
+
     this.recognition.onend = () => {
-      if (onError) onError();
+      onError?.();
     };
 
     try {
       this.recognition.start();
     } catch (e) {
-      if (onError) onError();
+      onError?.();
     }
   },
 
   stop() {
-    if (this.recognition) this.recognition.stop();
+    if (this.recognition) {
+      this.recognition.stop();
+    }
   }
 };
 
-// ============================================================================
+// ============================
 // 设置面板
-// ============================================================================
-const SettingsPanel = ({ settings, setSettings, onClose }) => {
+// ============================
+function SettingsPanel({ settings, setSettings, onClose }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: -20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: -20, scale: 0.95 }}
-      className="fixed top-16 right-4 z-[2000] bg-white rounded-2xl shadow-2xl border border-slate-100 w-72 overflow-hidden"
+      className="fixed top-16 right-4 z-[2000] w-72 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-2xl"
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="bg-slate-50 px-4 py-3 flex justify-between items-center border-b border-slate-100">
-        <span className="text-xs font-black text-slate-500 uppercase tracking-widest">
+      <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50 px-4 py-3">
+        <span className="text-xs font-black uppercase tracking-widest text-slate-500">
           播放设置
         </span>
         <button type="button" onClick={onClose}>
-          <X size={16} className="text-slate-400 hover:text-red-500" />
+          <X size={16} className="text-slate-400" />
         </button>
       </div>
 
-      <div className="p-5 space-y-5">
-        {/* 中文 */}
+      <div className="space-y-5 p-5">
         <div className="space-y-2">
           <div className="flex justify-between items-center">
             <span className="text-xs font-bold text-slate-700">中文朗读</span>
             <div
               onClick={() => setSettings((s) => ({ ...s, zhEnabled: !s.zhEnabled }))}
-              className={`w-8 h-4 rounded-full transition-colors relative cursor-pointer ${
+              className={`w-8 h-4 rounded-full relative cursor-pointer ${
                 settings.zhEnabled ? 'bg-blue-500' : 'bg-slate-200'
               }`}
             >
               <div
-                className="absolute top-0.5 w-3 h-3 bg-white rounded-full transition-transform"
+                className="absolute top-0.5 w-3 h-3 rounded-full bg-white"
                 style={{ left: settings.zhEnabled ? '18px' : '2px' }}
               />
             </div>
@@ -240,19 +220,19 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => {
 
           <div className="grid grid-cols-2 gap-2">
             {[
-              { label: '小晓 (女)', val: 'zh-CN-XiaoxiaoMultilingualNeural' },
-              { label: '小辰 (男)', val: 'zh-CN-XiaochenMultilingualNeural' },
-              { label: '云夏 (男童)', val: 'zh-CN-YunxiaNeural' },
-              { label: '小颜 (通用)', val: 'zh-CN-XiaoyanNeural' }
+              { label: '小晓', val: 'zh-CN-XiaoxiaoMultilingualNeural' },
+              { label: '小辰', val: 'zh-CN-XiaochenMultilingualNeural' },
+              { label: '小颜', val: 'zh-CN-XiaoyanNeural' },
+              { label: '云夏', val: 'zh-CN-YunxiaNeural' }
             ].map((opt) => (
               <button
                 type="button"
                 key={opt.val}
                 onClick={() => setSettings((s) => ({ ...s, zhVoice: opt.val }))}
-                className={`py-1.5 text-[10px] font-bold rounded border transition-all truncate ${
+                className={`rounded border py-1.5 text-[10px] font-bold ${
                   settings.zhVoice === opt.val
-                    ? 'bg-blue-50 border-blue-200 text-blue-600'
-                    : 'bg-white border-slate-100 text-slate-400'
+                    ? 'border-blue-200 bg-blue-50 text-blue-600'
+                    : 'border-slate-100 bg-white text-slate-400'
                 }`}
               >
                 {opt.label}
@@ -260,7 +240,7 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => {
             ))}
           </div>
 
-          <div className="flex items-center gap-2 pt-1">
+          <div className="flex items-center gap-2">
             <span className="text-[10px] text-slate-400">语速</span>
             <input
               type="range"
@@ -271,28 +251,27 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => {
               onChange={(e) =>
                 setSettings((s) => ({ ...s, zhRate: Number(e.target.value) }))
               }
-              className="flex-1 h-1 bg-slate-100 rounded-lg appearance-none accent-blue-500"
+              className="flex-1 h-1 rounded-lg bg-slate-100 accent-blue-500"
             />
-            <span className="text-[10px] w-6 text-right font-mono text-slate-400">
+            <span className="w-6 text-right text-[10px] text-slate-400">
               {settings.zhRate}
             </span>
           </div>
         </div>
 
-        <div className="h-[1px] bg-slate-50" />
+        <div className="h-px bg-slate-100" />
 
-        {/* 缅文 */}
         <div className="space-y-2">
           <div className="flex justify-between items-center">
             <span className="text-xs font-bold text-slate-700">缅文朗读</span>
             <div
               onClick={() => setSettings((s) => ({ ...s, myEnabled: !s.myEnabled }))}
-              className={`w-8 h-4 rounded-full transition-colors relative cursor-pointer ${
+              className={`w-8 h-4 rounded-full relative cursor-pointer ${
                 settings.myEnabled ? 'bg-green-500' : 'bg-slate-200'
               }`}
             >
               <div
-                className="absolute top-0.5 w-3 h-3 bg-white rounded-full transition-transform"
+                className="absolute top-0.5 w-3 h-3 rounded-full bg-white"
                 style={{ left: settings.myEnabled ? '18px' : '2px' }}
               />
             </div>
@@ -300,17 +279,17 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => {
 
           <div className="grid grid-cols-2 gap-2">
             {[
-              { label: 'Thiha (男)', val: 'my-MM-ThihaNeural' },
-              { label: 'Nilar (女)', val: 'my-MM-NilarNeural' }
+              { label: 'Thiha', val: 'my-MM-ThihaNeural' },
+              { label: 'Nilar', val: 'my-MM-NilarNeural' }
             ].map((opt) => (
               <button
                 type="button"
                 key={opt.val}
                 onClick={() => setSettings((s) => ({ ...s, myVoice: opt.val }))}
-                className={`py-1.5 text-[10px] font-bold rounded border transition-all truncate ${
+                className={`rounded border py-1.5 text-[10px] font-bold ${
                   settings.myVoice === opt.val
-                    ? 'bg-green-50 border-green-200 text-green-600'
-                    : 'bg-white border-slate-100 text-slate-400'
+                    ? 'border-green-200 bg-green-50 text-green-600'
+                    : 'border-slate-100 bg-white text-slate-400'
                 }`}
               >
                 {opt.label}
@@ -318,7 +297,7 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => {
             ))}
           </div>
 
-          <div className="flex items-center gap-2 pt-1">
+          <div className="flex items-center gap-2">
             <span className="text-[10px] text-slate-400">语速</span>
             <input
               type="range"
@@ -329,9 +308,9 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => {
               onChange={(e) =>
                 setSettings((s) => ({ ...s, myRate: Number(e.target.value) }))
               }
-              className="flex-1 h-1 bg-slate-100 rounded-lg appearance-none accent-green-500"
+              className="flex-1 h-1 rounded-lg bg-slate-100 accent-green-500"
             />
-            <span className="text-[10px] w-6 text-right font-mono text-slate-400">
+            <span className="w-6 text-right text-[10px] text-slate-400">
               {settings.myRate}
             </span>
           </div>
@@ -339,160 +318,85 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => {
       </div>
     </motion.div>
   );
-};
+}
 
-// ============================================================================
+// ============================
 // 拼读弹窗
-// ============================================================================
-const SpellingModal = ({ item, settings, onClose }) => {
-  const [activeCharIndex, setActiveCharIndex] = useState(-1);
-  const [recordState, setRecordState] = useState('idle');
-  const [userAudio, setUserAudio] = useState(null);
+// ============================
+function SpellingModal({ item, settings, onClose }) {
   const chars = item.chinese.split('');
-  const isMounted = useRef(true);
+  const [activeCharIndex, setActiveCharIndex] = useState(-1);
 
-  useEffect(() => {
-    isMounted.current = true;
-    AudioEngine.stop();
-
-    const autoSpell = async () => {
-      await new Promise((r) => setTimeout(r, 200));
-      if (!isMounted.current) return;
-
-      for (let i = 0; i < chars.length; i++) {
-        if (!isMounted.current) break;
-        setActiveCharIndex(i);
-        const py = pinyin(chars[i], { toneType: 'symbol' });
-        await AudioEngine.playTTS(py, settings.zhVoice, settings.zhRate);
-        await new Promise((r) => setTimeout(r, 60));
-      }
-
-      if (isMounted.current) setActiveCharIndex(-1);
-    };
-
-    autoSpell();
-    return () => {
-      isMounted.current = false;
-      AudioEngine.stop();
-    };
-  }, [chars, settings.zhVoice, settings.zhRate]);
-
-  const handleCharClick = async (index) => {
+  const playChar = async (char, index) => {
     setActiveCharIndex(index);
-    const char = chars[index];
     const py = pinyin(char, { toneType: 'symbol' });
     await AudioEngine.playTTS(py, settings.zhVoice, settings.zhRate);
     setActiveCharIndex(-1);
   };
 
   const playWhole = () => {
-    setActiveCharIndex('all');
-    AudioEngine.playTTS(item.chinese, settings.zhVoice, settings.zhRate).then(() =>
-      setActiveCharIndex(-1)
-    );
-  };
-
-  const toggleRecord = async () => {
-    if (recordState === 'recording') {
-      const url = await RecorderEngine.stop();
-      setUserAudio(url);
-      setRecordState('review');
-    } else {
-      AudioEngine.stop();
-      const success = await RecorderEngine.start();
-      if (success) setRecordState('recording');
-    }
+    AudioEngine.playTTS(item.chinese, settings.zhVoice, settings.zhRate);
   };
 
   return (
     <div
-      className="fixed inset-0 z-[2000] bg-black/60 backdrop-blur-sm flex items-end justify-center sm:items-center"
+      className="fixed inset-0 z-[2000] flex items-end justify-center bg-black/60 backdrop-blur-sm sm:items-center"
       onClick={onClose}
     >
       <motion.div
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
-        className="bg-white w-full max-w-md rounded-t-[2rem] sm:rounded-[2rem] p-6 shadow-2xl relative"
+        className="relative w-full max-w-md rounded-t-[2rem] bg-white p-6 shadow-2xl sm:rounded-[2rem]"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6 sm:hidden" />
+        <div className="mx-auto mb-6 h-1.5 w-12 rounded-full bg-slate-200 sm:hidden" />
 
-        <div className="flex items-center justify-between mb-8">
-          <h3 className="text-slate-900 font-black text-lg">拼读练习</h3>
-          <span className="text-[10px] bg-blue-50 text-blue-500 px-2 py-1 rounded font-bold animate-pulse">
-            自动演示中...
-          </span>
+        <div className="mb-6 flex items-center justify-between">
+          <h3 className="text-lg font-black text-slate-900">拼读练习</h3>
+          <button type="button" onClick={onClose}>
+            <X size={18} className="text-slate-400" />
+          </button>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-2 mb-10 px-2">
+        <div className="mb-8 flex flex-wrap justify-center gap-2">
           {chars.map((char, i) => (
-            <div
-              key={i}
-              onClick={() => handleCharClick(i)}
-              className={`flex flex-col items-center p-2 rounded-xl transition-all cursor-pointer select-none ${
+            <button
+              type="button"
+              key={`${char}-${i}`}
+              onClick={() => playChar(char, i)}
+              className={`flex flex-col items-center rounded-xl p-3 transition ${
                 activeCharIndex === i
-                  ? 'bg-blue-50 ring-2 ring-blue-500 scale-110 shadow-lg'
-                  : 'hover:bg-slate-50'
+                  ? 'scale-105 bg-blue-50 ring-2 ring-blue-500'
+                  : 'bg-slate-50 hover:bg-slate-100'
               }`}
             >
-              <span
-                className={`text-xs font-pinyin mb-1 ${
-                  activeCharIndex === i
-                    ? 'text-blue-600 font-bold'
-                    : 'text-slate-400'
-                }`}
-              >
+              <span className="mb-1 text-xs text-slate-400">
                 {pinyin(char, { toneType: 'symbol' })}
               </span>
-              <span
-                className={`text-3xl font-black ${
-                  activeCharIndex === i ? 'text-blue-800' : 'text-slate-800'
-                }`}
-              >
-                {char}
-              </span>
-            </div>
+              <span className="text-3xl font-black text-slate-800">{char}</span>
+            </button>
           ))}
         </div>
 
-        <div className="flex justify-around items-center px-4 pb-4">
-          <div onClick={playWhole} className="flex flex-col items-center gap-2 cursor-pointer">
-            <Volume2 size={24} />
-            <span className="text-[10px]">整句</span>
-          </div>
-
-          <div
-            onClick={toggleRecord}
-            className={`w-16 h-16 rounded-full flex items-center justify-center shadow-xl border-4 ${
-              recordState === 'recording'
-                ? 'bg-red-500 border-red-100'
-                : 'bg-slate-100'
-            }`}
+        <div className="flex justify-center">
+          <button
+            type="button"
+            onClick={playWhole}
+            className="flex items-center gap-2 rounded-full bg-blue-600 px-5 py-3 text-sm font-bold text-white"
           >
-            {recordState === 'recording' ? (
-              <Square size={24} className="text-white" />
-            ) : (
-              <Mic size={28} />
-            )}
-          </div>
-
-          <div
-            onClick={() => userAudio && AudioEngine.play(userAudio)}
-            className={`flex flex-col items-center gap-2 ${userAudio ? '' : 'opacity-30'}`}
-          >
-            <Play size={24} />
-            <span className="text-[10px]">回放</span>
-          </div>
+            <Volume2 size={16} />
+            整句朗读
+          </button>
         </div>
       </motion.div>
     </div>
   );
-};
+}
 
-// ============================================================================
+// ============================
 // 主组件
-// ============================================================================
+// ============================
 export default function SpokenModulePro({
   phrases = [],
   title = '口语短句',
@@ -508,17 +412,17 @@ export default function SpokenModulePro({
   );
 
   const [view, setView] = useState('home');
-
   const [favorites, setFavorites] = useState([]);
   const [isFavMode, setIsFavMode] = useState(false);
-
   const [visibleCount, setVisibleCount] = useState(20);
-  const loaderRef = useRef(null);
-
   const [showCatalog, setShowCatalog] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [expandedCats, setExpandedCats] = useState({});
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [playingId, setPlayingId] = useState(null);
+  const [spellingItem, setSpellingItem] = useState(null);
+  const [recordingId, setRecordingId] = useState(null);
+  const [speechResult, setSpeechResult] = useState(null);
 
   const [settings, setSettings] = useState({
     zhVoice: 'zh-CN-XiaoxiaoMultilingualNeural',
@@ -529,15 +433,9 @@ export default function SpokenModulePro({
     myEnabled: true
   });
 
-  const [playingId, setPlayingId] = useState(null);
-  const [spellingItem, setSpellingItem] = useState(null);
-  const [recordingId, setRecordingId] = useState(null);
-  const [speechResult, setSpeechResult] = useState(null);
-
-  const [showVip, setShowVip] = useState(false);
-
-  const { scrollY } = useScroll();
+  const loaderRef = useRef(null);
   const itemRefs = useRef({});
+  const headerRef = useRef({ lastY: 0 });
 
   useEffect(() => {
     const savedSet = localStorage.getItem(settingsStorageKey);
@@ -563,28 +461,31 @@ export default function SpokenModulePro({
     const onPopState = () => {
       if (view === 'list') {
         AudioEngine.stop();
-        setShowCatalog(false);
-        setShowSettings(false);
         setView('home');
         setIsFavMode(false);
-      } else if (typeof onBack === 'function') {
+      } else if (onBack) {
         onBack();
       }
     };
 
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
-  }, [view, onBack, isFavMode]);
+  }, [view, onBack]);
 
-  useMotionValueEvent(scrollY, 'change', (latest) => {
-    const previous = scrollY.getPrevious() || 0;
-    setIsHeaderVisible(!(latest > previous && latest > 50));
-  });
+  useEffect(() => {
+    const onScroll = () => {
+      const latest = window.scrollY;
+      const previous = headerRef.current.lastY || 0;
+      setIsHeaderVisible(!(latest > previous && latest > 50));
+      headerRef.current.lastY = latest;
+    };
+
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const displayPhrases = useMemo(() => {
-    if (isFavMode) {
-      return normalizedPhrases.filter((p) => favorites.includes(p.id));
-    }
+    if (isFavMode) return normalizedPhrases.filter((p) => favorites.includes(p.id));
     return normalizedPhrases;
   }, [normalizedPhrases, favorites, isFavMode]);
 
@@ -597,7 +498,7 @@ export default function SpokenModulePro({
           setVisibleCount((prev) => Math.min(prev + 20, displayPhrases.length));
         }
       },
-      { root: null, rootMargin: '200px', threshold: 0.1 }
+      { rootMargin: '200px' }
     );
 
     if (loaderRef.current) observer.observe(loaderRef.current);
@@ -608,7 +509,6 @@ export default function SpokenModulePro({
 
   const catalogTree = useMemo(() => {
     const map = new Map();
-
     normalizedPhrases.forEach((p) => {
       if (!map.has(p.category)) map.set(p.category, new Set());
       map.get(p.category).add(p.sub);
@@ -641,7 +541,7 @@ export default function SpokenModulePro({
         const el = itemRefs.current[targetSub];
         if (el) el.scrollIntoView({ behavior: 'auto', block: 'start' });
       }
-    }, 120);
+    }, 100);
   };
 
   const goHome = () => {
@@ -651,16 +551,13 @@ export default function SpokenModulePro({
 
   const handleCatalogJump = (sub) => {
     setShowCatalog(false);
-
     const idx = displayPhrases.findIndex((p) => p.sub === sub);
-    if (idx !== -1 && idx >= visibleCount) {
-      setVisibleCount(idx + 20);
-    }
+    if (idx !== -1 && idx >= visibleCount) setVisibleCount(idx + 20);
 
     setTimeout(() => {
       const el = itemRefs.current[sub];
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 120);
+    }, 100);
   };
 
   const handleCardPlay = async (item) => {
@@ -738,17 +635,9 @@ export default function SpokenModulePro({
 
   return (
     <div className="min-h-screen bg-[#F8F9FB] font-sans text-slate-900 max-w-md mx-auto relative shadow-2xl overflow-hidden">
-      {/* ================= VIEW 1: HOME ================= */}
       {view === 'home' && (
         <div className="min-h-screen bg-white">
           <div className="relative h-64 overflow-hidden">
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  'linear-gradient(135deg, rgba(37,99,235,0.18) 0%, rgba(59,130,246,0.28) 40%, rgba(255,255,255,0.08) 100%)'
-              }}
-            />
             <img
               src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=1000&q=80"
               alt={title}
@@ -792,8 +681,26 @@ export default function SpokenModulePro({
 
             {catalogTree.map((cat, i) => (
               <div
-                key={i border-slate-sm                class-Name text-sm] ? (
-                    <ChevronUp size={16} className="text-slate-400"late                </div>
+                key={i}
+                className="bg-white border border-slate-100 rounded-xl overflow-hidden shadow-sm"
+              >
+                <div
+                  onClick={() => toggleCat(cat.name)}
+                  className="flex items-center justify-between p-4 cursor-pointer active:bg-slate-50"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-slate-100 text-slate-500 rounded-lg flex items-center justify-center font-bold text-xs">
+                      {i + 1}
+                    </div>
+                    <span className="font-bold text-slate-800 text-sm">{cat.name}</span>
+                  </div>
+
+                  {expandedCats[cat.name] ? (
+                    <ChevronUp size={16} className="text-slate-400" />
+                  ) : (
+                    <ChevronDown size={16} className="text-slate-400" />
+                  )}
+                </div>
 
                 <AnimatePresence>
                   {expandedCats[cat.name] && (
@@ -806,8 +713,8 @@ export default function SpokenModulePro({
                       <div className="px-4 pb-4 pt-1 grid grid-cols-2 gap-2">
                         {cat.subs.map((sub, j) => (
                           <button
-                            key={j}
                             type="button"
+                            key={j}
                             onClick={() => enterList(sub)}
                             className="text-left px-3 py-2 bg-white border border-slate-100 rounded-lg text-xs font-medium text-slate-600 active:scale-95 transition-transform h-auto break-words leading-tight"
                           >
@@ -824,7 +731,6 @@ export default function SpokenModulePro({
         </div>
       )}
 
-      {/* ================= VIEW 2: LIST ================= */}
       {view === 'list' && (
         <div className="min-h-screen pb-32 bg-[#F5F7FA]">
           <motion.div
@@ -839,17 +745,14 @@ export default function SpokenModulePro({
               <ChevronLeft size={24} />
             </button>
 
-            {isFavMode ? (
-              <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
-                <span className="text-sm font-black text-slate-800">我的收藏</span>
-                <span className="text-[10px] text-slate-400">收藏短句</span>
-              </div>
-            ) : (
-              <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
-                <span className="text-sm font-black text-slate-800">{title}</span>
-                <span className="text-[10px] text-slate-400">{categoryTitle}</span>
-              </div>
-            )}
+            <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
+              <span className="text-sm font-black text-slate-800">
+                {isFavMode ? '我的收藏' : title}
+              </span>
+              <span className="text-[10px] text-slate-400">
+                {isFavMode ? '收藏短句' : categoryTitle}
+              </span>
+            </div>
 
             <div className="flex items-center gap-1">
               <button
@@ -859,6 +762,7 @@ export default function SpokenModulePro({
               >
                 <Settings2 size={20} />
               </button>
+
               {!isFavMode && (
                 <button
                   type="button"
@@ -874,10 +778,7 @@ export default function SpokenModulePro({
           <AnimatePresence>
             {showSettings && (
               <>
-                <div
-                  className="fixed inset-0 z-[1999]"
-                  onClick={() => setShowSettings(false)}
-                />
+                <div className="fixed inset-0 z-[1999]" onClick={() => setShowSettings(false)} />
                 <SettingsPanel
                   settings={settings}
                   setSettings={setSettings}
@@ -962,7 +863,6 @@ export default function SpokenModulePro({
           </AnimatePresence>
 
           <div className="pt-20 px-3 space-y-4">
-            {/* 空状态 */}
             {isFavMode && displayPhrases.length === 0 && (
               <div className="flex flex-col items-center justify-center pt-32 text-slate-400">
                 <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
@@ -1015,7 +915,7 @@ export default function SpokenModulePro({
                       {(item.xieyin || item.note) && (
                         <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 w-full flex justify-center pointer-events-none">
                           <div className="bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-[10px] font-black border border-amber-100 shadow-sm flex items-center gap-1 whitespace-nowrap">
-                            <Zap size={10} className="fill-amber-500 text-amber-500" />
+                            <Sparkles size={10} className="fill-amber-500 text-amber-500" />
                             {item.xieyin || item.note}
                           </div>
                         </div>
@@ -1130,16 +1030,16 @@ export default function SpokenModulePro({
             })}
 
             {displayPhrases.length > 0 && (
-              <div ref={loaderRef} className="py-10 text-center-center justify-center gap-2 text-xs font-bold animate-pulse">
+              <div ref={loaderRef} className="py-10 text-center text-slate-400">
+                {visibleCount < displayPhrases.length ? (
+                  <div className="flex items-center justify-center gap-2 text-xs font-bold animate-pulse">
                     <Loader2 className="animate-spin" size={16} />
                     正在加载更多...
                   </div>
                 ) : (
                   <div className="flex flex-col items-center gap-2 opacity-50">
                     <div className="w-12 h-1 bg-slate-200 rounded-full" />
-                    <span className="text-[10px]">
-                      到底了 (Total: {displayPhrases.length})
-                    </span>
+                    <span className="text-[10px]">到底了 (Total: {displayPhrases.length})</span>
                   </div>
                 )}
               </div>
@@ -1155,57 +1055,6 @@ export default function SpokenModulePro({
             settings={settings}
             onClose={() => setSpellingItem(null)}
           />
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {showVip && (
-          <div className="fixed inset-0 z-[3000] flex items-center justify-center p-6 bg-slate-900/80 backdrop-blur-md">
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative bg-white rounded-[2rem] p-8 w-full max-w-xs text-center shadow-2xl"
-            >
-              <button
-                type="button"
-                onClick={() => setShowVip(false)}
-                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600"
-              >
-                <X size={20} />
-              </button>
-
-              <div className="w-16 h-16 mx-auto bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mb-4 text-white shadow-lg ring-4 ring-orange-100">
-                <CheckCircle2 size={30} />
-              </div>
-
-              <h3 className="text-xl font-black text-slate-900 mb-2">解锁完整课程</h3>
-              <p className="text-xs text-slate-500 mb-4">升级后可使用全部功能</p>
-
-              <ul className="text-left text-xs text-slate-500 space-y-2 mb-8 bg-slate-50 p-4 rounded-xl">
-                <li className="flex gap-2 items-center">
-                  <CheckCircle2 size={14} className="text-green-500" />
-                  解锁完整短句与训练
-                </li>
-                <li className="flex gap-2 items-center">
-                  <CheckCircle2 size={14} className="text-green-500" />
-                  开启语音评分
-                </li>
-                <li className="flex gap-2 items-center={14} className="text-green-500" />
-                  永久有效，无限回放
-                </li>
-              </ul>
-
-              <a
-                href="https://m.me/61575187883357"
-                target="_blank"
-                rel="noreferrer"
-                className="block w-full py-3.5 bg-slate-900 text-white rounded-xl font-bold shadow-lg active:scale-95 transition-transform hover:bg-slate-800"
-              >
-                联系老师激活
-              </a>
-            </motion.div>
-          </div>
         )}
       </AnimatePresence>
 
