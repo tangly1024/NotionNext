@@ -129,6 +129,9 @@ const nextConfig = {
       'source.unsplash.com',
       'p1.qhimg.com',
       'webmention.io',
+      'images.pexels.com',
+      'picsum.photos',
+      'imagedelivery.net',
       'ko-fi.com'
     ],
     // 图片加载器优化
