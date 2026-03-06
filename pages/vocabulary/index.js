@@ -2,15 +2,39 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-// 【修复】彻底移除 framer-motion，采用纯 CSS 原生动画，解决打包报错
-import { ChevronDown, ChevronRight, FileText } from 'lucide-react';
 import { vocabCategories } from '@/data/vocabData';
 
+// 备用图片
 const FALLBACK_BG = 'https://picsum.photos/seed/vocab-bg/1200/800';
 const FALLBACK_THUMB = 'https://picsum.photos/seed/vocab-thumb/400/400';
 
 const getTitle = (obj) => obj?.title || obj?.name || obj?.zh || obj?.id || '未命名';
 const getDesc = (obj) => obj?.description || obj?.desc || '暂无简介';
+
+// ==========================================
+// 原生 SVG 图标 (彻底摆脱 lucide-react 依赖，解决打包报错)
+// ==========================================
+const IconChevronDown = ({ size = 22 }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m6 9 6 6 6-6"/>
+  </svg>
+);
+
+const IconChevronRight = ({ size = 20 }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m9 18 6-6-6-6"/>
+  </svg>
+);
+
+const IconFileText = ({ size = 16 }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+    <polyline points="14 2 14 8 20 8"/>
+    <line x1="16" x2="8" y1="13" y2="13"/>
+    <line x1="16" x2="8" y1="17" y2="17"/>
+    <line x1="10" x2="8" y1="9" y2="9"/>
+  </svg>
+);
 
 // ==========================================
 // 1. 折叠菜单组件 (大分类卡片)
@@ -34,7 +58,7 @@ const CategoryAccordion = ({ cat }) => {
 
   return (
     <div style={{ marginBottom: 20 }}>
-      {/* --- 大分类卡片 (背景图 + 黑色渐变) --- */}
+      {/* --- 大分类卡片 --- */}
       <div
         onClick={() => setIsOpen(!isOpen)}
         style={{
@@ -101,12 +125,12 @@ const CategoryAccordion = ({ cat }) => {
             transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
           }}>
-            <ChevronDown size={22} />
+            <IconChevronDown size={22} />
           </div>
         </div>
       </div>
 
-      {/* --- 二级分类折叠区域 (纯 CSS Grid 原生动画，绝对不报错) --- */}
+      {/* --- 二级分类折叠区域 (纯 CSS Grid 原生动画，告别外部库) --- */}
       <div
         style={{
           display: 'grid',
@@ -190,7 +214,7 @@ const CategoryAccordion = ({ cat }) => {
 
                     {/* 箭头 */}
                     <div style={{ color: '#94a3b8', paddingLeft: 4 }}>
-                      <ChevronRight size={20} />
+                      <IconChevronRight size={20} />
                     </div>
                   </div>
                 </Link>
@@ -228,7 +252,7 @@ export default function VocabularyIndexPage() {
             词汇学习库
           </h1>
           <p style={{ fontSize: 14, color: '#cbd5e1', marginTop: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
-            <FileText size={16} /> 选择一个模块开始学习
+            <IconFileText size={16} /> 选择一个模块开始学习
           </p>
         </header>
 
