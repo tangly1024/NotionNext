@@ -159,7 +159,7 @@ export async function getStaticPaths() {
       { params: { chartType: 'whole' } },
       { params: { chartType: 'tones' } },
     ],
-    fallback: false,
+    fallback: 'blocking',
   };
 }
 
