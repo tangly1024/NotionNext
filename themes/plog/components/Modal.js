@@ -1,6 +1,6 @@
 import { ArrowPath, ChevronLeft, ChevronRight } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
-import { compressImage } from '@/lib/notion/mapImage'
+import { compressImage } from '@/lib/db/notion/mapImage'
 import { Dialog, Transition } from '@headlessui/react'
 import SmartLink from '@/components/SmartLink'
 import { Fragment, useRef, useState } from 'react'
