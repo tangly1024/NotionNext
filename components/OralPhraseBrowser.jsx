@@ -1,67 +1,86 @@
 'use client';
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
-  ChevronLeft,
-  Volume2,
-  Settings2,
+  Mic,
+  StopCircle,
+  Sparkles,
   X,
-  Loader2,
+  Volume2,
+  Star,
   Play,
   Square,
-  Heart,
-  Sparkles
+  Menu,
+  Zap,
+  Lock,
+  Settings2,
+  ChevronLeft,
+  ChevronDown,
+  ChevronUp,
+  CheckCircle2,
+  BookOpen,
+  Loader2,
+  Heart
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { pinyin } from 'pinyin-pro';
 
-// ===============================
-// 工具
-// ===============================
-function hexToRgba(hex, alpha = 1) {
-  if (!hex) return `rgba(37,99,235,${alpha})`;
-
-  const c = String(hex).replace('#', '');
-  const full = c.length === 3 ? c.split('').map((s) => s + s).join('') : c;
-
-  if (!/^[0-9a-fA-F]{6}$/.test(full)) {
-    return `rgba(37,99,235,${alpha})`;
-  }
-
-  const num = parseInt(full, 16);
-  const r = (num >> 16) & 255;
-  const g = (num >> 8) & 255;
-  const b = num & 255;
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-}
-
-function safeParseJSON(value, fallback) {
-  try {
-    return JSON.parse(value);
-  } catch {
-    return fallback;
-  }
-}
-
+// ============================================================================
+// 工具函数
+// ============================================================================
 function normalizePhrase(item, index) {
   const chinese = item?.chinese || item?.zh || item?.text || '';
-  const cleanChinese = String(chinese).replace(/[，。！？；：、,.!?;:]/g, '');
+  const burmese = item?.burmese || item?.translation || item?.en || item?.meaning || '';
+  const xieyin = item?.xieyin || '';
+  const category = item?.category || '当前模块';
+  const sub = item?.sub || '短句列表';
 
   return {
     id: item?.id || `${index}`,
     chinese,
-    pinyin: item?.pinyin || (cleanChinese ? pinyin(cleanChinese, { toneType: 'symbol' }) : ''),
-    burmese: item?.burmese || item?.translation || item?.en || item?.meaning || '',
-    xieyin: item?.xieyin || '',
-    note: item?.note || '',
+    burmese,
+    xieyin,
+    category,
+    sub,
+    pinyin: item?.pinyin || pinyin(String(chinese).replace(/[，。！？；：、,.!?;:]/g, ''), { toneType: 'symbol' }),
     audioZh: item?.audioZh || item?.zhAudio || '',
-    audioSecondary: item?.audioSecondary || item?.myAudio || item?.translationAudio || ''
+    audioMy: item?.audioMy || item?.myAudio || '',
+    locked: !!item?.locked
   };
 }
 
-// ===============================
-// 音频引擎
-// ===============================
+function getPinyinComparison(targetText, userText) {
+  const cleanTarget = targetText.replace(/[^\u4e00-\u9fa5]/g, '');
+  const cleanUser = userText.replace(/[^\u4e00-\u9fa5]/g, '');
+
+  const targetPy = pinyin(cleanTarget, { type: 'array', toneType: 'symbol' });
+  const userPy = pinyin(cleanUser, { type: 'array', toneType: 'symbol' });
+
+  const result = [];
+  const len = Math.max(targetPy.length, userPy.length);
+  let correctCount = 0;
+
+  for (let i = 0; i < len; i++) {
+    const t = targetPy[i] || '';
+    const u = userPy[i] || '';
+    const isMatch = t === u;
+    if (isMatch) correctCount++;
+    result.push({
+      targetChar: cleanTarget[i] || '',
+      targetPy: t,
+      userPy: u,
+      isMatch,
+      isMissing: !u
+    });
+  }
+
+  const accuracy = targetPy.length > 0 ? correctCount / targetPy.length : 0;
+  return { accuracy, comparison: result, userText };
+}
+
+// ============================================================================
+// 核心音频引擎
+// ============================================================================
 const AudioEngine = {
   current: null,
 
@@ -71,16 +90,11 @@ const AudioEngine = {
       this.current.currentTime = 0;
       this.current = null;
     }
-
-    if (typeof window !== 'undefined' && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-    }
   },
 
   play(url) {
     return new Promise((resolve) => {
       this.stop();
-
       if (typeof window === 'undefined' || !url) {
         resolve();
         return;
@@ -93,12 +107,10 @@ const AudioEngine = {
         this.current = null;
         resolve();
       };
-
       audio.onerror = () => {
         this.current = null;
         resolve();
       };
-
       audio.play().catch(() => {
         this.current = null;
         resolve();
@@ -107,45 +119,100 @@ const AudioEngine = {
   },
 
   playTTS(text, voice, rate) {
-    if (!text) return Promise.resolve();
-    const url = `/api/tts?t=${encodeURIComponent(text)}&v=${encodeURIComponent(
-      voice
-    )}&r=${encodeURIComponent(rate)}`;
+    const r = parseInt(rate, 10) || 0;
+    const url = `/api/tts?t=${encodeURIComponent(text)}&v=${voice}&r=${r}`;
     return this.play(url);
   }
 };
 
-// ===============================
+// ============================================================================
+// 录音与识别
+// ============================================================================
+const RecorderEngine = {
+  mediaRecorder: null,
+  chunks: [],
+
+  async start() {
+    AudioEngine.stop();
+    if (typeof navigator === 'undefined' || !navigator.mediaDevices) return false;
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      this.mediaRecorder = new MediaRecorder(stream);
+      this.chunks = [];
+      this.mediaRecorder.ondataavailable = (e) => this.chunks.push(e.data);
+      this.mediaRecorder.start();
+      return true;
+    } catch (e) {
+      alert('请开启麦克风权限');
+      return false;
+    }
+  },
+
+  stop() {
+    return new Promise((resolve) => {
+      if (!this.mediaRecorder) return resolve(null);
+      this.mediaRecorder.onstop = () => {
+        const url = URL.createObjectURL(new Blob(this.chunks, { type: 'audio/webm' }));
+        this.mediaRecorder.stream.getTracks().forEach((t) => t.stop());
+        this.mediaRecorder = null;
+        resolve(url);
+      };
+      this.mediaRecorder.stop();
+    });
+  }
+};
+
+const SpeechEngine = {
+  recognition: null,
+
+  start(onResult, onError) {
+    AudioEngine.stop();
+    if (typeof window === 'undefined') return;
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) {
+      alert('浏览器不支持语音识别');
+      if (onError) onError();
+      return;
+    }
+
+    this.recognition = new SR();
+    this.recognition.lang = 'zh-CN';
+    this.recognition.continuous = false;
+    this.recognition.interimResults = false;
+    this.recognition.onresult = (e) => onResult(e.results[0][0].transcript);
+    this.recognition.onerror = () => {
+      if (onError) onError();
+    };
+    this.recognition.onend = () => {
+      if (onError) onError();
+    };
+
+    try {
+      this.recognition.start();
+    } catch (e) {
+      if (onError) onError();
+    }
+  },
+
+  stop() {
+    if (this.recognition) this.recognition.stop();
+  }
+};
+
+// ============================================================================
 // 设置面板
-// ===============================
-function SettingsPanel({
-  settings,
-  setSettings,
-  onClose,
-  secondaryLabel = '缅文'
-}) {
-  const zhOptions = [
-    { label: '小晓', value: 'zh-CN-XiaoxiaoMultilingualNeural' },
-    { label: '小辰', value: 'zh-CN-XiaochenNeural' },
-    { label: '小颜', value: 'zh-CN-XiaoyanNeural' },
-    { label: '云夏', value: 'zh-CN-YunxiaNeural' }
-  ];
-
-  const secondaryOptions = [
-    { label: 'Thiha', value: 'my-MM-ThihaNeural' },
-    { label: 'Nilar', value: 'my-MM-NilarNeural' }
-  ];
-
+// ============================================================================
+const SettingsPanel = ({ settings, setSettings, onClose }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: -16, scale: 0.96 }}
+      initial={{ opacity: 0, y: -20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: -16, scale: 0.96 }}
-      className="fixed right-4 top-16 z-[2000] w-72 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-2xl"
+      exit={{ opacity: 0, y: -20, scale: 0.95 }}
+      className="fixed top-16 right-4 z-[2000] bg-white rounded-2xl shadow-2xl border border-slate-100 w-72 overflow-hidden"
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50 px-4 py-3">
-        <span className="text-[11px] font-black uppercase tracking-widest text-slate-500">
+      <div className="bg-slate-50 px-4 py-3 flex justify-between items-center border-b border-slate-100">
+        <span className="text-xs font-black text-slate-500 uppercase tracking-widest">
           播放设置
         </span>
         <button type="button" onClick={onClose}>
@@ -153,39 +220,39 @@ function SettingsPanel({
         </button>
       </div>
 
-      <div className="space-y-5 p-5">
+      <div className="p-5 space-y-5">
         {/* 中文 */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between">
+          <div className="flex justify-between items-center">
             <span className="text-xs font-bold text-slate-700">中文朗读</span>
-            <button
-              type="button"
-              onClick={() =>
-                setSettings((s) => ({ ...s, zhEnabled: !s.zhEnabled }))
-              }
-              className={`relative h-5 w-10 rounded-full transition ${
+            <div
+              onClick={() => setSettings((s) => ({ ...s, zhEnabled: !s.zhEnabled }))}
+              className={`w-8 h-4 rounded-full transition-colors relative cursor-pointer ${
                 settings.zhEnabled ? 'bg-blue-500' : 'bg-slate-200'
               }`}
             >
-              <span
-                className="absolute top-0.5 h-4 w-4 rounded-full bg-white transition"
-                style={{ left: settings.zhEnabled ? 22 : 2 }}
+              <div
+                className="absolute top-0.5 w-3 h-3 bg-white rounded-full transition-transform"
+                style={{ left: settings.zhEnabled ? '18px' : '2px' }}
               />
-            </button>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-            {zhOptions.map((opt) => (
+            {[
+              { label: '小晓 (女)', val: 'zh-CN-XiaoxiaoMultilingualNeural' },
+              { label: '小辰 (男)', val: 'zh-CN-XiaochenMultilingualNeural' },
+              { label: '云夏 (男童)', val: 'zh-CN-YunxiaNeural' },
+              { label: '小颜 (通用)', val: 'zh-CN-XiaoyanNeural' }
+            ].map((opt) => (
               <button
                 type="button"
-                key={opt.value}
-                onClick={() =>
-                  setSettings((s) => ({ ...s, zhVoice: opt.value }))
-                }
-                className={`rounded border px-2 py-1.5 text-[10px] font-bold transition ${
-                  settings.zhVoice === opt.value
-                    ? 'border-blue-200 bg-blue-50 text-blue-600'
-                    : 'border-slate-100 bg-white text-slate-400'
+                key={opt.val}
+                onClick={() => setSettings((s) => ({ ...s, zhVoice: opt.val }))}
+                className={`py-1.5 text-[10px] font-bold rounded border transition-all truncate ${
+                  settings.zhVoice === opt.val
+                    ? 'bg-blue-50 border-blue-200 text-blue-600'
+                    : 'bg-white border-slate-100 text-slate-400'
                 }`}
               >
                 {opt.label}
@@ -204,53 +271,46 @@ function SettingsPanel({
               onChange={(e) =>
                 setSettings((s) => ({ ...s, zhRate: Number(e.target.value) }))
               }
-              className="h-1 flex-1 appearance-none rounded-lg bg-slate-100 accent-blue-500"
+              className="flex-1 h-1 bg-slate-100 rounded-lg appearance-none accent-blue-500"
             />
-            <span className="w-7 text-right font-mono text-[10px] text-slate-400">
+            <span className="text-[10px] w-6 text-right font-mono text-slate-400">
               {settings.zhRate}
             </span>
           </div>
         </div>
 
-        <div className="h-px bg-slate-100" />
+        <div className="h-[1px] bg-slate-50" />
 
-        {/* 第二语言 */}
+        {/* 缅文 */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-700">
-              {secondaryLabel}朗读
-            </span>
-            <button
-              type="button"
-              onClick={() =>
-                setSettings((s) => ({
-                  ...s,
-                  secondaryEnabled: !s.secondaryEnabled
-                }))
-              }
-              className={`relative h-5 w-10 rounded-full transition ${
-                settings.secondaryEnabled ? 'bg-emerald-500' : 'bg-slate-200'
+          <div className="flex justify-between items-center">
+            <span className="text-xs font-bold text-slate-700">缅文朗读</span>
+            <div
+              onClick={() => setSettings((s) => ({ ...s, myEnabled: !s.myEnabled }))}
+              className={`w-8 h-4 rounded-full transition-colors relative cursor-pointer ${
+                settings.myEnabled ? 'bg-green-500' : 'bg-slate-200'
               }`}
             >
-              <span
-                className="absolute top-0.5 h-4 w-4 rounded-full bg-white transition"
-                style={{ left: settings.secondaryEnabled ? 22 : 2 }}
+              <div
+                className="absolute top-0.5 w-3 h-3 bg-white rounded-full transition-transform"
+                style={{ left: settings.myEnabled ? '18px' : '2px' }}
               />
-            </button>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-            {secondaryOptions.map((opt) => (
+            {[
+              { label: 'Thiha (男)', val: 'my-MM-ThihaNeural' },
+              { label: 'Nilar (女)', val: 'my-MM-NilarNeural' }
+            ].map((opt) => (
               <button
                 type="button"
-                key={opt.value}
-                onClick={() =>
-                  setSettings((s) => ({ ...s, secondaryVoice: opt.value }))
-                }
-                className={`rounded border px-2 py-1.5 text-[10px] font-bold transition ${
-                  settings.secondaryVoice === opt.value
-                    ? 'border-emerald-200 bg-emerald-50 text-emerald-600'
-                    : 'border-slate-100 bg-white text-slate-400'
+                key={opt.val}
+                onClick={() => setSettings((s) => ({ ...s, myVoice: opt.val }))}
+                className={`py-1.5 text-[10px] font-bold rounded border transition-all truncate ${
+                  settings.myVoice === opt.val
+                    ? 'bg-green-50 border-green-200 text-green-600'
+                    : 'bg-white border-slate-100 text-slate-400'
                 }`}
               >
                 {opt.label}
@@ -265,433 +325,549 @@ function SettingsPanel({
               min="-50"
               max="50"
               step="10"
-              value={settings.secondaryRate}
+              value={settings.myRate}
               onChange={(e) =>
-                setSettings((s) => ({
-                  ...s,
-                  secondaryRate: Number(e.target.value)
-                }))
+                setSettings((s) => ({ ...s, myRate: Number(e.target.value) }))
               }
-              className="h-1 flex-1 appearance-none rounded-lg bg-slate-100 accent-emerald-500"
+              className="flex-1 h-1 bg-slate-100 rounded-lg appearance-none accent-green-500"
             />
-            <span className="w-7 text-right font-mono text-[10px] text-slate-400">
-              {settings.secondaryRate}
+            <span className="text-[10px] w-6 text-right font-mono text-slate-400">
+              {settings.myRate}
             </span>
           </div>
         </div>
       </div>
     </motion.div>
   );
-}
+};
 
-// ===============================
-// 拼读弹窗（精简版）
-// ===============================
-function SpellingModal({ item, onClose, settings }) {
-  const chars = (item?.chinese || '').split('');
+// ============================================================================
+// 拼读弹窗
+// ============================================================================
+const SpellingModal = ({ item, settings, onClose }) => {
   const [activeCharIndex, setActiveCharIndex] = useState(-1);
+  const [recordState, setRecordState] = useState('idle');
+  const [userAudio, setUserAudio] = useState(null);
+  const chars = item.chinese.split('');
+  const isMounted = useRef(true);
 
-  const playChar = async (char, index) => {
+  useEffect(() => {
+    isMounted.current = true;
+    AudioEngine.stop();
+
+    const autoSpell = async () => {
+      await new Promise((r) => setTimeout(r, 200));
+      if (!isMounted.current) return;
+
+      for (let i = 0; i < chars.length; i++) {
+        if (!isMounted.current) break;
+        setActiveCharIndex(i);
+        const py = pinyin(chars[i], { toneType: 'symbol' });
+        await AudioEngine.playTTS(py, settings.zhVoice, settings.zhRate);
+        await new Promise((r) => setTimeout(r, 60));
+      }
+
+      if (isMounted.current) setActiveCharIndex(-1);
+    };
+
+    autoSpell();
+    return () => {
+      isMounted.current = false;
+      AudioEngine.stop();
+    };
+  }, [chars, settings.zhVoice, settings.zhRate]);
+
+  const handleCharClick = async (index) => {
     setActiveCharIndex(index);
+    const char = chars[index];
     const py = pinyin(char, { toneType: 'symbol' });
     await AudioEngine.playTTS(py, settings.zhVoice, settings.zhRate);
     setActiveCharIndex(-1);
   };
 
-  const playWhole = async () => {
-    setActiveCharIndex(-1);
-    await AudioEngine.playTTS(item.chinese, settings.zhVoice, settings.zhRate);
+  const playWhole = () => {
+    setActiveCharIndex('all');
+    AudioEngine.playTTS(item.chinese, settings.zhVoice, settings.zhRate).then(() =>
+      setActiveCharIndex(-1)
+    );
+  };
+
+  const toggleRecord = async () => {
+    if (recordState === 'recording') {
+      const url = await RecorderEngine.stop();
+      setUserAudio(url);
+      setRecordState('review');
+    } else {
+      AudioEngine.stop();
+      const success = await RecorderEngine.start();
+      if (success) setRecordState('recording');
+    }
   };
 
   return (
     <div
-      className="fixed inset-0 z-[2000] flex items-end justify-center bg-black/60 backdrop-blur-sm sm:items-center"
+      className="fixed inset-0 z-[2000] bg-black/60 backdrop-blur-sm flex items-end justify-center sm:items-center"
       onClick={onClose}
     >
       <motion.div
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
-        className="relative w-full max-w-md rounded-t-[2rem] bg-white p-6 shadow-2xl sm:rounded-[2rem]"
+        className="bg-white w-full max-w-md rounded-t-[2rem] sm:rounded-[2rem] p-6 shadow-2xl relative"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="mx-auto mb-6 h-1.5 w-12 rounded-full bg-slate-200 sm:hidden" />
+        <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6 sm:hidden" />
 
-        <div className="mb-6 flex items-center justify-between">
-          <h3 className="text-lg font-black text-slate-900">拼读练习</h3>
-          <button type="button" onClick={onClose}>
-            <X size={18} className="text-slate-400 hover:text-red-500" />
-          </button>
+        <div className="flex items-center justify-between mb-8">
+          <h3 className="text-slate-900 font-black text-lg">拼读练习</h3>
+          <span className="text-[10px] bg-blue-50 text-blue-500 px-2 py-1 rounded font-bold animate-pulse">
+            自动演示中...
+          </span>
         </div>
 
-        <div className="mb-8 flex flex-wrap justify-center gap-2">
+        <div className="flex flex-wrap justify-center gap-2 mb-10 px-2">
           {chars.map((char, i) => (
-            <button
-              type="button"
-              key={`${char}-${i}`}
-              onClick={() => playChar(char, i)}
-              className={`flex flex-col items-center rounded-xl p-3 transition ${
+            <div
+              key={i}
+              onClick={() => handleCharClick(i)}
+              className={`flex flex-col items-center p-2 rounded-xl transition-all cursor-pointer select-none ${
                 activeCharIndex === i
-                  ? 'scale-105 bg-blue-50 ring-2 ring-blue-500'
-                  : 'bg-slate-50 hover:bg-slate-100'
+                  ? 'bg-blue-50 ring-2 ring-blue-500 scale-110 shadow-lg'
+                  : 'hover:bg-slate-50'
               }`}
             >
-              <span className={`mb-1 text-xs ${activeCharIndex === i ? 'font-bold text-blue-600' : 'text-slate-400'}`}>
+              <span
+                className={`text-xs font-pinyin mb-1 ${
+                  activeCharIndex === i
+                    ? 'text-blue-600 font-bold'
+                    : 'text-slate-400'
+                }`}
+              >
                 {pinyin(char, { toneType: 'symbol' })}
               </span>
-              <span className={`text-3xl font-black ${activeCharIndex === i ? 'text-blue-800' : 'text-slate-800'}`}>
+              <span
+                className={`text-3xl font-black ${
+                  activeCharIndex === i ? 'text-blue-800' : 'text-slate-800'
+                }`}
+              >
                 {char}
               </span>
-            </button>
+            </div>
           ))}
         </div>
 
-        <div className="flex justify-center">
-          <button
-            type="button"
-            onClick={playWhole}
-            className="flex items-center gap-2 rounded-full bg-blue-600 px-5 py-3 text-sm font-bold text-white active:scale-95"
+        <div className="flex justify-around items-center px-4 pb-4">
+          <div onClick={playWhole} className="flex flex-col items-center gap-2 cursor-pointer">
+            <Volume2 size={24} />
+            <span className="text-[10px]">整句</span>
+          </div>
+
+          <div
+            onClick={toggleRecord}
+            className={`w-16 h-16 rounded-full flex items-center justify-center shadow-xl border-4 ${
+              recordState === 'recording'
+                ? 'bg-red-500 border-red-100'
+                : 'bg-slate-100'
+            }`}
           >
-            <Volume2 size={16} />
-            整句朗读
-          </button>
+            {recordState === 'recording' ? (
+              <Square size={24} className="text-white" />
+            ) : (
+              <Mic size={28} />
+            )}
+          </div>
+
+          <div
+            onClick={() => userAudio && AudioEngine.play(userAudio)}
+            className={`flex flex-col items-center gap-2 ${userAudio ? '' : 'opacity-30'}`}
+          >
+            <Play size={24} />
+            <span className="text-[10px]">回放</span>
+          </div>
         </div>
       </motion.div>
     </div>
   );
-}
+};
 
-// ===============================
-// 主组件：B版重写
-// ===============================
-export default function OralPhraseBrowser({
-  categoryTitle,
-  title,
-  subtitle,
+// ============================================================================
+// 主组件
+// ============================================================================
+export default function SpokenModulePro({
   phrases = [],
+  title = '口语短句',
+  subtitle = '',
+  categoryTitle = '',
   onBack,
-  accent = '#2563EB',
-  icon = '💬',
-  favoriteStorageKey = 'oral_phrase_favs',
-  settingsStorageKey = 'oral_phrase_settings',
-  secondaryLabel = '缅文'
+  favoriteStorageKey = 'spoken_favs',
+  settingsStorageKey = 'spoken_settings'
 }) {
-  const [view, setView] = useState('list');
-  const [showSettings, setShowSettings] = useState(false);
-  const [showCatalog, setShowCatalog] = useState(false);
-  const [playingId, setPlayingId] = useState(null);
-  const [isPlayingAll, setIsPlayingAll] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(20);
-  const [favorites, setFavorites] = useState([]);
-  const [onlyFav, setOnlyFav] = useState(false);
-  const [spellingItem, setSpellingItem] = useState(null);
+  const normalizedPhrases = useMemo(
+    () => (phrases || []).map(normalizePhrase).filter((item) => item.chinese),
+    [phrases]
+  );
 
+  const [view, setView] = useState('home');
+
+  const [favorites, setFavorites] = useState([]);
+  const [isFavMode, setIsFavMode] = useState(false);
+
+  const [visibleCount, setVisibleCount] = useState(20);
   const loaderRef = useRef(null);
-  const playTokenRef = useRef(0);
+
+  const [showCatalog, setShowCatalog] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [expandedCats, setExpandedCats] = useState({});
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
 
   const [settings, setSettings] = useState({
-    zhEnabled: true,
     zhVoice: 'zh-CN-XiaoxiaoMultilingualNeural',
-    zhRate: -10,
-    secondaryEnabled: true,
-    secondaryVoice: 'my-MM-ThihaNeural',
-    secondaryRate: 0
+    zhRate: -20,
+    zhEnabled: true,
+    myVoice: 'my-MM-ThihaNeural',
+    myRate: 0,
+    myEnabled: true
   });
 
+  const [playingId, setPlayingId] = useState(null);
+  const [spellingItem, setSpellingItem] = useState(null);
+  const [recordingId, setRecordingId] = useState(null);
+  const [speechResult, setSpeechResult] = useState(null);
+
+  const [showVip, setShowVip] = useState(false);
+
+  const { scrollY } = useScroll();
+  const itemRefs = useRef({});
+
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    const savedSet = localStorage.getItem(settingsStorageKey);
+    if (savedSet) setSettings(JSON.parse(savedSet));
 
-    const savedSettings = localStorage.getItem(settingsStorageKey);
-    if (savedSettings) {
-      const parsed = safeParseJSON(savedSettings, null);
-      if (parsed) setSettings(parsed);
-    }
+    const savedFavs = localStorage.getItem(favoriteStorageKey);
+    if (savedFavs) setFavorites(JSON.parse(savedFavs));
 
-    const savedFav = localStorage.getItem(favoriteStorageKey);
-    if (savedFav) {
-      const parsed = safeParseJSON(savedFav, []);
-      if (Array.isArray(parsed)) setFavorites(parsed);
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('filter') === 'favorites') {
+        setView('list');
+        setIsFavMode(true);
+      }
     }
   }, [favoriteStorageKey, settingsStorageKey]);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
     localStorage.setItem(settingsStorageKey, JSON.stringify(settings));
   }, [settings, settingsStorageKey]);
 
-  const normalized = useMemo(() => {
-    return (phrases || []).map(normalizePhrase).filter((item) => item.chinese);
-  }, [phrases]);
+  useEffect(() => {
+    const onPopState = () => {
+      if (view === 'list') {
+        AudioEngine.stop();
+        setShowCatalog(false);
+        setShowSettings(false);
+        setView('home');
+        setIsFavMode(false);
+      } else if (typeof onBack === 'function') {
+        onBack();
+      }
+    };
+
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, [view, onBack, isFavMode]);
+
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    const previous = scrollY.getPrevious() || 0;
+    setIsHeaderVisible(!(latest > previous && latest > 50));
+  });
 
   const displayPhrases = useMemo(() => {
-    if (!onlyFav) return normalized;
-    return normalized.filter((item) => favorites.includes(item.id));
-  }, [normalized, onlyFav, favorites]);
+    if (isFavMode) {
+      return normalizedPhrases.filter((p) => favorites.includes(p.id));
+    }
+    return normalizedPhrases;
+  }, [normalizedPhrases, favorites, isFavMode]);
 
   useEffect(() => {
-    setVisibleCount(20);
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'auto' });
-    }
-    AudioEngine.stop();
-    setPlayingId(null);
-    setIsPlayingAll(false);
-  }, [title, onlyFav]);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (!('IntersectionObserver' in window)) {
-      setVisibleCount(displayPhrases.length);
-      return;
-    }
-
-    const node = loaderRef.current;
-    if (!node) return;
+    if (view !== 'list') return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting) {
+        if (entries[0].isIntersecting) {
           setVisibleCount((prev) => Math.min(prev + 20, displayPhrases.length));
         }
       },
-      { rootMargin: '180px' }
+      { root: null, rootMargin: '200px', threshold: 0.1 }
     );
 
-    observer.observe(node);
-
+    if (loaderRef.current) observer.observe(loaderRef.current);
     return () => {
-      observer.disconnect();
+      if (loaderRef.current) observer.unobserve(loaderRef.current);
     };
-  }, [displayPhrases.length]);
+  }, [view, displayPhrases.length]);
 
-  useEffect(() => {
-    return () => AudioEngine.stop();
-  }, []);
+  const catalogTree = useMemo(() => {
+    const map = new Map();
 
-  const stopPlayback = () => {
-    playTokenRef.current += 1;
-    AudioEngine.stop();
-    setPlayingId(null);
-    setIsPlayingAll(false);
+    normalizedPhrases.forEach((p) => {
+      if (!map.has(p.category)) map.set(p.category, new Set());
+      map.get(p.category).add(p.sub);
+    });
+
+    return Array.from(map.entries()).map(([cat, subs]) => ({
+      name: cat,
+      subs: Array.from(subs)
+    }));
+  }, [normalizedPhrases]);
+
+  const enterList = (targetSub = null) => {
+    if (typeof window !== 'undefined') {
+      window.history.pushState({ page: 'list' }, '', window.location.href);
+    }
+
+    let targetCount = 20;
+    setIsFavMode(false);
+
+    if (targetSub) {
+      const idx = normalizedPhrases.findIndex((p) => p.sub === targetSub);
+      if (idx !== -1) targetCount = idx + 20;
+    }
+
+    setVisibleCount(targetCount);
+    setView('list');
+
+    setTimeout(() => {
+      if (targetSub) {
+        const el = itemRefs.current[targetSub];
+        if (el) el.scrollIntoView({ behavior: 'auto', block: 'start' });
+      }
+    }, 120);
   };
 
-  const playSingle = async (item) => {
+  const goHome = () => {
+    AudioEngine.stop();
+    window.history.back();
+  };
+
+  const handleCatalogJump = (sub) => {
+    setShowCatalog(false);
+
+    const idx = displayPhrases.findIndex((p) => p.sub === sub);
+    if (idx !== -1 && idx >= visibleCount) {
+      setVisibleCount(idx + 20);
+    }
+
+    setTimeout(() => {
+      const el = itemRefs.current[sub];
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 120);
+  };
+
+  const handleCardPlay = async (item) => {
     if (playingId === item.id) {
-      stopPlayback();
+      AudioEngine.stop();
+      setPlayingId(null);
       return;
     }
 
-    const token = ++playTokenRef.current;
-    setIsPlayingAll(false);
     setPlayingId(item.id);
 
-    if (settings.zhEnabled && item.chinese) {
+    if (settings.zhEnabled) {
       if (item.audioZh) {
         await AudioEngine.play(item.audioZh);
       } else {
         await AudioEngine.playTTS(item.chinese, settings.zhVoice, settings.zhRate);
       }
-      if (playTokenRef.current !== token) return;
     }
 
-    if (settings.secondaryEnabled && item.burmese) {
-      await new Promise((r) => setTimeout(r, 260));
-      if (playTokenRef.current !== token) return;
-
-      if (item.audioSecondary) {
-        await AudioEngine.play(item.audioSecondary);
-      } else {
-        await AudioEngine.playTTS(
-          item.burmese,
-          settings.secondaryVoice,
-          settings.secondaryRate
-        );
-      }
-    }
-
-    if (playTokenRef.current === token) {
+    if (AudioEngine.current === null) {
       setPlayingId(null);
-    }
-  };
-
-  const playAll = async () => {
-    if (isPlayingAll) {
-      stopPlayback();
       return;
     }
 
-    const token = ++playTokenRef.current;
-    setIsPlayingAll(true);
-
-    for (const item of displayPhrases) {
-      if (playTokenRef.current !== token) break;
-      setPlayingId(item.id);
-
-      if (settings.zhEnabled && item.chinese) {
-        if (item.audioZh) {
-          await AudioEngine.play(item.audioZh);
-        } else {
-          await AudioEngine.playTTS(item.chinese, settings.zhVoice, settings.zhRate);
-        }
+    if (settings.myEnabled && item.burmese) {
+      if (settings.zhEnabled) await new Promise((r) => setTimeout(r, 400));
+      if (AudioEngine.current === null && settings.zhEnabled) {
+        setPlayingId(null);
+        return;
       }
 
-      if (playTokenRef.current !== token) break;
-
-      if (settings.secondaryEnabled && item.burmese) {
-        await new Promise((r) => setTimeout(r, 260));
-        if (playTokenRef.current !== token) break;
-
-        if (item.audioSecondary) {
-          await AudioEngine.play(item.audioSecondary);
-        } else {
-          await AudioEngine.playTTS(
-            item.burmese,
-            settings.secondaryVoice,
-            settings.secondaryRate
-          );
-        }
+      if (item.audioMy) {
+        await AudioEngine.play(item.audioMy);
+      } else {
+        await AudioEngine.playTTS(item.burmese, settings.myVoice, settings.myRate);
       }
-
-      await new Promise((r) => setTimeout(r, 220));
     }
 
-    if (playTokenRef.current === token) {
-      setPlayingId(null);
-      setIsPlayingAll(false);
+    setPlayingId(null);
+  };
+
+  const handleSpeech = (item) => {
+    if (recordingId === item.id) {
+      SpeechEngine.stop();
+      setRecordingId(null);
+      return;
     }
+
+    AudioEngine.stop();
+    setRecordingId(item.id);
+    setSpeechResult(null);
+
+    SpeechEngine.start(
+      (transcript) => {
+        const scoreData = getPinyinComparison(item.chinese, transcript);
+        setSpeechResult({ id: item.id, data: scoreData });
+        setRecordingId(null);
+      },
+      () => setRecordingId(null)
+    );
   };
 
   const toggleFav = (id) => {
-    const next = favorites.includes(id)
-      ? favorites.filter((x) => x !== id)
+    const newFavs = favorites.includes(id)
+      ? favorites.filter((i) => i !== id)
       : [...favorites, id];
 
-    setFavorites(next);
+    setFavorites(newFavs);
+    localStorage.setItem(favoriteStorageKey, JSON.stringify(newFavs));
+  };
 
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(favoriteStorageKey, JSON.stringify(next));
-    }
+  const toggleCat = (catName) => {
+    setExpandedCats((prev) => ({ ...prev, [catName]: !prev[catName] }));
   };
 
   return (
-    <div className="min-h-screen max-w-md mx-auto bg-[#F8F9FB] font-sans text-slate-900 relative shadow-2xl overflow-hidden">
-      {/* ================= HOME HERO ================= */}
+    <div className="min-h-screen bg-[#F8F9FB] font-sans text-slate-900 max-w-md mx-auto relative shadow-2xl overflow-hidden">
+      {/* ================= VIEW 1: HOME ================= */}
       {view === 'home' && (
         <div className="min-h-screen bg-white">
           <div className="relative h-64 overflow-hidden">
             <div
               className="absolute inset-0"
               style={{
-                background: `linear-gradient(135deg, ${hexToRgba(accent, 0.95)} 0%, ${hexToRgba(accent, 0.55)} 65%, ${hexToRgba(accent, 0.25)} 100%)`
+                background:
+                  'linear-gradient(135deg, rgba(37,99,235,0.18) 0%, rgba(59,130,246,0.28) 40%, rgba(255,255,255,0.08) 100%)'
               }}
             />
+            <img
+              src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=1000&q=80"
+              alt={title}
+              className="w-full h-full object-cover brightness-[0.78]"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+
             <div className="absolute bottom-6 left-6 right-6">
-              <div className="inline-block rounded bg-white/18 px-2 py-1 text-[10px] font-bold text-white shadow-sm backdrop-blur-sm mb-2">
-                口语训练
+              <div className="inline-block px-2 py-1 bg-blue-600 text-white text-[10px] font-bold rounded mb-2 shadow-sm">
+                口语特训
               </div>
-              <h1 className="mb-1 text-3xl font-black leading-tight text-slate-900">
+              <h1 className="text-3xl font-black text-slate-900 mb-1 leading-tight">
                 {title}
               </h1>
-              <p className="text-xs font-medium leading-relaxed text-slate-600">
-                {subtitle || `${categoryTitle} · 共 ${normalized.length} 条短句`}
+              <p className="text-slate-600 text-xs font-medium leading-relaxed">
+                {subtitle || `${categoryTitle} · 共 ${normalizedPhrases.length} 条`}
               </p>
-            </div>
-
-            <div className="absolute top-6 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-4 py-1.5 backdrop-blur-md">
-              <span className="text-lg">{icon}</span>
-              <span className="text-[10px] font-bold tracking-widest text-white uppercase">
-                Oral Module
-              </span>
             </div>
           </div>
 
-          <div className="mb-8 px-6">
+          <div className="px-6 mb-8">
             <button
               type="button"
-              onClick={() => setView('list')}
-              className="w-full rounded-xl border border-blue-100 bg-gradient-to-r from-sky-50 to-indigo-50 py-4 text-sm font-bold text-slate-800 shadow-sm transition-transform active:scale-95"
+              onClick={() => enterList(null)}
+              className="w-full py-4 bg-gradient-to-r from-sky-50 to-indigo-50 border border-blue-100 text-slate-800 rounded-xl font-bold text-sm shadow-sm active:scale-95 transition-transform flex flex-col items-center justify-center gap-1"
             >
-              <div className="flex items-center justify-center gap-2">
-                <BookOpenCheck size={18} className="text-blue-600" />
+              <div className="flex items-center gap-2">
+                <BookOpen size={18} className="text-blue-600" />
                 <span>开始短句训练</span>
               </div>
-              <div className="mt-1 text-[10px] font-normal text-slate-500">
-                进入模块浏览与朗读练习
-              </div>
+              <span className="text-[10px] text-slate-500 font-normal">
+                浏览 / 朗读 / 收藏 / 跟读评分
+              </span>
             </button>
           </div>
 
-          <div className="px-4 pb-20">
-            <div className="mb-3 px-2 text-sm font-black uppercase tracking-widest text-slate-400">
-              Module Info
-            </div>
+          <div className="px-4 pb-20 space-y-4">
+            <h2 className="px-2 text-sm font-black text-slate-400 uppercase tracking-widest">
+              Directory
+            </h2>
 
-            <div className="space-y-3">
-              <div className="rounded-2xl border border-slate-100 bg-white p-4 shadow-sm">
-                <div className="text-xs font-bold text-slate-400">所属分类</div>
-                <div className="mt-1 text-sm font-black text-slate-800">{categoryTitle}</div>
-              </div>
+            {catalogTree.map((cat, i) => (
+              <div
+                key={i border-slate-sm                class-Name text-sm] ? (
+                    <ChevronUp size={16} className="text-slate-400"late                </div>
 
-              <div className="rounded-2xl border border-slate-100 bg-white p-4 shadow-sm">
-                <div className="text-xs font-bold text-slate-400">短句数量</div>
-                <div className="mt-1 text-sm font-black text-slate-800">
-                  共 {normalized.length} 条
-                </div>
+                <AnimatePresence>
+                  {expandedCats[cat.name] && (
+                    <motion.div
+                      initial={{ height: 0 }}
+                      animate={{ height: 'auto' }}
+                      exit={{ height: 0 }}
+                      className="overflow-hidden bg-slate-50/50"
+                    >
+                      <div className="px-4 pb-4 pt-1 grid grid-cols-2 gap-2">
+                        {cat.subs.map((sub, j) => (
+                          <button
+                            key={j}
+                            type="button"
+                            onClick={() => enterList(sub)}
+                            className="text-left px-3 py-2 bg-white border border-slate-100 rounded-lg text-xs font-medium text-slate-600 active:scale-95 transition-transform h-auto break-words leading-tight"
+                          >
+                            {sub}
+                          </button>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-
-              <div className="rounded-2xl border border-slate-100 bg-white p-4 shadow-sm">
-                <div className="text-xs font-bold text-slate-400">学习方式</div>
-                <div className="mt-1 text-sm font-black text-slate-800">
-                  朗读 / 收藏 / 拼读练习
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       )}
 
-      {/* ================= LIST VIEW ================= */}
+      {/* ================= VIEW 2: LIST ================= */}
       {view === 'list' && (
-        <div className="min-h-screen bg-[#F5F7FA] pb-32">
+        <div className="min-h-screen pb-32 bg-[#F5F7FA]">
           <motion.div
-            className="fixed left-0 right-0 top-0 z-[100] mx-auto flex h-14 max-w-md items-center justify-between border-b border-slate-100 bg-white/90 px-4 backdrop-blur-md"
+            animate={{ y: isHeaderVisible ? 0 : -80 }}
+            className="fixed top-0 left-0 right-0 z-[100] bg-white/90 backdrop-blur-md border-b border-slate-100 h-14 max-w-md mx-auto px-4 flex justify-between items-center"
           >
             <button
               type="button"
-              onClick={() => {
-                AudioEngine.stop();
-                setView('home');
-              }}
+              onClick={goHome}
               className="p-2 -ml-2 text-slate-500 hover:text-slate-900"
             >
               <ChevronLeft size={24} />
             </button>
 
-            <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
-              <span className="text-sm font-black text-slate-800">
-                {onlyFav ? '我的收藏' : title}
-              </span>
-              <span className="text-[10px] text-slate-400">
-                {onlyFav ? '收藏短句' : categoryTitle}
-              </span>
-            </div>
+            {isFavMode ? (
+              <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
+                <span className="text-sm font-black text-slate-800">我的收藏</span>
+                <span className="text-[10px] text-slate-400">收藏短句</span>
+              </div>
+            ) : (
+              <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
+                <span className="text-sm font-black text-slate-800">{title}</span>
+                <span className="text-[10px] text-slate-400">{categoryTitle}</span>
+              </div>
+            )}
 
             <div className="flex items-center gap-1">
               <button
                 type="button"
-                onClick={() => setShowSettings(true)}
+                onClick={() => setShowSettings(!showSettings)}
                 className="p-2 text-slate-400 hover:text-blue-600"
               >
                 <Settings2 size={20} />
               </button>
-              <button
-                type="button"
-                onClick={() => setOnlyFav((v) => !v)}
-                className={`p-2 ${onlyFav ? 'text-rose-500' : 'text-slate-400 hover:text-rose-500'}`}
-              >
-                <Heart size={18} fill={onlyFav ? 'currentColor' : 'none'} />
-              </button>
+              {!isFavMode && (
+                <button
+                  type="button"
+                  onClick={() => setShowCatalog(true)}
+                  className="p-2 text-slate-600 hover:text-blue-600"
+                >
+                  <Menu size={20} />
+                </button>
+              )}
             </div>
           </motion.div>
 
@@ -706,133 +882,164 @@ export default function OralPhraseBrowser({
                   settings={settings}
                   setSettings={setSettings}
                   onClose={() => setShowSettings(false)}
-                  secondaryLabel={secondaryLabel}
                 />
               </>
             )}
           </AnimatePresence>
 
-          <div className="px-3 pt-20 space-y-4">
-            {/* 顶部控制卡 */}
-            <div className="mx-auto max-w-[360px] rounded-[1.6rem] border border-slate-100 bg-white p-4 shadow-sm">
-              <div className="flex items-center justify-between gap-3">
-                <div className="min-w-0">
-                  <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400">
-                    Oral Phrases
+          <AnimatePresence>
+            {showCatalog && (
+              <>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 bg-black/40 z-[150] backdrop-blur-sm"
+                  onClick={() => setShowCatalog(false)}
+                />
+                <motion.div
+                  initial={{ x: '100%' }}
+                  animate={{ x: 0 }}
+                  exit={{ x: '100%' }}
+                  className="fixed inset-y-0 right-0 z-[160] w-[80%] max-w-[280px] bg-white shadow-2xl overflow-y-auto"
+                >
+                  <div className="p-5">
+                    <div className="flex justify-between items-center mb-6">
+                      <div className="flex flex-col">
+                        <h2 className="text-lg font-black text-slate-800">快速跳转</h2>
+                        <span className="text-xs text-slate-400">Quick Jump</span>
+                      </div>
+                      <button type="button" onClick={() => setShowCatalog(false)}>
+                        <X size={20} className="text-slate-400" />
+                      </button>
+                    </div>
+
+                    <div className="space-y-4">
+                      {catalogTree.map((cat, i) => (
+                        <div key={i} className="border-b border-slate-50 pb-2">
+                          <div
+                            onClick={() => toggleCat(cat.name)}
+                            className="flex items-center justify-between py-2 cursor-pointer"
+                          >
+                            <h3 className="text-sm font-bold text-slate-700">{cat.name}</h3>
+                            {expandedCats[cat.name] ? (
+                              <ChevronUp size={14} className="text-slate-400" />
+                            ) : (
+                              <ChevronDown size={14} className="text-slate-400" />
+                            )}
+                          </div>
+
+                          <AnimatePresence>
+                            {expandedCats[cat.name] && (
+                              <motion.div
+                                initial={{ height: 0 }}
+                                animate={{ height: 'auto' }}
+                                exit={{ height: 0 }}
+                                className="overflow-hidden"
+                              >
+                                <div className="pl-3 flex flex-col gap-1 pb-2">
+                                  {cat.subs.map((sub, j) => (
+                                    <button
+                                      type="button"
+                                      key={j}
+                                      onClick={() => handleCatalogJump(sub)}
+                                      className="text-left py-1.5 text-xs font-medium text-slate-500 hover:text-blue-600 truncate"
+                                    >
+                                      {sub}
+                                    </button>
+                                  ))}
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <div className="mt-1 text-lg font-black text-slate-900">{title}</div>
-                  <div className="mt-1 text-[11px] text-slate-500">
-                    {subtitle || `共 ${displayPhrases.length} 条`}
-                  </div>
-                </div>
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>
 
-                <div
-                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-2xl"
-                  style={{ background: hexToRgba(accent, 0.12) }}
-                >
-                  {icon}
-                </div>
-              </div>
-
-              <div className="mt-4 flex gap-2">
-                <button
-                  type="button"
-                  onClick={playAll}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold text-white active:scale-95"
-                  style={{ background: accent }}
-                >
-                  {isPlayingAll ? <Square size={16} /> : <Play size={16} />}
-                  {isPlayingAll ? '停止播放' : '播放全部'}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setOnlyFav((v) => !v)}
-                  className={`flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition active:scale-95 ${
-                    onlyFav
-                      ? 'bg-rose-50 text-rose-600'
-                      : 'bg-slate-100 text-slate-600'
-                  }`}
-                >
-                  <Heart size={16} fill={onlyFav ? 'currentColor' : 'none'} />
-                  收藏
-                </button>
-              </div>
-            </div>
-
+          <div className="pt-20 px-3 space-y-4">
             {/* 空状态 */}
-            {displayPhrases.length === 0 ? (
-              <div className="flex flex-col items-center justify-center pt-24 text-slate-400">
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+            {isFavMode && displayPhrases.length === 0 && (
+              <div className="flex flex-col items-center justify-center pt-32 text-slate-400">
+                <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
                   <Heart size={32} className="text-slate-300" />
                 </div>
-                <p className="text-sm font-bold">
-                  {onlyFav ? '还没有收藏的短句' : '当前模块暂无内容'}
-                </p>
-                <p className="mt-1 text-xs">
-                  {onlyFav ? '点击卡片上的星形即可收藏' : '请检查数据文件'}
-                </p>
+                <p className="text-sm font-bold">还没有收藏的句子</p>
+                <p className="text-xs mt-1">点击右下角星标收藏短句</p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsFavMode(false);
+                    setView('home');
+                  }}
+                  className="mt-6 px-6 py-2 bg-blue-50 text-blue-600 rounded-full text-xs font-bold active:scale-95 transition-transform"
+                >
+                  去浏览课程
+                </button>
               </div>
-            ) : (
-              <>
-                {displayPhrases.slice(0, visibleCount).map((item, index) => {
-                  const active = playingId === item.id;
-                  const isFav = favorites.includes(item.id);
+            )}
 
-                  return (
-                    <motion.div
-                      key={item.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
+            {displayPhrases.slice(0, visibleCount).map((item, index) => {
+              const isNewSub =
+                !isFavMode &&
+                (index === 0 || displayPhrases[index - 1].sub !== item.sub);
+
+              return (
+                <div
+                  key={item.id}
+                  ref={(el) => {
+                    if (isNewSub && !isFavMode) itemRefs.current[item.sub] = el;
+                  }}
+                >
+                  {isNewSub && (
+                    <div className="mt-8 mb-3 pl-2 border-l-4 border-blue-500 flex items-center justify-between">
+                      <h3 className="text-sm font-bold text-slate-800">{item.sub}</h3>
+                    </div>
+                  )}
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                  >
+                    <div
+                      className={`relative bg-white pt-10 pb-4 px-4 rounded-[1.5rem] shadow-sm border border-slate-100 flex flex-col items-center text-center transition-all max-w-[360px] mx-auto overflow-visible mt-6 ${
+                        playingId === item.id ? 'ring-2 ring-blue-500 bg-blue-50/10' : ''
+                      } active:scale-[0.98] cursor-pointer`}
+                      onClick={() => handleCardPlay(item)}
                     >
-                      <div
-                        className={`relative mx-auto mt-6 max-w-[360px] overflow-visible rounded-[1.5rem] border border-slate-100 bg-white px-4 pb-4 pt-10 text-center shadow-sm transition-all ${
-                          active ? 'ring-2 ring-blue-500 bg-blue-50/10' : ''
-                        }`}
-                        onClick={() => playSingle(item)}
-                      >
-                        {/* 谐音顶部 badge */}
-                        {(item.xieyin || item.note) && (
-                          <div className="pointer-events-none absolute -top-3 left-1/2 z-10 flex w-full -translate-x-1/2 justify-center">
-                            <div
-                              className="flex items-center gap-1 whitespace-nowrap rounded-full border px-3 py-1 text-[10px] font-black shadow-sm"
-                              style={{
-                                background: hexToRgba(accent, 0.08),
-                                color: accent,
-                                borderColor: hexToRgba(accent, 0.18)
-                              }}
-                            >
-                              <ZapIcon />
-                              {item.xieyin || item.note}
-                            </div>
+                      {(item.xieyin || item.note) && (
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 w-full flex justify-center pointer-events-none">
+                          <div className="bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-[10px] font-black border border-amber-100 shadow-sm flex items-center gap-1 whitespace-nowrap">
+                            <Zap size={10} className="fill-amber-500 text-amber-500" />
+                            {item.xieyin || item.note}
                           </div>
-                        )}
-
-                        <div>
-                          <div className="mb-1.5 text-[13px] text-slate-400 font-pinyin">
-                            {item.pinyin}
-                          </div>
-
-                          <h3 className="mb-2 text-xl font-black leading-tight text-slate-800">
-                            {item.chinese}
-                          </h3>
-
-                          {item.burmese ? (
-                            <p className="mb-4 text-sm font-medium text-blue-600">
-                              {item.burmese}
-                            </p>
-                          ) : null}
                         </div>
+                      )}
 
-                        <div className="flex w-full items-center justify-center gap-5 border-t border-slate-50 pt-3">
+                      <div>
+                        <div className="text-[13px] text-slate-400 font-pinyin mb-1.5">
+                          {item.pinyin}
+                        </div>
+                        <h3 className="text-xl font-black text-slate-800 mb-2 leading-tight">
+                          {item.chinese}
+                        </h3>
+                        <p className="text-sm text-blue-600 font-medium mb-4">
+                          {item.burmese}
+                        </p>
+
+                        <div className="w-full flex justify-center items-center gap-5 pt-3 border-t border-slate-50">
                           <button
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
                               setSpellingItem(item);
                             }}
-                            className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-50 text-slate-400 hover:bg-blue-50 hover:text-blue-500"
+                            className="w-9 h-9 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center hover:bg-blue-50 hover:text-blue-500"
                           >
                             <Sparkles size={16} />
                           </button>
@@ -841,11 +1048,19 @@ export default function OralPhraseBrowser({
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
-                              playSingle(item);
+                              handleSpeech(item);
                             }}
-                            className="flex h-12 w-12 -mt-4 items-center justify-center rounded-full border-4 border-white bg-slate-100 text-slate-500 shadow-md"
+                            className={`w-12 h-12 -mt-4 rounded-full flex items-center justify-center shadow-md border-4 border-white ${
+                              recordingId === item.id
+                                ? 'bg-slate-100 text-slate-500 animate-pulse'
+                                : 'bg-slate-100 text-slate-500'
+                            }`}
                           >
-                            {active ? <Square size={20} /> : <Volume2 size={20} />}
+                            {recordingId === item.id ? (
+                              <StopCircle size={20} />
+                            ) : (
+                              <Mic size={20} />
+                            )}
                           </button>
 
                           <button
@@ -854,36 +1069,80 @@ export default function OralPhraseBrowser({
                               e.stopPropagation();
                               toggleFav(item.id);
                             }}
-                            className={`flex h-9 w-9 items-center justify-center rounded-full ${
-                              isFav
+                            className={`w-9 h-9 rounded-full flex items-center justify-center ${
+                              favorites.includes(item.id)
                                 ? 'bg-yellow-50 text-yellow-500'
                                 : 'bg-slate-50 text-slate-300'
                             }`}
                           >
-                            <Heart size={16} fill={isFav ? 'currentColor' : 'none'} />
+                            <Star
+                              size={16}
+                              fill={favorites.includes(item.id) ? 'currentColor' : 'none'}
+                            />
                           </button>
                         </div>
                       </div>
-                    </motion.div>
-                  );
-                })}
+                    </div>
 
-                <div ref={loaderRef} className="py-10 text-center text-slate-400">
-                  {visibleCount < displayPhrases.length ? (
-                    <div className="flex items-center justify-center gap-2 text-xs font-bold animate-pulse">
-                      <Loader2 className="animate-spin" size={16} />
-                      正在加载更多...
-                    </div>
-                  ) : (
-                    <div className="flex flex-col items-center gap-2 opacity-50">
-                      <div className="h-1 w-12 rounded-full bg-slate-200" />
-                      <span className="text-[10px]">
-                        到底了 (Total: {displayPhrases.length})
-                      </span>
-                    </div>
-                  )}
+                    <AnimatePresence>
+                      {speechResult?.id === item.id && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="bg-white mx-auto max-w-[360px] rounded-xl mt-2 p-3 shadow-sm border border-slate-100"
+                        >
+                          <div className="flex justify-between items-center mb-2">
+                            <span className="text-[10px] font-bold text-slate-400">评分</span>
+                            <span
+                              className={`text-xs font-black ${
+                                speechResult.data.accuracy > 0.8
+                                  ? 'text-green-500'
+                                  : 'text-red-500'
+                              }`}
+                            >
+                              {Math.round(speechResult.data.accuracy * 100)}%
+                            </span>
+                          </div>
+
+                          <div className="flex flex-wrap gap-2 justify-center">
+                            {speechResult.data.comparison.map((r, idx) => (
+                              <div key={idx} className="flex flex-col items-center">
+                                <span
+                                  className={`text-xs font-pinyin font-bold ${
+                                    r.isMatch ? 'text-slate-800' : 'text-red-500'
+                                  }`}
+                                >
+                                  {r.userPy || '?'}
+                                </span>
+                                <span className="text-[10px] text-slate-400">
+                                  {r.targetChar}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
                 </div>
-              </>
+              );
+            })}
+
+            {displayPhrases.length > 0 && (
+              <div ref={loaderRef} className="py-10 text-center-center justify-center gap-2 text-xs font-bold animate-pulse">
+                    <Loader2 className="animate-spin" size={16} />
+                    正在加载更多...
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center gap-2 opacity-50">
+                    <div className="w-12 h-1 bg-slate-200 rounded-full" />
+                    <span className="text-[10px]">
+                      到底了 (Total: {displayPhrases.length})
+                    </span>
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </div>
@@ -899,6 +1158,57 @@ export default function OralPhraseBrowser({
         )}
       </AnimatePresence>
 
+      <AnimatePresence>
+        {showVip && (
+          <div className="fixed inset-0 z-[3000] flex items-center justify-center p-6 bg-slate-900/80 backdrop-blur-md">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative bg-white rounded-[2rem] p-8 w-full max-w-xs text-center shadow-2xl"
+            >
+              <button
+                type="button"
+                onClick={() => setShowVip(false)}
+                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600"
+              >
+                <X size={20} />
+              </button>
+
+              <div className="w-16 h-16 mx-auto bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mb-4 text-white shadow-lg ring-4 ring-orange-100">
+                <CheckCircle2 size={30} />
+              </div>
+
+              <h3 className="text-xl font-black text-slate-900 mb-2">解锁完整课程</h3>
+              <p className="text-xs text-slate-500 mb-4">升级后可使用全部功能</p>
+
+              <ul className="text-left text-xs text-slate-500 space-y-2 mb-8 bg-slate-50 p-4 rounded-xl">
+                <li className="flex gap-2 items-center">
+                  <CheckCircle2 size={14} className="text-green-500" />
+                  解锁完整短句与训练
+                </li>
+                <li className="flex gap-2 items-center">
+                  <CheckCircle2 size={14} className="text-green-500" />
+                  开启语音评分
+                </li>
+                <li className="flex gap-2 items-center={14} className="text-green-500" />
+                  永久有效，无限回放
+                </li>
+              </ul>
+
+              <a
+                href="https://m.me/61575187883357"
+                target="_blank"
+                rel="noreferrer"
+                className="block w-full py-3.5 bg-slate-900 text-white rounded-xl font-bold shadow-lg active:scale-95 transition-transform hover:bg-slate-800"
+              >
+                联系老师激活
+              </a>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
       <style jsx global>{`
         .font-pinyin {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -907,21 +1217,5 @@ export default function OralPhraseBrowser({
         }
       `}</style>
     </div>
-  );
-}
-
-// 顶部小 badge 图标
-function ZapIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="10"
-      height="10"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M13 2 4 14h7l-1 8 9-12h-7z" />
-    </svg>
   );
 }
