@@ -7,6 +7,6 @@ export const oralDataMap = {
 //  'travel/hotel': () => import('./travel/hotel.json').then((m) => m.default),
 //  'travel/direction': () => import('./travel/direction.json').then((m) => m.default),
 
-  'medical/registration': () => import('./medical/registration.json').then((m) => m.default),
-  'medical/symptoms': () => import('./medical/symptoms.json').then((m) => m.default),
+ // 'medical/registration': () => import('./medical/registration.json').then((m) => m.default),
+ // 'medical/symptoms': () => import('./medical/symptoms.json').then((m) => m.default),
 };
