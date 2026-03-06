@@ -75,7 +75,7 @@ export default function OralPlayerPage() {
 
   if (!categoryData || !listMeta) {
     return (
-      <main style={{ minHeight: '100vh', background: '#F8FAFC', padding: 24 }}>
+      <main style={{ minHeight: '100vh', backgroundColor: '#F8FAFC', padding: 24 }}>
         <div style={{ textAlign: 'center', color: '#64748B' }}>未找到该口语模块</div>
       </main>
     );
@@ -83,7 +83,7 @@ export default function OralPlayerPage() {
 
   if (loading) {
     return (
-      <main style={{ minHeight: '100vh', background: '#F8FAFC', padding: 24 }}>
+      <main style={{ minHeight: '100vh', backgroundColor: '#F8FAFC', padding: 24 }}>
         <div style={{ textAlign: 'center', color: '#64748B' }}>加载中...</div>
       </main>
     );
@@ -91,7 +91,7 @@ export default function OralPlayerPage() {
 
   if (error) {
     return (
-      <main style={{ minHeight: '100vh', background: '#F8FAFC', padding: 24 }}>
+      <main style={{ minHeight: '100vh', backgroundColor: '#F8FAFC', padding: 24 }}>
         <div style={{ textAlign: 'center', color: '#DC2626' }}>{error}</div>
       </main>
     );
@@ -103,8 +103,8 @@ export default function OralPlayerPage() {
       title={listMeta.title}
       subtitle={listMeta.subtitle}
       phrases={phrases}
-      accent={categoryData.accent || '#2563EB'}
-      icon={listMeta.icon || categoryData.icon || '💬'}
+      accent="#2563EB"
+      icon="💬"
       onBack={() => router.push(`/oral/${categoryData.id}`)}
       favoriteStorageKey={`oral_favs_${categoryData.id}_${listMeta.id}`}
       settingsStorageKey={`oral_settings_${categoryData.id}_${listMeta.id}`}
