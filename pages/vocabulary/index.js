@@ -2,11 +2,10 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+// 【修复】彻底移除 framer-motion，采用纯 CSS 原生动画，解决打包报错
 import { ChevronDown, ChevronRight, FileText } from 'lucide-react';
 import { vocabCategories } from '@/data/vocabData';
 
-// 【修复图片不显示】换成国内加载更稳定的备用图片链接
 const FALLBACK_BG = 'https://picsum.photos/seed/vocab-bg/1200/800';
 const FALLBACK_THUMB = 'https://picsum.photos/seed/vocab-thumb/400/400';
 
@@ -21,7 +20,7 @@ const CategoryAccordion = ({ cat }) => {
 
   const cover = cat.cover || FALLBACK_BG;
   
-  // 【智能兼容】：如果你现有的数据里没有 subCategories，自动生成一个子项，防止折叠没内容
+  // 智能兼容：如果没有子分类，自动生成一个
   const subCategories = cat.subCategories && cat.subCategories.length > 0 
     ? cat.subCategories 
     : [
@@ -40,17 +39,16 @@ const CategoryAccordion = ({ cat }) => {
         onClick={() => setIsOpen(!isOpen)}
         style={{
           position: 'relative',
-          height: 140, // 大卡片高度
+          height: 140,
           width: '100%',
           borderRadius: 24,
           overflow: 'hidden',
           cursor: 'pointer',
           boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
           border: '1px solid rgba(255,255,255,0.2)',
-          transform: 'translateZ(0)', // 开启硬件加速，防止圆角失效
+          transform: 'translateZ(0)',
         }}
       >
-        {/* 背景大图 */}
         <img
           src={cover}
           alt={getTitle(cat)}
@@ -64,7 +62,6 @@ const CategoryAccordion = ({ cat }) => {
             transform: isOpen ? 'scale(1.05)' : 'scale(1)',
           }}
         />
-        {/* 黑色渐变遮罩 (保证白色文字清晰) */}
         <div
           style={{
             position: 'absolute',
@@ -73,7 +70,6 @@ const CategoryAccordion = ({ cat }) => {
           }}
         />
         
-        {/* 卡片文字内容 */}
         <div style={{
           position: 'absolute',
           bottom: 0,
@@ -93,7 +89,6 @@ const CategoryAccordion = ({ cat }) => {
             </p>
           </div>
           
-          {/* 旋转箭头 */}
           <div style={{
             background: 'rgba(255,255,255,0.2)',
             backdropFilter: 'blur(8px)',
@@ -111,106 +106,102 @@ const CategoryAccordion = ({ cat }) => {
         </div>
       </div>
 
-      {/* --- 二级分类折叠区域 (左图右文) --- */}
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0, marginTop: 0 }}
-            animate={{ height: 'auto', opacity: 1, marginTop: 12 }}
-            exit={{ height: 0, opacity: 0, marginTop: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            style={{ overflow: 'hidden' }}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: '0 4px' }}>
-              {subCategories.map((sub) => {
-                const subCover = sub.cover || FALLBACK_THUMB;
-                
-                return (
-                  <Link
-                    key={sub.id}
-                    href={`/vocabulary/${encodeURIComponent(sub.id)}`}
-                    style={{ textDecoration: 'none' }}
+      {/* --- 二级分类折叠区域 (纯 CSS Grid 原生动画，绝对不报错) --- */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateRows: isOpen ? '1fr' : '0fr',
+          transition: 'grid-template-rows 0.3s ease-in-out',
+        }}
+      >
+        <div style={{ overflow: 'hidden' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: '12px 4px 0 4px' }}>
+            {subCategories.map((sub) => {
+              const subCover = sub.cover || FALLBACK_THUMB;
+              
+              return (
+                <Link
+                  key={sub.id}
+                  href={`/vocabulary/${encodeURIComponent(sub.id)}`}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <div
+                    style={{
+                      background: 'rgba(255,255,255,0.85)',
+                      backdropFilter: 'blur(12px)',
+                      WebkitBackdropFilter: 'blur(12px)',
+                      borderRadius: 20,
+                      padding: 12,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 14,
+                      boxShadow: '0 4px 15px rgba(0,0,0,0.05)',
+                      border: '1px solid rgba(255,255,255,0.6)',
+                      transition: 'transform 0.1s',
+                    }}
+                    onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.98)'}
+                    onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                    onTouchStart={(e) => e.currentTarget.style.transform = 'scale(0.98)'}
+                    onTouchEnd={(e) => e.currentTarget.style.transform = 'scale(1)'}
                   >
-                    <div
-                      style={{
-                        background: 'rgba(255,255,255,0.85)',
-                        backdropFilter: 'blur(12px)',
-                        WebkitBackdropFilter: 'blur(12px)',
-                        borderRadius: 20,
-                        padding: 12,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 14,
-                        boxShadow: '0 4px 15px rgba(0,0,0,0.05)',
-                        border: '1px solid rgba(255,255,255,0.6)',
-                        transition: 'transform 0.1s',
-                      }}
-                      // 触摸按下时的缩放效果
-                      onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.98)'}
-                      onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                      onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                      onTouchStart={(e) => e.currentTarget.style.transform = 'scale(0.98)'}
-                      onTouchEnd={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                    >
-                      {/* 左侧：方形图片 */}
-                      <div style={{
-                        width: 64,
-                        height: 64,
-                        borderRadius: 14,
-                        overflow: 'hidden',
-                        flexShrink: 0,
-                        backgroundColor: '#e2e8f0',
-                      }}>
-                        <img
-                          src={subCover}
-                          alt={getTitle(sub)}
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
-                      </div>
-
-                      {/* 右侧：文字说明 */}
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <h3 style={{
-                          margin: 0,
-                          fontSize: 16,
-                          fontWeight: 800,
-                          color: '#1e293b',
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                        }}>
-                          {getTitle(sub)}
-                        </h3>
-                        <p style={{
-                          margin: '4px 0 0 0',
-                          fontSize: 12,
-                          color: '#64748b',
-                          display: '-webkit-box',
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden',
-                          lineHeight: 1.4
-                        }}>
-                          {getDesc(sub)}
-                        </p>
-                      </div>
-
-                      {/* 最右侧：进入箭头 */}
-                      <div style={{ color: '#94a3b8', paddingLeft: 4 }}>
-                        <ChevronRight size={20} />
-                      </div>
+                    {/* 左侧方形图片 */}
+                    <div style={{
+                      width: 64,
+                      height: 64,
+                      borderRadius: 14,
+                      overflow: 'hidden',
+                      flexShrink: 0,
+                      backgroundColor: '#e2e8f0',
+                    }}>
+                      <img
+                        src={subCover}
+                        alt={getTitle(sub)}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
                     </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+                    {/* 右侧文字 */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <h3 style={{
+                        margin: 0,
+                        fontSize: 16,
+                        fontWeight: 800,
+                        color: '#1e293b',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}>
+                        {getTitle(sub)}
+                      </h3>
+                      <p style={{
+                        margin: '4px 0 0 0',
+                        fontSize: 12,
+                        color: '#64748b',
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        lineHeight: 1.4
+                      }}>
+                        {getDesc(sub)}
+                      </p>
+                    </div>
+
+                    {/* 箭头 */}
+                    <div style={{ color: '#94a3b8', paddingLeft: 4 }}>
+                      <ChevronRight size={20} />
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
-
 
 // ==========================================
 // 2. 页面主入口
@@ -220,7 +211,6 @@ export default function VocabularyIndexPage() {
 
   return (
     <main style={{ minHeight: '100vh', position: 'relative', overflowX: 'hidden' }}>
-      {/* 底部全屏背景 (带暗色遮罩) */}
       <div
         style={{
           position: 'fixed',
@@ -233,8 +223,6 @@ export default function VocabularyIndexPage() {
       />
 
       <div style={{ maxWidth: 640, margin: '0 auto', padding: '30px 16px 100px 16px' }}>
-        
-        {/* 页面顶部标题 */}
         <header style={{ marginBottom: 30 }}>
           <h1 style={{ fontSize: 28, fontWeight: 900, color: '#fff', margin: 0, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
             词汇学习库
@@ -244,13 +232,11 @@ export default function VocabularyIndexPage() {
           </p>
         </header>
 
-        {/* 循环渲染大分类折叠卡片 */}
         <div>
           {vocabCategories.map((cat) => (
             <CategoryAccordion key={cat.id} cat={cat} />
           ))}
         </div>
-
       </div>
     </main>
   );
