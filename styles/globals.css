@@ -299,7 +299,7 @@ img {
   0% {background-position: right}
 }
 
-/****** 新增style  by arale ******/
+/****** 新增style by arale ******/
 
  .font-bold {
   font-weight: 450 !important;
@@ -341,7 +341,8 @@ img {
  .border-indigo-600,
  .hover\:border-indigo-600:hover,
  .hover\:border-blue-600:hover,
- .group:hover .group-hover\:border-indigo-600 {
+ .group:hover .group-hover\:border-indigo-600,
+ .border-red-600 {
     border-color:#df9283 !important;
   }
 
@@ -374,7 +375,8 @@ img {
   .text-indigo-700,
   .hover\:text-indigo-700:hover,
   .hover\:text-blue-600:hover,
-  .group:hover .group-hover\:text-indigo-700 {
+  .group:hover .group-hover\:text-indigo-700,
+  .text-red-600 {
     color:#df9283 !important;
   }
 
@@ -410,4 +412,38 @@ img {
 
   .from-teal-300 {
     --tw-gradient-from:#d68272 !important;
+  }
+
+  /* TWIKOO样式修改 */
+
+ .el-button--primary.is-disabled {
+  background-color: #e7ada2 !important;
+    border-color: transparent !important;
+ }
+  
+  .el-button--primary {
+    background-color: #d68272 !important;
+    border-color: transparent !important;
+  }
+
+  .el-input__inner:focus,
+  .el-textarea__inner:focus {
+    border-color: #df9283 !important;
+  }
+
+  
+  .tk-icon.__comments,
+  .tk-action-icon {
+    color: #df9283 !important;
+  }
+
+  .tk-action-count {
+        color: #717171 !important;
+    font-weight: 400 !important;
+  }
+
+  .twikoo .el-button:not(.el-button--primary):not(.el-button--text):hover {
+    color: #df9283 !important;
+    background-color: #fdf9f9 !important;
+    border-color: #e7ada2 !important;
   }
