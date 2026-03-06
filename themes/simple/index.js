@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { motion, AnimatePresence } from 'framer-motion'
+import React, { useState, useRef } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Mic2,
   Music4,
@@ -21,17 +21,13 @@ import {
   Compass,
   BookOpen,
   Sparkles
-} from 'lucide-react'
-import dynamic from 'next/dynamic'
+} from 'lucide-react';
+import dynamic from 'next/dynamic';
 
-// 动态组件
 const BookLibrary = dynamic(() => import('@/components/BookLibrary'), {
   ssr: false
-})
+});
 
-// ==============================
-// 配置数据
-// ==============================
 const PINYIN_NAV = [
   {
     zh: '声母',
@@ -65,7 +61,7 @@ const PINYIN_NAV = [
     color: 'text-amber-600',
     bg: 'bg-amber-100/80'
   }
-]
+];
 
 const CORE_TOOLS = [
   {
@@ -100,7 +96,7 @@ const CORE_TOOLS = [
     bg: 'bg-slate-50',
     iconColor: 'text-slate-600'
   }
-]
+];
 
 const LEARNING_COURSES = [
   {
@@ -131,45 +127,41 @@ const LEARNING_COURSES = [
     href: '/course/hsk1',
     color: 'from-amber-600/85'
   }
-]
+];
 
-// ==============================
-// 页面
-// ==============================
 export default function LayoutLearningHome() {
-  const router = useRouter()
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [isLibraryOpen, setIsLibraryOpen] = useState(false)
+  const router = useRouter();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isLibraryOpen, setIsLibraryOpen] = useState(false);
 
-  // 手势控制
-  const touchStartPos = useRef({ x: 0, y: 0 })
-  const isEdgeSwipe = useRef(false)
+  const touchStartPos = useRef({ x: 0, y: 0 });
+  const isEdgeSwipe = useRef(false);
 
   const onTouchStart = (e) => {
-    const x = e.touches[0].clientX
-    const y = e.touches[0].clientY
-    touchStartPos.current = { x, y }
-    isEdgeSwipe.current = x < 25
-  }
+    const x = e.touches[0].clientX;
+    const y = e.touches[0].clientY;
+    touchStartPos.current = { x, y };
+    isEdgeSwipe.current = x < 25;
+  };
 
   const onTouchEnd = (e) => {
-    if (!isEdgeSwipe.current) return
+    if (!isEdgeSwipe.current) return;
 
-    const deltaX = e.changedTouches[0].clientX - touchStartPos.current.x
-    const deltaY = Math.abs(e.changedTouches[0].clientY - touchStartPos.current.y)
+    const deltaX = e.changedTouches[0].clientX - touchStartPos.current.x;
+    const deltaY = Math.abs(e.changedTouches[0].clientY - touchStartPos.current.y);
 
     if (deltaX > 85 && deltaY < 50) {
       if (isLibraryOpen) {
-        setIsLibraryOpen(false)
+        setIsLibraryOpen(false);
       } else if (isDrawerOpen) {
-        setIsDrawerOpen(false)
+        setIsDrawerOpen(false);
       } else {
-        router.back()
+        router.back();
       }
     }
 
-    isEdgeSwipe.current = false
-  }
+    isEdgeSwipe.current = false;
+  };
 
   return (
     <main
@@ -177,7 +169,7 @@ export default function LayoutLearningHome() {
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      {/* 固定背景图，不跟页面滚动 */}
+      {/* 背景 */}
       <div className="fixed inset-0 -z-30">
         <img
           src="/images/home-bg.jpg"
@@ -187,10 +179,7 @@ export default function LayoutLearningHome() {
         />
       </div>
 
-      {/* 固定磨砂层 */}
       <div className="fixed inset-0 -z-20 bg-white/30 backdrop-blur-md" />
-
-      {/* 固定柔光渐变层 */}
       <div className="fixed inset-0 -z-10 bg-gradient-to-b from-white/10 via-white/5 to-white/60" />
 
       {/* 侧边栏 */}
@@ -228,16 +217,28 @@ export default function LayoutLearningHome() {
               </div>
 
               <nav className="space-y-2 p-4">
-                <button className="w-full rounded-xl p-4 text-left font-bold text-slate-800 transition-colors hover:bg-slate-100">
+                <button
+                  type="button"
+                  className="w-full rounded-xl p-4 text-left font-bold text-slate-800 transition-colors hover:bg-slate-100"
+                >
                   首页
                 </button>
-                <button className="w-full rounded-xl p-4 text-left font-bold text-slate-800 transition-colors hover:bg-slate-100">
+                <button
+                  type="button"
+                  className="w-full rounded-xl p-4 text-left font-bold text-slate-800 transition-colors hover:bg-slate-100"
+                >
                   HSK 课程
                 </button>
-                <button className="w-full rounded-xl p-4 text-left font-bold text-slate-800 transition-colors hover:bg-slate-100">
+                <button
+                  type="button"
+                  className="w-full rounded-xl p-4 text-left font-bold text-slate-800 transition-colors hover:bg-slate-100"
+                >
                   AI 翻译
                 </button>
-                <button className="w-full rounded-xl p-4 text-left font-bold text-slate-800 transition-colors hover:bg-slate-100">
+                <button
+                  type="button"
+                  className="w-full rounded-xl p-4 text-left font-bold text-slate-800 transition-colors hover:bg-slate-100"
+                >
                   系统设置
                 </button>
               </nav>
@@ -248,7 +249,6 @@ export default function LayoutLearningHome() {
 
       {/* 主内容 */}
       <div className="relative z-10 mx-auto max-w-md px-4 pb-36 pt-6">
-        {/* Header */}
         <header className="mb-8 flex items-center gap-4">
           <button
             type="button"
@@ -269,41 +269,45 @@ export default function LayoutLearningHome() {
         {/* 拼音网格 */}
         <section className="mb-6 grid grid-cols-4 gap-3">
           {PINYIN_NAV.map((item, idx) => (
-            <Link href={item.href} key={idx}>
-              <motion.div
-                whileTap={{ scale: 0.95 }}
-                className="flex flex-col items-center rounded-2xl border border-white bg-white/70 p-3 shadow-sm backdrop-blur-sm"
-              >
-                <div className={`${item.bg} mb-2 rounded-full p-2`}>
-                  <item.icon size={18} className={item.color} />
-                </div>
-                <span className="text-xs font-black text-slate-800">{item.zh}</span>
-                <span className="mt-0.5 text-[9px] font-medium text-slate-400">
-                  {item.mm}
-                </span>
-              </motion.div>
+            <Link href={item.href} key={idx} legacyBehavior>
+              <a>
+                <motion.div
+                  whileTap={{ scale: 0.95 }}
+                  className="flex flex-col items-center rounded-2xl border border-white bg-white/70 p-3 shadow-sm backdrop-blur-sm"
+                >
+                  <div className={`${item.bg} mb-2 rounded-full p-2`}>
+                    <item.icon size={18} className={item.color} />
+                  </div>
+                  <span className="text-xs font-black text-slate-800">{item.zh}</span>
+                  <span className="mt-0.5 text-[9px] font-medium text-slate-400">
+                    {item.mm}
+                  </span>
+                </motion.div>
+              </a>
             </Link>
           ))}
         </section>
 
         {/* 发音技巧 */}
-        <Link href="/pinyin/tips">
-          <motion.div
-            whileTap={{ scale: 0.98 }}
-            className="mb-6 flex items-center justify-between rounded-2xl border border-white bg-white/70 p-4 shadow-sm backdrop-blur-sm"
-          >
-            <div className="flex items-center gap-4">
-              <div className="rounded-xl bg-orange-100 p-2 text-orange-600">
-                <Lightbulb size={20} />
+        <Link href="/pinyin/tips" legacyBehavior>
+          <a>
+            <motion.div
+              whileTap={{ scale: 0.98 }}
+              className="mb-6 flex items-center justify-between rounded-2xl border border-white bg-white/70 p-4 shadow-sm backdrop-blur-sm"
+            >
+              <div className="flex items-center gap-4">
+                <div className="rounded-xl bg-orange-100 p-2 text-orange-600">
+                  <Lightbulb size={20} />
+                </div>
+                <div>
+                  <p className="text-sm font-black text-slate-800">发音技巧 (Tips)</p>
+                  <p className="text-[10px] text-slate-400">အသံထွက်နည်းလမ်းများ</p>
+                </div>
               </div>
-              <div>
-                <p className="text-sm font-black text-slate-800">发音技巧 (Tips)</p>
-                <p className="text-[10px] text-slate-400">အသံထွက်နည်းလမ်းများ</p>
-              </div>
-            </div>
 
-            <ChevronRight size={18} className="text-slate-300" />
-          </motion.div>
+              <ChevronRight size={18} className="text-slate-300" />
+            </motion.div>
+          </a>
         </Link>
 
         {/* 核心工具 */}
@@ -315,16 +319,14 @@ export default function LayoutLearningHome() {
                   <tool.icon size={20} />
                 </div>
                 <div className="overflow-hidden text-left">
-                  <p className="truncate text-[13px] font-black text-slate-800">
-                    {tool.zh}
-                  </p>
+                  <p className="truncate text-[13px] font-black text-slate-800">{tool.zh}</p>
                   <p className="truncate text-[9px] text-slate-400">{tool.mm}</p>
                 </div>
               </div>
-            )
+            );
 
             const cardStyle =
-              'w-full rounded-2xl border border-white bg-white/70 p-3.5 shadow-sm backdrop-blur-sm'
+              'block w-full rounded-2xl border border-white bg-white/70 p-3.5 shadow-sm backdrop-blur-sm';
 
             if (tool.action === 'open-library') {
               return (
@@ -336,14 +338,14 @@ export default function LayoutLearningHome() {
                 >
                   {content}
                 </button>
-              )
+              );
             }
 
             return (
-              <Link href={tool.href} key={idx} className={cardStyle}>
-                {content}
+              <Link href={tool.href} key={idx} legacyBehavior>
+                <a className={cardStyle}>{content}</a>
               </Link>
-            )
+            );
           })}
         </section>
 
@@ -357,36 +359,37 @@ export default function LayoutLearningHome() {
           </div>
 
           {LEARNING_COURSES.map((course, idx) => (
-            <Link href={course.href} key={idx}>
-              <motion.div
-                whileTap={{ scale: 0.97 }}
-                className="relative h-36 w-full overflow-hidden rounded-3xl shadow-md"
-              >
-                <img
-                  src={course.img}
-                  alt={course.title}
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
+            <Link href={course.href} key={idx} legacyBehavior>
+              <a>
+                <motion.div
+                  whileTap={{ scale: 0.97 }}
+                  className="relative h-36 w-full overflow-hidden rounded-3xl shadow-md"
+                >
+                  <img
+                    src={course.img}
+                    alt={course.title}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
 
-                <div className={`absolute inset-0 bg-gradient-to-r ${course.color} to-transparent`} />
+                  <div className={`absolute inset-0 bg-gradient-to-r ${course.color} to-transparent`} />
 
-                <div className="absolute inset-y-0 left-0 flex flex-col justify-center px-6">
-                  <h3 className="text-xl font-black text-white">{course.title}</h3>
-                  <p className="text-xs font-medium text-white/85">{course.sub}</p>
+                  <div className="absolute inset-y-0 left-0 flex flex-col justify-center px-6">
+                    <h3 className="text-xl font-black text-white">{course.title}</h3>
+                    <p className="text-xs font-medium text-white/85">{course.sub}</p>
 
-                  <div className="mt-3 flex w-fit items-center gap-1 rounded-md bg-white/20 px-2 py-0.5 text-[10px] font-bold text-white backdrop-blur-sm">
-                    立即学习 <ChevronRight size={10} />
+                    <div className="mt-3 flex w-fit items-center gap-1 rounded-md bg-white/20 px-2 py-0.5 text-[10px] font-bold text-white backdrop-blur-sm">
+                      立即学习 <ChevronRight size={10} />
+                    </div>
                   </div>
-                </div>
 
-                {/* AI 练口语加小标识 */}
-                {course.title === 'AI 练口语' && (
-                  <div className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1 text-[10px] font-black text-white backdrop-blur-sm">
-                    <Sparkles size={10} />
-                    NEW
-                  </div>
-                )}
-              </motion.div>
+                  {course.title === 'AI 练口语' && (
+                    <div className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1 text-[10px] font-black text-white backdrop-blur-sm">
+                      <Sparkles size={10} />
+                      NEW
+                    </div>
+                  )}
+                </motion.div>
+              </a>
             </Link>
           ))}
         </section>
@@ -407,7 +410,7 @@ export default function LayoutLearningHome() {
         onClose={() => setIsLibraryOpen(false)}
       />
     </main>
-  )
+  );
 }
 
 function FooterItem({ icon: Icon, label, active = false }) {
@@ -422,5 +425,5 @@ function FooterItem({ icon: Icon, label, active = false }) {
       </div>
       <span className="text-[10px] font-bold">{label}</span>
     </div>
-  )
+  );
 }
