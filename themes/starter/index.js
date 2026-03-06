@@ -423,4 +423,4 @@ function FooterItem({ icon: Icon, label, active = false }) {
       <span className="text-[10px] font-bold">{label}</span>
     </div>
   )
-}
+              }
