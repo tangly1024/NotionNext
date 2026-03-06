@@ -35,9 +35,9 @@ export const vocabCategories = [
     id: 'hsk',
     title: 'HSK',
     description: 'HSK词汇',
-    cover: 'https://pixabay.com/zh/images/download/x-9354692_1920.jpg',
+    cover: 'https://pixabay.com/zh/images/download/ri1yad-nature-10137982_1920.jpg',
     items: [
-      { id: 'hsk1', title: 'HSK1 常用', subtitle: '基础高频', cover: 'https://pixabay.com/zh/images/download/x-10137982_1920.jpg', locked: false },
+      { id: 'hsk1', title: 'HSK1 常用', subtitle: '基础高频', cover: 'https://pixabay.com/zh/images/download/ri1yad-nature-10137982_1920.jpg', locked: false },
     ],
   },
 ];
