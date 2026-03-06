@@ -189,7 +189,7 @@ nav {
 }
 
 .webmention-block-intro a {
-  color: #0000ee;
+  color: #df9283;
   text-decoration: underline;
 }
 
@@ -321,6 +321,7 @@ img {
 }
 
 .bg-indigo-600,
+.bg-blue-600,
 .hover\:bg-indigo-600:hover,
 .hover\:bg-blue-600:hover,
 .group:hover .group-hover\:bg-indigo-600 {
@@ -339,9 +340,14 @@ img {
 
  .border-indigo-600,
  .hover\:border-indigo-600:hover,
+ .hover\:border-blue-600:hover,
  .group:hover .group-hover\:border-indigo-600 {
     border-color:#df9283 !important;
   }
+
+   .outline-blue-500 {
+    outline-color:#df9283 !important;
+   }
 
  .border-indigo-500,
  .hover\:border-indigo-500:hover,
@@ -357,11 +363,14 @@ img {
 
   .text-indigo-500,
   .text-indigo-600,
+  .text-yellow-600,
   .hover\:text-indigo-600:hover,
   .group:hover .group-hover\:text-indigo-600 {
     color:#e7ada2 !important;
   }
   
+  .hover\:text-blue-600,
+  .text-blue-600,
   .text-indigo-700,
   .hover\:text-indigo-700:hover,
   .hover\:text-blue-600:hover,

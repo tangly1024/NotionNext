@@ -18,26 +18,47 @@
   --select-color-1: rgba(45, 170, 219, 0.3);
   --select-color-2: #ffffff;
 
-  --notion-red: rgb(224, 62, 62);
+  /* --notion-red: rgb(224, 62, 62); 
   --notion-pink: rgb(173, 26, 114);
   --notion-blue: rgb(11, 110, 153);
   --notion-purple: rgb(105, 64, 165);
   --notion-teal: rgb(15, 123, 108);
   --notion-yellow: rgb(223, 171, 1);
-  --notion-orange: rgb(217, 115, 13);
+  --notion-orange: rgb(217, 115, 13);*/
+  --notion-red:#c83c3c !important;
+  --notion-pink: #fae4ef !important;
+  --notion-blue: rgb(11, 110, 153);
+  --notion-purple: #6659a7 !important;
+  --notion-teal: #73b192 !important;
+  --notion-yellow: #d3a259 !important;
+  --notion-orange: #d68272 !important;
+
+
+
+
   --notion-brown: rgb(100, 71, 58);
   --notion-gray: rgb(155, 154, 151);
 
-  --notion-red_background: rgb(251, 228, 228);
+  /* --notion-red_background: rgb(251, 228, 228);
   --notion-pink_background: rgb(244, 223, 235);
   --notion-blue_background: rgb(221, 235, 241);
   --notion-purple_background: rgb(234, 228, 242);
   --notion-teal_background: rgb(221, 237, 234);
   --notion-yellow_background: rgb(251, 243, 219);
   --notion-orange_background: rgb(250, 235, 221);
+  --notion-green_background: rgb(219, 237, 219); */
+  --notion-red_background: rgb(251, 228, 228);
+  --notion-pink_background: #f8e5ea !important;
+  --notion-blue_background: rgb(221, 235, 241);
+  --notion-purple_background: #dddaea  !important;
+  --notion-teal_background: #edf4f0  !important;
+  --notion-yellow_background: #edf4f0  !important;
+  --notion-orange_background: #f7e4e0  !important;
+  --notion-green_background: #edf4f0  !important;
+
+
   --notion-brown_background: rgb(233, 229, 227);
   --notion-gray_background: rgb(241 241 239);
-  --notion-green_background: rgb(219, 237, 219);
   --notion-default_background: rgba(227, 226, 224);
 
   --notion-red_background_co: rgba(251, 228, 228, 0.3);
