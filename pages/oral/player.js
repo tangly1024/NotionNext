@@ -2,9 +2,21 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
-import OralPhraseBrowser from '@/components/OralPhraseBrowser';
+import dynamic from 'next/dynamic';
 import { oralCategories } from '@/data/oralData';
 import { oralDataMap } from '@/data/oral';
+
+const OralPhraseBrowser = dynamic(
+  () => import('@/components/OralPhraseBrowser'),
+  {
+    ssr: false,
+    loading: () => (
+      <main style={{ minHeight: '100vh', backgroundColor: '#F8FAFC', padding: 24 }}>
+        <div style={{ textAlign: 'center', color: '#64748B' }}>加载中...</div>
+      </main>
+    ),
+  }
+);
 
 const pick = (v) => (Array.isArray(v) ? v[0] : v);
 
@@ -49,10 +61,10 @@ export default function OralPlayerPage() {
         const list = Array.isArray(data)
           ? data
           : Array.isArray(data?.items)
-          ? data.items
-          : Array.isArray(data?.phrases)
-          ? data.phrases
-          : [];
+            ? data.items
+            : Array.isArray(data?.phrases)
+              ? data.phrases
+              : [];
 
         setPhrases(list);
       } catch (err) {
