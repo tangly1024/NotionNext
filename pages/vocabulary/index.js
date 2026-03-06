@@ -3,7 +3,7 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { ChevronLeft, Lock, PlayCircle } from 'lucide-react';
-import { oralCategories } from '@/data/oralData';
+// import { oralCategories } from '@/data/oralData';
 
 export default function OralCategoryPage() {
   const router = useRouter();
