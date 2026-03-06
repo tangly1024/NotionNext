@@ -9,8 +9,7 @@ import {
   Loader2,
   Play,
   Square,
-  Heart,
-  Languages
+  Heart
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { pinyin } from 'pinyin-pro';
@@ -20,8 +19,14 @@ import { pinyin } from 'pinyin-pro';
 // ===============================
 function hexToRgba(hex, alpha = 1) {
   if (!hex) return `rgba(37,99,235,${alpha})`;
-  const c = hex.replace('#', '');
+
+  const c = String(hex).replace('#', '');
   const full = c.length === 3 ? c.split('').map((s) => s + s).join('') : c;
+
+  if (!/^[0-9a-fA-F]{6}$/.test(full)) {
+    return `rgba(37,99,235,${alpha})`;
+  }
+
   const num = parseInt(full, 16);
   const r = (num >> 16) & 255;
   const g = (num >> 8) & 255;
@@ -29,17 +34,27 @@ function hexToRgba(hex, alpha = 1) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
+function safeParseJSON(value, fallback) {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return fallback;
+  }
+}
+
 function normalizePhrase(item, index) {
-  const chinese = item.chinese || item.zh || item.text || '';
+  const chinese = item?.chinese || item?.zh || item?.text || '';
+  const cleanChinese = String(chinese).replace(/[，。！？；：、,.!?;:]/g, '');
+
   return {
-    id: item.id || `${index}`,
+    id: item?.id || `${index}`,
     chinese,
-    pinyin: item.pinyin || (chinese ? pinyin(chinese, { toneType: 'symbol' }) : ''),
-    translation: item.burmese || item.translation || item.en || item.meaning || '',
-    xieyin: item.xieyin || '',
-    note: item.note || '',
-    audioZh: item.audioZh || item.zhAudio || '',
-    audioSecondary: item.audioSecondary || item.myAudio || item.translationAudio || '',
+    pinyin: item?.pinyin || (cleanChinese ? pinyin(cleanChinese, { toneType: 'symbol' }) : ''),
+    translation: item?.burmese || item?.translation || item?.en || item?.meaning || '',
+    xieyin: item?.xieyin || '',
+    note: item?.note || '',
+    audioZh: item?.audioZh || item?.zhAudio || '',
+    audioSecondary: item?.audioSecondary || item?.myAudio || item?.translationAudio || ''
   };
 }
 
@@ -55,6 +70,7 @@ const AudioEngine = {
       this.current.currentTime = 0;
       this.current = null;
     }
+
     if (typeof window !== 'undefined' && window.speechSynthesis) {
       window.speechSynthesis.cancel();
     }
@@ -63,6 +79,7 @@ const AudioEngine = {
   play(url) {
     return new Promise((resolve) => {
       this.stop();
+
       if (typeof window === 'undefined' || !url) {
         resolve();
         return;
@@ -75,10 +92,12 @@ const AudioEngine = {
         this.current = null;
         resolve();
       };
+
       audio.onerror = () => {
         this.current = null;
         resolve();
       };
+
       audio.play().catch(() => {
         this.current = null;
         resolve();
@@ -107,7 +126,8 @@ function SettingsPanel({
   const zhOptions = [
     { label: '小晓', value: 'zh-CN-XiaoxiaoMultilingualNeural' },
     { label: '小辰', value: 'zh-CN-XiaochenNeural' },
-    { label: '小颜', value: 'zh-CN-XiaoyNe云 'N-YunxiaNeural' }
+    { label: '小颜', value: 'zh-CN-XiaoyanNeural' },
+    { label: '云夏', value: 'zh-CN-YunxiaNeural' }
   ];
 
   const secondaryOptions = [
@@ -120,14 +140,14 @@ function SettingsPanel({
       initial={{ opacity: 0, y: -16, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: -16, scale: 0.96 }}
-      className="fixed top-16 right-4 z-[2000] w-72 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-2xl"
+      className="fixed right-4 top-16 z-[2000] w-72 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-2xl"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50 px-4 py-3">
         <span className="text-[11px] font-black uppercase tracking-widest text-slate-500">
           播放设置
         </span>
-        <button onClick={onClose}>
+        <button type="button" onClick={onClose}>
           <X size={16} className="text-slate-400 hover:text-red-500" />
         </button>
       </div>
@@ -138,6 +158,7 @@ function SettingsPanel({
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-700">中文朗读</span>
             <button
+              type="button"
               onClick={() =>
                 setSettings((s) => ({ ...s, zhEnabled: !s.zhEnabled }))
               }
@@ -155,6 +176,7 @@ function SettingsPanel({
           <div className="grid grid-cols-2 gap-2">
             {zhOptions.map((opt) => (
               <button
+                type="button"
                 key={opt.value}
                 onClick={() =>
                   setSettings((s) => ({ ...s, zhVoice: opt.value }))
@@ -198,6 +220,7 @@ function SettingsPanel({
               {secondaryLabel}朗读
             </span>
             <button
+              type="button"
               onClick={() =>
                 setSettings((s) => ({
                   ...s,
@@ -218,6 +241,7 @@ function SettingsPanel({
           <div className="grid grid-cols-2 gap-2">
             {secondaryOptions.map((opt) => (
               <button
+                type="button"
                 key={opt.value}
                 onClick={() =>
                   setSettings((s) => ({ ...s, secondaryVoice: opt.value }))
@@ -294,22 +318,23 @@ export default function OralPhraseBrowser({
   });
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const savedSettings = localStorage.getItem(settingsStorageKey);
     if (savedSettings) {
-      try {
-        setSettings(JSON.parse(savedSettings));
-      } catch {}
+      const parsed = safeParseJSON(savedSettings, null);
+      if (parsed) setSettings(parsed);
     }
 
     const savedFav = localStorage.getItem(favoriteStorageKey);
     if (savedFav) {
-      try {
-        setFavorites(JSON.parse(savedFav));
-      } catch {}
+      const parsed = safeParseJSON(savedFav, []);
+      if (Array.isArray(parsed)) setFavorites(parsed);
     }
   }, [favoriteStorageKey, settingsStorageKey]);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     localStorage.setItem(settingsStorageKey, JSON.stringify(settings));
   }, [settings, settingsStorageKey]);
 
@@ -324,27 +349,37 @@ export default function OralPhraseBrowser({
 
   useEffect(() => {
     setVisibleCount(20);
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
     AudioEngine.stop();
     setPlayingId(null);
     setIsPlayingAll(false);
   }, [title]);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!('IntersectionObserver' in window)) {
+      setVisibleCount(displayPhrases.length);
+      return;
+    }
+
+    const node = loaderRef.current;
+    if (!node) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
+        if (entries[0]?.isIntersecting) {
           setVisibleCount((prev) => Math.min(prev + 20, displayPhrases.length));
         }
       },
       { rootMargin: '180px' }
     );
 
-    const node = loaderRef.current;
-    if (node) observer.observe(node);
+    observer.observe(node);
 
     return () => {
-      if (node) observer.unobserve(node);
+      observer.disconnect();
     };
   }, [displayPhrases.length]);
 
@@ -451,7 +486,10 @@ export default function OralPhraseBrowser({
       : [...favorites, id];
 
     setFavorites(next);
-    localStorage.setItem(favoriteStorageKey, JSON.stringify(next));
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(favoriteStorageKey, JSON.stringify(next));
+    }
   };
 
   return (
@@ -460,6 +498,7 @@ export default function OralPhraseBrowser({
       <div className="sticky top-0 z-40 border-b border-slate-100 bg-white/88 backdrop-blur-md">
         <div className="mx-auto flex h-14 max-w-md items-center justify-between px-4">
           <button
+            type="button"
             onClick={onBack}
             className="rounded-full p-2 text-slate-500 transition hover:bg-slate-50 hover:text-slate-900"
           >
@@ -476,6 +515,7 @@ export default function OralPhraseBrowser({
           </div>
 
           <button
+            type="button"
             onClick={() => setShowSettings(true)}
             className="rounded-full p-2 text-slate-500 transition hover:bg-slate-50 hover:text-blue-600"
           >
@@ -492,7 +532,7 @@ export default function OralPhraseBrowser({
           style={{
             background: `linear-gradient(135deg, ${hexToRgba(
               accent,
-              0.10
+              0.1
             )} 0%, rgba(255,255,255,0.96) 58%)`
           }}
         >
@@ -519,6 +559,7 @@ export default function OralPhraseBrowser({
 
           <div className="flex gap-2">
             <button
+              type="button"
               onClick={playAll}
               className="flex flex-1 items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold text-white shadow-sm active:scale-[0.98]"
               style={{ background: accent }}
@@ -528,6 +569,7 @@ export default function OralPhraseBrowser({
             </button>
 
             <button
+              type="button"
               onClick={() => setOnlyFav((v) => !v)}
               className={`flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold transition active:scale-[0.98] ${
                 onlyFav
@@ -568,32 +610,14 @@ export default function OralPhraseBrowser({
                   viewport={{ once: true, margin: '-80px' }}
                 >
                   <div
-                    className={`overflow-hidden rounded-[26px] border bg-white px-4 pb-4 pt-10 shadow-sm transition ${
+                    className={`rounded-[26px] border bg-white px-4 pb-4 pt-6 shadow-sm transition ${
                       active
                         ? 'border-blue-200 ring-2 ring-blue-100'
                         : 'border-slate-100'
                     }`}
                   >
-                    {/* 顶部小标签 */}
-                    <div className="pointer-events-none absolute" />
-                    {(item.xieyin || item.note) && (
-                      <div className="mb-3 flex justify-center">
-                        <div
-                          className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-[10px] font-black shadow-sm"
-                          style={{
-                            background: hexToRgba(accent, 0.08),
-                            color: accent,
-                            borderColor: hexToRgba(accent, 0.18)
-                          }}
-                        >
-                          <Languages size={10} />
-                          {item.xieyin || item.note}
-                        </div>
-                      </div>
-                    )}
-
                     <div className="text-center">
-                      <div className="mb-1 text-[13px] text-slate-400">
+                      <div className="mb-1 text-[13px] font-medium text-slate-400">
                         {item.pinyin}
                       </div>
 
@@ -606,13 +630,25 @@ export default function OralPhraseBrowser({
                           {item.translation}
                         </p>
                       ) : null}
+
+                      {item.xieyin ? (
+                        <p className="mt-2 text-xs font-medium leading-relaxed text-emerald-600">
+                          谐音：{item.xieyin}
+                        </p>
+                      ) : null}
+
+                      {!item.xieyin && item.note ? (
+                        <p className="mt-2 text-xs font-medium leading-relaxed text-slate-500">
+                          {item.note}
+                        </p>
+                      ) : null}
                     </div>
 
                     <div className="mt-5 flex items-center justify-between border-t border-slate-50 pt-4">
                       <div
                         className="flex h-8 min-w-[32px] items-center justify-center rounded-full px-2 text-[11px] font-black"
                         style={{
-                          background: hexToRgba(accent, 0.10),
+                          background: hexToRgba(accent, 0.1),
                           color: accent
                         }}
                       >
@@ -621,6 +657,7 @@ export default function OralPhraseBrowser({
 
                       <div className="flex items-center gap-3">
                         <button
+                          type="button"
                           onClick={() => toggleFav(item.id)}
                           className={`flex h-10 w-10 items-center justify-center rounded-full transition ${
                             isFav
@@ -632,6 +669,7 @@ export default function OralPhraseBrowser({
                         </button>
 
                         <button
+                          type="button"
                           onClick={() => playSingle(item)}
                           className="flex h-12 w-12 items-center justify-center rounded-full text-white shadow-md transition active:scale-95"
                           style={{ background: accent }}
@@ -681,13 +719,6 @@ export default function OralPhraseBrowser({
           </>
         )}
       </AnimatePresence>
-
-      <style jsx global>{`
-        .font-pinyin {
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-            Helvetica, Arial, sans-serif;
-        }
-      `}</style>
     </div>
   );
 }
