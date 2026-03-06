@@ -1,79 +1,99 @@
 'use client';
 
-import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { ChevronLeft, Lock, PlayCircle } from 'lucide-react';
-// import { oralCategories } from '@/data/oralData';
+import { vocabCategories } from '@/data/vocabData';
 
-export default function OralCategoryPage() {
-  const router = useRouter();
-  const { categoryId } = router.query;
+// ==========================================
+// 纯原生 SVG 图标 (彻底解决所有打包报错问题)
+// ==========================================
+const IconBookOpen = ({ size = 24 }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+);
+const IconChevronRight = ({ size = 20 }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+);
 
-  if (!router.isReady) return null;
-
-  const category = oralCategories.find((c) => c.id === categoryId);
-
-  if (!category) {
-    return <div className="p-8 text-center text-slate-500">分类不存在</div>;
+// 动态生成绝对不重复的精美配图
+const getCover = (id, originalCover) => {
+  if (originalCover && !originalCover.includes('pixabay.com/zh/images/download')) {
+    return originalCover;
   }
+  return `https://picsum.photos/seed/${id}/200/200`;
+};
 
+export default function VocabularyIndexPage() {
   return (
-    <main className="min-h-screen bg-[#F8FAFC] pb-20">
-      <div className="max-w-md mx-auto px-4 pt-6">
+    // 极简浅色背景，告别黑灰压抑感
+    <main style={{ minHeight: '100vh', backgroundColor: '#F8FAFC', paddingBottom: 80, fontFamily: 'sans-serif' }}>
+      <div style={{ maxWidth: 640, margin: '0 auto', padding: '32px 16px' }}>
         
-        {/* 头部 */}
-        <div className="flex items-center gap-3 mb-6">
-          <button 
-            onClick={() => router.push('/oral')}
-            className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm text-slate-600 active:scale-95 transition-transform"
-          >
-            <ChevronLeft size={20} />
-          </button>
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">{category.icon}</span>
-            <h1 className="text-xl font-black text-slate-800">{category.title}</h1>
+        {/* 顶部清新标题区 */}
+        <header style={{ marginBottom: 32 }}>
+          <div style={{ width: 48, height: 48, backgroundColor: '#DBEAFE', color: '#2563EB', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
+            <IconBookOpen size={24} />
           </div>
-        </div>
+          <h1 style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', margin: 0, letterSpacing: '-0.5px' }}>
+            词汇学习库
+          </h1>
+          <p style={{ fontSize: 14, color: '#64748B', marginTop: 8, fontWeight: 500 }}>
+            选择一个核心模块，开始沉浸式学习
+          </p>
+        </header>
 
-        {/* 一排三个的网格 */}
-        <div className="grid grid-cols-3 gap-3">
-          {category.items.map((sub, index) => {
-            const isLocked = sub.locked;
-            // 跳转到你的播放器页面 (你需要自己建一个 pages/oral/player.js 接收这些参数)
-            const targetUrl = `/oral/player?category=${category.id}&listId=${sub.id}`;
-
+        {/* 极简卡片列表 */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          {vocabCategories.map((cat) => {
+            const itemsCount = (cat.items || []).length;
+            
             return (
-              <Link 
-                key={sub.id} 
-                href={isLocked ? '#' : targetUrl}
-                onClick={(e) => isLocked && e.preventDefault()}
-              >
-                <div className={`bg-white rounded-2xl p-3 flex flex-col items-center justify-center shadow-sm border border-slate-100 h-[120px] active:scale-95 transition-all relative overflow-hidden ${isLocked ? 'opacity-70 bg-slate-50' : ''}`}>
+              <Link key={cat.id} href={`/vocabulary/${cat.id}`} style={{ textDecoration: 'none' }}>
+                <div style={{
+                  backgroundColor: '#FFFFFF',
+                  padding: 16,
+                  borderRadius: 24,
+                  boxShadow: '0 4px 20px -4px rgba(0,0,0,0.05)',
+                  border: '1px solid #F1F5F9',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 16,
+                  transition: 'transform 0.1s',
+                }}
+                onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.98)'}
+                onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                onTouchStart={(e) => e.currentTarget.style.transform = 'scale(0.98)'}
+                onTouchEnd={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                >
                   
-                  {/* 背景装饰数字 */}
-                  <div className="absolute -top-2 -right-2 text-4xl font-black text-slate-50 opacity-50 pointer-events-none">
-                    {index + 1}
+                  {/* 左侧精美方图 */}
+                  <div style={{ width: 80, height: 80, borderRadius: 16, overflow: 'hidden', backgroundColor: '#E2E8F0', flexShrink: 0 }}>
+                    <img 
+                      src={getCover(cat.id, cat.cover)} 
+                      alt={cat.title} 
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      onError={(e) => { e.currentTarget.src = getCover(cat.id + 'fallback', null); }}
+                    />
                   </div>
 
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 ${isLocked ? 'bg-slate-200 text-slate-400' : 'bg-blue-50 text-blue-500'}`}>
-                    {isLocked ? <Lock size={18} /> : <PlayCircle size={20} />}
-                  </div>
-
-                  <h3 className="text-[14px] font-bold text-slate-800 text-center leading-tight w-full z-10">
-                    {sub.title}
-                  </h3>
-                  
-                  {sub.subtitle && (
-                    <p className="text-[10px] text-slate-400 text-center mt-1 truncate w-full z-10">
-                      {sub.subtitle}
+                  {/* 中间文字 */}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <h2 style={{ fontSize: 18, fontWeight: 800, color: '#1E293B', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {cat.title}
+                    </h2>
+                    <p style={{ fontSize: 13, color: '#64748B', margin: '4px 0 0 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.4 }}>
+                      {cat.description || `包含 ${itemsCount} 个学习阶段`}
                     </p>
-                  )}
+                  </div>
+
+                  {/* 右侧箭头 */}
+                  <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: '#F8FAFC', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94A3B8', flexShrink: 0 }}>
+                    <IconChevronRight size={18} />
+                  </div>
+
                 </div>
               </Link>
             );
           })}
         </div>
-
       </div>
     </main>
   );
