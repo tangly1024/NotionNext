@@ -2,19 +2,8 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
-  Mic,
-  StopCircle,
-  Sparkles,
-  X,
-  Volume2,
-  Star,
-  Play,
-  Square,
-  Settings2,
-  ChevronLeft,
-  Loader2,
-  Heart,
-  Zap
+  Mic, StopCircle, Sparkles, X, Volume2, Star, Play,
+  Square, Settings2, ChevronLeft, Loader2, Heart, Zap
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { pinyin } from 'pinyin-pro';
@@ -50,7 +39,7 @@ function getPinyinComparison(targetText, userText) {
   const targetPy = pinyin(cleanTarget, { type: 'array', toneType: 'symbol' });
   const userPy = pinyin(cleanUser, { type: 'array', toneType: 'symbol' });
 
-  const result = [];
+  const result =[];
   const len = Math.max(targetPy.length, userPy.length);
   let correctCount = 0;
 
@@ -125,16 +114,17 @@ const AudioEngine = {
 
 const RecorderEngine = {
   mediaRecorder: null,
-  chunks: [],
+  chunks:[],
+  stream: null,
 
   async start() {
     AudioEngine.stop();
     if (typeof navigator === 'undefined' || !navigator.mediaDevices) return false;
 
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      this.mediaRecorder = new MediaRecorder(stream);
-      this.chunks = [];
+      this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      this.mediaRecorder = new MediaRecorder(this.stream);
+      this.chunks =[];
       this.mediaRecorder.ondataavailable = (e) => this.chunks.push(e.data);
       this.mediaRecorder.start();
       return true;
@@ -153,7 +143,9 @@ const RecorderEngine = {
 
       this.mediaRecorder.onstop = () => {
         const url = URL.createObjectURL(new Blob(this.chunks, { type: 'audio/webm' }));
-        this.stream.getTracksEach((t) => t.stop());
+        if (this.stream) {
+          this.stream.getTracks().forEach((t) => t.stop());
+        }
         this.mediaRecorder = null;
         resolve(url);
       };
@@ -172,10 +164,26 @@ const SpeechEngine = {
     if (typeof window === 'undefined') return;
 
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
- }
+    if (!SR) {
+      alert('您的浏览器不支持语音识别，请使用 Chrome、Edge 或 Safari (需开启设置)。');
+      if (onError) onError();
+      return;
+    }
 
-.rec SR this.recN   .cont this.onerror => ifError) onError();
+    this.recognition = new SR();
+    this.recognition.lang = 'zh-CN';
+    this.recognition.continuous = false;
+    this.recognition.interimResults = false;
+
+    this.recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      if (onResult) onResult(transcript);
     };
+
+    this.recognition.onerror = () => {
+      if (onError) onError();
+    };
+
     this.recognition.onend = () => {
       if (onError) onError();
     };
@@ -211,6 +219,7 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => (
     </div>
 
     <div className="p-5 space-y-5">
+      {/* 中文设置 */}
       <div className="space-y-2">
         <div className="flex justify-between items-center">
           <span className="text-xs font-bold text-slate-700">中文朗读</span>
@@ -263,19 +272,51 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => (
         </div>
       </div>
 
-      <xdiv">
--between="文 ({ h-          >
+      {/* 缅甸语设置 */}
+      <div className="space-y-2 pt-4 border-t border-slate-100">
+        <div className="flex justify-between items-center">
+          <span className="text-xs font-bold text-slate-700">缅甸语朗读</span>
+          <div
+            onClick={() => setSettings((s) => ({ ...s, myEnabled: !s.myEnabled }))}
+            className={`w-8 h-4 rounded-full transition-colors relative cursor-pointer ${
+              settings.myEnabled ? 'bg-emerald-500' : 'bg-slate-200'
+            }`}
+          >
             <div
-              class5 rounded ' />
- <           :uralilar-N (
-           
-sVoice opt))}
-Namepy. textpx font transition ${
- settings ===`}
-             >
-              div="         
-="           ="-           50           "
- set) Number(e.target.value) }))}
+              className="absolute top-0.5 w-3 h-3 bg-white rounded-full transition-transform"
+              style={{ left: settings.myEnabled ? '18px' : '2px' }}
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2">
+          {[
+            { label: 'Thiha (男)', val: 'my-MM-ThihaNeural' },
+            { label: 'Nilar (女)', val: 'my-MM-NilarNeural' }
+          ].map((opt) => (
+            <button
+              key={opt.val}
+              onClick={() => setSettings((s) => ({ ...s, myVoice: opt.val }))}
+              className={`py-1.5 text-[10px] font-bold rounded border transition-all truncate ${
+                settings.myVoice === opt.val
+                  ? 'bg-emerald-50 border-emerald-200 text-emerald-600'
+                  : 'bg-white border-slate-100 text-slate-400'
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-2 pt-1">
+          <span className="text-[10px] text-slate-400">语速</span>
+          <input
+            type="range"
+            min="-50"
+            max="50"
+            step="10"
+            value={settings.myRate}
+            onChange={(e) => setSettings((s) => ({ ...s, myRate: Number(e.target.value) }))}
             className="flex-1 h-1 bg-slate-100 rounded-lg appearance-none accent-emerald-500"
           />
           <span className="text-[10px] w-6 text-right font-mono text-slate-400">{settings.myRate}</span>
@@ -286,7 +327,7 @@ Namepy. textpx font transition ${
 );
 
 const SpellingModal = ({ item, settings, onClose }) => {
-  const [activeCharIndex, setActiveCharIndex] = useState(-1);
+  const[activeCharIndex, setActiveCharIndex] = useState(-1);
   const [recordState, setRecordState] = useState('idle');
   const [userAudio, setUserAudio] = useState(null);
   const chars = item.chinese.split('');
@@ -318,7 +359,7 @@ const SpellingModal = ({ item, settings, onClose }) => {
       isMounted.current = false;
       AudioEngine.stop();
     };
-  }, [item.chinese]);
+  }, [item.chinese, chars]);
 
   const handleCharClick = async (index) => {
     setActiveCharIndex(index);
@@ -421,7 +462,7 @@ const SpellingModal = ({ item, settings, onClose }) => {
           <button
             onClick={() => userAudio && AudioEngine.play(userAudio)}
             className={`flex flex-col items-center gap-2 ${
-              userAudio ? 'text-slate-700' : 'opacity-30 text-slate-400'
+              userAudio ? 'text-slate-700 hover:text-blue-500' : 'opacity-30 text-slate-400 cursor-not-allowed'
             }`}
           >
             <Play size={24} />
@@ -437,7 +478,7 @@ const SpellingModal = ({ item, settings, onClose }) => {
 // 4. 主组件
 // ============================================================================
 export default function OralPhraseBrowser({
-  phrases = [],
+  phrases =[],
   title = '模块学习',
   categoryTitle = '口语分类',
   onBack,
@@ -445,16 +486,16 @@ export default function OralPhraseBrowser({
   settingsStorageKey = 'spoken_settings_default'
 }) {
   const normalizedPhrases = useMemo(
-    () => (phrases || []).map(normalizePhrase).filter((item) => item.chinese),
+    () => (phrases ||[]).map(normalizePhrase).filter((item) => item.chinese),
     [phrases]
   );
 
   const [favorites, setFavorites] = useState([]);
   const [isFavMode, setIsFavMode] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(20);
+  const[visibleCount, setVisibleCount] = useState(20);
   const loaderRef = useRef(null);
 
-  const [showSettings, setShowSettings] = useState(false);
+  const[showSettings, setShowSettings] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
 
   const [settings, setSettings] = useState({
@@ -468,7 +509,7 @@ export default function OralPhraseBrowser({
 
   const [playingId, setPlayingId] = useState(null);
   const [spellingItem, setSpellingItem] = useState(null);
-  const [recordingId, setRecordingId] = useState(null);
+  const[recordingId, setRecordingId] = useState(null);
   const [speechResult, setSpeechResult] = useState(null);
 
   const { scrollY } = useScroll();
@@ -740,7 +781,7 @@ export default function OralPhraseBrowser({
                       className={`w-12 h-12 -mt-4 rounded-full flex items-center justify-center shadow-md border-4 border-white transition-all ${
                         isRecording
                           ? 'bg-red-50 text-red-500 animate-pulse'
-                          : 'bg-slate-100 text-slate-500'
+                          : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
                       }`}
                     >
                       {isRecording ? <StopCircle size={20} /> : <Mic size={20} />}
@@ -751,7 +792,11 @@ export default function OralPhraseBrowser({
                         e.stopPropagation();
                         handleCardPlay(item);
                       }}
-                      className={`w-10 h-10 rounded                          }`}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                        isPlaying
+                          ? 'bg-blue-100 text-blue-600 animate-pulse'
+                          : 'bg-slate-50 text-slate-400 hover:bg-blue-50 hover:text-blue-500'
+                      }`}
                     >
                       <Volume2 size={16} />
                     </button>
