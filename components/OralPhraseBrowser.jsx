@@ -10,11 +10,11 @@ import {
   Star,
   Play,
   Square,
-  Zap,
   Settings2,
   ChevronLeft,
   Loader2,
-  Heart
+  Heart,
+  Zap
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { pinyin } from 'pinyin-pro';
@@ -39,7 +39,6 @@ function normalizePhrase(item, index) {
       }),
     audioZh: item?.audioZh || item?.zhAudio || '',
     audioMy: item?.audioMy || item?.myAudio || '',
-    locked: false,
     note: item?.note || ''
   };
 }
@@ -130,7 +129,6 @@ const RecorderEngine = {
 
   async start() {
     AudioEngine.stop();
-
     if (typeof navigator === 'undefined' || !navigator.mediaDevices) return false;
 
     try {
@@ -155,25 +153,41 @@ const RecorderEngine = {
 
       this.mediaRecorder.onstop = () => {
         const url = URL.createObjectURL(new Blob(this.chunks, { type: 'audio/webm' }));
-        this.mediaTracks t resolve    {
- on ifundefined') return;
+        this.stream.getTracksEach((t) => t.stop());
+        this.mediaRecorder = null;
+        resolve(url);
+      };
+
+      this.mediaRecorder.stop();
+    });
+  }
+};
+
+const SpeechEngine = {
+  recognition: null,
+
+  start(onResult, onError) {
+    AudioEngine.stop();
+
+    if (typeof window === 'undefined') return;
 
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+ }
 
-    if (!SR) {
-      alert('浏览器不支持语音识别');
+.rec SR this.recN   .cont this.onerror => ifError) onError();
+    };
+    this.recognition.onend = () => {
       if (onError) onError();
-      return;
+    };
+
+    try {
+      this.recognition.start();
+    } catch (_) {
+      if (onError) onError();
     }
+  },
 
-    this.recognition = new SR();
-    this.recognition.lang = 'zh-CN';
-    this.recognition.continuous = false;
-    this.recognitionim false this.one on.results][cript thisognition ()     onError thisend => ()();
-        ognition    {
- ()    },
-
-() {
+  stop() {
     if (this.recognition) this.recognition.stop();
   }
 };
@@ -181,40 +195,36 @@ const RecorderEngine = {
 // ============================================================================
 // 3. 子组件
 // ============================================================================
-const ToggleSwitch = ({ enabled, onClick, activeClass }) => (
-  <div
-    onClick={onClick}
-    className={`w-9 h-5 rounded-full transition-colors relative cursor-pointer ${
-      enabled ? activeClass : 'bg-slate-200'
-    }`}
-  >
-    <div
-      className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform shadow-sm ${
-        enabled ? 'left-[18px]' : 'left-[2px]'
-      }`}
-    />
-  </div>
-);
-
 const SettingsPanel = ({ settings, setSettings, onClose }) => (
-  <motion.div={{:0 y: -20, scale: 0.95 }}
+  <motion.div
+    initial={{ opacity: 0, y: -20, scale: 0.95 }}
     animate={{ opacity: 1, y: 0, scale: 1 }}
     exit={{ opacity: 0, y: -20, scale: 0.95 }}
-    className="fixed top-16 right-4 z-[2000] bg-white rounded-[1.5rem] shadow-2xl border border-slate-100 w-80 overflow-hidden"
+    className="fixed top-16 right-4 z-[2000] bg-white rounded-2xl shadow-2xl border border-slate-100 w-72 overflow-hidden"
     onClick={(e) => e.stopPropagation()}
   >
-    <div className="bg-gradient-to-r from-slate-50 to-white px-4 py-3 flex justify-between items-center border-b border-slate-100">
-      <span className="text-xs font-black text-slate-500 uppercase tracking-[0.2em]">播放设置</span>
+    <div className="bg-slate-50 px-4 py-3 flex justify-between items-center border-b border-slate-100">
+      <span className="text-xs font-black text-slate-500 uppercase tracking-widest">播放设置</span>
       <button onClick={onClose}>
         <X size={16} className="text-slate-400 hover:text-red-500" />
       </button>
     </div>
 
     <div className="p-5 space-y-5">
-      <div className="space-y-3 rounded-2xl bg-blue-50/50 border border-blue-100 p-4">
+      <div className="space-y-2">
         <div className="flex justify-between items-center">
-          <span className="text-xs font-black text-slate-700">中文朗读</span          on,Class-blue-500"
-          />
+          <span className="text-xs font-bold text-slate-700">中文朗读</span>
+          <div
+            onClick={() => setSettings((s) => ({ ...s, zhEnabled: !s.zhEnabled }))}
+            className={`w-8 h-4 rounded-full transition-colors relative cursor-pointer ${
+              settings.zhEnabled ? 'bg-blue-500' : 'bg-slate-200'
+            }`}
+          >
+            <div
+              className="absolute top-0.5 w-3 h-3 bg-white rounded-full transition-transform"
+              style={{ left: settings.zhEnabled ? '18px' : '2px' }}
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-2">
@@ -227,10 +237,10 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => (
             <button
               key={opt.val}
               onClick={() => setSettings((s) => ({ ...s, zhVoice: opt.val }))}
-              className={`py-2 text-[10px] font-bold rounded-xl border transition-all truncate ${
+              className={`py-1.5 text-[10px] font-bold rounded border transition-all truncate ${
                 settings.zhVoice === opt.val
-                  ? 'bg-white border-blue-300 text-blue-700 shadow-sm'
-                  : 'bg-white/70 border-blue-100 text-slate-400'
+                  ? 'bg-blue-50 border-blue-200 text-blue-600'
+                  : 'bg-white border-slate-100 text-slate-400'
               }`}
             >
               {opt.label}
@@ -249,68 +259,54 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => (
             onChange={(e) => setSettings((s) => ({ ...s, zhRate: Number(e.target.value) }))}
             className="flex-1 h-1 bg-slate-100 rounded-lg appearance-none accent-blue-500"
           />
- class-[ w-right-mono text-slate-500">{settings.zhRate}</span>
+          <span className="text-[10px] w-6 text-right font-mono text-slate-400">{settings.zhRate}</span>
         </div>
       </div>
 
-      <div className="space-y-3 rounded-2xl bg-emerald-50/60 border border-emerald-100 p-4">
-        <div className="flex justify-between items-center">
-          <span className="text-xs font-black text-slate-700">缅文朗读</span>
-          <ToggleSwitch
-            enabled={settings.myEnabled}
-            onClick={() => setSettings((s) => ({ ...s, myEnabled: !s.myEnabled }))}
-            activeClass="bg-emerald-500"
+      <xdiv">
+-between="文 ({ h-          >
+            <div
+              class5 rounded ' />
+ <           :uralilar-N (
+           
+sVoice opt))}
+Namepy. textpx font transition ${
+ settings ===`}
+             >
+              div="         
+="           ="-           50           "
+ set) Number(e.target.value) }))}
+            className="flex-1 h-1 bg-slate-100 rounded-lg appearance-none accent-emerald-500"
           />
+          <span className="text-[10px] w-6 text-right font-mono text-slate-400">{settings.myRate}</span>
         </div>
-
-        <div className="grid grid-cols-2 gap-2">
-          {[
-            { label: 'Thiha (男)', val: 'my-MM-ThihaNeural' },
-            { label: 'Nilar (女)', val: 'my-MM-NilarNeural' }
-          ].map((opt) => (
-            <button
-              key={opt.val}
-              onClick={() => setSettings((s) => ({ ...s, myVoice: opt.val }))}
-              className={`py-2 text-[10px] font-bold rounded-xl border transition-all truncate ${
-                settings.myVoice === opt.val
-                  ? 'bg-white border-emerald-300 text-emerald-700 shadow-sm'
-                  : 'bg-white/70 border-emerald-100 text-slate-400'
-              }`}
-            >
-              {opt.label}
-            </button>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-2 pt-1">
-          <span className="text-[10px] text-slate-400">语速</span>
-          <input
-            type="range"
-            min="-50"
-            max="50"
-            step10settings one =>, }late-none500span10 wlate-500">{settings.myRate}</span>
-        </div>
-PslClass    text-amber-700 border-amber-200',
-    emerald: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    slate: 'bg-slate-50 text-slate-600 border-slate-200'
-  };
-
-  return (
-    <div
-      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[11px] font-bold ${
-        toneClassMap[tone] || toneClassMap.slate
-      }`}
-    >
-      {children}
+      </div>
     </div>
-  );
-};
+  </motion.div>
+);
 
 const SpellingModal = ({ item, settings, onClose }) => {
-  const [activeCharIndex,Char =(- record set =State');
- [ set] useState(null);
-  const chars = iteminese Mounted(true use => is = Audio.stop const async {
- newrTimeout      Mounted return forlet  i.length i       Mounted breakActiveIndex        =(chars],:' await.play(pyVoice.zh        Promise)Timeout(r, 80));
+  const [activeCharIndex, setActiveCharIndex] = useState(-1);
+  const [recordState, setRecordState] = useState('idle');
+  const [userAudio, setUserAudio] = useState(null);
+  const chars = item.chinese.split('');
+  const isMounted = useRef(true);
+
+  useEffect(() => {
+    isMounted.current = true;
+    AudioEngine.stop();
+
+    const autoSpell = async () => {
+      await new Promise((r) => setTimeout(r, 200));
+      if (!isMounted.current) return;
+
+      for (let i = 0; i < chars.length; i++) {
+        if (!isMounted.current) break;
+        setActiveCharIndex(i);
+        const py = pinyin(chars[i], { toneType: 'symbol' });
+        const r2Url = `https://audio.886.best/chinese-vocab-audio/%E6%8B%BC%E8%AF%BB%E9%9F%B3%E9%A2%91/${encodeURIComponent(py)}.mp3`;
+        await AudioEngine.play(r2Url);
+        await new Promise((r) => setTimeout(r, 60));
       }
 
       if (isMounted.current) setActiveCharIndex(-1);
@@ -322,12 +318,14 @@ const SpellingModal = ({ item, settings, onClose }) => {
       isMounted.current = false;
       AudioEngine.stop();
     };
-  }, [item.chinese, settings.zhVoice, settings.zhRate]);
+  }, [item.chinese]);
 
   const handleCharClick = async (index) => {
     setActiveCharIndex(index);
-    const py = pinyin(chars[index], { toneType: 'symbol' });
-    await AudioEngine.playTTS(py, settings.zhVoice, settings.zhRate);
+    const char = chars[index];
+    const py = pinyin(char, { toneType: 'symbol' });
+    const r2Url = `https://audio.886.best/chinese-vocab-audio/%E6%8B%BC%E8%AF%BB%E9%9F%B3%E9%A2%91/${encodeURIComponent(py)}.mp3`;
+    await AudioEngine.play(r2Url);
     setActiveCharIndex(-1);
   };
 
@@ -341,12 +339,11 @@ const SpellingModal = ({ item, settings, onClose }) => {
       const url = await RecorderEngine.stop();
       setUserAudio(url);
       setRecordState('review');
-      return;
+    } else {
+      AudioEngine.stop();
+      const success = await RecorderEngine.start();
+      if (success) setRecordState('recording');
     }
-
-    AudioEngine.stop();
-    const success = await RecorderEngine.start();
-    if (success) setRecordState('recording');
   };
 
   return (
@@ -365,20 +362,20 @@ const SpellingModal = ({ item, settings, onClose }) => {
 
         <div className="flex items-center justify-between mb-8">
           <h3 className="text-slate-900 font-black text-lg">拼读练习</h3>
-          <span className="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-full font-bold">
-            自动演示中
+          <span className="text-[10px] bg-blue-50 text-blue-500 px-2 py-1 rounded font-bold animate-pulse">
+            自动演示中...
           </span>
         </div>
 
         <div className="flex flex-wrap justify-center gap-2 mb-10 px-2">
           {chars.map((char, i) => (
             <div
-              key={`${char}-${i}`}
+              key={i}
               onClick={() => handleCharClick(i)}
-              className={`flex flex-col items-center min-w-[58px] p-3 rounded-2xl transition-all cursor-pointer select-none border ${
+              className={`flex flex-col items-center p-2 rounded-xl transition-all cursor-pointer select-none min-w-[58px] ${
                 activeCharIndex === i
-                  ? 'bg-blue-50 border-blue-300 scale-110 shadow-lg'
-                  : 'bg-white border-slate-100 hover:bg-slate-50'
+                  ? 'bg-blue-50 ring-2 ring-blue-500 scale-110 shadow-lg'
+                  : 'hover:bg-slate-50'
               }`}
             >
               <span
@@ -395,31 +392,55 @@ const SpellingModal = ({ item, settings, onClose }) => {
               >
                 {char}
               </span>
-            </ ))}
- <="-around items-center px-4 pb-4">
+            </div>
+          ))}
+        </div>
+
+        <div className="flex justify-around items-center px-4 pb-4">
           <button
             onClick={playWhole}
-            className="flex flex-col items-center gap-2 cursor-pointer text-slate-600 hover:text-blue-600"
+            className="flex flex-col items-center gap-2 cursor-pointer text-slate-700"
           >
             <Volume2 size={24} />
-            <span className="text-[10px] font-bold">整句</span>
+            <span className="text-[10px]">整句</span>
           </button>
 
           <button
             onClick={toggleRecord}
             className={`w-16 h-16 rounded-full flex items-center justify-center shadow-xl border-4 ${
-              recordState === 'recording'
-                ? 'bg-red-500 border text :late-white text-slate-700'
+              recordState === 'recording' ? 'bg-red-500 border-red-100' : 'bg-slate-100 border-white'
             }`}
           >
-            {recordState === 'recording' ? <Square size={}Mic28 </ <            => &&(user            flex-center ${
-Audio-s hoveremer'opacity-s'
-`}
- <24 <="10">>
->
->
->
- ===========.,
+            {recordState === 'recording' ? (
+              <Square size={24} className="text-white" />
+            ) : (
+              <Mic size={28} className="text-slate-700" />
+            )}
+          </button>
+
+          <button
+            onClick={() => userAudio && AudioEngine.play(userAudio)}
+            className={`flex flex-col items-center gap-2 ${
+              userAudio ? 'text-slate-700' : 'opacity-30 text-slate-400'
+            }`}
+          >
+            <Play size={24} />
+            <span className="text-[10px]">回放</span>
+          </button>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+// ============================================================================
+// 4. 主组件
+// ============================================================================
+export default function OralPhraseBrowser({
+  phrases = [],
+  title = '模块学习',
+  categoryTitle = '口语分类',
+  onBack,
   favoriteStorageKey = 'spoken_favs_default',
   settingsStorageKey = 'spoken_settings_default'
 }) {
@@ -429,7 +450,8 @@ Audio-s hoveremer'opacity-s'
   );
 
   const [favorites, setFavorites] = useState([]);
-  const [isFavMode,Mode(falsevisibleVisibleCount] = useState(20);
+  const [isFavMode, setIsFavMode] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(20);
   const loaderRef = useRef(null);
 
   const [showSettings, setShowSettings] = useState(false);
@@ -456,8 +478,40 @@ Audio-s hoveremer'opacity-s'
     if (savedSet) setSettings(JSON.parse(savedSet));
 
     const savedFavs = localStorage.getItem(favoriteStorageKey);
-    if (savedFavs) setFavorites(JSON.parse(savedFavs },Storage,Key ',   {
-.filter   hrases, favorites, isFav use [ use observer)ing Math       Margin. );
+    if (savedFavs) setFavorites(JSON.parse(savedFavs));
+  }, [favoriteStorageKey, settingsStorageKey]);
+
+  useEffect(() => {
+    localStorage.setItem(settingsStorageKey, JSON.stringify(settings));
+  }, [settings, settingsStorageKey]);
+
+  useEffect(() => {
+    localStorage.setItem(favoriteStorageKey, JSON.stringify(favorites));
+  }, [favorites, favoriteStorageKey]);
+
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    const previous = scrollY.getPrevious() || 0;
+    setIsHeaderVisible(!(latest > previous && latest > 50));
+  });
+
+  const displayPhrases = useMemo(() => {
+    if (isFavMode) return normalizedPhrases.filter((p) => favorites.includes(p.id));
+    return normalizedPhrases;
+  }, [normalizedPhrases, favorites, isFavMode]);
+
+  useEffect(() => {
+    setVisibleCount(20);
+  }, [isFavMode, phrases]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisibleCount((prev) => Math.min(prev + 20, displayPhrases.length));
+        }
+      },
+      { root: null, rootMargin: '200px', threshold: 0.1 }
+    );
 
     const el = loaderRef.current;
     if (el) observer.observe(el);
@@ -541,10 +595,10 @@ Audio-s hoveremer'opacity-s'
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff7ed,_#f8fafc_38%,_#eef2ff_100%)] text-slate-900 max-w-md mx-auto relative shadow-2xl overflow-x-hidden pb-32">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#fffaf5_0%,_#f7f8fc_45%,_#eef4ff_100%)] font-sans text-slate-900 max-w-md mx-auto relative shadow-2xl overflow-x-hidden pb-32">
       <motion.div
         animate={{ y: isHeaderVisible ? 0 : -80 }}
-        className="fixed top-0 left-0 right-0 z-[100] bg-white/80 backdrop-blur-xl border-b border-white/60 h-16 max-w-md mx-auto px-4 flex justify-between items-center"
+        className="fixed top-0 left-0 right-0 z-[100] bg-white/85 backdrop-blur-md border-b border-slate-100 h-14 max-w-md mx-auto px-4 flex justify-between items-center"
       >
         <button onClick={handleBack} className="p-2 -ml-2 text-slate-500 hover:text-slate-900">
           <ChevronLeft size={24} />
@@ -552,9 +606,7 @@ Audio-s hoveremer'opacity-s'
 
         <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
           <span className="text-sm font-black text-slate-800">{isFavMode ? '我的收藏' : title}</span>
-          <span className="text-[10px] text-slate-400">
-            {isFavMode ? '已收藏内容' : categoryTitle}
-          </span>
+          <span className="text-[10px] text-slate-400">{isFavMode ? '已收藏的内容' : categoryTitle}</span>
         </div>
 
         <div className="flex items-center gap-1">
@@ -589,14 +641,17 @@ Audio-s hoveremer'opacity-s'
         )}
       </AnimatePresence>
 
-      <div className="pt-24 px-4 space-y-5">
+      <div className="pt-20 px-3 space-y-5">
         {displayPhrases.length === 0 && (
           <div className="flex flex-col items-center justify-center pt-32 text-slate-400">
-            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm border border-slate-100">
+            <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
               {isFavMode ? (
-                <Heart size={32} className="text-slate-300"              (
-Loader32="-s />
-divptext-sm font-bold">{isFavMode ? '还没有收藏的句子' : '暂无数据'}</p>
+                <Heart size={32} className="text-slate-300" />
+              ) : (
+                <Loader2 size={32} className="animate-spin text-slate-300" />
+              )}
+            </div>
+            <p className="text-sm font-bold">{isFavMode ? '还没有收藏的句子' : '暂无数据'}</p>
           </div>
         )}
 
@@ -604,85 +659,119 @@ divptext-sm font-bold">{isFavMode ? '还没有收藏的句子' : '暂无数据'}
           const isPlaying = playingId === item.id;
           const isRecording = recordingId === item.id;
           const isFav = favorites.includes(item.id);
+          const xieyinText = item.xieyin || item.note;
 
           return (
             <motion.div
               key={item.id}
-                    ? 'border-blue-300 bg-gradient-to-br from-blue-50 via-whiteyan :8090             divabsolute0 h-gradient-orange--s" classp                 =" justify3">
-Name- <Name13-s font1-wide.p </h="26-black900                       inese3divbuttonClickFav                     -10 items border                                                bg-yellow-50 text-yellow-500 border-yellow-200'
-                          : 'bg-white text-slate-300 border-slate-200 hover:text-yellow-500'
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div
+                className={`relative bg-white pt-10 pb-4 px-4 rounded-[1.75rem] shadow-[0_12px_30px_rgba(15,23,42,0.06)] border border-white/80 flex flex-col items-center text-center transition-all max-w-[360px] mx-auto overflow-visible mt-6 ${
+                  isPlaying ? 'ring-2 ring-blue-400 bg-blue-50/20' : ''
+                }`}
+                onClick={() => handleCardPlay(item)}
+              >
+                {xieyinText && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 w-full flex justify-center pointer-events-none">
+                    <div className="max-w-[88%] bg-amber-50/95 text-amber-700 px-3 py-1 rounded-full text-[10px] font-black border border-amber-200 shadow-sm flex items-center gap-1 whitespace-nowrap overflow-hidden">
+                      <Zap size={10} className="shrink-0 fill-amber-500 text-amber-500" />
+                      <span className="truncate">{xieyinText}</span>
+                    </div>
+                  </div>
+                )}
+
+                <div className="absolute inset-x-4 top-0 h-1 rounded-b-full bg-gradient-to-r from-orange-300 via-pink-300 to-sky-300" />
+
+                <div className="w-full">
+                  <div className="flex justify-end mb-1">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleFav(item.id);
+                      }}
+                      className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${
+                        isFav
+                          ? 'bg-yellow-50 text-yellow-500'
+                          : 'bg-slate-50 text-slate-300 hover:text-yellow-500'
                       }`}
                     >
                       <Star size={16} fill={isFav ? 'currentColor' : 'none'} />
                     </button>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {item.burmese && (
-                      <InfoPill tone="emerald">
-                        <span>缅语</span>
-                        <span className="opacity-70">·</span>
-                        <span>{item.burmese}</span>
-                      </InfoPill>
-                    )}
+                  <div className="text-[13px] text-slate-400 font-pinyin mb-1.5 tracking-wide">
+                    {item.pinyin}
+                  </div>
 
-                    {(item.xieyin || item.note) && (
-                      <InfoPill tone="amber">
-                        <Zap size={12} className="fill-amber-500 text-amber-500" />
-                        <span>谐音</span>
-                        <span className="opacity-70">·</span>
-                        <span>{item.xieyin || item.note}</span>
-                      </InfoPill>
-                    )}
-="-">
+                  <h3 className="text-[24px] font-black text-slate-800 mb-3 leading-tight px-2">
+                    {item.chinese}
+                  </h3>
+
+                  {item.burmese && (
+                    <div className="mb-4 mx-auto max-w-[92%] rounded-2xl border border-emerald-100 bg-gradient-to-r from-emerald-50 to-teal-50 px-4 py-3">
+                      <div className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-1">
+                        Burmese
+                      </div>
+                      <p className="text-[14px] text-emerald-800 font-medium leading-relaxed">
+                        {item.burmese}
+                      </p>
+                    </div>
+                  )}
+
+                  <div className="w-full flex justify-center items-center gap-4 pt-3 border-t border-slate-50">
                     <button
-                      onClick={() => handleCardPlay(item)}
-                      className={`h-12 rounded-2xl flex items-center justify-center gap-2 font-bold text-sm transition-all ${
-                        isPlaying
-                          ? 'bg-blue-600 text-white shadow-lg'
-                          : 'bg-slate-900 text-white hover:bg-slate-800'
-                      }`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSpellingItem(item);
+                      }}
+                      className="w-10 h-10 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center hover:bg-blue-50 hover:text-blue-500 transition-all"
                     >
-                      <Volume2 size={18} />
-                      {isPlaying ? '播放中' : '跟读'}
+                      <Sparkles size={16} />
                     </button>
 
                     <button
-                      onClick={() => setSpellingItem(item)}
-                      className="h-12 rounded-2xl flex items-center justify-center gap-2 font-bold text-sm bg-sky-50 text-sky-700 border border-sky-100 hover:bg-sky-100 transition-all"
-                    >
-                      <Sparkles size={18} />
-                      拼读
-                    </button>
-
-                    <button
-                      onClick={() => handleSpeech(item)}
-                      className={`h-12 rounded-2xl flex items-center justify-center gap-2 font-bold text-sm border transition-all ${
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSpeech(item);
+                      }}
+                      className={`w-12 h-12 -mt-4 rounded-full flex items-center justify-center shadow-md border-4 border-white transition-all ${
                         isRecording
-                          ? 'bg-red-50 text-red-600 :bg-rose-50 text-rose-700 border-rose-100 hover:bg-rose-100'
+                          ? 'bg-red-50 text-red-500 animate-pulse'
+                          : 'bg-slate-100 text-slate-500'
                       }`}
                     >
-                      {isRecording ? <StopCircle size={18} /> : <Mic size={18} />}
-                      {isRecording ? '停止' : '评分'}
+                      {isRecording ? <StopCircle size={20} /> : <Mic size={20} />}
+                    </button>
+
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCardPlay(item);
+                      }}
+                      className={`w-10 h-10 rounded                          }`}
+                    >
+                      <Volume2 size={16} />
                     </button>
                   </div>
                 </div>
               </div>
 
               <AnimatePresence>
-                {?.id === item.id && (
-                  <                    0, height: 0 }}
+                {speechResult?.id === item.id && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="bg-white/90 backdrop-blur-sm mx-auto rounded-[1.5rem] mt-3 p-4 shadow-sm border border-white/80"
+                    className="bg-white mx-auto max-w-[360px] rounded-xl mt-2 p-3 shadow-sm border border-slate-100"
                   >
-                    <div className="flex justify-between items-center mb-3">
-                      <span className="text-[11px] font-black text-slate-400 tracking-wide">
-                        发音评分
-                      </span>
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-[10px] font-bold text-slate-400">发音评分</span>
                       <span
-                        className={`text-sm font-black ${
-                          speechResult.data.accuracy > 0.8 ? 'text-emerald-500' : 'text-rose-500'
+                        className={`text-xs font-black ${
+                          speechResult.data.accuracy > 0.8 ? 'text-green-500' : 'text-red-500'
                         }`}
                       >
                         {Math.round(speechResult.data.accuracy * 100)}%
@@ -691,13 +780,10 @@ Name- <Name13-s font1-wide.p </h="26-black900                       inese3divbut
 
                     <div className="flex flex-wrap gap-2 justify-center">
                       {speechResult.data.comparison.map((r, idx) => (
-                        <div
-                          key={idx}
-                          className="flex flex-col items-center px-2 py-1 rounded-xl bg-slate-50 min-w-[48px]"
-                        >
+                        <div key={idx} className="flex flex-col items-center">
                           <span
                             className={`text-xs font-pinyin font-bold ${
-                              r.isMatch ? 'text-slate-800' : 'text-rose-500'
+                              r.isMatch ? 'text-slate-800' : 'text-red-500'
                             }`}
                           >
                             {r.userPy || '?'}
