@@ -3,7 +3,7 @@ import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import CategoryItem from './CategoryItem'
 import TagItemMini from './TagItemMini'
@@ -28,7 +28,7 @@ const PostItemCardTop = ({ post, showSummary }) => {
       <div className='flex flex-col w-full'>
         {siteConfig('MAGZINE_POST_LIST_COVER', true, CONFIG) &&
           post?.pageCoverThumbnail && (
-            <Link
+            <SmartLink
               href={post?.href || ''}
               passHref
               className={
@@ -42,7 +42,7 @@ const PostItemCardTop = ({ post, showSummary }) => {
                   className='w-full h-80 object-cover hover:scale-125 duration-150'
                 />
               </div>
-            </Link>
+            </SmartLink>
           )}
 
         <div className='flex py-2 space-x-1 items-center'>
@@ -60,7 +60,7 @@ const PostItemCardTop = ({ post, showSummary }) => {
           </div>
         </div>
 
-        <Link
+        <SmartLink
           href={post?.href || ''}
           passHref
           className={
@@ -72,7 +72,7 @@ const PostItemCardTop = ({ post, showSummary }) => {
             )}
             {post?.title}
           </h2>
-        </Link>
+        </SmartLink>
 
         <div className='flex'></div>
 
@@ -87,13 +87,13 @@ const PostItemCardTop = ({ post, showSummary }) => {
             <NotionPage post={post} />
             <div className='pointer-events-none border-t pt-8 border-dashed'>
               <div className='w-full justify-start flex'>
-                <Link
+                <SmartLink
                   href={post?.href}
                   passHref
                   className='hover:bg-opacity-100 hover:scale-105 duration-200 pointer-events-auto transform font-bold text-gray-500 cursor-pointer'>
                   {locale.COMMON.ARTICLE_DETAIL}
                   <i className='ml-1 fas fa-angle-right' />
-                </Link>
+                </SmartLink>
               </div>
             </div>
           </div>

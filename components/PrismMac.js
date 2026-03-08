@@ -43,9 +43,15 @@ const PrismMac = () => {
       loadExternalResource('/css/prism-mac-style.css', 'css')
     }
     // 加载prism样式
-    loadPrismThemeCSS(isDarkMode, prismThemeSwitch, prismThemeDarkPath, prismThemeLightPath, prismThemePrefixPath)
+    loadPrismThemeCSS(
+      isDarkMode,
+      prismThemeSwitch,
+      prismThemeDarkPath,
+      prismThemeLightPath,
+      prismThemePrefixPath
+    )
     // 折叠代码
-    loadExternalResource(prismjsAutoLoader, 'js').then((url) => {
+    loadExternalResource(prismjsAutoLoader, 'js').then(url => {
       if (window?.Prism?.plugins?.autoloader) {
         window.Prism.plugins.autoloader.languages_path = prismjsPath
       }
@@ -62,7 +68,13 @@ const PrismMac = () => {
 /**
  * 加载Prism主题样式
  */
-const loadPrismThemeCSS = (isDarkMode, prismThemeSwitch, prismThemeDarkPath, prismThemeLightPath, prismThemePrefixPath) => {
+const loadPrismThemeCSS = (
+  isDarkMode,
+  prismThemeSwitch,
+  prismThemeDarkPath,
+  prismThemeLightPath,
+  prismThemePrefixPath
+) => {
   let PRISM_THEME
   let PRISM_PREVIOUS
   if (prismThemeSwitch) {
@@ -73,8 +85,14 @@ const loadPrismThemeCSS = (isDarkMode, prismThemeSwitch, prismThemeDarkPath, pri
       PRISM_THEME = prismThemeLightPath
       PRISM_PREVIOUS = prismThemeDarkPath
     }
-    const previousTheme = document.querySelector(`link[href="${PRISM_PREVIOUS}"]`)
-    if (previousTheme && previousTheme.parentNode && previousTheme.parentNode.contains(previousTheme)) {
+    const previousTheme = document.querySelector(
+      `link[href="${PRISM_PREVIOUS}"]`
+    )
+    if (
+      previousTheme &&
+      previousTheme.parentNode &&
+      previousTheme.parentNode.contains(previousTheme)
+    ) {
       previousTheme.parentNode.removeChild(previousTheme)
     }
     loadExternalResource(PRISM_THEME, 'css')
@@ -103,14 +121,17 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
     const collapseWrapper = document.createElement('div')
     collapseWrapper.className = 'collapse-wrapper w-full py-2'
     const panelWrapper = document.createElement('div')
-    panelWrapper.className = 'border dark:border-gray-600 rounded-md hover:border-indigo-500 duration-200 transition-colors'
+    panelWrapper.className =
+      'border dark:border-gray-600 rounded-md hover:border-indigo-500 duration-200 transition-colors'
 
     const header = document.createElement('div')
-    header.className = 'flex justify-between items-center px-4 py-2 cursor-pointer select-none'
+    header.className =
+      'flex justify-between items-center px-4 py-2 cursor-pointer select-none'
     header.innerHTML = `<h3 class="text-lg font-medium">${language}</h3><svg class="transition-all duration-200 w-5 h-5 transform rotate-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.293 6.293a1 1 0 0 1 1.414 0L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z" clip-rule="evenodd"/></svg>`
 
     const panel = document.createElement('div')
-    panel.className = 'invisible h-0 transition-transform duration-200 border-t border-gray-300'
+    panel.className =
+      'invisible h-0 transition-transform duration-200 border-t border-gray-300'
 
     panelWrapper.appendChild(header)
     panelWrapper.appendChild(panel)
@@ -139,13 +160,13 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
 /**
  * 将mermaid语言 渲染成图片
  */
-const renderMermaid = async(mermaidCDN) => {
-  const observer = new MutationObserver(async mutationsList => {
+const renderMermaid = mermaidCDN => {
+  const observer = new MutationObserver(mutationsList => {
     for (const m of mutationsList) {
       if (m.target.className === 'notion-code language-mermaid') {
         const chart = m.target.querySelector('code').textContent
         if (chart && !m.target.querySelector('.mermaid')) {
-          const mermaidChart = document.createElement('div')
+          const mermaidChart = document.createElement('pre')
           mermaidChart.className = 'mermaid'
           mermaidChart.innerHTML = chart
           m.target.appendChild(mermaidChart)
@@ -172,7 +193,10 @@ const renderMermaid = async(mermaidCDN) => {
     }
   })
   if (document.querySelector('#notion-article')) {
-    observer.observe(document.querySelector('#notion-article'), { attributes: true, subtree: true })
+    observer.observe(document.querySelector('#notion-article'), {
+      attributes: true,
+      subtree: true
+    })
   }
 }
 
@@ -234,7 +258,10 @@ const fixCodeLineStyle = () => {
       }
     }
   })
-  observer.observe(document.querySelector('#notion-article'), { attributes: true, subtree: true })
+  observer.observe(document.querySelector('#notion-article'), {
+    attributes: true,
+    subtree: true
+  })
   setTimeout(() => {
     const preCodes = document.querySelectorAll('pre.notion-code')
     for (const preCode of preCodes) {

@@ -1,6 +1,6 @@
 import { useGlobal } from '@/lib/global'
 import { formatDateFmt } from '@/lib/utils/formatDate'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 /**
  * 文章页脚
@@ -18,12 +18,12 @@ export default function ArticleFooter(props) {
         {/* 分类标签（如果文章不是“页面”类型） */}
         {post?.type !== 'Page' && (
           <>
-            <Link
+            <SmartLink
               href={`/category/${post?.category}`}
               passHref
               className='cursor-pointer text-md mr-2 text-green-500'>
               {post?.category}
-            </Link>
+            </SmartLink>
           </>
         )}
 
@@ -37,12 +37,12 @@ export default function ArticleFooter(props) {
           {/* 显示所有标签 */}
           {post?.tags?.map(tag => {
             return (
-              <Link
+              <SmartLink
                 href={`/tag/${tag}`}
                 key={tag}
                 className='text-yellow-500 mr-2'>
                 {tag}
-              </Link>
+              </SmartLink>
             )
           })}
         </div>
@@ -57,12 +57,12 @@ export default function ArticleFooter(props) {
           fontWeight: '300', // 设置字体粗细为细体
           color: 'gray' // 设置文字颜色为灰色
         }}>
-        <Link
+        <SmartLink
           href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
           passHref
           className='pl-1 cursor-pointer'>
           {post?.publishDay}
-        </Link>
+        </SmartLink>
       </div>
     </>
   )
