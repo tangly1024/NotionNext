@@ -32,6 +32,16 @@ export const vocabCategories = [
     ],
   },
   {
+    id: 'jcjj',
+    title: '基础交际',
+    description: '基础信息',
+    cover: '/images/vocab/bg-travel.jpg',
+    items: [
+      { id: 'rcdc', title: '人称代词', subtitle: '你 / 我/ 他', cover: 'https://images.pexels.com/photos/7148445/pexels-photo-7148445.jpeg', locked: false },
+      { id: 'hotel', title: '酒店', subtitle: '入住 / 退房', cover: '/images/vocab/hotel.jpg', locked: false },
+    ],
+  },
+  {
     id: 'hsk',
     title: 'HSK',
     description: 'HSK词汇',
