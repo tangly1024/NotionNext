@@ -4,12 +4,6 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { oralCategories } from '@/data/oralData';
 
-const IconChevronLeft = ({ size = 22 }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="m15 18-6-6 6-6" />
-  </svg>
-);
-
 const IconLock = ({ size = 18 }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
@@ -46,55 +40,6 @@ export default function OralCategoryPage() {
     <main style={{ minHeight: '100vh', backgroundColor: '#F8FAFC', paddingBottom: 80, fontFamily: 'sans-serif' }}>
       <div style={{ maxWidth: 640, margin: '0 auto', padding: '20px 16px 32px' }}>
         
-        {/* 顶部 */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
-          <button
-            type="button"
-            onClick={() => router.push('/oral')}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: '50%',
-              border: '1px solid #E2E8F0',
-              backgroundColor: '#FFFFFF',
-              color: '#475569',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              boxShadow: '0 2px 8px rgba(15,23,42,0.03)'
-            }}
-          >
-            <IconChevronLeft size={20} />
-          </button>
-
-          <div style={{ minWidth: 0 }}>
-            <h1 style={{ margin: 0, fontSize: 20, fontWeight: 900, color: '#0F172A' }}>
-              {categoryData.title}
-            </h1>
-            <p style={{ margin: '4px 0 0 0', fontSize: 12, color: '#64748B', fontWeight: 500 }}>
-              共 {subItems.length} 个口语模块
-            </p>
-          </div>
-        </div>
-
-        {/* 简介 */}
-        {categoryData.description ? (
-          <div style={{
-            marginBottom: 16,
-            backgroundColor: '#FFFFFF',
-            border: '1px solid #EEF2F7',
-            borderRadius: 18,
-            padding: '12px 14px',
-            color: '#64748B',
-            fontSize: 13,
-            lineHeight: 1.5,
-            boxShadow: '0 4px 16px rgba(15,23,42,0.03)'
-          }}>
-            {categoryData.description}
-          </div>
-        ) : null}
-
         {/* 三列网格 */}
         <div style={{
           display: 'grid',
@@ -225,4 +170,4 @@ export default function OralCategoryPage() {
       </div>
     </main>
   );
-    }
+}
