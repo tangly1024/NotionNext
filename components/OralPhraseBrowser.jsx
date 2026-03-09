@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   Mic, StopCircle, Sparkles, X, Volume2, Star, Play,
-  Square, Settings2, ChevronLeft, Loader2, Heart
+  Square, Settings2, ChevronLeft, Loader2, Heart, Zap
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { pinyin } from 'pinyin-pro';
@@ -336,18 +336,16 @@ const SpellingModal = ({ item, settings, onClose }) => {
     AudioEngine.stop();
 
     const autoSpell = async () => {
-      await new Promise((r) => setTimeout(r, 220));
+      await new Promise((r) => setTimeout(r, 200));
       if (!isMounted.current) return;
 
       for (let i = 0; i < chars.length; i++) {
         if (!isMounted.current) break;
-
         setActiveCharIndex(i);
         const py = pinyin(chars[i], { toneType: 'symbol' });
         const r2Url = `https://audio.886.best/chinese-vocab-audio/%E6%8B%BC%E8%AF%BB%E9%9F%B3%E9%A2%91/${encodeURIComponent(py)}.mp3`;
-
         await AudioEngine.play(r2Url);
-        await new Promise((r) => setTimeout(r, 80));
+        await new Promise((r) => setTimeout(r, 60));
       }
 
       if (isMounted.current) setActiveCharIndex(-1);
@@ -403,8 +401,8 @@ const SpellingModal = ({ item, settings, onClose }) => {
 
         <div className="flex items-center justify-between mb-8">
           <h3 className="text-slate-900 font-black text-lg">拼读练习</h3>
-          <span className="text-[10px] bg-blue-50 text-blue-500 px-2 py-1 rounded font-bold">
-            自动演示
+          <span className="text-[10px] bg-blue-50 text-blue-500 px-2 py-1 rounded font-bold animate-pulse">
+            自动演示中...
           </span>
         </div>
 
@@ -641,7 +639,7 @@ export default function OralPhraseBrowser({
         animate={{ y: isHeaderVisible ? 0 : -80 }}
         className="fixed top-0 left-0 right-0 z-[100] bg-white/85 backdrop-blur-md border-b border-slate-100 h-14 max-w-md mx-auto px-4 flex justify-between items-center"
       >
-        <button onClick={handleBack} className="p-2 -ml-2 text-slate-500 hover:text-slate-900 active:scale-95 transition-transform">
+        <button onClick={handleBack} className="p-2 -ml-2 text-slate-500 hover:text-slate-900">
           <ChevronLeft size={24} />
         </button>
 
@@ -653,8 +651,8 @@ export default function OralPhraseBrowser({
         <div className="flex items-center gap-1">
           <button
             onClick={() => setIsFavMode(!isFavMode)}
-            className={`p-2 transition-colors active:scale-95 ${
-              isFavMode ? 'text-rose-500' : 'text-slate-400'
+            className={`p-2 transition-colors ${
+              isFavMode ? 'text-rose-500' : 'text-slate-400 hover:text-rose-500'
             }`}
           >
             <Heart size={20} fill={isFavMode ? 'currentColor' : 'none'} />
@@ -662,7 +660,7 @@ export default function OralPhraseBrowser({
 
           <button
             onClick={() => setShowSettings(!showSettings)}
-            className="p-2 text-slate-400 active:scale-95 transition-transform"
+            className="p-2 text-slate-400 hover:text-blue-600"
           >
             <Settings2 size={20} />
           </button>
@@ -682,7 +680,7 @@ export default function OralPhraseBrowser({
         )}
       </AnimatePresence>
 
-      <div className="pt-20 px-4 space-y-4">
+      <div className="pt-20 px-3 space-y-5">
         {displayPhrases.length === 0 && (
           <div className="flex flex-col items-center justify-center pt-32 text-slate-400">
             <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
@@ -708,80 +706,73 @@ export default function OralPhraseBrowser({
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mt-6"
             >
               <div
-                className={`relative pt-10 pb-4 px-4
-                            bg-gradient-to-br from-white via-white to-rose-50/60
-                            rounded-[28px]
-                            border border-rose-100/80
-                            shadow-[0_10px_28px_-10px_rgba(244,114,182,0.22)]
-                            flex flex-col items-center text-center
-                            transition-all duration-300 ease-out
-                            max-w-[340px] mx-auto overflow-visible
-                            ${isPlaying ? 'ring-2 ring-pink-400/40 bg-rose-50/70 scale-[1.01]' : ''}
-                          `}
+                className={`relative bg-white pt-14 pb-4 px-4 rounded-[1.75rem] shadow-[0_12px_30px_rgba(15,23,42,0.06)] border border-white/80 flex flex-col items-center text-center transition-all max-w-[360px] mx-auto overflow-visible mt-7 ${
+                  isPlaying ? 'ring-2 ring-blue-400 bg-blue-50/20' : ''
+                }`}
                 onClick={() => handleCardPlay(item)}
               >
                 {xieyinText && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20 flex justify-center pointer-events-none">
                     <div className="relative">
-                      <div className="absolute left-1/2 top-[22px] -translate-x-1/2 w-[78%] h-3 rounded-full bg-rose-200/40 blur-md" />
-                      <div
-                        className="relative flex items-center gap-1.5 max-w-[240px]
-                                   px-4 py-1.5 rounded-full
-                                   bg-gradient-to-r from-rose-400 via-pink-400 to-fuchsia-400
-                                   text-white text-[11px] font-black tracking-[0.08em]
-                                   border-2 border-white/95
-                                   shadow-[0_10px_24px_-8px_rgba(244,114,182,0.55)]
-                                   overflow-hidden"
-                      >
-                        <div className="absolute inset-x-3 top-[2px] h-[45%] rounded-full bg-white/18 blur-[1px]" />
-                        <span className="relative z-10 text-[10px] shrink-0">✦</span>
+                      <div className="absolute left-1/2 top-[18px] -translate-x-1/2 w-[78%] h-2.5 bg-amber-200/45 blur-md rounded-full" />
+                      <div className="relative max-w-[260px] bg-gradient-to-r from-amber-50 to-orange-50 text-amber-700 px-3.5 py-1.5 rounded-full text-[10px] font-black border border-amber-200/90 shadow-[0_6px_16px_rgba(251,191,36,0.22)] flex items-center gap-1.5 whitespace-nowrap overflow-hidden">
+                        <div className="absolute inset-x-3 top-[2px] h-[40%] rounded-full bg-white/70 blur-[1px]" />
+                        <Zap size={10} className="relative z-10 shrink-0 fill-amber-500 text-amber-500" />
                         <span className="relative z-10 truncate">{xieyinText}</span>
-                        <span className="relative z-10 text-[10px] shrink-0">✦</span>
                       </div>
                     </div>
                   </div>
                 )}
 
-                <div className="absolute top-2.5 left-1/2 -translate-x-1/2 flex gap-1">
-                  <div className="w-1 h-1 bg-pink-300/40 rounded-full" />
-                  <div className="w-1 h-1 bg-pink-400/50 rounded-full" />
-                  <div className="w-1 h-1 bg-pink-300/40 rounded-full" />
-                </div>
+                <div className="absolute inset-x-4 top-0 h-1 rounded-b-full bg-gradient-to-r from-orange-300 via-pink-300 to-sky-300" />
 
-                <div className="relative z-10 w-full space-y-2 mt-1">
-                  <div className="flex items-center justify-center gap-1 text-[12px] text-slate-400/90">
-                    <Volume2 size={12} className={isPlaying ? 'text-pink-500 animate-pulse' : 'text-pink-300'} />
-                    <span className="font-pinyin tracking-wide">
-                      {item.pinyin}
-                    </span>
+                <div className="w-full">
+                  <div className="flex justify-end mb-1">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleFav(item.id);
+                      }}
+                      className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${
+                        isFav
+                          ? 'bg-yellow-50 text-yellow-500'
+                          : 'bg-slate-50 text-slate-300 hover:text-yellow-500'
+                      }`}
+                    >
+                      <Star size={16} fill={isFav ? 'currentColor' : 'none'} />
+                    </button>
                   </div>
 
-                  <h3
-                    className={`text-[22px] font-black leading-tight transition-colors duration-300 px-2 ${
-                      isPlaying ? 'text-pink-600' : 'text-slate-800'
-                    }`}
-                  >
+                  <div className="text-[13px] text-slate-400 font-pinyin mb-1.5 tracking-wide mt-1">
+                    {item.pinyin}
+                  </div>
+
+                  <h3 className="text-[24px] font-black text-slate-800 mb-3 leading-tight px-2">
                     {item.chinese}
                   </h3>
 
                   {item.burmese && (
-                    <p className="text-[14px] text-rose-500/80 font-medium leading-relaxed tracking-wide px-2 pb-1">
-                      {item.burmese}
-                    </p>
+                    <div className="mb-4 mx-auto max-w-[92%] rounded-2xl border border-emerald-100 bg-gradient-to-r from-emerald-50 to-teal-50 px-4 py-3">
+                      <div className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-1">
+                        Burmese
+                      </div>
+                      <p className="text-[14px] text-emerald-800 font-medium leading-relaxed">
+                        {item.burmese}
+                      </p>
+                    </div>
                   )}
 
-                  <div className="flex justify-center items-center gap-5 pt-3 mt-1 border-t border-pink-100/60 relative">
+                  <div className="w-full flex justify-center items-center gap-4 pt-3 border-t border-slate-50">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         setSpellingItem(item);
                       }}
-                      className="w-9 h-9 rounded-xl bg-pink-50 text-pink-400 active:bg-pink-100 active:scale-95 transition-all duration-200 flex items-center justify-center border border-pink-200/50"
+                      className="w-10 h-10 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center hover:bg-blue-50 hover:text-blue-500 transition-all"
                     >
-                      <Sparkles size={15} />
+                      <Sparkles size={16} />
                     </button>
 
                     <button
@@ -789,12 +780,11 @@ export default function OralPhraseBrowser({
                         e.stopPropagation();
                         handleSpeech(item);
                       }}
-                      className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-md border-2 border-white transition-all duration-200 active:scale-95 z-10 -mt-2
-                                 ${
-                                   isRecording
-                                     ? 'bg-rose-500 text-white shadow-rose-500/40 animate-pulse'
-                                     : 'bg-gradient-to-br from-pink-400 to-rose-400 text-white shadow-pink-400/30'
-                                 }`}
+                      className={`w-12 h-12 -mt-4 rounded-full flex items-center justify-center shadow-md border-4 border-white transition-all ${
+                        isRecording
+                          ? 'bg-red-50 text-red-500 animate-pulse'
+                          : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                      }`}
                     >
                       {isRecording ? <StopCircle size={20} /> : <Mic size={20} />}
                     </button>
@@ -802,22 +792,18 @@ export default function OralPhraseBrowser({
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        toggleFav(item.id);
+                        handleCardPlay(item);
                       }}
-                      className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 active:scale-95
-                                 ${
-                                   isFav
-                                     ? 'bg-pink-500 text-white shadow-sm shadow-pink-500/40'
-                                     : 'bg-pink-50 text-pink-300 border border-pink-100/50'
-                                 }`}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                        isPlaying
+                          ? 'bg-blue-100 text-blue-600 animate-pulse'
+                          : 'bg-slate-50 text-slate-400 hover:bg-blue-50 hover:text-blue-500'
+                      }`}
                     >
-                      <Star size={15} fill={isFav ? 'currentColor' : 'none'} />
+                      <Volume2 size={16} />
                     </button>
                   </div>
                 </div>
-
-                <div className="absolute -bottom-2 left-6 right-6 h-4 bg-rose-200/30 blur-md rounded-full -z-10" />
-                <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-10 h-1.5 bg-rose-200/50 rounded-full" />
               </div>
 
               <AnimatePresence>
@@ -826,9 +812,9 @@ export default function OralPhraseBrowser({
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="bg-white/80 backdrop-blur-sm mx-auto max-w-[320px] rounded-2xl mt-3 p-3 shadow-sm border border-pink-50"
+                    className="bg-white mx-auto max-w-[360px] rounded-xl mt-2 p-3 shadow-sm border border-slate-100"
                   >
-                    <div className="flex justify-between items-center mb-2 px-1">
+                    <div className="flex justify-between items-center mb-2">
                       <span className="text-[10px] font-bold text-slate-400">发音评分</span>
                       <span
                         className={`text-xs font-black ${
@@ -867,7 +853,7 @@ export default function OralPhraseBrowser({
                 <Loader2 className="animate-spin" size={16} /> 加载中...
               </div>
             ) : (
-              <div className="flex flex-col items-center gap-2 opacity-50 pb-8">
+              <div className="flex flex-col items-center gap-2 opacity-50">
                 <div className="w-12 h-1 bg-slate-200 rounded-full" />
                 <span className="text-[10px]">到底了 (共 {displayPhrases.length} 句)</span>
               </div>
