@@ -225,7 +225,7 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => (
           <div
             onClick={() => setSettings((s) => ({ ...s, zhEnabled: !s.zhEnabled }))}
             className={`w-8 h-4 rounded-full transition-colors relative cursor-pointer ${
-              settings.zhEnabled ? 'bg-blue-500' : 'bg-slate-200'
+              settings.zhEnabled ? 'bg-pink-500' : 'bg-slate-200'
             }`}
           >
             <div
@@ -247,7 +247,7 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => (
               onClick={() => setSettings((s) => ({ ...s, zhVoice: opt.val }))}
               className={`py-1.5 text-[10px] font-bold rounded border transition-all truncate ${
                 settings.zhVoice === opt.val
-                  ? 'bg-blue-50 border-blue-200 text-blue-600'
+                  ? 'bg-pink-50 border-pink-200 text-pink-600'
                   : 'bg-white border-slate-100 text-slate-400'
               }`}
             >
@@ -265,7 +265,7 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => (
             step="10"
             value={settings.zhRate}
             onChange={(e) => setSettings((s) => ({ ...s, zhRate: Number(e.target.value) }))}
-            className="flex-1 h-1 bg-slate-100 rounded-lg appearance-none accent-blue-500"
+            className="flex-1 h-1 bg-slate-100 rounded-lg appearance-none accent-pink-500"
           />
           <span className="text-[10px] w-6 text-right font-mono text-slate-400">{settings.zhRate}</span>
         </div>
@@ -280,7 +280,7 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => (
           <div
             onClick={() => setSettings((s) => ({ ...s, myEnabled: !s.myEnabled }))}
             className={`w-8 h-4 rounded-full transition-colors relative cursor-pointer ${
-              settings.myEnabled ? 'bg-green-500' : 'bg-slate-200'
+              settings.myEnabled ? 'bg-rose-500' : 'bg-slate-200'
             }`}
           >
             <div
@@ -300,7 +300,7 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => (
               onClick={() => setSettings((s) => ({ ...s, myVoice: opt.val }))}
               className={`py-1.5 text-[10px] font-bold rounded border transition-all truncate ${
                 settings.myVoice === opt.val
-                  ? 'bg-green-50 border-green-200 text-green-600'
+                  ? 'bg-rose-50 border-rose-200 text-rose-600'
                   : 'bg-white border-slate-100 text-slate-400'
               }`}
             >
@@ -318,7 +318,7 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => (
             step="10"
             value={settings.myRate}
             onChange={(e) => setSettings((s) => ({ ...s, myRate: Number(e.target.value) }))}
-            className="flex-1 h-1 bg-slate-100 rounded-lg appearance-none accent-green-500"
+            className="flex-1 h-1 bg-slate-100 rounded-lg appearance-none accent-rose-500"
           />
           <span className="text-[10px] w-6 text-right font-mono text-slate-400">{settings.myRate}</span>
         </div>
@@ -398,12 +398,12 @@ const SpellingModal = ({ item, settings, onClose }) => {
         className="bg-white w-full max-w-md rounded-t-[2rem] sm:rounded-[2rem] p-6 shadow-2xl relative"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6 sm:hidden" />
+        <div className="w-12 h-1.5 bg-pink-200 rounded-full mx-auto mb-6 sm:hidden" />
 
         <div className="flex items-center justify-between mb-8">
           <h3 className="text-slate-900 font-black text-lg">拼读练习 | စာလုံးပေါင်း</h3>
-          <span className="text-[10px] bg-blue-50 text-blue-500 px-2 py-1 rounded font-bold animate-pulse">
-            自动演示中...
+          <span className="text-[10px] bg-pink-50 text-pink-500 px-2 py-1 rounded font-bold animate-pulse">
+            ✨ 自动演示中...
           </span>
         </div>
 
@@ -414,20 +414,20 @@ const SpellingModal = ({ item, settings, onClose }) => {
               onClick={() => handleCharClick(i)}
               className={`flex flex-col items-center p-2 rounded-xl transition-all cursor-pointer select-none ${
                 activeCharIndex === i
-                  ? 'bg-blue-50 ring-2 ring-blue-500 scale-110 shadow-lg'
-                  : 'hover:bg-slate-50'
+                  ? 'bg-pink-50 ring-2 ring-pink-500 scale-110 shadow-lg'
+                  : 'hover:bg-pink-50/50'
               }`}
             >
               <span
                 className={`text-xs font-pinyin mb-1 ${
-                  activeCharIndex === i ? 'text-blue-600 font-bold' : 'text-slate-400'
+                  activeCharIndex === i ? 'text-pink-600 font-bold' : 'text-slate-400'
                 }`}
               >
                 {pinyin(char, { toneType: 'symbol' })}
               </span>
               <span
                 className={`text-3xl font-black ${
-                  activeCharIndex === i ? 'text-blue-800' : 'text-slate-800'
+                  activeCharIndex === i ? 'text-pink-800' : 'text-slate-800'
                 }`}
               >
                 {char}
@@ -439,16 +439,20 @@ const SpellingModal = ({ item, settings, onClose }) => {
         <div className="flex justify-around items-center px-4 pb-4">
           <div
             onClick={playWhole}
-            className="flex flex-col items-center gap-2 cursor-pointer"
+            className="flex flex-col items-center gap-2 cursor-pointer group"
           >
-            <Volume2 size={24} />
-            <span className="text-[10px]">整句 | စာကြောင်း</span>
+            <div className="w-12 h-12 rounded-2xl bg-pink-50 text-pink-400 flex items-center justify-center group-hover:bg-pink-100 group-hover:scale-110 transition-all">
+              <Volume2 size={20} />
+            </div>
+            <span className="text-[10px] text-slate-500">整句</span>
           </div>
 
           <div
             onClick={toggleRecord}
-            className={`w-16 h-16 rounded-full flex items-center justify-center shadow-xl border-4 ${
-              recordState === 'recording' ? 'bg-red-500 border-red-100' : 'bg-slate-100'
+            className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-xl border-2 border-white ${
+              recordState === 'recording' 
+                ? 'bg-rose-500 shadow-rose-500/30 animate-pulse' 
+                : 'bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-pink-500/30'
             }`}
           >
             {recordState === 'recording' ? (
@@ -460,12 +464,14 @@ const SpellingModal = ({ item, settings, onClose }) => {
 
           <div
             onClick={() => userAudio && AudioEngine.play(userAudio)}
-            className={`flex flex-col items-center gap-2 ${
-              userAudio ? '' : 'opacity-30'
+            className={`flex flex-col items-center gap-2 group ${
+              userAudio ? 'cursor-pointer' : 'opacity-30'
             }`}
           >
-            <Play size={24} />
-            <span className="text-[10px]">回放 | ပြန်ဖွင့်ပါ</span>
+            <div className="w-12 h-12 rounded-2xl bg-pink-50 text-pink-400 flex items-center justify-center group-hover:bg-pink-100 group-hover:scale-110 transition-all">
+              <Play size={20} />
+            </div>
+            <span className="text-[10px] text-slate-500">回放</span>
           </div>
         </div>
       </motion.div>
@@ -474,7 +480,7 @@ const SpellingModal = ({ item, settings, onClose }) => {
 };
 
 // ============================================================================
-// 4. 主组件 (修改为完全照抄你的代码中的卡片结构)
+// 4. 主组件 - 小红书风格
 // ============================================================================
 export default function OralPhraseBrowser({
   phrases = [],
@@ -635,27 +641,27 @@ export default function OralPhraseBrowser({
   };
 
   return (
-    // 【修改点】底层背景色和 padding 完全对齐你提供的代码：bg-[#F5F7FA]
-    <div className="min-h-screen pb-32 bg-[#F5F7FA] font-sans text-slate-900 max-w-md mx-auto relative shadow-2xl overflow-x-hidden">
+    <div className="min-h-screen pb-32 bg-gradient-to-b from-pink-50/30 to-white font-sans text-slate-900 max-w-md mx-auto relative shadow-2xl overflow-x-hidden">
       
+      {/* 头部 - 小红书风格 */}
       <motion.div
         animate={{ y: isHeaderVisible ? 0 : -80 }}
-        className="fixed top-0 left-0 right-0 z-[100] bg-white/90 backdrop-blur-md border-b border-slate-100 h-14 max-w-md mx-auto px-4 flex justify-between items-center"
+        className="fixed top-0 left-0 right-0 z-[100] bg-white/90 backdrop-blur-md border-b border-pink-100 h-14 max-w-md mx-auto px-4 flex justify-between items-center"
       >
-        <button onClick={handleBack} className="p-2 -ml-2 text-slate-500 hover:text-slate-900">
+        <button onClick={handleBack} className="p-2 -ml-2 text-pink-400 hover:text-pink-600">
           <ChevronLeft size={24} />
         </button>
 
         <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
-          <span className="text-sm font-black text-slate-800">{isFavMode ? '我的收藏' : title}</span>
-          <span className="text-[10px] text-slate-400 font-burmese">{isFavMode ? 'မှတ်ထားသော စကားပြော' : categoryTitle}</span>
+          <span className="text-sm font-black text-pink-600">{isFavMode ? '我的收藏' : title}</span>
+          <span className="text-[10px] text-pink-400 font-burmese">{isFavMode ? 'မှတ်ထားသော စကားပြော' : categoryTitle}</span>
         </div>
 
         <div className="flex items-center gap-1">
           <button
             onClick={() => setIsFavMode(!isFavMode)}
             className={`p-2 transition-colors ${
-              isFavMode ? 'text-rose-500' : 'text-slate-400 hover:text-rose-500'
+              isFavMode ? 'text-rose-500' : 'text-pink-300 hover:text-rose-500'
             }`}
           >
             <Heart size={20} fill={isFavMode ? 'currentColor' : 'none'} />
@@ -663,13 +669,14 @@ export default function OralPhraseBrowser({
 
           <button
             onClick={() => setShowSettings(!showSettings)}
-            className="p-2 text-slate-400 hover:text-blue-600"
+            className="p-2 text-pink-300 hover:text-pink-600"
           >
             <Settings2 size={20} />
           </button>
         </div>
       </motion.div>
 
+      {/* 设置面板 */}
       <AnimatePresence>
         {showSettings && (
           <>
@@ -683,72 +690,210 @@ export default function OralPhraseBrowser({
         )}
       </AnimatePresence>
 
-      <div className="pt-20 px-3 space-y-4">
+      {/* 卡片列表 */}
+      <div className="pt-20 px-3 space-y-6">
         {displayPhrases.length === 0 && (
-          <div className="flex flex-col items-center justify-center pt-32 text-slate-400">
-            <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
-              <Heart size={32} className="text-slate-300" />
+          <div className="flex flex-col items-center justify-center pt-32 text-pink-300">
+            <div className="w-16 h-16 bg-pink-100 rounded-2xl flex items-center justify-center mb-4">
+              <Heart size={32} className="text-pink-300" />
             </div>
-            <p className="text-sm font-bold">{isFavMode ? '还没有收藏的句子' : '暂无数据'}</p>
-            {isFavMode && <p className="text-xs font-burmese mt-1">မှတ်ထားသော စာကြောင်း မရှိသေးပါ</p>}
+            <p className="text-sm font-bold text-pink-400">{isFavMode ? '还没有收藏的句子' : '暂无数据'}</p>
+            {isFavMode && <p className="text-xs text-pink-300 font-burmese mt-1">မှတ်ထားသော စာကြောင်း မရှိသေးပါ</p>}
           </div>
         )}
 
         {displayPhrases.slice(0, visibleCount).map((item) => {
-          // 完全复制你的卡片 DOM 结构
           return (
             <motion.div 
               key={item.id} 
-              initial={{ opacity: 0, y: 10 }} 
+              initial={{ opacity: 0, y: 20 }} 
               whileInView={{ opacity: 1, y: 0 }} 
               viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
             >
+              {/* ========== 小红书风格卡片 ========== */}
               <div 
-                className={`relative bg-white pt-10 pb-4 px-4 rounded-[1.5rem] shadow-sm border border-slate-100 flex flex-col items-center text-center transition-all max-w-[360px] mx-auto overflow-visible mt-6
-                ${playingId === item.id ? 'ring-2 ring-blue-500 bg-blue-50/10' : ''} active:scale-[0.98] cursor-pointer`}
-                onClick={() => handleCardPlay(item)}
-              >
-                {/* 谐音悬浮在上边线 (100% 还原) */}
-                {item.xieyin && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 w-full flex justify-center pointer-events-none">
-                      <div className="bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-[10px] font-black border border-amber-100 shadow-sm flex items-center gap-1 whitespace-nowrap">
-                         <Zap size={10} className="fill-amber-500 text-amber-500"/> {item.xieyin}
-                      </div>
+                className={`relative pt-12 pb-5 px-5 
+                            bg-gradient-to-br from-white to-pink-50/30
+                            rounded-[2.5rem]
+                            border border-pink-100
+                            shadow-[0_10px_25px_-5px_rgba(236,72,153,0.1)]
+                            flex flex-col items-center text-center 
+                            transition-all duration-300 ease-out
+                            max-w-[360px] mx-auto overflow-visible
+                            group
+                            ${playingId === item.id 
+                              ? 'ring-2 ring-pink-400/50 bg-pink-50/40 shadow-pink-200' 
+                              : 'hover:shadow-[0_20px_35px_-8px_rgba(236,72,153,0.2)] hover:-translate-y-0.5'
+                            }`}
+                  onClick={() => handleCardPlay(item)}
+                >
+                  {/* 背景装饰光晕 */}
+                  <div className="absolute inset-0 overflow-hidden rounded-[2.5rem] pointer-events-none">
+                    <div className="absolute top-10 right-5 w-28 h-28 
+                                    bg-pink-200/30 rounded-full blur-3xl 
+                                    group-hover:scale-150 transition-transform duration-700" />
+                    <div className="absolute bottom-5 left-5 w-24 h-24 
+                                    bg-yellow-200/30 rounded-full blur-3xl 
+                                    group-hover:scale-150 transition-transform duration-700" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+                                    w-32 h-32 bg-blue-100/20 rounded-full blur-3xl" />
                   </div>
-                )}
 
-                <div className="">
-                  <div className="text-[13px] text-slate-400 font-pinyin mb-1.5">{pinyin(item.chinese, {toneType:'symbol'})}</div>
-                  <h3 className="text-xl font-black text-slate-800 mb-2 leading-tight">{item.chinese}</h3>
-                  {item.burmese && (
-                    <p className="text-sm text-blue-600 font-medium mb-4 font-burmese">{item.burmese}</p>
+                  {/* 谐音标签 - 小红书跳动风格 */}
+                  {item.xieyin && (
+                    <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-20
+                                    animate-bounce-slow">
+                      <motion.div 
+                        initial={{ scale: 0.9 }}
+                        animate={{ scale: 1 }}
+                        transition={{ repeat: Infinity, duration: 2, repeatType: "reverse" }}
+                        className="bg-gradient-to-r from-pink-400 to-rose-400
+                                    text-white px-5 py-2.5 rounded-full
+                                    text-xs font-bold tracking-wider
+                                    shadow-lg shadow-pink-400/40
+                                    border-2 border-white
+                                    flex items-center gap-1.5
+                                    group-hover:shadow-xl group-hover:scale-105
+                                    transition-all duration-300
+                                    whitespace-nowrap">
+                        <span className="text-base leading-none">✨</span>
+                        {item.xieyin}
+                        <span className="text-base leading-none">✨</span>
+                      </motion.div>
+                    </div>
                   )}
 
-                  <div className="w-full flex justify-center items-center gap-5 pt-3 border-t border-slate-50">
-                     <button onClick={(e) => { e.stopPropagation(); setSpellingItem(item); }} className="w-9 h-9 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center hover:bg-blue-50 hover:text-blue-500"><Sparkles size={16}/></button>
-                     <button onClick={(e) => { e.stopPropagation(); handleSpeech(item); }} className={`w-12 h-12 -mt-4 rounded-full flex items-center justify-center shadow-md border-4 border-white ${recordingId === item.id ? 'bg-slate-100 text-slate-500 animate-pulse' : 'bg-slate-100 text-slate-500'}`}>
-                         {recordingId === item.id ? <StopCircle size={20}/> : <Mic size={20}/>}
-                     </button>
-                     <button onClick={(e) => { e.stopPropagation(); toggleFav(item.id); }} className={`w-9 h-9 rounded-full flex items-center justify-center ${favorites.includes(item.id) ? 'bg-yellow-50 text-yellow-500' : 'bg-slate-50 text-slate-300'}`}><Star size={16} fill={favorites.includes(item.id) ? "currentColor" : "none"}/></button>
+                  {/* 顶部装饰圆点 */}
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 flex gap-1">
+                    <div className="w-1 h-1 bg-pink-300/50 rounded-full" />
+                    <div className="w-1 h-1 bg-pink-400/50 rounded-full" />
+                    <div className="w-1 h-1 bg-pink-300/50 rounded-full" />
                   </div>
+
+                  <div className="relative z-10 w-full space-y-3">
+                    
+                    {/* 拼音 - 带小喇叭图标 */}
+                    <div className="flex items-center justify-center gap-1.5 
+                                    text-xs text-pink-300">
+                      <Volume2 size={12} className="text-pink-300 group-hover:scale-110 transition-transform"/>
+                      <span className="font-mono tracking-wider">
+                        {pinyin(item.chinese, {toneType:'symbol'})}
+                      </span>
+                    </div>
+                    
+                    {/* 中文 - 渐变大字 */}
+                    <h3 className="text-2xl font-black leading-tight
+                                   bg-gradient-to-r from-pink-600 to-rose-600
+                                   bg-clip-text text-transparent
+                                   group-hover:from-pink-700 group-hover:to-rose-700
+                                   transition-all duration-300">
+                      {item.chinese}
+                    </h3>
+                    
+                    {/* 缅文 - 柔和粉色 */}
+                    {item.burmese && (
+                      <p className="text-sm text-rose-500/80 font-burmese 
+                                    leading-relaxed tracking-wide
+                                    group-hover:text-rose-600 transition-colors">
+                        {item.burmese}
+                      </p>
+                    )}
+
+                    {/* 操作按钮 - 小红书可爱风格 */}
+                    <div className="flex justify-center items-center gap-4 
+                                    pt-4 mt-2 border-t border-pink-100">
+                      
+                      {/* 拼读按钮 */}
+                      <motion.button 
+                        whileHover={{ scale: 1.1, rotate: 8 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={(e) => { e.stopPropagation(); setSpellingItem(item); }} 
+                        className="w-10 h-10 rounded-2xl 
+                                   bg-pink-50 text-pink-400 
+                                   hover:bg-pink-100 hover:text-pink-500
+                                   hover:shadow-md hover:shadow-pink-200
+                                   transition-all duration-300
+                                   flex items-center justify-center
+                                   border border-pink-200/50">
+                        <Sparkles size={16}/>
+                      </motion.button>
+                      
+                      {/* 录音按钮 - 突出C位 */}
+                      <motion.button 
+                        whileHover={{ scale: 1.15, rotate: 2 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={(e) => { e.stopPropagation(); handleSpeech(item); }} 
+                        className={`w-14 h-14 -mt-5 rounded-2xl 
+                                   flex items-center justify-center
+                                   shadow-lg
+                                   transition-all duration-300
+                                   border-2 border-white
+                                   ${recordingId === item.id 
+                                     ? 'bg-rose-500 text-white shadow-rose-500/40 animate-pulse' 
+                                     : 'bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-pink-500/40 hover:shadow-xl hover:shadow-pink-500/50 hover:-translate-y-0.5'
+                                   }`}>
+                        {recordingId === item.id 
+                          ? <StopCircle size={22}/> 
+                          : <Mic size={22}/>
+                        }
+                      </motion.button>
+                      
+                      {/* 收藏按钮 */}
+                      <motion.button 
+                        whileHover={{ scale: 1.1, rotate: -8 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={(e) => { e.stopPropagation(); toggleFav(item.id); }} 
+                        className={`w-10 h-10 rounded-2xl 
+                                   flex items-center justify-center
+                                   transition-all duration-300
+                                   ${favorites.includes(item.id) 
+                                     ? 'bg-pink-500 text-white shadow-md shadow-pink-500/40' 
+                                     : 'bg-pink-50 text-pink-300 hover:bg-pink-100 hover:text-pink-400'
+                                   }`}>
+                        <Star size={16} fill={favorites.includes(item.id) ? "currentColor" : "none"}/>
+                      </motion.button>
+                    </div>
+                  </div>
+
+                  {/* 底部装饰条 */}
+                  <div className="absolute bottom-1 left-1/2 -translate-x-1/2
+                                  w-12 h-1 bg-pink-200/50 rounded-full
+                                  group-hover:w-16 group-hover:bg-pink-300
+                                  transition-all duration-300" />
                 </div>
-              </div>
               
+              {/* 语音评分结果 */}
               <AnimatePresence>
                 {speechResult?.id === item.id && (
-                  <motion.div initial={{opacity:0, height:0}} animate={{opacity:1, height:'auto'}} exit={{opacity:0, height:0}} className="bg-white mx-auto max-w-[360px] rounded-xl mt-2 p-3 shadow-sm border border-slate-100">
-                     <div className="flex justify-between items-center mb-2">
-                        <span className="text-[10px] font-bold text-slate-400">评分 | ရမှတ်</span>
-                        <span className={`text-xs font-black ${speechResult.data.accuracy > 0.8 ? 'text-green-500' : 'text-red-500'}`}>{Math.round(speechResult.data.accuracy * 100)}%</span>
-                     </div>
-                     <div className="flex flex-wrap gap-2 justify-center">
-                         {speechResult.data.comparison.map((r, idx) => (
-                             <div key={idx} className="flex flex-col items-center">
-                                 <span className={`text-xs font-pinyin font-bold ${r.isMatch ? 'text-slate-800' : 'text-red-500'}`}>{r.userPy || '?'}</span>
-                                 <span className="text-[10px] text-slate-400">{r.targetChar}</span>
-                             </div>
-                         ))}
-                     </div>
+                  <motion.div 
+                    initial={{opacity:0, height:0}} 
+                    animate={{opacity:1, height:'auto'}} 
+                    exit={{opacity:0, height:0}} 
+                    className="bg-white mx-auto max-w-[360px] rounded-2xl mt-2 p-4 shadow-sm border border-pink-100"
+                  >
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="text-[10px] font-bold text-pink-400">评分 | ရမှတ်</span>
+                      <span className={`text-xs font-black px-2 py-0.5 rounded-full ${
+                        speechResult.data.accuracy > 0.8 
+                          ? 'bg-green-100 text-green-600' 
+                          : 'bg-rose-100 text-rose-600'
+                      }`}>
+                        {Math.round(speechResult.data.accuracy * 100)}%
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      {speechResult.data.comparison.map((r, idx) => (
+                        <div key={idx} className="flex flex-col items-center">
+                          <span className={`text-xs font-pinyin font-bold ${
+                            r.isMatch ? 'text-pink-600' : 'text-rose-500'
+                          }`}>
+                            {r.userPy || '?'}
+                          </span>
+                          <span className="text-[10px] text-slate-400">{r.targetChar}</span>
+                        </div>
+                      ))}
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -756,22 +901,27 @@ export default function OralPhraseBrowser({
           );
         })}
 
+        {/* 加载更多指示器 */}
         {displayPhrases.length > 0 && (
-          <div ref={loaderRef} className="py-10 text-center text-slate-400">
+          <div ref={loaderRef} className="py-10 text-center">
             {visibleCount < displayPhrases.length ? (
-              <div className="flex items-center justify-center gap-2 text-xs font-bold animate-pulse">
-                <Loader2 className="animate-spin" size={16} /> 正在加载更多...
+              <div className="flex items-center justify-center gap-2 text-xs font-bold text-pink-400">
+                <Loader2 className="animate-spin" size={16} /> 
+                <span>✨ 加载更多 ✨</span>
               </div>
             ) : (
               <div className="flex flex-col items-center gap-2 opacity-50">
-                <div className="w-12 h-1 bg-slate-200 rounded-full" />
-                <span className="text-[10px]">到底了 (Total: {displayPhrases.length})</span>
+                <div className="w-12 h-1 bg-pink-200 rounded-full" />
+                <span className="text-[10px] text-pink-300">
+                  ✨ 共 {displayPhrases.length} 句 ✨
+                </span>
               </div>
             )}
           </div>
         )}
       </div>
 
+      {/* 拼读弹窗 */}
       <AnimatePresence>
         {spellingItem && (
           <SpellingModal
@@ -782,12 +932,22 @@ export default function OralPhraseBrowser({
         )}
       </AnimatePresence>
 
+      {/* 全局样式 */}
       <style jsx global>{`
-        .font-pinyin {
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        @keyframes bounce-slow {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
         }
+        .animate-bounce-slow {
+          animation: bounce-slow 2s ease-in-out infinite;
+        }
+        
+        .font-pinyin {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        
         .font-burmese {
-          font-family: 'Padauk', sans-serif;
+          font-family: 'Padauk', 'Myanmar3', 'Noto Sans Myanmar', sans-serif;
         }
       `}</style>
     </div>
