@@ -3,27 +3,27 @@ export const oralCategories = [
     id: 'daily',
     title: '日常口语',
     description: '打招呼、介绍、感谢、寒暄',
-    cover: '/images/oral/bg-daily.jpg', // 一级大卡片封面
+    cover: 'https://images.pexels.com/photos/4880405/pexels-photo-4880405.jpeg', // 一级大卡片封面
     items: [
       {
         id: 'greeting',
         title: '打招呼',
         subtitle: '你好 / 再见 / 早上好',
-        cover: '/images/oral/greeting.jpg', // 二级小卡片封面
+        cover: 'https://images.pexels.com/photos/35537012/pexels-photo-35537012.jpeg', // 二级小卡片封面
         locked: false,
       },
       {
         id: 'thanks',
         title: '感谢道歉',
         subtitle: '谢谢 / 对不起',
-        cover: '/images/oral/thanks.jpg',
+        cover: 'https://images.pexels.com/photos/36308161/pexels-photo-36308161.jpeg',
         locked: false,
       },
       {
         id: 'selfintro',
         title: '自我介绍',
         subtitle: '我叫… / 我来自…',
-        cover: '/images/oral/selfintro.jpg',
+        cover: 'https://images.pexels.com/photos/34418972/pexels-photo-34418972.jpeg',
         locked: false,
       },
     ],
