@@ -1,172 +1,155 @@
 'use client';
 
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { oralCategories } from '@/data/oralData';
 
-const IconLock = ({ size = 18 }) => (
+// 原生 SVG 图标
+const IconChevronRight = ({ size = 20 }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+    <path d="m9 18 6-6-6-6" />
   </svg>
 );
 
-const pick = (v) => (Array.isArray(v) ? v[0] : v);
-
 const getCover = (id, originalCover) => {
   if (originalCover) return originalCover;
-  return `https://picsum.photos/seed/oral-sub-${id}/300/300`;
+  return `https://picsum.photos/seed/oral-${id}/1200/600`;
 };
 
-export default function OralCategoryPage() {
-  const router = useRouter();
-  const categoryId = pick(router.query.categoryId);
-
-  if (!router.isReady) return null;
-
-  const categoryData = oralCategories.find((c) => c.id === categoryId);
-
-  if (!categoryData) {
-    return (
-      <main style={{ minHeight: '100vh', backgroundColor: '#F8FAFC', padding: 24 }}>
-        <div style={{ textAlign: 'center', color: '#64748B' }}>未找到该分类</div>
-      </main>
-    );
-  }
-
-  const subItems = Array.isArray(categoryData.items) ? categoryData.items : [];
-
+export default function OralIndexPage() {
   return (
     <main style={{ minHeight: '100vh', backgroundColor: '#F8FAFC', paddingBottom: 80, fontFamily: 'sans-serif' }}>
       <div style={{ maxWidth: 640, margin: '0 auto', padding: '20px 16px 32px' }}>
-        
-        {/* 三列网格 */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: 12
-        }}>
-          {subItems.map((sub) => {
-            const isLocked = !!sub.locked;
-            const targetUrl = `/oral/player?category=${encodeURIComponent(categoryData.id)}&listId=${encodeURIComponent(sub.id)}`;
+        {/* 大卡片列表 */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          {oralCategories.map((cat) => {
+            const itemsCount = Array.isArray(cat.items) ? cat.items.length : 0;
 
-            const card = (
-              <div className={`oral-sub-card ${isLocked ? 'locked' : ''}`}>
-                <div style={{
-                  width: '100%',
-                  aspectRatio: '1 / 1',
-                  borderRadius: 14,
+            return (
+              <Link
+                key={cat.id}
+                href={`/oral/${cat.id}`}
+                style={{ textDecoration: 'none' }}
+                prefetch={false}
+              >
+                <div className="oral-cover-card" style={{
+                  height: 168,
+                  borderRadius: 24,
                   overflow: 'hidden',
-                  backgroundColor: '#E2E8F0',
                   position: 'relative',
-                  marginBottom: 8
+                  boxShadow: '0 10px 30px rgba(15,23,42,0.12)',
+                  cursor: 'pointer'
                 }}>
                   <img
-                    src={getCover(sub.id, sub.cover)}
-                    alt={sub.title}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    src={getCover(cat.id, cat.cover)}
+                    alt={cat.title}
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }}
                     onError={(e) => {
-                      const fallback = `https://picsum.photos/seed/oral-sub-${sub.id}-fallback/300/300`;
+                      const fallback = `https://picsum.photos/seed/oral-${cat.id}-fallback/1200/600`;
                       if (e.currentTarget.src !== fallback) {
                         e.currentTarget.src = fallback;
                       }
                     }}
                   />
 
-                  {isLocked && (
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.36) 55%, rgba(0,0,0,0.08) 100%)'
+                  }} />
+
+                  <div style={{
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    padding: 20,
+                    display: 'flex',
+                    alignItems: 'flex-end',
+                    justifyContent: 'space-between',
+                    gap: 12
+                  }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        padding: '6px 10px',
+                        borderRadius: 999,
+                        marginBottom: 10,
+                        fontSize: 12,
+                        fontWeight: 700,
+                        color: 'rgba(255,255,255,0.96)',
+                        background: 'rgba(255,255,255,0.14)',
+                        border: '1px solid rgba(255,255,255,0.16)'
+                      }}>
+                        {itemsCount} 个模块
+                      </div>
+
+                      <h2 style={{
+                        margin: 0,
+                        color: '#fff',
+                        fontSize: 24,
+                        fontWeight: 900,
+                        lineHeight: 1.18,
+                        letterSpacing: '-0.4px',
+                        textShadow: '0 2px 8px rgba(0,0,0,0.32)'
+                      }}>
+                        {cat.title}
+                      </h2>
+
+                      <p style={{
+                        margin: '6px 0 0 0',
+                        fontSize: 13,
+                        color: 'rgba(255,255,255,0.88)',
+                        fontWeight: 500,
+                        lineHeight: 1.45
+                      }}>
+                        {cat.description || '点击进入分类'}
+                      </p>
+                    </div>
+
                     <div style={{
-                      position: 'absolute',
-                      inset: 0,
-                      backgroundColor: 'rgba(15,23,42,0.42)',
+                      width: 42,
+                      height: 42,
+                      borderRadius: '50%',
+                      flexShrink: 0,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: '#FFF'
+                      color: '#fff',
+                      background: 'rgba(255,255,255,0.18)',
+                      border: '1px solid rgba(255,255,255,0.16)',
+                      backdropFilter: 'blur(6px)',
+                      WebkitBackdropFilter: 'blur(6px)'
                     }}>
-                      <IconLock size={20} />
+                      <IconChevronRight size={20} />
                     </div>
-                  )}
+                  </div>
                 </div>
 
-                <h3 style={{
-                  fontSize: 13,
-                  fontWeight: 800,
-                  color: '#1E293B',
-                  margin: 0,
-                  textAlign: 'center',
-                  lineHeight: 1.2,
-                  width: '100%',
-                  display: '-webkit-box',
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden'
-                }}>
-                  {sub.title}
-                </h3>
-
-                {sub.subtitle ? (
-                  <p style={{
-                    fontSize: 10,
-                    color: '#94A3B8',
-                    margin: '4px 0 0 0',
-                    textAlign: 'center',
-                    width: '100%',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis'
-                  }}>
-                    {sub.subtitle}
-                  </p>
-                ) : null}
-              </div>
-            );
-
-            if (isLocked) {
-              return <div key={sub.id}>{card}</div>;
-            }
-
-            return (
-              <Link
-                key={sub.id}
-                href={targetUrl}
-                style={{ textDecoration: 'none' }}
-                prefetch={false}
-              >
-                {card}
+                <style jsx>{`
+                  .oral-cover-card {
+                    transition: transform 0.18s ease, box-shadow 0.18s ease;
+                  }
+                  .oral-cover-card:active {
+                    transform: scale(0.985);
+                  }
+                  @media (hover: hover) {
+                    .oral-cover-card:hover {
+                      transform: translateY(-2px);
+                      box-shadow: 0 16px 36px rgba(15,23,42,0.16);
+                    }
+                  }
+                `}</style>
               </Link>
             );
           })}
         </div>
-
-        <style jsx>{`
-          .oral-sub-card {
-            background-color: #ffffff;
-            border-radius: 20px;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
-            border: 1px solid #f1f5f9;
-            min-height: 100%;
-            transition: transform 0.14s ease, box-shadow 0.14s ease;
-          }
-
-          .oral-sub-card.locked {
-            opacity: 0.62;
-          }
-
-          .oral-sub-card:active {
-            transform: scale(0.965);
-          }
-
-          @media (hover: hover) {
-            .oral-sub-card:hover {
-              transform: translateY(-2px);
-              box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
-            }
-          }
-        `}</style>
       </div>
     </main>
   );
