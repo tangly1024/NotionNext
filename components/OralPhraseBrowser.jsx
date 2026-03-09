@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   Mic, StopCircle, Sparkles, X, Volume2, Star, Play,
-  Square, Settings2, ChevronLeft, Loader2, Heart, Zap
+  Square, Settings2, ChevronLeft, Loader2, Heart
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { pinyin } from 'pinyin-pro';
@@ -219,7 +219,6 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => (
     </div>
 
     <div className="p-5 space-y-5">
-      {/* 中文设置 */}
       <div className="space-y-2">
         <div className="flex justify-between items-center">
           <span className="text-xs font-bold text-slate-700">中文朗读</span>
@@ -272,7 +271,6 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => (
         </div>
       </div>
 
-      {/* 缅甸语设置 */}
       <div className="space-y-2 pt-4 border-t border-slate-100">
         <div className="flex justify-between items-center">
           <span className="text-xs font-bold text-slate-700">缅甸语朗读</span>
@@ -330,7 +328,7 @@ const SpellingModal = ({ item, settings, onClose }) => {
   const [activeCharIndex, setActiveCharIndex] = useState(-1);
   const [recordState, setRecordState] = useState('idle');
   const [userAudio, setUserAudio] = useState(null);
-  const chars = item.chinese.split('');
+  const chars = useMemo(() => item.chinese.split(''), [item.chinese]);
   const isMounted = useRef(true);
 
   useEffect(() => {
@@ -338,16 +336,18 @@ const SpellingModal = ({ item, settings, onClose }) => {
     AudioEngine.stop();
 
     const autoSpell = async () => {
-      await new Promise((r) => setTimeout(r, 200));
+      await new Promise((r) => setTimeout(r, 220));
       if (!isMounted.current) return;
 
       for (let i = 0; i < chars.length; i++) {
         if (!isMounted.current) break;
+
         setActiveCharIndex(i);
         const py = pinyin(chars[i], { toneType: 'symbol' });
         const r2Url = `https://audio.886.best/chinese-vocab-audio/%E6%8B%BC%E8%AF%BB%E9%9F%B3%E9%A2%91/${encodeURIComponent(py)}.mp3`;
+
         await AudioEngine.play(r2Url);
-        await new Promise((r) => setTimeout(r, 60));
+        await new Promise((r) => setTimeout(r, 80));
       }
 
       if (isMounted.current) setActiveCharIndex(-1);
@@ -359,7 +359,7 @@ const SpellingModal = ({ item, settings, onClose }) => {
       isMounted.current = false;
       AudioEngine.stop();
     };
-  }, [item.chinese, chars]);
+  }, [chars]);
 
   const handleCharClick = async (index) => {
     setActiveCharIndex(index);
@@ -403,8 +403,8 @@ const SpellingModal = ({ item, settings, onClose }) => {
 
         <div className="flex items-center justify-between mb-8">
           <h3 className="text-slate-900 font-black text-lg">拼读练习</h3>
-          <span className="text-[10px] bg-blue-50 text-blue-500 px-2 py-1 rounded font-bold animate-pulse">
-            自动演示中...
+          <span className="text-[10px] bg-blue-50 text-blue-500 px-2 py-1 rounded font-bold">
+            自动演示
           </span>
         </div>
 
@@ -710,70 +710,70 @@ export default function OralPhraseBrowser({
               viewport={{ once: true }}
               className="mt-6"
             >
-              {/* 卡片主体（紧凑型小红书风格 + 底部阴影加强） */}
               <div
-                className={`relative pt-8 pb-4 px-4 
-                            bg-gradient-to-br from-white to-pink-50/50
-                            rounded-3xl
-                            border border-pink-100/80
-                            shadow-[0_8px_20px_-4px_rgba(236,72,153,0.12)]
-                            flex flex-col items-center text-center 
+                className={`relative pt-10 pb-4 px-4
+                            bg-gradient-to-br from-white via-white to-rose-50/60
+                            rounded-[28px]
+                            border border-rose-100/80
+                            shadow-[0_10px_28px_-10px_rgba(244,114,182,0.22)]
+                            flex flex-col items-center text-center
                             transition-all duration-300 ease-out
                             max-w-[340px] mx-auto overflow-visible
-                            ${isPlaying ? 'ring-2 ring-pink-400/50 bg-pink-50/80 scale-[1.01]' : ''}
+                            ${isPlaying ? 'ring-2 ring-pink-400/40 bg-rose-50/70 scale-[1.01]' : ''}
                           `}
                 onClick={() => handleCardPlay(item)}
               >
-                {/* 谐音/备注跳动标签 */}
                 {xieyinText && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 animate-bounce-slow">
-                    <div className="bg-gradient-to-r from-pink-400 to-rose-400
-                                    text-white px-4 py-1.5 rounded-full
-                                    text-[11px] font-bold tracking-wider
-                                    shadow-md shadow-pink-400/30
-                                    border-[1.5px] border-white
-                                    flex items-center gap-1
-                                    whitespace-nowrap max-w-[220px] overflow-hidden">
-                      <span className="text-[10px] leading-none shrink-0">✨</span>
-                      <span className="truncate">{xieyinText}</span>
-                      <span className="text-[10px] leading-none shrink-0">✨</span>
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+                    <div className="relative">
+                      <div className="absolute left-1/2 top-[22px] -translate-x-1/2 w-[78%] h-3 rounded-full bg-rose-200/40 blur-md" />
+                      <div
+                        className="relative flex items-center gap-1.5 max-w-[240px]
+                                   px-4 py-1.5 rounded-full
+                                   bg-gradient-to-r from-rose-400 via-pink-400 to-fuchsia-400
+                                   text-white text-[11px] font-black tracking-[0.08em]
+                                   border-2 border-white/95
+                                   shadow-[0_10px_24px_-8px_rgba(244,114,182,0.55)]
+                                   overflow-hidden"
+                      >
+                        <div className="absolute inset-x-3 top-[2px] h-[45%] rounded-full bg-white/18 blur-[1px]" />
+                        <span className="relative z-10 text-[10px] shrink-0">✦</span>
+                        <span className="relative z-10 truncate">{xieyinText}</span>
+                        <span className="relative z-10 text-[10px] shrink-0">✦</span>
+                      </div>
                     </div>
                   </div>
                 )}
 
-                {/* 顶部三个点装饰 */}
-                <div className="absolute top-2 left-1/2 -translate-x-1/2 flex gap-1">
-                  <div className="w-1 h-1 bg-pink-300/50 rounded-full" />
+                <div className="absolute top-2.5 left-1/2 -translate-x-1/2 flex gap-1">
+                  <div className="w-1 h-1 bg-pink-300/40 rounded-full" />
                   <div className="w-1 h-1 bg-pink-400/50 rounded-full" />
-                  <div className="w-1 h-1 bg-pink-300/50 rounded-full" />
+                  <div className="w-1 h-1 bg-pink-300/40 rounded-full" />
                 </div>
 
                 <div className="relative z-10 w-full space-y-2 mt-1">
-                  {/* 拼音层 */}
                   <div className="flex items-center justify-center gap-1 text-[12px] text-slate-400/90">
-                    <Volume2 size={12} className={isPlaying ? "text-pink-500 animate-pulse" : "text-pink-300"} />
+                    <Volume2 size={12} className={isPlaying ? 'text-pink-500 animate-pulse' : 'text-pink-300'} />
                     <span className="font-pinyin tracking-wide">
                       {item.pinyin}
                     </span>
                   </div>
 
-                  {/* 中文大字 */}
-                  <h3 className={`text-[22px] font-black leading-tight transition-colors duration-300 px-2
-                                 ${isPlaying ? 'text-pink-600' : 'text-slate-800'}`}>
+                  <h3
+                    className={`text-[22px] font-black leading-tight transition-colors duration-300 px-2 ${
+                      isPlaying ? 'text-pink-600' : 'text-slate-800'
+                    }`}
+                  >
                     {item.chinese}
                   </h3>
 
-                  {/* 缅文展示 */}
                   {item.burmese && (
                     <p className="text-[14px] text-rose-500/80 font-medium leading-relaxed tracking-wide px-2 pb-1">
                       {item.burmese}
                     </p>
                   )}
 
-                  {/* 底部紧凑操作栏 */}
                   <div className="flex justify-center items-center gap-5 pt-3 mt-1 border-t border-pink-100/60 relative">
-                    
-                    {/* 拼读按钮 */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -784,44 +784,42 @@ export default function OralPhraseBrowser({
                       <Sparkles size={15} />
                     </button>
 
-                    {/* 录音按钮（核心主操作） */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleSpeech(item);
                       }}
                       className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-md border-2 border-white transition-all duration-200 active:scale-95 z-10 -mt-2
-                                 ${isRecording
-                                   ? 'bg-rose-500 text-white shadow-rose-500/40 animate-pulse'
-                                   : 'bg-gradient-to-br from-pink-400 to-rose-400 text-white shadow-pink-400/30'
+                                 ${
+                                   isRecording
+                                     ? 'bg-rose-500 text-white shadow-rose-500/40 animate-pulse'
+                                     : 'bg-gradient-to-br from-pink-400 to-rose-400 text-white shadow-pink-400/30'
                                  }`}
                     >
                       {isRecording ? <StopCircle size={20} /> : <Mic size={20} />}
                     </button>
 
-                    {/* 收藏按钮 */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         toggleFav(item.id);
                       }}
                       className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 active:scale-95
-                                 ${isFav
-                                   ? 'bg-pink-500 text-white shadow-sm shadow-pink-500/40'
-                                   : 'bg-pink-50 text-pink-300 border border-pink-100/50'
+                                 ${
+                                   isFav
+                                     ? 'bg-pink-500 text-white shadow-sm shadow-pink-500/40'
+                                     : 'bg-pink-50 text-pink-300 border border-pink-100/50'
                                  }`}
                     >
-                      <Star size={15} fill={isFav ? "currentColor" : "none"} />
+                      <Star size={15} fill={isFav ? 'currentColor' : 'none'} />
                     </button>
                   </div>
                 </div>
 
-                {/* --- 手机端增强立体感的底部阴影 --- */}
-                <div className="absolute -bottom-1.5 left-4 right-4 h-3 bg-pink-200/40 blur-sm rounded-full -z-10" />
-                <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-8 h-1 bg-pink-200/60 rounded-full" />
+                <div className="absolute -bottom-2 left-6 right-6 h-4 bg-rose-200/30 blur-md rounded-full -z-10" />
+                <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-10 h-1.5 bg-rose-200/50 rounded-full" />
               </div>
 
-              {/* 语音评分结果面板 (保持原样，微调圆角) */}
               <AnimatePresence>
                 {speechResult?.id === item.id && (
                   <motion.div
@@ -891,13 +889,6 @@ export default function OralPhraseBrowser({
       <style jsx global>{`
         .font-pinyin {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-        @keyframes bounce-slow {
-          0%, 100% { transform: translateY(0) translateX(-50%); }
-          50% { transform: translateY(-4px) translateX(-50%); }
-        }
-        .animate-bounce-slow {
-          animation: bounce-slow 2.5s ease-in-out infinite;
         }
       `}</style>
     </div>
