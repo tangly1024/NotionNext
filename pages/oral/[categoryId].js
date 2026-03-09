@@ -5,7 +5,17 @@ import Link from 'next/link';
 import { oralCategories } from '@/data/oralData';
 
 const IconLock = ({ size = 18 }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
   </svg>
@@ -15,7 +25,7 @@ const pick = (v) => (Array.isArray(v) ? v[0] : v);
 
 const getCover = (id, originalCover) => {
   if (originalCover) return originalCover;
-  return `https://picsum.photos/seed/oral-sub-${id}/300/300`;
+  return `https://picsum.photos/seed/oral-sub-${id}/600/600`;
 };
 
 export default function OralCategoryPage() {
@@ -28,7 +38,14 @@ export default function OralCategoryPage() {
 
   if (!categoryData) {
     return (
-      <main style={{ minHeight: '100vh', backgroundColor: '#F8FAFC', padding: 24 }}>
+      <main
+        style={{
+          minHeight: '100vh',
+          backgroundColor: '#F8FAFC',
+          padding: 24,
+          fontFamily: 'sans-serif'
+        }}
+      >
         <div style={{ textAlign: 'center', color: '#64748B' }}>未找到该分类</div>
       </main>
     );
@@ -37,87 +54,62 @@ export default function OralCategoryPage() {
   const subItems = Array.isArray(categoryData.items) ? categoryData.items : [];
 
   return (
-    <main style={{ minHeight: '100vh', backgroundColor: '#F8FAFC', paddingBottom: 80, fontFamily: 'sans-serif' }}>
-      <div style={{ maxWidth: 640, margin: '0 auto', padding: '20px 16px 32px' }}>
-        
-        {/* 三列网格 */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: 12
-        }}>
+    <main
+      style={{
+        minHeight: '100vh',
+        background:
+          'linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)',
+        paddingBottom: 80,
+        fontFamily: 'sans-serif'
+      }}
+    >
+      <div style={{ maxWidth: 640, margin: '0 auto', padding: '16px 16px 32px' }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 12
+          }}
+        >
           {subItems.map((sub) => {
             const isLocked = !!sub.locked;
-            const targetUrl = `/oral/player?category=${encodeURIComponent(categoryData.id)}&listId=${encodeURIComponent(sub.id)}`;
+            const targetUrl = `/oral/player?category=${encodeURIComponent(
+              categoryData.id
+            )}&listId=${encodeURIComponent(sub.id)}`;
 
             const card = (
               <div className={`oral-sub-card ${isLocked ? 'locked' : ''}`}>
-                <div style={{
-                  width: '100%',
-                  aspectRatio: '1 / 1',
-                  borderRadius: 14,
-                  overflow: 'hidden',
-                  backgroundColor: '#E2E8F0',
-                  position: 'relative',
-                  marginBottom: 8
-                }}>
-                  <img
-                    src={getCover(sub.id, sub.cover)}
-                    alt={sub.title}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    onError={(e) => {
-                      const fallback = `https://picsum.photos/seed/oral-sub-${sub.id}-fallback/300/300`;
-                      if (e.currentTarget.src !== fallback) {
-                        e.currentTarget.src = fallback;
-                      }
-                    }}
-                  />
+                <img
+                  src={getCover(sub.id, sub.cover)}
+                  alt={sub.title}
+                  className="oral-sub-image"
+                  onError={(e) => {
+                    const fallback = `https://picsum.photos/seed/oral-sub-${sub.id}-fallback/600/600`;
+                    if (e.currentTarget.src !== fallback) {
+                      e.currentTarget.src = fallback;
+                    }
+                  }}
+                />
 
-                  {isLocked && (
-                    <div style={{
-                      position: 'absolute',
-                      inset: 0,
-                      backgroundColor: 'rgba(15,23,42,0.42)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: '#FFF'
-                    }}>
-                      <IconLock size={20} />
+                {/* 基础暗色渐变蒙层 */}
+                <div className="oral-sub-overlay" />
+
+                {/* 锁定遮罩 */}
+                {isLocked && (
+                  <div className="oral-sub-lock-mask">
+                    <div className="oral-sub-lock-badge">
+                      <IconLock size={18} />
                     </div>
-                  )}
+                  </div>
+                )}
+
+                {/* 底部文字浮层 */}
+                <div className="oral-sub-content">
+                  <h3 className="oral-sub-title">{sub.title}</h3>
+                  {sub.subtitle ? (
+                    <p className="oral-sub-subtitle">{sub.subtitle}</p>
+                  ) : null}
                 </div>
-
-                <h3 style={{
-                  fontSize: 13,
-                  fontWeight: 800,
-                  color: '#1E293B',
-                  margin: 0,
-                  textAlign: 'center',
-                  lineHeight: 1.2,
-                  width: '100%',
-                  display: '-webkit-box',
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden'
-                }}>
-                  {sub.title}
-                </h3>
-
-                {sub.subtitle ? (
-                  <p style={{
-                    fontSize: 10,
-                    color: '#94A3B8',
-                    margin: '4px 0 0 0',
-                    textAlign: 'center',
-                    width: '100%',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis'
-                  }}>
-                    {sub.subtitle}
-                  </p>
-                ) : null}
               </div>
             );
 
@@ -140,30 +132,126 @@ export default function OralCategoryPage() {
 
         <style jsx>{`
           .oral-sub-card {
-            background-color: #ffffff;
-            border-radius: 20px;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
-            border: 1px solid #f1f5f9;
-            min-height: 100%;
-            transition: transform 0.14s ease, box-shadow 0.14s ease;
-          }
-
-          .oral-sub-card.locked {
-            opacity: 0.62;
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1.18;
+            overflow: hidden;
+            border-radius: 22px;
+            background: #e2e8f0;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
           }
 
           .oral-sub-card:active {
-            transform: scale(0.965);
+            transform: scale(0.975);
           }
 
           @media (hover: hover) {
             .oral-sub-card:hover {
-              transform: translateY(-2px);
-              box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+              transform: translateY(-3px);
+              box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+            }
+          }
+
+          .oral-sub-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+
+          .oral-sub-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+              linear-gradient(
+                to top,
+                rgba(15, 23, 42, 0.82) 0%,
+                rgba(15, 23, 42, 0.48) 42%,
+                rgba(15, 23, 42, 0.12) 70%,
+                rgba(15, 23, 42, 0.04) 100%
+              );
+          }
+
+          .oral-sub-lock-mask {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.26);
+            backdrop-filter: blur(1.5px);
+            -webkit-backdrop-filter: blur(1.5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+          }
+
+          .oral-sub-lock-badge {
+            width: 38px;
+            height: 38px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+          }
+
+          .oral-sub-content {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 2;
+            padding: 14px 12px 12px;
+          }
+
+          .oral-sub-title {
+            margin: 0;
+            font-size: 13px;
+            font-weight: 900;
+            line-height: 1.25;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            letter-spacing: -0.2px;
+          }
+
+          .oral-sub-subtitle {
+            margin: 4px 0 0 0;
+            font-size: 10px;
+            line-height: 1.3;
+            color: rgba(255, 255, 255, 0.82);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.24);
+          }
+
+          .locked {
+            filter: saturate(0.9);
+          }
+
+          @media (max-width: 420px) {
+            .oral-sub-card {
+              border-radius: 20px;
+            }
+
+            .oral-sub-content {
+              padding: 12px 10px 10px;
+            }
+
+            .oral-sub-title {
+              font-size: 12px;
+            }
+
+            .oral-sub-subtitle {
+              font-size: 9px;
             }
           }
         `}</style>
