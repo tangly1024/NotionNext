@@ -41,7 +41,7 @@ export default function OralCategoryPage() {
       <main
         style={{
           minHeight: '100vh',
-          backgroundColor: '#F8FAFC',
+          background: 'linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)',
           padding: 24,
           fontFamily: 'sans-serif'
         }}
@@ -57,8 +57,7 @@ export default function OralCategoryPage() {
     <main
       style={{
         minHeight: '100vh',
-        background:
-          'linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)',
+        background: 'linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)',
         paddingBottom: 80,
         fontFamily: 'sans-serif'
       }}
@@ -91,8 +90,16 @@ export default function OralCategoryPage() {
                   }}
                 />
 
-                {/* 基础暗色渐变蒙层 */}
-                <div className="oral-sub-overlay" />
+                {/* 顶部轻暗层，让图片更柔和 */}
+                <div className="oral-sub-soft-overlay" />
+
+                {/* 底部玻璃拟态浮层 */}
+                <div className="oral-sub-glass">
+                  <h3 className="oral-sub-title">{sub.title}</h3>
+                  {sub.subtitle ? (
+                    <p className="oral-sub-subtitle">{sub.subtitle}</p>
+                  ) : null}
+                </div>
 
                 {/* 锁定遮罩 */}
                 {isLocked && (
@@ -102,14 +109,6 @@ export default function OralCategoryPage() {
                     </div>
                   </div>
                 )}
-
-                {/* 底部文字浮层 */}
-                <div className="oral-sub-content">
-                  <h3 className="oral-sub-title">{sub.title}</h3>
-                  {sub.subtitle ? (
-                    <p className="oral-sub-subtitle">{sub.subtitle}</p>
-                  ) : null}
-                </div>
               </div>
             );
 
@@ -136,10 +135,13 @@ export default function OralCategoryPage() {
             width: 100%;
             aspect-ratio: 1 / 1.18;
             overflow: hidden;
-            border-radius: 22px;
+            border-radius: 24px;
             background: #e2e8f0;
-            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+            box-shadow:
+              0 10px 30px rgba(15, 23, 42, 0.08),
+              0 2px 8px rgba(15, 23, 42, 0.04);
             transition: transform 0.18s ease, box-shadow 0.18s ease;
+            isolation: isolate;
           }
 
           .oral-sub-card:active {
@@ -149,7 +151,9 @@ export default function OralCategoryPage() {
           @media (hover: hover) {
             .oral-sub-card:hover {
               transform: translateY(-3px);
-              box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+              box-shadow:
+                0 16px 34px rgba(15, 23, 42, 0.12),
+                0 4px 10px rgba(15, 23, 42, 0.05);
             }
           }
 
@@ -161,51 +165,34 @@ export default function OralCategoryPage() {
             object-fit: cover;
           }
 
-          .oral-sub-overlay {
+          .oral-sub-soft-overlay {
             position: absolute;
             inset: 0;
             background:
               linear-gradient(
                 to top,
-                rgba(15, 23, 42, 0.82) 0%,
-                rgba(15, 23, 42, 0.48) 42%,
-                rgba(15, 23, 42, 0.12) 70%,
-                rgba(15, 23, 42, 0.04) 100%
+                rgba(15, 23, 42, 0.18) 0%,
+                rgba(15, 23, 42, 0.08) 45%,
+                rgba(15, 23, 42, 0.03) 100%
               );
+            z-index: 1;
           }
 
-          .oral-sub-lock-mask {
+          .oral-sub-glass {
             position: absolute;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.26);
-            backdrop-filter: blur(1.5px);
-            -webkit-backdrop-filter: blur(1.5px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 3;
-          }
-
-          .oral-sub-lock-badge {
-            width: 38px;
-            height: 38px;
-            border-radius: 999px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            background: rgba(255, 255, 255, 0.18);
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
-          }
-
-          .oral-sub-content {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
             z-index: 2;
-            padding: 14px 12px 12px;
+            padding: 10px 10px 9px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            backdrop-filter: blur(10px) saturate(140%);
+            -webkit-backdrop-filter: blur(10px) saturate(140%);
+            box-shadow:
+              inset 0 1px 0 rgba(255, 255, 255, 0.22),
+              0 8px 24px rgba(15, 23, 42, 0.14);
           }
 
           .oral-sub-title {
@@ -214,36 +201,70 @@ export default function OralCategoryPage() {
             font-weight: 900;
             line-height: 1.25;
             color: #ffffff;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.22);
+            letter-spacing: -0.2px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            letter-spacing: -0.2px;
           }
 
           .oral-sub-subtitle {
             margin: 4px 0 0 0;
             font-size: 10px;
             line-height: 1.3;
-            color: rgba(255, 255, 255, 0.82);
+            color: rgba(255, 255, 255, 0.9);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.24);
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.16);
           }
 
-          .locked {
-            filter: saturate(0.9);
+          .oral-sub-lock-mask {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            background: rgba(15, 23, 42, 0.22);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .oral-sub-lock-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.26);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow:
+              0 8px 20px rgba(0, 0, 0, 0.16),
+              inset 0 1px 0 rgba(255, 255, 255, 0.18);
+          }
+
+          .locked .oral-sub-glass {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.18);
           }
 
           @media (max-width: 420px) {
             .oral-sub-card {
-              border-radius: 20px;
+              border-radius: 22px;
             }
 
-            .oral-sub-content {
-              padding: 12px 10px 10px;
+            .oral-sub-glass {
+              left: 7px;
+              right: 7px;
+              bottom: 7px;
+              padding: 9px 9px 8px;
+              border-radius: 14px;
             }
 
             .oral-sub-title {
