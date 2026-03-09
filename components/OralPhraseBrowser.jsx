@@ -39,7 +39,7 @@ function getPinyinComparison(targetText, userText) {
   const targetPy = pinyin(cleanTarget, { type: 'array', toneType: 'symbol' });
   const userPy = pinyin(cleanUser, { type: 'array', toneType: 'symbol' });
 
-  const result =[];
+  const result = [];
   const len = Math.max(targetPy.length, userPy.length);
   let correctCount = 0;
 
@@ -114,7 +114,7 @@ const AudioEngine = {
 
 const RecorderEngine = {
   mediaRecorder: null,
-  chunks:[],
+  chunks: [],
   stream: null,
 
   async start() {
@@ -124,7 +124,7 @@ const RecorderEngine = {
     try {
       this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       this.mediaRecorder = new MediaRecorder(this.stream);
-      this.chunks =[];
+      this.chunks = [];
       this.mediaRecorder.ondataavailable = (e) => this.chunks.push(e.data);
       this.mediaRecorder.start();
       return true;
@@ -327,7 +327,7 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => (
 );
 
 const SpellingModal = ({ item, settings, onClose }) => {
-  const[activeCharIndex, setActiveCharIndex] = useState(-1);
+  const [activeCharIndex, setActiveCharIndex] = useState(-1);
   const [recordState, setRecordState] = useState('idle');
   const [userAudio, setUserAudio] = useState(null);
   const chars = item.chinese.split('');
@@ -478,7 +478,7 @@ const SpellingModal = ({ item, settings, onClose }) => {
 // 4. 主组件
 // ============================================================================
 export default function OralPhraseBrowser({
-  phrases =[],
+  phrases = [],
   title = '模块学习',
   categoryTitle = '口语分类',
   onBack,
@@ -486,16 +486,16 @@ export default function OralPhraseBrowser({
   settingsStorageKey = 'spoken_settings_default'
 }) {
   const normalizedPhrases = useMemo(
-    () => (phrases ||[]).map(normalizePhrase).filter((item) => item.chinese),
+    () => (phrases || []).map(normalizePhrase).filter((item) => item.chinese),
     [phrases]
   );
 
   const [favorites, setFavorites] = useState([]);
   const [isFavMode, setIsFavMode] = useState(false);
-  const[visibleCount, setVisibleCount] = useState(20);
+  const [visibleCount, setVisibleCount] = useState(20);
   const loaderRef = useRef(null);
 
-  const[showSettings, setShowSettings] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
 
   const [settings, setSettings] = useState({
@@ -509,7 +509,7 @@ export default function OralPhraseBrowser({
 
   const [playingId, setPlayingId] = useState(null);
   const [spellingItem, setSpellingItem] = useState(null);
-  const[recordingId, setRecordingId] = useState(null);
+  const [recordingId, setRecordingId] = useState(null);
   const [speechResult, setSpeechResult] = useState(null);
 
   const { scrollY } = useScroll();
@@ -710,24 +710,61 @@ export default function OralPhraseBrowser({
               viewport={{ once: true }}
             >
               <div
-                className={`relative bg-white pt-10 pb-4 px-4 rounded-[1.75rem] shadow-[0_12px_30px_rgba(15,23,42,0.06)] border border-white/80 flex flex-col items-center text-center transition-all max-w-[360px] mx-auto overflow-visible mt-6 ${
-                  isPlaying ? 'ring-2 ring-blue-400 bg-blue-50/20' : ''
+                className={`relative bg-white pt-10 pb-4 px-4 rounded-[1.5rem] shadow-sm border border-slate-100 flex flex-col items-center text-center transition-all max-w-[360px] mx-auto overflow-visible mt-6 active:scale-[0.98] cursor-pointer ${
+                  isPlaying ? 'ring-2 ring-blue-500 bg-blue-50/10' : ''
                 }`}
                 onClick={() => handleCardPlay(item)}
               >
+                {/* 谐音悬浮在上边线 */}
                 {xieyinText && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 w-full flex justify-center pointer-events-none">
-                    <div className="max-w-[88%] bg-amber-50/95 text-amber-700 px-3 py-1 rounded-full text-[10px] font-black border border-amber-200 shadow-sm flex items-center gap-1 whitespace-nowrap overflow-hidden">
-                      <Zap size={10} className="shrink-0 fill-amber-500 text-amber-500" />
+                    <div className="bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-[10px] font-black border border-amber-100 shadow-sm flex items-center gap-1 whitespace-nowrap">
+                      <Zap size={10} className="fill-amber-500 text-amber-500 shrink-0" />
                       <span className="truncate">{xieyinText}</span>
                     </div>
                   </div>
                 )}
 
-                <div className="absolute inset-x-4 top-0 h-1 rounded-b-full bg-gradient-to-r from-orange-300 via-pink-300 to-sky-300" />
-
                 <div className="w-full">
-                  <div className="flex justify-end mb-1">
+                  <div className="text-[13px] text-slate-400 font-pinyin mb-1.5">
+                    {item.pinyin}
+                  </div>
+
+                  <h3 className="text-xl font-black text-slate-800 mb-2 leading-tight">
+                    {item.chinese}
+                  </h3>
+
+                  {item.burmese && (
+                    <p className="text-sm text-blue-600 font-medium mb-4 font-burmese">
+                      {item.burmese}
+                    </p>
+                  )}
+
+                  <div className="w-full flex justify-center items-center gap-5 pt-3 border-t border-slate-50">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSpellingItem(item);
+                      }}
+                      className="w-9 h-9 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center hover:bg-blue-50 hover:text-blue-500 transition-all"
+                    >
+                      <Sparkles size={16} />
+                    </button>
+
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSpeech(item);
+                      }}
+                      className={`w-12 h-12 -mt-4 rounded-full flex items-center justify-center shadow-md border-4 border-white transition-all ${
+                        isRecording
+                          ? 'bg-slate-100 text-slate-500 animate-pulse'
+                          : 'bg-slate-100 text-slate-500'
+                      }`}
+                    >
+                      {isRecording ? <StopCircle size={20} /> : <Mic size={20} />}
+                    </button>
+
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -740,65 +777,6 @@ export default function OralPhraseBrowser({
                       }`}
                     >
                       <Star size={16} fill={isFav ? 'currentColor' : 'none'} />
-                    </button>
-                  </div>
-
-                  <div className="text-[13px] text-slate-400 font-pinyin mb-1.5 tracking-wide">
-                    {item.pinyin}
-                  </div>
-
-                  <h3 className="text-[24px] font-black text-slate-800 mb-3 leading-tight px-2">
-                    {item.chinese}
-                  </h3>
-
-                  {item.burmese && (
-                    <div className="mb-4 mx-auto max-w-[92%] rounded-2xl border border-emerald-100 bg-gradient-to-r from-emerald-50 to-teal-50 px-4 py-3">
-                      <div className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-1">
-                        Burmese
-                      </div>
-                      <p className="text-[14px] text-emerald-800 font-medium leading-relaxed">
-                        {item.burmese}
-                      </p>
-                    </div>
-                  )}
-
-                  <div className="w-full flex justify-center items-center gap-4 pt-3 border-t border-slate-50">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSpellingItem(item);
-                      }}
-                      className="w-10 h-10 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center hover:bg-blue-50 hover:text-blue-500 transition-all"
-                    >
-                      <Sparkles size={16} />
-                    </button>
-
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleSpeech(item);
-                      }}
-                      className={`w-12 h-12 -mt-4 rounded-full flex items-center justify-center shadow-md border-4 border-white transition-all ${
-                        isRecording
-                          ? 'bg-red-50 text-red-500 animate-pulse'
-                          : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-                      }`}
-                    >
-                      {isRecording ? <StopCircle size={20} /> : <Mic size={20} />}
-                    </button>
-
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleCardPlay(item);
-                      }}
-                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-                        isPlaying
-                          ? 'bg-blue-100 text-blue-600 animate-pulse'
-                          : 'bg-slate-50 text-slate-400 hover:bg-blue-50 hover:text-blue-500'
-                      }`}
-                    >
-                      <Volume2 size={16} />
                     </button>
                   </div>
                 </div>
@@ -873,6 +851,9 @@ export default function OralPhraseBrowser({
       <style jsx global>{`
         .font-pinyin {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        .font-burmese {
+          font-family: 'Padauk', sans-serif;
         }
       `}</style>
     </div>
