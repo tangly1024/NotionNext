@@ -1,5 +1,5 @@
 import Collapse from '@/components/Collapse'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useState } from 'react'
 
 /**
@@ -28,17 +28,19 @@ export const MenuItemCollapse = props => {
 
   return (
     <>
-      <div className='select-none w-full px-6 py-2  text-left ' onClick={toggleShow}>
+      <div
+        className='select-none w-full px-6 py-2  text-left '
+        onClick={toggleShow}>
         {!hasSubMenu && (
-          <Link
-            href={link?.to}
-            target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
+          <SmartLink
+            href={link?.href}
+            target={link?.target}
             className='flex justify-between pl-2 pr-4 dark:text-gray-200 no-underline tracking-widest'>
             <span className=' transition-all items-center duration-200'>
               {link?.icon && <i className={link.icon + ' mr-4'} />}
               {link?.name}
             </span>
-          </Link>
+          </SmartLink>
         )}
         {hasSubMenu && (
           <div
@@ -56,17 +58,21 @@ export const MenuItemCollapse = props => {
 
       {/* 折叠子菜单 */}
       {hasSubMenu && (
-        <Collapse isOpen={isOpen} onHeightChange={props.onHeightChange} className='rounded-xl'>
+        <Collapse
+          isOpen={isOpen}
+          onHeightChange={props.onHeightChange}
+          className='rounded-xl'>
           {link.subMenus.map((sLink, index) => {
             return (
               <div
                 key={index}
                 className='dark:text-gray-200 text-left px-3 justify-start  tracking-widest transition-all duration-200  py-3 pr-6'>
-                <Link href={sLink.to} target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}>
+                <SmartLink href={sLink.href} target={link?.target}>
                   <span className='text-sm ml-4 whitespace-nowrap'>
-                    {link?.icon && <i className={sLink.icon + ' mr-2'} />} {sLink.title}
+                    {link?.icon && <i className={sLink.icon + ' mr-2'} />}{' '}
+                    {sLink.title}
                   </span>
-                </Link>
+                </SmartLink>
               </div>
             )
           })}

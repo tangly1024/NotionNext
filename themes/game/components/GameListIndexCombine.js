@@ -2,8 +2,8 @@
 import { AdSlot } from '@/components/GoogleAdsense'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
-import { checkContainHttp, deepClone, sliceUrlFromHttp } from '@/lib/utils'
-import Link from 'next/link'
+import { deepClone } from '@/lib/utils'
+import SmartLink from '@/components/SmartLink'
 import { useState } from 'react'
 import CONFIG from '../config'
 
@@ -139,15 +139,13 @@ const GameItem = ({ item, isLargeCard }) => {
   const { title } = item
   const img = item.pageCoverThumbnail
   const [showType, setShowType] = useState('img') // img or video
-  const url = checkContainHttp(item.slug)
-    ? sliceUrlFromHttp(item.slug)
-    : `${siteConfig('SUB_PATH', '')}/${item.slug}`
+
   const video = item?.ext?.video
   return (
-    <Link
+    <SmartLink
       title={title}
-      href={`${url}`}
-      className={`card-single ${isLargeCard ? 'h-80 ' : 'h-full text-xs'} w-full transition-all duration-200 hover:scale-105 shadow-md hover:shadow-lg relative rounded-lg overflow-hidden flex justify-center items-center
+      href={`${item?.href}`}
+      className={`card-single ${isLargeCard ? 'h-80 ' : 'h-full text-xs'} w-full transition-all duration-200 shadow-md md:hover:scale-105 md:hover:shadow-lg relative rounded-lg overflow-hidden flex justify-center items-center
       group hover:border-purple-400`}
       onMouseOver={() => {
         setShowType('video')
@@ -179,6 +177,6 @@ const GameItem = ({ item, isLargeCard }) => {
         alt={title}
         fill='full'
       />
-    </Link>
+    </SmartLink>
   )
 }

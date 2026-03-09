@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import NotionIcon from '@/components/NotionIcon'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
@@ -19,17 +19,17 @@ export default function PostHeader({ post }) {
         <div className='mt-10'>
             <div className='mb-3 flex justify-center'>
               {post.category && <>
-                <Link href={`/category/${post.category}`} passHref legacyBehavior>
+                <SmartLink href={`/category/${post.category}`} passHref legacyBehavior>
                   <div className="cursor-pointer px-2 py-1 mb-2 border rounded-sm dark:border-white text-sm font-medium hover:underline duration-200 shadow-text-md text-white">
                     {post.category}
                   </div>
-                </Link>
+                </SmartLink>
               </>}
             </div>
 
           {/* 文章Title */}
           <div className="leading-snug font-bold xs:text-4xl sm:text-4xl md:text-5xl md:leading-snug text-4xl shadow-text-md flex justify-center text-center text-white">
-            <NotionIcon icon={post.pageIcon} className='text-4xl mx-1' /><div className='text-4xl mx-1'>{post.title}</div>
+            {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post.pageIcon} className='text-4xl mx-1' />}<div className='text-4xl mx-1'>{post.title}</div>
           </div>
 
         </div>
