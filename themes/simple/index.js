@@ -38,10 +38,10 @@ import CONFIG from './config'
 import { Style } from './style'
 
 // --- 动态导入组件 ---
-const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
-const BookLibrary = dynamic(() => import('@/components/BookLibrary'), { ssr: false })
-const AIChatDrawer = dynamic(() => import('@/components/AIChatDrawer'), { ssr: false })
-const VoiceChat = dynamic(() => import('@/components/VoiceChat'), { ssr: false })
+const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false, loading: () => <div className="p-4 text-center text-slate-500">加载中...</div> })
+const BookLibrary = dynamic(() => import('@/components/BookLibrary'), { ssr: false, loading: () => <div className="p-4 text-center text-slate-500">加载中...</div> })
+const AIChatDrawer = dynamic(() => import('@/components/AIChatDrawer'), { ssr: false, loading: () => <div className="p-4 text-center text-slate-500">加载中...</div> })
+const VoiceChat = dynamic(() => import('@/components/VoiceChat'), { ssr: false, loading: () => <div className="p-4 text-center text-slate-500">加载中...</div> })
 
 const BlogListScroll = dynamic(() => import('./components/BlogListScroll'), { ssr: false })
 const BlogArchiveItem = dynamic(() => import('./components/BlogArchiveItem'), { ssr: false })
@@ -65,17 +65,17 @@ const ThemeGlobalSimple = createContext()
 export const useSimpleGlobal = () => useContext(ThemeGlobalSimple)
 
 const pinyinNav = [
-  { zh: '声母', mm: 'ဗျည်း', icon: Mic, href: '/pinyin/initials', bg: 'bg-blue-100/80', color: 'text-blue-600' },
-  { zh: '韵母', mm: 'သရ', icon: Music2, href: '/pinyin/finals', bg: 'bg-emerald-100/80', color: 'text-emerald-600' },
-  { zh: '整体', mm: 'အသံတွဲ', icon: Layers3, href: '/pinyin/whole', bg: 'bg-purple-100/80', color: 'text-purple-600' },
-  { zh: '声调', mm: 'အသံ', icon: FileText, href: '/pinyin/tones', bg: 'bg-orange-100/80', color: 'text-orange-600' }
+  { zh: '声母', mm: 'ဗျည်း', icon: Mic, href: '/pinyin/initials', bg: 'bg-blue-100/90', color: 'text-blue-700' },
+  { zh: '韵母', mm: 'သရ', icon: Music2, href: '/pinyin/finals', bg: 'bg-emerald-100/90', color: 'text-emerald-700' },
+  { zh: '整体', mm: 'အသံတွဲ', icon: Layers3, href: '/pinyin/whole', bg: 'bg-purple-100/90', color: 'text-purple-700' },
+  { zh: '声调', mm: 'အသံ', icon: FileText, href: '/pinyin/tones', bg: 'bg-orange-100/90', color: 'text-orange-700' }
 ]
 
 const coreTools = [
   { zh: 'AI 翻译', mm: 'AI ဘာသာပြန်', icon: Globe, action: 'translator', bg: 'bg-indigo-50', iconColor: 'text-indigo-600' },
   { zh: '免费书籍', mm: 'စာကြည့်တိုက်', icon: Library, action: 'library', bg: 'bg-cyan-50', iconColor: 'text-cyan-600' },
-  { zh: '单词收藏', mm: 'မှတ်ထားသော စာလုံး', icon: Star, href: '/words', bg: 'bg-slate-50', iconColor: 'text-slate-600' },
-  { zh: '口语收藏', mm: 'မှတ်ထားသော စကားပြော', icon: Volume2, href: '/oral', bg: 'bg-slate-50', iconColor: 'text-slate-600' }
+  { zh: '单词收藏', mm: 'မှတ်ထားသော စာလုံး', icon: Star, href: '/words', bg: 'bg-slate-50', iconColor: 'text-slate-700' },
+  { zh: '口语收藏', mm: 'မှတ်ထားသော စကားပြော', icon: Volume2, href: '/oral', bg: 'bg-slate-50', iconColor: 'text-slate-700' }
 ]
 
 const systemCourses = [
@@ -83,7 +83,7 @@ const systemCourses = [
     badge: 'Words',
     sub: '词汇 (VOCABULARY)',
     title: '日常高频词汇',
-    mmDesc: 'အခြေခံ စကားလုံးများကို လေ့လာပါ。',
+    mmDesc: 'အခြေခံ စကားလုံးများကို လေ့လာပါ။',
     bgImg: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=1200',
     href: '/vocabulary',
     color: 'from-blue-600/90'
@@ -152,12 +152,12 @@ const LayoutLearningHome = () => {
   if (isTranslatorOpen) return <AIChatDrawer isOpen={true} onClose={closeOverlay} />
   if (isAiTutorOpen) return <VoiceChat isOpen={true} onClose={closeOverlay} />
 
-  const glassCard =
-    'bg-white/72 backdrop-blur-md border border-white shadow-sm rounded-2xl transition-all active:scale-95 cursor-pointer'
+  // ✨ 修复：增强卡片可读性 - 更高透明度 + 更强磨砂 + 边框对比
+  const glassCard = 'bg-white/95 backdrop-blur-xl border border-white/60 shadow-lg shadow-slate-200/50 rounded-2xl transition-all active:scale-95 cursor-pointer hover:shadow-xl hover:shadow-slate-300/60'
 
   return (
     <main className='relative min-h-[100dvh] overflow-x-hidden text-slate-900'>
-      {/* 固定背景图 */}
+      {/* ✨ 修复：背景图固定 + 增强玻璃磨砂效果（合并多层为一层，性能更优） */}
       <div className='fixed inset-0 -z-30'>
         <img
           src='/images/home-bg.jpg'
@@ -165,13 +165,13 @@ const LayoutLearningHome = () => {
           aria-hidden='true'
           className='h-full w-full object-cover'
         />
+        {/* 叠加增强磨砂层：更高模糊度 + 适度遮罩，确保文字清晰 */}
+        <div className='absolute inset-0 bg-white/50 backdrop-blur-2xl' />
+        {/* 额外柔光渐变，提升层次感 */}
+        <div className='absolute inset-0 bg-gradient-to-b from-white/20 via-white/10 to-white/30' />
       </div>
 
-      {/* 固定磨砂层 */}
-      <div className='fixed inset-0 -z-20 bg-white/36 backdrop-blur-[2px]' />
-
-      {/* 固定柔光渐变层 */}
-      <div className='fixed inset-0 -z-10 bg-gradient-to-b from-white/12 via-white/4 to-white/60' />
+      {/* ✨ 移除原 -z-20 和 -z-10 层，避免层级冲突和性能浪费 */}
 
       {/* 左侧菜单 */}
       <AnimatePresence>
@@ -182,7 +182,7 @@ const LayoutLearningHome = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeOverlay}
-              className='absolute inset-0 bg-slate-900/40 backdrop-blur-sm'
+              className='absolute inset-0 bg-slate-900/50 backdrop-blur-sm'
             />
             <motion.aside
               initial={{ x: '-100%' }}
@@ -195,7 +195,7 @@ const LayoutLearningHome = () => {
               onDragEnd={(e, info) => {
                 if (info.offset.x < -80 || info.velocity.x < -400) closeOverlay()
               }}
-              className='relative w-72 h-full bg-white shadow-2xl flex flex-col'
+              className='relative w-72 h-full bg-white/95 backdrop-blur-xl shadow-2xl flex flex-col border-r border-slate-100'
             >
               <div className='p-6 border-b border-slate-100 flex items-center justify-between'>
                 <div>
@@ -205,7 +205,7 @@ const LayoutLearningHome = () => {
                 <button
                   type='button'
                   onClick={closeOverlay}
-                  className='p-2 bg-slate-100 rounded-full active:scale-90 transition-transform'
+                  className='p-2 bg-slate-100 hover:bg-slate-200 rounded-full active:scale-90 transition-colors'
                 >
                   <X size={20} className='text-slate-800' />
                 </button>
@@ -232,13 +232,13 @@ const LayoutLearningHome = () => {
           <button
             type='button'
             onClick={() => openOverlay('menu')}
-            className='p-1.5 active:scale-90 transition-transform'
+            className='p-1.5 active:scale-90 transition-transform bg-white/80 backdrop-blur-md rounded-xl border border-white/50'
           >
             <Menu className='h-7 w-7 text-slate-800' />
           </button>
           <div>
             <h1 className='text-xl font-black text-slate-900 leading-none'>中缅文学习中心</h1>
-            <div className='mt-1.5 flex items-center gap-1 text-[10px] font-bold text-slate-500 uppercase tracking-widest'>
+            <div className='mt-1.5 flex items-center gap-1 text-[10px] font-bold text-slate-600 uppercase tracking-widest'>
               <Sparkles size={12} className='text-blue-500' />
               <span>Premium Hub</span>
             </div>
@@ -257,7 +257,8 @@ const LayoutLearningHome = () => {
                 <item.icon className={`h-4 w-4 ${item.color}`} />
               </div>
               <p className='text-[13px] font-black text-slate-800'>{item.zh}</p>
-              <p className='text-[9px] font-medium text-slate-400 mt-0.5'>{item.mm}</p>
+              {/* ✨ 修复：缅语文字颜色加深，提升可读性 */}
+              <p className='text-[9px] font-medium text-slate-700 mt-0.5'>{item.mm}</p>
             </Link>
           ))}
         </section>
@@ -272,7 +273,8 @@ const LayoutLearningHome = () => {
                 </div>
                 <div className='min-w-0'>
                   <p className='truncate text-[13px] font-black text-slate-800'>{tool.zh}</p>
-                  <p className='truncate text-[9px] text-slate-400'>{tool.mm}</p>
+                  {/* ✨ 修复：缅语文字颜色加深 */}
+                  <p className='truncate text-[9px] text-slate-700'>{tool.mm}</p>
                 </div>
               </div>
             )
@@ -298,15 +300,16 @@ const LayoutLearningHome = () => {
         <section className='mt-4'>
           <Link href='/pinyin/tips' className={`${glassCard} flex items-center justify-between p-4`}>
             <div className='flex items-center gap-4'>
-              <div className='rounded-xl bg-orange-100 p-2 text-orange-600'>
+              <div className='rounded-xl bg-orange-100 p-2 text-orange-700'>
                 <Lightbulb size={20} />
               </div>
               <div>
                 <p className='text-[14px] font-black text-slate-800'>发音技巧 (Tips)</p>
-                <p className='text-[10px] text-slate-400'>အသံထွက်နည်းလမ်းများ</p>
+                {/* ✨ 修复：缅语文字颜色加深 */}
+                <p className='text-[10px] text-slate-700'>အသံထွက်နည်းလမ်းများ</p>
               </div>
             </div>
-            <ChevronRight className='h-5 w-5 text-slate-300' />
+            <ChevronRight className='h-5 w-5 text-slate-400' />
           </Link>
         </section>
 
@@ -314,7 +317,7 @@ const LayoutLearningHome = () => {
         <section className='mt-8'>
           <div className='mb-4 flex items-center gap-2 px-1'>
             <BookOpen className='h-4 w-4 text-slate-400' />
-            <h2 className='text-[11px] font-black tracking-[0.2em] text-slate-400 uppercase'>
+            <h2 className='text-[11px] font-black tracking-[0.2em] text-slate-500 uppercase'>
               SYSTEM COURSES
             </h2>
           </div>
@@ -323,7 +326,7 @@ const LayoutLearningHome = () => {
               <Link
                 key={course.title}
                 href={course.href}
-                className='group relative h-40 overflow-hidden rounded-[2.5rem] shadow-lg border border-white'
+                className='group relative h-40 overflow-hidden rounded-[2.5rem] shadow-lg border border-white/60'
               >
                 <img
                   src={course.bgImg}
@@ -332,11 +335,12 @@ const LayoutLearningHome = () => {
                 />
                 <div className={`absolute inset-0 bg-gradient-to-r ${course.color} to-transparent`} />
                 <div className='relative flex h-full flex-col justify-center px-8'>
-                  <span className='w-fit rounded-lg bg-white/20 backdrop-blur-md px-2 py-0.5 text-[9px] font-black text-white mb-2 uppercase'>
+                  <span className='w-fit rounded-lg bg-white/25 backdrop-blur-md px-2 py-0.5 text-[9px] font-black text-white mb-2 uppercase border border-white/30'>
                     {course.badge}
                   </span>
-                  <h3 className='text-2xl font-black text-white'>{course.title}</h3>
-                  <p className='text-xs font-medium text-white/80 mt-1'>{course.mmDesc}</p>
+                  <h3 className='text-2xl font-black text-white drop-shadow-md'>{course.title}</h3>
+                  {/* ✨ 修复：缅语描述文字加阴影+微调透明度 */}
+                  <p className='text-xs font-medium text-white/95 drop-shadow-sm mt-1'>{course.mmDesc}</p>
                 </div>
               </Link>
             ))}
@@ -348,24 +352,24 @@ const LayoutLearningHome = () => {
           <button
             type='button'
             onClick={() => openOverlay('ai-tutor')}
-            className='group relative w-full h-[140px] overflow-hidden rounded-[2.5rem] shadow-xl text-left transition-all active:scale-95 border border-white/50'
+            className='group relative w-full h-[140px] overflow-hidden rounded-[2.5rem] shadow-xl text-left transition-all active:scale-95 border border-white/60'
           >
             <img
               src='https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&q=80&w=1200'
               alt='AI 真人私教对练'
               className='absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105'
             />
-            <div className='absolute inset-0 bg-gradient-to-r from-slate-900/80 to-slate-900/20' />
+            <div className='absolute inset-0 bg-gradient-to-r from-slate-900/85 to-slate-900/25' />
 
             <div className='relative z-10 flex h-full flex-col justify-center px-6'>
               <div className='mb-2 flex items-center gap-1.5'>
-                <span className='rounded-full bg-pink-500 px-2.5 py-0.5 text-[10px] font-black tracking-wider text-white shadow-sm'>
+                <span className='rounded-full bg-pink-500 px-2.5 py-0.5 text-[10px] font-black tracking-wider text-white shadow-sm border border-pink-400/30'>
                   AI TUTOR
                 </span>
                 <Sparkles size={14} className='text-pink-300 animate-pulse' />
               </div>
               <h3 className='text-xl font-black text-white drop-shadow-md'>AI 真人私教对练</h3>
-              <p className='mt-1 text-xs font-medium text-white/80 drop-shadow-sm'>
+              <p className='mt-1 text-xs font-medium text-white/95 drop-shadow-sm'>
                 沉浸式真实口语对话
               </p>
             </div>
@@ -374,14 +378,14 @@ const LayoutLearningHome = () => {
       </div>
 
       {/* 底部导航 */}
-      <nav className='fixed bottom-0 left-0 right-0 z-[50] bg-white border-t border-slate-100 px-4 pt-3 pb-[calc(env(safe-area-inset-bottom)+10px)] shadow-[0_-10px_20px_rgba(0,0,0,0.05)]'>
+      <nav className='fixed bottom-0 left-0 right-0 z-[50] bg-white/95 backdrop-blur-xl border-t border-slate-100 px-4 pt-3 pb-[calc(env(safe-area-inset-bottom)+10px)] shadow-[0_-10px_20px_rgba(0,0,0,0.08)]'>
         <div className='flex items-center justify-between'>
           <FooterItem icon={MessageCircle} label='消息' />
           <FooterItem icon={Globe2} label='社区' />
           <FooterItem icon={Users} label='语伴' />
           <FooterItem icon={Compass} label='动态' />
           <Link href='/' className='flex flex-col items-center gap-1 text-indigo-600'>
-            <div className='bg-indigo-50 p-1.5 rounded-xl'>
+            <div className='bg-indigo-50 p-1.5 rounded-xl border border-indigo-100'>
               <BookOpen size={22} />
             </div>
             <span className='text-[10px] font-bold'>学习</span>
@@ -403,7 +407,7 @@ const LayoutLearningHome = () => {
 
 function FooterItem({ icon: Icon, label }) {
   return (
-    <div className='flex flex-col items-center gap-1 text-slate-400'>
+    <div className='flex flex-col items-center gap-1 text-slate-500 hover:text-slate-700 transition-colors'>
       <Icon size={22} />
       <span className='text-[10px] font-bold'>{label}</span>
     </div>
