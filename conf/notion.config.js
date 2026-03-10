@@ -35,7 +35,5 @@ module.exports = {
     
   },
   NOTION_ACTIVE_USER: process.env.NOTION_ACTIVE_USER || '',
-  NOTION_TOKEN_V2: process.env.NOTION_TOKEN_V2 || '',// Useful if you prefer not to make your database public
-  REDIRECT_LANG: false // 开启多语言自动跳转
-
+  NOTION_TOKEN_V2: process.env.NOTION_TOKEN_V2 || ''// Useful if you prefer not to make your database public
 }
