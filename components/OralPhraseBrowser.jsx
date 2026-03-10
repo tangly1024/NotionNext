@@ -219,7 +219,6 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => (
     </div>
 
     <div className="p-5 space-y-5">
-      {/* 中文设置 */}
       <div className="space-y-2">
         <div className="flex justify-between items-center">
           <span className="text-xs font-bold text-slate-700">中文朗读</span>
@@ -272,7 +271,6 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => (
         </div>
       </div>
 
-      {/* 缅甸语设置 */}
       <div className="space-y-2 pt-4 border-t border-slate-100">
         <div className="flex justify-between items-center">
           <span className="text-xs font-bold text-slate-700">缅甸语朗读</span>
@@ -327,55 +325,69 @@ const SettingsPanel = ({ settings, setSettings, onClose }) => (
 );
 
 const SpellingModal = ({ item, settings, onClose }) => {
-  const[activeCharIndex, setActiveCharIndex] = useState(-1);
+  const [activeCharIndex, setActiveCharIndex] = useState(-1);
   const [recordState, setRecordState] = useState('idle');
   const [userAudio, setUserAudio] = useState(null);
-  const chars = item.chinese.split('');
+  const chars = useMemo(() => item.chinese.split(''), [item.chinese]);
+  
   const isMounted = useRef(true);
+  const spellSessionId = useRef(0); // 彻底解决声音重叠的问题锁
 
   useEffect(() => {
     isMounted.current = true;
+    spellSessionId.current += 1;
+    const currentSession = spellSessionId.current;
+
     AudioEngine.stop();
 
     const autoSpell = async () => {
-      await new Promise((r) => setTimeout(r, 200));
-      if (!isMounted.current) return;
+      await new Promise((r) => setTimeout(r, 300));
+      if (!isMounted.current || currentSession !== spellSessionId.current) return;
 
       for (let i = 0; i < chars.length; i++) {
-        if (!isMounted.current) break;
+        if (!isMounted.current || currentSession !== spellSessionId.current) break;
         setActiveCharIndex(i);
         const py = pinyin(chars[i], { toneType: 'symbol' });
         const r2Url = `https://audio.886.best/chinese-vocab-audio/%E6%8B%BC%E8%AF%BB%E9%9F%B3%E9%A2%91/${encodeURIComponent(py)}.mp3`;
         await AudioEngine.play(r2Url);
-        await new Promise((r) => setTimeout(r, 60));
+        await new Promise((r) => setTimeout(r, 60)); // 字间微小停顿
       }
 
-      if (isMounted.current) setActiveCharIndex(-1);
+      if (isMounted.current && currentSession === spellSessionId.current) {
+        setActiveCharIndex(-1);
+      }
     };
 
     autoSpell();
 
     return () => {
       isMounted.current = false;
+      spellSessionId.current += 1; // 组件卸载时废弃当前排队
       AudioEngine.stop();
     };
-  }, [item.chinese, chars]);
+  }, [chars]);
 
   const handleCharClick = async (index) => {
+    spellSessionId.current += 1; // 打断自动拼读
+    AudioEngine.stop();
     setActiveCharIndex(index);
     const char = chars[index];
     const py = pinyin(char, { toneType: 'symbol' });
     const r2Url = `https://audio.886.best/chinese-vocab-audio/%E6%8B%BC%E8%AF%BB%E9%9F%B3%E9%A2%91/${encodeURIComponent(py)}.mp3`;
     await AudioEngine.play(r2Url);
-    setActiveCharIndex(-1);
+    if (isMounted.current) setActiveCharIndex(-1);
   };
 
   const playWhole = async () => {
-    setActiveCharIndex(-1);
+    spellSessionId.current += 1; // 打断自动拼读
+    AudioEngine.stop();
+    setActiveCharIndex('all');
     await AudioEngine.playTTS(item.chinese, settings.zhVoice, settings.zhRate);
+    if (isMounted.current) setActiveCharIndex(-1);
   };
 
   const toggleRecord = async () => {
+    spellSessionId.current += 1; // 打断发音
     if (recordState === 'recording') {
       const url = await RecorderEngine.stop();
       setUserAudio(url);
@@ -388,24 +400,27 @@ const SpellingModal = ({ item, settings, onClose }) => {
   };
 
   return (
+    // 居中显示，点击外部黑色区域触发 onClose关闭
     <div
-      className="fixed inset-0 z-[2000] bg-black/60 backdrop-blur-sm flex items-end justify-center sm:items-center"
+      className="fixed inset-0 z-[2000] bg-black/60 backdrop-blur-sm flex items-center justify-center px-4"
       onClick={onClose}
     >
       <motion.div
-        initial={{ y: '100%' }}
-        animate={{ y: 0 }}
-        exit={{ y: '100%' }}
-        className="bg-white w-full max-w-md rounded-t-[2rem] sm:rounded-[2rem] p-6 shadow-2xl relative"
-        onClick={(e) => e.stopPropagation()}
+        initial={{ opacity: 0, scale: 0.95, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 10 }}
+        className="bg-white w-full max-w-sm rounded-[2rem] p-6 shadow-2xl relative"
+        onClick={(e) => e.stopPropagation()} // 阻止冒泡，点卡片内部不关闭
       >
-        <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6 sm:hidden" />
+        <div className="absolute top-4 right-4">
+          <button onClick={onClose} className="p-2 bg-slate-50 text-slate-400 rounded-full hover:bg-slate-100 hover:text-slate-600 transition-colors">
+            <X size={20} />
+          </button>
+        </div>
 
-        <div className="flex items-center justify-between mb-8">
-          <h3 className="text-slate-900 font-black text-lg">拼读练习</h3>
-          <span className="text-[10px] bg-blue-50 text-blue-500 px-2 py-1 rounded font-bold animate-pulse">
-            自动演示中...
-          </span>
+        <div className="text-center mb-6 pt-2">
+          <h3 className="text-slate-900 font-black text-xl mb-1">拼读练习</h3>
+          <span className="text-[10px] text-slate-400 font-burmese">စာလုံးပေါင်းလေ့ကျင့်ခြင်း</span>
         </div>
 
         <div className="flex flex-wrap justify-center gap-2 mb-10 px-2">
@@ -413,22 +428,22 @@ const SpellingModal = ({ item, settings, onClose }) => {
             <div
               key={i}
               onClick={() => handleCharClick(i)}
-              className={`flex flex-col items-center p-2 rounded-xl transition-all cursor-pointer select-none min-w-[58px] ${
-                activeCharIndex === i
-                  ? 'bg-blue-50 ring-2 ring-blue-500 scale-110 shadow-lg'
-                  : 'hover:bg-slate-50'
+              className={`flex flex-col items-center justify-center w-16 h-20 rounded-2xl transition-all cursor-pointer select-none ${
+                activeCharIndex === i || activeCharIndex === 'all'
+                  ? 'bg-blue-50 ring-2 ring-blue-500 scale-105 shadow-md'
+                  : 'hover:bg-slate-50 border border-slate-100'
               }`}
             >
               <span
                 className={`text-xs font-pinyin mb-1 ${
-                  activeCharIndex === i ? 'text-blue-600 font-bold' : 'text-slate-400'
+                  activeCharIndex === i || activeCharIndex === 'all' ? 'text-blue-600 font-bold' : 'text-slate-400'
                 }`}
               >
                 {pinyin(char, { toneType: 'symbol' })}
               </span>
               <span
                 className={`text-3xl font-black ${
-                  activeCharIndex === i ? 'text-blue-800' : 'text-slate-800'
+                  activeCharIndex === i || activeCharIndex === 'all' ? 'text-blue-800' : 'text-slate-800'
                 }`}
               >
                 {char}
@@ -437,36 +452,36 @@ const SpellingModal = ({ item, settings, onClose }) => {
           ))}
         </div>
 
-        <div className="flex justify-around items-center px-4 pb-4">
+        <div className="flex justify-around items-center px-4 pb-2">
           <button
             onClick={playWhole}
-            className="flex flex-col items-center gap-2 cursor-pointer text-slate-700"
+            className="flex flex-col items-center gap-2 cursor-pointer text-slate-500 hover:text-blue-500 transition-colors"
           >
-            <Volume2 size={24} />
-            <span className="text-[10px]">整句</span>
+            <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center"><Volume2 size={20} /></div>
+            <span className="text-[10px] font-bold">整句</span>
           </button>
 
           <button
             onClick={toggleRecord}
-            className={`w-16 h-16 rounded-full flex items-center justify-center shadow-xl border-4 ${
-              recordState === 'recording' ? 'bg-red-500 border-red-100' : 'bg-slate-100 border-white'
+            className={`w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-colors ${
+              recordState === 'recording' ? 'bg-red-500 text-white animate-pulse' : 'bg-slate-900 text-white'
             }`}
           >
             {recordState === 'recording' ? (
-              <Square size={24} className="text-white" />
+              <Square size={24} />
             ) : (
-              <Mic size={28} className="text-slate-700" />
+              <Mic size={24} />
             )}
           </button>
 
           <button
             onClick={() => userAudio && AudioEngine.play(userAudio)}
-            className={`flex flex-col items-center gap-2 ${
-              userAudio ? 'text-slate-700 hover:text-blue-500' : 'opacity-30 text-slate-400 cursor-not-allowed'
+            className={`flex flex-col items-center gap-2 transition-colors ${
+              userAudio ? 'text-slate-500 hover:text-blue-500 cursor-pointer' : 'opacity-30 text-slate-400 cursor-not-allowed'
             }`}
           >
-            <Play size={24} />
-            <span className="text-[10px]">回放</span>
+            <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center"><Play size={20} /></div>
+            <span className="text-[10px] font-bold">回放</span>
           </button>
         </div>
       </motion.div>
@@ -647,7 +662,7 @@ export default function OralPhraseBrowser({
 
         <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
           <span className="text-sm font-black text-slate-800">{isFavMode ? '我的收藏' : title}</span>
-          <span className="text-[10px] text-slate-400">{isFavMode ? '已收藏的内容' : categoryTitle}</span>
+          <span className="text-[10px] text-slate-400 font-burmese leading-tight">{isFavMode ? 'မှတ်ထားသော စကားပြော' : categoryTitle}</span>
         </div>
 
         <div className="flex items-center gap-1">
@@ -682,8 +697,7 @@ export default function OralPhraseBrowser({
         )}
       </AnimatePresence>
 
-      {/* 调整了容器的 padding-top 和间距 space-y-8，防止卡片挨在一起 */}
-      <div className="pt-24 px-4 space-y-8">
+      <div className="pt-24 px-4 space-y-10">
         {displayPhrases.length === 0 && (
           <div className="flex flex-col items-center justify-center pt-32 text-slate-400">
             <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
@@ -712,42 +726,42 @@ export default function OralPhraseBrowser({
               className="mt-8"
             >
               <div
-                className={`relative bg-white pt-10 pb-6 px-4 rounded-[2.5rem] shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-slate-100 flex flex-col items-center text-center transition-all max-w-[360px] mx-auto overflow-visible cursor-pointer ${
+                className={`relative bg-white pt-10 pb-6 px-4 rounded-[2.5rem] 
+                border-2 border-slate-100 border-b-[6px] border-b-slate-100/90
+                shadow-[0_8px_20px_rgba(15,23,42,0.05)] flex flex-col items-center text-center transition-all max-w-[360px] mx-auto overflow-visible cursor-pointer ${
                   isPlaying ? 'ring-2 ring-blue-400 bg-blue-50/20' : ''
                 }`}
                 onClick={() => handleCardPlay(item)}
               >
-                {/* 谐音绝对定位：悬浮在上边框正中间 */}
+                {/* 谐音绝对定位：悬浮在边框中线，使用实色背景防透明 */}
                 {xieyinText && (
                   <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 z-10 flex justify-center pointer-events-none">
-                    <div className="bg-orange-50 text-orange-600 px-3 py-1 rounded-full text-[12px] font-bold border border-orange-100 shadow-sm flex items-center gap-1 whitespace-nowrap">
-                      <Zap size={12} className="shrink-0 fill-orange-500 text-orange-500" />
-                      <span className="truncate">{xieyinText}</span>
+                    <div className="bg-[#FFF9EB] text-[#D97706] px-4 py-1.5 rounded-full text-[13px] font-black border border-[#FDE68A] shadow-sm flex items-center gap-1.5 whitespace-nowrap overflow-visible">
+                      <Zap size={14} className="shrink-0 fill-[#F59E0B] text-[#F59E0B]" />
+                      <span className="truncate leading-normal pt-0.5 font-burmese">{xieyinText}</span>
                     </div>
                   </div>
                 )}
 
                 <div className="w-full mt-2">
-                  {/* 拼音 (灰色较小) */}
-                  <div className="text-sm text-slate-300 font-pinyin mb-2 tracking-wide">
+                  {/* 拼音，加深颜色为 slate-500 */}
+                  <div className="text-[15px] text-slate-500 font-medium font-pinyin mb-1 tracking-wide">
                     {item.pinyin}
                   </div>
 
-                  {/* 中文 (黑色大字) */}
-                  <h3 className="text-[26px] font-black text-slate-800 mb-3 leading-tight px-2">
+                  <h3 className="text-[28px] font-black text-slate-800 mb-2 leading-tight px-2">
                     {item.chinese}
                   </h3>
 
-                  {/* 缅甸语 (蓝色字体，去掉了背景框) */}
+                  {/* 缅文，引入 font-burmese 类防截断 */}
                   {item.burmese && (
-                    <p className="text-sm text-blue-600 font-bold leading-relaxed mb-6">
+                    <p className="text-[15px] text-blue-600 font-bold font-burmese mb-6 px-2">
                       {item.burmese}
                     </p>
                   )}
 
-                  {/* 底部按钮区 (还原截图：左拼读、中录音、右收藏) */}
+                  {/* 底部按钮区 (无双边框，底色带阴影大圆球) */}
                   <div className="w-full flex justify-center items-center gap-8 pt-2">
-                    {/* 左：拼读 */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -755,10 +769,9 @@ export default function OralPhraseBrowser({
                       }}
                       className="text-slate-300 hover:text-blue-500 transition-all p-2"
                     >
-                      <Sparkles size={20} />
+                      <Sparkles size={22} />
                     </button>
 
-                    {/* 中：录音 (无双边框，底色带阴影大圆球) */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -773,7 +786,6 @@ export default function OralPhraseBrowser({
                       {isRecording ? <StopCircle size={24} /> : <Mic size={24} />}
                     </button>
 
-                    {/* 右：收藏 */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -785,7 +797,7 @@ export default function OralPhraseBrowser({
                           : 'text-slate-300 hover:text-yellow-500'
                       }`}
                     >
-                      <Star size={20} fill={isFav ? 'currentColor' : 'none'} />
+                      <Star size={22} fill={isFav ? 'currentColor' : 'none'} />
                     </button>
                   </div>
                 </div>
@@ -860,6 +872,12 @@ export default function OralPhraseBrowser({
       <style jsx global>{`
         .font-pinyin {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        /* 针对缅文高度截断问题，增加行高和底部 padding 补偿 */
+        .font-burmese {
+          font-family: 'Padauk', 'Myanmar Text', sans-serif;
+          line-height: 1.8;
+          padding-bottom: 0.1em;
         }
       `}</style>
     </div>
