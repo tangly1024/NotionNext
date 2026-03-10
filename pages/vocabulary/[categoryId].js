@@ -8,15 +8,21 @@ import { vocabCategories } from '@/data/vocabData';
 // 纯原生 SVG 图标
 // ==========================================
 const IconChevronLeft = ({ size = 22 }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m15 18-6-6 6-6"/>
+  </svg>
 );
-const IconLock = ({ size = 18 }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+
+const IconLock = ({ size = 24 }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+  </svg>
 );
 
 const getCover = (id, originalCover) => {
   if (originalCover && !originalCover.includes('pixabay.com/zh/images/download')) return originalCover;
-  return `https://picsum.photos/seed/${id}/150/150`; // 获取小图
+  return `https://picsum.photos/seed/${id}/300/300`; // 稍微调大了分辨率以保证清晰度
 };
 
 const pick = (v) => (Array.isArray(v) ? v[0] : v);
@@ -43,7 +49,19 @@ export default function CategoryPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
           <button 
             onClick={() => router.push('/vocabulary')}
-            style={{ width: 40, height: 40, backgroundColor: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#475569', cursor: 'pointer', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}
+            style={{ 
+              width: 40, 
+              height: 40, 
+              backgroundColor: '#FFFFFF', 
+              border: '1px solid #E2E8F0', 
+              borderRadius: '50%', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              color: '#475569', 
+              cursor: 'pointer', 
+              boxShadow: '0 2px 8px rgba(0,0,0,0.04)' 
+            }}
           >
             <IconChevronLeft size={20} />
           </button>
@@ -57,7 +75,7 @@ export default function CategoryPage() {
           </div>
         </div>
 
-        {/* 🌟 核心：一排三个的网格布局 🌟 */}
+        {/* 🌟 核心：一排三个的网格布局 (图片背景+悬浮文字) 🌟 */}
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: 'repeat(3, 1fr)', // 强制分为3列
@@ -75,52 +93,104 @@ export default function CategoryPage() {
                 style={{ textDecoration: 'none' }}
               >
                 <div style={{
-                  backgroundColor: '#FFFFFF',
-                  borderRadius: 20,
-                  padding: 8,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  boxShadow: '0 2px 10px rgba(0,0,0,0.03)',
-                  border: '1px solid #F1F5F9',
-                  height: '100%',
-                  opacity: isLocked ? 0.5 : 1, // 如果锁定则变半透明
-                  transition: 'transform 0.1s'
+                  position: 'relative',
+                  width: '100%',
+                  aspectRatio: '3 / 4', // 保证正方形比例
+                  borderRadius: 18,
+                  overflow: 'hidden',
+                  backgroundColor: '#E2E8F0',
+                  boxShadow: '0 6px 16px rgba(15,23,42,0.08)',
+                  opacity: isLocked ? 0.65 : 1, // 锁定时轻微透明
+                  transition: 'transform 0.15s ease, box-shadow 0.15s ease',
+                  cursor: isLocked ? 'not-allowed' : 'pointer'
                 }}
-                onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+                onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.94)'}
                 onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                onTouchStart={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+                onTouchStart={(e) => e.currentTarget.style.transform = 'scale(0.94)'}
                 onTouchEnd={(e) => e.currentTarget.style.transform = 'scale(1)'}
                 >
                   
-                  {/* 卡片内部的正方形图片 */}
-                  <div style={{ width: '100%', aspectRatio: '1 / 1', borderRadius: 12, overflow: 'hidden', backgroundColor: '#E2E8F0', position: 'relative', marginBottom: 8 }}>
-                    <img 
-                      src={getCover(sub.id, sub.cover)} 
-                      alt={sub.title}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      onError={(e) => { e.currentTarget.src = getCover(sub.id + 'fb', null); }}
-                    />
+                  {/* 底层背景图片 */}
+                  <img 
+                    src={getCover(sub.id, sub.cover)} 
+                    alt={sub.title}
+                    style={{ 
+                      position: 'absolute', 
+                      inset: 0, 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'cover' 
+                    }}
+                    onError={(e) => { e.currentTarget.src = getCover(sub.id + 'fb', null); }}
+                  />
+
+                  {/* 底部渐变遮罩 (保证白色文字清晰可见) */}
+                  <div style={{ 
+                    position: 'absolute', 
+                    inset: 0, 
+                    background: 'linear-gradient(to top, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0.3) 50%, transparent 100%)' 
+                  }} />
+                  
+                  {/* 如果是锁定状态，在正中间显示锁 */}
+                  {isLocked && (
+                    <div style={{ 
+                      position: 'absolute', 
+                      inset: 0, 
+                      backgroundColor: 'rgba(15,23,42,0.2)', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      color: 'rgba(255,255,255,0.9)' 
+                    }}>
+                      <IconLock size={28} />
+                    </div>
+                  )}
+
+                  {/* 悬浮在底部的文字信息 */}
+                  <div style={{
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    padding: '12px 8px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    textAlign: 'center'
+                  }}>
+                    {/* 标题 */}
+                    <h3 style={{ 
+                      fontSize: 14, 
+                      fontWeight: 800, 
+                      color: '#FFFFFF', 
+                      margin: 0, 
+                      lineHeight: 1.25, 
+                      width: '100%', 
+                      display: '-webkit-box', 
+                      WebkitLineClamp: 2, 
+                      WebkitBoxOrient: 'vertical', 
+                      overflow: 'hidden',
+                      textShadow: '0 2px 6px rgba(0,0,0,0.6)'
+                    }}>
+                      {sub.title}
+                    </h3>
                     
-                    {/* 如果是锁定状态，在图片上蒙一层黑纱并显示锁 */}
-                    {isLocked && (
-                      <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(15,23,42,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFF' }}>
-                        <IconLock size={20} />
-                      </div>
+                    {/* 副标题 */}
+                    {sub.subtitle && (
+                      <p style={{ 
+                        fontSize: 10, 
+                        color: 'rgba(255,255,255,0.8)', 
+                        margin: '4px 0 0 0', 
+                        width: '100%', 
+                        whiteSpace: 'nowrap', 
+                        overflow: 'hidden', 
+                        textOverflow: 'ellipsis' 
+                      }}>
+                        {sub.subtitle}
+                      </p>
                     )}
                   </div>
 
-                  {/* 标题 */}
-                  <h3 style={{ fontSize: 13, fontWeight: 800, color: '#1E293B', margin: 0, textAlign: 'center', lineHeight: 1.2, width: '100%', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                    {sub.title}
-                  </h3>
-                  
-                  {/* 副标题 */}
-                  {sub.subtitle && (
-                    <p style={{ fontSize: 10, color: '#94A3B8', margin: '4px 0 0 0', textAlign: 'center', width: '100%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      {sub.subtitle}
-                    </p>
-                  )}
                 </div>
               </Link>
             );
@@ -130,4 +200,4 @@ export default function CategoryPage() {
       </div>
     </main>
   );
-                }
+}
