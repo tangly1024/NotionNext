@@ -153,7 +153,8 @@ export default function ImmersiveBookLibrary({ isOpen, onClose }) {
           dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
           dragElastic={{ top: 0, left: 0, right: 0.5, bottom: 0.8 }}
           onDragEnd={handleDragEnd}
-          className="relative w-full h-full sm:max-w-md bg-black"
+          className="relative w-full h-full sm:max-w-md bg-slate-900
+"
         >
           {/* 背景层：彩色磨砂玻璃 */}
           <div className="absolute inset-0 z-0 pointer-events-none">
