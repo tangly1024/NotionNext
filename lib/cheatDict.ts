@@ -1,4 +1,5 @@
 // src/lib/cheatDict.ts
+
 export type CheatTranslation = {
   translation: string
   back_translation: string
@@ -25,6 +26,7 @@ export type CheatDict = {
 class LRUCache<K, V> {
   private cache = new Map<K, V>()
   constructor(private readonly max = 200) {}
+
   get(key: K): V | undefined {
     if (!this.cache.has(key)) return undefined
     const v = this.cache.get(key)!
@@ -32,15 +34,23 @@ class LRUCache<K, V> {
     this.cache.set(key, v)
     return v
   }
+
   set(key: K, val: V): void {
     if (this.cache.has(key)) this.cache.delete(key)
     this.cache.set(key, val)
+
+    // ✅ 修复：iterator.value 可能是 undefined 的 TS 报错
     if (this.cache.size > this.max) {
-      const firstKey = this.cache.keys().next().value
-      this.cache.delete(firstKey)
+      const it = this.cache.keys().next()
+      if (!it.done) {
+        this.cache.delete(it.value)
+      }
     }
   }
-  clear(): void { this.cache.clear() }
+
+  clear(): void {
+    this.cache.clear()
+  }
 }
 
 const normalizeCache = new LRUCache<string, string>(1000)
@@ -54,12 +64,15 @@ export const normalizeLoose = (s: string): string => {
   const t = String(s ?? '').trim().toLowerCase()
   let out = t
 
-  // 优先用 Unicode property escapes
+  // 优先用 Unicode property escapes（现代运行时支持）
   try {
     out = out.replace(/[\p{P}\p{S}\s]+/gu, '')
   } catch {
     // fallback：老环境（不支持 \p{..}）
-    out = out.replace(/[\s\r\n\t]+|[~`!@#$%^&*()_\-+={}\[\]\\|;:'",.<>/?，。！？、；：‘’“”（）【】《》〈〉…·—–―「」『』﹏￥]+/g, '')
+    out = out.replace(
+      /[\s\r\n\t]+|[~`!@#$%^&*()_\-+={}\[\]\\|;:'",.<>/?，。！？、；：‘’“”（）【】《》〈〉…·—–―「」『』﹏￥]+/g,
+      ''
+    )
   }
 
   normalizeCache.set(key, out)
@@ -74,6 +87,7 @@ export const normalizeLoose = (s: string): string => {
 export type CheatDictLoader = (lang: string) => Promise<CheatDict | null>
 
 let loadCheatDictImpl: CheatDictLoader | null = null
+
 export function setCheatDictLoader(loader: CheatDictLoader) {
   loadCheatDictImpl = loader
 }
@@ -135,7 +149,11 @@ const buildWordIndex = (items: CheatItem[]): Map<string, Set<number>> => {
           if (i + 1 < chars.length) tokens.add(chars[i] + chars[i + 1]) // 2-gram
         }
       } else {
-        for (const w of text.toLowerCase().split(/[\s\p{P}]+/u).filter(x => x.length >= 2)) {
+        // 这里用 \p{P} 需要 u 标志；大多数 Next.js 环境 OK
+        for (const w of text
+          .toLowerCase()
+          .split(/[\s\p{P}]+/u)
+          .filter(x => x.length >= 2)) {
           tokens.add(w)
         }
       }
@@ -197,7 +215,7 @@ const formatResults = (translations: CheatTranslation[] | undefined): CheatTrans
       translation: String(x?.translation ?? '').trim(),
       back_translation: String(x?.back_translation ?? '').trim(),
       frequency: x?.frequency ?? 0,
-      tags: Array.isArray(x?.tags) ? x!.tags! : []
+      tags: Array.isArray(x?.tags) ? (x!.tags as string[]) : []
     }))
     .filter(x => x.translation || x.back_translation)
     .sort((a, b) => (b.frequency ?? 0) - (a.frequency ?? 0))
@@ -212,7 +230,9 @@ const formatResults = (translations: CheatTranslation[] | undefined): CheatTrans
 
   const res = unique.slice(0, 4)
   while (res.length < 4 && res.length > 0) res.push({ ...res[res.length - 1] })
-  return res.length ? res : [{ translation: '（字典数据为空）', back_translation: '', frequency: 0, tags: [] }]
+  return res.length
+    ? res
+    : [{ translation: '（字典数据为空）', back_translation: '', frequency: 0, tags: [] }]
 }
 
 // -------------------- matching --------------------
@@ -262,7 +282,12 @@ const matchByWords = (
   if (/[\u4e00-\u9fff]/.test(input)) {
     tokens.push(...Array.from(input))
   } else {
-    tokens.push(...input.toLowerCase().split(/[\s\p{P}]+/u).filter(w => w.length >= 2))
+    tokens.push(
+      ...input
+        .toLowerCase()
+        .split(/[\s\p{P}]+/u)
+        .filter(w => w.length >= 2)
+    )
   }
 
   const hits = new Map<number, number>()
@@ -279,6 +304,8 @@ const matchByWords = (
   const res = formatResults(dict.items[topIdx]?.targets?.[targetLang])
   return res.map(r => ({ ...r, tags: [...(r.tags ?? []), 'word-match'] }))
 }
+
+// -------------------- API --------------------
 
 export type MatchOptions = {
   mode?: 'exact' | 'phrase' | 'word' | 'hybrid'
@@ -302,7 +329,9 @@ export async function matchCheatLoose(
     if (cached !== undefined) return cached
   }
 
-  let dictObj: CheatDict | null = typeof dict === 'string' ? await loadCheatDict(dict) : dict
+  const dictObj: CheatDict | null =
+    typeof dict === 'string' ? await loadCheatDict(dict) : dict
+
   if (!dictObj || !norm) {
     if (useCache) queryCache.set(cacheKey, null)
     return null
@@ -313,7 +342,9 @@ export async function matchCheatLoose(
 
   if (mode === 'exact' || mode === 'hybrid') {
     const ids = exactIndex.get(norm)
-    if (ids?.length) result = formatResults(dictObj.items[ids[0]]?.targets?.[targetLang])
+    if (ids?.length) {
+      result = formatResults(dictObj.items[ids[0]]?.targets?.[targetLang])
+    }
   }
 
   if (!result && (mode === 'phrase' || mode === 'hybrid') && input.length >= 3) {
@@ -336,8 +367,12 @@ export async function preloadDicts(langs: string[]): Promise<void> {
 export function clearCache(lang?: string, version?: string): void {
   if (lang && version) dictIndexCache.delete(`${lang}@${version}`)
   else if (lang) {
-    for (const k of dictIndexCache.keys()) if (k.startsWith(`${lang}@`)) dictIndexCache.delete(k)
-  } else dictIndexCache.clear()
+    for (const k of dictIndexCache.keys()) {
+      if (k.startsWith(`${lang}@`)) dictIndexCache.delete(k)
+    }
+  } else {
+    dictIndexCache.clear()
+  }
   queryCache.clear()
   normalizeCache.clear()
-                        }
+}
