@@ -1,0 +1,41 @@
+
+{
+  "lang": "zh-CN",
+  "items": [
+    {
+      "source": "你吃饭了吗？",
+      "targets": {
+        "my-MM": [
+          { "translation": "စားပြီးပြီလား？", "back_translation": "你吃了吗？" },
+          { "translation": "ထမင်းစားပြီးလား？", "back_translation": "你吃饭了吗？" },
+          { "translation": "စားပြီးသွားပြီလား？", "back_translation": "你已经吃了吗？" },
+          { "translation": "နင် ထမင်းစားပြီးပြီလား？", "back_translation": "你饭吃了吗？" }
+        ],
+        "vi-VN": [
+          { "translation": "Bạn ăn cơm chưa?", "back_translation": "你吃饭了吗？" },
+          { "translation": "Bạn ăn rồi chưa?", "back_translation": "你吃了吗？" },
+          { "translation": "Ăn cơm chưa vậy?", "back_translation": "吃饭了吗？" },
+          { "translation": "Bạn đã ăn cơm chưa?", "back_translation": "你已经吃饭了吗？" }
+        ],
+        "th-TH": [
+          { "translation": "กินข้าวหรือยัง?", "back_translation": "你吃饭了吗？" },
+          { "translation": "ทานข้าวหรือยัง?", "back_translation": "你吃饭了吗？" },
+          { "translation": "กินอะไรหรือยัง?", "back_translation": "你吃东西了吗？" },
+          { "translation": "คุณกินข้าวแล้วหรือยัง?", "back_translation": "你已经吃饭了吗？" }
+        ],
+        "lo-LA": [
+          { "translation": "ເຈົ້າກິນເຂົ້າແລ້ວບໍ?", "back_translation": "你吃饭了吗？" },
+          { "translation": "ກິນເຂົ້າແລ້ວບໍ?", "back_translation": "吃饭了吗？" },
+          { "translation": "ເຈົ້າໄດ້ກິນແລ້ວບໍ?", "back_translation": "你已经吃了吗？" },
+          { "translation": "ເຈົ້າກິນແລ້ວບໍ?", "back_translation": "你吃了吗？" }
+        ],
+        "ru-RU": [
+          { "translation": "Ты уже поел(а)?", "back_translation": "你已经吃了吗？" },
+          { "translation": "Ты ел(а)?", "back_translation": "你吃了吗？" },
+          { "translation": "Ты уже поужинал(а)?", "back_translation": "你已经吃晚饭了吗？" },
+          { "translation": "Ты поел(а) уже?", "back_translation": "你已经吃了吗？" }
+        ]
+      }
+    }
+  ]
+}
