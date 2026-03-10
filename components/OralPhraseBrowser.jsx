@@ -32,6 +32,7 @@ function normalizePhrase(item, index) {
   };
 }
 
+// 全新升级的滑动窗口比对算法，容许漏字、跳字
 function getPinyinComparison(targetText, userText) {
   const cleanTarget = targetText.replace(/[^\u4e00-\u9fa5]/g, '');
   const cleanUser = userText.replace(/[^\u4e00-\u9fa5]/g, '');
@@ -39,23 +40,44 @@ function getPinyinComparison(targetText, userText) {
   const targetPy = pinyin(cleanTarget, { type: 'array', toneType: 'symbol' });
   const userPy = pinyin(cleanUser, { type: 'array', toneType: 'symbol' });
 
-  const result =[];
-  const len = Math.max(targetPy.length, userPy.length);
+  const result = [];
   let correctCount = 0;
+  let uIdx = 0; // 用户语音指针
 
-  for (let i = 0; i < len; i++) {
-    const t = targetPy[i] || '';
-    const u = userPy[i] || '';
-    const isMatch = t === u;
-    if (isMatch) correctCount++;
+  for (let i = 0; i < targetPy.length; i++) {
+    const tChar = cleanTarget[i];
+    const tPy = targetPy[i];
+    
+    let matchIdx = -1;
+    // 在用户发音中，往后看最多3个字，寻找匹配，防止漏字导致全部错位
+    for (let j = uIdx; j < Math.min(uIdx + 3, userPy.length); j++) {
+      if (cleanUser[j] === tChar || userPy[j] === tPy) {
+        matchIdx = j;
+        break;
+      }
+    }
 
-    result.push({
-      targetChar: cleanTarget[i] || '',
-      targetPy: t,
-      userPy: u,
-      isMatch,
-      isMissing: !u
-    });
+    if (matchIdx !== -1) {
+      // 找到了匹配
+      correctCount++;
+      result.push({
+        targetChar: tChar,
+        targetPy: tPy,
+        userPy: userPy[matchIdx],
+        isMatch: true,
+        isMissing: false
+      });
+      uIdx = matchIdx + 1; // 用户指针跳到匹配成功的下一个字
+    } else {
+      // 当前字没读，或者读得面目全非。占位为缺失，不移动 uIdx，让下一个字继续比对
+      result.push({
+        targetChar: tChar,
+        targetPy: tPy,
+        userPy: '—',
+        isMatch: false,
+        isMissing: true
+      });
+    }
   }
 
   const accuracy = targetPy.length > 0 ? correctCount / targetPy.length : 0;
@@ -331,7 +353,7 @@ const SpellingModal = ({ item, settings, onClose }) => {
   const chars = useMemo(() => item.chinese.split(''), [item.chinese]);
   
   const isMounted = useRef(true);
-  const spellSessionId = useRef(0); // 彻底解决声音重叠的问题锁
+  const spellSessionId = useRef(0);
 
   useEffect(() => {
     isMounted.current = true;
@@ -350,7 +372,7 @@ const SpellingModal = ({ item, settings, onClose }) => {
         const py = pinyin(chars[i], { toneType: 'symbol' });
         const r2Url = `https://audio.886.best/chinese-vocab-audio/%E6%8B%BC%E8%AF%BB%E9%9F%B3%E9%A2%91/${encodeURIComponent(py)}.mp3`;
         await AudioEngine.play(r2Url);
-        await new Promise((r) => setTimeout(r, 60)); // 字间微小停顿
+        await new Promise((r) => setTimeout(r, 60));
       }
 
       if (isMounted.current && currentSession === spellSessionId.current) {
@@ -362,13 +384,13 @@ const SpellingModal = ({ item, settings, onClose }) => {
 
     return () => {
       isMounted.current = false;
-      spellSessionId.current += 1; // 组件卸载时废弃当前排队
+      spellSessionId.current += 1;
       AudioEngine.stop();
     };
   }, [chars]);
 
   const handleCharClick = async (index) => {
-    spellSessionId.current += 1; // 打断自动拼读
+    spellSessionId.current += 1;
     AudioEngine.stop();
     setActiveCharIndex(index);
     const char = chars[index];
@@ -379,7 +401,7 @@ const SpellingModal = ({ item, settings, onClose }) => {
   };
 
   const playWhole = async () => {
-    spellSessionId.current += 1; // 打断自动拼读
+    spellSessionId.current += 1;
     AudioEngine.stop();
     setActiveCharIndex('all');
     await AudioEngine.playTTS(item.chinese, settings.zhVoice, settings.zhRate);
@@ -387,7 +409,7 @@ const SpellingModal = ({ item, settings, onClose }) => {
   };
 
   const toggleRecord = async () => {
-    spellSessionId.current += 1; // 打断发音
+    spellSessionId.current += 1;
     if (recordState === 'recording') {
       const url = await RecorderEngine.stop();
       setUserAudio(url);
@@ -400,17 +422,17 @@ const SpellingModal = ({ item, settings, onClose }) => {
   };
 
   return (
-    // 居中显示，点击外部黑色区域触发 onClose关闭
+    // 加深遮罩颜色，增大模糊度，提升 z-index 彻底挡住背后的胶囊
     <div
-      className="fixed inset-0 z-[2000] bg-black/60 backdrop-blur-sm flex items-center justify-center px-4"
+      className="fixed inset-0 z-[9999] bg-slate-900/90 backdrop-blur-xl flex items-center justify-center px-4"
       onClick={onClose}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 10 }}
-        className="bg-white w-full max-w-sm rounded-[2rem] p-6 shadow-2xl relative"
-        onClick={(e) => e.stopPropagation()} // 阻止冒泡，点卡片内部不关闭
+        className="bg-white w-full max-w-sm rounded-[2.5rem] p-6 shadow-2xl relative"
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="absolute top-4 right-4">
           <button onClick={onClose} className="p-2 bg-slate-50 text-slate-400 rounded-full hover:bg-slate-100 hover:text-slate-600 transition-colors">
@@ -461,10 +483,11 @@ const SpellingModal = ({ item, settings, onClose }) => {
             <span className="text-[10px] font-bold">整句</span>
           </button>
 
+          {/* 录音按钮：抛弃黑色背景，采用浅色明亮风格 */}
           <button
             onClick={toggleRecord}
-            className={`w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-colors ${
-              recordState === 'recording' ? 'bg-red-500 text-white animate-pulse' : 'bg-slate-900 text-white'
+            className={`w-16 h-16 rounded-full flex items-center justify-center shadow-lg border-2 transition-all ${
+              recordState === 'recording' ? 'bg-red-50 text-red-500 border-red-200 animate-pulse' : 'bg-slate-50 text-slate-500 border-white hover:text-blue-500'
             }`}
           >
             {recordState === 'recording' ? (
@@ -697,7 +720,7 @@ export default function OralPhraseBrowser({
         )}
       </AnimatePresence>
 
-      <div className="pt-24 px-4 space-y-10">
+      <div className="pt-24 px-4 space-y-8">
         {displayPhrases.length === 0 && (
           <div className="flex flex-col items-center justify-center pt-32 text-slate-400">
             <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
@@ -727,24 +750,24 @@ export default function OralPhraseBrowser({
             >
               <div
                 className={`relative bg-white pt-10 pb-6 px-4 rounded-[2.5rem] 
-                border-2 border-slate-100 border-b-[6px] border-b-slate-100/90
-                shadow-[0_8px_20px_rgba(15,23,42,0.05)] flex flex-col items-center text-center transition-all max-w-[360px] mx-auto overflow-visible cursor-pointer ${
+                border-2 border-slate-50 border-b-[6px] border-b-slate-100/80
+                shadow-[0_8px_20px_rgba(15,23,42,0.06)] flex flex-col items-center text-center transition-all max-w-[360px] mx-auto overflow-visible cursor-pointer ${
                   isPlaying ? 'ring-2 ring-blue-400 bg-blue-50/20' : ''
                 }`}
                 onClick={() => handleCardPlay(item)}
               >
-                {/* 谐音绝对定位：悬浮在边框中线，使用实色背景防透明 */}
+                {/* 谐音胶囊：背景浅粉，字体蓝色 */}
                 {xieyinText && (
                   <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 z-10 flex justify-center pointer-events-none">
-                    <div className="bg-[#FFF9EB] text-[#D97706] px-4 py-1.5 rounded-full text-[13px] font-black border border-[#FDE68A] shadow-sm flex items-center gap-1.5 whitespace-nowrap overflow-visible">
-                      <Zap size={14} className="shrink-0 fill-[#F59E0B] text-[#F59E0B]" />
-                      <span className="truncate leading-normal pt-0.5 font-burmese">{xieyinText}</span>
+                    <div className="bg-pink-50 text-blue-600 px-4 py-1.5 rounded-full text-[13px] font-black border border-pink-100 shadow-sm flex items-center gap-1.5 whitespace-nowrap overflow-visible">
+                      <Zap size={14} className="shrink-0 fill-pink-400 text-pink-400" />
+                      <span className="truncate pt-0.5 font-burmese">{xieyinText}</span>
                     </div>
                   </div>
                 )}
 
                 <div className="w-full mt-2">
-                  {/* 拼音，加深颜色为 slate-500 */}
+                  {/* 拼音，加深颜色 */}
                   <div className="text-[15px] text-slate-500 font-medium font-pinyin mb-1 tracking-wide">
                     {item.pinyin}
                   </div>
@@ -753,14 +776,13 @@ export default function OralPhraseBrowser({
                     {item.chinese}
                   </h3>
 
-                  {/* 缅文，引入 font-burmese 类防截断 */}
+                  {/* 缅甸语 */}
                   {item.burmese && (
                     <p className="text-[15px] text-blue-600 font-bold font-burmese mb-6 px-2">
                       {item.burmese}
                     </p>
                   )}
 
-                  {/* 底部按钮区 (无双边框，底色带阴影大圆球) */}
                   <div className="w-full flex justify-center items-center gap-8 pt-2">
                     <button
                       onClick={(e) => {
@@ -873,11 +895,11 @@ export default function OralPhraseBrowser({
         .font-pinyin {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
-        /* 针对缅文高度截断问题，增加行高和底部 padding 补偿 */
+        /* 针对缅文防截断优化：加大行高和底层内边距 */
         .font-burmese {
           font-family: 'Padauk', 'Myanmar Text', sans-serif;
-          line-height: 1.8;
-          padding-bottom: 0.1em;
+          line-height: 2.2 !important;
+          padding-bottom: 0.25em;
         }
       `}</style>
     </div>
