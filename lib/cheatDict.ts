@@ -1,5 +1,4 @@
-// lib/cheatDict.ts
-// ✅ 兼容：低 TS target（不使用 /u 与 \p{}） + noUncheckedIndexedAccess
+// ✅ 兼容：低 TS target + noUncheckedIndexedAccess
 
 export type CheatTranslation = {
   translation: string
@@ -23,7 +22,6 @@ export type CheatDict = {
 }
 
 // -------------------- LRU Cache --------------------
-
 class LRUCache<K, V> {
   private cache = new Map<K, V>()
   constructor(private readonly max = 200) {}
@@ -31,7 +29,6 @@ class LRUCache<K, V> {
   get(key: K): V | undefined {
     if (!this.cache.has(key)) return undefined
     const v = this.cache.get(key)!
-    // refresh
     this.cache.delete(key)
     this.cache.set(key, v)
     return v
@@ -40,7 +37,6 @@ class LRUCache<K, V> {
   set(key: K, val: V): void {
     if (this.cache.has(key)) this.cache.delete(key)
     this.cache.set(key, val)
-
     if (this.cache.size > this.max) {
       const it = this.cache.keys().next()
       if (!it.done) this.cache.delete(it.value)
@@ -53,24 +49,21 @@ class LRUCache<K, V> {
 }
 
 // -------------------- normalize --------------------
-
 const normalizeCache = new LRUCache<string, string>(1000)
 
-/**
- * 宽松归兼 target  const raw = s ?? ''
+const PUNCT_RE = /[\s\n\r\t@#$%^&*()_\-+={}\[\]\\|;:'",.，！？：；''""·（）【】《》〈〉…—–―「」『』﹏￥]+/g
+
+export function normalizeLoose(s: string | null | undefined): string {
+  const raw = s ?? ''
   const cached = normalizeCache.get(raw)
   if (cached !== undefined) return cached
-
- =
-\r[@#$%^&*()_\-+={]\\:'.，！？：‘’“”·（）【】《》〈〉…—–―「」『』﹏￥]+/g
-
+  const t = raw.toLowerCase().trim().replace(/\s+/g, ' ')
   const out = t.replace(PUNCT_RE, '')
   normalizeCache.set(raw, out)
   return out
 }
 
 // -------------------- dict loading --------------------
-
 export type CheatDictLoader = (lang: string) => Promise<CheatDict | null>
 
 let loadCheatDictImpl: CheatDictLoader | null = null
@@ -79,31 +72,24 @@ export function setCheatDictLoader(loader: CheatDictLoader) {
   loadCheatDictImpl = loader
 }
 
-/**
- * 默认 loader：从同源静态文件拉取 /dicts/{lang}.json
- * 注意：仅建议在浏览器端调用；SSR 场景你可以通过 setCheatDictLoader 替换实现。
- */
 export async function loadCheatDict(lang: string): Promise<CheatDict | null> {
   if (loadCheatDictImpl) return loadCheatDictImpl(lang)
-
   const url = `/dicts/${encodeURIComponent(lang)}.json`
   const res = await fetch(url, { cache: 'force-cache' })
   if (!res.ok) return null
-
   const dict = (await res.json()) as CheatDict
   if (!dict?.items || !Array.isArray(dict.items)) return null
   return dict
 }
 
 // -------------------- indexing --------------------
-
 type DictIndex = {
   exactIndex: Map<string, number[]>
   wordIndex: Map<string, Set<number>>
   phraseIndex: Map<string, Set<number>>
 }
 
-const dictIndexCache = new Map<string, DictIndex>() // key: lang@version
+const dictIndexCache = new Map<string, DictIndex>()
 const queryCache = new LRUCache<string, CheatTranslation[] | null>(300)
 
 const getIndexKey = (dict: CheatDict) => `${dict.lang}@${dict.version}`
@@ -126,7 +112,6 @@ const buildExactIndex = (items: CheatItem[]): Map<string, number[]> => {
   return index
 }
 
-/** 英文/数字分词：不使用 \p{P}，直接按“非字母数字”切 */
 const splitAlphaNumTokens = (text: string): string[] => {
   return text
     .toLowerCase()
@@ -136,10 +121,8 @@ const splitAlphaNumTokens = (text: string): string[] => {
 
 const buildWordIndex = (items: CheatItem[]): Map<string, Set<number>> => {
   const index = new Map<string, Set<number>>()
-
   items.forEach((item, idx) => {
     const tokens = new Set<string>()
-
     for (const text of allTextsOfItem(item)) {
       if (/[\u4e00-\u9fff]/.test(text)) {
         const chars = Array.from(text)
@@ -147,41 +130,64 @@ const buildWordIndex = (items: CheatItem[]): Map<string, Set<number>> => {
           const c1 = chars[i]
           if (!c1) continue
           tokens.add(c1)
-
           const c2 = chars[i + 1]
-          if (c2) tokens.add(c1 + c2) // 2-gram
+          if (c2) tokens.add(c1 + c2)
         }
       } else {
         const ws = splitAlphaNumTokens(text)
         for (const w of ws) tokens.add(w)
       }
     }
-
     tokens.forEach(tok => {
       if (!tok) return
       if (!index.has(tok)) index.set(tok, new Set<number>())
-      return index}
+      index.get(tok)!.add(idx)
+    })
+  })
+  return index
+}
 
- buildPhraseitems[]):<number  Map>>.for, {
- textTextsOfItem(item)) {
-      const chars = Array(text if <       len <=.min.length++)       let  i chars; {
- const(i len.length
- slice         phrase if.has))phrase<number.getadd           returnOrdict Dict  kIndex const dict)
-)  = buildWordIndex(dict.items)
+const buildPhraseIndex = (items: CheatItem[]): Map<string, Set<number>> => {
+  const index = new Map<string, Set<number>>()
+  items.forEach((item, idx) => {
+    for (const text of allTextsOfItem(item)) {
+      if (/[\u4e00-\u9fff]/.test(text)) {
+        const chars = Array.from(text)
+        const len = chars.length
+        if (len < 3) continue
+        const minLen = 3, maxLen = Math.min(6, len)
+        for (let l = minLen; l <= maxLen; l++) {
+          for (let i = 0; i <= len - l; i++) {
+            const phrase = chars.slice(i, i + l).join('')
+            if (!index.has(phrase)) index.set(phrase, new Set<number>())
+            index.get(phrase)!.add(idx)
+          }
+        }
+      }
+    }
+  })
+  return index
+}
+
+const getOrBuildIndex = (dict: CheatDict): DictIndex => {
+  const k = getIndexKey(dict)
+  const cached = dictIndexCache.get(k)
+  if (cached) return cached
+  const exactIndex = buildExactIndex(dict.items)
+  const wordIndex = buildWordIndex(dict.items)
   const phraseIndex = buildPhraseIndex(dict.items)
-
   const idx: DictIndex = { exactIndex, wordIndex, phraseIndex }
   dictIndexCache.set(k, idx)
   return idx
 }
 
 // -------------------- results formatting --------------------
-
 const formatResults = (translations: CheatTranslation[] | undefined): CheatTranslation[] => {
   if (!Array.isArray(translations) || translations.length === 0) {
-    return [{ translation: '（  }
-
-  const cleaned translations   map(x => ({
+    return [{ translation: '（字典数据为空）', back_translation: '', frequency: 0, tags: [] }]
+  }
+  const cleaned = translations
+    .map(x => ({
       translation: String(x?.translation ?? '').trim(),
       back_translation: String(x?.back_translation ?? '').trim(),
       frequency: x?.frequency ?? 0,
@@ -189,7 +195,6 @@ const formatResults = (translations: CheatTranslation[] | undefined): CheatTrans
     }))
     .filter(x => x.translation || x.back_translation)
     .sort((a, b) => (b.frequency ?? 0) - (a.frequency ?? 0))
-
   const seen = new Set<string>()
   const unique = cleaned.filter(x => {
     const k = `${x.translation}|${x.back_translation}`
@@ -197,17 +202,12 @@ const formatResults = (translations: CheatTranslation[] | undefined): CheatTrans
     seen.add(k)
     return true
   })
-
   const res = unique.slice(0, 4)
   while (res.length < 4 && res.length > 0) res.push({ ...res[res.length - 1] })
-
-  return res.length
-    ? res
-    : [{ translation: '（字典数据为空）', back_translation: '', frequency: 0, tags: [] }]
+  return res.length ? res : [{ translation: '（字典数据为空）', back_translation: '', frequency: 0, tags: [] }]
 }
 
 // -------------------- matching --------------------
-
 const matchByPhrases = (
   dict: CheatDict,
   input: string,
@@ -217,7 +217,6 @@ const matchByPhrases = (
 ): CheatTranslation[] | null => {
   const chars = Array.from(input)
   const scores = new Map<number, number>()
-
   for (let len = Math.min(6, chars.length); len >= 3; len--) {
     for (let i = 0; i <= chars.length - len; i++) {
       const slice = chars.slice(i, i + len)
@@ -225,26 +224,20 @@ const matchByPhrases = (
       const phrase = slice.join('')
       const ids = phraseIndex.get(phrase)
       if (!ids) continue
-
       const weight = len * (1 - i / Math.max(1, chars.length))
       ids.forEach(id => scores.set(id, (scores.get(id) ?? 0) + weight))
     }
   }
-
   if (scores.size === 0) return null
-
   const sorted = Array.from(scores.entries()).sort((a, b) => b[1] - a[1])
   const top = sorted[0]
   if (!top) return null
-
   const topIdx = top[0]
   const topScore = top[1]
   const second = sorted.length > 1 ? sorted[1] : undefined
   const secondScore = second ? second[1] : 0
-
   if (topScore < minScore) return null
   if (secondScore > 0 && topScore / secondScore < 1.08) return null
-
   const hit = dict.items[topIdx]
   if (!hit) return null
   return formatResults(hit.targets?.[targetLang])
@@ -258,42 +251,33 @@ const matchByWords = (
   minHits = 2
 ): CheatTranslation[] | null => {
   const tokens: string[] = []
-
   if (/[\u4e00-\u9fff]/.test(input)) {
     const cs = Array.from(input)
     for (const c of cs) if (c) tokens.push(c)
   } else {
     tokens.push(...splitAlphaNumTokens(input))
   }
-
   const hits = new Map<number, number>()
   const uniq = new Set(tokens)
-
   uniq.forEach(tok => {
     const ids = wordIndex.get(tok)
     if (!ids) return
     ids.forEach(id => hits.set(id, (hits.get(id) ?? 0) + 1))
   })
-
   if (hits.size === 0) return null
-
   const sorted = Array.from(hits.entries()).sort((a, b) => b[1] - a[1])
   const top = sorted[0]
   if (!top) return null
-
   const topIdx = top[0]
   const topHits = top[1]
   if (topHits < minHits) return null
-
   const hit = dict.items[topIdx]
   if (!hit) return null
-
   const res = formatResults(hit.targets?.[targetLang])
   return res.map(r => ({ ...r, tags: [...(r.tags ?? []), 'word-match'] }))
 }
 
 // -------------------- API --------------------
-
 export type MatchOptions = {
   mode?: 'exact' | 'phrase' | 'word' | 'hybrid'
   useCache?: boolean
@@ -306,26 +290,20 @@ export async function matchCheatLoose(
   options: MatchOptions = {}
 ): Promise<CheatTranslation[] | null> {
   const { mode = 'hybrid', useCache = true } = options
-
   const norm = normalizeLoose(input)
   const dictLang = typeof dict === 'string' ? dict : dict?.lang
   const cacheKey = `${dictLang ?? 'null'}|${norm}|${targetLang}|${mode}`
-
   if (useCache) {
     const cached = queryCache.get(cacheKey)
     if (cached !== undefined) return cached
   }
-
   const dictObj: CheatDict | null = typeof dict === 'string' ? await loadCheatDict(dict) : dict
   if (!dictObj || !norm) {
     if (useCache) queryCache.set(cacheKey, null)
     return null
   }
-
   const { exactIndex, phraseIndex, wordIndex } = getOrBuildIndex(dictObj)
   let result: CheatTranslation[] | null = null
-
-  // exact
   if (mode === 'exact' || mode === 'hybrid') {
     const ids = exactIndex.get(norm)
     const first = ids ? ids[0] : undefined
@@ -334,17 +312,12 @@ export async function matchCheatLoose(
       if (hit) result = formatResults(hit.targets?.[targetLang])
     }
   }
-
-  // phrase
   if (!result && (mode === 'phrase' || mode === 'hybrid') && input.length >= 3) {
     result = matchByPhrases(dictObj, input, targetLang, phraseIndex)
   }
-
-  // word
   if (!result && (mode === 'word' || mode === 'hybrid')) {
     result = matchByWords(dictObj, input, targetLang, wordIndex)
   }
-
   if (useCache) queryCache.set(cacheKey, result)
   return result
 }
