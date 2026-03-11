@@ -7,17 +7,29 @@ export const PROVIDERS = {
     baseUrl: 'https://www.galaapi.com/v1',
     models: ['gemini-3.1-flash-lite-preview', 'gemini-2.5-flash-lite'],
   },
+  Mistral: {
+    id: 'Mistral',
+    name: 'Mistral',
+    baseUrl: 'https://api.mistral.ai/v1',
+    models: ['mistral-large-2512', 'mistral-medium-latest'],
+  },
   nvidia: {
     id: 'nvidia',
     name: 'NVIDIA',
     baseUrl: 'https://integrate.api.nvidia.com/v1',
-    models: ['meta/llama-3.1-70b-instruct', 'google/gemma-2-9b-it'],
+    models: ['qwen/qwen3.5-397b-a17b', 'mistralai/mistral-large-3-675b-instruct-2512'],
   },
   deepseek: {
     id: 'deepseek',
     name: 'DeepSeek',
     baseUrl: 'https://api.deepseek.com/v1',
     models: ['deepseek-chat'],
+  },
+  iflow: {
+    id: 'iflow',
+    name: 'iflow',
+    baseUrl: 'https://apis.iflow.cn/v1',
+    models: ['qwen3-max', 'qwen3-235b'],
   },
   qwen: {
     id: 'qwen',
