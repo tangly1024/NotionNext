@@ -352,17 +352,26 @@ const LayoutSlug = props => {
                 <WWAds orientation='horizontal' className='w-full' />
               </section>
 
-              {/* 上一篇\下一篇文章 */}
-              <PostAdjacent {...props} />
-
-              {/* 分享 */}
-              <ShareBar post={post} />
               {post?.type === 'Post' && (
-                <div className='px-5'>
-                  {/* 版权 */}
-                  <PostCopyright {...props} />
-                  {/* 文章推荐 */}
-                  <PostRecommend {...props} />
+                <div className='heo-post-footer px-5 pb-1'>
+                  <div className='heo-post-footer__inner space-y-6'>
+                    
+                    {/* 分享 */}
+                    <div className='heo-post-footer__share'>
+                      <ShareBar post={post} />
+                    </div>
+
+                    {/* 版权 */}
+                    <PostCopyright {...props} />
+
+                    {/* 上一篇\下一篇文章 */}
+                    <PostAdjacent {...props} />
+
+                    <div className='heo-post-footer__divider h-px bg-gradient-to-r from-transparent via-slate-200/80 to-transparent dark:via-slate-700/70' />
+
+                    {/* 文章推荐 */}
+                    <PostRecommend {...props} />
+                  </div>
                 </div>
               )}
             </article>
