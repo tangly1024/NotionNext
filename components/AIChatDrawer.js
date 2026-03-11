@@ -1,10 +1,9 @@
 import { Transition, Dialog, Menu } from '@headlessui/react';
 import React, { useState, useEffect, useRef, Fragment, memo } from 'react';
 
-// 引入你本地的字典库
+// 引入你本地的字典库和刚建的映射文件
 import { loadCheatDict, matchCheatLoose } from '@/lib/cheatDict';
-// 引入刚刚新建的密钥路由配置文件 (请确保路径正确！)
-import { getApiConfig } from '@/data/ai-models';
+import { getApiConfig } from '@/data/ai-models'; 
 
 // ----------------- 全局样式 -----------------
 const GlobalStyles = () => (
@@ -88,7 +87,6 @@ const SUPPORTED_LANGUAGES = [
   { code: 'ru-RU', name: '俄语', flag: '🇷🇺' }
 ];
 
-// 优化后的极严苛 Prompt
 const BASE_SYSTEM_INSTRUCTION = `You are an expert bilingual localization engine. 
 CRITICAL RULES:
 1. STRICT LITERAL TRANSLATION: Maintain exact meaning, tone, and punctuation. Do NOT paraphrase, explain, or add filler words.
@@ -96,10 +94,9 @@ CRITICAL RULES:
 3. FORMAT: You MUST return ONLY valid JSON.
 4. SCHEMA: {"data": [{"translation": "your accurate translation", "back_translation": "translate it back to source language to check accuracy"}]}`;
 
-// 默认设置中去掉了繁琐的模型配置，仅保留 apiKey
+// 极简默认配置
 const DEFAULT_SETTINGS = {
   apiKey: '',
-  ttsConfig: {},
   ttsSpeed: 1.0,
   autoPlayTTS: false, 
   backgroundOverlay: 0.9,
@@ -112,14 +109,17 @@ const DEFAULT_SETTINGS = {
 // ----------------- TTS Engine -----------------
 const ttsCache = new Map();
 const AVAILABLE_VOICES = {
-  'zh-CN': [{ id: 'zh-CN-XiaoyouNeural', name: '小悠 (女)' }],
-  'en-US': [{ id: 'en-US-JennyNeural', name: 'Jenny (女)' }],
-  'my-MM': [{ id: 'my-MM-NilarNeural', name: 'Nilar (女)' }]
+  'zh-CN': 'zh-CN-XiaoyouNeural',
+  'en-US': 'en-US-JennyNeural',
+  'my-MM': 'my-MM-NilarNeural',
+  'ja-JP': 'ja-JP-NanamiNeural',
+  'ko-KR': 'ko-KR-SunHiNeural',
+  'th-TH': 'th-TH-PremwadeeNeural'
 };
 
 const playTTS = async (text, lang, settings) => {
   if (!text) return;
-  const voice = settings.ttsConfig?.[lang] || AVAILABLE_VOICES[lang]?.[0]?.id || 'zh-CN-XiaoyouNeural';
+  const voice = AVAILABLE_VOICES[lang] || 'zh-CN-XiaoyouNeural';
   const speed = settings.ttsSpeed || 1.0;
   const key = `${voice}_${speed}_${text}`;
 
@@ -136,7 +136,7 @@ const playTTS = async (text, lang, settings) => {
     }
     audio.currentTime = 0; audio.playbackRate = speed;
     await audio.play();
-  } catch (e) { console.error('TTS Play Error:', e); }
+  } catch (e) { console.error('TTS Error:', e); }
 };
 
 const normalizeTranslations = (raw) => {
@@ -173,7 +173,7 @@ const TranslationCard = memo(({ data, onPlay }) => {
   );
 });
 
-// 极简版设置（去掉了复杂的接口模型配置，仅保留 Key 和偏好）
+// 设置面板 (只保留极简功能)
 const SettingsModal = ({ settings, onSave, onClose }) => {
   const [data, setData] = useState(settings);
   const fileInputRef = useRef(null);
@@ -197,24 +197,24 @@ const SettingsModal = ({ settings, onSave, onClose }) => {
           </div>
           
           <div className="p-6 space-y-6 max-h-[60vh] overflow-y-auto slim-scrollbar">
-            {/* 核心改动：只有一个密钥输入框 */}
+            {/* 核心改动：只有一个输入框，用来输入密钥 */}
             <div>
               <label className="block text-sm font-bold text-gray-700 mb-2">通行密钥 (API Key)</label>
               <input 
                 type="password" 
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition-all" 
-                placeholder="请输入管理员分配的通信密钥..." 
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500" 
+                placeholder="请输入您的密钥..." 
                 value={data.apiKey || ''} 
                 onChange={e => setData({...data, apiKey: e.target.value})} 
               />
-              <p className="text-[11px] text-gray-400 mt-2">系统会根据您的密钥级别，自动为您分配最佳翻译节点。</p>
+              <p className="text-[11px] text-gray-400 mt-2">系统会根据密钥智能分配高速翻译节点和模型。</p>
             </div>
 
             <hr className="border-gray-100" />
 
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-bold text-gray-700">自动朗读译文</div>
+                <div className="text-sm font-bold text-gray-700">自动朗读</div>
                 <div className="text-xs text-gray-400 mt-1">翻译完成后立即播放语音</div>
               </div>
               <input type="checkbox" checked={data.autoPlayTTS} onChange={e => setData({...data, autoPlayTTS: e.target.checked})} className="w-5 h-5 accent-pink-500"/>
@@ -237,8 +237,8 @@ const SettingsModal = ({ settings, onSave, onClose }) => {
             </div>
           </div>
           
-          <div className="p-5 border-t border-gray-100 flex gap-3">
-             <button onClick={()=>{onSave(data);onClose();}} className="w-full py-3 rounded-xl bg-pink-500 text-sm font-bold text-white shadow-lg shadow-pink-200 hover:bg-pink-600 transition-colors">保存配置</button>
+          <div className="p-5 border-t border-gray-100">
+             <button onClick={()=>{onSave(data);onClose();}} className="w-full py-3 rounded-xl bg-pink-500 text-sm font-bold text-white shadow-lg shadow-pink-200">保存并关闭</button>
           </div>
         </Dialog.Panel>
       </div>
@@ -250,7 +250,7 @@ const SettingsModal = ({ settings, onSave, onClose }) => {
 const AiChatContent = ({ onClose }) => {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
   const [sourceLang, setSourceLang] = useState('zh-CN');
-  const [targetLang, setTargetLang] = useState('en-US');
+  const [targetLang, setTargetLang] = useState('my-MM');
   const [inputVal, setInputVal] = useState('');
   const [inputImages, setInputImages] = useState([]);
   const fileInputRef = useRef(null);
@@ -285,44 +285,64 @@ const AiChatContent = ({ onClose }) => {
     setTimeout(() => scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' }), 100);
   };
 
-  // 核心改动：不再从前端读取各种复杂的 provider，而是通过 getApiConfig 解析密钥
+  // 核心改动 1：智能 URL 拼接与按数组轮询模型
   const fetchAi = async (messages, apiKey, signal) => {
-    // 调用配置文件中的映射逻辑
-    const { baseUrl, model, name, apiKey: parsedKey } = getApiConfig(apiKey);
-    
-    if (!parsedKey) throw new Error(`系统未配置 API 密钥，请在设置中配置`);
+    const config = getApiConfig(apiKey);
+    if (!config.apiKey && !config.baseUrl) throw new Error(`未配置 API，请检查设置`);
 
-    const body = { 
-        model: model, 
-        messages, 
-        stream: false,
-        temperature: 0.1, // 改为 0.1，既保障严谨性，又防死循环
-        response_format: { type: 'json_object' }
-    };
+    // 智能修正 URL：如果用户填的地址已经包含了 /chat/completions，就不再拼接
+    const endpoint = config.baseUrl.endsWith('/chat/completions') 
+        ? config.baseUrl 
+        : `${config.baseUrl.replace(/\/+$/, '')}/chat/completions`;
 
-    const cleanUrl = baseUrl.replace(/\/+$/, '');
-    const res = await fetch(`${cleanUrl}/chat/completions`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${parsedKey}` },
-      body: JSON.stringify(body),
-      signal
-    });
+    let lastErrorMsg = "";
 
-    const contentType = res.headers.get("content-type");
-    if (contentType && contentType.includes("text/html")) {
-        throw new Error(`网络异常(HTML拦截)。分配的节点地址无效，请检查网络或联系管理员。`);
+    // 轮询机制：遍历 config.models 数组，一个失败了自动尝试下一个
+    for (let i = 0; i < config.models.length; i++) {
+        const currentModel = config.models[i];
+        
+        try {
+            const res = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${config.apiKey}` },
+                body: JSON.stringify({ 
+                    model: currentModel, 
+                    messages, 
+                    temperature: 0.1, // 降低温度，提高严谨度
+                    response_format: { type: 'json_object' }
+                }),
+                signal
+            });
+
+            // 彻底解决 404/HTML 问题
+            const contentType = res.headers.get("content-type");
+            if (contentType && contentType.includes("text/html")) {
+                throw new Error(`接口地址填写错误(404)，请检查: ${config.baseUrl}`);
+            }
+
+            if (!res.ok) {
+                const errData = await res.json().catch(() => ({}));
+                throw new Error(errData?.error?.message || `状态码: ${res.status}`);
+            }
+            
+            const data = await res.json();
+            let content = data.choices?.[0]?.message?.content || "";
+            if (settings.filterThinking) content = content.replace(/<think>[\s\S]*?<\/think>/g, '').trim();
+            
+            // 成功则直接返回，并标注用了哪个模型
+            return { content, modelName: `${config.name} (${currentModel})` };
+            
+        } catch (error) {
+            lastErrorMsg = error.message;
+            console.warn(`[轮询] 模型 ${currentModel} 请求失败:`, error.message);
+            // 如果是用户主动取消请求，不要继续轮询了
+            if (error.name === 'AbortError') throw error;
+            // 否则继续下一次循环，尝试下一个模型
+        }
     }
 
-    if (!res.ok) {
-      const errData = await res.json().catch(() => ({}));
-      throw new Error(errData?.error?.message || `服务错误: ${res.status}`);
-    }
-    
-    const data = await res.json();
-    let content = data.choices?.[0]?.message?.content || "";
-    if (settings.filterThinking) content = content.replace(/<think>[\s\S]*?<\/think>/g, '').trim();
-    
-    return { content, modelName: name }; // 展示映射后的名称
+    // 如果所有模型都失败了，抛出最后的错误
+    throw new Error(`所有可用节点均尝试失败，最后报错：${lastErrorMsg}`);
   };
 
   const handleTranslate = async (textOverride = null) => {
@@ -359,7 +379,7 @@ const AiChatContent = ({ onClose }) => {
       let dictHit = null;
       let aiMsg = { id: nowId(), role: 'ai', results: [], modelName: '', ts: Date.now(), tgtLang: cTgt };
 
-      // 本地字典检测 (注意 try-catch 和 await)
+      // 本地字典检测
       if (inputImages.length === 0 && text) {
          try {
              const dict = await loadCheatDict(cSrc);
@@ -371,7 +391,7 @@ const AiChatContent = ({ onClose }) => {
         aiMsg.results = normalizeTranslations(dictHit);
         aiMsg.modelName = '★ 内部优选词库';
       } else {
-        // AI 翻译，传入用户的 apiKey 进行路由
+        // AI 翻译，传入用户填写的 apiKey
         const res = await fetchAi(messages, settings.apiKey, signal);
         aiMsg.results = normalizeTranslations(res.content);
         aiMsg.modelName = res.modelName;
@@ -391,19 +411,40 @@ const AiChatContent = ({ onClose }) => {
     }
   };
 
+  // 核心改动 2：加长语音识别时间
   const startRecording = () => {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) return alert('当前浏览器不支持语音输入');
-    if (isRecording) { recognitionRef.current?.stop(); return; }
+    
+    // 如果正在录音，点击则停止并发送翻译
+    if (isRecording) { 
+        recognitionRef.current?.stop(); 
+        if (inputVal.trim()) handleTranslate();
+        return; 
+    }
+    
     playBeep();
     const rec = new SR();
-    rec.lang = sourceLang; rec.interimResults = true;
-    recognitionRef.current = rec; setInputVal(''); setIsRecording(true);
+    rec.lang = sourceLang; 
+    rec.interimResults = true;
+    rec.continuous = true; // 关键：开启连续监听，即使停顿也不会断开！
+
+    recognitionRef.current = rec; 
+    setInputVal(''); 
+    setIsRecording(true);
+    
+    // 实时累加结果到输入框，等待用户手动停止
     rec.onresult = (e) => {
-      const t = Array.from(e.results).map(r => r[0].transcript).join('');
-      setInputVal(t);
-      if (e.results.some(r => r.isFinal)) { rec.stop(); handleTranslate(t); }
+      let finalTranscript = '';
+      let interimTranscript = '';
+      for (let i = e.resultIndex; i < e.results.length; ++i) {
+        if (e.results[i].isFinal) finalTranscript += e.results[i][0].transcript;
+        else interimTranscript += e.results[i][0].transcript;
+      }
+      // 不直接触发翻译，而是更新输入框，让用户有时间修改或主动点发送
+      setInputVal(prev => prev + finalTranscript + interimTranscript);
     };
+    
     rec.onend = () => setIsRecording(false);
     rec.start();
   };
@@ -440,8 +481,8 @@ const AiChatContent = ({ onClose }) => {
            {history.length === 0 && !isLoading && (
              <div className="text-center text-gray-400 mb-20 opacity-80 mt-20">
                 <div className="w-20 h-20 bg-pink-50 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl shadow-inner border border-pink-100">🌍</div>
-                <div className="font-bold text-gray-600">智能翻译系统已就绪</div>
-                <div className="text-xs mt-2">支持文字、语音、图片智能识别</div>
+                <div className="font-bold text-gray-600">智能翻译引擎已启动</div>
+                <div className="text-xs mt-2">文本 / 拍照 / 语音长传</div>
              </div>
            )}
 
@@ -465,7 +506,7 @@ const AiChatContent = ({ onClose }) => {
            {isLoading && (
               <div className="flex justify-start mb-6">
                 <div className="bg-white/90 px-5 py-3 rounded-2xl shadow-sm flex items-center gap-3 text-pink-500 border border-pink-100 font-bold text-sm">
-                  <i className="fas fa-circle-notch fa-spin text-lg" /><span>正在极速翻译...</span>
+                  <i className="fas fa-circle-notch fa-spin text-lg" /><span>正在翻译中...</span>
                 </div>
               </div>
            )}
@@ -492,8 +533,8 @@ const AiChatContent = ({ onClose }) => {
                 <Menu.Button className="w-11 h-11 flex items-center justify-center text-gray-400 hover:bg-gray-50 rounded-full transition-colors"><i className="fas fa-plus text-lg" /></Menu.Button>
                 <Transition as={Fragment} enter="duration-150 ease-out" enterFrom="opacity-0 scale-95 translate-y-2" enterTo="opacity-100 scale-100 translate-y-0" leave="duration-100 ease-in" leaveFrom="opacity-100 scale-100 translate-y-0" leaveTo="opacity-0 scale-95 translate-y-2">
                     <Menu.Items className="absolute bottom-full left-0 mb-3 w-36 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden p-1.5 focus:outline-none">
-                        <Menu.Item>{({ active }) => <button onClick={() => cameraInputRef.current?.click()} className={`flex w-full items-center px-4 py-3 text-sm font-bold rounded-xl transition-colors ${active?'bg-pink-50 text-pink-600':'text-gray-700'}`}><i className="fas fa-camera w-6"/> 拍照翻译</button>}</Menu.Item>
-                        <Menu.Item>{({ active }) => <button onClick={() => fileInputRef.current?.click()} className={`flex w-full items-center px-4 py-3 text-sm font-bold rounded-xl transition-colors ${active?'bg-pink-50 text-pink-600':'text-gray-700'}`}><i className="fas fa-image w-6"/> 相册提取</button>}</Menu.Item>
+                        <Menu.Item>{({ active }) => <button onClick={() => cameraInputRef.current?.click()} className={`flex w-full items-center px-4 py-3 text-sm font-bold rounded-xl transition-colors ${active?'bg-pink-50 text-pink-600':'text-gray-700'}`}><i className="fas fa-camera w-6"/> 拍照</button>}</Menu.Item>
+                        <Menu.Item>{({ active }) => <button onClick={() => fileInputRef.current?.click()} className={`flex w-full items-center px-4 py-3 text-sm font-bold rounded-xl transition-colors ${active?'bg-pink-50 text-pink-600':'text-gray-700'}`}><i className="fas fa-image w-6"/> 相册</button>}</Menu.Item>
                     </Menu.Items>
                 </Transition>
             </Menu>
@@ -514,13 +555,14 @@ const AiChatContent = ({ onClose }) => {
                 )}
                 <textarea
                   className="w-full bg-transparent border-none outline-none resize-none px-2 py-1.5 max-h-[120px] text-[16px] leading-relaxed no-scrollbar placeholder-gray-400 text-gray-800"
-                  placeholder={isRecording ? "请说话..." : "输入要翻译的内容..."}
+                  placeholder={isRecording ? "正在听你说，随时可以暂停..." : "输入翻译内容..."}
                   rows={1} value={inputVal} onChange={e => setInputVal(e.target.value)}
                   onKeyDown={e => { if(e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleTranslate(); } }}
                 />
             </div>
             
-            <button onClick={() => isRecording ? recognitionRef.current?.stop() : (inputVal.trim() || inputImages.length ? handleTranslate() : startRecording())} 
+            {/* 点击发送翻译；录音中点击则停止录音并发送 */}
+            <button onClick={() => isRecording ? startRecording() : (inputVal.trim() || inputImages.length ? handleTranslate() : startRecording())} 
                     className={`w-11 h-11 shrink-0 rounded-full flex items-center justify-center transition-all duration-200 ${isRecording ? 'bg-red-500 text-white shadow-lg shadow-red-200 animate-pulse' : (inputVal.trim() || inputImages.length ? 'bg-pink-500 text-white shadow-lg shadow-pink-200 active:scale-95' : 'bg-pink-50 text-pink-500 hover:bg-pink-100')}`}>
                <i className={`fas text-lg ${isRecording ? 'fa-stop' : (inputVal.trim() || inputImages.length ? 'fa-arrow-up' : 'fa-microphone')}`} />
             </button>
@@ -528,7 +570,7 @@ const AiChatContent = ({ onClose }) => {
         </div>
       </div>
 
-      {/* Pickers (保持极简态) */}
+      {/* Pickers */}
       <Dialog open={showSrcPicker} onClose={() => setShowSrcPicker(false)} className="relative z-[10003]"><div className="fixed inset-0 bg-black/30 backdrop-blur-sm" /><div className="fixed inset-0 flex items-end sm:items-center justify-center sm:p-4 pb-0"><Dialog.Panel className="w-full max-w-sm bg-white rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl max-h-[70vh] flex flex-col"><div className="font-bold text-center mb-4 text-gray-800">源语言</div><div className="grid grid-cols-2 gap-3 overflow-y-auto slim-scrollbar pb-safe-bottom">{SUPPORTED_LANGUAGES.map(l => <button key={l.code} onClick={() => { setSourceLang(l.code); setShowSrcPicker(false); }} className={`p-4 rounded-2xl font-medium text-sm flex items-center ${sourceLang===l.code?'bg-pink-50 text-pink-600 border border-pink-200':'bg-gray-50 text-gray-700 border border-transparent hover:bg-gray-100'}`}><span className="text-xl mr-3">{l.flag}</span>{l.name}</button>)}</div></Dialog.Panel></div></Dialog>
       <Dialog open={showTgtPicker} onClose={() => setShowTgtPicker(false)} className="relative z-[10003]"><div className="fixed inset-0 bg-black/30 backdrop-blur-sm" /><div className="fixed inset-0 flex items-end sm:items-center justify-center sm:p-4 pb-0"><Dialog.Panel className="w-full max-w-sm bg-white rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl max-h-[70vh] flex flex-col"><div className="font-bold text-center mb-4 text-gray-800">目标语言</div><div className="grid grid-cols-2 gap-3 overflow-y-auto slim-scrollbar pb-safe-bottom">{SUPPORTED_LANGUAGES.map(l => <button key={l.code} onClick={() => { setTargetLang(l.code); setShowTgtPicker(false); }} className={`p-4 rounded-2xl font-medium text-sm flex items-center ${targetLang===l.code?'bg-pink-50 text-pink-600 border border-pink-200':'bg-gray-50 text-gray-700 border border-transparent hover:bg-gray-100'}`}><span className="text-xl mr-3">{l.flag}</span>{l.name}</button>)}</div></Dialog.Panel></div></Dialog>
 
