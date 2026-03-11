@@ -1,4 +1,4 @@
- import { Transition, Dialog, Menu } from '@headlessui/react';
+import { Transition, Dialog, Menu } from '@headlessui/react';
 import React, {
   useState,
   useEffect,
@@ -8,7 +8,7 @@ import React, {
   memo
 } from 'react';
 // 假设这些库文件存在，如果没有请自行处理引用
- import { loadCheatDict, matchCheatLoose } from '@/lib/cheatDict';
+import { loadCheatDict, matchCheatLoose } from '@/lib/cheatDict';
 
 // ----------------- 全局样式 -----------------
 const GlobalStyles = () => (
@@ -579,10 +579,21 @@ const AiChatContent = ({ onClose }) => {
       signal
     });
 
-    if (!res.ok) {
-      const errData = await res.json().catch(() => ({}));
-      throw new Error(errData?.error?.message || `API Error: ${res.status}`);
+    // 核心修复点 1：检查返回的是否是 HTML 页面（比如 404, 500 页面）
+    const contentType = res.headers.get("content-type");
+    if (contentType && contentType.includes("text/html")) {
+        throw new Error(`API 地址错误或服务器异常 (收到 HTML 响应)。请检查你在设置中填写的 API URL 是否正确。`);
     }
+
+    if (!res.ok) {
+      let errMsg = `API Error: ${res.status}`;
+      try {
+          const errData = await res.json();
+          if (errData?.error?.message) errMsg = errData.error.message;
+      } catch (e) {} // 忽略解析错误
+      throw new Error(errMsg);
+    }
+    
     const data = await res.json();
     if (!data.choices?.length) throw new Error('API 返回数据异常');
 
@@ -657,23 +668,31 @@ const AiChatContent = ({ onClose }) => {
 
     try {
       let dictHit = null;
-      if (inputImages.length === 0 && text) {
-         const dict = await loadCheatDict(currentSource);
-         dictHit = matchCheatLoose(dict, text, currentTarget);
-      }
-      
       let aiMsg = { id: nowId(), role: 'ai', results: [], modelName: '', ts: Date.now(), tgtLang: currentTarget };
 
-      if (dictHit) {
+      // 核心修复点 2：加上 try-catch 防止本地字典返回 HTML 导致报错，并加上 await
+      if (inputImages.length === 0 && text) {
+         try {
+             const dict = await loadCheatDict(currentSource);
+             if (dict) {
+                 dictHit = await matchCheatLoose(dict, text, currentTarget); // 必须 await
+             }
+         } catch (dictErr) {
+             console.warn("本地词典加载失败，自动回退到 AI 翻译", dictErr);
+         }
+      }
+      
+      // 如果命中字典，并且结果不是“字典为空”
+      if (dictHit && dictHit.length > 0 && dictHit[0].translation !== '（字典数据为空）') {
         aiMsg.results = normalizeTranslations(dictHit);
-        aiMsg.modelName = '本地字典库';
+        aiMsg.modelName = '本地专业词库';
       } else {
         const res = await fetchAi(messages, settings.mainModelId, true, signal);
         aiMsg.results = normalizeTranslations(res.content);
         aiMsg.modelName = res.modelName;
       }
 
-      // 【关键】验证当前请求是否仍是最新活跃请求
+      // 验证当前请求是否仍是最新活跃请求
       if (currentRequestIdRef.current === requestId) {
           setHistory(prev => [...prev, aiMsg]);
           scrollToResult();
