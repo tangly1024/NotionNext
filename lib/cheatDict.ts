@@ -186,15 +186,17 @@ const formatResults = (translations: CheatTranslation[] | undefined): CheatTrans
   if (!Array.isArray(translations) || translations.length === 0) {
     return [{ translation: '（字典数据为空）', back_translation: '', frequency: 0, tags: [] }]
   }
-  const cleaned = translations
+
+  const cleaned: CheatTranslation[] = translations
     .map(x => ({
       translation: String(x?.translation ?? '').trim(),
       back_translation: String(x?.back_translation ?? '').trim(),
       frequency: x?.frequency ?? 0,
-      tags: Array.isArray(x?.tags) ? (x!.tags as string[]) : []
+      tags: Array.isArray(x?.tags) ? (x.tags as string[]) : []
     }))
     .filter(x => x.translation || x.back_translation)
     .sort((a, b) => (b.frequency ?? 0) - (a.frequency ?? 0))
+
   const seen = new Set<string>()
   const unique = cleaned.filter(x => {
     const k = `${x.translation}|${x.back_translation}`
@@ -202,8 +204,19 @@ const formatResults = (translations: CheatTranslation[] | undefined): CheatTrans
     seen.add(k)
     return true
   })
-  const res = unique.slice(0, 4)
-  while (res.length < 4 && res.length > 0) res.push({ ...res[res.length - 1] })
+
+  // 修复点：明确指定 res 类型，并安全地处理数组末尾元素
+  const res: CheatTranslation[] = unique.slice(0, 4)
+  
+  while (res.length < 4 && res.length > 0) {
+    const lastItem = res[res.length - 1]
+    if (lastItem) {
+      res.push({ ...lastItem })
+    } else {
+      break
+    }
+  }
+
   return res.length ? res : [{ translation: '（字典数据为空）', back_translation: '', frequency: 0, tags: [] }]
 }
 
@@ -341,4 +354,4 @@ export function clearCache(lang?: string, version?: string): void {
   }
   queryCache.clear()
   normalizeCache.clear()
-}
+    }
