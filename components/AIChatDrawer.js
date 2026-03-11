@@ -139,6 +139,7 @@ const playTTS = async (text, lang, settings) => {
   } catch (e) { console.error('TTS Error:', e); }
 };
 
+// =================【补全缺失的关键函数】=================
 const normalizeTranslations = (raw) => {
   let data = [];
   try {
@@ -152,6 +153,10 @@ const normalizeTranslations = (raw) => {
   const validData = data.filter(x => x && x.translation);
   return validData.length ? validData.slice(0, 4) : [{ translation: typeof raw === 'string' ? raw : '无有效译文', back_translation: '' }];
 };
+
+const getLangName = (c) => SUPPORTED_LANGUAGES.find(l => l.code === c)?.name || c;
+const getLangFlag = (c) => SUPPORTED_LANGUAGES.find(l => l.code === c)?.flag || '';
+// =======================================================
 
 // ----------------- Components -----------------
 const TranslationCard = memo(({ data, onPlay }) => {
@@ -342,7 +347,7 @@ const AiChatContent = ({ onClose }) => {
     }
 
     // 如果所有模型都失败了，抛出最后的错误
-    throw new Error(`所有可用节点均尝试失败，最后报错：${lastErrorMsg}`);
+    throw new Error(`节点服务均已断开，最终错误：${lastErrorMsg}`);
   };
 
   const handleTranslate = async (textOverride = null) => {
