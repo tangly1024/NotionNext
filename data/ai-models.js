@@ -4,73 +4,69 @@ export const PROVIDERS = {
   openai: {
     id: 'openai',
     name: 'OpenAI',
-    baseUrl: 'https://www.galaapi.com/v1',
-    models: ['gemini-3.1-flash-lite-preview', 'gemini-2.5-flash-lite'],
-  },
-  Mistral: {
-    id: 'Mistral',
-    name: 'Mistral',
-    baseUrl: 'https://api.mistral.ai/v1',
-    models: ['mistral-large-2512', 'mistral-medium-latest'],
-  },
-  nvidia: {
-    id: 'nvidia',
-    name: 'NVIDIA',
-    baseUrl: 'https://integrate.api.nvidia.com/v1',
-    models: ['qwen/qwen3.5-397b-a17b', 'mistralai/mistral-large-3-675b-instruct-2512'],
+    icon: 'fa-brain',
+    baseUrl: 'https://api.openai.com/v1',
+    models: ['gpt-4o', 'gpt-4o-mini'],
   },
   deepseek: {
     id: 'deepseek',
     name: 'DeepSeek',
+    icon: 'fa-globe', // 用地球/水相关的图标代表
     baseUrl: 'https://api.deepseek.com/v1',
     models: ['deepseek-chat'],
   },
-  iflow: {
-    id: 'iflow',
-    name: 'iflow',
-    baseUrl: 'https://apis.iflow.cn/v1',
-    models: ['qwen3-max', 'qwen3-235b'],
-  },
   qwen: {
     id: 'qwen',
-    name: 'Qwen',
+    name: '通义千问',
+    icon: 'fa-cloud',
     baseUrl: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
     models: ['qwen-max', 'qwen-plus'],
+  },
+  nvidia: {
+    id: 'nvidia',
+    name: 'NVIDIA',
+    icon: 'fa-microchip',
+    baseUrl: 'https://integrate.api.nvidia.com/v1',
+    models: ['meta/llama-3.1-70b-instruct', 'google/gemma-2-9b-it'],
   },
   gemini: {
     id: 'gemini',
     name: 'Gemini',
+    icon: 'fa-sparkles',
     baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai',
     models: ['gemini-2.0-flash', 'gemini-2.0-flash-lite'],
   },
   openrouter: {
     id: 'openrouter',
     name: 'OpenRouter',
+    icon: 'fa-network-wired',
     baseUrl: 'https://openrouter.ai/api/v1',
     models: ['google/gemini-2.0-flash-001', 'deepseek/deepseek-chat'],
   },
   custom: {
     id: 'custom',
-    name: 'Custom',
+    name: '自定义',
+    icon: 'fa-sliders-h',
     baseUrl: '',
     models: ['gpt-4o-mini'],
   },
 };
 
-// 专属密钥路由，可选
 const KEY_ROUTER = {
-  "sk-vip-super-admin-999": {
+  'sk-vip-super-admin-999': {
     provider: 'openai',
     baseUrl: 'https://api.openai.com/v1',
     models: ['gpt-4o', 'gpt-4o-mini'],
-    name: 'VIP 极速节点'
+    name: 'VIP 极速节点',
+    icon: 'fa-crown',
   },
-  "sk-pro-translate-888": {
+  'sk-pro-translate-888': {
     provider: 'deepseek',
     baseUrl: 'https://api.deepseek.com/v1',
     models: ['deepseek-chat'],
-    name: 'Pro 翻译节点'
-  }
+    name: 'Pro 翻译节点',
+    icon: 'fa-bolt',
+  },
 };
 
 export const DEFAULT_PROVIDER = 'openai';
@@ -79,20 +75,24 @@ export const getProviderMeta = (providerId) => {
   return PROVIDERS[providerId] || PROVIDERS[DEFAULT_PROVIDER];
 };
 
-export const getApiConfig = ({ apiKey, provider, customBaseUrl, customModels }) => {
-  const cleanKey = (apiKey || '').trim();
+// 注意：这里改成了接收 apiKeys 对象
+export const getApiConfig = ({ apiKeys, provider, customBaseUrl, customModels }) => {
   const cleanProvider = provider || DEFAULT_PROVIDER;
+  const providerMeta = getProviderMeta(cleanProvider);
+  
+  // 获取当前供应商对应的密钥
+  const rawKey = apiKeys?.[cleanProvider] || '';
+  const cleanKey = rawKey.trim();
 
-  // 专属 key 优先
+  // 1. 如果匹配到超级路由密钥
   if (cleanKey && KEY_ROUTER[cleanKey]) {
     return {
       ...KEY_ROUTER[cleanKey],
-      apiKey: cleanKey
+      apiKey: cleanKey,
     };
   }
 
-  const providerMeta = getProviderMeta(cleanProvider);
-
+  // 2. 正常供应商逻辑
   const finalBaseUrl =
     cleanProvider === 'custom'
       ? (customBaseUrl || '').trim()
@@ -102,15 +102,16 @@ export const getApiConfig = ({ apiKey, provider, customBaseUrl, customModels }) 
   if (cleanProvider === 'custom' && customModels?.trim()) {
     finalModels = customModels
       .split(',')
-      .map(s => s.trim())
+      .map((s) => s.trim())
       .filter(Boolean);
   }
 
   return {
     provider: cleanProvider,
     name: providerMeta.name,
+    icon: providerMeta.icon,
     baseUrl: finalBaseUrl,
     models: finalModels,
-    apiKey: cleanKey
+    apiKey: cleanKey,
   };
 };
