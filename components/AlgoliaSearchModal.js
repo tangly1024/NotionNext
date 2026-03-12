@@ -247,12 +247,12 @@ export default function AlgoliaSearchModal({ cRef }) {
       id='search-wrapper'
       className={`${
         isModalOpen ? 'opacity-100' : 'invisible opacity-0 pointer-events-none'
-      } z-30 fixed h-screen w-screen left-0 top-0 sm:mt-[10vh] flex items-start justify-center mt-0`}>
+      } z-30 fixed inset-0 flex items-start justify-center px-3 pt-4 sm:px-4 sm:pt-[10vh]`}>
       {/* 模态框 */}
       <div
         className={`${
-          isModalOpen ? 'opacity-100' : 'invisible opacity-0 translate-y-10'
-        } max-h-[80vh] flex flex-col justify-between w-full min-h-[10rem] h-full md:h-fit max-w-xl dark:bg-hexo-black-gray dark:border-gray-800 bg-white dark:bg- p-5 rounded-[1.75rem] z-50 shadow border hover:border-blue-600 duration-300 transition-all `}>
+          isModalOpen ? 'opacity-100 translate-y-0' : 'invisible opacity-0 translate-y-6'
+        } relative z-50 flex w-full max-w-xl flex-col rounded-[1.75rem] border bg-white p-4 shadow transition-all duration-300 dark:border-gray-800 dark:bg-hexo-black-gray sm:p-5 max-h-[75vh] sm:max-h-[80vh] h-auto min-h-[10rem] mx-auto hover:border-blue-600 overflow-hidden`}>
         <div className='flex justify-between items-center'>
           <div className='text-2xl text-blue-600 dark:text-yellow-600 font-bold'>
             搜索
@@ -270,7 +270,7 @@ export default function AlgoliaSearchModal({ cRef }) {
           onChange={e => handleInputChange(e)}
           onFocus={() => setIsInputFocused(true)} // 聚焦时
           onBlur={() => setIsInputFocused(false)} // 失去焦点时
-          className='text-black dark:text-gray-200 bg-gray-50 dark:bg-gray-600 outline-blue-500 w-full px-4 my-2 py-1 mb-4 border rounded-md'
+          className='text-black dark:text-gray-200 bg-gray-50 dark:bg-gray-600 outline-blue-500 w-full px-4 py-2 my-2 mb-4 border rounded-xl'
           ref={inputRef}
         />
 
@@ -287,7 +287,7 @@ export default function AlgoliaSearchModal({ cRef }) {
             </p>
           </div>
         )}
-        <ul className='flex-1 overflow-auto'>
+        <ul className='flex-1 min-h-0 overflow-y-auto'>
           {searchResults.map((result, index) => (
             <li
               key={result.objectID}
