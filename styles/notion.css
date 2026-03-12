@@ -864,7 +864,7 @@ code[class*='language-'] {
   box-sizing: border-box;
   text-decoration: none;
   border: 1px solid var(--fg-color-1);
-  border-radius: 3px;
+  border-radius: 14px;
   display: flex;
   overflow: hidden;
   user-select: none;
@@ -975,7 +975,7 @@ code[class*='language-'] {
   padding: 16px 16px 16px 12px;
   display: inline-flex;
   width: 100%;
-  border-radius: 3px;
+  border-radius: 14px;
   border-width: 1px;
   align-items: center;
   box-sizing: border-box;
@@ -2035,7 +2035,7 @@ svg + .notion-page-title-text {
   border: 1px dashed;
   border-left: 5px solid;
   box-shadow: 0px 0px 1px rgb(127, 127, 127);
-  border-radius: 5px;
+  border-radius: 6px;
   width: 100%;
 }
 
