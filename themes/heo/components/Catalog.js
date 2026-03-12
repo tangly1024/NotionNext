@@ -1,7 +1,7 @@
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 /**
  * 目录导航组件
@@ -11,54 +11,94 @@ import { useCallback, useEffect, useRef, useState } from 'react'
  */
 const Catalog = ({ toc }) => {
   const { locale } = useGlobal()
-  // 监听滚动事件
-  useEffect(() => {
-    window.addEventListener('scroll', actionSectionScrollSpy)
-    actionSectionScrollSpy()
-    return () => {
-      window.removeEventListener('scroll', actionSectionScrollSpy)
-    }
-  }, [])
 
   // 目录自动滚动
   const tRef = useRef(null)
-  const tocIds = []
 
-  // 同步选中目录事件
+  // 当前激活目录
   const [activeSection, setActiveSection] = useState(null)
+  const activeSectionRef = useRef(null)
 
-  const actionSectionScrollSpy = useCallback(
-    throttle(() => {
-      const sections = document.getElementsByClassName('notion-h')
-      let prevBBox = null
-      let currentSectionId = activeSection
-      for (let i = 0; i < sections.length; ++i) {
-        const section = sections[i]
-        if (!section || !(section instanceof Element)) continue
-        if (!currentSectionId) {
-          currentSectionId = section.getAttribute('data-id')
+  useEffect(() => {
+    activeSectionRef.current = activeSection
+  }, [activeSection])
+
+  const scrollTocToActive = useCallback(sectionId => {
+    const container = tRef.current
+    if (!container || !sectionId) return
+
+    const currentTocItem = container.querySelector(
+      `[data-toc-id="${sectionId}"]`
+    )
+    if (!currentTocItem) return
+
+    const containerRect = container.getBoundingClientRect()
+    const itemRect = currentTocItem.getBoundingClientRect()
+
+    const nextTop =
+      container.scrollTop + (itemRect.top - containerRect.top) - 8
+
+    container.scrollTo({
+      top: Math.max(0, nextTop),
+      behavior: 'auto'
+    })
+  }, [])
+
+  // 监听滚动事件
+  const actionSectionScrollSpy = useMemo(
+    () =>
+      throttle(() => {
+        const sections = document.getElementsByClassName('notion-h')
+        let prevBBox = null
+        let currentSectionId = activeSectionRef.current
+
+        for (let i = 0; i < sections.length; ++i) {
+          const section = sections[i]
+          if (!section || !(section instanceof Element)) continue
+
+          if (!currentSectionId) {
+            currentSectionId = section.getAttribute('data-id')
+          }
+
+          const bbox = section.getBoundingClientRect()
+          const prevHeight = prevBBox ? bbox.top - prevBBox.bottom : 0
+          const offset = Math.max(150, prevHeight / 4)
+
+          // GetBoundingClientRect returns values relative to viewport
+          if (bbox.top - offset < 0) {
+            currentSectionId = section.getAttribute('data-id')
+            prevBBox = bbox
+            continue
+          }
+
+          break
         }
-        const bbox = section.getBoundingClientRect()
-        const prevHeight = prevBBox ? bbox.top - prevBBox.bottom : 0
-        const offset = Math.max(150, prevHeight / 4)
-        // GetBoundingClientRect returns values relative to viewport
-        if (bbox.top - offset < 0) {
-          currentSectionId = section.getAttribute('data-id')
-          prevBBox = bbox
-          continue
+
+        if (!currentSectionId) return
+
+        // 只有变更时才更新，避免重复滚动
+        if (activeSectionRef.current !== currentSectionId) {
+          activeSectionRef.current = currentSectionId
+          setActiveSection(currentSectionId)
+          scrollTocToActive(currentSectionId)
         }
-        // No need to continue loop, if last element has been detected
-        break
-      }
-      setActiveSection(currentSectionId)
-      const index = tocIds.indexOf(currentSectionId) || 0
-      tRef?.current?.scrollTo({ top: 28 * index, behavior: 'smooth' })
-    }, 200)
+      }, 200),
+    [scrollTocToActive]
   )
+
+  useEffect(() => {
+    window.addEventListener('scroll', actionSectionScrollSpy, { passive: true })
+    actionSectionScrollSpy()
+
+    return () => {
+      window.removeEventListener('scroll', actionSectionScrollSpy)
+      actionSectionScrollSpy.cancel()
+    }
+  }, [actionSectionScrollSpy])
 
   // 无目录就直接返回空
   if (!toc || toc.length < 1) {
-    return <></>
+    return null
   }
 
   return (
@@ -71,13 +111,13 @@ const Catalog = ({ toc }) => {
         className='overflow-y-auto max-h-36 lg:max-h-96 overscroll-none scroll-hidden'
         ref={tRef}>
         <nav className='h-full'>
-          {toc?.map(tocItem => {
+          {toc.map(tocItem => {
             const id = uuidToId(tocItem.id)
-            tocIds.push(id)
             const selected = activeSection === id
             return (
               <a
                 key={id}
+                data-toc-id={id}
                 href={`#${id}`}
                 className={`notion-table-of-contents-item block my-1 rounded-2xl transition-all duration-300 border ${
                   selected
