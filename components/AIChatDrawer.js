@@ -743,35 +743,52 @@ const AiChatContent = ({ onClose }) => {
       <GlobalStyles />
       {settings.chatBackgroundUrl && <div className="absolute inset-0 bg-cover bg-center z-0 pointer-events-none opacity-50" style={{ backgroundImage: `url('${settings.chatBackgroundUrl}')`, opacity: 1 - settings.backgroundOverlay }} />}
 
-      <div className="relative z-20 pt-[env(safe-area-inset-top)] bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm">
+      <div className="relative z-20 pt-[env(safe-area-inset-top)] bg-white/70 backdrop-blur-xl border-b border-gray-100/80 shadow-sm">
   <div className="flex justify-between h-16 px-4 items-center">
-    {/* 左侧占位 (保持平衡) */}
-    <div className="w-10" />
+    {/* 左侧占位 - 保持与右侧按钮视觉平衡 */}
+    <div className="w-9" />
 
-    {/* 中间标题区域 - 垂直居中，两行布局 */}
+    {/* 中间标题区域 */}
     <div className="flex flex-col items-center justify-center select-none">
-      {/* 第一排：主标题 */}
-      <div className="font-bold text-gray-800 text-base leading-tight tracking-wide">
+      {/* 主标题 */}
+      <h1 className="font-bold text-gray-800 text-lg leading-tight tracking-wide">
         中缅交友网
-      </div>
+      </h1>
       
-      {/* 第二排：网址与蓝色小球 */}
+      {/* 网址行 - 使用 SVG 地球图标 */}
       <div className="flex items-center gap-1.5 mt-0.5">
-        {/* 蓝色发光小球 */}
-        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_6px_rgba(59,130,246,0.6)]"></span>
+        {/* 自定义地球图标，颜色与文字统一，稍加发光效果 */}
+        <svg 
+          className="w-4 h-4 text-blue-500 drop-shadow-[0_0_4px_rgba(59,130,246,0.5)]" 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path 
+            strokeLinecap="round" 
+            strokeLinejoin="round" 
+            strokeWidth={1.8} 
+            d="M12 21a9.05 9.05 0 1 0 0-18 9.05 9.05 0 0 0 0 18zM2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" 
+          />
+        </svg>
         {/* 网址文字 */}
-        <span className="text-[10px] font-medium text-blue-400 tracking-wider">
+        <span className="text-xs font-semibold text-blue-600/90 tracking-wider">
           886.best
         </span>
       </div>
     </div>
 
-    {/* 右侧设置按钮 - 增加了一些过渡效果 */}
+    {/* 右侧设置按钮 */}
     <button 
       onClick={() => setShowSettings(true)} 
-      className="w-9 h-9 rounded-full bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-800 active:scale-95 transition-all duration-200 flex items-center justify-center border border-gray-100"
+      className="w-9 h-9 rounded-full bg-gray-50/80 text-gray-500 hover:bg-gray-200 hover:text-gray-700 active:scale-95 transition-all duration-200 flex items-center justify-center border border-gray-200/50 backdrop-blur-sm"
+      aria-label="设置"
     >
-      <i className="fas fa-cog text-sm" />
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
     </button>
   </div>
 </div>
