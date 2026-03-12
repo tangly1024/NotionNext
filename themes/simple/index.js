@@ -31,7 +31,8 @@ import {
   Users,
   Volume2,
   X,
-  Sparkles
+  Sparkles,
+  Map // 新增图标
 } from 'lucide-react'
 import BlogPostBar from './components/BlogPostBar'
 import CONFIG from './config'
@@ -152,12 +153,11 @@ const LayoutLearningHome = () => {
   if (isTranslatorOpen) return <AIChatDrawer isOpen={true} onClose={closeOverlay} />
   if (isAiTutorOpen) return <VoiceChat isOpen={true} onClose={closeOverlay} />
 
-  // ✨ 修复：增强卡片可读性 - 更高透明度 + 更强磨砂 + 边框对比
   const glassCard = 'bg-white/95 backdrop-blur-xl border border-white/60 shadow-lg shadow-slate-200/50 rounded-2xl transition-all active:scale-95 cursor-pointer hover:shadow-xl hover:shadow-slate-300/60'
 
   return (
     <main className='relative min-h-[100dvh] overflow-x-hidden text-slate-900'>
-      {/* ✨ 修复：背景图固定 + 增强玻璃磨砂效果（合并多层为一层，性能更优） */}
+      {/* 背景层 */}
       <div className='fixed inset-0 -z-30'>
         <img
           src='/images/home-bg.jpg'
@@ -165,13 +165,9 @@ const LayoutLearningHome = () => {
           aria-hidden='true'
           className='h-full w-full object-cover'
         />
-        {/* 叠加增强磨砂层：更高模糊度 + 适度遮罩，确保文字清晰 */}
         <div className='absolute inset-0 bg-white/50 backdrop-blur-2xl' />
-        {/* 额外柔光渐变，提升层次感 */}
         <div className='absolute inset-0 bg-gradient-to-b from-white/20 via-white/10 to-white/30' />
       </div>
-
-      {/* ✨ 移除原 -z-20 和 -z-10 层，避免层级冲突和性能浪费 */}
 
       {/* 左侧菜单 */}
       <AnimatePresence>
@@ -257,7 +253,6 @@ const LayoutLearningHome = () => {
                 <item.icon className={`h-4 w-4 ${item.color}`} />
               </div>
               <p className='text-[13px] font-black text-slate-800'>{item.zh}</p>
-              {/* ✨ 修复：缅语文字颜色加深，提升可读性 */}
               <p className='text-[9px] font-medium text-slate-700 mt-0.5'>{item.mm}</p>
             </Link>
           ))}
@@ -273,7 +268,6 @@ const LayoutLearningHome = () => {
                 </div>
                 <div className='min-w-0'>
                   <p className='truncate text-[13px] font-black text-slate-800'>{tool.zh}</p>
-                  {/* ✨ 修复：缅语文字颜色加深 */}
                   <p className='truncate text-[9px] text-slate-700'>{tool.mm}</p>
                 </div>
               </div>
@@ -305,7 +299,6 @@ const LayoutLearningHome = () => {
               </div>
               <div>
                 <p className='text-[14px] font-black text-slate-800'>发音技巧 (Tips)</p>
-                {/* ✨ 修复：缅语文字颜色加深 */}
                 <p className='text-[10px] text-slate-700'>အသံထွက်နည်းလမ်းများ</p>
               </div>
             </div>
@@ -313,42 +306,8 @@ const LayoutLearningHome = () => {
           </Link>
         </section>
 
-        {/* 系统课程 */}
-        <section className='mt-8'>
-          <div className='mb-4 flex items-center gap-2 px-1'>
-            <BookOpen className='h-4 w-4 text-slate-400' />
-            <h2 className='text-[11px] font-black tracking-[0.2em] text-slate-500 uppercase'>
-              SYSTEM COURSES
-            </h2>
-          </div>
-          <div className='flex flex-col gap-4'>
-            {systemCourses.map(course => (
-              <Link
-                key={course.title}
-                href={course.href}
-                className='group relative h-40 overflow-hidden rounded-[2.5rem] shadow-lg border border-white/60'
-              >
-                <img
-                  src={course.bgImg}
-                  alt={course.title}
-                  className='absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110'
-                />
-                <div className={`absolute inset-0 bg-gradient-to-r ${course.color} to-transparent`} />
-                <div className='relative flex h-full flex-col justify-center px-8'>
-                  <span className='w-fit rounded-lg bg-white/25 backdrop-blur-md px-2 py-0.5 text-[9px] font-black text-white mb-2 uppercase border border-white/30'>
-                    {course.badge}
-                  </span>
-                  <h3 className='text-2xl font-black text-white drop-shadow-md'>{course.title}</h3>
-                  {/* ✨ 修复：缅语描述文字加阴影+微调透明度 */}
-                  <p className='text-xs font-medium text-white/95 drop-shadow-sm mt-1'>{course.mmDesc}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        {/* AI 真人私教对练独立入口 */}
-        <section className='mt-4 mb-2'>
+        {/* AI 真人私教对练 */}
+        <section className='mt-8 mb-2'>
           <button
             type='button'
             onClick={() => openOverlay('ai-tutor')}
@@ -375,6 +334,74 @@ const LayoutLearningHome = () => {
             </div>
           </button>
         </section>
+
+        {/* ✨ 新增：主线闯关地图 (放在 AI 对练下面) */}
+        <section className='mt-4'>
+          <Link
+            href='/learn'
+            className={`${glassCard} relative flex items-center gap-4 p-5 overflow-hidden border-l-[6px] border-l-green-500`}
+          >
+            {/* 装饰微光 */}
+            <div className='absolute -right-6 -top-6 h-24 w-24 rounded-full bg-green-500/10 blur-2xl' />
+            
+            {/* 图标盒子 */}
+            <div className='relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-green-400 to-emerald-600 text-white shadow-lg shadow-green-200 transition-transform active:scale-110'>
+              <Map size={26} />
+            </div>
+
+            {/* 内容区 */}
+            <div className='relative flex-1'>
+              <div className='flex items-center gap-2'>
+                <h3 className='text-lg font-black text-slate-900 uppercase leading-tight'>主线闯关地图</h3>
+                <span className='rounded bg-green-500 px-1.5 py-0.5 text-[9px] font-black text-white animate-pulse'>NEW</span>
+              </div>
+              <p className='text-[13px] font-bold text-slate-600 mt-0.5'>စနစ်တကျ လေ့လာရန် လမ်းပြမြေပုံ</p>
+              
+              {/* 游戏化进度条装饰 */}
+              <div className="mt-3 flex items-center gap-2">
+                <div className="h-1.5 w-full max-w-[110px] rounded-full bg-slate-100 overflow-hidden">
+                  <div className="h-full w-2/5 bg-green-500 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.4)]" />
+                </div>
+                <span className="text-[9px] font-black text-green-600 tracking-tighter opacity-70">CONTINUE</span>
+              </div>
+            </div>
+
+            <ChevronRight className='h-5 w-5 text-slate-300 shrink-0' />
+          </Link>
+        </section>
+
+        {/* 系统课程 */}
+        <section className='mt-8'>
+          <div className='mb-4 flex items-center gap-2 px-1'>
+            <BookOpen className='h-4 w-4 text-slate-400' />
+            <h2 className='text-[11px] font-black tracking-[0.2em] text-slate-500 uppercase'>
+              SYSTEM COURSES
+            </h2>
+          </div>
+          <div className='flex flex-col gap-4'>
+            {systemCourses.map(course => (
+              <Link
+                key={course.title}
+                href={course.href}
+                className='group relative h-40 overflow-hidden rounded-[2.5rem] shadow-lg border border-white/60 active:scale-[0.98] transition-all'
+              >
+                <img
+                  src={course.bgImg}
+                  alt={course.title}
+                  className='absolute inset-0 h-full w-full object-cover'
+                />
+                <div className={`absolute inset-0 bg-gradient-to-r ${course.color} to-transparent`} />
+                <div className='relative flex h-full flex-col justify-center px-8'>
+                  <span className='w-fit rounded-lg bg-white/25 backdrop-blur-md px-2 py-0.5 text-[9px] font-black text-white mb-2 uppercase border border-white/30'>
+                    {course.badge}
+                  </span>
+                  <h3 className='text-2xl font-black text-white drop-shadow-md'>{course.title}</h3>
+                  <p className='text-xs font-medium text-white/95 drop-shadow-sm mt-1'>{course.mmDesc}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
       </div>
 
       {/* 底部导航 */}
@@ -384,7 +411,7 @@ const LayoutLearningHome = () => {
           <FooterItem icon={Globe2} label='社区' />
           <FooterItem icon={Users} label='语伴' />
           <FooterItem icon={Compass} label='动态' />
-          <Link href='/' className='flex flex-col items-center gap-1 text-indigo-600'>
+          <Link href='/' className='flex flex-col items-center gap-1 text-indigo-600 active:scale-90 transition-transform'>
             <div className='bg-indigo-50 p-1.5 rounded-xl border border-indigo-100'>
               <BookOpen size={22} />
             </div>
@@ -407,14 +434,14 @@ const LayoutLearningHome = () => {
 
 function FooterItem({ icon: Icon, label }) {
   return (
-    <div className='flex flex-col items-center gap-1 text-slate-500 hover:text-slate-700 transition-colors'>
+    <div className='flex flex-col items-center gap-1 text-slate-500 active:scale-90 transition-all'>
       <Icon size={22} />
       <span className='text-[10px] font-bold'>{label}</span>
     </div>
   )
 }
 
-// ===================== 3. 基础布局框架 =====================
+// ===================== 基础布局框架 =====================
 const LayoutBase = props => {
   const { children, slotTop } = props
   const { onLoading, fullWidth } = useGlobal()
@@ -427,7 +454,8 @@ const LayoutBase = props => {
     pathname.startsWith('/vocabulary') ||
     pathname.startsWith('/pinyin') ||
     pathname.startsWith('/course') ||
-    pathname.startsWith('/oral')
+    pathname.startsWith('/oral') ||
+    pathname.startsWith('/learn')
 
   if (isLearningRoute) {
     return (
@@ -447,21 +475,9 @@ const LayoutBase = props => {
         {siteConfig('SIMPLE_TOP_BAR', null, CONFIG) && <TopBar {...props} />}
         <Header {...props} />
         <NavBar {...props} />
-        <div
-          id='container-wrapper'
-          className={
-            (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') +
-            ' w-full flex-1 flex items-start max-w-9/10 mx-auto pt-12'
-          }
-        >
+        <div id='container-wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' w-full flex-1 flex items-start max-w-9/10 mx-auto pt-12'}>
           <div id='container-inner' className='w-full flex-grow min-h-fit'>
-            <Transition
-              show={!onLoading}
-              appear={true}
-              enter='transition duration-700'
-              enterFrom='opacity-0 translate-y-16'
-              enterTo='opacity-100 translate-y-0'
-            >
+            <Transition show={!onLoading} appear={true} enter='transition duration-700' enterFrom='opacity-0 translate-y-16' enterTo='opacity-100 translate-y-0'>
               {slotTop}
               {children}
             </Transition>
@@ -505,7 +521,6 @@ const LayoutSearch = props => {
       })
     }
   }, [keyword])
-
   return <LayoutPostList {...props} slotTop={siteConfig('ALGOLIA_APP_ID') ? null : <SearchInput {...props} />} />
 }
 
