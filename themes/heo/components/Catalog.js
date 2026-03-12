@@ -74,18 +74,26 @@ const Catalog = ({ toc }) => {
           {toc?.map(tocItem => {
             const id = uuidToId(tocItem.id)
             tocIds.push(id)
+            const selected = activeSection === id
             return (
               <a
                 key={id}
                 href={`#${id}`}
-                className={`notion-table-of-contents-item duration-300 transform dark:text-gray-200
-            notion-table-of-contents-item-indent-level-${tocItem.indentLevel} catalog-item `}>
+                className={`notion-table-of-contents-item block my-1 rounded-2xl transition-all duration-300 border ${
+                  selected
+                    ? 'bg-[#ebf4ff] border-[#60a5fa] shadow-[0_8px_16px_rgba(59,130,246,0.1)] dark:bg-[#9a34123d] dark:border-[#f59e0b52] dark:shadow-[0_8px_16px_rgba(120,53,15,0.15)]'
+                    : 'bg-transparent border-transparent hover:bg-[#ebf4ff] hover:border-[#93c5fd] hover:shadow-[0_6px_12px_rgba(59,130,246,0.08)] dark:hover:bg-[#9a34122e] dark:hover:border-[#f59e0b3d]'
+                }`}>
                 <span
                   style={{
                     display: 'inline-block',
                     marginLeft: tocItem.indentLevel * 16
                   }}
-                  className={`truncate ${activeSection === id ? 'font-bold text-indigo-600' : ''}`}>
+                  className={`truncate block ${
+                    selected
+                      ? 'font-bold text-indigo-600 dark:text-[#ffc848]'
+                      : 'dark:text-gray-200 hover:text-indigo-600 dark:hover:text-[#ffc848]'
+                  }`}>
                   {tocItem.text}
                 </span>
               </a>

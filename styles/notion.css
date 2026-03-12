@@ -761,7 +761,7 @@ svg.notion-page-icon {
   max-height: 100%;
   margin: auto;
   border-radius: 12px;
-  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+  /* box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15); */
 }
 
 .notion-asset-wrapper iframe {
@@ -1186,8 +1186,7 @@ code[class*='language-'] {
   cursor: pointer;
   width: 100%;
   opacity: 0.9;
-
-  padding: 6px 2px;
+  padding: 8px 2px;
   font-size: 15px;
   line-height: 1.2;
   display: flex;
@@ -1199,9 +1198,9 @@ code[class*='language-'] {
   @apply dark:text-white;
 }
 
-.notion-table-of-contents-item:hover {
+/* .notion-table-of-contents-item:hover {
   background: var(--bg-color-0);
-}
+} */
 
 .notion-table-of-contents-item-body {
   border-bottom: 1px solid var(--fg-color-1);
