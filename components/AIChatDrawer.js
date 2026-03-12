@@ -1,7 +1,7 @@
 import { Transition, Dialog, Menu } from '@headlessui/react';
 import React, { useState, useEffect, useRef, Fragment, memo } from 'react';
 
-import { loadCheatDict, matchCheatExact } from '@/lib/cheatDict'; // 注意这里改用 Exact
+import { loadCheatDict, matchCheatExact } from '@/lib/cheatDict';
 import { getApiConfig, PROVIDERS, DEFAULT_PROVIDER } from '@/data/ai-models';
 import {
   saveToUserDict,
@@ -90,6 +90,26 @@ const detectScript = (text) => {
   return null;
 };
 
+// --- 安全的尾部重叠去重算法 (针对 Web Speech API interim 抖动) ---
+const mergeTranscript = (prev, next) => {
+  const a = String(prev || '').trim();
+  const b = String(next || '').trim();
+  if (!a) return b;
+  if (!b) return a;
+
+  const maxOverlap = Math.min(a.length, b.length);
+  for (let len = maxOverlap; len >= 2; len--) {
+    if (a.slice(-len) === b.slice(0, len)) {
+      return a + b.slice(len);
+    }
+  }
+
+  if (b.startsWith(a)) return b;
+  if (a.endsWith(b)) return a;
+
+  return a + b;
+};
+
 // ----------------- AI 模型轮询记忆 -----------------
 const getLastSuccessModelKey = (provider) => `ai886_last_model_${provider}`;
 const reorderModelsByLastSuccess = (provider, models) => {
@@ -102,7 +122,7 @@ const clearLastSuccessModel = (provider, model) => {
   if (saved === model) safeLocalStorageSet(getLastSuccessModelKey(provider), '');
 };
 
-// ----------------- 24小时 AI 缓存 (核心节约成本逻辑) -----------------
+// ----------------- 24小时 AI 缓存 -----------------
 const AI_CACHE_PREFIX = 'ai886_translate_cache_v1:';
 const AI_CACHE_TTL = 24 * 60 * 60 * 1000;
 
@@ -143,7 +163,6 @@ const SUPPORTED_LANGUAGES = [
 const getLangName = (code) => SUPPORTED_LANGUAGES.find((l) => l.code === code)?.name || code;
 const getLangFlag = (code) => SUPPORTED_LANGUAGES.find((l) => l.code === code)?.flag || '';
 
-// 纯净直译要求 Prompt
 const buildSystemInstruction = (enableBackTranslation, srcLangName, tgtLangName, customPrompt) => {
   let baseRules = `You are a strict, highly accurate multilingual translation engine.
 
@@ -163,10 +182,7 @@ CRITICAL RULES:
   }
 
   if (!enableBackTranslation) {
-    return `${baseRules}
-
-Output schema:
-{"data":[{"translation":"..."}]}`;
+    return `${baseRules}\n\nOutput schema:\n{"data":[{"translation":"..."}]}`;
   }
 
   return `${baseRules}
@@ -184,24 +200,25 @@ const buildUserMsgContent = (srcLang, tgtLang, text, hasImage) => {
     `Task: Translate the content faithfully into the target language.`,
     `Important: The translation must be written only in ${getLangName(tgtLang)}. Do not mix other languages unless the content must remain unchanged, such as names, brands, codes, URLs, or numbers.`
   ];
-
-  if (text && text.trim()) {
-    parts.push(`Text to translate:\n${text}`);
-  }
-
-  if (hasImage) {
-    parts.push(
-      `If the image contains visible text, translate that text faithfully into the target language.`
-    );
-  }
-
+  if (text && text.trim()) parts.push(`Text to translate:\n${text}`);
+  if (hasImage) parts.push(`If the image contains visible text, translate that text faithfully into the target language.`);
   return parts.join('\n\n');
 };
 
 const DEFAULT_SETTINGS = {
-  apiKeys: {}, provider: DEFAULT_PROVIDER, customBaseUrl: '', customModels: '', customPrompt: '',
-  ttsSpeed: 1.0, autoPlayTTS: false, backgroundOverlay: 0.9, chatBackgroundUrl: '', filterThinking: true,
-  enableBackTranslation: false, lastSourceLang: 'zh-CN', lastTargetLang: 'my-MM', voiceAutoSendDelay: 1800
+  apiKeys: {}, 
+  provider: DEFAULT_PROVIDER, 
+  customProviders: [],
+  customPrompt: '',
+  ttsSpeed: 1.0,
+  autoPlayTTS: false, 
+  backgroundOverlay: 0.9, 
+  chatBackgroundUrl: '', 
+  filterThinking: true,
+  enableBackTranslation: false, 
+  lastSourceLang: 'zh-CN', 
+  lastTargetLang: 'my-MM', 
+  voiceAutoSendDelay: 1800
 };
 
 // ----------------- TTS 控制 -----------------
@@ -216,7 +233,7 @@ const playTTS = async (text, lang, settings) => {
   if (!text) return;
   const voiceMap = { 'zh-CN': 'zh-CN-XiaoyouNeural', 'en-US': 'en-US-JennyNeural', 'my-MM': 'my-MM-NilarNeural' };
   const voice = voiceMap[lang] || 'zh-CN-XiaoxiaoMultilingualNeural';
-  const speed = settings.ttsSpeed || 1.0;
+  const speed = Number(settings.ttsSpeed) || 1.0;
   const key = `${voice}_${speed}_${text}`;
 
   try {
@@ -287,7 +304,7 @@ const TranslationCard = memo(({ data, onPlay, originalText, srcLang, tgtLang }) 
 
 // 设置面板
 const SettingsModal = ({ settings, onSave, onClose }) => {
-  const [data, setData] = useState(settings);
+  const [data, setData] = useState({ ...DEFAULT_SETTINGS, ...settings });
   const [tab, setTab] = useState('api');
   const [dictList, setDictList] = useState([]);
 
@@ -329,25 +346,83 @@ const SettingsModal = ({ settings, onSave, onClose }) => {
 
           <div className="p-6 overflow-y-auto slim-scrollbar flex-1">
             {tab === 'api' && (
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-bold text-gray-700 mb-2 flex items-center gap-2">默认供应商</label>
-                  <select className="w-full bg-gray-50 border rounded-xl p-3 text-sm" value={data.provider} onChange={(e) => setData({ ...data, provider: e.target.value })}>
-                    {Object.values(PROVIDERS).map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
-                  </select>
+              <div className="space-y-5">
+                <div className="flex gap-2 items-end">
+                  <div className="flex-1">
+                    <label className="text-sm font-bold text-gray-700 mb-2 block">当前翻译节点</label>
+                    <select className="w-full bg-gray-50 border rounded-xl p-3 text-sm" value={data.provider} onChange={(e) => setData({ ...data, provider: e.target.value })}>
+                      <optgroup label="内置节点">
+                        {Object.values(PROVIDERS).map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
+                      </optgroup>
+                      {(data.customProviders && data.customProviders.length > 0) && (
+                        <optgroup label="自定义节点">
+                          {data.customProviders.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
+                        </optgroup>
+                      )}
+                    </select>
+                  </div>
+                  <button onClick={() => {
+                    const newId = 'custom_' + Date.now();
+                    setData({
+                      ...data, provider: newId, 
+                      customProviders: [...(data.customProviders || []), { id: newId, name: '新自定义节点', icon: 'fa-robot', baseUrl: '', models: '', apiKey: '' }]
+                    });
+                  }} className="bg-pink-50 text-pink-600 px-4 py-3 rounded-xl text-sm font-bold whitespace-nowrap">
+                    + 新增
+                  </button>
                 </div>
-                <div>
-                  <label className="text-sm font-bold text-gray-700 mb-2">通行密钥</label>
-                  <input type="password" placeholder="该供应商的API Key" className="w-full bg-gray-50 border rounded-xl p-3 text-sm" value={data.apiKeys?.[data.provider] || ''} onChange={(e) => setData({ ...data, apiKeys: { ...data.apiKeys, [data.provider]: e.target.value } })} />
-                </div>
-                {data.provider === 'custom' && (
-                  <>
-                    <input type="text" placeholder="自定义BaseURL" className="w-full bg-gray-50 border rounded-xl p-3 text-sm" value={data.customBaseUrl || ''} onChange={(e) => setData({ ...data, customBaseUrl: e.target.value })} />
-                    <input type="text" placeholder="自定义模型(逗号分隔)" className="w-full bg-gray-50 border rounded-xl p-3 text-sm" value={data.customModels || ''} onChange={(e) => setData({ ...data, customModels: e.target.value })} />
-                  </>
+
+                {data.provider.startsWith('custom_') ? (() => {
+                  const cpIndex = (data.customProviders || []).findIndex(p => p.id === data.provider);
+                  const cp = (data.customProviders || [])[cpIndex] || {};
+                  const updateCp = (key, val) => {
+                    const newCps = [...(data.customProviders || [])];
+                    if(newCps[cpIndex]) newCps[cpIndex] = { ...cp, [key]: val };
+                    setData({ ...data, customProviders: newCps });
+                  };
+
+                  return (
+                    <div className="bg-blue-50/30 p-4 rounded-2xl border border-blue-100 space-y-3 relative">
+                      <div className="absolute top-2 right-2 flex gap-1">
+                        <button onClick={() => {
+                          if(!window.confirm('确认删除该节点？')) return;
+                          const newCps = data.customProviders.filter(p => p.id !== data.provider);
+                          setData({ ...data, customProviders: newCps, provider: Object.keys(PROVIDERS)[0] });
+                        }} className="w-8 h-8 rounded-full bg-red-50 text-red-400 hover:text-red-600"><i className="fas fa-trash"/></button>
+                      </div>
+                      <div className="flex gap-2 pt-2">
+                        <div className="flex-1">
+                          <label className="text-xs font-bold text-gray-500 mb-1 block">节点名称</label>
+                          <input type="text" placeholder="例如: 个人专线" className="w-full border rounded-xl p-2.5 text-sm" value={cp.name || ''} onChange={e => updateCp('name', e.target.value)} />
+                        </div>
+                        <div className="w-1/3">
+                          <label className="text-xs font-bold text-gray-500 mb-1 block">图标类名</label>
+                          <input type="text" placeholder="如 fa-bolt" className="w-full border rounded-xl p-2.5 text-sm" value={cp.icon || ''} onChange={e => updateCp('icon', e.target.value)} />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-gray-500 mb-1 block">接口地址 (Base URL)</label>
+                        <input type="text" placeholder="https://api.openai.com/v1" className="w-full border rounded-xl p-2.5 text-sm" value={cp.baseUrl || ''} onChange={e => updateCp('baseUrl', e.target.value)} />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-gray-500 mb-1 block">模型名称 (多个用逗号分隔)</label>
+                        <input type="text" placeholder="gpt-4o, gpt-4o-mini" className="w-full border rounded-xl p-2.5 text-sm" value={cp.models || ''} onChange={e => updateCp('models', e.target.value)} />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-gray-500 mb-1 block">API Key / 令牌</label>
+                        <input type="password" placeholder="sk-..." className="w-full border rounded-xl p-2.5 text-sm" value={cp.apiKey || ''} onChange={e => updateCp('apiKey', e.target.value)} />
+                      </div>
+                    </div>
+                  );
+                })() : (
+                  <div>
+                    <label className="text-sm font-bold text-gray-700 mb-2 block">通行密钥 (API Key)</label>
+                    <input type="password" placeholder="该供应商的API Key" className="w-full bg-gray-50 border rounded-xl p-3 text-sm" value={data.apiKeys?.[data.provider] || ''} onChange={(e) => setData({ ...data, apiKeys: { ...data.apiKeys, [data.provider]: e.target.value } })} />
+                  </div>
                 )}
+
                 <div>
-                  <label className="text-sm font-bold text-gray-700 mb-2">自定义提示词 (可选)</label>
+                  <label className="text-sm font-bold text-gray-700 mb-2 block">自定义提示词 (可选)</label>
                   <textarea placeholder="例如：请使用敬语翻译..." className="w-full bg-gray-50 border rounded-xl p-3 text-sm h-24" value={data.customPrompt || ''} onChange={(e) => setData({ ...data, customPrompt: e.target.value })} />
                 </div>
               </div>
@@ -356,10 +431,10 @@ const SettingsModal = ({ settings, onSave, onClose }) => {
             {tab === 'dict' && (
               <div className="space-y-4">
                 <div className="flex gap-2">
-                  <label className="flex-1 bg-pink-50 text-pink-600 text-center py-2 rounded-xl text-sm font-bold cursor-pointer">
+                  <label className="flex-1 bg-pink-50 text-pink-600 text-center py-2 rounded-xl text-sm font-bold cursor-pointer hover:bg-pink-100 transition-colors">
                     导入 JSON <input type="file" accept=".json" hidden onChange={handleImportJSON} />
                   </label>
-                  <button onClick={handleExportJSON} className="flex-1 bg-blue-50 text-blue-600 py-2 rounded-xl text-sm font-bold">导出 JSON</button>
+                  <button onClick={handleExportJSON} className="flex-1 bg-blue-50 text-blue-600 py-2 rounded-xl text-sm font-bold hover:bg-blue-100 transition-colors">导出 JSON</button>
                 </div>
                 <div className="bg-gray-50 rounded-xl p-2 min-h-[200px] max-h-[300px] overflow-y-auto">
                   {dictList.length === 0 ? <p className="text-center text-gray-400 mt-10 text-sm">暂无自定义词条</p> : dictList.map((d) => (
@@ -372,7 +447,7 @@ const SettingsModal = ({ settings, onSave, onClose }) => {
                     </div>
                   ))}
                 </div>
-                <button onClick={async () => { if (window.confirm('确认清空？')) { await clearUserDict(); loadDict(); } }} className="w-full text-red-500 text-sm py-2 border border-red-100 rounded-xl font-bold">清空所有词典</button>
+                <button onClick={async () => { if (window.confirm('确认清空？')) { await clearUserDict(); loadDict(); } }} className="w-full text-red-500 text-sm py-2 border border-red-100 rounded-xl font-bold hover:bg-red-50">清空所有词典</button>
               </div>
             )}
 
@@ -380,12 +455,22 @@ const SettingsModal = ({ settings, onSave, onClose }) => {
               <div className="space-y-5">
                 <div className="flex justify-between items-center"><span className="text-sm font-bold">开启回译</span><input type="checkbox" checked={data.enableBackTranslation} onChange={(e) => setData({ ...data, enableBackTranslation: e.target.checked })} className="w-5 h-5 accent-pink-500" /></div>
                 <div className="flex justify-between items-center"><span className="text-sm font-bold">自动朗读</span><input type="checkbox" checked={data.autoPlayTTS} onChange={(e) => setData({ ...data, autoPlayTTS: e.target.checked })} className="w-5 h-5 accent-pink-500" /></div>
-                <div><span className="text-sm font-bold flex justify-between"><span>语音静默发送</span><span>{Number(data.voiceAutoSendDelay) / 1000}s</span></span><input type="range" min="1000" max="3000" step="100" value={data.voiceAutoSendDelay} onChange={(e) => setData({ ...data, voiceAutoSendDelay: Number(e.target.value) })} className="w-full accent-pink-500 mt-2" /></div>
+                
+                <div className="bg-gray-50 p-4 rounded-xl space-y-4">
+                  <div>
+                    <span className="text-sm font-bold flex justify-between mb-2"><span>静默发送延迟</span><span className="text-pink-500">{Number(data.voiceAutoSendDelay) / 1000}s</span></span>
+                    <input type="range" min="1000" max="3000" step="100" value={data.voiceAutoSendDelay} onChange={(e) => setData({ ...data, voiceAutoSendDelay: Number(e.target.value) })} className="w-full accent-pink-500" />
+                  </div>
+                  <div className="border-t pt-4">
+                    <span className="text-sm font-bold flex justify-between mb-2"><span>TTS 朗读语速</span><span className="text-pink-500">{Number(data.ttsSpeed || 1.0).toFixed(1)}x</span></span>
+                    <input type="range" min="0.5" max="2.0" step="0.1" value={data.ttsSpeed || 1.0} onChange={(e) => setData({ ...data, ttsSpeed: Number(e.target.value) })} className="w-full accent-pink-500" />
+                  </div>
+                </div>
               </div>
             )}
           </div>
 
-          <div className="p-5 border-t"><button onClick={() => { onSave(data); onClose(); }} className="w-full py-3 bg-pink-500 text-white rounded-xl font-bold shadow-lg">保存配置</button></div>
+          <div className="p-5 border-t"><button onClick={() => { onSave(data); onClose(); }} className="w-full py-3 bg-pink-500 text-white rounded-xl font-bold shadow-lg active:scale-95 transition-transform">保存配置</button></div>
         </Dialog.Panel>
       </div>
     </Dialog>
@@ -413,7 +498,7 @@ const AiChatContent = ({ onClose }) => {
   const recognitionRef = useRef(null);
   const abortControllerRef = useRef(null);
   const currentRequestIdRef = useRef(null);
-  const finalTextRef = useRef('');
+  const finalTextRef = useRef(''); // 保存已确认(isFinal)的文本
   const autoSendTimerRef = useRef(null);
   const hasAutoSentRef = useRef(false);
 
@@ -437,13 +522,30 @@ const AiChatContent = ({ onClose }) => {
     safeLocalStorageSet('ai886_settings', JSON.stringify({ ...settings, lastSourceLang: sourceLang, lastTargetLang: targetLang }));
   }, [settings, sourceLang, targetLang]);
 
-  const appendHistory = (item) => setHistory((p) => [...p, item].slice(-100)); // 限制100条长度
+  const appendHistory = (item) => setHistory((p) => [...p, item].slice(-100));
 
   const scrollToResult = () => setTimeout(() => { scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' }); }, 100);
 
   const fetchAi = async ({ messages, signal }) => {
-    const config = getApiConfig({ apiKeys: settings.apiKeys, provider: settings.provider, customBaseUrl: settings.customBaseUrl, customModels: settings.customModels });
-    if (!config?.baseUrl || !config.models?.length) throw new Error('未配置API节点，请检查设置');
+    let config;
+    const isCustom = settings.provider.startsWith('custom_');
+    
+    if (isCustom) {
+      const cp = (settings.customProviders || []).find(p => p.id === settings.provider);
+      if (!cp) throw new Error('自定义节点不存在');
+      config = {
+        provider: cp.id,
+        name: cp.name,
+        icon: cp.icon || 'fa-robot',
+        baseUrl: cp.baseUrl,
+        models: cp.models ? cp.models.split(',').map(m => m.trim()).filter(Boolean) : [],
+        apiKey: cp.apiKey
+      };
+    } else {
+      config = getApiConfig({ apiKeys: settings.apiKeys, provider: settings.provider });
+    }
+
+    if (!config?.baseUrl || !config.models?.length) throw new Error('未正确配置API节点信息，请检查设置');
     const endpoint = config.baseUrl.endsWith('/chat/completions') ? config.baseUrl : `${config.baseUrl.replace(/\/+$/, '')}/chat/completions`;
     const orderedModels = reorderModelsByLastSuccess(config.provider, config.models);
     let lastErr = '';
@@ -503,18 +605,16 @@ const AiChatContent = ({ onClose }) => {
       let aiMsg = { id: reqId + '_a', role: 'ai', results: [], ts: Date.now(), tgtLang: cTgt, originalText: text, srcLang: cSrc };
       let dictHit = null; let providerInfo = null;
 
-      // 1. 预设专业词库 (仅要求精确匹配)
       if (inputImages.length === 0 && text) {
         try {
           const dict = await loadCheatDict(cSrc);
           if (dict) {
-            dictHit = await matchCheatExact(dict, text, cTgt); // EXACT MATCH
+            dictHit = await matchCheatExact(dict, text, cTgt);
             if (dictHit) providerInfo = { name: '★ 离线专业词库', icon: 'fa-book' };
           }
         } catch (e) {}
       }
 
-      // 2. 用户自定义词典
       if (!dictHit && inputImages.length === 0 && text) {
         dictHit = await matchFromUserDict(cSrc, cTgt, text);
         if (dictHit) providerInfo = { name: '✓ 我的词典', icon: 'fa-user-edit' };
@@ -524,25 +624,19 @@ const AiChatContent = ({ onClose }) => {
         aiMsg.results = normalizeTranslations(dictHit, settings.enableBackTranslation);
         aiMsg.providerMeta = providerInfo;
       } else {
-        // 3. AI 24小时缓存
         const cacheParams = { srcLang: cSrc, tgtLang: cTgt, text, provider: settings.provider, enableBackTranslation: settings.enableBackTranslation, customPrompt: settings.customPrompt };
         const cachedResult = getCachedAiResult(cacheParams);
 
         if (cachedResult && inputImages.length === 0) {
-  aiMsg.results = normalizeTranslations(cachedResult.results, settings.enableBackTranslation);
-  aiMsg.providerMeta = { name: '⚡ 缓存秒回', icon: 'fa-bolt' };
+          aiMsg.results = normalizeTranslations(cachedResult.results, settings.enableBackTranslation);
+          aiMsg.providerMeta = { name: '⚡ 缓存秒回', icon: 'fa-bolt' };
         } else {
-          // 4. 真实请求 AI
           const res = await fetchAi({ messages: msgs, signal });
           aiMsg.results = normalizeTranslations(res.content, settings.enableBackTranslation);
           aiMsg.providerMeta = res.providerMeta;
 
-          // 缓存 24 小时 (仅限纯文本)，不写入永久用户词库
           if (text && inputImages.length === 0 && aiMsg.results[0]?.translation) {
-            setCachedAiResult(cacheParams, {
-  results: aiMsg.results,
-  providerMeta: res.providerMeta
-});
+            setCachedAiResult(cacheParams, { results: aiMsg.results, providerMeta: res.providerMeta });
           }
         }
       }
@@ -558,44 +652,71 @@ const AiChatContent = ({ onClose }) => {
     }
   };
 
+  // 唯一入口：终止语音并发送，带锁防止重复触发
+  const stopAndSend = (textToForce) => {
+    if (hasAutoSentRef.current) return;
+    hasAutoSentRef.current = true;
+    if (autoSendTimerRef.current) clearTimeout(autoSendTimerRef.current);
+    
+    recognitionRef.current?.stop();
+    setIsRecording(false);
+    
+    const finalStr = (textToForce !== undefined ? textToForce : inputVal).trim();
+    if (finalStr) handleTranslate(finalStr);
+  };
+
   const startRecording = () => {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) return alert('当前浏览器不支持语音输入');
     if (isRecording) {
-  hasAutoSentRef.current = true;
-  recognitionRef.current?.stop();
-  if ((finalTextRef.current || inputVal).trim()) {
-    handleTranslate(finalTextRef.current || inputVal);
-  }
-  return;
+      stopAndSend(inputVal);
+      return;
     }
     
     playBeep();
     const rec = new SR(); rec.lang = sourceLang; rec.interimResults = true; rec.continuous = true;
-    recognitionRef.current = rec; setInputVal(''); finalTextRef.current = ''; setIsRecording(true);
-    hasAutoSentRef.current = false; // 重置发送锁
+    recognitionRef.current = rec; 
+    
+    setInputVal(''); 
+    finalTextRef.current = ''; 
+    hasAutoSentRef.current = false; // 解锁
+    setIsRecording(true);
 
     rec.onresult = (e) => {
-      let t = ''; for (let i = 0; i < e.results.length; i++) t += e.results[i][0].transcript;
-      setInputVal(t); finalTextRef.current = t;
+      let interimText = '';
+      // 增量循环：从当前的 resultIndex 开始处理
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const transcript = e.results[i][0].transcript;
+        if (e.results[i].isFinal) {
+          // 如果这段文本已经确定，安全地合并入 final 缓存
+          finalTextRef.current = mergeTranscript(finalTextRef.current, transcript);
+        } else {
+          // 否则收集作为临时文本
+          interimText += transcript;
+        }
+      }
+
+      // 组装要在输入框中显示的文本
+      const currentDisplay = mergeTranscript(finalTextRef.current, interimText);
+      setInputVal(currentDisplay);
+
+      // 重置静默自动发送的定时器
       if (autoSendTimerRef.current) clearTimeout(autoSendTimerRef.current);
-      
       autoSendTimerRef.current = setTimeout(() => {
-        if (finalTextRef.current.trim() && !hasAutoSentRef.current) {
-          hasAutoSentRef.current = true; // 加锁防重复
-          rec.stop();
-          handleTranslate(finalTextRef.current);
+        if (currentDisplay.trim() && !hasAutoSentRef.current) {
+          stopAndSend(currentDisplay);
         }
       }, settings.voiceAutoSendDelay);
     };
 
     rec.onend = () => {
       setIsRecording(false);
-      if (!hasAutoSentRef.current && finalTextRef.current.trim()) {
-        hasAutoSentRef.current = true;
-        handleTranslate(finalTextRef.current);
+      // 如果到底了还没发过，发最后这一下
+      if (!hasAutoSentRef.current && inputVal.trim()) {
+        stopAndSend(inputVal);
       }
     };
+    
     rec.onerror = () => setIsRecording(false);
     rec.start();
   };
@@ -615,7 +736,7 @@ const AiChatContent = ({ onClose }) => {
         <div className="flex justify-between h-14 px-4 items-center">
           <div className="w-10" />
           <div className="font-extrabold text-lg flex items-center gap-2"><i className="fas fa-language text-pink-500" />886.best</div>
-          <button onClick={() => setShowSettings(true)} className="w-9 h-9 rounded-full bg-gray-100 text-gray-600"><i className="fas fa-cog" /></button>
+          <button onClick={() => setShowSettings(true)} className="w-9 h-9 rounded-full bg-gray-100 text-gray-600 active:scale-95"><i className="fas fa-cog" /></button>
         </div>
       </div>
 
@@ -628,7 +749,7 @@ const AiChatContent = ({ onClose }) => {
             <div key={item.id} className={`mb-6 ${item.role === 'user' ? 'flex justify-end' : ''}`}>
               {item.role === 'user' ? (
                 <div className="flex flex-col items-end max-w-[85%]">
-                  {item.images?.length > 0 && <div className="flex gap-2 mb-2 justify-end">{item.images.map((img, i) => <img loading="lazy" key={i} src={img} className="w-24 h-24 object-cover rounded-xl border-2" alt="" />)}</div>}
+                  {item.images?.length > 0 && <div className="flex gap-2 mb-2 justify-end">{item.images.map((img, i) => <img loading="lazy" key={i} src={img} className="w-24 h-24 object-cover rounded-xl border-2 shadow-sm" alt="" />)}</div>}
                   {item.text && <div className="bg-gradient-to-br from-pink-500 to-pink-600 text-white px-5 py-3 rounded-2xl rounded-tr-sm text-[15px] shadow-md">{item.text}</div>}
                 </div>
               ) : item.role === 'error' ? (
@@ -653,15 +774,38 @@ const AiChatContent = ({ onClose }) => {
               <button onClick={() => { setSourceLang(targetLang); setTargetLang(sourceLang); }} className="w-8 h-8 text-gray-400 hover:text-pink-500"><i className="fas fa-exchange-alt text-xs" /></button>
               <button onClick={() => setShowTgtPicker(true)} className="flex items-center gap-2 px-4 py-1.5 hover:bg-gray-50 rounded-full"><span className="text-lg">{getLangFlag(targetLang)}</span><span className="text-xs font-bold">{getLangName(targetLang)}</span></button>
               <div className="w-px h-5 bg-gray-200 mx-1"></div>
+              
               <Menu as="div" className="relative">
-                <Menu.Button className="w-10 h-10 flex items-center justify-center text-pink-500 rounded-full hover:bg-pink-50 transition-colors"><i className={`fas ${(PROVIDERS[settings.provider] || {}).icon || 'fa-robot'} text-lg`} /></Menu.Button>
+                <Menu.Button className="w-10 h-10 flex items-center justify-center text-pink-500 rounded-full hover:bg-pink-50 transition-colors">
+                  {(() => {
+                    let icon = 'fa-robot';
+                    if (settings.provider.startsWith('custom_')) {
+                      const cp = (settings.customProviders || []).find(p => p.id === settings.provider);
+                      if (cp && cp.icon) icon = cp.icon;
+                    } else {
+                      icon = (PROVIDERS[settings.provider] || {}).icon || 'fa-robot';
+                    }
+                    return <i className={`fas ${icon} text-lg`} />;
+                  })()}
+                </Menu.Button>
                 <Transition as={Fragment} enter="duration-150 ease-out" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100" leave="duration-100 ease-in" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95">
-                  <Menu.Items className="absolute bottom-full right-0 mb-2 w-40 bg-white rounded-2xl shadow-xl border overflow-hidden p-1.5 outline-none">
+                  <Menu.Items className="absolute bottom-full right-0 mb-2 w-48 bg-white rounded-2xl shadow-xl border overflow-hidden p-1.5 outline-none max-h-64 overflow-y-auto slim-scrollbar">
+                    <div className="text-xs text-gray-400 font-bold px-3 py-1 mt-1">内置节点</div>
                     {Object.values(PROVIDERS).map((p) => (
                       <Menu.Item key={p.id}>
-                        {({ active }) => <button onClick={() => setSettings({ ...settings, provider: p.id })} className={`flex w-full items-center px-4 py-3 text-xs font-bold rounded-xl ${settings.provider === p.id ? 'bg-pink-50 text-pink-600' : active ? 'bg-gray-50' : ''}`}><i className={`fas ${p.icon} w-5`} /> {p.name}</button>}
+                        {({ active }) => <button onClick={() => setSettings({ ...settings, provider: p.id })} className={`flex w-full items-center px-3 py-2.5 text-xs font-bold rounded-xl ${settings.provider === p.id ? 'bg-pink-50 text-pink-600' : active ? 'bg-gray-50' : ''}`}><i className={`fas ${p.icon} w-5 text-center`} /> {p.name}</button>}
                       </Menu.Item>
                     ))}
+                    {(settings.customProviders && settings.customProviders.length > 0) && (
+                      <>
+                        <div className="text-xs text-gray-400 font-bold px-3 py-1 mt-2 border-t pt-2">自定义节点</div>
+                        {settings.customProviders.map((p) => (
+                          <Menu.Item key={p.id}>
+                            {({ active }) => <button onClick={() => setSettings({ ...settings, provider: p.id })} className={`flex w-full items-center px-3 py-2.5 text-xs font-bold rounded-xl ${settings.provider === p.id ? 'bg-pink-50 text-pink-600' : active ? 'bg-gray-50' : ''}`}><i className={`fas ${p.icon || 'fa-robot'} w-5 text-center`} /> {p.name}</button>}
+                          </Menu.Item>
+                        ))}
+                      </>
+                    )}
                   </Menu.Items>
                 </Transition>
               </Menu>
@@ -670,7 +814,7 @@ const AiChatContent = ({ onClose }) => {
 
           <div className={`relative flex items-end gap-2 bg-white border ${isRecording ? 'border-pink-400 ring-2 ring-pink-100' : 'shadow-md'} rounded-[32px] p-2`}>
             <Menu as="div" className="relative">
-              <Menu.Button className="w-11 h-11 flex items-center justify-center text-gray-400 hover:bg-gray-50 rounded-full"><i className="fas fa-plus text-lg" /></Menu.Button>
+              <Menu.Button className="w-11 h-11 flex items-center justify-center text-gray-400 hover:bg-gray-50 rounded-full active:scale-95"><i className="fas fa-plus text-lg" /></Menu.Button>
               <Transition as={Fragment} enter="duration-150" enterFrom="opacity-0 translate-y-2" enterTo="opacity-100 translate-y-0" leave="duration-100" leaveTo="opacity-0">
                 <Menu.Items className="absolute bottom-full left-0 mb-3 w-32 bg-white rounded-2xl shadow-xl border p-1.5 outline-none">
                   <Menu.Item>{({ active }) => <button onClick={() => cameraInputRef.current?.click()} className={`flex w-full items-center px-4 py-3 text-sm font-bold rounded-xl ${active ? 'bg-pink-50 text-pink-600' : ''}`}><i className="fas fa-camera w-6" /> 拍照</button>}</Menu.Item>
@@ -686,7 +830,7 @@ const AiChatContent = ({ onClose }) => {
               <textarea className="w-full bg-transparent border-none outline-none resize-none px-2 py-1.5 max-h-[120px] text-[16px] leading-relaxed no-scrollbar placeholder-gray-400" placeholder={isRecording ? "听你说，随时点击停止..." : "输入翻译内容..."} rows={1} value={inputVal} onChange={(e) => { setInputVal(e.target.value); finalTextRef.current = e.target.value; }} onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleTranslate(); } }} />
             </div>
 
-            <button onClick={() => isRecording ? startRecording() : (inputVal.trim() || inputImages.length ? handleTranslate() : startRecording())} className={`w-11 h-11 shrink-0 rounded-full flex items-center justify-center transition-all ${isRecording ? 'bg-red-500 text-white animate-pulse' : (inputVal.trim() || inputImages.length ? 'bg-pink-500 text-white active:scale-95' : 'bg-pink-50 text-pink-500 hover:bg-pink-100')}`}>
+            <button onClick={() => isRecording ? stopAndSend(inputVal) : (inputVal.trim() || inputImages.length ? handleTranslate() : startRecording())} className={`w-11 h-11 shrink-0 rounded-full flex items-center justify-center transition-all ${isRecording ? 'bg-red-500 text-white animate-pulse' : (inputVal.trim() || inputImages.length ? 'bg-pink-500 text-white active:scale-95' : 'bg-pink-50 text-pink-500 hover:bg-pink-100')}`}>
               <i className={`fas text-lg ${isRecording ? 'fa-stop' : (inputVal.trim() || inputImages.length ? 'fa-arrow-up' : 'fa-microphone')}`} />
             </button>
           </div>
