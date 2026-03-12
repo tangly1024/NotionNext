@@ -122,9 +122,9 @@ const clearLastSuccessModel = (provider, model) => {
   if (saved === model) safeLocalStorageSet(getLastSuccessModelKey(provider), '');
 };
 
-// ----------------- 24小时 AI 缓存 -----------------
+// ----------------- 72小时 AI 缓存 (核心节约成本逻辑) -----------------
 const AI_CACHE_PREFIX = 'ai886_translate_cache_v1:';
-const AI_CACHE_TTL = 24 * 60 * 60 * 1000;
+const AI_CACHE_TTL = 72 * 60 * 60 * 1000; // 修改为 72 小时
 
 const getAiCacheKey = ({ srcLang, tgtLang, text, provider, enableBackTranslation, customPrompt }) => {
   return `${AI_CACHE_PREFIX}${[srcLang||'', tgtLang||'', provider||'', enableBackTranslation?'1':'0', (customPrompt||'').trim(), (text||'').trim()].join('|')}`;
@@ -201,7 +201,7 @@ const buildUserMsgContent = (srcLang, tgtLang, text, hasImage) => {
     `Important: The translation must be written only in ${getLangName(tgtLang)}. Do not mix other languages unless the content must remain unchanged, such as names, brands, codes, URLs, or numbers.`
   ];
   if (text && text.trim()) parts.push(`Text to translate:\n${text}`);
-  if (hasImage) parts.push(`If the image contains visible text, translate that text faithfully into the target language.`);
+  if (hasImage) parts.push(`If both text and image are provided, translate the user's text first, and also translate any clearly visible text in the image if relevant.`);
   return parts.join('\n\n');
 };
 
@@ -498,7 +498,10 @@ const AiChatContent = ({ onClose }) => {
   const recognitionRef = useRef(null);
   const abortControllerRef = useRef(null);
   const currentRequestIdRef = useRef(null);
-  const finalTextRef = useRef(''); // 保存已确认(isFinal)的文本
+  
+  // 核心：彻底分离状态，根治文字残留 Bug
+  const finalTextRef = useRef(''); // 保存已经确定 (isFinal) 的部分
+  const speechDisplayRef = useRef(''); // 保存当前语音识别的全部字符串 (final + interim)
   const autoSendTimerRef = useRef(null);
   const hasAutoSentRef = useRef(false);
 
@@ -575,9 +578,6 @@ const AiChatContent = ({ onClose }) => {
   };
 
   const handleTranslate = async (textOverride = null) => {
-    if (autoSendTimerRef.current) clearTimeout(autoSendTimerRef.current);
-    if (isRecording) { recognitionRef.current?.stop(); setIsRecording(false); }
-
     let text = (textOverride !== null ? textOverride : inputVal).trim();
     if (!text && inputImages.length === 0) return;
 
@@ -595,7 +595,13 @@ const AiChatContent = ({ onClose }) => {
 
     setIsLoading(true);
     appendHistory({ id: reqId + '_u', role: 'user', text, images: inputImages, ts: Date.now() });
-    setInputVal(''); finalTextRef.current = ''; setInputImages([]); scrollToResult();
+    
+    // 确保任何情况下点击翻译都会彻底清空缓存
+    setInputVal('');
+    finalTextRef.current = '';
+    speechDisplayRef.current = '';
+    setInputImages([]); 
+    scrollToResult();
 
     const sysMsg = buildSystemInstruction(settings.enableBackTranslation, getLangName(cSrc), getLangName(cTgt), settings.customPrompt);
     const userContent = buildUserMsgContent(cSrc, cTgt, text, inputImages.length > 0);
@@ -652,68 +658,73 @@ const AiChatContent = ({ onClose }) => {
     }
   };
 
-  // 唯一入口：终止语音并发送，带锁防止重复触发
+  // 终极发送函数：统一处理停止、清空、发起翻译
   const stopAndSend = (textToForce) => {
     if (hasAutoSentRef.current) return;
     hasAutoSentRef.current = true;
-    if (autoSendTimerRef.current) clearTimeout(autoSendTimerRef.current);
+    
+    if (autoSendTimerRef.current) {
+      clearTimeout(autoSendTimerRef.current);
+      autoSendTimerRef.current = null;
+    }
     
     recognitionRef.current?.stop();
     setIsRecording(false);
     
-    const finalStr = (textToForce !== undefined ? textToForce : inputVal).trim();
+    // 取目标文本
+    const finalStr = String(textToForce !== undefined ? textToForce : speechDisplayRef.current).trim();
+    
+    // 强制同步清空所有 UI 缓存，切断残留
+    speechDisplayRef.current = '';
+    finalTextRef.current = '';
+    setInputVal('');
+
     if (finalStr) handleTranslate(finalStr);
   };
 
   const startRecording = () => {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) return alert('当前浏览器不支持语音输入');
-    if (isRecording) {
-      stopAndSend(inputVal);
-      return;
-    }
     
     playBeep();
     const rec = new SR(); rec.lang = sourceLang; rec.interimResults = true; rec.continuous = true;
     recognitionRef.current = rec; 
     
+    // 开始录音时清空
     setInputVal(''); 
     finalTextRef.current = ''; 
-    hasAutoSentRef.current = false; // 解锁
+    speechDisplayRef.current = '';
+    hasAutoSentRef.current = false;
     setIsRecording(true);
 
     rec.onresult = (e) => {
       let interimText = '';
-      // 增量循环：从当前的 resultIndex 开始处理
       for (let i = e.resultIndex; i < e.results.length; i++) {
         const transcript = e.results[i][0].transcript;
         if (e.results[i].isFinal) {
-          // 如果这段文本已经确定，安全地合并入 final 缓存
           finalTextRef.current = mergeTranscript(finalTextRef.current, transcript);
         } else {
-          // 否则收集作为临时文本
           interimText += transcript;
         }
       }
 
-      // 组装要在输入框中显示的文本
       const currentDisplay = mergeTranscript(finalTextRef.current, interimText);
-      setInputVal(currentDisplay);
+      speechDisplayRef.current = currentDisplay; // 存入Ref
+      setInputVal(currentDisplay); // 渲染UI
 
-      // 重置静默自动发送的定时器
       if (autoSendTimerRef.current) clearTimeout(autoSendTimerRef.current);
       autoSendTimerRef.current = setTimeout(() => {
-        if (currentDisplay.trim() && !hasAutoSentRef.current) {
-          stopAndSend(currentDisplay);
+        if (speechDisplayRef.current.trim() && !hasAutoSentRef.current) {
+          stopAndSend(speechDisplayRef.current);
         }
       }, settings.voiceAutoSendDelay);
     };
 
     rec.onend = () => {
       setIsRecording(false);
-      // 如果到底了还没发过，发最后这一下
-      if (!hasAutoSentRef.current && inputVal.trim()) {
-        stopAndSend(inputVal);
+      // 使用 Ref 作为绝对真理，避免闭包坑
+      if (!hasAutoSentRef.current && speechDisplayRef.current.trim()) {
+        stopAndSend(speechDisplayRef.current);
       }
     };
     
@@ -735,7 +746,7 @@ const AiChatContent = ({ onClose }) => {
       <div className="relative z-20 pt-[env(safe-area-inset-top)] bg-white/80 backdrop-blur-xl border-b shadow-sm">
         <div className="flex justify-between h-14 px-4 items-center">
           <div className="w-10" />
-          <div className="font-extrabold text-lg flex items-center gap-2"><i className="fas fa-language text-pink-500" />886.best</div>
+          <div className="font-extrabold text-lg flex items-center gap-2"><i className="fas fa-language text-pink-500" />886.best中缅交友网</div>
           <button onClick={() => setShowSettings(true)} className="w-9 h-9 rounded-full bg-gray-100 text-gray-600 active:scale-95"><i className="fas fa-cog" /></button>
         </div>
       </div>
@@ -827,10 +838,10 @@ const AiChatContent = ({ onClose }) => {
 
             <div className="flex-1 flex flex-col justify-center min-h-[44px] py-1">
               {inputImages.length > 0 && <div className="flex gap-2 overflow-x-auto mb-2 pl-1">{inputImages.map((img, idx) => <div key={idx} className="relative shrink-0"><img src={img} className="h-12 w-12 object-cover rounded-xl border shadow-sm" alt="" /><button onClick={() => setInputImages((p) => p.filter((_, i) => i !== idx))} className="absolute -top-1.5 -right-1.5 bg-gray-800 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px]"><i className="fas fa-times" /></button></div>)}</div>}
-              <textarea className="w-full bg-transparent border-none outline-none resize-none px-2 py-1.5 max-h-[120px] text-[16px] leading-relaxed no-scrollbar placeholder-gray-400" placeholder={isRecording ? "听你说，随时点击停止..." : "输入翻译内容..."} rows={1} value={inputVal} onChange={(e) => { setInputVal(e.target.value); finalTextRef.current = e.target.value; }} onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleTranslate(); } }} />
+              <textarea className="w-full bg-transparent border-none outline-none resize-none px-2 py-1.5 max-h-[120px] text-[16px] leading-relaxed no-scrollbar placeholder-gray-400" placeholder={isRecording ? "听你说，随时点击停止..." : "输入翻译内容..."} rows={1} value={inputVal} onChange={(e) => { setInputVal(e.target.value); finalTextRef.current = e.target.value; speechDisplayRef.current = e.target.value; }} onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleTranslate(); } }} />
             </div>
 
-            <button onClick={() => isRecording ? stopAndSend(inputVal) : (inputVal.trim() || inputImages.length ? handleTranslate() : startRecording())} className={`w-11 h-11 shrink-0 rounded-full flex items-center justify-center transition-all ${isRecording ? 'bg-red-500 text-white animate-pulse' : (inputVal.trim() || inputImages.length ? 'bg-pink-500 text-white active:scale-95' : 'bg-pink-50 text-pink-500 hover:bg-pink-100')}`}>
+            <button onClick={() => isRecording ? stopAndSend(speechDisplayRef.current) : (inputVal.trim() || inputImages.length ? handleTranslate() : startRecording())} className={`w-11 h-11 shrink-0 rounded-full flex items-center justify-center transition-all ${isRecording ? 'bg-red-500 text-white animate-pulse' : (inputVal.trim() || inputImages.length ? 'bg-pink-500 text-white active:scale-95' : 'bg-pink-50 text-pink-500 hover:bg-pink-100')}`}>
               <i className={`fas text-lg ${isRecording ? 'fa-stop' : (inputVal.trim() || inputImages.length ? 'fa-arrow-up' : 'fa-microphone')}`} />
             </button>
           </div>
