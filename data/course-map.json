@@ -1,0 +1,15 @@
+{
+  "courseId": "english",
+  "title": "日常问候",
+  "units": [
+    {
+      "id": "unit-1",
+      "title": "单元 1：基础问候",
+      "lessons": [
+        { "id": "lesson-1", "title": "关卡 1打招呼" },
+        { "id": "lesson-2", "title": "关卡 2" },
+        { "id": "lesson-3", "title": "关卡 3" }
+      ]
+    }
+  ]
+}
