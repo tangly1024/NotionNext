@@ -145,28 +145,33 @@ const getLangFlag = (code) => SUPPORTED_LANGUAGES.find((l) => l.code === code)?.
 
 // 纯净直译要求 Prompt
 const buildSystemInstruction = (enableBackTranslation, srcLangName, tgtLangName, customPrompt) => {
-  let baseRules = `You are a professional multilingual translation engine.
+  let baseRules = `You are a strict, highly accurate multilingual translation engine.
 
 CRITICAL RULES:
 1. Translate the user's input from ${srcLangName} into ${tgtLangName}.
-2. Be faithful to the source text. Prefer direct and literal translation when possible.
+2. Be faithful to the source text. Prefer direct and literal translation whenever possible.
 3. Preserve the original meaning, tone, style, and important details. Do not add, omit, summarize, explain, answer, or rewrite.
-4. Keep names, brands, product names, model numbers, codes, URLs, numbers, and special formatting unchanged when appropriate.
-5. If a literal translation would be unnatural or incorrect in ${tgtLangName}, make only the smallest necessary adjustment to keep the meaning accurate.
-6. Output exactly one final translation.
-7. The "translation" field must contain only the final translated text in ${tgtLangName}.
-8. Return only valid JSON. Do not use markdown fences or any extra text.`;
+4. The "translation" field must contain ONLY the final translated text in ${tgtLangName}.
+5. Do NOT mix other languages in the translation. The output must be written purely in ${tgtLangName}, except for content that must remain unchanged, such as names, brands, product names, model numbers, codes, URLs, numbers, emojis, or other inherently non-translatable items.
+6. Do NOT include the original text, pronunciation, transliteration, notes, explanations, brackets, or extra commentary in the translation.
+7. If a fully literal translation would be unnatural or incorrect in ${tgtLangName}, make only the smallest necessary adjustment to keep the meaning accurate.
+8. Output exactly one final translation.
+9. Return ONLY valid JSON. Do not use markdown fences. Do not output any extra text before or after the JSON.`;
 
   if (customPrompt && customPrompt.trim()) {
     baseRules += `\n\nUSER CUSTOM RULES:\n${customPrompt.trim()}`;
   }
 
   if (!enableBackTranslation) {
-    return `${baseRules}\n\nOutput schema:\n{"data":[{"translation":"..."}]}`;
+    return `${baseRules}
+
+Output schema:
+{"data":[{"translation":"..."}]}`;
   }
 
   return `${baseRules}
-9. Also provide "back_translation" by translating the final result back into ${srcLangName} for verification only.
+10. Also provide "back_translation" by translating the final ${tgtLangName} result back into ${srcLangName} for verification only.
+11. The "back_translation" must be a real back-translation, not a copy of the original input, unless the translated content is naturally identical.
 
 Output schema:
 {"data":[{"translation":"...","back_translation":"..."}]}`;
@@ -174,13 +179,23 @@ Output schema:
 
 const buildUserMsgContent = (srcLang, tgtLang, text, hasImage) => {
   const parts = [
-    `Source language: ${srcLang}`,
-    `Target language: ${tgtLang}`,
-    `Task: Translate faithfully and directly without extra words.`,
-    text ? `Text:\n${text}` : ''
+    `Source language: ${getLangName(srcLang)}`,
+    `Target language: ${getLangName(tgtLang)}`,
+    `Task: Translate the content faithfully into the target language.`,
+    `Important: The translation must be written only in ${getLangName(tgtLang)}. Do not mix other languages unless the content must remain unchanged, such as names, brands, codes, URLs, or numbers.`
   ];
-  if (hasImage) parts.push('If the image contains text, translate the visible text faithfully into the target language.');
-  return parts.filter(Boolean).join('\n\n');
+
+  if (text && text.trim()) {
+    parts.push(`Text to translate:\n${text}`);
+  }
+
+  if (hasImage) {
+    parts.push(
+      `If the image contains visible text, translate that text faithfully into the target language.`
+    );
+  }
+
+  return parts.join('\n\n');
 };
 
 const DEFAULT_SETTINGS = {
@@ -607,7 +622,7 @@ const AiChatContent = ({ onClose }) => {
       <div ref={scrollRef} className="flex-1 overflow-y-auto no-scrollbar relative z-10 px-4 pt-4 pb-[180px] scroll-smooth">
         <div className="w-full max-w-[600px] mx-auto min-h-full flex flex-col justify-end">
           {history.length === 0 && !isLoading && (
-            <div className="text-center text-gray-400 mb-20 opacity-80 mt-20"><div className="w-20 h-20 bg-pink-50 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl">🌍</div><div className="font-bold"886.best中缅交友社区</div></div>
+            <div className="text-center text-gray-400 mb-20 opacity-80 mt-20"><div className="w-20 h-20 bg-pink-50 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl">🌍</div><div className="font-bold">886.best中缅交友社区</div></div>
           )}
           {history.map((item) => (
             <div key={item.id} className={`mb-6 ${item.role === 'user' ? 'flex justify-end' : ''}`}>
