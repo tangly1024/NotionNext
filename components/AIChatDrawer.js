@@ -743,13 +743,39 @@ const AiChatContent = ({ onClose }) => {
       <GlobalStyles />
       {settings.chatBackgroundUrl && <div className="absolute inset-0 bg-cover bg-center z-0 pointer-events-none opacity-50" style={{ backgroundImage: `url('${settings.chatBackgroundUrl}')`, opacity: 1 - settings.backgroundOverlay }} />}
 
-      <div className="relative z-20 pt-[env(safe-area-inset-top)] bg-white/80 backdrop-blur-xl border-b shadow-sm">
-        <div className="flex justify-between h-14 px-4 items-center">
-          <div className="w-10" />
-          <div className="font-extrabold text-lg flex items-center gap-2"><i className="fas fa-language text-pink-500" />886.best中缅交友网</div>
-          <button onClick={() => setShowSettings(true)} className="w-9 h-9 rounded-full bg-gray-100 text-gray-600 active:scale-95"><i className="fas fa-cog" /></button>
-        </div>
+      <div className="relative z-20 pt-[env(safe-area-inset-top)] bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm">
+  <div className="flex justify-between h-16 px-4 items-center">
+    {/* 左侧占位 (保持平衡) */}
+    <div className="w-10" />
+
+    {/* 中间标题区域 - 垂直居中，两行布局 */}
+    <div className="flex flex-col items-center justify-center select-none">
+      {/* 第一排：主标题 */}
+      <div className="font-bold text-gray-800 text-base leading-tight tracking-wide">
+        中缅交友网
       </div>
+      
+      {/* 第二排：网址与蓝色小球 */}
+      <div className="flex items-center gap-1.5 mt-0.5">
+        {/* 蓝色发光小球 */}
+        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_6px_rgba(59,130,246,0.6)]"></span>
+        {/* 网址文字 */}
+        <span className="text-[10px] font-medium text-blue-400 tracking-wider">
+          886.best
+        </span>
+      </div>
+    </div>
+
+    {/* 右侧设置按钮 - 增加了一些过渡效果 */}
+    <button 
+      onClick={() => setShowSettings(true)} 
+      className="w-9 h-9 rounded-full bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-800 active:scale-95 transition-all duration-200 flex items-center justify-center border border-gray-100"
+    >
+      <i className="fas fa-cog text-sm" />
+    </button>
+  </div>
+</div>
+
 
       <div ref={scrollRef} className="flex-1 overflow-y-auto no-scrollbar relative z-10 px-4 pt-4 pb-[180px] scroll-smooth">
         <div className="w-full max-w-[600px] mx-auto min-h-full flex flex-col justify-end">
