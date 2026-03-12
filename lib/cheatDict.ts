@@ -238,8 +238,8 @@ export async function matchCheatLoose(
   options: LegacyMatchOptions = {}
 ): Promise<CheatTranslation[] | null> {
   return matchCheatExact(dict, input, targetLang, {
-    useCache: options.useCache
-  })
+  useCache: options.useCache ?? true // 如果 undefined，默认为 true
+})
 }
 
 export async function preloadDicts(langs: string[]): Promise<void> {
