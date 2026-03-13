@@ -49,9 +49,12 @@ const SEO = props => {
     keywords = post?.tags?.join(',')
   }
   if (meta) {
-    url = `${url}/${meta.slug}`
+    const slug = meta?.slug ? String(meta.slug).replace(/^\/+/, '') : ''
+    url = slug ? `${url}/${slug}` : url
     image = meta.image || '/bg_image.jpg'
   }
+  const canonicalUrl = url.split(/[?#]/)[0]
+  const robotsContent = meta?.robots || 'follow, index'
   const TITLE = siteConfig('TITLE')
   const title = meta?.title || TITLE
   const description = meta?.description || `${siteInfo?.description}`
@@ -104,12 +107,13 @@ const SEO = props => {
     <Head>
       <link rel='icon' href={favicon} />
       <title>{title}</title>
+      <link rel='canonical' href={canonicalUrl} />
       <meta name='theme-color' content={BACKGROUND_DARK} />
       <meta
         name='viewport'
         content='width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0'
       />
-      <meta name='robots' content='follow, index' />
+      <meta name='robots' content={robotsContent} />
       <meta charSet='UTF-8' />
       {SEO_GOOGLE_SITE_VERIFICATION && (
         <meta
@@ -128,7 +132,7 @@ const SEO = props => {
       <meta property='og:locale' content={lang} />
       <meta property='og:title' content={title} />
       <meta property='og:description' content={description} />
-      <meta property='og:url' content={url} />
+      <meta property='og:url' content={canonicalUrl} />
       <meta property='og:image' content={image} />
       <meta property='og:site_name' content={title} />
       <meta property='og:type' content={type} />
@@ -236,7 +240,8 @@ const getSEOMeta = (props, router, locale) => {
         description: `${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'search',
-        type: 'website'
+        type: 'website',
+        robots: 'noindex, follow'
       }
     case '/search/[keyword]':
     case '/search/[keyword]/page/[page]':
@@ -245,12 +250,14 @@ const getSEOMeta = (props, router, locale) => {
         description: TITLE,
         image: `${siteInfo?.pageCover}`,
         slug: 'search/' + (keyword || ''),
-        type: 'website'
+        type: 'website',
+        robots: 'noindex, follow'
       }
     case '/404':
       return {
         title: `${siteInfo?.title} | 页面找不到啦`,
-        image: `${siteInfo?.pageCover}`
+        image: `${siteInfo?.pageCover}`,
+        robots: 'noindex, nofollow'
       }
     case '/tag':
       return {

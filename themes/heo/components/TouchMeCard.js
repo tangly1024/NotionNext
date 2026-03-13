@@ -11,6 +11,8 @@ export default function TouchMeCard() {
   if (!JSON.parse(siteConfig('HEO_SOCIAL_CARD', null, CONFIG))) {
     return <></>
   }
+  const socialUrl = siteConfig('HEO_SOCIAL_CARD_URL', null, CONFIG)
+  const hasSocialUrl = typeof socialUrl === 'string' && socialUrl.length > 0
   return (
     <div className={'relative h-28 text-white flex flex-col'}>
       <FlipCard
@@ -32,11 +34,17 @@ export default function TouchMeCard() {
           </div>
         }
         backContent={
-          <Link href={siteConfig('HEO_SOCIAL_CARD_URL', null, CONFIG)}>
-            <div className='font-[1000] text-xl h-full'>
+          hasSocialUrl ? (
+            <Link href={socialUrl}>
+              <div className='font-[1000] text-xl h-full'>
+                {siteConfig('HEO_SOCIAL_CARD_TITLE_3', null, CONFIG)}
+              </div>
+            </Link>
+          ) : (
+            <div className='font-[1000] text-xl h-full opacity-70 cursor-default'>
               {siteConfig('HEO_SOCIAL_CARD_TITLE_3', null, CONFIG)}
             </div>
-          </Link>
+          )
         }
       />
     </div>
