@@ -1,6 +1,6 @@
 {
   "id": "greet-l1",
-  "title": "日常问候 - 基础篇",
+  "title": "日常问候 - 你好",
   "questions": [
     {
       "id": "q1",
@@ -45,6 +45,187 @@
         ],
         "correctAnswer": ["1"],
         "grammarPoint": "Morning 对应早晨。"
+      }
+    },
+    {
+      "id": "q4",
+      "type": "single_choice",
+      "content": {
+        "question": "下列哪个是'晚上好'的正确翻译？",
+        "imageUrl": "/images/evening.png",
+        "options": [
+          { "id": "1", "text": "Good morning" },
+          { "id": "2", "text": "Good evening" },
+          { "id": "3", "text": "Good afternoon" },
+          { "id": "4", "text": "Good night" }
+        ],
+        "correctAnswer": ["2"],
+        "grammarPoint": "Good evening 用于晚上见面时问候。"
+      }
+    },
+    {
+      "id": "q5",
+      "type": "single_choice",
+      "content": {
+        "question": "以下哪个是问候语？",
+        "options": [
+          { "id": "1", "text": "Hi" },
+          { "id": "2", "text": "Bye" },
+          { "id": "3", "text": "Sorry" },
+          { "id": "4", "text": "Thanks" }
+        ],
+        "correctAnswer": ["1"],
+        "grammarPoint": "Hi 是 Hello 的非正式说法。"
+      }
+    },
+    {
+      "id": "q6",
+      "type": "single_choice",
+      "content": {
+        "question": "Good afternoon 的意思是：",
+        "options": [
+          { "id": "1", "text": "早上好" },
+          { "id": "2", "text": "中午好/下午好" },
+          { "id": "3", "text": "晚上好" },
+          { "id": "4", "text": "晚安" }
+        ],
+        "correctAnswer": ["2"],
+        "grammarPoint": "Afternoon 指中午12点后到傍晚前。"
+      }
+    },
+    {
+      "id": "q7",
+      "type": "single_choice",
+      "content": {
+        "question": "Hello, how are you? 这句话是用来：",
+        "options": [
+          { "id": "1", "text": "打招呼并问候近况" },
+          { "id": "2", "text": "询问年龄" },
+          { "id": "3", "text": "询问名字" },
+          { "id": "4", "text": "告别" }
+        ],
+        "correctAnswer": ["1"],
+        "grammarPoint": "这是一句常用的问候语，相当于'你好吗？'"
+      }
+    },
+    {
+      "id": "q8",
+      "type": "single_choice",
+      "content": {
+        "question": "当你晚上睡觉前对家人应该说：",
+        "options": [
+          { "id": "1", "text": "Good evening" },
+          { "id": "2", "text": "Good night" },
+          { "id": "3", "text": "Good morning" },
+          { "id": "4", "text": "Hello" }
+        ],
+        "correctAnswer": ["2"],
+        "grammarPoint": "Good night 用于睡前告别，不是见面问候。"
+      }
+    },
+    {
+      "id": "q9",
+      "type": "single_choice",
+      "content": {
+        "question": "Hey 属于什么类型的问候语？",
+        "options": [
+          { "id": "1", "text": "非常正式的" },
+          { "id": "2", "text": "非正式、朋友间使用的" },
+          { "id": "3", "text": "商务场合专用的" },
+          { "id": "4", "text": "书面用语" }
+        ],
+        "correctAnswer": ["2"],
+        "grammarPoint": "Hey 是朋友间常用的非正式问候。"
+      }
+    },
+    {
+      "id": "q10",
+      "type": "single_choice",
+      "content": {
+        "question": "Howdy 是哪个地区的常见问候语？",
+        "options": [
+          { "id": "1", "text": "英国" },
+          { "id": "2", "text": "美国南部/西部" },
+          { "id": "3", "text": "澳大利亚" },
+          { "id": "4", "text": "加拿大" }
+        ],
+        "correctAnswer": ["2"],
+        "grammarPoint": "Howdy 源于'How do you do?'，是美国南部的非正式问候。"
+      }
+    },
+    {
+      "id": "q11",
+      "type": "single_choice",
+      "content": {
+        "question": "What's up? 的正确回应是：",
+        "options": [
+          { "id": "1", "text": "Not much" },
+          { "id": "2", "text": "I'm 20 years old" },
+          { "id": "3", "text": "My name is Tom" },
+          { "id": "4", "text": "I'm from China" }
+        ],
+        "correctAnswer": ["1"],
+        "grammarPoint": "What's up? 是朋友间的问候，通常回答 Not much 或 Nothing。"
+      }
+    },
+    {
+      "id": "q12",
+      "type": "single_choice",
+      "content": {
+        "question": "G'day 是哪个国家的常见问候语？",
+        "options": [
+          { "id": "1", "text": "美国" },
+          { "id": "2", "text": "英国" },
+          { "id": "3", "text": "澳大利亚" },
+          { "id": "4", "text": "新西兰" }
+        ],
+        "correctAnswer": ["3"],
+        "grammarPoint": "G'day 是 Good day 的缩写，澳大利亚人常用。"
+      }
+    },
+    {
+      "id": "q13",
+      "type": "single_choice",
+      "content": {
+        "question": "Bonjour 是哪国语言的'你好'？",
+        "options": [
+          { "id": "1", "text": "西班牙语" },
+          { "id": "2", "text": "德语" },
+          { "id": "3", "text": "法语" },
+          { "id": "4", "text": "意大利语" }
+        ],
+        "correctAnswer": ["3"],
+        "grammarPoint": "Bonjour 是法语中最常用的问候语。"
+      }
+    },
+    {
+      "id": "q14",
+      "type": "single_choice",
+      "content": {
+        "question": "如果你不确定对方的名字，见面时应该说：",
+        "options": [
+          { "id": "1", "text": "Hello, nice to meet you" },
+          { "id": "2", "text": "Goodbye" },
+          { "id": "3", "text": "Thank you" },
+          { "id": "4", "text": "I don't know" }
+        ],
+        "correctAnswer": ["1"],
+        "grammarPoint": "初次见面用 Nice to meet you 表达荣幸。"
+      }
+    },
+    {
+      "id": "q15",
+      "type": "single_choice",
+      "content": {
+        "question": "在正式邮件开头，应该使用：",
+        "options": [
+          { "id": "1", "text": "Hi" },
+          { "id": "2", "text": "Hey" },
+          { "id": "3", "text": "Dear Sir/Madam" },
+          { "id": "4", "text": "What's up" }
+        ],
+        "correctAnswer": ["3"],
+        "grammarPoint": "正式场合使用 Dear 开头更礼貌。"
       }
     }
   ]
