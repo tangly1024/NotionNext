@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import confetti from 'canvas-confetti';
+// import confetti from 'canvas-confetti';
 import {
   FaVolumeUp,
   FaCheck,
