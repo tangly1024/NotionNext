@@ -733,7 +733,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
 
           <div className="scene-wrapper">
             <img
-              src="/images/laoshi.png"
+              src=""
               className="teacher-img"
               alt="Teacher"
               onError={(e) => {
