@@ -270,16 +270,14 @@ const audioController = {
 const cssStyles = `
 .xzt-container { font-family: "Padauk","Noto Sans SC",sans-serif; display:flex; flex-direction:column; background:transparent; width:100%; height:100%; position:relative; }
 .xzt-header { flex-shrink:0; padding:14px 16px 6px; display:flex; justify-content:center; }
-.top-hint-row { width:100%; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:8px; }
-.role-chip { display:flex; align-items:center; gap:10px; }
-.role-avatar { width:46px; height:46px; border-radius:9999px; object-fit:cover; background:#eef2ff; border:2px solid #e5e7eb; box-shadow:0 4px 12px rgba(0,0,0,0.06); }
+.top-hint-row { width:100%; display:flex; justify-content:flex-end; align-items:flex-start; gap:12px; margin-bottom:8px; }
 
 .top-actions { display:flex; align-items:center; gap:8px; }
 .task-text { font-size:13px; font-weight:900; color:#475569; line-height:1.1; text-align:right; }
 .settings-btn { width:38px; height:38px; border-radius:9999px; background:#fff; border:2px solid #e5e7eb; display:flex; align-items:center; justify-content:center; color:#64748b; box-shadow:0 3px 10px rgba(0,0,0,0.05); cursor:pointer; }
 
 .scene-wrapper { width:100%; display:flex; align-items:flex-end; gap:12px; }
-.teacher-img { height:110px; object-fit:contain; flex-shrink:0; }
+.teacher-img { height:130px; object-fit:contain; flex-shrink:0; }
 .bubble-container { flex:1; background:#fff; border-radius:22px; padding:14px 14px; border:2px solid #e5e7eb; position:relative; display:flex; align-items:center; justify-content:space-between; gap:10px; box-shadow:0 6px 14px rgba(0,0,0,0.05); }
 .bubble-tail { position:absolute; bottom:18px; left:-10px; width:0; height:0; border-top:8px solid transparent; border-bottom:8px solid transparent; border-right:10px solid #e5e7eb; }
 .bubble-tail::after { content:''; position:absolute; top:-6px; left:2px; border-top:6px solid transparent; border-bottom:6px solid transparent; border-right:8px solid #fff; }
@@ -321,7 +319,7 @@ const cssStyles = `
 .submit-bar { position:absolute; bottom:0; left:0; right:0; padding:14px 16px calc(16px + env(safe-area-inset-bottom)); border-top:2px solid #f3f4f6; background:#fff; display:flex; justify-content:center; z-index:50; }
 .submit-btn { width:100%; max-width:520px; background:#58cc02; color:white; padding:16px; border-radius:18px; font-size:1.15rem; font-weight:900; border:none; border-bottom:5px solid #46a302; transition:all .1s; -webkit-tap-highlight-color:transparent; cursor:pointer; box-shadow:0 6px 0 #46a302; }
 .submit-btn:active { transform:translateY(4px); border-bottom-width:1px; box-shadow:0 2px 0 #46a302; }
-.submit-btn:disabled { background:#e5e7eb; color:#9ca3af; border-bottom-color:#d1d5db; box-shadow:0 6px 0 #d1d5db; cursor:not-allowed; transform:none; }
+.submit-btn:disabled { background:#e5e5e5; color:#9ca3af; border-bottom-color:#d1d5db; box-shadow:0 6px 0 #d1d5db; cursor:not-allowed; transform:none; }
 
 .result-sheet { position:absolute; bottom:0; left:0; right:0; padding:20px 20px calc(22px + env(safe-area-inset-bottom)); border-top-left-radius:28px; border-top-right-radius:28px; transform:translateY(110%); transition:transform .34s cubic-bezier(0.34,1.56,0.64,1); z-index:100; display:flex; flex-direction:column; gap:14px; box-shadow:0 -10px 32px rgba(0,0,0,0.1); }
 .result-sheet.correct { background:#dcfce7; color:#166534; }
@@ -423,9 +421,6 @@ function getSavedPrefs() {
   }
 }
 
-// =================================================================================
-// 5. 设置面板
-// =================================================================================
 function MiniSettings({ prefs, setPrefs, onClose }) {
   return (
     <>
@@ -499,7 +494,7 @@ function MiniSettings({ prefs, setPrefs, onClose }) {
 }
 
 // =================================================================================
-// 6. 组件主体
+// 5. 组件主体
 // =================================================================================
 export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, triggerAI }) {
   const data = rawData?.content || rawData || {};
@@ -704,17 +699,6 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
       <div className="xzt-header">
         <div className="w-full relative">
           <div className="top-hint-row">
-            <div className="role-chip">
-              <img
-                src="https://audio.886.best/chinese-vocab-audio/%E5%9B%BE%E7%89%87/1765952194374.png"
-                className="role-avatar"
-                alt="Teacher"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                }}
-              />
-            </div>
-
             <div className="top-actions">
               <div className="task-text">အဖြေမှန်ကို ရွေးပါ</div>
               <button className="settings-btn" onClick={() => setShowSettings((v) => !v)}>
@@ -733,7 +717,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
 
           <div className="scene-wrapper">
             <img
-              src=""
+              src="https://audio.886.best/chinese-vocab-audio/%E5%9B%BE%E7%89%87/1765952194374.png"
               className="teacher-img"
               alt="Teacher"
               onError={(e) => {
