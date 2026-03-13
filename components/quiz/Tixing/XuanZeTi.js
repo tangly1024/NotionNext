@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { FaVolumeUp, FaCheck, FaTimes, FaArrowRight, FaSpinner, FaRobot } from 'react-icons/fa';
+import {
+  FaVolumeUp,
+  FaCheck,
+  FaTimes,
+  FaArrowRight,
+  FaSpinner,
+  FaRobot,
+  FaCog
+} from 'react-icons/fa';
 import { pinyin } from 'pinyin-pro';
 
 // =================================================================================
@@ -53,12 +61,18 @@ const TTS_VOICES = {
   en: 'zh-CN-XiaoxiaoMultilingualNeural'
 };
 
+const RATE_MAP = {
+  slow: -30,
+  normal: 0,
+  fast: 20
+};
+
 const isChineseChar = (ch = '') => /[\u4e00-\u9fff]/.test(ch);
 const isMyanmarChar = (ch = '') => /[\u1000-\u109F]/.test(ch);
 const isLatinOrDigit = (ch = '') => /[a-zA-Z0-9]/.test(ch);
 const isWhitespace = (ch = '') => /\s/.test(ch);
+const containsChinese = (text = '') => /[\u4e00-\u9fff]/.test(text);
 
-// 标点/符号：不单独作为一个 TTS 片段，而是挂靠到前后文本
 const isPunctuationOrSymbol = (ch = '') => {
   return !isChineseChar(ch) && !isMyanmarChar(ch) && !isLatinOrDigit(ch) && !isWhitespace(ch);
 };
@@ -78,10 +92,6 @@ const detectWholeTextType = (text = '') => {
   return 'mixed';
 };
 
-// 中/缅/英混合分段：
-// 1) 纯中文/纯缅文/纯英文整句播
-// 2) 混合时才按语言类型切段
-// 3) 标点不单独切出来，而是尽量附着到前一个 segment
 function splitMixedText(text = '') {
   const wholeType = detectWholeTextType(text);
   if (wholeType !== 'mixed') {
@@ -107,24 +117,17 @@ function splitMixedText(text = '') {
     else if (isMyanmarChar(ch)) lang = 'my';
     else if (isLatinOrDigit(ch)) lang = 'en';
     else if (isWhitespace(ch)) {
-      // 空格：附着到当前段，不主动开新段
       currentText += ch;
       continue;
     } else if (isPunctuationOrSymbol(ch)) {
-      // 标点：附着到当前段，避免被拆出去
       currentText += ch;
       continue;
     }
 
     if (!currentLang) {
       currentLang = lang;
-      currentText += ch;
-      continue;
-    }
-
-    if (lang === currentLang) {
-      currentText += ch;
-    } else {
+      currentText += ch        ;
+ } else {
       pushCurrent();
       currentLang = lang;
       currentText = ch;
@@ -133,7 +136,6 @@ function splitMixedText(text = '') {
 
   pushCurrent();
 
-  // 如果由于某些特殊情况产生空数组，兜底整句中文播放
   if (!segments.length && text.trim()) {
     return [{ text: text.trim(), lang: 'zh' }];
   }
@@ -141,13 +143,13 @@ function splitMixedText(text = '') {
   return segments;
 }
 
-async function getTTSBlob(text, voice) {
-  const cacheKey = `${voice}-${text}`;
+async function getTTSBlob(text, voice, rate = 0) {
+  const cacheKey = `${voice}-${rate}-${text}`;
   let blob = await idb.get(cacheKey);
 
   if (!blob) {
     const res = await fetch(
-      `https://t.leftsite.cn/tts?t=${encodeURIComponent(text)}&v=${voice}&r=0`
+      `https://t.leftsite.cn/tts?t=${encodeURIComponent(text)}&v=${voice}&r=${rate}`
     );
     if (!res.ok) throw new Error('TTS Failed');
     blob = await res.blob();
@@ -186,7 +188,7 @@ const audioController = {
     this.activeUrls = [];
   },
 
-  async playMixed(text, onStart, onEnd) {
+  async playMixed(text, { rate = 0 } = {}, onStart, onEnd) {
     this.stop();
 
     const raw = String(text || '').trim();
@@ -215,7 +217,7 @@ const audioController = {
             ? TTS_VOICES.en
             : TTS_VOICES.zh;
 
-        const blob = await getTTSBlob(segText, voice);
+        const blob = await getTTSBlob(segText, voice, rate);
         if (reqId !== this.latestRequestId) return;
 
         const url = URL.createObjectURL(blob);
@@ -259,45 +261,84 @@ const audioController = {
 // 4. 页面样式
 // =================================================================================
 const cssStyles = `
-.xzt-container { font-family: "Padauk","Noto Sans SC",sans-serif; display: flex; flex-direction: column; background: transparent; width: 100%; height: 100%; position: relative; }
-.xzt-header { flex-shrink: 0; padding: 20px 20px 10px; display: flex; justify-content: center; }
-.scene-wrapper { width: 100%; display: flex; align-items: flex-end; gap: 12px; }
-.teacher-img { height: 120px; object-fit: contain; flex-shrink: 0; }
-.bubble-container { flex: 1; background: #fff; border-radius: 18px; padding: 14px 16px; border: 2px solid #e5e7eb; position: relative; display: flex; align-items: center; justify-content: space-between; gap: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-.bubble-tail { position: absolute; bottom: 20px; left: -10px; width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-right: 10px solid #e5e7eb; }
-.bubble-tail::after { content: ''; position: absolute; top: -6px; left: 2px; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-right: 8px solid #fff; }
-.zh-seg { display: inline-flex; flex-direction: column; align-items: center; margin: 0 1px; }
-.zh-py { font-size: .8rem; color: #64748b; line-height: 1; font-family: Arial, sans-serif; }
-.zh-char { font-size: 1.5rem; font-weight: 900; color: #1e293b; line-height: 1.2; }
-.my-seg { font-size: 1.2rem; font-weight: 600; color: #334155; white-space: pre-wrap; }
-.xzt-scroll-area { flex: 1; overflow-y: auto; padding: 10px 16px 120px; display: flex; flex-direction: column; align-items: center; -webkit-overflow-scrolling: touch; }
-.options-grid { width: 100%; display: grid; gap: 12px; grid-template-columns: 1fr; }
-.options-grid.has-images { grid-template-columns: 1fr 1fr; }
-.option-card { background: #fff; border-radius: 16px; padding: 16px; border: 2px solid #e5e7eb; border-bottom-width: 4px; cursor: pointer; transition: all .1s ease; display: flex; align-items: center; justify-content: center; min-height: 60px; position: relative; user-select: none; -webkit-tap-highlight-color: transparent; }
-.option-card:active { transform: translateY(2px); border-bottom-width: 2px; }
-.option-card.selected { border-color: #84cc16; background: #f7fee7; color: #4d7c0f; }
-.option-card.playing { border-color: #60a5fa; background: #eff6ff; color: #1d4ed8; }
-.option-card.correct { border-color: #84cc16; background: #d9f99d; color: #365314; }
-.option-card.wrong { border-color: #ef4444; background: #fee2e2; color: #991b1b; }
-.option-card.locked { cursor: default; transform: none; }
-.option-card.has-image-layout { flex-direction: column; align-items: stretch; justify-content: flex-start; padding: 12px; }
-.option-text { font-weight: 800; text-align: center; line-height: 1.35; font-size: 1.15rem; }
-.option-play-dot { position: absolute; top: 8px; right: 10px; font-size: 14px; opacity: .85; }
-.submit-bar { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 20px calc(16px + env(safe-area-inset-bottom)); border-top: 2px solid #f3f4f6; background: #fff; display: flex; justify-content: center; z-index: 50; }
-.submit-btn { width: 100%; max-width: 500px; background: #58cc02; color: white; padding: 16px; border-radius: 16px; font-size: 1.2rem; font-weight: 900; text-transform: uppercase; border: none; border-bottom: 4px solid #46a302; transition: all 0.1s; -webkit-tap-highlight-color: transparent; cursor: pointer; }
-.submit-btn:active { transform: translateY(4px); border-bottom-width: 0; margin-bottom: 4px; }
-.submit-btn:disabled { background: #e5e7eb; color: #9ca3af; border-bottom-color: #d1d5db; cursor: not-allowed; transform: none; margin-bottom: 0; }
-.result-sheet { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 24px calc(24px + env(safe-area-inset-bottom)); border-top-left-radius: 24px; border-top-right-radius: 24px; transform: translateY(110%); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 100; display: flex; flex-direction: column; gap: 16px; }
-.result-sheet.correct { background: #dcfce7; color: #166534; }
-.result-sheet.wrong { background: #fee2e2; color: #991b1b; }
-.result-sheet.show { transform: translateY(0); box-shadow: 0 -10px 40px rgba(0,0,0,0.1); }
-.sheet-header { font-size: 1.6rem; font-weight: 900; display: flex; align-items: center; gap: 12px; }
-.next-btn { width: 100%; padding: 16px; border-radius: 16px; border: none; color: #fff; font-weight: 900; text-transform: uppercase; font-size: 1.2rem; cursor: pointer; border-bottom: 4px solid rgba(0,0,0,0.2); -webkit-tap-highlight-color: transparent; display: flex; align-items: center; justify-content: center; gap: 8px; }
-.next-btn:active { transform: translateY(4px); border-bottom-width: 0; margin-bottom: 4px; }
-.btn-correct { background: #58cc02; border-bottom-color: #46a302; }
-.btn-wrong { background: #ef4444; border-bottom-color: #b91c1c; }
-.ai-btn { background: #fff; border: 2px solid #e5e7eb; color: #4f46e5; padding: 12px; border-radius: 16px; font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; font-size: 1rem; cursor: pointer; }
-.ai-btn:disabled { opacity: .7; cursor: not-allowed; }
+.xzt-container { font-family: "Padauk","Noto Sans SC",sans-serif; display:flex; flex-direction:column; background:transparent; width:100%; height:100%; position:relative; }
+.xzt-header { flex-shrink:0; padding:14px 16px 6px; display:flex; justify-content:center; }
+.top-hint-row { width:100%; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:8px; }
+.role-chip { display:flex; align-items:center; gap:10px; }
+.role-avatar { width:46px; height:46px; border-radius:9999px; object-fit:cover; background:#eef2ff; border:2px solid #e5e7eb; box-shadow:0 4px 12px rgba(0,0,0,0.06); }
+.role-label { display:flex; flex-direction:column; line-height:1.1; }
+.role-title { font-size:12px; font-weight:900; color:#334155; }
+.role-sub { font-size:10px; color:#94a3b8; font-weight:800; }
+
+.top-actions { display:flex; align-items:center; gap:8px; }
+.task-pill { background:#f8fafc; border:2px solid #e5e7eb; color:#475569; border-radius:9999px; padding:8px 12px; font-size:11px; font-weight:900; line-height:1; white-space:nowrap; }
+.settings-btn { width:38px; height:38px; border-radius:9999px; background:#fff; border:2px solid #e5e7eb; display:flex; align-items:center; justify-content:center; color:#64748b; box-shadow:0 3px 10px rgba(0,0,0,0.05); cursor:pointer; }
+
+.scene-wrapper { width:100%; display:flex; align-items:flex-end; gap:12px; }
+.teacher-img { height:110px; object-fit:contain; flex-shrink:0; }
+.bubble-container { flex:1; background:#fff; border-radius:22px; padding:14px 14px; border:2px solid #e5e7eb; position:relative; display:flex; align-items:center; justify-content:space-between; gap:10px; box-shadow:0 6px 14px rgba(0,0,0,0.05); }
+.bubble-tail { position:absolute; bottom:18px; left:-10px; width:0; height:0; border-top:8px solid transparent; border-bottom:8px solid transparent; border-right:10px solid #e5e7eb; }
+.bubble-tail::after { content:''; position:absolute; top:-6px; left:2px; border-top:6px solid transparent; border-bottom:6px solid transparent; border-right:8px solid #fff; }
+
+.zh-seg { display:inline-flex; flex-direction:column; align-items:center; margin:0 1px; }
+.zh-py { font-size:.68rem; color:#94a3b8; line-height:1; font-family:Arial, sans-serif; font-weight:700; margin-bottom:2px; }
+.zh-char { font-size:1.42rem; font-weight:900; color:#1e293b; line-height:1.15; }
+.my-seg { font-size:1.05rem; font-weight:700; color:#334155; white-space:pre-wrap; }
+.bubble-play-btn { flex-shrink:0; width:44px; height:44px; border-radius:9999px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:inset 0 -2px 0 rgba(0,0,0,0.06); }
+
+.settings-pop { position:absolute; top:58px; right:16px; z-index:120; width:232px; background:#fff; border:2px solid #e5e7eb; border-radius:20px; box-shadow:0 14px 30px rgba(15,23,42,0.12); padding:12px; }
+.settings-section-title { font-size:11px; font-weight:900; color:#94a3b8; text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; }
+.setting-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 2px; }
+.setting-label { font-size:13px; font-weight:900; color:#334155; }
+.switch { width:42px; height:24px; border-radius:9999px; position:relative; transition:all .2s; cursor:pointer; }
+.switch-dot { position:absolute; top:3px; width:16px; height:16px; border-radius:9999px; background:#fff; transition:all .2s; box-shadow:0 1px 4px rgba(0,0,0,.15); }
+.speed-group { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:6px; }
+.speed-btn { border:2px solid #e5e7eb; background:#fff; color:#64748b; border-radius:12px; font-size:12px; font-weight:900; padding:10px 0; cursor:pointer; }
+.speed-btn.active { background:#ecfccb; border-color:#bef264; color:#3f6212; }
+
+.xzt-scroll-area { flex:1; overflow-y:auto; padding:8px 16px 132px; display:flex; flex-direction:column; align-items:center; -webkit-overflow-scrolling:touch; }
+.options-grid { width:100%; display:grid; gap:12px; grid-template-columns:1fr; }
+.options-grid.has-images { grid-template-columns:1fr 1fr; }
+
+.option-card { background:#fff; border-radius:20px; padding:14px; border:2px solid #e5e7eb; border-bottom-width:5px; cursor:pointer; transition:all .12s ease; display:flex; align-items:center; justify-content:center; min-height:68px; position:relative; user-select:none; -webkit-tap-highlight-color:transparent; box-shadow:0 2px 0 rgba(0,0,0,0.02); }
+.option-card:active { transform:translateY(2px); border-bottom-width:3px; }
+.option-card.selected { border-color:#84cc16; background:#f7fee7; color:#4d7c0f; }
+.option-card.playing { border-color:#60a5fa; background:#eff6ff; color:#1d4ed8; }
+.option-card.correct { border-color:#84cc16; background:#dcfce7; color:#365314; }
+.option-card.wrong { border-color:#fca5a5; background:#fef2f2; color:#b91c1c; }
+.option-card.locked { cursor:default; transform:none; }
+.option-card.has-image-layout { flex-direction:column; align-items:stretch; justify-content:flex-start; padding:12px; }
+.option-text-wrap { display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.option-py { font-size:.68rem; color:#94a3b8; line-height:1; font-weight:700; margin-bottom:4px; text-align:center; }
+.option-text { font-weight:900; text-align:center; line-height:1.35; font-size:1.08rem; }
+
+.submit-bar { position:absolute; bottom:0; left:0; right:0; padding:14px 16px calc(16px + env(safe-area-inset-bottom)); border-top:2px solid #f3f4f6; background:#fff; display:flex; justify-content:center; z-index:50; }
+.submit-btn { width:100%; max-width:520px; background:#58cc02; color:white; padding:16px; border-radius:18px; font-size:1.15rem; font-weight:900; border:none; border-bottom:5px solid #46a302; transition:all .1s; -webkit-tap-highlight-color:transparent; cursor:pointer; box-shadow:0 6px 0 #46a302; }
+.submit-btn:active { transform:translateY(4px); border-bottom-width:1px; box-shadow:0 2px 0 #46a302; }
+.submit-btn:disabled { background:#e5e7eb; color:#9ca3af; border-bottom-color:#d1d5db; box-shadow:0 6px 0 #d1d5db; cursor:not-allowed; transform:none; }
+
+.result-sheet { position:absolute; bottom:0; left:0; right:0; padding:20px 20px calc(22px + env(safe-area-inset-bottom)); border-top-left-radius:28px; border-top-right-radius:28px; transform:translateY(110%); transition:transform .34s cubic-bezier(0.34,1.56,0.64,1); z-index:100; display:flex; flex-direction:column; gap:14px; box-shadow:0 -10px 32px rgba(0,0,0,0.1); }
+.result-sheet.correct { background:#dcfce7; color:#166534; }
+.result-sheet.wrong { background:#fef2f2; color:#b91c1c; }
+.result-sheet.show { transform:translateY(0); }
+
+.sheet-header { font-size:1.55rem; font-weight:900; display:flex; align-items:center; gap:12px; }
+.sheet-sub { font-size:13px; font-weight:800; opacity:.8; }
+
+.next-btn { width:100%; padding:16px; border-radius:18px; border:none; color:#fff; font-weight:900; font-size:1.15rem; cursor:pointer; border-bottom:5px solid rgba(0,0,0,0.15); -webkit-tap-highlight-color:transparent; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 6px 0 rgba(0,0,0,0.14); }
+.next-btn:active { transform:translateY(4px); border-bottom-width:1px; box-shadow:0 2px 0 rgba(0,0,0,0.14); }
+.btn-correct { background:#58cc02; border-bottom-color:#46a302; box-shadow:0 6px 0 #46a302; }
+.btn-wrong { background:#ff6b6b; border-bottom-color:#e25454; box-shadow:0 6px 0 #e25454; }
+
+.ai-btn { background:#fff; border:2px solid #e5e7eb; color:#4f46e5; padding:13px; border-radius:16px; font-weight:900; display:flex; align-items:center; justify-content:center; gap:8px; width:100%; font-size:1rem; cursor:pointer; }
+.ai-btn:disabled { opacity:.7; cursor:not-allowed; }
+
+.bounce-in { animation: xzt-bounce .28s ease-out; }
+@keyframes xzt-bounce {
+  0% { transform: scale(0.97); }
+  60% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
 `;
 
 // 工具：安全震动
@@ -305,8 +346,118 @@ const vibrate = (pattern) => {
   if (typeof navigator !== 'undefined' && navigator.vibrate) navigator.vibrate(pattern);
 };
 
+function getPinyinArraySafe(text = '') {
+  const cleaned = String(text).replace(/[^\u4e00-\u9fff]/g, '');
+  if (!cleaned) return [];
+  try {
+    return pinyin(cleaned, { type: 'array', toneType: 'symbol' });
+  } catch (_) {
+    return [];
+  }
+}
+
+function renderTextWithOptionalPinyin(text, showPinyin, textClass = 'zh-char', pyClass = 'zh-py') {
+  if (!text) return null;
+
+  const parts = String(text).match(/([\u4e00-\u9fff]+|[^\u4e00-\u9fff]+)/g) || [];
+
+  return parts.map((part, i) => {
+    if (/[\u4e00-\u9fff]/.test(part)) {
+      const py = getPinyinArraySafe(part);
+      const chars = part.split('');
+      return chars.map((char, j) => (
+        <div key={`${i}-${j}`} className="zh-seg">
+          {showPinyin ? <span className={pyClass}>{py[j] || ''}</span> : null}
+          <span className={textClass}>{char}</span>
+        </div>
+      ));
+    }
+
+    return (
+      <span key={i} className="my-seg">
+        {part}
+      </span>
+    );
+  });
+}
+
 // =================================================================================
-// 5. 组件主体
+// 5. 设置面板
+// =================================================================================
+function MiniSettings({ prefs, setPrefs, onClose }) {
+  return (
+    <>
+      <div className="fixed inset-0 z-[110]" onClick={onClose} />
+      <div className="settings-pop bounce-in">
+        <div className="settings-section-title">Learning Aids</div>
+
+        <div className="setting-row">
+          <span className="setting-label">题干拼音</span>
+          <div
+            className="switch"
+            onClick={() => setPrefs((s) => ({ ...s, showQuestionPinyin: !s.showQuestionPinyin }))}
+            style={{ background: prefs.showQuestionPinyin ? '#58cc02' : '#cbd5e1' }}
+          >
+            <div
+              className="switch-dot"
+              style={{ left: prefs.showQuestionPinyin ? '22px' : '4px' }}
+            />
+          </div>
+        </div>
+
+        <div className="setting-row">
+          <span className="setting-label">选项拼音</span>
+          <div
+            className="switch"
+            onClick={() => setPrefs((s) => ({ ...s, showOptionPinyin: !s.showOptionPinyin }))}
+            style={{ background: prefs.showOptionPinyin ? '#58cc02' : '#cbd5e1' }}
+          >
+            <div
+              className="switch-dot"
+              style={{ left: prefs.showOptionPinyin ? '22px' : '4px' }}
+            />
+          </div>
+        </div>
+
+        <div className="setting-row">
+          <span className="setting-label">自动朗读</span>
+          <div
+            className="switch"
+            onClick={() => setPrefs((s) => ({ ...s, autoPlay: !s.autoPlay }))}
+            style={{ background: prefs.autoPlay ? '#58cc02' : '#cbd5e1' }}
+          >
+            <div
+              className="switch-dot"
+              style={{ left: prefs.autoPlay ? '22px' : '4px' }}
+            />
+          </div>
+        </div>
+
+        <div style={{ marginTop: 8 }}>
+          <div className="setting-label" style={{ marginBottom: 8 }}>语速</div>
+          <div className="speed-group">
+            {[
+              { key: 'slow', label: '慢' },
+              { key: 'normal', label: '正常' },
+              { key: 'fast', label: '快' }
+            ].map((item) => (
+              <button
+                key={item.key}
+                className={`speed-btn ${prefs.rateMode === item.key ? 'active' : ''}`}
+                onClick={() => setPrefs((s) => ({ ...s, rateMode: item.key }))}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+// =================================================================================
+// 6. 组件主体
 // =================================================================================
 export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, triggerAI }) {
   const data = rawData?.content || rawData || {};
@@ -341,6 +492,15 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
   const [speakingOptionId, setSpeakingOptionId] = useState(null);
   const [showResultSheet, setShowResultSheet] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [cardPopId, setCardPopId] = useState(null);
+
+  const [prefs, setPrefs] = useState({
+    showQuestionPinyin: true,
+    showOptionPinyin: false,
+    autoPlay: true,
+    rateMode: 'normal'
+  });
 
   const timersRef = useRef([]);
   const mountedRef = useRef(true);
@@ -362,6 +522,8 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
     };
   }, []);
 
+  const currentRate = RATE_MAP[prefs.rateMode] ?? 0;
+
   // 初始化与自动播放
   useEffect(() => {
     clearTimers();
@@ -374,28 +536,32 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
     setIsQuestionPlaying(false);
     setSpeakingOptionId(null);
     setAiLoading(false);
+    setShowSettings(false);
+    setCardPopId(null);
 
-    if (questionText) {
+    if (questionText && prefs.autoPlay) {
       addTimer(() => {
         audioController.playMixed(
           questionText,
+          { rate: currentRate },
           () => mountedRef.current && setIsQuestionPlaying(true),
           () => mountedRef.current && setIsQuestionPlaying(false)
         );
-      }, 300);
+      }, 260);
     }
 
     return () => {
       clearTimers();
       audioController.stop();
     };
-  }, [data?.id, questionText]);
+  }, [data?.id, questionText, prefs.autoPlay, currentRate]);
 
   const playQuestion = () => {
     if (!questionText) return;
     setSpeakingOptionId(null);
     audioController.playMixed(
       questionText,
+      { rate: currentRate },
       () => mountedRef.current && setIsQuestionPlaying(true),
       () => mountedRef.current && setIsQuestionPlaying(false)
     );
@@ -415,11 +581,17 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
       );
     }
 
+    setCardPopId(sid);
+    setTimeout(() => {
+      if (mountedRef.current) setCardPopId((prev) => (prev === sid ? null : prev));
+    }, 180);
+
     const opt = options.find((o) => String(o.id) === sid);
     if (opt?.text) {
       setIsQuestionPlaying(false);
-      audioController.playMixed(
+      audio.playMixed(
         opt.text,
+        { rate: currentRate },
         () => mountedRef.current && setSpeakingOptionId(sid),
         () => mountedRef.current && setSpeakingOptionId(null)
       );
@@ -440,14 +612,10 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
     setSpeakingOptionId(null);
 
     if (correct) {
-      vibrate([30, 50, 30]);
-      if (typeof window !== 'undefined') {
-        const { default: confetti } = await import('canvas-confetti');
-        confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
-      }
+      vibrate([30, 40, 30]);
       onCorrect?.();
     } else {
-      vibrate([50, 50, 50]);
+      vibrate([40, 40, 40]);
       onWrong?.();
     }
 
@@ -479,69 +647,96 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
     }
   };
 
-  const renderRichText = (text) => {
-    if (!text) return null;
-    const parts = text.match(/([\u4e00-\u9fff]+|[^\u4e00-\u9fff]+)/g) || [];
-
-    return parts.map((part, i) => {
-      if (/[\u4e00-\u9fff]/.test(part)) {
-        const py = pinyin(part, { type: 'array', toneType: 'symbol' });
-        return part.split('').map((char, j) => (
-          <div key={`${i}-${j}`} className="zh-seg">
-            <span className="zh-py">{py[j] || ''}</span>
-            <span className="zh-char">{char}</span>
-          </div>
-        ));
-      }
-      return (
-        <span key={i} className="my-seg">
-          {part}
-        </span>
-      );
-    });
-  };
-
   return (
     <div className="xzt-container">
       <style dangerouslySetInnerHTML={{ __html: cssStyles }} />
 
       <div className="xzt-header">
-        <div className="scene-wrapper">
-          <img
-            src="/images/laoshi.png"
-            className="teacher-img"
-            alt="Teacher"
-            onError={(e) => {
-              e.target.style.display = 'none';
-            }}
-          />
-
-          <div className="bubble-container">
-            <div className="bubble-tail" />
-
-            <div className="flex-1 flex flex-wrap items-end gap-1">
-              {renderRichText(questionText)}
+        <div className="w-full relative">
+          <div className="top-hint-row">
+            <div className="role-chip">
+              <img
+                src="/images/laoshi.png"
+                className="role-avatar"
+                alt="Teacher"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+              <div className="role-label">
+                <span className="role-title">老师 / AI Teacher</span>
+                <span className="role-sub">陪你完成这道题</span>
+              </div>
             </div>
 
-            {questionText && (
-              <div
-                className={`p-3 rounded-2xl cursor-pointer ${
-                  isQuestionPlaying ? 'bg-blue-500 text-white' : 'bg-blue-50 text-blue-500'
-                }`}
-                onClick={playQuestion}
-              >
-                {isQuestionPlaying ? (
-                  <FaSpinner className="animate-spin" size={20} />
-                ) : (
-                  <FaVolumeUp size={20} />
+            <div className="top-actions">
+              <div className="task-pill">အဖြေမှန်ကို ရွေးပါ</div>
+              <button className="settings-btn" onClick={() => setShowSettings((v) => !v)}>
+                <FaCog size={16} />
+              </button>
+            </div>
+          </div>
+
+          {showSettings && (
+            <MiniSettings
+              prefs={prefs}
+              setPrefs={setPrefs}
+              onClose={() => setShowSettings(false)}
+            />
+          )}
+
+          <div className="scene-wrapper">
+            <img
+              src="/images/laoshi.png"
+              className="teacher-img"
+              alt="Teacher"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+
+            <div className="bubble-container">
+              <div className="bubble-tail" />
+
+              <div className="flex-1 flex flex-wrap items-end gap-1">
+                {renderTextWithOptionalPinyin(
+                  questionText,
+                  prefs.showQuestionPinyin,
+                  'zh-char',
+                  'zh-py'
                 )}
               </div>
-            )}
+
+              {questionText && (
+                <div
+                  className="bubble-play-btn"
+                  style={{
+                    background: isQuestionPlaying ? '#1d4ed8' : '#eff6ff',
+                    color: isQuestionPlaying ? '#fff' : '#2563eb'
+                  }}
+                  onClick={playQuestion}
+                >
+                  {isQuestionPlaying ? (
+                    <FaSpinner className="animate-spin" size={20} />
+                  ) : (
+                    <FaVolumeUp size={20} />
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
       <div className="xzt-scroll-area">
+        {questionImg ? (
+          <img
+            src={questionImg}
+            alt="question"
+            className="w-full max-w-[280px] rounded-2xl mb-4 border-2 border-slate-100 shadow-sm"
+          />
+        ) : null}
+
         <div className={`options-grid ${hasOptionImages ? 'has-images' : ''}`}>
           {shuffledOptions.map((opt) => {
             const sid = String(opt.id);
@@ -550,6 +745,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
 
             let cls = 'option-card';
             if (opt.img || opt.imageUrl) cls += ' has-image-layout';
+            if (cardPopId === sid) cls += ' bounce-in';
 
             if (isSubmitted) {
               cls += ' locked';
@@ -559,6 +755,8 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
               if (speakingOptionId === sid) cls += ' playing';
               else if (isSel) cls += ' selected';
             }
+
+            const showPy = prefs.showOptionPinyin && containsChinese(opt.text);
 
             return (
               <div key={sid} className={cls} onClick={() => toggleOption(sid)}>
@@ -574,7 +772,16 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
                   />
                 )}
 
-                <span className="option-text">{opt.text}</span>
+                <div className="option-text-wrap">
+                  {showPy && containsChinese(opt.text) ? (
+                    <div className="option-py">
+                      {pinyin(String(opt.text).replace(/[^\u4e00-\u9fff]/g, ''), {
+                        toneType: 'symbol'
+                      })}
+                    </div>
+                  ) : null}
+                  <span className="option-text">{opt.text}</span>
+                </div>
               </div>
             );
           })}
@@ -584,7 +791,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
       {!isSubmitted && (
         <div className="submit-bar">
           <button className="submit-btn" disabled={!selectedIds.length} onClick={handleSubmit}>
-            စစ်ဆေးမည် (CHECK)
+            检查答案
           </button>
         </div>
       )}
@@ -592,13 +799,17 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
       <div className={`result-sheet ${showResultSheet ? 'show' : ''} ${isRight ? 'correct' : 'wrong'}`}>
         <div className="sheet-header">
           {isRight ? <FaCheck /> : <FaTimes />}
-          <span>{isRight ? 'မှန်ပါတယ်!' : 'မှားနေပါတယ်'}</span>
+          <span>{isRight ? '答对了！' : '再试试看'}</span>
+        </div>
+
+        <div className="sheet-sub">
+          {isRight ? '太棒了，继续前进。' : '你已经很接近正确答案了。'}
         </div>
 
         {!isRight && triggerAI && (
           <button className="ai-btn" disabled={aiLoading} onClick={handleAI}>
             {aiLoading ? <FaSpinner className="animate-spin" /> : <FaRobot />}
-            AI ရှင်းလင်းချက်
+            解释一下
           </button>
         )}
 
@@ -609,7 +820,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
             onNext?.();
           }}
         >
-          ဆက်သွားမည် <FaArrowRight />
+          继续 <FaArrowRight />
         </button>
       </div>
     </div>
