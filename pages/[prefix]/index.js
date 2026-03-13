@@ -6,6 +6,7 @@ import { getGlobalData, getPost } from '@/lib/db/getSiteData'
 import { useGlobal } from '@/lib/global'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import { getPasswordQuery } from '@/lib/password'
+import { checkStrIsNotionId, checkStrIsUuid } from '@/lib/utils'
 import { checkSlugHasNoSlash, processPostData } from '@/lib/utils/post'
 import { DynamicLayout } from '@/themes/theme'
 import md5 from 'js-md5'
@@ -144,7 +145,30 @@ export async function getStaticProps({ params: { prefix }, locale }) {
     // 无法获取文章
     props.post = null
   } else {
-    await processPostData(props, from)
+    // oops 等兜底数据可能不含有效 notion pageId，跳过正文块抓取避免构建失败
+    const postId = String(props.post.id || '')
+    const hasValidNotionId =
+      checkStrIsUuid(postId) || checkStrIsNotionId(postId)
+
+    if (hasValidNotionId) {
+      try {
+        await processPostData(props, from)
+      } catch (error) {
+        console.error(
+          `[slug-props-${fullSlug}] processPostData failed, fallback to metadata-only render`,
+          error
+        )
+        props.prev = null
+        props.next = null
+        props.recommendPosts = []
+        delete props.allPages
+      }
+    } else {
+      props.prev = null
+      props.next = null
+      props.recommendPosts = []
+      delete props.allPages
+    }
   }
   return {
     props,
