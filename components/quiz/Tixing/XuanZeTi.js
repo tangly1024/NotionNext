@@ -687,7 +687,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
 
           <div className="scene-wrapper">
             <img
-              src="/images/laoshi.png"
+              src="https://audio.886.best/chinese-vocab-audio/%E5%9B%BE%E7%89%87/1765952194374.png"
               className="teacher-img"
               alt="Teacher"
               onError={(e) => {
