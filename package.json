@@ -75,6 +75,7 @@
     "notion-utils": "7.7.1",
     "pinyin-pro": "^3.28.0",
     "react": "^18.3.1",
+    "canvas-confetti": "^1.9.3",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.3.1",
     "react-facebook": "^8.1.4",
