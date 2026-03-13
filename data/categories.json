@@ -1,0 +1,5 @@
+[
+  { "id": "greetings", "title": "日常问候", "icon": "👋", "color": "bg-green-500" },
+  { "id": "shopping", "title": "购物指南", "icon": "🛍️", "color": "bg-purple-500" },
+  { "id": "transport", "title": "交通出行", "icon": "🚗", "color": "bg-blue-500" }
+]
