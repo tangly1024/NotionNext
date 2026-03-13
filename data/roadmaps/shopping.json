@@ -1,0 +1,15 @@
+{
+  "id": "shopping",
+  "title": "购物指南",
+  "units": [
+    {
+      "id": "shop-u1",
+      "title": "第一单元：超市购物",
+      "description": "学习常见食物和生活用品名称",
+      "lessons": [
+        { "id": "shop-l1", "title": "水果与蔬菜" },
+        { "id": "shop-l2", "title": "结账与付款" }
+      ]
+    }
+  ]
+}
