@@ -1,0 +1,72 @@
+{
+  "id": "greetings",
+  "title": "日常问候主题",
+  "units": [
+    {
+      "id": "greet-u1",
+      "title": "单元 1: 初次见面",
+      "lessons": [
+        { "id": "greet-l1", "title": "你好" },
+        { "id": "greet-l2", "title": "谢谢" },
+        { "id": "greet-l3", "title": "对不起" },
+        { "id": "greet-l4", "title": "没关系" },
+        { "id": "greet-l5", "title": "再见" }
+      ]
+    },
+    {
+      "id": "greet-u2",
+      "title": "单元 2: 日常寒暄",
+      "lessons": [
+        { "id": "greet-l6", "title": "早上好" },
+        { "id": "greet-l7", "title": "下午好" },
+        { "id": "greet-l8", "title": "晚上好" },
+        { "id": "greet-l9", "title": "好久不见" },
+        { "id": "greet-l10", "title": "最近怎么样" }
+      ]
+    },
+    {
+      "id": "greet-u3",
+      "title": "单元 3: 自我介绍",
+      "lessons": [
+        { "id": "greet-l11", "title": "我叫..." },
+        { "id": "greet-l12", "title": "我来自..." },
+        { "id": "greet-l13", "title": "我是学生" },
+        { "id": "greet-l14", "title": "我今年25岁" },
+        { "id": "greet-l15", "title": "很高兴认识你" }
+      ]
+    },
+    {
+      "id": "greet-u4",
+      "title": "单元 4: 礼貌用语",
+      "lessons": [
+        { "id": "greet-l16", "title": "请" },
+        { "id": "greet-l17", "title": "不客气" },
+        { "id": "greet-l18", "title": "打扰一下" },
+        { "id": "greet-l19", "title": "恭喜" },
+        { "id": "greet-l20", "title": "祝你好运" }
+      ]
+    },
+    {
+      "id": "greet-u5",
+      "title": "单元 5: 问候回应",
+      "lessons": [
+        { "id": "greet-l21", "title": "我很好，谢谢" },
+        { "id": "greet-l22", "title": "还不错" },
+        { "id": "greet-l23", "title": "你呢" },
+        { "id": "greet-l24", "title": "我也很好" },
+        { "id": "greet-l25", "title": "再见，保重" }
+      ]
+    },
+    {
+      "id": "greet-u6",
+      "title": "单元 6: 节日问候",
+      "lessons": [
+        { "id": "greet-l26", "title": "新年快乐" },
+        { "id": "greet-l27", "title": "生日快乐" },
+        { "id": "greet-l28", "title": "圣诞快乐" },
+        { "id": "greet-l29", "title": "中秋节快乐" },
+        { "id": "greet-l30", "title": "春节快乐" }
+      ]
+    }
+  ]
+}
