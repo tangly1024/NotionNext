@@ -1,6 +1,6 @@
 {
-  "id": "greet-l1",
-  "title": "日常问候 - 你好",
+  "id": "greet-mm-l1",
+  "title": "နှုတ်ဆက်ခြင်း အခြေခံ (你好)",
   "questions": [
     {
       "id": "q1",
@@ -9,13 +9,13 @@
         "question": "你好",
         "imageUrl": "/images/hand-wave.png",
         "options": [
-          { "id": "1", "text": "Hello" },
-          { "id": "2", "text": "Goodbye" },
-          { "id": "3", "text": "Thank you" },
-          { "id": "4", "text": "Sorry" }
+          { "id": "1", "text": "မင်္ဂလာပါ" },
+          { "id": "2", "text": "ကျေးဇူးတင်ပါတယ်" },
+          { "id": "3", "text": "တာ့တာ" },
+          { "id": "4", "text": "ဆောရီး" }
         ],
         "correctAnswer": ["1"],
-        "grammarPoint": "基础问候语，用于打招呼。"
+        "grammarPoint": "“你好” က လူကို တွေ့တဲ့အချိန် နှုတ်ဆက်ဖို့ သုံးတဲ့ အခြေခံစကားပါ။"
       }
     },
     {
@@ -25,207 +25,403 @@
         "question": "မင်္ဂလာပါ",
         "options": [
           { "id": "1", "text": "再见" },
-          { "id": "2", "text": "谢谢" },
-          { "id": "3", "text": "你好" },
-          { "id": "4", "text": "不客气" }
+          { "id": "2", "text": "你好" },
+          { "id": "3", "text": "谢谢" },
+          { "id": "4", "text": "对不起" }
         ],
-        "correctAnswer": ["3"],
-        "grammarPoint": "这是缅语中最正式的'你好'。"
+        "correctAnswer": ["2"],
+        "grammarPoint": "“မင်္ဂလာပါ” ကို တရုတ်လို ဆိုရင် “你好” နဲ့ အနီးစပ်ဆုံးပါ။"
       }
     },
     {
       "id": "q3",
       "type": "single_choice",
       "content": {
-        "question": "当你早上见到老师时，应该说：",
+        "question": "早上好",
         "options": [
-          { "id": "1", "text": "Good morning" },
-          { "id": "2", "text": "Good night" },
-          { "id": "3", "text": "I am hungry" }
+          { "id": "1", "text": "ညနေခင်းကောင်းပါစေ" },
+          { "id": "2", "text": "မနက်ခင်းကောင်းပါစေ" },
+          { "id": "3", "text": "တာ့တာ" },
+          { "id": "4", "text": "ကျေးဇူးတင်ပါတယ်" }
         ],
-        "correctAnswer": ["1"],
-        "grammarPoint": "Morning 对应早晨。"
+        "correctAnswer": ["2"],
+        "grammarPoint": "“早上好” ကို မနက်ပိုင်းမှာ သုံးပါတယ်။ “早上” = မနက်, “好” = ကောင်း။"
       }
     },
     {
       "id": "q4",
       "type": "single_choice",
       "content": {
-        "question": "下列哪个是'晚上好'的正确翻译？",
+        "question": "晚上好",
         "imageUrl": "/images/evening.png",
         "options": [
-          { "id": "1", "text": "Good morning" },
-          { "id": "2", "text": "Good evening" },
-          { "id": "3", "text": "Good afternoon" },
-          { "id": "4", "text": "Good night" }
+          { "id": "1", "text": "ညနေ/ညခင်းကောင်းပါစေ" },
+          { "id": "2", "text": "မနက်ခင်းကောင်းပါစေ" },
+          { "id": "3", "text": "နေလယ်ခင်းကောင်းပါစေ" },
+          { "id": "4", "text": "ကောင်းသောညပါ" }
         ],
-        "correctAnswer": ["2"],
-        "grammarPoint": "Good evening 用于晚上见面时问候。"
+        "correctAnswer": ["1"],
+        "grammarPoint": "“晚上好” ကို ညနေမှာ လူတွေ့တဲ့အချိန် နှုတ်ဆက်ရာမှာ သုံးပါတယ်။"
       }
     },
     {
       "id": "q5",
       "type": "single_choice",
       "content": {
-        "question": "以下哪个是问候语？",
+        "question": "晚安",
         "options": [
-          { "id": "1", "text": "Hi" },
-          { "id": "2", "text": "Bye" },
-          { "id": "3", "text": "Sorry" },
-          { "id": "4", "text": "Thanks" }
+          { "id": "1", "text": "မင်္ဂလာပါ" },
+          { "id": "2", "text": "ကောင်းသောညပါ / အိပ်တော့မယ်ဆိုရင် ပြောတဲ့စကား" },
+          { "id": "3", "text": "မနက်ခင်းကောင်းပါစေ" },
+          { "id": "4", "text": "ပြန်တွေ့မယ်" }
         ],
-        "correctAnswer": ["1"],
-        "grammarPoint": "Hi 是 Hello 的非正式说法。"
+        "correctAnswer": ["2"],
+        "grammarPoint": "“晚安” က အိပ်ရာဝင်ခါနီး သုံးတာဖြစ်ပြီး “晚上好” နဲ့ မတူပါ။"
       }
     },
     {
       "id": "q6",
       "type": "single_choice",
       "content": {
-        "question": "Good afternoon 的意思是：",
+        "question": "老师，您好！",
         "options": [
-          { "id": "1", "text": "早上好" },
-          { "id": "2", "text": "中午好/下午好" },
-          { "id": "3", "text": "晚上好" },
-          { "id": "4", "text": "晚安" }
+          { "id": "1", "text": "ဆရာ/ဆရာမ၊ မင်္ဂလာပါ" },
+          { "id": "2", "text": "ဆရာ/ဆရာမ၊ ကျေးဇူးတင်ပါတယ်" },
+          { "id": "3", "text": "ဆရာ/ဆရာမ၊ တာ့တာ" },
+          { "id": "4", "text": "ဆရာ/ဆရာမ၊ ငါဗိုက်ဆာတယ်" }
         ],
-        "correctAnswer": ["2"],
-        "grammarPoint": "Afternoon 指中午12点后到傍晚前。"
+        "correctAnswer": ["1"],
+        "grammarPoint": "“您好” က “你好” ထက် ပိုလေးစားဖော်ပြတဲ့ ပုံစံပါ။ “老师” နဲ့ တွဲသုံးရင် အလွန်သင့်တော်ပါတယ်။"
       }
     },
     {
       "id": "q7",
       "type": "single_choice",
       "content": {
-        "question": "Hello, how are you? 这句话是用来：",
+        "question": "你好吗？",
         "options": [
-          { "id": "1", "text": "打招呼并问候近况" },
-          { "id": "2", "text": "询问年龄" },
-          { "id": "3", "text": "询问名字" },
-          { "id": "4", "text": "告别" }
+          { "id": "1", "text": "မင်းနာမည်ဘာလဲ" },
+          { "id": "2", "text": "မင်းဘယ်ကလာတာလဲ" },
+          { "id": "3", "text": "နေကောင်းလား" },
+          { "id": "4", "text": "ကျေးဇူးပါ" }
         ],
-        "correctAnswer": ["1"],
-        "grammarPoint": "这是一句常用的问候语，相当于'你好吗？'"
+        "correctAnswer": ["3"],
+        "grammarPoint": "“你好吗？” က အဓိပ္ပါယ်အားဖြင့် “နေကောင်းလား” ဖြစ်ပါတယ်။ “你” = မင်း, “好” = ကောင်း။"
       }
     },
     {
       "id": "q8",
       "type": "single_choice",
       "content": {
-        "question": "当你晚上睡觉前对家人应该说：",
+        "question": "对方问：你好吗？ 你可以回答：",
         "options": [
-          { "id": "1", "text": "Good evening" },
-          { "id": "2", "text": "Good night" },
-          { "id": "3", "text": "Good morning" },
-          { "id": "4", "text": "Hello" }
+          { "id": "1", "text": "我很好" },
+          { "id": "2", "text": "晚安" },
+          { "id": "3", "text": "谢谢老师" },
+          { "id": "4", "text": "再见" }
         ],
-        "correctAnswer": ["2"],
-        "grammarPoint": "Good night 用于睡前告别，不是见面问候。"
+        "correctAnswer": ["1"],
+        "grammarPoint": "“我很好” = “ကျွန်တော်/ကျွန်မ နေကောင်းပါတယ်” ။ “我” = ငါ/ကျွန်တော်, “很好” = အရမ်းကောင်း။"
       }
     },
     {
       "id": "q9",
       "type": "single_choice",
       "content": {
-        "question": "Hey 属于什么类型的问候语？",
+        "question": "再见",
         "options": [
-          { "id": "1", "text": "非常正式的" },
-          { "id": "2", "text": "非正式、朋友间使用的" },
-          { "id": "3", "text": "商务场合专用的" },
-          { "id": "4", "text": "书面用语" }
+          { "id": "1", "text": "မင်္ဂလာပါ" },
+          { "id": "2", "text": "ပြန်တွေ့မယ် / နှုတ်ဆက်ပြီး ခွဲရာမှာ သုံးသည်" },
+          { "id": "3", "text": "နေကောင်းလား" },
+          { "id": "4", "text": "ကျေးဇူးတင်ပါတယ်" }
         ],
         "correctAnswer": ["2"],
-        "grammarPoint": "Hey 是朋友间常用的非正式问候。"
+        "grammarPoint": "“再见” ကို ခွဲခါနီး သုံးပါတယ်။ တွေ့တဲ့အချိန် မသုံးပါ။"
       }
     },
     {
       "id": "q10",
       "type": "single_choice",
       "content": {
-        "question": "Howdy 是哪个地区的常见问候语？",
+        "question": "朋友之间比较随便地说“你好”，可以用：",
         "options": [
-          { "id": "1", "text": "英国" },
-          { "id": "2", "text": "美国南部/西部" },
-          { "id": "3", "text": "澳大利亚" },
-          { "id": "4", "text": "加拿大" }
+          { "id": "1", "text": "您好" },
+          { "id": "2", "text": "你好" },
+          { "id": "3", "text": "晚安" },
+          { "id": "4", "text": "对不起" }
         ],
         "correctAnswer": ["2"],
-        "grammarPoint": "Howdy 源于'How do you do?'，是美国南部的非正式问候。"
+        "grammarPoint": "သူငယ်ချင်းတွေကြားမှာ “你好” ကို ပိုများသုံးပါတယ်။ “您好” က ပိုလေးစားဖော်ပြတဲ့ပုံစံပါ။"
       }
     },
     {
       "id": "q11",
       "type": "single_choice",
       "content": {
-        "question": "What's up? 的正确回应是：",
+        "question": "下面哪一个更有礼貌？",
         "options": [
-          { "id": "1", "text": "Not much" },
-          { "id": "2", "text": "I'm 20 years old" },
-          { "id": "3", "text": "My name is Tom" },
-          { "id": "4", "text": "I'm from China" }
+          { "id": "1", "text": "你好" },
+          { "id": "2", "text": "您好" },
+          { "id": "3", "text": "再见" },
+          { "id": "4", "text": "晚安" }
         ],
-        "correctAnswer": ["1"],
-        "grammarPoint": "What's up? 是朋友间的问候，通常回答 Not much 或 Nothing。"
+        "correctAnswer": ["2"],
+        "grammarPoint": "“您好” ထဲက “您” ဟာ “你” ရဲ့ လေးစားသုံးပုံဖြစ်ပါတယ်။"
       }
     },
     {
       "id": "q12",
       "type": "single_choice",
       "content": {
-        "question": "G'day 是哪个国家的常见问候语？",
+        "question": "中午好 的意思是：",
         "options": [
-          { "id": "1", "text": "美国" },
-          { "id": "2", "text": "英国" },
-          { "id": "3", "text": "澳大利亚" },
-          { "id": "4", "text": "新西兰" }
+          { "id": "1", "text": "မနက်ခင်းကောင်းပါစေ" },
+          { "id": "2", "text": "နေ့လယ်ကောင်းပါစေ" },
+          { "id": "3", "text": "ညခင်းကောင်းပါစေ" },
+          { "id": "4", "text": "အိပ်ချိန်ကောင်းပါစေ" }
         ],
-        "correctAnswer": ["3"],
-        "grammarPoint": "G'day 是 Good day 的缩写，澳大利亚人常用。"
+        "correctAnswer": ["2"],
+        "grammarPoint": "“中午” = နေလယ်/နေ့လယ် အချိန်။ “中午好” ကို နေ့လယ်ပိုင်းမှာ သုံးနိုင်ပါတယ်။"
       }
     },
     {
       "id": "q13",
       "type": "single_choice",
       "content": {
-        "question": "Bonjour 是哪国语言的'你好'？",
+        "question": "下午好 的意思是：",
         "options": [
-          { "id": "1", "text": "西班牙语" },
-          { "id": "2", "text": "德语" },
-          { "id": "3", "text": "法语" },
-          { "id": "4", "text": "意大利语" }
+          { "id": "1", "text": "နေ့လယ်/မွန်းလွဲကောင်းပါစေ" },
+          { "id": "2", "text": "မနက်ခင်းကောင်းပါစေ" },
+          { "id": "3", "text": "အိပ်ရာဝင်ကောင်းပါစေ" },
+          { "id": "4", "text": "တာ့တာ" }
         ],
-        "correctAnswer": ["3"],
-        "grammarPoint": "Bonjour 是法语中最常用的问候语。"
+        "correctAnswer": ["1"],
+        "grammarPoint": "“下午” က နေလယ်ပြီးနောက်ကနေ ညနေမတိုင်ခင်အထိ အချိန်ကို ဆိုလိုပါတယ်။"
       }
     },
     {
       "id": "q14",
       "type": "single_choice",
       "content": {
-        "question": "如果你不确定对方的名字，见面时应该说：",
+        "question": "当你第一次见到新同学时，你最适合说：",
         "options": [
-          { "id": "1", "text": "Hello, nice to meet you" },
-          { "id": "2", "text": "Goodbye" },
-          { "id": "3", "text": "Thank you" },
-          { "id": "4", "text": "I don't know" }
+          { "id": "1", "text": "你好" },
+          { "id": "2", "text": "晚安" },
+          { "id": "3", "text": "对不起" },
+          { "id": "4", "text": "谢谢" }
         ],
         "correctAnswer": ["1"],
-        "grammarPoint": "初次见面用 Nice to meet you 表达荣幸。"
+        "grammarPoint": "အသစ်တွေ့တဲ့ သူကို အရင်ဆုံးနှုတ်ဆက်မယ်ဆို “你好” က အကောင်းဆုံးဖြစ်ပါတယ်။"
       }
     },
     {
       "id": "q15",
       "type": "single_choice",
       "content": {
-        "question": "在正式邮件开头，应该使用：",
+        "question": "你早！ 最接近的意思是：",
         "options": [
-          { "id": "1", "text": "Hi" },
-          { "id": "2", "text": "Hey" },
-          { "id": "3", "text": "Dear Sir/Madam" },
-          { "id": "4", "text": "What's up" }
+          { "id": "1", "text": "မနက်ခင်းကောင်းပါ" },
+          { "id": "2", "text": "ညနေခင်းကောင်းပါ" },
+          { "id": "3", "text": "ကောင်းသောညပါ" },
+          { "id": "4", "text": "ပြန်တွေ့မယ်" }
+        ],
+        "correctAnswer": ["1"],
+        "grammarPoint": "“你早” ဟာ “早上好” ထက် ပိုတိုပြီး ပိုပြောလွယ်တဲ့ မနက်ပိုင်းနှုတ်ဆက်စကားပါ။"
+      }
+    },
+    {
+      "id": "q16",
+      "type": "single_choice",
+      "content": {
+        "question": "如果老师对你说“你好”，你比较合适的回应是：",
+        "options": [
+          { "id": "1", "text": "老师，您好" },
+          { "id": "2", "text": "晚安" },
+          { "id": "3", "text": "我叫李明" },
+          { "id": "4", "text": "我来自缅甸" }
+        ],
+        "correctAnswer": ["1"],
+        "grammarPoint": "ဆရာ/ဆရာမကို ပြန်နှုတ်ဆက်တဲ့အခါ “老师，您好” လို့ ပြောရင် ပိုလေးစားသလို သင့်တော်ပါတယ်။"
+      }
+    },
+    {
+      "id": "q17",
+      "type": "single_choice",
+      "content": {
+        "question": "“你好，我叫安安。” 里面 “我叫” 的意思是：",
+        "options": [
+          { "id": "1", "text": "ငါသွားမယ်" },
+          { "id": "2", "text": "ငါစားမယ်" },
+          { "id": "3", "text": "ငါ့နာမည်က..." },
+          { "id": "4", "text": "ငါနေကောင်းတယ်" }
         ],
         "correctAnswer": ["3"],
-        "grammarPoint": "正式场合使用 Dear 开头更礼貌。"
+        "grammarPoint": "HSK1 အစမှာ “我叫...” ကို မိတ်ဆက်တဲ့အခါ အများဆုံး သုံးပါတယ်။ အဓိပ္ပါယ်က “ကျွန်တော်/ကျွန်မ နာမည်က ...” ပါ။"
+      }
+    },
+    {
+      "id": "q18",
+      "type": "single_choice",
+      "content": {
+        "question": "“你好，我是老师。” 里面 “老师” 是：",
+        "options": [
+          { "id": "1", "text": "ကျောင်းသား" },
+          { "id": "2", "text": "ဆရာ/ဆရာမ" },
+          { "id": "3", "text": "သူငယ်ချင်း" },
+          { "id": "4", "text": "အဖေ" }
+        ],
+        "correctAnswer": ["2"],
+        "grammarPoint": "“老师” ဆိုတာ ဆရာ/ဆရာမ ကို ဆိုလိုပါတယ်။ HSK1 မှာ အရေးကြီးတဲ့ စကားလုံးတစ်လုံးပါ။"
+      }
+    },
+    {
+      "id": "q19",
+      "type": "single_choice",
+      "content": {
+        "question": "“你好，谢谢。” 里面 “谢谢” 的意思是：",
+        "options": [
+          { "id": "1", "text": "ဆောရီး" },
+          { "id": "2", "text": "ကျေးဇူးတင်ပါတယ်" },
+          { "id": "3", "text": "ပြန်တွေ့မယ်" },
+          { "id": "4", "text": "နေကောင်းလား" }
+        ],
+        "correctAnswer": ["2"],
+        "grammarPoint": "“谢谢” က ကျေးဇူးတင်ကြောင်း ပြောတဲ့ စကားဖြစ်ပါတယ်။ နှုတ်ဆက်စကားမဟုတ်ပေမယ့် အခြေခံအသုံးများပါတယ်။"
+      }
+    },
+    {
+      "id": "q20",
+      "type": "single_choice",
+      "content": {
+        "question": "下面哪一句是告别，不是问候？",
+        "options": [
+          { "id": "1", "text": "你好" },
+          { "id": "2", "text": "您好" },
+          { "id": "3", "text": "再见" },
+          { "id": "4", "text": "早上好" }
+        ],
+        "correctAnswer": ["3"],
+        "grammarPoint": "“再见” က ခွဲသွားတဲ့အချိန် ပြောတာဖြစ်ပြီး greeting မဟုတ်ပါ။"
+      }
+    },
+    {
+      "id": "q21",
+      "type": "single_choice",
+      "content": {
+        "question": "在晚上见到朋友，你可以说：",
+        "options": [
+          { "id": "1", "text": "晚上好" },
+          { "id": "2", "text": "晚安" },
+          { "id": "3", "text": "再见" },
+          { "id": "4", "text": "谢谢" }
+        ],
+        "correctAnswer": ["1"],
+        "grammarPoint": "တွေ့တဲ့အချိန်ဆို “晚上好” ၊ အိပ်ရာဝင်တော့မယ်ဆို “晚安” ။ ဒီနှစ်ခုကို မရှုပ်ရပါ။"
+      }
+    },
+    {
+      "id": "q22",
+      "type": "single_choice",
+      "content": {
+        "question": "睡觉前，你应该说：",
+        "options": [
+          { "id": "1", "text": "晚上好" },
+          { "id": "2", "text": "晚安" },
+          { "id": "3", "text": "你好" },
+          { "id": "4", "text": "老师好" }
+        ],
+        "correctAnswer": ["2"],
+        "grammarPoint": "အိပ်ခါနီး သုံးတာက “晚安” ဖြစ်ပါတယ်။"
+      }
+    },
+    {
+      "id": "q23",
+      "type": "single_choice",
+      "content": {
+        "question": "哪一句最适合在早上对老师说？",
+        "options": [
+          { "id": "1", "text": "老师，早上好" },
+          { "id": "2", "text": "老师，晚安" },
+          { "id": "3", "text": "老师，再见" },
+          { "id": "4", "text": "老师，谢谢" }
+        ],
+        "correctAnswer": ["1"],
+        "grammarPoint": "အချိန် + လူပုဂ္ဂိုလ် ကို တွဲပြောနိုင်ပါတယ်။ “老师，早上好” ဆိုရင် အလွန်သဘာဝကျပါတယ်။"
+      }
+    },
+    {
+      "id": "q24",
+      "type": "single_choice",
+      "content": {
+        "question": "如果你想礼貌地说“Hello”，应该选：",
+        "options": [
+          { "id": "1", "text": "你好" },
+          { "id": "2", "text": "您好" },
+          { "id": "3", "text": "再见" },
+          { "id": "4", "text": "你好吗" }
+        ],
+        "correctAnswer": ["2"],
+        "grammarPoint": "လေးစားသုံးစကားဖြစ်စေချင်ရင် “您好” ကို ရွေးသင့်ပါတယ်။"
+      }
+    },
+    {
+      "id": "q25",
+      "type": "single_choice",
+      "content": {
+        "question": "A: 你好！ B: ____",
+        "options": [
+          { "id": "1", "text": "你好！" },
+          { "id": "2", "text": "晚安！" },
+          { "id": "3", "text": "谢谢！" },
+          { "id": "4", "text": "对不起！" }
+        ],
+        "correctAnswer": ["1"],
+        "grammarPoint": "လူတစ်ယောက်က “你好” လို့ နှုတ်ဆက်ရင် အလွယ်ဆုံး ပြန်ပြောနိုင်တာလည်း “你好” ပဲ ဖြစ်ပါတယ်။"
+      }
+    },
+    {
+      "id": "q26",
+      "type": "single_choice",
+      "content": {
+        "question": "A: 你好吗？ B: ____",
+        "options": [
+          { "id": "1", "text": "我很好" },
+          { "id": "2", "text": "再见" },
+          { "id": "3", "text": "晚安" },
+          { "id": "4", "text": "老师好" }
+        ],
+        "correctAnswer": ["1"],
+        "grammarPoint": "“你好吗？” ကို ပြန်ဖြေရာမှာ “我很好” ဟာ အခြေခံဆုံး အဖြေပါ။"
+      }
+    },
+    {
+      "id": "q27",
+      "type": "single_choice",
+      "content": {
+        "question": "下面哪一句最适合第一次见面？",
+        "options": [
+          { "id": "1", "text": "你好，很高兴认识你" },
+          { "id": "2", "text": "晚安" },
+          { "id": "3", "text": "我回家了" },
+          { "id": "4", "text": "你吃了吗" }
+        ],
+        "correctAnswer": ["1"],
+        "grammarPoint": "ပထမဆုံးတွေ့တဲ့အခါ “很高兴认识你” ကို “你好” နဲ့ တွဲသုံးလို့ ရပါတယ်။ အဓိပ္ပါယ်က “သင့်ကို တွေ့ရတာ ဝမ်းသာပါတယ်” ပါ။"
+      }
+    },
+    {
+      "id": "q28",
+      "type": "single_choice",
+      "content": {
+        "question": "下面哪一句是比较完整的礼貌问候？",
+        "options": [
+          { "id": "1", "text": "老师，您好" },
+          { "id": "2", "text": "你" },
+          { "id": "3", "text": "好" },
+          { "id": "4", "text": "再" }
+        ],
+        "correctAnswer": ["1"],
+        "grammarPoint": "နှုတ်ဆက်စကားက ပြည့်စုံပြီး ယဉ်ကျေးဖို့ လိုပါတယ်။ “老师，您好” က အလွန်ကောင်းတဲ့ နမူနာပါ။"
       }
     }
   ]
