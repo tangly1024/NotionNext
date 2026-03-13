@@ -2,7 +2,13 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import fs from 'fs';
 import path from 'path';
-import XuanZeTi from '../../../components/quiz/Tixing/XuanZeTi';
+import dynamic from 'next/dynamic';
+
+// 强制取消服务端渲染，只在浏览器端加载这个带有撒花特效的组件！
+const XuanZeTi = dynamic(() => import('../../../components/quiz/Tixing/XuanZeTi'), { 
+  ssr: false,
+  loading: () => <div className="p-10 text-center text-gray-500 font-bold animate-pulse">正在加载题目引擎...</div>
+});
 import { completeLesson, getProgress } from '../../../lib/progress';
 
 export default function QuizPage({ lessonData }) {
