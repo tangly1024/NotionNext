@@ -1,0 +1,51 @@
+{
+  "id": "greet-l1",
+  "title": "日常问候 - 基础篇",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single_choice",
+      "content": {
+        "question": "你好",
+        "imageUrl": "/images/hand-wave.png",
+        "options": [
+          { "id": "1", "text": "Hello" },
+          { "id": "2", "text": "Goodbye" },
+          { "id": "3", "text": "Thank you" },
+          { "id": "4", "text": "Sorry" }
+        ],
+        "correctAnswer": ["1"],
+        "grammarPoint": "基础问候语，用于打招呼。"
+      }
+    },
+    {
+      "id": "q2",
+      "type": "single_choice",
+      "content": {
+        "question": "မင်္ဂလာပါ",
+        "options": [
+          { "id": "1", "text": "再见" },
+          { "id": "2", "text": "谢谢" },
+          { "id": "3", "text": "你好" },
+          { "id": "4", "text": "不客气" }
+        ],
+        "correctAnswer": ["3"],
+        "grammarPoint": "这是缅语中最正式的'你好'。"
+      }
+    },
+    {
+      "id": "q3",
+      "type": "single_choice",
+      "content": {
+        "question": "当你早上见到老师时，应该说：",
+        "options": [
+          { "id": "1", "text": "Good morning" },
+          { "id": "2", "text": "Good night" },
+          { "id": "3", "text": "I am hungry" }
+        ],
+        "correctAnswer": ["1"],
+        "grammarPoint": "Morning 对应早晨。"
+      }
+    }
+  ]
+}
