@@ -270,7 +270,7 @@ const audioController = {
 const cssStyles = `
 .xzt-container { font-family: "Padauk","Noto Sans SC",sans-serif; display:flex; flex-direction:column; background:transparent; width:100%; height:100%; position:relative; }
 .xzt-header { flex-shrink:0; padding:14px 16px 6px; display:flex; justify-content:center; }
-.top-hint-row { width:100%; display:flex; justify-content:flex-end; align-items:flex-start; gap:12px; margin-bottom:8px; }
+.top-hint-row { width:100%; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:8px; }
 
 .top-actions { display:flex; align-items:center; gap:8px; }
 .task-text { font-size:13px; font-weight:900; color:#475569; line-height:1.1; text-align:right; }
