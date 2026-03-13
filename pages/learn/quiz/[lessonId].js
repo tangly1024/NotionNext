@@ -1,3 +1,4 @@
+// /pages/learn/quiz/[lessonId].js
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import fs from 'fs';
@@ -17,7 +18,8 @@ const XuanZeTi = dynamic(() => import('../../../components/quiz/Tixing/XuanZeTi'
   )
 });
 
-export default function QuizPage({ lessonData }) {
+// 🌟 接收真实的地图数据 currentRoadmap 和安全的 explicitLessonId
+export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId }) {
   const router = useRouter();
   
   const [mainQueue, setMainQueue] = useState([]);
@@ -42,7 +44,6 @@ export default function QuizPage({ lessonData }) {
     : mainQueue[currentIndex];
 
   const totalSteps = mainQueue.length + wrongQueue.length;
-  // 进度条至少显示 5%，看起来更好
   const progressPercent = Math.max(5, (currentIndex / totalSteps) * 100);
 
   const handleCorrect = () => {
@@ -74,7 +75,10 @@ export default function QuizPage({ lessonData }) {
       accuracy: accuracy,
       stars: accuracy === 100 ? 3 : accuracy >= 80 ? 2 : 1
     };
-    completeLesson(lessonData.id, resultStats, { units: [] }); 
+    
+    // 🌟 终极修复：传入真实的地图 currentRoadmap 和绝对 ID
+    // 这样 progress.js 就能在地图里找到下一关并解锁了！
+    completeLesson(explicitLessonId, resultStats, currentRoadmap); 
   };
 
   // 结算通关界面
@@ -139,6 +143,7 @@ export default function QuizPage({ lessonData }) {
       {/* 3. 核心题目区域 (自动填满剩余屏幕高度) */}
       <div className="flex-1 relative w-full max-w-lg mx-auto overflow-hidden">
         <XuanZeTi 
+          key={`${currentQuestion?.id || 'q'}-${currentIndex}`} // 🌟 终极防错位修复：加入绝对唯一的 key！
           data={currentQuestion} 
           onCorrect={handleCorrect}
           onWrong={handleWrong}
@@ -162,11 +167,44 @@ export async function getStaticPaths() {
   return { paths, fallback: false };
 }
 
+// 🌟 终极修复：找出这张图的真实数据并传给页面
 export async function getStaticProps({ params }) {
+  const lessonId = params.lessonId;
   try {
-    const filePath = path.join(process.cwd(), 'data/lessons', `${params.lessonId}.json`);
+    const filePath = path.join(process.cwd(), 'data/lessons', `${lessonId}.json`);
     const fileContents = fs.readFileSync(filePath, 'utf8');
-    return { props: { lessonData: JSON.parse(fileContents) } };
+    const lessonData = JSON.parse(fileContents);
+
+    // 去 roadmaps 文件夹里找这关属于哪张图
+    const roadmapsDir = path.join(process.cwd(), 'data/roadmaps');
+    let currentRoadmap = { units: [] }; 
+    if (fs.existsSync(roadmapsDir)) {
+      const roadmapFiles = fs.readdirSync(roadmapsDir).filter(f => f.endsWith('.json'));
+      for (const file of roadmapFiles) {
+        const roadmapData = JSON.parse(fs.readFileSync(path.join(roadmapsDir, file), 'utf8'));
+        let found = false;
+        if (roadmapData.units) {
+          for (const unit of roadmapData.units) {
+            if (unit.lessons && unit.lessons.some(l => l.id === lessonId)) {
+              found = true;
+              break;
+            }
+          }
+        }
+        if (found) {
+          currentRoadmap = roadmapData; 
+          break;
+        }
+      }
+    }
+
+    return { 
+      props: { 
+        lessonData,
+        currentRoadmap,      // 传给页面真实地图
+        explicitLessonId: lessonId // 传给页面真实ID
+      } 
+    };
   } catch (e) {
     return { notFound: true };
   }
