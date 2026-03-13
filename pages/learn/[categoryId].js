@@ -1,32 +1,15 @@
 // /pages/learn/[categoryId].js
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import fs from 'fs';
 import path from 'path';
+import { ChevronLeft } from 'lucide-react';
 import { getProgress } from '../../lib/progress';
-
-// 顶部状态栏组件 (纯粹的多邻国风格：国旗、连击、钻石)
-const StatusBar = () => (
-  <header className="sticky top-0 bg-white/95 backdrop-blur-md border-b-2 border-[#e5e5e5] h-14 z-50 flex items-center justify-between px-5 shadow-sm">
-    <div className="w-8 h-6 rounded bg-gray-200 overflow-hidden flex-shrink-0 border-2 border-[#e5e5e5]">
-      {/* 替换成你真实的国旗图片 */}
-      <div className="w-full h-full bg-red-500 flex items-center justify-center text-[10px] text-white font-black">MM</div>
-    </div>
-    
-    <div className="flex items-center gap-1 font-black text-orange-500">
-      <span className="text-xl">🔥</span> 
-      <span className="text-lg">1</span>
-    </div>
-    
-    <div className="flex items-center gap-1 font-black text-blue-500">
-      <span className="text-xl">💎</span> 
-      <span className="text-lg">800</span>
-    </div>
-  </header>
-);
 
 export default function CategoryRoadmap({ roadmap }) {
   const [progress, setProgress] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     setProgress(getProgress());
@@ -37,48 +20,42 @@ export default function CategoryRoadmap({ roadmap }) {
   return (
     <div className="min-h-screen bg-[#f3f4f6] pb-32 font-sans overflow-x-hidden selection:bg-transparent">
       
-      <StatusBar />
-
-      <main className="max-w-md mx-auto relative pt-6 px-4">
+      {/* --- 1. 顶部面板：带有返回键和居中的大分类标题 --- */}
+      <header className="sticky top-0 bg-[#f3f4f6]/95 backdrop-blur-md h-14 z-50 flex items-center justify-between px-4">
+        {/* 左侧返回键 */}
+        <button 
+          onClick={() => router.push('/learn')}
+          className="p-2 -ml-2 text-gray-400 hover:text-gray-600 active:scale-90 transition-transform"
+        >
+          <ChevronLeft size={30} strokeWidth={3} />
+        </button>
         
-        {/* 页面大标题 (可选，如果不想要可以删掉，多邻国通常只有单元标题) */}
-        <div className="text-center mb-8">
-           <h1 className="text-2xl font-black text-[#4b4b4b] uppercase tracking-wider">{roadmap.title}</h1>
-        </div>
+        {/* 中间大标题 */}
+        <h1 className="flex-1 text-center text-[17px] font-black text-[#4b4b4b] tracking-wide">
+          {roadmap.title}
+        </h1>
+        
+        {/* 右侧占位（为了让标题绝对居中） */}
+        <div className="w-10"></div>
+      </header>
 
+      <main className="max-w-md mx-auto relative pt-4 px-4">
         {roadmap.units.map((unit, unitIdx) => (
-          <section key={unit.id} className="mb-14">
+          <section key={unit.id} className="mb-8">
             
-            {/* --- 极致还原的 3D 单元横幅 --- */}
-            <div className="sticky top-[70px] z-40 mb-10">
-              <div className="relative bg-[#58cc02] rounded-2xl p-5 text-white shadow-[0_6px_0_0_#46a302] active:translate-y-1 active:shadow-[0_2px_0_0_#46a302] transition-all cursor-pointer overflow-hidden group">
-                {/* 内部高光遮罩，增加立体感 */}
-                <div className="absolute top-0 left-0 right-0 h-1/2 bg-white/10 rounded-t-2xl pointer-events-none" />
-                
-                <div className="relative z-10 flex justify-between items-center">
-                  <div>
-                    <h3 className="text-[12px] font-black uppercase opacity-90 tracking-widest mb-1 text-green-100">
-                      单元 {unitIdx + 1}
-                    </h3>
-                    <h2 className="text-[22px] font-black leading-tight drop-shadow-sm">
-                      {unit.title}
-                    </h2>
-                    <p className="font-bold opacity-90 text-[14px] mt-1 text-green-50">
-                      {unit.description}
-                    </p>
-                  </div>
-                  {/* 右侧的图标装饰 (类似多邻国的笔记本) */}
-                  <div className="w-12 h-12 bg-black/10 rounded-xl flex items-center justify-center group-hover:bg-black/20 transition-colors">
-                    <span className="text-2xl opacity-90">📖</span>
-                  </div>
-                </div>
-              </div>
+            {/* --- 2. 极致还原图中的实线文字分割线 --- */}
+            <div className="flex items-center justify-center w-full mb-8 mt-2 z-20">
+              <div className="h-[2px] flex-1 bg-[#e5e5e5]"></div>
+              <span className="px-4 text-[15px] font-black text-gray-400 text-center tracking-wide">
+                {unit.description || unit.title}
+              </span>
+              <div className="h-[2px] flex-1 bg-[#e5e5e5]"></div>
             </div>
 
-            {/* --- 蛇形关卡地图 --- */}
-            <div className="relative flex flex-col items-center py-4 gap-6">
+            {/* --- 3. 蛇形关卡地图 (保持你原有完美的逻辑不变) --- */}
+            <div className="relative flex flex-col items-center py-2 gap-7">
               
-              {/* 贯穿的背景连线 (加粗，更有质感) */}
+              {/* 贯穿的背景连线 (垂直灰线) */}
               <div className="absolute top-0 bottom-0 left-1/2 w-[14px] -ml-[7px] bg-[#e5e5e5] -z-10 rounded-full shadow-inner" />
 
               {unit.lessons.map((lesson, idx) => {
