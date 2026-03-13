@@ -85,6 +85,7 @@ export default function CategoryRoadmap({ roadmap }) {
                 const isUnlocked = progress.unlockedLessons.includes(lesson.id);
                 const isCompleted = progress.completedLessons.includes(lesson.id);
                 const isCurrent = isUnlocked && !isCompleted;
+                const isLocked = !isUnlocked; 
                 
                 // 更平滑的曲线偏移 (类似正弦波)
                 const xOffsets = [0, -38, -65, -38, 0, 38, 65, 38];
