@@ -3,7 +3,7 @@ import { FaVolumeUp, FaCheck, FaTimes, FaArrowRight, FaSpinner, FaRobot } from '
 import { pinyin } from 'pinyin-pro';
 
 // =================================================================================
-// 1. IndexedDB 缓存引擎 (极其优秀，保留并加速音频加载)
+// 1. IndexedDB 缓存引擎
 // =================================================================================
 const idb = {
   db: null,
@@ -17,7 +17,10 @@ const idb = {
           db.createObjectStore('tts_audio');
         }
       };
-      request.onsuccess = (e) => { this.db = e.target.result; resolve(); };
+      request.onsuccess = (e) => {
+        this.db = e.target.result;
+        resolve();
+      };
       request.onerror = () => resolve();
     });
   },
@@ -34,13 +37,128 @@ const idb = {
   async set(key, blob) {
     await this.init();
     if (!this.db) return;
-    const tx = this.db.transaction('tts_audio', 'readwrite');
-    tx.objectStore('tts_audio').put(blob, key);
+    try {
+      const tx = this.db.transaction('tts_audio', 'readwrite');
+      tx.objectStore('tts_audio').put(blob, key);
+    } catch (_) {}
   }
 };
 
 // =================================================================================
-// 2. 中缅混合 TTS 播放引擎 (接入 leftsite 接口)
+// 2. 文本与 TTS 工具
+// =================================================================================
+const TTS_VOICES = {
+  zh: 'zh-CN-XiaoxiaoMultilingualNeural',
+  my: 'my-MM-ThihaNeural',
+  en: 'zh-CN-XiaoxiaoMultilingualNeural'
+};
+
+const isChineseChar = (ch = '') => /[\u4e00-\u9fff]/.test(ch);
+const isMyanmarChar = (ch = '') => /[\u1000-\u109F]/.test(ch);
+const isLatinOrDigit = (ch = '') => /[a-zA-Z0-9]/.test(ch);
+const isWhitespace = (ch = '') => /\s/.test(ch);
+
+// 标点/符号：不单独作为一个 TTS 片段，而是挂靠到前后文本
+const isPunctuationOrSymbol = (ch = '') => {
+  return !isChineseChar(ch) && !isMyanmarChar(ch) && !isLatinOrDigit(ch) && !isWhitespace(ch);
+};
+
+const detectWholeTextType = (text = '') => {
+  const hasZh = /[\u4e00-\u9fff]/.test(text);
+  const hasMy = /[\u1000-\u109F]/.test(text);
+  const hasLatin = /[a-zA-Z0-9]/.test(text);
+
+  const count = [hasZh, hasMy, hasLatin].filter(Boolean).length;
+
+  if (count <= 1) {
+    if (hasZh) return 'zh';
+    if (hasMy) return 'my';
+    if (hasLatin) return 'en';
+  }
+  return 'mixed';
+};
+
+// 中/缅/英混合分段：
+// 1) 纯中文/纯缅文/纯英文整句播
+// 2) 混合时才按语言类型切段
+// 3) 标点不单独切出来，而是尽量附着到前一个 segment
+function splitMixedText(text = '') {
+  const wholeType = detectWholeTextType(text);
+  if (wholeType !== 'mixed') {
+    return [{ text: text.trim(), lang: wholeType }];
+  }
+
+  const chars = Array.from(text);
+  const segments = [];
+  let currentText = '';
+  let currentLang = null;
+
+  const pushCurrent = () => {
+    const t = currentText.trim();
+    if (t) segments.push({ text: t, lang: currentLang || 'zh' });
+    currentText = '';
+    currentLang = null;
+  };
+
+  for (const ch of chars) {
+    let lang = null;
+
+    if (isChineseChar(ch)) lang = 'zh';
+    else if (isMyanmarChar(ch)) lang = 'my';
+    else if (isLatinOrDigit(ch)) lang = 'en';
+    else if (isWhitespace(ch)) {
+      // 空格：附着到当前段，不主动开新段
+      currentText += ch;
+      continue;
+    } else if (isPunctuationOrSymbol(ch)) {
+      // 标点：附着到当前段，避免被拆出去
+      currentText += ch;
+      continue;
+    }
+
+    if (!currentLang) {
+      currentLang = lang;
+      currentText += ch;
+      continue;
+    }
+
+    if (lang === currentLang) {
+      currentText += ch;
+    } else {
+      pushCurrent();
+      currentLang = lang;
+      currentText = ch;
+    }
+  }
+
+  pushCurrent();
+
+  // 如果由于某些特殊情况产生空数组，兜底整句中文播放
+  if (!segments.length && text.trim()) {
+    return [{ text: text.trim(), lang: 'zh' }];
+  }
+
+  return segments;
+}
+
+async function getTTSBlob(text, voice) {
+  const cacheKey = `${voice}-${text}`;
+  let blob = await idb.get(cacheKey);
+
+  if (!blob) {
+    const res = await fetch(
+      `https://t.leftsite.cn/tts?t=${encodeURIComponent(text)}&v=${voice}&r=0`
+    );
+    if (!res.ok) throw new Error('TTS Failed');
+    blob = await res.blob();
+    await idb.set(cacheKey, blob);
+  }
+
+  return blob;
+}
+
+// =================================================================================
+// 3. 中缅混合 TTS 播放引擎
 // =================================================================================
 const audioController = {
   currentAudio: null,
@@ -49,75 +167,96 @@ const audioController = {
 
   stop() {
     this.latestRequestId++;
+
     if (this.currentAudio) {
-      this.currentAudio.pause();
-      this.currentAudio.currentTime = 0;
+      try {
+        this.currentAudio.pause();
+        this.currentAudio.currentTime = 0;
+      } catch (_) {}
+      this.currentAudio.onended = null;
+      this.currentAudio.onerror = null;
       this.currentAudio = null;
     }
-    this.activeUrls.forEach((url) => URL.revokeObjectURL(url));
+
+    this.activeUrls.forEach((url) => {
+      try {
+        URL.revokeObjectURL(url);
+      } catch (_) {}
+    });
     this.activeUrls = [];
   },
 
   async playMixed(text, onStart, onEnd) {
     this.stop();
-    if (!text?.trim()) return;
+
+    const raw = String(text || '').trim();
+    if (!raw) {
+      onEnd?.();
+      return;
+    }
 
     const reqId = this.latestRequestId;
     onStart?.();
 
-    // 根据中/缅/英分段
-    const regex = /([\u4e00-\u9fa5]+|[\u1000-\u109F\s]+|[a-zA-Z0-9\s]+|[^\s])/g;
-    const segments = text.match(regex) || [text];
-
     try {
+      const segments = splitMixedText(raw);
       const audios = [];
-      for (const segRaw of segments) {
-        const seg = (segRaw || '').trim();
-        if (!seg) continue;
-        if (reqId !== this.latestRequestId) return; 
 
-        // 核心：智能判断语音类型
-        const isMy = /[\u1000-\u109F]/.test(seg);
-        const voice = isMy ? 'my-MM-ThihaNeural' : 'zh-CN-XiaoxiaoMultilingualNeural';
-        const cacheKey = `${voice}-${seg}`;
+      for (const seg of segments) {
+        if (reqId !== this.latestRequestId) return;
 
-        let blob = await idb.get(cacheKey);
-        if (!blob) {
-          // 接入你的新接口
-          const res = await fetch(`https://t.leftsite.cn/tts?t=${encodeURIComponent(seg)}&v=${voice}&r=0`);
-          if (!res.ok) throw new Error('TTS Failed');
-          blob = await res.blob();
-          await idb.set(cacheKey, blob);
-        }
+        const segText = String(seg.text || '').trim();
+        if (!segText) continue;
+
+        const voice =
+          seg.lang === 'my'
+            ? TTS_VOICES.my
+            : seg.lang === 'en'
+            ? TTS_VOICES.en
+            : TTS_VOICES.zh;
+
+        const blob = await getTTSBlob(segText, voice);
+        if (reqId !== this.latestRequestId) return;
 
         const url = URL.createObjectURL(blob);
         this.activeUrls.push(url);
         audios.push(new Audio(url));
       }
 
-      // 递归顺序播放
-      const playNext = (i) => {
+      if (reqId !== this.latestRequestId) return;
+
+      if (!audios.length) {
+        onEnd?.();
+        return;
+      }
+
+      const playNext = (index) => {
         if (reqId !== this.latestRequestId) return;
-        if (i >= audios.length) {
-          onEnd?.();
+
+        if (index >= audios.length) {
+          if (reqId === this.latestRequestId) onEnd?.();
           return;
         }
-        this.currentAudio = audios[i];
-        this.currentAudio.onended = () => playNext(i + 1);
-        this.currentAudio.onerror = () => playNext(i + 1);
-        this.currentAudio.play().catch(() => playNext(i + 1));
+
+        const audio = audios[index];
+        this.currentAudio = audio;
+
+        audio.onended = () => playNext(index + 1);
+        audio.onerror = () => playNext(index + 1);
+
+        audio.play().catch(() => playNext(index + 1));
       };
 
       playNext(0);
     } catch (e) {
       console.warn('[TTS Error]:', e);
-      onEnd?.();
+      if (reqId === this.latestRequestId) onEnd?.();
     }
   }
 };
 
 // =================================================================================
-// 3. 页面样式 (修复全屏问题，让组件完全融入容器)
+// 4. 页面样式
 // =================================================================================
 const cssStyles = `
 .xzt-container { font-family: "Padauk","Noto Sans SC",sans-serif; display: flex; flex-direction: column; background: transparent; width: 100%; height: 100%; position: relative; }
@@ -142,22 +281,23 @@ const cssStyles = `
 .option-card.wrong { border-color: #ef4444; background: #fee2e2; color: #991b1b; }
 .option-card.locked { cursor: default; transform: none; }
 .option-card.has-image-layout { flex-direction: column; align-items: stretch; justify-content: flex-start; padding: 12px; }
-.option-text { font-weight: 800; text-align: center; line-height: 1.35; font-size: 1.15rem;}
+.option-text { font-weight: 800; text-align: center; line-height: 1.35; font-size: 1.15rem; }
 .option-play-dot { position: absolute; top: 8px; right: 10px; font-size: 14px; opacity: .85; }
 .submit-bar { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 20px calc(16px + env(safe-area-inset-bottom)); border-top: 2px solid #f3f4f6; background: #fff; display: flex; justify-content: center; z-index: 50; }
-.submit-btn { width: 100%; max-width: 500px; background: #58cc02; color: white; padding: 16px; border-radius: 16px; font-size: 1.2rem; font-weight: 900; text-transform: uppercase; border: none; border-bottom: 4px solid #46a302; transition: all 0.1s; -webkit-tap-highlight-color: transparent; cursor: pointer;}
+.submit-btn { width: 100%; max-width: 500px; background: #58cc02; color: white; padding: 16px; border-radius: 16px; font-size: 1.2rem; font-weight: 900; text-transform: uppercase; border: none; border-bottom: 4px solid #46a302; transition: all 0.1s; -webkit-tap-highlight-color: transparent; cursor: pointer; }
 .submit-btn:active { transform: translateY(4px); border-bottom-width: 0; margin-bottom: 4px; }
-.submit-btn:disabled { background: #e5e7eb; color: #9ca3af; border-bottom-color: #d1d5db; cursor: not-allowed; transform: none; margin-bottom: 0;}
+.submit-btn:disabled { background: #e5e7eb; color: #9ca3af; border-bottom-color: #d1d5db; cursor: not-allowed; transform: none; margin-bottom: 0; }
 .result-sheet { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 24px calc(24px + env(safe-area-inset-bottom)); border-top-left-radius: 24px; border-top-right-radius: 24px; transform: translateY(110%); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 100; display: flex; flex-direction: column; gap: 16px; }
 .result-sheet.correct { background: #dcfce7; color: #166534; }
 .result-sheet.wrong { background: #fee2e2; color: #991b1b; }
 .result-sheet.show { transform: translateY(0); box-shadow: 0 -10px 40px rgba(0,0,0,0.1); }
 .sheet-header { font-size: 1.6rem; font-weight: 900; display: flex; align-items: center; gap: 12px; }
-.next-btn { width: 100%; padding: 16px; border-radius: 16px; border: none; color: #fff; font-weight: 900; text-transform: uppercase; font-size: 1.2rem; cursor: pointer; border-bottom: 4px solid rgba(0,0,0,0.2); -webkit-tap-highlight-color: transparent; display: flex; align-items: center; justify-content: center; }
-.next-btn:active { transform: translateY(4px); border-bottom-width: 0; margin-bottom: 4px;}
+.next-btn { width: 100%; padding: 16px; border-radius: 16px; border: none; color: #fff; font-weight: 900; text-transform: uppercase; font-size: 1.2rem; cursor: pointer; border-bottom: 4px solid rgba(0,0,0,0.2); -webkit-tap-highlight-color: transparent; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.next-btn:active { transform: translateY(4px); border-bottom-width: 0; margin-bottom: 4px; }
 .btn-correct { background: #58cc02; border-bottom-color: #46a302; }
 .btn-wrong { background: #ef4444; border-bottom-color: #b91c1c; }
-.ai-btn { background: #fff; border: 2px solid #e5e7eb; color: #4f46e5; padding: 12px; border-radius: 16px; font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; font-size: 1rem;}
+.ai-btn { background: #fff; border: 2px solid #e5e7eb; color: #4f46e5; padding: 12px; border-radius: 16px; font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; font-size: 1rem; cursor: pointer; }
+.ai-btn:disabled { opacity: .7; cursor: not-allowed; }
 `;
 
 // 工具：安全震动
@@ -166,7 +306,7 @@ const vibrate = (pattern) => {
 };
 
 // =================================================================================
-// 4. 组件主体
+// 5. 组件主体
 // =================================================================================
 export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, triggerAI }) {
   const data = rawData?.content || rawData || {};
@@ -180,7 +320,10 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
     return (Array.isArray(raw) ? raw : [raw]).map(String);
   }, [data.correctAnswer]);
 
-  const hasOptionImages = useMemo(() => options.some((opt) => opt.img || opt.imageUrl), [options]);
+  const hasOptionImages = useMemo(
+    () => options.some((opt) => opt.img || opt.imageUrl),
+    [options]
+  );
 
   const shuffledOptions = useMemo(() => {
     const opts = [...options];
@@ -200,45 +343,96 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
   const [aiLoading, setAiLoading] = useState(false);
 
   const timersRef = useRef([]);
-  const addTimer = (fn, ms) => timersRef.current.push(setTimeout(fn, ms));
-  const clearTimers = () => { timersRef.current.forEach(clearTimeout); timersRef.current = []; };
+  const mountedRef = useRef(true);
+
+  const addTimer = (fn, ms) => {
+    const timer = setTimeout(fn, ms);
+    timersRef.current.push(timer);
+  };
+
+  const clearTimers = () => {
+    timersRef.current.forEach(clearTimeout);
+    timersRef.current = [];
+  };
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
 
   // 初始化与自动播放
   useEffect(() => {
     clearTimers();
     audioController.stop();
+
     setSelectedIds([]);
     setIsSubmitted(false);
     setIsRight(false);
     setShowResultSheet(false);
+    setIsQuestionPlaying(false);
+    setSpeakingOptionId(null);
+    setAiLoading(false);
 
     if (questionText) {
       addTimer(() => {
-        audioController.playMixed(questionText, () => setIsQuestionPlaying(true), () => setIsQuestionPlaying(false));
+        audioController.playMixed(
+          questionText,
+          () => mountedRef.current && setIsQuestionPlaying(true),
+          () => mountedRef.current && setIsQuestionPlaying(false)
+        );
       }, 300);
     }
-    return () => { clearTimers(); audioController.stop(); };
+
+    return () => {
+      clearTimers();
+      audioController.stop();
+    };
   }, [data?.id, questionText]);
+
+  const playQuestion = () => {
+    if (!questionText) return;
+    setSpeakingOptionId(null);
+    audioController.playMixed(
+      questionText,
+      () => mountedRef.current && setIsQuestionPlaying(true),
+      () => mountedRef.current && setIsQuestionPlaying(false)
+    );
+  };
 
   const toggleOption = (id) => {
     if (isSubmitted) return;
+
     vibrate(15);
     const sid = String(id);
 
-    if (correctAnswers.length === 1) setSelectedIds([sid]);
-    else setSelectedIds((prev) => prev.includes(sid) ? prev.filter((i) => i !== sid) : [...prev, sid]);
+    if (correctAnswers.length === 1) {
+      setSelectedIds([sid]);
+    } else {
+      setSelectedIds((prev) =>
+        prev.includes(sid) ? prev.filter((i) => i !== sid) : [...prev, sid]
+      );
+    }
 
     const opt = options.find((o) => String(o.id) === sid);
     if (opt?.text) {
       setIsQuestionPlaying(false);
-      audioController.playMixed(opt.text, () => setSpeakingOptionId(sid), () => setSpeakingOptionId(null));
+      audioController.playMixed(
+        opt.text,
+        () => mountedRef.current && setSpeakingOptionId(sid),
+        () => mountedRef.current && setSpeakingOptionId(null)
+      );
     }
   };
 
   const handleSubmit = async () => {
     if (!selectedIds.length || isSubmitted) return;
-    const correct = selectedIds.length === correctAnswers.length && selectedIds.every((id) => correctAnswers.includes(id));
-    
+
+    const correct =
+      selectedIds.length === correctAnswers.length &&
+      selectedIds.every((id) => correctAnswers.includes(id));
+
     setIsRight(correct);
     setIsSubmitted(true);
     audioController.stop();
@@ -247,7 +441,6 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
 
     if (correct) {
       vibrate([30, 50, 30]);
-      // 🔥 彻底解决 SSR 报错的终极方案：动态引入 canvas-confetti
       if (typeof window !== 'undefined') {
         const { default: confetti } = await import('canvas-confetti');
         confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
@@ -257,14 +450,41 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
       vibrate([50, 50, 50]);
       onWrong?.();
     }
+
     setShowResultSheet(true);
+  };
+
+  const handleAI = async () => {
+    if (!triggerAI || aiLoading) return;
+
+    try {
+      setAiLoading(true);
+
+      await Promise.resolve(
+        triggerAI({
+          scene: 'choice',
+          questionText,
+          questionImg,
+          options: shuffledOptions,
+          selectedIds,
+          correctAnswers,
+          isRight,
+          rawData: data
+        })
+      );
+    } catch (err) {
+      console.warn('[AI trigger error]:', err);
+    } finally {
+      if (mountedRef.current) setAiLoading(false);
+    }
   };
 
   const renderRichText = (text) => {
     if (!text) return null;
-    const parts = text.match(/([\u4e00-\u9fa5]+|[^\u4e00-\u9fa5]+)/g) || [];
+    const parts = text.match(/([\u4e00-\u9fff]+|[^\u4e00-\u9fff]+)/g) || [];
+
     return parts.map((part, i) => {
-      if (/[\u4e00-\u9fa5]/.test(part)) {
+      if (/[\u4e00-\u9fff]/.test(part)) {
         const py = pinyin(part, { type: 'array', toneType: 'symbol' });
         return part.split('').map((char, j) => (
           <div key={`${i}-${j}`} className="zh-seg">
@@ -273,7 +493,11 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
           </div>
         ));
       }
-      return <span key={i} className="my-seg">{part}</span>;
+      return (
+        <span key={i} className="my-seg">
+          {part}
+        </span>
+      );
     });
   };
 
@@ -283,18 +507,34 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
 
       <div className="xzt-header">
         <div className="scene-wrapper">
-          <img src="/images/laoshi.png" className="teacher-img" alt="Teacher" onError={(e) => e.target.style.display='none'} />
+          <img
+            src="/images/laoshi.png"
+            className="teacher-img"
+            alt="Teacher"
+            onError={(e) => {
+              e.target.style.display = 'none';
+            }}
+          />
+
           <div className="bubble-container">
             <div className="bubble-tail" />
+
             <div className="flex-1 flex flex-wrap items-end gap-1">
               {renderRichText(questionText)}
             </div>
+
             {questionText && (
               <div
-                className={`p-3 rounded-2xl cursor-pointer ${isQuestionPlaying ? 'bg-blue-500 text-white' : 'bg-blue-50 text-blue-500'}`}
-                onClick={() => audioController.playMixed(questionText, () => setIsQuestionPlaying(true), () => setIsQuestionPlaying(false))}
+                className={`p-3 rounded-2xl cursor-pointer ${
+                  isQuestionPlaying ? 'bg-blue-500 text-white' : 'bg-blue-50 text-blue-500'
+                }`}
+                onClick={playQuestion}
               >
-                {isQuestionPlaying ? <FaSpinner className="animate-spin" size={20} /> : <FaVolumeUp size={20} />}
+                {isQuestionPlaying ? (
+                  <FaSpinner className="animate-spin" size={20} />
+                ) : (
+                  <FaVolumeUp size={20} />
+                )}
               </div>
             )}
           </div>
@@ -307,8 +547,10 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
             const sid = String(opt.id);
             const isSel = selectedIds.includes(sid);
             const isCorrectAns = correctAnswers.includes(sid);
+
             let cls = 'option-card';
             if (opt.img || opt.imageUrl) cls += ' has-image-layout';
+
             if (isSubmitted) {
               cls += ' locked';
               if (isCorrectAns) cls += ' correct';
@@ -320,8 +562,18 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
 
             return (
               <div key={sid} className={cls} onClick={() => toggleOption(sid)}>
-                {speakingOptionId === sid && <FaSpinner className="absolute top-3 right-3 text-blue-500 animate-spin" />}
-                {(opt.img || opt.imageUrl) && <img src={opt.img || opt.imageUrl} alt="opt" className="h-24 w-full object-cover rounded-xl mb-2" />}
+                {speakingOptionId === sid && (
+                  <FaSpinner className="absolute top-3 right-3 text-blue-500 animate-spin" />
+                )}
+
+                {(opt.img || opt.imageUrl) && (
+                  <img
+                    src={opt.img || opt.imageUrl}
+                    alt="opt"
+                    className="h-24 w-full object-cover rounded-xl mb-2"
+                  />
+                )}
+
                 <span className="option-text">{opt.text}</span>
               </div>
             );
@@ -342,12 +594,21 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
           {isRight ? <FaCheck /> : <FaTimes />}
           <span>{isRight ? 'မှန်ပါတယ်!' : 'မှားနေပါတယ်'}</span>
         </div>
+
         {!isRight && triggerAI && (
-          <button className="ai-btn" onClick={() => { setAiLoading(true); setTimeout(() => setAiLoading(false), 2000); }}>
-            {aiLoading ? <FaSpinner className="animate-spin" /> : <FaRobot />} AI ရှင်းလင်းချက်
+          <button className="ai-btn" disabled={aiLoading} onClick={handleAI}>
+            {aiLoading ? <FaSpinner className="animate-spin" /> : <FaRobot />}
+            AI ရှင်းလင်းချက်
           </button>
         )}
-        <button className={`next-btn ${isRight ? 'btn-correct' : 'btn-wrong'}`} onClick={() => { audioController.stop(); onNext?.(); }}>
+
+        <button
+          className={`next-btn ${isRight ? 'btn-correct' : 'btn-wrong'}`}
+          onClick={() => {
+            audioController.stop();
+            onNext?.();
+          }}
+        >
           ဆက်သွားမည် <FaArrowRight />
         </button>
       </div>
