@@ -28,11 +28,11 @@
       "id": "greet-u3",
       "title": "单元 3: 自我介绍",
       "lessons": [
-        { "id": "greet-l11", "title": "我叫..." },
-        { "id": "greet-l12", "title": "我来自..." },
-        { "id": "greet-l13", "title": "我是学生" },
-        { "id": "greet-l14", "title": "我今年25岁" },
-        { "id": "greet-l15", "title": "很高兴认识你" }
+        { "id": "greet-l11", "title": "ငါ့နာမည်... (我叫……)" },
+        { "id": "greet-l12", "title": "ငါ...က လာတာ (我来自……)" },
+        { "id": "greet-l13", "title": "ငါက ကျောင်းသားပါ (我是学生)" },
+        { "id": "greet-l14", "title": "အသက်ပြောမယ် (我今年 25 岁)" },
+        { "id": "greet-l15", "title": "ရတာဝမ်းသာပါတယ် (很高兴认识你)" }
       ]
     },
     {
