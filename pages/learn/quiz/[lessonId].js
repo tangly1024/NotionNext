@@ -1,23 +1,19 @@
+// /pages/learn/quiz/[lessonId].js
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import fs from 'fs';
 import path from 'path';
-import dynamic from 'next/dynamic';
-import { motion, AnimatePresence } from 'framer-motion';
 import { completeLesson } from '../../../lib/progress';
+import { motion, AnimatePresence } from 'framer-motion'; 
 
-// 🔥 强制取消 SSR，防止任何浏览器专属对象导致服务端报错
+// 🔥 防爆修复：使用 dynamic import 取消 SSR，避开 canvas-confetti 在服务端的报错！
+import dynamic from 'next/dynamic';
 const XuanZeTi = dynamic(() => import('../../../components/quiz/Tixing/XuanZeTi'), { 
-  ssr: false,
-  loading: () => (
-    <div className="flex-1 flex flex-col items-center justify-center h-full">
-      <div className="w-12 h-12 border-4 border-gray-200 border-t-green-500 rounded-full animate-spin mb-4"></div>
-      <p className="text-gray-400 font-bold tracking-widest animate-pulse">加载题目引擎...</p>
-    </div>
-  )
+  ssr: false, 
+  loading: () => <div className="flex justify-center mt-32 text-gray-400 font-bold animate-pulse text-lg tracking-widest">引擎启动中...</div>
 });
 
-export default function QuizPage({ lessonData }) {
+export default function QuizPage({ lessonData, currentRoadmap }) { // 🌟 接收到了真实的地图数据
   const router = useRouter();
   
   const [mainQueue, setMainQueue] = useState([]);
@@ -25,6 +21,8 @@ export default function QuizPage({ lessonData }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [stats, setStats] = useState({ totalInitial: 0, mistakes: 0 });
+  
+  // 🌟 连击状态
   const [combo, setCombo] = useState(0);
 
   useEffect(() => {
@@ -34,7 +32,7 @@ export default function QuizPage({ lessonData }) {
     }
   }, [lessonData]);
 
-  if (!mainQueue.length) return <div className="min-h-screen bg-white" />;
+  if (!mainQueue.length) return <div className="p-10 text-center font-bold text-gray-500">加载题目中...</div>;
 
   const isDoingWrongQueue = currentIndex >= mainQueue.length;
   const currentQuestion = isDoingWrongQueue 
@@ -42,15 +40,16 @@ export default function QuizPage({ lessonData }) {
     : mainQueue[currentIndex];
 
   const totalSteps = mainQueue.length + wrongQueue.length;
-  // 进度条至少显示 5%，看起来更好
-  const progressPercent = Math.max(5, (currentIndex / totalSteps) * 100);
+  const progressPercent = (currentIndex / totalSteps) * 100;
 
+  // 🌟 答对：增加连击
   const handleCorrect = () => {
     setCombo(prev => prev + 1);
   };
 
+  // 🌟 答错：连击清零，加入错题本
   const handleWrong = () => {
-    setCombo(0);
+    setCombo(0); // 连击断了
     if (!isDoingWrongQueue) {
       setStats(prev => ({ ...prev, mistakes: prev.mistakes + 1 }));
     }
@@ -74,61 +73,66 @@ export default function QuizPage({ lessonData }) {
       accuracy: accuracy,
       stars: accuracy === 100 ? 3 : accuracy >= 80 ? 2 : 1
     };
-    completeLesson(lessonData.id, resultStats, { units: [] }); 
+    
+    // 🌟 核心修复：传入真实的 currentRoadmap 地图，progress.js 终于知道下一关是谁了！
+    completeLesson(lessonData.id, resultStats, currentRoadmap); 
   };
 
-  // 结算通关界面
   if (isFinished) {
     return (
-      <div className="flex flex-col items-center justify-center h-[100dvh] bg-white p-6 text-center">
+      <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center bg-[#f3f4f6]">
         <h1 className="text-6xl mb-6 animate-bounce">🎉</h1>
-        <h2 className="text-3xl font-black text-green-500 mb-2">太棒了！</h2>
-        <p className="text-gray-500 font-bold mb-10 text-lg">你完成了本节课，错误次数：{stats.mistakes}</p>
+        <h2 className="text-3xl font-black text-[#58cc02] mb-3 drop-shadow-sm">太棒了，通关成功！</h2>
+        <div className="bg-white px-6 py-4 rounded-2xl shadow-sm border-2 border-[#e5e5e5] mb-10 w-full max-w-xs">
+           <p className="text-gray-500 font-bold mb-2">本次错误次数：<span className="text-red-500 text-lg">{stats.mistakes}</span></p>
+           <p className="text-gray-500 font-bold">获得奖励：<span className="text-blue-500 text-lg">💎 +15</span></p>
+        </div>
+        
         <button 
-          onClick={() => router.replace('/learn')}
-          className="w-full max-w-sm bg-green-500 text-white py-4 rounded-2xl font-black text-lg shadow-[0_6px_0_0_#46a302] active:translate-y-1 active:shadow-[0_2px_0_0_#46a302] transition-all"
+          onClick={() => router.back()}
+          className="w-full max-w-xs bg-[#58cc02] text-white py-4 rounded-2xl font-black text-lg shadow-[0_6px_0_0_#46a302] active:translate-y-1 active:shadow-[0_2px_0_0_#46a302] transition-all uppercase tracking-widest"
         >
-          继续
+          继续前进
         </button>
       </div>
     );
   }
 
-  // --- 极致全屏沉浸式 UI ---
   return (
-    <div className="flex flex-col h-[100dvh] bg-white overflow-hidden relative selection:bg-transparent">
+    <div className="min-h-screen bg-white relative overflow-hidden">
       
-      {/* 1. 顶部进度条 (去掉了返回键，彻底全屏居中) */}
-      <div className="pt-8 pb-4 px-6 flex items-center justify-center shrink-0">
-        <div className="flex-1 max-w-lg h-4 bg-gray-200 rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-green-500 rounded-full transition-all duration-500 ease-out" 
-            style={{ width: `${progressPercent}%` }} 
+      {/* 顶部进度条 (多邻国经典绿条) */}
+      <div className="fixed top-8 left-0 right-0 px-5 z-50 flex items-center gap-4">
+        <button onClick={() => router.back()} className="text-[#afafaf] hover:text-gray-500 active:scale-90 transition-transform text-2xl font-black">
+          ✕
+        </button>
+        <div className="flex-1 h-4 bg-[#e5e5e5] rounded-full overflow-hidden">
+          <motion.div 
+            className="h-full bg-[#58cc02] rounded-full" 
+            initial={{ width: 0 }}
+            animate={{ width: `${progressPercent}%` }} 
+            transition={{ type: "spring", stiffness: 100, damping: 20 }}
           />
         </div>
       </div>
 
-      {/* 错题重做提示 */}
-      {isDoingWrongQueue && (
-         <div className="text-center text-red-500 font-black text-sm pb-2 animate-pulse shrink-0">
-           ⚠️ 强化练习：重做错题
-         </div>
-      )}
-
-      {/* 2. 连击特效 (悬浮在最上层) */}
+      {/* 🌟 核心特效：超燃连击弹出动画！(3连击出现，10连击变紫变独角兽) */}
       <AnimatePresence>
-        {combo >= 3 && (
+        {combo >= 3 && ( 
           <motion.div
-            key="combo"
-            initial={{ opacity: 0, y: 50, scale: 0.5 }}
-            animate={{ opacity: 1, y: 0, scale: 1.1 }}
+            key="combo-popup"
+            initial={{ opacity: 0, y: 50, scale: 0.5, rotate: -5 }}
+            animate={{ opacity: 1, y: 0, scale: 1.1, rotate: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: -20 }}
-            transition={{ type: "spring", stiffness: 300, damping: 15 }}
-            className="absolute top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none"
+            transition={{ type: "spring", stiffness: 400, damping: 15 }}
+            className="fixed top-24 left-1/2 -translate-x-1/2 z-40 pointer-events-none"
           >
-            <div className={`px-6 py-2 rounded-full shadow-lg border-2 flex items-center gap-2 ${combo >= 5 ? 'bg-purple-100 border-purple-500' : 'bg-orange-100 border-orange-500'}`}>
-              <span className="text-2xl">{combo >= 5 ? '🦄' : '🔥'}</span>
-              <span className={`font-black italic text-lg ${combo >= 5 ? 'text-purple-600' : 'text-orange-600'}`}>
+            <div className={`
+              px-6 py-2 rounded-2xl shadow-lg border-b-[4px] flex items-center gap-2
+              ${combo >= 10 ? 'bg-[#ce82ff] border-[#a559d9]' : 'bg-[#ff9600] border-[#d97706]'}
+            `}>
+              <span className="text-2xl drop-shadow-md">{combo >= 10 ? '🦄' : '🔥'}</span>
+              <span className="text-white font-black text-xl italic tracking-wider drop-shadow-sm">
                 {combo} 连击！
               </span>
             </div>
@@ -136,38 +140,82 @@ export default function QuizPage({ lessonData }) {
         )}
       </AnimatePresence>
 
-      {/* 3. 核心题目区域 (自动填满剩余屏幕高度) */}
-      <div className="flex-1 relative w-full max-w-lg mx-auto overflow-hidden">
+      <div className="pt-24 pb-10">
+        {isDoingWrongQueue && (
+          <div className="text-center font-black text-[#ff4b4b] text-sm animate-pulse mb-4 tracking-widest uppercase">
+            ⚠️ 错题强化训练
+          </div>
+        )}
+        
+        {/* 调用你的核心题库组件 */}
         <XuanZeTi 
           data={currentQuestion} 
           onCorrect={handleCorrect}
           onWrong={handleWrong}
           onNext={handleNext}
-          triggerAI={async (params) => {
-            console.log("AI解析请求:", params);
-          }}
         />
       </div>
     </div>
   );
 }
 
+// 静态路由生成 (获取所有关卡文件)
 export async function getStaticPaths() {
   const lessonsDir = path.join(process.cwd(), 'data/lessons');
-  if (!fs.existsSync(lessonsDir)) return { paths: [], fallback: false };
-  const filenames = fs.readdirSync(lessonsDir);
-  const paths = filenames
-    .filter(name => name.endsWith('.json'))
-    .map(name => ({ params: { lessonId: name.replace('.json', '') } }));
+  if (!fs.existsSync(lessonsDir)) {
+    return { paths: [], fallback: false };
+  }
+  const filenames = fs.readdirSync(lessonsDir).filter(name => name.endsWith('.json'));
+  const paths = filenames.map(name => ({
+    params: { lessonId: name.replace('.json', '') }
+  }));
   return { paths, fallback: false };
 }
 
+// 🌟 获取关卡数据，并自动寻找它所在的路线地图！
 export async function getStaticProps({ params }) {
+  const lessonId = params.lessonId;
+  const filePath = path.join(process.cwd(), 'data/lessons', `${lessonId}.json`);
+  let lessonData = null;
+  
   try {
-    const filePath = path.join(process.cwd(), 'data/lessons', `${params.lessonId}.json`);
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    return { props: { lessonData: JSON.parse(fileContents) } };
+    lessonData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   } catch (e) {
-    return { notFound: true };
+    return { notFound: true }; // 找不到题目时防爆
   }
+
+  // 找出当前关卡属于哪个大分类地图
+  const roadmapsDir = path.join(process.cwd(), 'data/roadmaps');
+  let currentRoadmap = { units: [] }; 
+  
+  try {
+    const roadmapFiles = fs.readdirSync(roadmapsDir).filter(f => f.endsWith('.json'));
+    for (const file of roadmapFiles) {
+      const roadmapData = JSON.parse(fs.readFileSync(path.join(roadmapsDir, file), 'utf8'));
+      
+      let found = false;
+      if (roadmapData.units) {
+        for (const unit of roadmapData.units) {
+          if (unit.lessons && unit.lessons.some(l => l.id === lessonId)) {
+            found = true;
+            break;
+          }
+        }
+      }
+      
+      if (found) {
+        currentRoadmap = roadmapData; 
+        break;
+      }
+    }
+  } catch (e) {
+    // 忽略寻找地图的错误
+  }
+
+  return {
+    props: {
+      lessonData,
+      currentRoadmap // 把真实地图传给页面组件
+    }
+  };
 }
