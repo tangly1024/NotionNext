@@ -20,7 +20,6 @@ export default function QuizPage({ lessonData, currentRoadmap }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [stats, setStats] = useState({ totalInitial: 0, mistakes: 0 });
-  
   const [combo, setCombo] = useState(0);
 
   useEffect(() => {
@@ -96,12 +95,10 @@ export default function QuizPage({ lessonData, currentRoadmap }) {
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
       
-      {/* 🌟 修复：更精致、更细的进度条，以及更轻量的退出按钮 */}
       <div className="fixed top-6 left-0 right-0 px-4 z-50 flex items-center gap-3">
         <button onClick={() => router.back()} className="text-[#cfcfcf] hover:text-gray-400 active:scale-90 transition-transform p-1">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>
-        {/* 进度条变细为 h-2.5 */}
         <div className="flex-1 h-2.5 bg-[#e5e5e5] rounded-full overflow-hidden">
           <motion.div 
             className="h-full bg-[#58cc02] rounded-full" 
@@ -142,9 +139,9 @@ export default function QuizPage({ lessonData, currentRoadmap }) {
           </div>
         )}
         
-        {/* 🌟 核心修复：加入了 key={currentIndex}，彻底解决选项画面错乱 Bug！ */}
+        {/* 🌟 终极修复：绝对锁定 key！题目ID + 当前题号。绝不让组件状态复用错乱！ */}
         <XuanZeTi 
-          key={currentIndex}
+          key={`${currentQuestion?.id || 'q'}-${currentIndex}`}
           data={currentQuestion} 
           onCorrect={handleCorrect}
           onWrong={handleWrong}
