@@ -1,4 +1,3 @@
-// /pages/learn/quiz/[lessonId].js
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import fs from 'fs';
@@ -7,16 +6,17 @@ import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import { completeLesson } from '../../../lib/progress';
 
-// 🔥 强制取消 SSR，防止任何浏览器专属对象导致服务端报错
 const XuanZeTi = dynamic(() => import('../../../components/quiz/Tixing/XuanZeTi'), {
   ssr: false,
   loading: () => (
-    <div className="flex-1 flex flex-col items-center justify-center h-full">
+    <div className="flex-1 flex flex-col items-center justify-center h-full bg-white">
       <div className="w-12 h-12 border-4 border-[#e5e5e5] border-t-[#58cc02] rounded-full animate-spin mb-4"></div>
       <p className="text-gray-400 font-black tracking-widest animate-pulse">引擎启动中...</p>
     </div>
   )
 });
+
+const getQuizProgressKey = (lessonId) => `quiz_progress_${lessonId}`;
 
 export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId }) {
   const router = useRouter();
@@ -28,7 +28,6 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
   const [stats, setStats] = useState({ totalInitial: 0, mistakes: 0 });
   const [combo, setCombo] = useState(0);
 
-  // 连击与动画状态
   const [comboFlash, setComboFlash] = useState(null);
   const comboTimerRef = useRef(null);
   const [progressPulse, setProgressPulse] = useState(false);
@@ -36,8 +35,40 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
   const [shakeStage, setShakeStage] = useState(0);
   const shakeTimerRef = useRef(null);
 
+  const [restored, setRestored] = useState(false);
+
   useEffect(() => {
-    if (lessonData && lessonData.questions) {
+    if (!lessonData?.questions) return;
+
+    let loaded = false;
+
+    if (typeof window !== 'undefined') {
+      try {
+        const raw = localStorage.getItem(getQuizProgressKey(explicitLessonId));
+        if (raw) {
+          const saved = JSON.parse(raw);
+          if (
+            saved &&
+            saved.lessonId === explicitLessonId &&
+            Array.isArray(saved.mainQueue) &&
+            Array.isArray(saved.wrongQueue)
+          ) {
+            setMainQueue(saved.mainQueue);
+            setWrongQueue(saved.wrongQueue);
+            setCurrentIndex(saved.currentIndex || 0);
+            setIsFinished(false);
+            setCombo(0);
+            setComboFlash(null);
+            setProgressPulse(false);
+            setShakeStage(0);
+            setStats(saved.stats || { totalInitial: lessonData.questions.length, mistakes: 0 });
+            loaded = true;
+          }
+        }
+      } catch (_) {}
+    }
+
+    if (!loaded) {
       setMainQueue(lessonData.questions);
       setWrongQueue([]);
       setCurrentIndex(0);
@@ -48,9 +79,32 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
       setShakeStage(0);
       setStats({ totalInitial: lessonData.questions.length, mistakes: 0 });
     }
-  }, [lessonData]);
 
-  // 清理定时器，防止内存泄漏
+    setRestored(true);
+  }, [lessonData, explicitLessonId]);
+
+  // 本地保存进行中的关卡进度
+  useEffect(() => {
+    if (!restored) return;
+    if (typeof window === 'undefined') return;
+    if (isFinished) return;
+    if (!mainQueue.length) return;
+
+    try {
+      localStorage.setItem(
+        getQuizProgressKey(explicitLessonId),
+        JSON.stringify({
+          lessonId: explicitLessonId,
+          mainQueue,
+          wrongQueue,
+          currentIndex,
+          stats,
+          savedAt: Date.now()
+        })
+      );
+    } catch (_) {}
+  }, [restored, explicitLessonId, mainQueue, wrongQueue, currentIndex, stats, isFinished]);
+
   useEffect(() => {
     return () => {
       if (comboTimerRef.current) clearTimeout(comboTimerRef.current);
@@ -59,9 +113,14 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
     };
   }, []);
 
-  // 🌟 通关撒花特效 (动态引入避免 SSR 报错)
   useEffect(() => {
     if (isFinished) {
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.removeItem(getQuizProgressKey(explicitLessonId));
+        } catch (_) {}
+      }
+
       import('canvas-confetti').then((confetti) => {
         confetti.default({
           particleCount: 150,
@@ -71,9 +130,11 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
         });
       });
     }
-  }, [isFinished]);
+  }, [isFinished, explicitLessonId]);
 
-  if (!mainQueue.length) return <div className="min-h-screen bg-white" />;
+  if (!restored || !mainQueue.length) {
+    return <div className="min-h-screen bg-white" />;
+  }
 
   const isDoingWrongQueue = currentIndex >= mainQueue.length;
   const currentQuestion = isDoingWrongQueue
@@ -83,11 +144,11 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
   const totalSteps = mainQueue.length + wrongQueue.length;
   const progressPercent = Math.max(5, (currentIndex / Math.max(totalSteps, 1)) * 100);
 
-  const accuracy = stats.totalInitial > 0
+  const accuracy =
+    stats.totalInitial > 0
       ? Math.round(((stats.totalInitial - stats.mistakes) / stats.totalInitial) * 100)
       : 0;
 
-  // 进度条发光脉冲动画
   const triggerProgressPulse = () => {
     setProgressPulse(true);
     if (progressTimerRef.current) clearTimeout(progressTimerRef.current);
@@ -96,7 +157,6 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
     }, 500);
   };
 
-  // 错误抖动动画
   const triggerShake = () => {
     setShakeStage((prev) => prev + 1);
     if (shakeTimerRef.current) clearTimeout(shakeTimerRef.current);
@@ -105,10 +165,10 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
     }, 420);
   };
 
-  // 答对时触发连续正确小烟花
   const triggerComboBurst = async (nextCombo) => {
     if (typeof window === 'undefined') return;
     if (nextCombo < 5) return;
+
     try {
       const { default: confetti } = await import('canvas-confetti');
       confetti({
@@ -152,7 +212,7 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
 
     comboTimerRef.current = setTimeout(() => {
       setComboFlash(null);
-    }, 2500);
+    }, 2200);
   };
 
   const handleCorrect = () => {
@@ -169,10 +229,13 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
     setCombo(0);
     setComboFlash(null);
     triggerShake();
+
     if (comboTimerRef.current) clearTimeout(comboTimerRef.current);
+
     if (!isDoingWrongQueue) {
       setStats((prev) => ({ ...prev, mistakes: prev.mistakes + 1 }));
     }
+
     setWrongQueue((prev) => [...prev, currentQuestion]);
   };
 
@@ -187,7 +250,9 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
 
   const finishLesson = () => {
     setIsFinished(true);
-    const finalAccuracy = stats.totalInitial > 0
+
+    const finalAccuracy =
+      stats.totalInitial > 0
         ? ((stats.totalInitial - stats.mistakes) / stats.totalInitial) * 100
         : 0;
 
@@ -196,10 +261,10 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
       accuracy: finalAccuracy,
       stars: finalAccuracy === 100 ? 3 : finalAccuracy >= 80 ? 2 : 1
     };
+
     completeLesson(explicitLessonId, resultStats, currentRoadmap);
   };
 
-  // 🌟 修复语法错误的通关页，并加入了史诗级的入场动画
   if (isFinished) {
     const stars = accuracy === 100 ? 3 : accuracy >= 80 ? 2 : 1;
     const praise = accuracy === 100 ? '完美通关！' : accuracy >= 80 ? '做得很棒！' : '继续加油！';
@@ -233,7 +298,6 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
           本次错误次数：<span className="text-red-500">{stats.mistakes}</span>
         </motion.p>
 
-        {/* 星级连跳砸入动画 */}
         <div className="flex items-center gap-4 mb-8">
           {[1, 2, 3].map((n) => (
             <motion.div
@@ -251,7 +315,7 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.8, type: "spring" }}
+          transition={{ delay: 0.8, type: 'spring' }}
           className="w-full max-w-sm bg-[#f3f4f6] rounded-3xl p-5 mb-10 border-2 border-[#e5e5e5]"
         >
           <div className="flex justify-between items-center mb-3">
@@ -264,7 +328,7 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
               className="h-full bg-[#ffc800] rounded-full"
               initial={{ width: 0 }}
               animate={{ width: `${accuracy}%` }}
-              transition={{ delay: 1, duration: 1, type: "spring" }}
+              transition={{ delay: 1, duration: 1, type: 'spring' }}
             />
           </div>
         </motion.div>
@@ -272,7 +336,7 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
         <motion.button
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, type: "spring", stiffness: 200 }}
+          transition={{ delay: 1.2, type: 'spring', stiffness: 200 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => router.replace('/learn')}
           className="w-full max-w-sm bg-[#58cc02] text-white py-4 rounded-2xl font-black text-xl tracking-widest uppercase shadow-[0_6px_0_0_#46a302] active:translate-y-1 active:shadow-[0_2px_0_0_#46a302] transition-all"
@@ -283,20 +347,13 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
     );
   }
 
-  // 错误时的页面整体抖动配置
   const shakeAnimation = shakeStage > 0 ? { x: [0, -10, 10, -8, 8, -4, 4, 0] } : { x: 0 };
 
   return (
     <div className="flex flex-col h-[100dvh] bg-white overflow-hidden relative selection:bg-transparent">
-      
-      {/* --- 顶部进度条区域 --- */}
-      <div className="pt-8 pb-4 px-6 shrink-0 flex items-center gap-4">
-        <button onClick={() => router.back()} className="text-[#afafaf] hover:text-gray-400 active:scale-90 transition-transform">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-        </button>
-        
-        <div className="flex-1 h-3.5 bg-[#e5e5e5] rounded-full relative">
-          {/* 发光脉冲背景层 */}
+      {/* 顶部进度条 */}
+      <div className="pt-8 pb-4 px-6 shrink-0">
+        <div className="h-3.5 bg-[#e5e5e5] rounded-full relative">
           {progressPulse && (
             <motion.div
               className="absolute inset-0 bg-[#58cc02] rounded-full"
@@ -305,14 +362,13 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
               transition={{ duration: 0.5 }}
             />
           )}
-          {/* 实际进度条 */}
+
           <motion.div
             className="absolute top-0 left-0 bottom-0 bg-[#58cc02] rounded-full z-10"
             initial={{ width: 0 }}
             animate={{ width: `${progressPercent}%` }}
-            transition={{ type: "spring", stiffness: 100, damping: 20 }}
+            transition={{ type: 'spring', stiffness: 100, damping: 20 }}
           >
-            {/* 进度条内部高光，增加3D立体感 */}
             <div className="absolute top-1 left-2 right-2 h-[30%] bg-white/30 rounded-full" />
           </motion.div>
         </div>
@@ -331,7 +387,6 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
         )}
       </AnimatePresence>
 
-      {/* --- 连击特效徽章 --- */}
       <AnimatePresence mode="wait">
         {comboFlash && (
           <motion.div
@@ -340,7 +395,7 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
             animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
             exit={{ opacity: 0, y: -20, scale: 0.8 }}
             transition={{ type: 'spring', stiffness: 300, damping: 15 }}
-            className="absolute top-20 right-6 z-50 pointer-events-none"
+            className="absolute top-16 right-6 z-50 pointer-events-none"
           >
             <div className="bg-white px-4 py-2 rounded-2xl shadow-lg border-2 border-[#e5e5e5] flex items-center gap-2">
               <span className="text-2xl drop-shadow-sm">{comboFlash.icon}</span>
@@ -352,7 +407,6 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
         )}
       </AnimatePresence>
 
-      {/* --- 核心题区：切换动画 + 错误震动 --- */}
       <motion.div
         animate={shakeAnimation}
         transition={{ duration: 0.4 }}
@@ -361,10 +415,10 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={`${currentQuestion?.id || 'q'}-${currentIndex}`}
-            initial={{ opacity: 0, x: 50 }}    // 从右侧滑入
-            animate={{ opacity: 1, x: 0 }}     // 停在中间
-            exit={{ opacity: 0, x: -50 }}      // 向左侧滑出
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             className="absolute inset-0"
           >
             <XuanZeTi
