@@ -67,6 +67,8 @@ const RATE_MAP = {
   fast: 20
 };
 
+const PREFS_STORAGE_KEY = 'quiz_choice_prefs_v1';
+
 const isChineseChar = (ch = '') => /[\u4e00-\u9fff]/.test(ch);
 const isMyanmarChar = (ch = '') => /[\u1000-\u109F]/.test(ch);
 const isLatinOrDigit = (ch = '') => /[a-zA-Z0-9]/.test(ch);
@@ -126,8 +128,13 @@ function splitMixedText(text = '') {
 
     if (!currentLang) {
       currentLang = lang;
-      currentText += ch        ;
- } else {
+      currentText += ch;
+      continue;
+    }
+
+    if (lang === currentLang) {
+      currentText += ch;
+    } else {
       pushCurrent();
       currentLang = lang;
       currentText = ch;
@@ -258,7 +265,7 @@ const audioController = {
 };
 
 // =================================================================================
-// 4. 页面样式
+// 4. 样式
 // =================================================================================
 const cssStyles = `
 .xzt-container { font-family: "Padauk","Noto Sans SC",sans-serif; display:flex; flex-direction:column; background:transparent; width:100%; height:100%; position:relative; }
@@ -266,12 +273,9 @@ const cssStyles = `
 .top-hint-row { width:100%; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:8px; }
 .role-chip { display:flex; align-items:center; gap:10px; }
 .role-avatar { width:46px; height:46px; border-radius:9999px; object-fit:cover; background:#eef2ff; border:2px solid #e5e7eb; box-shadow:0 4px 12px rgba(0,0,0,0.06); }
-.role-label { display:flex; flex-direction:column; line-height:1.1; }
-.role-title { font-size:12px; font-weight:900; color:#334155; }
-.role-sub { font-size:10px; color:#94a3b8; font-weight:800; }
 
 .top-actions { display:flex; align-items:center; gap:8px; }
-.task-pill { background:#f8fafc; border:2px solid #e5e7eb; color:#475569; border-radius:9999px; padding:8px 12px; font-size:11px; font-weight:900; line-height:1; white-space:nowrap; }
+.task-text { font-size:13px; font-weight:900; color:#475569; line-height:1.1; text-align:right; }
 .settings-btn { width:38px; height:38px; border-radius:9999px; background:#fff; border:2px solid #e5e7eb; display:flex; align-items:center; justify-content:center; color:#64748b; box-shadow:0 3px 10px rgba(0,0,0,0.05); cursor:pointer; }
 
 .scene-wrapper { width:100%; display:flex; align-items:flex-end; gap:12px; }
@@ -296,6 +300,8 @@ const cssStyles = `
 .speed-btn { border:2px solid #e5e7eb; background:#fff; color:#64748b; border-radius:12px; font-size:12px; font-weight:900; padding:10px 0; cursor:pointer; }
 .speed-btn.active { background:#ecfccb; border-color:#bef264; color:#3f6212; }
 
+.question-image { width:100%; max-width:280px; border-radius:18px; margin-bottom:14px; border:2px solid #f1f5f9; box-shadow:0 4px 12px rgba(0,0,0,0.05); }
+
 .xzt-scroll-area { flex:1; overflow-y:auto; padding:8px 16px 132px; display:flex; flex-direction:column; align-items:center; -webkit-overflow-scrolling:touch; }
 .options-grid { width:100%; display:grid; gap:12px; grid-template-columns:1fr; }
 .options-grid.has-images { grid-template-columns:1fr 1fr; }
@@ -305,7 +311,7 @@ const cssStyles = `
 .option-card.selected { border-color:#84cc16; background:#f7fee7; color:#4d7c0f; }
 .option-card.playing { border-color:#60a5fa; background:#eff6ff; color:#1d4ed8; }
 .option-card.correct { border-color:#84cc16; background:#dcfce7; color:#365314; }
-.option-card.wrong { border-color:#fca5a5; background:#fef2f2; color:#b91c1c; }
+.option-card.wrong { border-color:#fca5a5; background:#fff5f5; color:#c2410c; }
 .option-card.locked { cursor:default; transform:none; }
 .option-card.has-image-layout { flex-direction:column; align-items:stretch; justify-content:flex-start; padding:12px; }
 .option-text-wrap { display:flex; flex-direction:column; align-items:center; justify-content:center; }
@@ -319,7 +325,7 @@ const cssStyles = `
 
 .result-sheet { position:absolute; bottom:0; left:0; right:0; padding:20px 20px calc(22px + env(safe-area-inset-bottom)); border-top-left-radius:28px; border-top-right-radius:28px; transform:translateY(110%); transition:transform .34s cubic-bezier(0.34,1.56,0.64,1); z-index:100; display:flex; flex-direction:column; gap:14px; box-shadow:0 -10px 32px rgba(0,0,0,0.1); }
 .result-sheet.correct { background:#dcfce7; color:#166534; }
-.result-sheet.wrong { background:#fef2f2; color:#b91c1c; }
+.result-sheet.wrong { background:#fff5f5; color:#c2410c; }
 .result-sheet.show { transform:translateY(0); }
 
 .sheet-header { font-size:1.55rem; font-weight:900; display:flex; align-items:center; gap:12px; }
@@ -328,7 +334,7 @@ const cssStyles = `
 .next-btn { width:100%; padding:16px; border-radius:18px; border:none; color:#fff; font-weight:900; font-size:1.15rem; cursor:pointer; border-bottom:5px solid rgba(0,0,0,0.15); -webkit-tap-highlight-color:transparent; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 6px 0 rgba(0,0,0,0.14); }
 .next-btn:active { transform:translateY(4px); border-bottom-width:1px; box-shadow:0 2px 0 rgba(0,0,0,0.14); }
 .btn-correct { background:#58cc02; border-bottom-color:#46a302; box-shadow:0 6px 0 #46a302; }
-.btn-wrong { background:#ff6b6b; border-bottom-color:#e25454; box-shadow:0 6px 0 #e25454; }
+.btn-wrong { background:#ff7878; border-bottom-color:#ef5b5b; box-shadow:0 6px 0 #ef5b5b; }
 
 .ai-btn { background:#fff; border:2px solid #e5e7eb; color:#4f46e5; padding:13px; border-radius:16px; font-weight:900; display:flex; align-items:center; justify-content:center; gap:8px; width:100%; font-size:1rem; cursor:pointer; }
 .ai-btn:disabled { opacity:.7; cursor:not-allowed; }
@@ -341,7 +347,6 @@ const cssStyles = `
 }
 `;
 
-// 工具：安全震动
 const vibrate = (pattern) => {
   if (typeof navigator !== 'undefined' && navigator.vibrate) navigator.vibrate(pattern);
 };
@@ -379,6 +384,43 @@ function renderTextWithOptionalPinyin(text, showPinyin, textClass = 'zh-char', p
       </span>
     );
   });
+}
+
+function getSavedPrefs() {
+  if (typeof window === 'undefined') {
+    return {
+      showQuestionPinyin: true,
+      showOptionPinyin: false,
+      autoPlay: true,
+      rateMode: 'normal'
+    };
+  }
+
+  try {
+    const raw = localStorage.getItem(PREFS_STORAGE_KEY);
+    if (!raw) {
+      return {
+        showQuestionPinyin: true,
+        showOptionPinyin: false,
+        autoPlay: true,
+        rateMode: 'normal'
+      };
+    }
+    return {
+      showQuestionPinyin: true,
+      showOptionPinyin: false,
+      autoPlay: true,
+      rateMode: 'normal',
+      ...JSON.parse(raw)
+    };
+  } catch (_) {
+    return {
+      showQuestionPinyin: true,
+      showOptionPinyin: false,
+      autoPlay: true,
+      rateMode: 'normal'
+    };
+  }
 }
 
 // =================================================================================
@@ -494,13 +536,9 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
   const [aiLoading, setAiLoading] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [cardPopId, setCardPopId] = useState(null);
+  const [questionImgVisible, setQuestionImgVisible] = useState(Boolean(questionImg));
 
-  const [prefs, setPrefs] = useState({
-    showQuestionPinyin: true,
-    showOptionPinyin: false,
-    autoPlay: true,
-    rateMode: 'normal'
-  });
+  const [prefs, setPrefs] = useState(() => getSavedPrefs());
 
   const timersRef = useRef([]);
   const mountedRef = useRef(true);
@@ -522,9 +560,19 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      localStorage.setItem(PREFS_STORAGE_KEY, JSON.stringify(prefs));
+    } catch (_) {}
+  }, [prefs]);
+
+  useEffect(() => {
+    setQuestionImgVisible(Boolean(questionImg));
+  }, [questionImg]);
+
   const currentRate = RATE_MAP[prefs.rateMode] ?? 0;
 
-  // 初始化与自动播放
   useEffect(() => {
     clearTimers();
     audioController.stop();
@@ -583,13 +631,15 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
 
     setCardPopId(sid);
     setTimeout(() => {
-      if (mountedRef.current) setCardPopId((prev) => (prev === sid ? null : prev));
+      if (mountedRef.current) {
+        setCardPopId((prev) => (prev === sid ? null : prev));
+      }
     }, 180);
 
     const opt = options.find((o) => String(o.id) === sid);
     if (opt?.text) {
       setIsQuestionPlaying(false);
-      audio.playMixed(
+      audioController.playMixed(
         opt.text,
         { rate: currentRate },
         () => mountedRef.current && setSpeakingOptionId(sid),
@@ -656,21 +706,17 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
           <div className="top-hint-row">
             <div className="role-chip">
               <img
-                src="/images/laoshi.png"
+                src="https://audio.886.best/chinese-vocab-audio/%E5%9B%BE%E7%89%87/1765952194374.png"
                 className="role-avatar"
                 alt="Teacher"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                 }}
               />
-              <div className="role-label">
-                <span className="role-title">老师 / AI Teacher</span>
-                <span className="role-sub">陪你完成这道题</span>
-              </div>
             </div>
 
             <div className="top-actions">
-              <div className="task-pill">အဖြေမှန်ကို ရွေးပါ</div>
+              <div className="task-text">အဖြေမှန်ကို ရွေးပါ</div>
               <button className="settings-btn" onClick={() => setShowSettings((v) => !v)}>
                 <FaCog size={16} />
               </button>
@@ -687,7 +733,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
 
           <div className="scene-wrapper">
             <img
-              src="https://audio.886.best/chinese-vocab-audio/%E5%9B%BE%E7%89%87/1765952194374.png"
+              src="/images/laoshi.png"
               className="teacher-img"
               alt="Teacher"
               onError={(e) => {
@@ -729,11 +775,12 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
       </div>
 
       <div className="xzt-scroll-area">
-        {questionImg ? (
+        {questionImg && questionImgVisible ? (
           <img
             src={questionImg}
             alt="question"
-            className="w-full max-w-[280px] rounded-2xl mb-4 border-2 border-slate-100 shadow-sm"
+            className="question-image"
+            onError={() => setQuestionImgVisible(false)}
           />
         ) : null}
 
@@ -769,11 +816,14 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
                     src={opt.img || opt.imageUrl}
                     alt="opt"
                     className="h-24 w-full object-cover rounded-xl mb-2"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
                   />
                 )}
 
                 <div className="option-text-wrap">
-                  {showPy && containsChinese(opt.text) ? (
+                  {showPy ? (
                     <div className="option-py">
                       {pinyin(String(opt.text).replace(/[^\u4e00-\u9fff]/g, ''), {
                         toneType: 'symbol'
