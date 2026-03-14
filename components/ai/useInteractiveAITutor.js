@@ -39,8 +39,6 @@ export function useInteractiveAITutor({
   const [liveInterim, setLiveInterim] = useState('');
   const [recLang] = useState('zh-CN');
 
-  const [bootstrapped, setBootstrapped] = useState(false);
-
   const scrollRef = useRef(null);
   const abortControllerRef = useRef(null);
   const recognitionRef = useRef(null);
@@ -53,6 +51,12 @@ export function useInteractiveAITutor({
   const sendLockRef = useRef(false);
   const requestIdRef = useRef(0);
 
+  // 关键修复：不用 state，改成 ref，避免 rerender 触发 cleanup 中断首轮请求
+  const bootstrappedRef = useRef(false);
+
+  // 关键修复：把 initialPayload 放 ref，不让对象引用变化导致 effect 重跑
+  const initialPayloadRef = useRef(initialPayload);
+
   const currentLangObj =
     RECOGNITION_LANGS.find((l) => l.code === recLang) || RECOGNITION_LANGS[0];
 
@@ -64,6 +68,10 @@ export function useInteractiveAITutor({
       '你是一位互动题解析老师。请用简洁中文解释并引导学生。不要输出Markdown格式。'
     );
   }, [settings]);
+
+  useEffect(() => {
+    initialPayloadRef.current = initialPayload;
+  }, [initialPayload]);
 
   const scrollToBottom = () => {
     if (!scrollRef.current) return;
@@ -145,7 +153,7 @@ export function useInteractiveAITutor({
 请先完成三件事：
 1. 解释这题考什么
 2. 说明为什么正确答案是这个
-3. 如果学生答错了，指出错误选项的关键误区
+3. 如果学生答错了，先站在学生角度思考为什么选择这个答案，指出错误选项的关键误区
 
 然后等待学生继续追问。
 `.trim();
@@ -445,25 +453,36 @@ export function useInteractiveAITutor({
     return () => ttsEngine.setStateCallback(null);
   }, []);
 
+  // 关闭时清理
   useEffect(() => {
     if (!open) {
       stopEverything();
       setHistory([]);
-      setBootstrapped(false);
-      return;
+      bootstrappedRef.current = false;
     }
+  }, [open]);
 
-    if (open && initialPayload && !bootstrapped) {
-      const firstPrompt = buildBootstrapPrompt(initialPayload);
+  // 打开时只初始化一次，不依赖 initialPayload 对象引用反复触发
+  useEffect(() => {
+    if (!open) return;
+
+    if (!bootstrappedRef.current) {
+      const payload = initialPayloadRef.current;
+      const firstPrompt = buildBootstrapPrompt(payload);
+
       if (firstPrompt) {
-        setBootstrapped(true);
+        bootstrappedRef.current = true;
         sendHiddenMessage(firstPrompt);
       }
     }
-
-    return () => stopEverything();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, bootstrapped, initialPayload]);
+  }, [open]);
+
+  useEffect(() => {
+    return () => {
+      stopEverything();
+    };
+  }, []);
 
   return {
     history,
