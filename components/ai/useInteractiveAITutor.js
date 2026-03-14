@@ -51,6 +51,19 @@ export function useInteractiveAITutor({
     );
   }, [settings]);
 
+  // 配置 TTS 引擎
+  useEffect(() => {
+    if (settings?.ttsApiUrl) {
+      ttsEngine.configure?.({
+        apiUrl: settings.ttsApiUrl,
+        voice: settings.ttsVoice || settings?.zhVoice,
+        speed: settings.ttsSpeed,
+        pitch: settings.ttsPitch,
+        apiKey: settings.apiKey
+      });
+    }
+  }, [settings]);
+
   const scrollToBottom = () => {
     if (!scrollRef.current) return;
     setTimeout(() => {
@@ -269,6 +282,13 @@ export function useInteractiveAITutor({
 
       interimRef.current = interimText.trim();
       setRecordFinalText(recordingFinalRef.current);
+      setLiveInterim(interimRef.current);
+
+      clearSilenceTimer();
+      silenceTimerRef.current = setTimeout(() => manualSubmitRecording(), 1400);
+    };
+
+    rec.onerror = () => stopRecordingOnly();
     rec.onend = () => stopRecordingOnly();
 
     recognitionRef.current = rec;
@@ -302,8 +322,8 @@ export function useInteractiveAITutor({
   }, [history]);
 
   useEffect(() => {
-    ttsEngine.setStateCallback(({ isPlaying }) => setIsAiSpeaking(isPlaying));
-    return () => ttsEngine.setStateCallback(null);
+    ttsEngine.setStateCallback?.(({ isPlaying }) => setIsAiSpeaking(isPlaying));
+    return () => ttsEngine.setStateCallback?.(null);
   }, []);
 
   useEffect(() => {
@@ -346,4 +366,4 @@ export function useInteractiveAITutor({
     stopEverything,
     replayLastAnswer
   };
-  }
+}
