@@ -1,3 +1,4 @@
+// components/ai/ttsEngine.js
 import { sanitizeForTTS, splitMixedLanguage } from './aiTextUtils';
 import { toFinite } from './aiConfig';
 
@@ -32,7 +33,8 @@ export class ExternalTTSQueue {
 
   getVoiceForLang(lang) {
     const s = this.settingsRef || {};
-    if (lang === 'my') return 'zh-CN-XiaoxiaoMultilingualNeural';
+    // 关键修正：将原先混用的中文多语言引擎改为原生缅甸语发音人
+    if (lang === 'my') return 'my-MM-NilarNeural'; 
     if (lang === 'en') return 'en-US-JennyNeural';
     return s.ttsVoice || 'zh-CN-XiaoxiaoMultilingualNeural';
   }
