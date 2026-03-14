@@ -6,7 +6,8 @@ import {
   FaArrowRight,
   FaSpinner,
   FaRobot,
-  FaCog
+  FaCog,
+  FaRedo
 } from 'react-icons/fa';
 import { pinyin } from 'pinyin-pro';
 
@@ -53,83 +54,10 @@ const idb = {
 };
 
 // =================================================================================
-// 2. 音效工具
+// 2. 基础工具
 // =================================================================================
-function vibrate(pattern) {
-  if (typeof navigator !== 'undefined' && navigator.vibrate) {
-    navigator.vibrate(pattern);
-  }
-}
-
-function playBeep(type = 'tap') {
-  if (typeof window === 'undefined') return;
-
-  try {
-    const AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) return;
-
-    const ctx = new AC();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    let frequency = 520;
-    let duration = 0.06;
-    let volume = 0.03;
-
-    if (type === 'correct') {
-      frequency = 760;
-      duration = 0.1;
-      volume = 0.045;
-    } else if (type === 'wrong') {
-      frequency = 220;
-      duration = 0.12;
-      volume = 0.05;
-    } else if (type === 'tap') {
-      frequency = 520;
-      duration = 0.05;
-      volume = 0.025;
-    }
-
-    osc.type = 'sine';
-    osc.frequency.value = frequency;
-    gain.gain.value = volume;
-
-    osc.start();
-    osc.stop(ctx.currentTime + duration);
-
-    osc.onended = () => {
-      try {
-        ctx.close();
-      } catch (_) {}
-    };
-  } catch (_) {}
-}
-
-// =================================================================================
-// 3. 文本与 TTS 工具
-// =================================================================================
-const TTS_VOICES = {
-  zh: 'zh-CN-XiaoxiaoMultilingualNeural',
-  my: 'my-MM-ThihaNeural',
-  en: 'en-US-JennyNeural'
-};
-
-const ZH_VOICE_OPTIONS = [
-  { id: 'zh-CN-XiaoxiaoMultilingualNeural', name: '晓晓 (女)' },
-  { id: 'zh-CN-XiaochenMultilingualNeural', name: '晓辰 (男)' },
-  { id: 'zh-CN-XiaoxiaoNeural', name: '晓晓标准' },
-  { id: 'zh-CN-YunxiNeural', name: '云希' },
-  { id: 'zh-CN-YunjianNeural', name: '云健' },
-  { id: 'zh-CN-XiaoyiNeural', name: '晓伊' }
-];
-
-const MY_VOICE_OPTIONS = [
-  { id: 'my-MM-ThihaNeural', name: 'Thiha' },
-  { id: 'my-MM-NilarNeural', name: 'Nilar' }
-];
+const PREFS_STORAGE_KEY = 'quiz_choice_prefs_v3';
+const AI_STORAGE_KEY = 'interactive_ai_settings_v3';
 
 const RATE_MAP = {
   slow: -30,
@@ -137,8 +65,24 @@ const RATE_MAP = {
   fast: 20
 };
 
-const PREFS_STORAGE_KEY = 'quiz_choice_prefs_v2';
-const AI_STORAGE_KEY = 'interactive_ai_settings_v2';
+const ZH_VOICE_OPTIONS = [
+  { id: 'zh-CN-XiaoxiaoMultilingualNeural', name: '晓晓 (女)' },
+  { id: 'zh-CN-XiaochenMultilingualNeural', name: '晓辰 (男)' },
+  { id: 'zh-CN-XiaoxiaoNeural', name: '晓晓标准' },
+  { id: 'zh-CN-YunxiNeural', name: '云希' }
+];
+
+const MY_VOICE_OPTIONS = [
+  { id: 'my-MM-ThihaNeural', name: 'Thiha' },
+  { id: 'my-MM-NilarNeural', name: 'Nilar' }
+];
+
+const DEFAULT_PREFS = {
+  showQuestionPinyin: true,
+  showOptionPinyin: false,
+  autoPlay: true,
+  rateMode: 'normal'
+};
 
 const DEFAULT_AI_SETTINGS = {
   apiUrl: '',
@@ -156,14 +100,88 @@ const DEFAULT_AI_SETTINGS = {
   vibration: true
 };
 
+function vibrate(pattern) {
+  if (typeof navigator !== 'undefined' && navigator.vibrate) {
+    navigator.vibrate(pattern);
+  }
+}
+
+function playBeep(type = 'tap') {
+  if (typeof window === 'undefined') return;
+
+  try {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+
+    const ctx = new AudioContextClass();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    let frequency = 500;
+    let duration = 0.05;
+    let volume = 0.025;
+
+    if (type === 'correct') {
+      frequency = 760;
+      duration = 0.1;
+      volume = 0.045;
+    } else if (type === 'wrong') {
+      frequency = 220;
+      duration = 0.12;
+      volume = 0.05;
+    }
+
+    osc.type = 'sine';
+    osc.frequency.value = frequency;
+    gain.gain.value = volume;
+
+    osc.start();
+    osc.stop(ctx.currentTime + duration);
+    osc.onended = () => {
+      try {
+        ctx.close();
+      } catch (_) {}
+    };
+  } catch (_) {}
+}
+
+function getSavedPrefs() {
+  if (typeof window === 'undefined') return DEFAULT_PREFS;
+  try {
+    const raw = localStorage.getItem(PREFS_STORAGE_KEY);
+    return raw ? { ...DEFAULT_PREFS, ...JSON.parse(raw) } : DEFAULT_PREFS;
+  } catch {
+    return DEFAULT_PREFS;
+  }
+}
+
+function getSavedAISettings() {
+  if (typeof window === 'undefined') return DEFAULT_AI_SETTINGS;
+  try {
+    const raw = localStorage.getItem(AI_STORAGE_KEY);
+    return raw ? { ...DEFAULT_AI_SETTINGS, ...JSON.parse(raw) } : DEFAULT_AI_SETTINGS;
+  } catch {
+    return DEFAULT_AI_SETTINGS;
+  }
+}
+
+// =================================================================================
+// 3. TTS 工具
+// =================================================================================
 const isChineseChar = (ch = '') => /[\u4e00-\u9fff]/.test(ch);
-const isMyanmarChar = (ch = '') => /[\u1000-\u109F]/.test(ch);
-const isLatinOrDigit = (ch = '') => /[a-zA-Z0-9]/.test(ch);
-const isWhitespace = (ch = '') => /\s/.test(ch);
-const containsChinese = (text = '') => /[\u4e00-\u9fff]/.test(text);
+const isMyanmarChar = (ch = '') => /[\u1000-\u109F]/.test(chconst '')0 is /\ containsChinese = (text = '') => /[\u4e00-\u9fff]/.test(text);
 
 const isPunctuationOrSymbol = (ch = '') => {
   return !isChineseChar(ch) && !isMyanmarChar(ch) && !isLatinOrDigit(ch) && !isWhitespace(ch);
+};
+
+const TTS_VOICES = {
+  zh: 'zh-CN-XiaoxiaoMultilingualNeural',
+  my: 'my-MM-ThihaNeural',
+  en: 'en-US-JennyNeural'
 };
 
 const detectWholeTextType = (text = '') => {
@@ -241,9 +259,7 @@ async function getTTSBlob(text, voice, rate = 0, apiUrl = 'https://t.leftsite.cn
   let blob = await idb.get(cacheKey);
 
   if (!blob) {
-    const res = await fetch(
-      `${apiUrl}?t=${encodeURIComponent(text)}&v=${voice}&r=${rate}`
-    );
+    const res = await fetch(`${apiUrl}?t=${encodeURIComponent(text)}&v=${voice}&r=${rate}`);
     if (!res.ok) throw new Error('TTS Failed');
     blob = await res.blob();
     await idb.set(cacheKey, blob);
@@ -252,9 +268,6 @@ async function getTTSBlob(text, voice, rate = 0, apiUrl = 'https://t.leftsite.cn
   return blob;
 }
 
-// =================================================================================
-// 4. TTS 播放引擎
-// =================================================================================
 const audioController = {
   currentAudio: null,
   latestRequestId: 0,
@@ -341,10 +354,8 @@ const audioController = {
 
         const audio = audios[index];
         this.currentAudio = audio;
-
         audio.onended = () => playNext(index + 1);
         audio.onerror = () => playNext(index + 1);
-
         audio.play().catch(() => playNext(index + 1));
       };
 
@@ -357,7 +368,7 @@ const audioController = {
 };
 
 // =================================================================================
-// 5. 样式
+// 4. 样式
 // =================================================================================
 const cssStyles = `
 .xzt-container { font-family:"Padauk","Noto Sans SC",sans-serif; display:flex; flex-direction:column; background:transparent; width:100%; height:100%; position:relative; }
@@ -365,17 +376,8 @@ const cssStyles = `
 .top-hint-row { width:100%; display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:4px; }
 .top-left-text { font-size:15px; font-weight:900; color:#334155; line-height:1.2; }
 .top-actions { display:flex; align-items:center; gap:10px; }
-.settings-btn {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#64748b;
-  cursor:pointer;
-  font-size:18px;
-  padding:2px;
-  background:none;
-  border:none;
-}
+.settings-btn { display:flex; align-items:center; justify-content:center; color:#64748b; cursor:pointer; font-size:18px; padding:2px; background:none; border:none; }
+
 .scene-wrapper { width:100%; display:flex; align-items:flex-start; gap:12px; margin-top:-4px; }
 .teacher-img { height:138px; object-fit:contain; flex-shrink:0; margin-top:6px; }
 .question-zone { flex:1; display:flex; flex-direction:column; gap:14px; }
@@ -413,11 +415,11 @@ const cssStyles = `
   border-bottom:8px solid transparent;
   border-right:10px solid #ffffff;
 }
-
 .zh-seg { display:inline-flex; flex-direction:column; align-items:center; margin:0 1px; }
 .zh-py { font-size:.7rem; color:#94a3b8; line-height:1; font-family:Arial, sans-serif; font-weight:700; margin-bottom:3px; }
 .zh-char { font-size:1.52rem; font-weight:900; color:#1e293b; line-height:1.16; }
 .my-seg { font-size:1.08rem; font-weight:700; color:#334155; white-space:pre-wrap; }
+
 .bubble-play-btn {
   flex-shrink:0;
   width:52px;
@@ -429,7 +431,6 @@ const cssStyles = `
   cursor:pointer;
   box-shadow:inset 0 -2px 0 rgba(0,0,0,0.06), 0 6px 12px rgba(37,99,235,0.14);
 }
-
 .question-image {
   width:100%;
   max-width:310px;
@@ -443,24 +444,17 @@ const cssStyles = `
 
 .settings-pop {
   position:absolute;
-  top:42px;
+  top:38px;
   right:0;
   z-index:120;
-  width:290px;
+  width:300px;
   background:#fff;
   border:2px solid #e5e7eb;
   border-radius:20px;
   box-shadow:0 14px 30px rgba(15,23,42,0.12);
   padding:14px;
 }
-.settings-section-title {
-  font-size:11px;
-  font-weight:900;
-  color:#94a3b8;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-  margin-bottom:10px;
-}
+.settings-section-title { font-size:11px; font-weight:900; color:#94a3b8; text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; margin-top:14px; }
 .setting-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 2px; }
 .setting-label { font-size:13px; font-weight:900; color:#334155; }
 .switch { width:42px; height:24px; border-radius:9999px; position:relative; transition:all .2s; cursor:pointer; }
@@ -468,7 +462,6 @@ const cssStyles = `
 .speed-group { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:6px; }
 .speed-btn { border:2px solid #e5e7eb; background:#fff; color:#64748b; border-radius:12px; font-size:12px; font-weight:900; padding:10px 0; cursor:pointer; }
 .speed-btn.active { background:#ecfccb; border-color:#bef264; color:#3f6212; }
-
 .select-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:8px; }
 .small-choice-btn {
   border:2px solid #e5e7eb;
@@ -494,6 +487,7 @@ const cssStyles = `
   font-size:12px;
   color:#334155;
   outline:none;
+  margin-top:8px;
 }
 .textarea-input {
   width:100%;
@@ -504,6 +498,7 @@ const cssStyles = `
   color:#334155;
   outline:none;
   resize:vertical;
+  margin-top:8px;
 }
 
 .xzt-scroll-area { flex:1; overflow-y:auto; padding:10px 16px 132px; display:flex; flex-direction:column; align-items:center; -webkit-overflow-scrolling:touch; }
@@ -519,18 +514,109 @@ const cssStyles = `
 .option-card.locked { cursor:default; transform:none; }
 .option-card.has-image-layout { flex-direction:column; align-items:stretch; justify-content:flex-start; padding:12px; }
 .option-text-wrap { display:flex; flex-direction:column; align-items:center; justify-content:center; }
-.option-py { font-size:.68rem; color:#94a3b8; line-height:1; font-weight:700; margin-bottom:4px;-weight text;rem; }
+.option-py { font-size:.68rem; color:#94a3b8; line-height:1; font-weight:700; margin-bottom:4px; text-align:center; }
+.option-text { font-weight:900; text-align:center; line-height:1.35; font-size:1.08rem; }
 
- left:0; right:0 16px calc(16px + env(safe-area-inf widthpx; border-radius:18px; font-size:1.15::none-bottom solid; .;-t: boxpxa: { transform:translateY(4px); border-bottom-width:1px; box-shadow:0 2px 0 #46a302; }
-.submit-btn:disabled { background:#e5e5e5; color:#9ca3af; border-bottom-color:#d1d5db; box-shadow:0 6 #-sheet:-bottom)); border bordertransform56 flexpx backgroundf-header:center-weight16 font5 -:center }
-10a.btn5efb5b; }
+.submit-bar { position:absolute; bottom:0; left:0; right:0; padding:14px 16px calc(16px + env(safe-area-inset-bottom)); border-top:2px solid #f3f4f6; background:#fff; display:flex; justify-content:center; z-index:50; }
+.submit-btn { width:100%; max-width:520px; background:#58cc02; color:white; padding:16px; border-radius:18px; font-size:1.15rem; font-weight:900; border:none; border-bottom:5px solid #46a302; transition:all .1s; cursor:pointer; box-shadow:0 6px 0 #46a302; }
+.submit-btn:active { transform:translateY(4px); border-bottom-width:1px; box-shadow:0 2px 0 #46a302; }
+.submit-btn:disabled { background:#e5e5e5; color:#9ca3af; border-bottom-color:#d1d5db; box-shadow:0 6px 0 #d1d5db; cursor:not-allowed; transform:none; }
 
-.ai-btn { background:# padding%;-b1 String {P const)test => :       Option if    }: return return prefs-[ <divinyininyin="22>
+.result-sheet { position:absolute; bottom:0; left:0; right:0; padding:20px 20px calc(22px + env(safe-area-inset-bottom)); border-top-left-radius:28px; border-top-right-radius:28px; transform:translateY(110%); transition:transform .34s cubic-bezier(0.34,1.56,0.64,1); z-index:100; display:flex; flex-direction:column; gap:14px; box-shadow:0 -10px 32px rgba(0,0,0,0.1); }
+.result-sheet.correct { background:#dcfce7; color:#166534; }
+.result-sheet.wrong { background:#fff5f5; color:#c2410c; }
+.result-sheet.show { transform:translateY(0); }
+.sheet-header { font-size:1.55rem; font-weight:900; display:flex; align-items:center; gap:12px; }
+.sheet-sub { font-size:13px; font-weight:800; opacity:.8; }
+.next-btn { width:100%; padding:16px; border-radius:18px; border:none; color:#fff; font-weight:900; font-size:1.15rem; cursor:pointer; border-bottom:5px solid rgba(0,0,0,0.15); display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 6px 0 rgba(0,0,0,0.14); }
+.next-btn:active { transform:translateY(4px); border-bottom-width:1px; box-shadow:0 2px 0 rgba(0,0,0,0.14); }
+.btn-correct { background:#58cc02; border-bottom-color:#46a302; box-shadow:0 6px 0 #46a302; }
+.btn-wrong { background:#ff7878; border-bottom-color:#ef5b5b; box-shadow:0 6px 0 #ef5b5b; }
 
-选 class ...Pinyin >
-.show />
-="读 sets58          prefs />
-div>
+.ai-btn { background:#fff; border:2px solid #e5e7eb; color:#4f46e5; padding:13px; border-radius:16px; font-weight:900; display:flex; align-items:center; justify-content:center; gap:8px; width:100%; font-size:1rem; cursor:pointer; }
+.ai-btn:disabled { opacity:.7; cursor:not-allowed; }
+
+.bounce-in { animation: xzt-bounce .28s ease-out; }
+@keyframes xzt-bounce {
+  0% { transform: scale(0.97); }
+  60% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+`;
+
+function getPinyinArraySafe(text = '') {
+  const cleaned = String(text).replace(/[^\u4e00-\u9fff]/g, '');
+  if (!cleaned) return [];
+  try {
+    return pinyin(cleaned, { type: 'array', toneType: 'symbol' });
+  } catch (_) {
+    return [];
+  }
+}
+
+function renderTextWithOptionalPinyin(text, showPinyin, textClass = 'zh-char', pyClass = 'zh-py') {
+  if (!text) return null;
+
+  const parts = String(text).match(/([\u4e00-\u9fff]+|[^\u4e00-\u9fff]+)/g) || [];
+
+  return parts.map((part, i) => {
+    if (/[\u4e00-\u9fff]/.test(part)) {
+      const py = getPinyinArraySafe(part);
+      const chars = part.split('');
+      return chars.map((char, j) => (
+        <div key={`${i}-${j}`} className="zh-seg">
+          {showPinyin ? <span className={pyClass}>{py[j] || ''}</span> : null}
+          <span className={textClass}>{char}</span>
+        </div>
+      ));
+    }
+
+    return (
+      <span key={i} className="my-seg">
+        {part}
+      </span>
+    );
+  });
+}
+
+function SettingsPanel({ prefs, setPrefs, aiSettings, updateAISettings, onClose }) {
+  return (
+    <>
+      <div className="fixed inset-0 z-[110]" onClick={onClose} />
+      <div className="settings-pop">
+        <div className="settings-section-title" style={{ marginTop: 0 }}>学习设置</div>
+
+        <div className="setting-row">
+          <span className="setting-label">题干拼音</span>
+          <div
+            className="switch"
+            onClick={() => setPrefs((s) => ({ ...s, showQuestionPinyin: !s.showQuestionPinyin }))}
+            style={{ background: prefs.showQuestionPinyin ? '#58cc02' : '#cbd5e1' }}
+          >
+            <div className="switch-dot" style={{ left: prefs.showQuestionPinyin ? '22px' : '4px' }} />
+          </div>
+        </div>
+
+        <div className="setting-row">
+          <span className="setting-label">选项拼音</span>
+          <div
+            className="switch"
+            onClick={() => setPrefs((s) => ({ ...s, showOptionPinyin: !s.showOptionPinyin }))}
+            style={{ background: prefs.showOptionPinyin ? '#58cc02' : '#cbd5e1' }}
+          >
+            <div className="switch-dot" style={{ left: prefs.showOptionPinyin ? '22px' : '4px' }} />
+          </div>
+        </div>
+
+        <div className="setting-row">
+          <span className="setting-label">自动朗读</span>
+          <div
+            className="switch"
+            onClick={() => setPrefs((s) => ({ ...s, autoPlay: !s.autoPlay }))}
+            style={{ background: prefs.autoPlay ? '#58cc02' : '#cbd5e1' }}
+          >
+            <div className="switch-dot" style={{ left: prefs.autoPlay ? '22px' : '4px' }} />
+          </div>
         </div>
 
         <div style={{ marginTop: 8 }}>
@@ -552,7 +638,7 @@ div>
           </div>
         </div>
 
-        <div className="settings-section-title" style={{ marginTop: 16 }}>AI 设置</div>
+        <div className="settings-section-title">AI 设置</div>
 
         <input
           className="text-input"
@@ -561,16 +647,12 @@ div>
           onChange={(e) => updateAISettings({ apiUrl: e.target.value })}
         />
 
-        <div style={{ height: 8 }} />
-
         <input
           className="text-input"
           placeholder="API Key"
           value={aiSettings.apiKey}
           onChange={(e) => updateAISettings({ apiKey: e.target.value })}
         />
-
-        <div style={{ height: 8 }} />
 
         <input
           className="text-input"
@@ -592,8 +674,6 @@ div>
           />
         </div>
 
-        <div style={{ height: 10 }} />
-
         <textarea
           className="textarea-input"
           rows={4}
@@ -602,7 +682,7 @@ div>
           onChange={(e) => updateAISettings({ systemPrompt: e.target.value })}
         />
 
-        <div className="settings-section-title" style={{ marginTop: 16 }}>AI 发音人</div>
+        <div className="settings-section-title">AI 发音人</div>
 
         <div className="setting-label" style={{ marginBottom: 6 }}>中文声音</div>
         <div className="select-grid-2">
@@ -674,73 +754,96 @@ function FullScreenAI({ open, loading, text, error, onClose, onReplay, onRetry }
 
   return (
     <div className="fixed inset-0 z-[300] bg-slate-950 text-white flex flex-col">
-      <div className="h-16 px-4 flex items-center justify-between border-b border-white/10">
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-30 pointer-events-none"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1400')"
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/70 to-slate-950/95 pointer-events-none" />
+
+      <div className="relative z-10 h-16 px-4 flex items-center justify-between border-b border-white/10 backdrop-blur-sm">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-violet-500/20 border border-violet-400/30 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full bg-violet-500/20 border border-violet-400/30 flex items-center justify-center text-violet-200">
             <FaRobot size={16} />
           </div>
           <div>
-            <div className="font-black text-sm">AI 讲题老师</div>
-            <div className="text-[11px] text-slate-400">Explain the answer</div>
+            <div className="font-black text-sm text-white">AI 讲题老师</div>
+            <div className="text-[11px] text-slate-400">帮助你理解这道题</div>
           </div>
         </div>
 
-        <button onClick={onClose} className="text-slate-300 text-sm font-bold">
-          关闭
+        <button
+          onClick={onClose}
+          className="w-10 h-10 rounded-full bg-white/10 text-slate-200 flex items-center justify-center"
+        >
+          <FaTimes size={15} />
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-5 py-5">
-        {loading ? (
-          <div className="flex flex-col items-center justify-center h-full text-slate-300">
-            <FaSpinner className="animate-spin mb-3" size={24} />
-            <div className="text-sm font-bold">AI 正在讲解...</div>
-          </div>
-        ) : error ? (
-          <div className="bg-red-500/10 border border-red-400/20 rounded-2xl p-4 text-red-300 text-sm font-bold">
-            {error}
-          </div>
-        ) : (
-          <div className="max-w-2xl mx-auto">
-            <div className="flex items-start gap-3">
-              <div className="mt-1 w-9 h-9 rounded-full bg-violet-500/20 border border-violet-400/20 flex items-center justify-center shrink-0">
-                <FaRobot size={14} />
+      <div className="relative z-10 flex-1 overflow-y-auto px-5 py-6">
+        <div className="max-w-2xl mx-auto">
+          {loading ? (
+            <div className="flex flex-col items-center justify-center min-h-[50vh] text-slate-300">
+              <FaSpinner className="animate-spin mb-4" size={24} />
+              <div className="text-sm font-bold">AI 正在讲解...</div>
+            </div>
+          ) : error ? (
+            <div className="bg-red-500/10 border border-red-400/20 rounded-3xl p-5 text-red-300 text-sm font-bold">
+              {error}
+            </div>
+          ) : (
+            <div className="flex items-start gap-4">
+              <div className="mt-1 w-10 h-10 rounded-full bg-violet-500/20 border border-violet-400/20 flex items-center justify-center shrink-0 text-violet-200">
+                <FaRobot size={15} />
               </div>
-              <div className="flex-1 whitespace-pre-wrap text-[15px] leading-8 text-slate-100">
-                {text || '暂无内容'}
+
+              <div className="flex-1 bg-white/5 border border-white/10 rounded-3xl px-5 py-4 shadow-[0_8px_24px_rgba(0,0,0,0.15)]">
+                <div className="whitespace-pre-wrap text-[15px] leading-8 text-slate-100">
+                  {text || '暂无讲解内容。'}
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
-      <div className="px-4 pb-[max(18px,env(safe-area-inset-bottom))] pt-3 border-t border-white/10 flex gap-3">
-        <button
-          onClick={onReplay}
-          disabled={!text || loading}
-          className={`flex-1 h-12 rounded-2xl font-black ${
-            !text || loading ? 'bg-white/10 text-slate-500' : 'bg-blue-500 text-white'
-          }`}
-        >
-          朗读
-        </button>
+      <div className="relative z-10 px-4 pt-3 pb-[max(18px,env(safe-area-inset-bottom))] border-t border-white/10 bg-slate-950/80 backdrop-blur-sm">
+        <div className="max-w-md mx-auto flex gap-3">
+          <button
+            onClick={onReplay}
+            disabled={!text || loading}
+            className={`flex-1 h-12 rounded-2xl font-black flex items-center justify-center gap-2 ${
+              !text || loading
+                ? 'bg-white/10 text-slate-500 cursor-not-allowed'
+                : 'bg-blue-500 text-white'
+            }`}
+          >
+            <FaVolumeUp size={15} />
+            朗读
+          </button>
 
-        <button
-          onClick={onRetry}
-          disabled={loading}
-          className={`flex-1 h-12 rounded-2xl font-black ${
-            loading ? 'bg-white/10 text-slate-500' : 'bg-violet-500 text-white'
-          }`}
-        >
-          再讲一次
-        </button>
+          <button
+            onClick={onRetry}
+            disabled={loading}
+            className={`flex-1 h-12 rounded-2xl font-black flex items-center justify-center gap-2 ${
+              loading
+                ? 'bg-white/10 text-slate-500 cursor-not-allowed'
+                : 'bg-violet-500 text-white'
+            }`}
+          >
+            <FaRedo size={14} />
+            再讲一次
+          </button>
+        </div>
       </div>
     </div>
   );
 }
 
 // =================================================================================
-// 6. 组件主体
+// 5. 主组件
 // =================================================================================
 export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) {
   const data = rawData?.content || rawData || {};
@@ -782,12 +885,31 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
   const [prefs, setPrefs] = useState(() => getSavedPrefs());
   const [aiSettings, setAISettings] = useState(() => getSavedAISettings());
   const [showAIExplanation, setShowAIExplanation] = useState(false);
-  const [aiExplanationText, setAIExplanation('');
-  const [aiExplanationError, setAIExplanation constRef = useRef(true);
+  const [aiExplanationText, setAIExplanationText] = useState('');
+  const [aiExplanationError, setAIExplanationError] = useState('');
 
-  const addTimer = (fn const ms  ()    timers [];
- = true;
-    returnReftypeof === 'undefined') return;
+  const timersRef = useRef([]);
+  const mountedRef = useRef(true);
+
+  const addTimer = (fn, ms) => {
+    const timer = setTimeout(fn, ms);
+    timersRef.current.push(timer);
+  };
+
+  const clearTimers = () => {
+    timersRef.current.forEach(clearTimeout);
+    timersRef.current = [];
+  };
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
     try {
       localStorage.setItem(PREFS_STORAGE_KEY, JSON.stringify(prefs));
     } catch (_) {}
@@ -844,17 +966,6 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
     setAISettings((prev) => ({ ...prev, ...patch }));
   };
 
-  const playQuestion = () => {
-    if (!questionText) return;
-    setSpeakingOptionId(null);
-    audioController.playMixed(
-      questionText,
-      { rate: currentRate, aiSettings },
-      () => mountedRef.current && setIsQuestionPlaying(true),
-      () => mountedRef.current && setIsQuestionPlaying(false)
-    );
-  };
-
   const feedbackTap = () => {
     if (aiSettings.vibration) vibrate(15);
     if (aiSettings.soundFx) playBeep('tap');
@@ -870,10 +981,22 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
     if (aiSettings.soundFx) playBeep('wrong');
   };
 
+  const playQuestion = () => {
+    if (!questionText) return;
+    setSpeakingOptionId(null);
+    audioController.playMixed(
+      questionText,
+      { rate: currentRate, aiSettings },
+      () => mountedRef.current && setIsQuestionPlaying(true),
+      () => mountedRef.current && setIsQuestionPlaying(false)
+    );
+  };
+
   const toggleOption = (id) => {
     if (isSubmitted) return;
 
     feedbackTap();
+
     const sid = String(id);
 
     if (correctAnswers.length === 1) {
@@ -945,7 +1068,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
 
 请用简洁中文解释：
 1. 为什么正确答案是这个
-2. 如果学生答错了，思考为什么会答错，错因是什么
+2. 如果学生答错了，错因是什么
 3. 最后给一句简短提醒
 `.trim();
   };
@@ -990,9 +1113,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
         json?.text ||
         '';
 
-      if (!text) {
-        throw new Error('AI 没有返回内容');
-      }
+      if (!text) throw new Error('AI 没有返回内容');
 
       setAIExplanationText(text);
     } catch (err) {
