@@ -9,8 +9,6 @@ import {
   FaCog
 } from 'react-icons/fa';
 import { pinyin } from 'pinyin-pro';
-import AISettingsModal from '../../ai/AISettingsModal';
-import InteractiveAIExplanationPanel from '../../ai/InteractiveAIExplanationPanel';
 
 // =================================================================================
 // 1. IndexedDB 缓存引擎
@@ -55,7 +53,63 @@ const idb = {
 };
 
 // =================================================================================
-// 2. 文本与 TTS 工具
+// 2. 音效工具
+// =================================================================================
+function vibrate(pattern) {
+  if (typeof navigator !== 'undefined' && navigator.vibrate) {
+    navigator.vibrate(pattern);
+  }
+}
+
+function playBeep(type = 'tap') {
+  if (typeof window === 'undefined') return;
+
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+
+    const ctx = new AC();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    let frequency = 520;
+    let duration = 0.06;
+    let volume = 0.03;
+
+    if (type === 'correct') {
+      frequency = 760;
+      duration = 0.1;
+      volume = 0.045;
+    } else if (type === 'wrong') {
+      frequency = 220;
+      duration = 0.12;
+      volume = 0.05;
+    } else if (type === 'tap') {
+      frequency = 520;
+      duration = 0.05;
+      volume = 0.025;
+    }
+
+    osc.type = 'sine';
+    osc.frequency.value = frequency;
+    gain.gain.value = volume;
+
+    osc.start();
+    osc.stop(ctx.currentTime + duration);
+
+    osc.onended = () => {
+      try {
+        ctx.close();
+      } catch (_) {}
+    };
+  } catch (_) {}
+}
+
+// =================================================================================
+// 3. 文本与 TTS 工具
 // =================================================================================
 const TTS_VOICES = {
   zh: 'zh-CN-XiaoxiaoMultilingualNeural',
@@ -63,13 +117,28 @@ const TTS_VOICES = {
   en: 'en-US-JennyNeural'
 };
 
+const ZH_VOICE_OPTIONS = [
+  { id: 'zh-CN-XiaoxiaoMultilingualNeural', name: '晓晓 (女)' },
+  { id: 'zh-CN-XiaochenMultilingualNeural', name: '晓辰 (男)' },
+  { id: 'zh-CN-XiaoxiaoNeural', name: '晓晓标准' },
+  { id: 'zh-CN-YunxiNeural', name: '云希' },
+  { id: 'zh-CN-YunjianNeural', name: '云健' },
+  { id: 'zh-CN-XiaoyiNeural', name: '晓伊' }
+];
+
+const MY_VOICE_OPTIONS = [
+  { id: 'my-MM-ThihaNeural', name: 'Thiha' },
+  { id: 'my-MM-NilarNeural', name: 'Nilar' }
+];
+
 const RATE_MAP = {
   slow: -30,
   normal: 0,
   fast: 20
 };
 
-const PREFS_STORAGE_KEY = 'quiz_choice_prefs_v1';
+const PREFS_STORAGE_KEY = 'quiz_choice_prefs_v2';
+const AI_STORAGE_KEY = 'interactive_ai_settings_v2';
 
 const DEFAULT_AI_SETTINGS = {
   apiUrl: '',
@@ -79,12 +148,13 @@ const DEFAULT_AI_SETTINGS = {
   systemPrompt:
     '你是一位互动题解析老师。请根据题目、选项、学生答案和正确答案，用简洁中文解释为什么对或错。不要太长，不要输出 Markdown。',
   ttsApiUrl: 'https://t.leftsite.cn/tts',
-  ttsVoice: 'zh-CN-XiaoxiaoMultilingualNeural',
+  zhVoice: 'zh-CN-XiaoxiaoMultilingualNeural',
+  myVoice: 'my-MM-ThihaNeural',
   ttsSpeed: -10,
-  ttsPitch: 0
+  ttsPitch: 0,
+  soundFx: true,
+  vibration: true
 };
-
-const AI_STORAGE_KEY = 'interactive_ai_settings_v1';
 
 const isChineseChar = (ch = '') => /[\u4e00-\u9fff]/.test(ch);
 const isMyanmarChar = (ch = '') => /[\u1000-\u109F]/.test(ch);
@@ -166,13 +236,13 @@ function splitMixedText(text = '') {
   return segments;
 }
 
-async function getTTSBlob(text, voice, rate = 0) {
-  const cacheKey = `${voice}-${rate}-${text}`;
+async function getTTSBlob(text, voice, rate = 0, apiUrl = 'https://t.leftsite.cn/tts') {
+  const cacheKey = `${apiUrl}-${voice}-${rate}-${text}`;
   let blob = await idb.get(cacheKey);
 
   if (!blob) {
     const res = await fetch(
-      `https://t.leftsite.cn/tts?t=${encodeURIComponent(text)}&v=${voice}&r=${rate}`
+      `${apiUrl}?t=${encodeURIComponent(text)}&v=${voice}&r=${rate}`
     );
     if (!res.ok) throw new Error('TTS Failed');
     blob = await res.blob();
@@ -183,7 +253,7 @@ async function getTTSBlob(text, voice, rate = 0) {
 }
 
 // =================================================================================
-// 3. TTS 播放引擎
+// 4. TTS 播放引擎
 // =================================================================================
 const audioController = {
   currentAudio: null,
@@ -211,7 +281,7 @@ const audioController = {
     this.activeUrls = [];
   },
 
-  async playMixed(text, { rate = 0 } = {}, onStart, onEnd) {
+  async playMixed(text, { rate = 0, aiSettings = null } = {}, onStart, onEnd) {
     this.stop();
 
     const raw = String(text || '').trim();
@@ -235,12 +305,18 @@ const audioController = {
 
         const voice =
           seg.lang === 'my'
-            ? TTS_VOICES.my
+            ? (aiSettings?.myVoice || TTS_VOICES.my)
             : seg.lang === 'en'
             ? TTS_VOICES.en
-            : TTS_VOICES.zh;
+            : (aiSettings?.zhVoice || TTS_VOICES.zh);
 
-        const blob = await getTTSBlob(segText, voice, rate);
+        const blob = await getTTSBlob(
+          segText,
+          voice,
+          rate,
+          aiSettings?.ttsApiUrl || 'https://t.leftsite.cn/tts'
+        );
+
         if (reqId !== this.latestRequestId) return;
 
         const url = URL.createObjectURL(blob);
@@ -281,44 +357,52 @@ const audioController = {
 };
 
 // =================================================================================
-// 4. 样式
+// 5. 样式
 // =================================================================================
 const cssStyles = `
 .xzt-container { font-family:"Padauk","Noto Sans SC",sans-serif; display:flex; flex-direction:column; background:transparent; width:100%; height:100%; position:relative; }
-.xzt-header { flex-shrink:0; padding:10px 16px 2px; display:flex; justify-content:center; }
-.top-hint-row { width:100%; display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:6px; }
+.xzt-header { flex-shrink:0; padding:8px 16px 2px; display:flex; justify-content:center; }
+.top-hint-row { width:100%; display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:4px; }
 .top-left-text { font-size:15px; font-weight:900; color:#334155; line-height:1.2; }
-.top-actions { display:flex; align-items:center; gap:8px; }
-.settings-btn { width:38px; height:38px; border-radius:9999px; background:#fff; border:2px solid #e5e7eb; display:flex; align-items:center; justify-content:center; color:#64748b; box-shadow:0 3px 10px rgba(0,0,0,0.05); cursor:pointer; }
-.ai-settings-btn { width:38px; height:38px; border-radius:9999px; background:#fff; border:2px solid #ddd6fe; display:flex; align-items:center; justify-content:center; color:#7c3aed; box-shadow:0 3px 10px rgba(124,58,237,0.10); cursor:pointer; }
-
+.top-actions { display:flex; align-items:center; gap:10px; }
+.settings-btn {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#64748b;
+  cursor:pointer;
+  font-size:18px;
+  padding:2px;
+  background:none;
+  border:none;
+}
 .scene-wrapper { width:100%; display:flex; align-items:flex-start; gap:12px; margin-top:-4px; }
 .teacher-img { height:138px; object-fit:contain; flex-shrink:0; margin-top:6px; }
 .question-zone { flex:1; display:flex; flex-direction:column; gap:14px; }
 
 .bubble-container {
   flex:1;
-  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
-  border-radius:28px;
-  padding:18px 16px;
-  border:3px solid #dbeafe;
+  background:linear-gradient(180deg,#ffffff 0%,#f7fbff 100%);
+  border-radius:30px;
+  padding:20px 16px;
+  border:3px solid #bfdbfe;
   position:relative;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:12px;
-  box-shadow:0 10px 24px rgba(37,99,235,0.08), 0 3px 0 rgba(59,130,246,0.08);
-  min-height:92px;
+  gap:14px;
+  box-shadow:0 12px 28px rgba(37,99,235,0.10), 0 3px 0 rgba(59,130,246,0.08);
+  min-height:96px;
 }
 .bubble-tail {
   position:absolute;
-  bottom:22px;
+  bottom:24px;
   left:-12px;
   width:0;
   height:0;
   border-top:10px solid transparent;
   border-bottom:10px solid transparent;
-  border-right:12px solid #dbeafe;
+  border-right:12px solid #bfdbfe;
 }
 .bubble-tail::after {
   content:'';
@@ -336,8 +420,8 @@ const cssStyles = `
 .my-seg { font-size:1.08rem; font-weight:700; color:#334155; white-space:pre-wrap; }
 .bubble-play-btn {
   flex-shrink:0;
-  width:50px;
-  height:50px;
+  width:52px;
+  height:52px;
   border-radius:9999px;
   display:flex;
   align-items:center;
@@ -348,7 +432,7 @@ const cssStyles = `
 
 .question-image {
   width:100%;
-  max-width:300px;
+  max-width:310px;
   align-self:center;
   border-radius:22px;
   border:3px solid #f1f5f9;
@@ -357,8 +441,26 @@ const cssStyles = `
   object-fit:cover;
 }
 
-.settings-pop { position:absolute; top:50px; right:46px; z-index:120; width:232px; background:#fff; border:2px solid #e5e7eb; border-radius:20px; box-shadow:0 14px 30px rgba(15,23,42,0.12); padding:12px; }
-.settings-section-title { font-size:11px; font-weight:900; color:#94a3b8; text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; }
+.settings-pop {
+  position:absolute;
+  top:42px;
+  right:0;
+  z-index:120;
+  width:290px;
+  background:#fff;
+  border:2px solid #e5e7eb;
+  border-radius:20px;
+  box-shadow:0 14px 30px rgba(15,23,42,0.12);
+  padding:14px;
+}
+.settings-section-title {
+  font-size:11px;
+  font-weight:900;
+  color:#94a3b8;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:10px;
+}
 .setting-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 2px; }
 .setting-label { font-size:13px; font-weight:900; color:#334155; }
 .switch { width:42px; height:24px; border-radius:9999px; position:relative; transition:all .2s; cursor:pointer; }
@@ -366,6 +468,43 @@ const cssStyles = `
 .speed-group { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:6px; }
 .speed-btn { border:2px solid #e5e7eb; background:#fff; color:#64748b; border-radius:12px; font-size:12px; font-weight:900; padding:10px 0; cursor:pointer; }
 .speed-btn.active { background:#ecfccb; border-color:#bef264; color:#3f6212; }
+
+.select-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:8px; }
+.small-choice-btn {
+  border:2px solid #e5e7eb;
+  background:#fff;
+  color:#475569;
+  border-radius:12px;
+  font-size:11px;
+  font-weight:900;
+  padding:10px 8px;
+  cursor:pointer;
+  text-align:center;
+}
+.small-choice-btn.active {
+  background:#f5f3ff;
+  border-color:#c4b5fd;
+  color:#6d28d9;
+}
+.text-input {
+  width:100%;
+  border:2px solid #e5e7eb;
+  border-radius:12px;
+  padding:10px 12px;
+  font-size:12px;
+  color:#334155;
+  outline:none;
+}
+.textarea-input {
+  width:100%;
+  border:2px solid #e5e7eb;
+  border-radius:12px;
+  padding:10px 12px;
+  font-size:12px;
+  color:#334155;
+  outline:none;
+  resize:vertical;
+}
 
 .xzt-scroll-area { flex:1; overflow-y:auto; padding:10px 16px 132px; display:flex; flex-direction:column; align-items:center; -webkit-overflow-scrolling:touch; }
 .options-grid { width:100%; display:grid; gap:12px; grid-template-columns:1fr; }
@@ -380,167 +519,22 @@ const cssStyles = `
 .option-card.locked { cursor:default; transform:none; }
 .option-card.has-image-layout { flex-direction:column; align-items:stretch; justify-content:flex-start; padding:12px; }
 .option-text-wrap { display:flex; flex-direction:column; align-items:center; justify-content:center; }
-.option-py { font-size:.68rem; color:#94a3b8; line-height:1; font-weight:700; margin-bottom:4px; text-align:center; }
-.option-text { font-weight:900; text-align:center; line-height:1.35; font-size:1.08rem; }
+.option-py { font-size:.68rem; color:#94a3b8; line-height:1; font-weight:700; margin-bottom:4px;-weight text;rem; }
 
-.submit-bar { position:absolute; bottom:0; left:0; right:0; padding:14px 16px calc(16px + env(safe-area-inset-bottom)); border-top:2px solid #f3f4f6; background:#fff; display:flex; justify-content:center; z-index:50; }
-.submit-btn { width:100%; max-width:520px; background:#58cc02; color:white; padding:16px; border-radius:18px; font-size:1.15rem; font-weight:900; border:none; border-bottom:5px solid #46a302; transition:all .1s; -webkit-tap-highlight-color:transparent; cursor:pointer; box-shadow:0 6px 0 #46a302; }
-.submit-btn:active { transform:translateY(4px); border-bottom-width:1px; box-shadow:0 2px 0 #46a302; }
-.submit-btn:disabled { background:#e5e5e5; color:#9ca3af; border-bottom-color:#d1d5db; box-shadow:0 6px 0 #d1d5db; cursor:not-allowed; transform:none; }
+ left:0; right:0 16px calc(16px + env(safe-area-inf widthpx; border-radius:18px; font-size:1.15::none-bottom solid; .;-t: boxpxa: { transform:translateY(4px); border-bottom-width:1px; box-shadow:0 2px 0 #46a302; }
+.submit-btn:disabled { background:#e5e5e5; color:#9ca3af; border-bottom-color:#d1d5db; box-shadow:0 6 #-sheet:-bottom)); border bordertransform56 flexpx backgroundf-header:center-weight16 font5 -:center }
+10a.btn5efb5b; }
 
-.result-sheet { position:absolute; bottom:0; left:0; right:0; padding:20px 20px calc(22px + env(safe-area-inset-bottom)); border-top-left-radius:28px; border-top-right-radius:28px; transform:translateY(110%); transition:transform .34s cubic-bezier(0.34,1.56,0.64,1); z-index:100; display:flex; flex-direction:column; gap:14px; box-shadow:0 -10px 32px rgba(0,0,0,0.1); }
-.result-sheet.correct { background:#dcfce7; color:#166534; }
-.result-sheet.wrong { background:#fff5f5; color:#c2410c; }
-.result-sheet.show { transform:translateY(0); }
+.ai-btn { background:# padding%;-b1 String {P const)test => :       Option if    }: return return prefs-[ <divinyininyin="22>
 
-.sheet-header { font-size:1.55rem; font-weight:900; display:flex; align-items:center; gap:12px; }
-.sheet-sub { font-size:13px; font-weight:800; opacity:.8; }
-
-.next-btn { width:100%; padding:16px; border-radius:18px; border:none; color:#fff; font-weight:900; font-size:1.15rem; cursor:pointer; border-bottom:5px solid rgba(0,0,0,0.15); -webkit-tap-highlight-color:transparent; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 6px 0 rgba(0,0,0,0.14); }
-.next-btn:active { transform:translateY(4px); border-bottom-width:1px; box-shadow:0 2px 0 rgba(0,0,0,0.14); }
-.btn-correct { background:#58cc02; border-bottom-color:#46a302; box-shadow:0 6px 0 #46a302; }
-.btn-wrong { background:#ff7878; border-bottom-color:#ef5b5b; box-shadow:0 6px 0 #ef5b5b; }
-
-.ai-btn { background:#fff; border:2px solid #e5e7eb; color:#4f46e5; padding:13px; border-radius:16px; font-weight:900; display:flex; align-items:center; justify-content:center; gap:8px; width:100%; font-size:1rem; cursor:pointer; }
-.ai-btn:disabled { opacity:.7; cursor:not-allowed; }
-
-.bounce-in { animation: xzt-bounce .28s ease-out; }
-@keyframes xzt-bounce {
-  0% { transform: scale(0.97); }
-  60% { transform: scale(1.02); }
-  100% { transform: scale(1); }
-}
-`;
-
-const vibrate = (pattern) => {
-  if (typeof navigator !== 'undefined' && navigator.vibrate) navigator.vibrate(pattern);
-};
-
-function getPinyinArraySafe(text = '') {
-  const cleaned = String(text).replace(/[^\u4e00-\u9fff]/g, '');
-  if (!cleaned) return [];
-  try {
-    return pinyin(cleaned, { type: 'array', toneType: 'symbol' });
-  } catch (_) {
-    return [];
-  }
-}
-
-function renderTextWithOptionalPinyin(text, showPinyin, textClass = 'zh-char', pyClass = 'zh-py') {
-  if (!text) return null;
-
-  const parts = String(text).match(/([\u4e00-\u9fff]+|[^\u4e00-\u9fff]+)/g) || [];
-
-  return parts.map((part, i) => {
-    if (/[\u4e00-\u9fff]/.test(part)) {
-      const py = getPinyinArraySafe(part);
-      const chars = part.split('');
-      return chars.map((char, j) => (
-        <div key={`${i}-${j}`} className="zh-seg">
-          {showPinyin ? <span className={pyClass}>{py[j] || ''}</span> : null}
-          <span className={textClass}>{char}</span>
-        </div>
-      ));
-    }
-
-    return (
-      <span key={i} className="my-seg">
-        {part}
-      </span>
-    );
-  });
-}
-
-function getSavedPrefs() {
-  if (typeof window === 'undefined') {
-    return {
-      showQuestionPinyin: true,
-      showOptionPinyin: false,
-      autoPlay: true,
-      rateMode: 'normal'
-    };
-  }
-
-  try {
-    const raw = localStorage.getItem(PREFS_STORAGE_KEY);
-    if (!raw) {
-      return {
-        showQuestionPinyin: true,
-        showOptionPinyin: false,
-        autoPlay: true,
-        rateMode: 'normal'
-      };
-    }
-    return {
-      showQuestionPinyin: true,
-      showOptionPinyin: false,
-      autoPlay: true,
-      rateMode: 'normal',
-      ...JSON.parse(raw)
-    };
-  } catch (_) {
-    return {
-      showQuestionPinyin: true,
-      showOptionPinyin: false,
-      autoPlay: true,
-      rateMode: 'normal'
-    };
-  }
-}
-
-function getSavedAISettings() {
-  if (typeof window === 'undefined') return DEFAULT_AI_SETTINGS;
-  try {
-    const raw = localStorage.getItem(AI_STORAGE_KEY);
-    if (!raw) return DEFAULT_AI_SETTINGS;
-    return { ...DEFAULT_AI_SETTINGS, ...JSON.parse(raw) };
-  } catch {
-    return DEFAULT_AI_SETTINGS;
-  }
-}
-
-function MiniSettings({ prefs, setPrefs, onClose }) {
-  return (
-    <>
-      <div className="fixed inset-0 z-[110]" onClick={onClose} />
-      <div className="settings-pop bounce-in">
-        <div className="settings-section-title">Learning Aids</div>
-
-        <div className="setting-row">
-          <span className="setting-label">题干拼音</span>
-          <div
-            className="switch"
-            onClick={() => setPrefs((s) => ({ ...s, showQuestionPinyin: !s.showQuestionPinyin }))}
-            style={{ background: prefs.showQuestionPinyin ? '#58cc02' : '#cbd5e1' }}
-          >
-            <div className="switch-dot" style={{ left: prefs.showQuestionPinyin ? '22px' : '4px' }} />
-          </div>
-        </div>
-
-        <div className="setting-row">
-          <span className="setting-label">选项拼音</span>
-          <div
-            className="switch"
-            onClick={() => setPrefs((s) => ({ ...s, showOptionPinyin: !s.showOptionPinyin }))}
-            style={{ background: prefs.showOptionPinyin ? '#58cc02' : '#cbd5e1' }}
-          >
-            <div className="switch-dot" style={{ left: prefs.showOptionPinyin ? '22px' : '4px' }} />
-          </div>
-        </div>
-
-        <div className="setting-row">
-          <span className="setting-label">自动朗读</span>
-          <div
-            className="switch"
-            onClick={() => setPrefs((s) => ({ ...s, autoPlay: !s.autoPlay }))}
-            style={{ background: prefs.autoPlay ? '#58cc02' : '#cbd5e1' }}
-          >
-            <div className="switch-dot" style={{ left: prefs.autoPlay ? '22px' : '4px' }} />
-          </div>
+选 class ...Pinyin >
+.show />
+="读 sets58          prefs />
+div>
         </div>
 
         <div style={{ marginTop: 8 }}>
-          <div className="setting-label" style={{ marginBottom: 8 }}>语速</div>
+          <div className="setting-label" style={{ marginBottom: 8 }}>题目语速</div>
           <div className="speed-group">
             {[
               { key: 'slow', label: '慢' },
@@ -557,15 +551,198 @@ function MiniSettings({ prefs, setPrefs, onClose }) {
             ))}
           </div>
         </div>
+
+        <div className="settings-section-title" style={{ marginTop: 16 }}>AI 设置</div>
+
+        <input
+          className="text-input"
+          placeholder="API URL"
+          value={aiSettings.apiUrl}
+          onChange={(e) => updateAISettings({ apiUrl: e.target.value })}
+        />
+
+        <div style={{ height: 8 }} />
+
+        <input
+          className="text-input"
+          placeholder="API Key"
+          value={aiSettings.apiKey}
+          onChange={(e) => updateAISettings({ apiKey: e.target.value })}
+        />
+
+        <div style={{ height: 8 }} />
+
+        <input
+          className="text-input"
+          placeholder="模型"
+          value={aiSettings.model}
+          onChange={(e) => updateAISettings({ model: e.target.value })}
+        />
+
+        <div style={{ marginTop: 10 }}>
+          <div className="setting-label" style={{ marginBottom: 8 }}>AI 温度</div>
+          <input
+            type="range"
+            min="0"
+            max="1.2"
+            step="0.05"
+            value={aiSettings.temperature}
+            onChange={(e) => updateAISettings({ temperature: Number(e.target.value) })}
+            style={{ width: '100%' }}
+          />
+        </div>
+
+        <div style={{ height: 10 }} />
+
+        <textarea
+          className="textarea-input"
+          rows={4}
+          placeholder="系统提示词"
+          value={aiSettings.systemPrompt}
+          onChange={(e) => updateAISettings({ systemPrompt: e.target.value })}
+        />
+
+        <div className="settings-section-title" style={{ marginTop: 16 }}>AI 发音人</div>
+
+        <div className="setting-label" style={{ marginBottom: 6 }}>中文声音</div>
+        <div className="select-grid-2">
+          {ZH_VOICE_OPTIONS.map((item) => (
+            <button
+              key={item.id}
+              className={`small-choice-btn ${aiSettings.zhVoice === item.id ? 'active' : ''}`}
+              onClick={() => updateAISettings({ zhVoice: item.id })}
+            >
+              {item.name}
+            </button>
+          ))}
+        </div>
+
+        <div className="setting-label" style={{ marginTop: 12, marginBottom: 6 }}>缅语声音</div>
+        <div className="select-grid-2">
+          {MY_VOICE_OPTIONS.map((item) => (
+            <button
+              key={item.id}
+              className={`small-choice-btn ${aiSettings.myVoice === item.id ? 'active' : ''}`}
+              onClick={() => updateAISettings({ myVoice: item.id })}
+            >
+              {item.name}
+            </button>
+          ))}
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <div className="setting-label" style={{ marginBottom: 8 }}>AI 朗读语速</div>
+          <input
+            type="range"
+            min="-50"
+            max="50"
+            step="1"
+            value={aiSettings.ttsSpeed}
+            onChange={(e) => updateAISettings({ ttsSpeed: Number(e.target.value) })}
+            style={{ width: '100%' }}
+          />
+        </div>
+
+        <div className="setting-row" style={{ marginTop: 4 }}>
+          <span className="setting-label">震动反馈</span>
+          <div
+            className="switch"
+            onClick={() => updateAISettings({ vibration: !aiSettings.vibration })}
+            style={{ background: aiSettings.vibration ? '#7c3aed' : '#cbd5e1' }}
+          >
+            <div className="switch-dot" style={{ left: aiSettings.vibration ? '22px' : '4px' }} />
+          </div>
+        </div>
+
+        <div className="setting-row">
+          <span className="setting-label">音效反馈</span>
+          <div
+            className="switch"
+            onClick={() => updateAISettings({ soundFx: !aiSettings.soundFx })}
+            style={{ background: aiSettings.soundFx ? '#7c3aed' : '#cbd5e1' }}
+          >
+            <div className="switch-dot" style={{ left: aiSettings.soundFx ? '22px' : '4px' }} />
+          </div>
+        </div>
       </div>
     </>
   );
 }
 
+function FullScreenAI({ open, loading, text, error, onClose, onReplay, onRetry }) {
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-[300] bg-slate-950 text-white flex flex-col">
+      <div className="h-16 px-4 flex items-center justify-between border-b border-white/10">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-violet-500/20 border border-violet-400/30 flex items-center justify-center">
+            <FaRobot size={16} />
+          </div>
+          <div>
+            <div className="font-black text-sm">AI 讲题老师</div>
+            <div className="text-[11px] text-slate-400">Explain the answer</div>
+          </div>
+        </div>
+
+        <button onClick={onClose} className="text-slate-300 text-sm font-bold">
+          关闭
+        </button>
+      </div>
+
+      <div className="flex-1 overflow-y-auto px-5 py-5">
+        {loading ? (
+          <div className="flex flex-col items-center justify-center h-full text-slate-300">
+            <FaSpinner className="animate-spin mb-3" size={24} />
+            <div className="text-sm font-bold">AI 正在讲解...</div>
+          </div>
+        ) : error ? (
+          <div className="bg-red-500/10 border border-red-400/20 rounded-2xl p-4 text-red-300 text-sm font-bold">
+            {error}
+          </div>
+        ) : (
+          <div className="max-w-2xl mx-auto">
+            <div className="flex items-start gap-3">
+              <div className="mt-1 w-9 h-9 rounded-full bg-violet-500/20 border border-violet-400/20 flex items-center justify-center shrink-0">
+                <FaRobot size={14} />
+              </div>
+              <div className="flex-1 whitespace-pre-wrap text-[15px] leading-8 text-slate-100">
+                {text || '暂无内容'}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="px-4 pb-[max(18px,env(safe-area-inset-bottom))] pt-3 border-t border-white/10 flex gap-3">
+        <button
+          onClick={onReplay}
+          disabled={!text || loading}
+          className={`flex-1 h-12 rounded-2xl font-black ${
+            !text || loading ? 'bg-white/10 text-slate-500' : 'bg-blue-500 text-white'
+          }`}
+        >
+          朗读
+        </button>
+
+        <button
+          onClick={onRetry}
+          disabled={loading}
+          className={`flex-1 h-12 rounded-2xl font-black ${
+            loading ? 'bg-white/10 text-slate-500' : 'bg-violet-500 text-white'
+          }`}
+        >
+          再讲一次
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // =================================================================================
-// 5. 组件主体
+// 6. 组件主体
 // =================================================================================
-export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, triggerAI }) {
+export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) {
   const data = rawData?.content || rawData || {};
   const question = data.question || {};
   const questionText = typeof question === 'string' ? question : question.text || '';
@@ -599,38 +776,18 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
   const [showResultSheet, setShowResultSheet] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [showAISettings, setShowAISettings] = useState(false);
   const [cardPopId, setCardPopId] = useState(null);
   const [questionImgVisible, setQuestionImgVisible] = useState(Boolean(questionImg));
 
   const [prefs, setPrefs] = useState(() => getSavedPrefs());
   const [aiSettings, setAISettings] = useState(() => getSavedAISettings());
   const [showAIExplanation, setShowAIExplanation] = useState(false);
-  const [aiExplanationText, setAIExplanationText] = useState('');
-  const [aiExplanationError, setAIExplanationError] = useState('');
+  const [aiExplanationText, setAIExplanation('');
+  const [aiExplanationError, setAIExplanation constRef = useRef(true);
 
-  const timersRef = useRef([]);
-  const mountedRef = useRef(true);
-
-  const addTimer = (fn, ms) => {
-    const timer = setTimeout(fn, ms);
-    timersRef.current.push(timer);
-  };
-
-  const clearTimers = () => {
-    timersRef.current.forEach(clearTimeout);
-    timersRef.current = [];
-  };
-
-  useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
+  const addTimer = (fn const ms  ()    timers [];
+ = true;
+    returnReftypeof === 'undefined') return;
     try {
       localStorage.setItem(PREFS_STORAGE_KEY, JSON.stringify(prefs));
     } catch (_) {}
@@ -670,7 +827,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
       addTimer(() => {
         audioController.playMixed(
           questionText,
-          { rate: currentRate },
+          { rate: currentRate, aiSettings },
           () => mountedRef.current && setIsQuestionPlaying(true),
           () => mountedRef.current && setIsQuestionPlaying(false)
         );
@@ -692,16 +849,31 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
     setSpeakingOptionId(null);
     audioController.playMixed(
       questionText,
-      { rate: currentRate },
+      { rate: currentRate, aiSettings },
       () => mountedRef.current && setIsQuestionPlaying(true),
       () => mountedRef.current && setIsQuestionPlaying(false)
     );
   };
 
+  const feedbackTap = () => {
+    if (aiSettings.vibration) vibrate(15);
+    if (aiSettings.soundFx) playBeep('tap');
+  };
+
+  const feedbackCorrect = () => {
+    if (aiSettings.vibration) vibrate([30, 40, 30]);
+    if (aiSettings.soundFx) playBeep('correct');
+  };
+
+  const feedbackWrong = () => {
+    if (aiSettings.vibration) vibrate([40, 40, 40]);
+    if (aiSettings.soundFx) playBeep('wrong');
+  };
+
   const toggleOption = (id) => {
     if (isSubmitted) return;
 
-    vibrate(15);
+    feedbackTap();
     const sid = String(id);
 
     if (correctAnswers.length === 1) {
@@ -724,7 +896,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
       setIsQuestionPlaying(false);
       audioController.playMixed(
         opt.text,
-        { rate: currentRate },
+        { rate: currentRate, aiSettings },
         () => mountedRef.current && setSpeakingOptionId(sid),
         () => mountedRef.current && setSpeakingOptionId(null)
       );
@@ -745,10 +917,10 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
     setSpeakingOptionId(null);
 
     if (correct) {
-      vibrate([30, 40, 30]);
+      feedbackCorrect();
       onCorrect?.();
     } else {
-      vibrate([40, 40, 40]);
+      feedbackWrong();
       onWrong?.();
     }
 
@@ -772,8 +944,8 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
 结果：${isRight ? '学生答对了' : '学生答错了'}
 
 请用简洁中文解释：
-1.站在学生的视角思考为什么答错了
-2.为什么正确答案是这个
+1. 为什么正确答案是这个
+2. 如果学生答错了，思考为什么会答错，错因是什么
 3. 最后给一句简短提醒
 `.trim();
   };
@@ -782,7 +954,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
     if (aiLoading) return;
 
     if (!aiSettings.apiUrl || !aiSettings.apiKey) {
-      setShowAISettings(true);
+      setShowSettings(true);
       return;
     }
 
@@ -792,60 +964,37 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
       setAIExplanationText('');
       setShowAIExplanation(true);
 
-      if (triggerAI) {
-        const result = await Promise.resolve(
-          triggerAI({
-            scene: 'interactive_explainer',
-            type: 'choice',
-            payload: {
-              questionText,
-              questionImg,
-              options: shuffledOptions,
-              selectedIds,
-              correctAnswers,
-              isRight,
-              rawData: data
-            },
-            aiSettings
-          })
-        );
+      const res = await fetch(`${aiSettings.apiUrl.replace(/\/+$/, '')}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${aiSettings.apiKey}`
+        },
+        body: JSON.stringify({
+          model: aiSettings.model,
+          temperature: aiSettings.temperature,
+          stream: false,
+          messages: [
+            { role: 'system', content: aiSettings.systemPrompt },
+            { role: 'user', content: buildAIPromptText() }
+          ]
+        })
+      });
 
-        if (typeof result === 'string') {
-          setAIExplanationText(result);
-        } else if (result?.text) {
-          setAIExplanationText(result.text);
-        } else {
-          setAIExplanationText('老师正在整理讲解，请稍后再试。');
-        }
-      } else {
-        const res = await fetch(`${aiSettings.apiUrl.replace(/\/+$/, '')}/chat/completions`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${aiSettings.apiKey}`
-          },
-          body: JSON.stringify({
-            model: aiSettings.model,
-            temperature: aiSettings.temperature,
-            stream: false,
-            messages: [
-              { role: 'system', content: aiSettings.systemPrompt },
-              { role: 'user', content: buildAIPromptText() }
-            ]
-          })
-        });
+      if (!res.ok) throw new Error(`AI Error: ${res.status}`);
 
-        if (!res.ok) throw new Error(`AI Error: ${res.status}`);
+      const json = await res.json();
+      const text =
+        json?.choices?.[0]?.message?.content ||
+        json?.reply ||
+        json?.text ||
+        '';
 
-        const json = await res.json();
-        const text =
-          json?.choices?.[0]?.message?.content ||
-          json?.reply ||
-          json?.text ||
-          '暂时没有解析内容。';
-
-        setAIExplanationText(text);
+      if (!text) {
+        throw new Error('AI 没有返回内容');
       }
+
+      setAIExplanationText(text);
     } catch (err) {
       setAIExplanationError(err?.message || 'AI 解析失败');
     } finally {
@@ -855,7 +1004,10 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
 
   const replayAIExplanation = () => {
     if (!aiExplanationText) return;
-    audioController.playMixed(aiExplanationText, { rate: aiSettings.ttsSpeed || 0 });
+    audioController.playMixed(aiExplanationText, {
+      rate: aiSettings.ttsSpeed || 0,
+      aiSettings
+    });
   };
 
   return (
@@ -869,19 +1021,17 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
 
             <div className="top-actions">
               <button className="settings-btn" onClick={() => setShowSettings((v) => !v)}>
-                <FaCog size={16} />
-              </button>
-
-              <button className="ai-settings-btn" onClick={() => setShowAISettings(true)}>
-                <FaRobot size={15} />
+                <FaCog size={18} />
               </button>
             </div>
           </div>
 
           {showSettings && (
-            <MiniSettings
+            <SettingsPanel
               prefs={prefs}
               setPrefs={setPrefs}
+              aiSettings={aiSettings}
+              updateAISettings={updateAISettings}
               onClose={() => setShowSettings(false)}
             />
           )}
@@ -1031,19 +1181,11 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
         </button>
       </div>
 
-      <AISettingsModal
-        open={showAISettings}
-        settings={aiSettings}
-        updateSettings={updateAISettings}
-        onClose={() => setShowAISettings(false)}
-      />
-
-      <InteractiveAIExplanationPanel
+      <FullScreenAI
         open={showAIExplanation}
         loading={aiLoading}
         text={aiExplanationText}
         error={aiExplanationError}
-        title="AI 讲题"
         onClose={() => setShowAIExplanation(false)}
         onReplay={replayAIExplanation}
         onRetry={handleAI}
