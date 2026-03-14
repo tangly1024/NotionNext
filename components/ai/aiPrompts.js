@@ -47,3 +47,4 @@ export function getPromptById(promptId = 'free_talk_default') {
 export function getPromptOptionsByScene(scene = 'free_talk') {
   return PROMPT_OPTIONS[scene] || PROMPT_OPTIONS.free_talk;
 }
+export const DEFAULT_CHAT_PROMPT = PROMPT_REGISTRY.free_talk_default;
