@@ -9,7 +9,7 @@ import {
   FaCog
 } from 'react-icons/fa';
 import { pinyin } from 'pinyin-pro';
-import InteractiveAIExplanationPanel from '../ai/InteractiveAIExplanationPanel'; // 【关键】引入你写好的全屏AI组件
+import InteractiveAIExplanationPanel from '../../ai/InteractiveAIExplanationPanel'; // 【关键】引入你写好的全屏AI组件
 
 // =================================================================================
 // 1. IndexedDB 缓存引擎
