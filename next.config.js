@@ -112,7 +112,7 @@ const nextConfig = {
     : {
         defaultLocale: BLOG.LANG,
         // 支持的所有多语言,按需填写即可
-        locales: locales
+        locales: locales,
         localeDetection: false
       },
   images: {
