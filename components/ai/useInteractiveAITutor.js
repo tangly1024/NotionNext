@@ -2,13 +2,18 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ttsEngine } from './ttsEngine';
-import { normalizeAssistantText, mergeTranscript, nowId } from './aiTextUtils';
+import { normalizeAssistantText, mergeTranscript, nowId, splitSpeakable } from './aiTextUtils';
 
 const RECOGNITION_LANGS = [
   { code: 'zh-CN', name: '中文', flag: '🇨🇳' },
   { code: 'my-MM', name: '缅语', flag: '🇲🇲' },
   { code: 'en-US', name: 'English', flag: '🇺🇸' }
 ];
+
+const toFinite = (v, fallback = 0) => {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : fallback;
+};
 
 export function useInteractiveAITutor({
   open,
@@ -39,6 +44,10 @@ export function useInteractiveAITutor({
   const recordingFinalRef = useRef('');
   const interimRef = useRef('');
 
+  const submitLockRef = useRef(false);
+  const sendLockRef = useRef(false);
+  const requestIdRef = useRef(0);
+
   const currentLangObj =
     RECOGNITION_LANGS.find((l) => l.code === recLang) || RECOGNITION_LANGS[0];
 
@@ -49,19 +58,6 @@ export function useInteractiveAITutor({
       settings?.systemPrompt ||
       '你是一位互动题解析老师。请用简洁中文解释并引导学生。不要输出Markdown格式。'
     );
-  }, [settings]);
-
-  // 配置 TTS 引擎
-  useEffect(() => {
-    if (settings?.ttsApiUrl) {
-      ttsEngine.configure?.({
-        apiUrl: settings.ttsApiUrl,
-        voice: settings.ttsVoice || settings?.zhVoice,
-        speed: settings.ttsSpeed,
-        pitch: settings.ttsPitch,
-        apiKey: settings.apiKey
-      });
-    }
   }, [settings]);
 
   const scrollToBottom = () => {
@@ -154,7 +150,23 @@ export function useInteractiveAITutor({
     const text = String(content || '').trim();
     if (!text) return;
 
-    stopEverything();
+    if (sendLockRef.current) {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+        abortControllerRef.current = null;
+      }
+      ttsEngine.stopAndClear();
+    }
+
+    sendLockRef.current = true;
+
+    stopRecordingOnly();
+    clearRecordingBuffer();
+    ttsEngine.unlockAudio();
+    ttsEngine.stopAndClear();
+
+    const currentRequestId = ++requestIdRef.current;
+    setIsThinking(true);
 
     const baseHistory = [...historyRef.current];
     let newHistory = baseHistory;
@@ -170,19 +182,17 @@ export function useInteractiveAITutor({
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
-    const messages = [
-      { role: 'system', content: initialSystemPrompt },
-      ...newHistory.map((h) => ({
-        role: h.role === 'ai' ? 'assistant' : 'user',
-        content: h.text
-      })),
-      ...(visibleUserMessage ? [] : [{ role: 'user', content: text }])
-    ];
-
     try {
-      setIsThinking(true);
+      const messages = [
+        { role: 'system', content: initialSystemPrompt },
+        ...newHistory.map((h) => ({
+          role: h.role === 'ai' ? 'assistant' : 'user',
+          content: h.text
+        })),
+        ...(visibleUserMessage ? [] : [{ role: 'user', content: text }])
+      ];
 
-      const res = await fetch(`${settings?.apiUrl?.replace(/\/+$/, '')}/chat/completions`, {
+      const res = await fetch(`${String(settings?.apiUrl || '').replace(/\/+$/, '')}/chat/completions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -192,48 +202,105 @@ export function useInteractiveAITutor({
         body: JSON.stringify({
           model: settings?.model,
           temperature: settings?.temperature,
-          stream: false,
+          stream: true,
           messages
         })
       });
 
-      if (!res.ok) {
-        throw new Error(`AI Error: ${res.status}`);
+      if (!res.ok) throw new Error(`API Error: ${res.status}`);
+      if (!res.body) throw new Error('API 返回为空');
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder('utf-8');
+      let raw = '';
+      let fullText = '';
+      let sentenceBuffer = '';
+      let gotFirstChunk = false;
+
+      while (true) {
+        if (controller.signal.aborted || currentRequestId !== requestIdRef.current) break;
+
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        raw += decoder.decode(value, { stream: true });
+        const parts = raw.split('\n');
+        raw = parts.pop() || '';
+
+        for (const line of parts) {
+          if (controller.signal.aborted || currentRequestId !== requestIdRef.current) break;
+
+          const ln = line.trim();
+          if (!ln.startsWith('data:')) continue;
+
+          const payload = ln.slice(5).trim();
+          if (payload === '[DONE]') continue;
+
+          try {
+            const data = JSON.parse(payload);
+
+            const chunk =
+              data?.choices?.[0]?.delta?.content ||
+              data?.choices?.[0]?.message?.content ||
+              '';
+
+            if (!chunk) continue;
+
+            if (!gotFirstChunk) {
+              if (currentRequestId === requestIdRef.current) {
+                setIsThinking(false);
+              }
+              gotFirstChunk = true;
+            }
+
+            fullText += chunk;
+            sentenceBuffer += chunk;
+
+            const visible = normalizeAssistantText(fullText);
+
+            if (currentRequestId === requestIdRef.current) {
+              setHistory((prev) =>
+                prev.map((m) => (m.id === aiMsgId ? { ...m, text: visible } : m))
+              );
+              scrollToBottom();
+            }
+
+            const { sentences, rest } = splitSpeakable(sentenceBuffer);
+            if (sentences.length) {
+              for (const s of sentences) {
+                if (!controller.signal.aborted && currentRequestId === requestIdRef.current) {
+                  ttsEngine.push(s);
+                }
+              }
+              sentenceBuffer = rest;
+            }
+          } catch (_) {}
+        }
       }
 
-      const json = await res.json();
-
-      const fullText =
-        json?.choices?.[0]?.message?.content ||
-        json?.reply ||
-        json?.text ||
-        '';
-
-      if (!fullText) {
-        throw new Error('AI 没有返回内容');
+      if (
+        sentenceBuffer.trim() &&
+        !controller.signal.aborted &&
+        currentRequestId === requestIdRef.current
+      ) {
+        ttsEngine.push(sentenceBuffer.trim());
       }
-
-      const visible = normalizeAssistantText(fullText);
-
-      setHistory((prev) =>
-        prev.map((m) =>
-          m.id === aiMsgId ? { ...m, text: visible, isStreaming: false } : m
-        )
-      );
-
-      setIsThinking(false);
-      abortControllerRef.current = null;
-      scrollToBottom();
-
-      ttsEngine.push(visible);
     } catch (err) {
-      if (err?.name === 'AbortError') return;
-
-      setIsThinking(false);
-      setHistory((prev) => [
-        ...prev,
-        { id: nowId(), role: 'error', text: err?.message || 'AI 请求失败' }
-      ]);
+      if (err?.name !== 'AbortError' && currentRequestId === requestIdRef.current) {
+        setHistory((prev) => [
+          ...prev,
+          { id: nowId(), role: 'error', text: err?.message || 'AI 请求失败' }
+        ]);
+      }
+    } finally {
+      if (currentRequestId === requestIdRef.current) {
+        setIsThinking(false);
+        abortControllerRef.current = null;
+        setHistory((prev) =>
+          prev.map((m) => (m.id === aiMsgId ? { ...m, isStreaming: false } : m))
+        );
+      }
+      sendLockRef.current = false;
     }
   };
 
@@ -250,13 +317,22 @@ export function useInteractiveAITutor({
   };
 
   const startRecording = () => {
+    ttsEngine.unlockAudio();
+
     const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRec) {
       alert('当前浏览器不支持语音识别');
       return;
     }
 
-    stopEverything();
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+      setIsThinking(false);
+    }
+
+    if (isAiSpeaking) ttsEngine.stopAndClear();
+    if (recognitionRef.current) return;
 
     const rec = new SpeechRec();
     rec.lang = recLang;
@@ -264,6 +340,7 @@ export function useInteractiveAITutor({
     rec.continuous = true;
     rec.maxAlternatives = 1;
 
+    clearRecordingBuffer();
     setIsRecording(true);
 
     rec.onresult = (e) => {
@@ -285,11 +362,23 @@ export function useInteractiveAITutor({
       setLiveInterim(interimRef.current);
 
       clearSilenceTimer();
-      silenceTimerRef.current = setTimeout(() => manualSubmitRecording(), 1400);
+      silenceTimerRef.current = setTimeout(
+        () => manualSubmitRecording(),
+        toFinite(settings?.asrSilenceMs, 1500)
+      );
     };
 
-    rec.onerror = () => stopRecordingOnly();
-    rec.onend = () => stopRecordingOnly();
+    rec.onerror = () => {
+      setIsRecording(false);
+      recognitionRef.current = null;
+      clearSilenceTimer();
+    };
+
+    rec.onend = () => {
+      setIsRecording(false);
+      recognitionRef.current = null;
+      clearSilenceTimer();
+    };
 
     recognitionRef.current = rec;
 
@@ -301,8 +390,18 @@ export function useInteractiveAITutor({
   };
 
   const manualSubmitRecording = () => {
+    if (submitLockRef.current) return;
+    submitLockRef.current = true;
+
     const finalText = mergeTranscript(recordingFinalRef.current, interimRef.current).trim();
+
     stopRecordingOnly();
+    clearRecordingBuffer();
+
+    setTimeout(() => {
+      submitLockRef.current = false;
+    }, 320);
+
     if (finalText) sendMessage(finalText);
   };
 
@@ -322,8 +421,8 @@ export function useInteractiveAITutor({
   }, [history]);
 
   useEffect(() => {
-    ttsEngine.setStateCallback?.(({ isPlaying }) => setIsAiSpeaking(isPlaying));
-    return () => ttsEngine.setStateCallback?.(null);
+    ttsEngine.setStateCallback(({ isPlaying }) => setIsAiSpeaking(isPlaying));
+    return () => ttsEngine.setStateCallback(null);
   }, []);
 
   useEffect(() => {
