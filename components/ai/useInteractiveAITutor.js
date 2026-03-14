@@ -1,3 +1,4 @@
+// components/ai/useInteractiveAITutor.js
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -8,12 +9,7 @@ import {
   nowId,
   splitSpeakable
 } from './aiTextUtils';
-
-const RECOGNITION_LANGS = [
-  { code: 'zh-CN', name: '中文', flag: '🇨🇳' },
-  { code: 'my-MM', name: '缅语', flag: '🇲🇲' },
-  { code: 'en-US', name: 'English', flag: '🇺🇸' }
-];
+import { RECOGNITION_LANGS, AI_REC_LANG_KEY } from './aiConfig';
 
 const toFinite = (v, fallback = 0) => {
   const n = Number(v);
@@ -37,29 +33,31 @@ export function useInteractiveAITutor({
   const [isRecording, setIsRecording] = useState(false);
   const [recordFinalText, setRecordFinalText] = useState('');
   const [liveInterim, setLiveInterim] = useState('');
-  const [recLang] = useState('zh-CN');
+  
+  // 语言、长按控制和字幕开关状态
+  const [recLang, setRecLang] = useState('zh-CN');
+  const [showLangPicker, setShowLangPicker] = useState(false);
+  const [showText, setShowText] = useState(settings?.showText ?? true);
 
   const scrollRef = useRef(null);
   const abortControllerRef = useRef(null);
   const recognitionRef = useRef(null);
   const silenceTimerRef = useRef(null);
+  const longPressTimerRef = useRef(null);
 
   const recordingFinalRef = useRef('');
   const interimRef = useRef('');
+  const longPressTriggeredRef = useRef(false);
+  const micActionLockRef = useRef(false);
 
   const submitLockRef = useRef(false);
   const sendLockRef = useRef(false);
   const requestIdRef = useRef(0);
 
-  // 关键修复：不用 state，改成 ref，避免 rerender 触发 cleanup 中断首轮请求
   const bootstrappedRef = useRef(false);
-
-  // 关键修复：把 initialPayload 放 ref，不让对象引用变化导致 effect 重跑
   const initialPayloadRef = useRef(initialPayload);
 
-  const currentLangObj =
-    RECOGNITION_LANGS.find((l) => l.code === recLang) || RECOGNITION_LANGS[0];
-
+  const currentLangObj = RECOGNITION_LANGS.find((l) => l.code === recLang) || RECOGNITION_LANGS[0];
   const liveText = mergeTranscript(recordFinalText, liveInterim);
 
   const initialSystemPrompt = useMemo(() => {
@@ -68,6 +66,18 @@ export function useInteractiveAITutor({
       '你是一位互动题解析老师。请用简洁中文解释并引导学生。不要输出Markdown格式。'
     );
   }, [settings]);
+
+  // 初始化获取语言缓存
+  useEffect(() => {
+    try {
+      const lang = localStorage.getItem(AI_REC_LANG_KEY);
+      if (lang && RECOGNITION_LANGS.some((l) => l.code === lang)) setRecLang(lang);
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(AI_REC_LANG_KEY, recLang);
+  }, [recLang]);
 
   useEffect(() => {
     initialPayloadRef.current = initialPayload;
@@ -116,6 +126,12 @@ export function useInteractiveAITutor({
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
     }
+
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+    longPressTriggeredRef.current = false;
 
     ttsEngine.stopAndClear();
     setIsThinking(false);
@@ -232,9 +248,7 @@ export function useInteractiveAITutor({
         throw new Error(`API Error: ${res.status} ${errText}`);
       }
 
-      if (!res.body) {
-        throw new Error('API 返回为空');
-      }
+      if (!res.body) throw new Error('API 返回为空');
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder('utf-8');
@@ -264,7 +278,6 @@ export function useInteractiveAITutor({
 
           try {
             const data = JSON.parse(payload);
-
             const chunk =
               data?.choices?.[0]?.delta?.content ||
               data?.choices?.[0]?.message?.content ||
@@ -273,15 +286,12 @@ export function useInteractiveAITutor({
             if (!chunk) continue;
 
             if (!gotFirstChunk) {
-              if (currentRequestId === requestIdRef.current) {
-                setIsThinking(false);
-              }
+              if (currentRequestId === requestIdRef.current) setIsThinking(false);
               gotFirstChunk = true;
             }
 
             fullText += chunk;
             sentenceBuffer += chunk;
-
             const visible = normalizeAssistantText(fullText);
 
             if (currentRequestId === requestIdRef.current) {
@@ -304,11 +314,7 @@ export function useInteractiveAITutor({
         }
       }
 
-      if (
-        sentenceBuffer.trim() &&
-        !controller.signal.aborted &&
-        currentRequestId === requestIdRef.current
-      ) {
+      if (sentenceBuffer.trim() && !controller.signal.aborted && currentRequestId === requestIdRef.current) {
         ttsEngine.push(sentenceBuffer.trim());
       }
     } catch (err) {
@@ -348,10 +354,7 @@ export function useInteractiveAITutor({
     ttsEngine.unlockAudio();
 
     const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRec) {
-      alert('当前浏览器不支持语音识别');
-      return;
-    }
+    if (!SpeechRec) return alert('当前浏览器不支持语音识别');
 
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -373,16 +376,11 @@ export function useInteractiveAITutor({
 
     rec.onresult = (e) => {
       let interimText = '';
-
       for (let i = e.resultIndex; i < e.results.length; i++) {
         const t = (e.results[i][0]?.transcript || '').trim();
         if (!t) continue;
-
-        if (e.results[i].isFinal) {
-          recordingFinalRef.current = mergeTranscript(recordingFinalRef.current, t);
-        } else {
-          interimText += `${t} `;
-        }
+        if (e.results[i].isFinal) recordingFinalRef.current = mergeTranscript(recordingFinalRef.current, t);
+        else interimText += `${t} `;
       }
 
       interimRef.current = interimText.trim();
@@ -396,64 +394,79 @@ export function useInteractiveAITutor({
       );
     };
 
-    rec.onerror = () => {
-      setIsRecording(false);
-      recognitionRef.current = null;
-      clearSilenceTimer();
-    };
-
-    rec.onend = () => {
-      setIsRecording(false);
-      recognitionRef.current = null;
-      clearSilenceTimer();
-    };
+    rec.onerror = () => { setIsRecording(false); recognitionRef.current = null; clearSilenceTimer(); };
+    rec.onend = () => { setIsRecording(false); recognitionRef.current = null; clearSilenceTimer(); };
 
     recognitionRef.current = rec;
-
     if (navigator.vibrate) navigator.vibrate(30);
-
-    try {
-      rec.start();
-    } catch (_) {}
+    try { rec.start(); } catch (_) {}
   };
 
   const manualSubmitRecording = () => {
     if (submitLockRef.current) return;
     submitLockRef.current = true;
-
     const finalText = mergeTranscript(recordingFinalRef.current, interimRef.current).trim();
 
     stopRecordingOnly();
     clearRecordingBuffer();
 
-    setTimeout(() => {
-      submitLockRef.current = false;
-    }, 320);
-
+    setTimeout(() => { submitLockRef.current = false; }, 320);
     if (finalText) sendMessage(finalText);
   };
 
   const replayLastAnswer = () => {
-    const lastAI = [...historyRef.current]
-      .reverse()
-      .find((item) => item.role === 'ai' && item.text);
-
+    const lastAI = [...historyRef.current].reverse().find((item) => item.role === 'ai' && item.text);
     if (!lastAI) return;
-
     ttsEngine.stopAndClear();
     ttsEngine.push(lastAI.text);
   };
 
-  useEffect(() => {
-    historyRef.current = history;
-  }, [history]);
+  // ---- 麦克风长按处理 ----
+  const handleMicPointerDown = (e) => {
+    e.preventDefault();
+    if (longPressTimerRef.current) clearTimeout(longPressTimerRef.current);
+    longPressTriggeredRef.current = false;
+    longPressTimerRef.current = setTimeout(() => {
+      longPressTriggeredRef.current = true;
+      if (navigator.vibrate) navigator.vibrate(45);
+      setShowLangPicker(true);
+      longPressTimerRef.current = null;
+    }, 550);
+  };
+
+  const handleMicPointerUp = (e) => {
+    e.preventDefault();
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+    if (longPressTriggeredRef.current) {
+      longPressTriggeredRef.current = false;
+      return;
+    }
+    if (micActionLockRef.current) return;
+    micActionLockRef.current = true;
+    setTimeout(() => { micActionLockRef.current = false; }, 220);
+
+    if (isRecording) manualSubmitRecording();
+    else startRecording();
+  };
+
+  const handleMicPointerCancel = () => {
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+    longPressTriggeredRef.current = false;
+  };
+
+  useEffect(() => { historyRef.current = history; }, [history]);
 
   useEffect(() => {
     ttsEngine.setStateCallback(({ isPlaying }) => setIsAiSpeaking(isPlaying));
     return () => ttsEngine.setStateCallback(null);
   }, []);
 
-  // 关闭时清理
   useEffect(() => {
     if (!open) {
       stopEverything();
@@ -462,27 +475,19 @@ export function useInteractiveAITutor({
     }
   }, [open]);
 
-  // 打开时只初始化一次，不依赖 initialPayload 对象引用反复触发
   useEffect(() => {
     if (!open) return;
-
     if (!bootstrappedRef.current) {
       const payload = initialPayloadRef.current;
       const firstPrompt = buildBootstrapPrompt(payload);
-
       if (firstPrompt) {
         bootstrappedRef.current = true;
         sendHiddenMessage(firstPrompt);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  useEffect(() => {
-    return () => {
-      stopEverything();
-    };
-  }, []);
+  useEffect(() => { return () => stopEverything(); }, []);
 
   return {
     history,
@@ -502,6 +507,15 @@ export function useInteractiveAITutor({
     startRecording,
     manualSubmitRecording,
     stopEverything,
-    replayLastAnswer
+    replayLastAnswer,
+    recLang,
+    setRecLang,
+    showLangPicker,
+    setShowLangPicker,
+    handleMicPointerDown,
+    handleMicPointerUp,
+    handleMicPointerCancel,
+    showText,
+    setShowText
   };
 }
