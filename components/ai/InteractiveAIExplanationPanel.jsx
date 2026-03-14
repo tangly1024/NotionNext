@@ -1,4 +1,3 @@
-// components/ai/InteractiveAIExplanationPanel.jsx
 'use client';
 
 import React from 'react';
@@ -7,10 +6,10 @@ import {
   FaPaperPlane,
   FaMicrophone,
   FaStop,
-  FaRobot,
   FaKeyboard,
   FaClosedCaptioning,
-  FaCommentSlash
+  FaCommentSlash,
+  FaVolumeUp
 } from 'react-icons/fa';
 import { normalizeAssistantText } from './aiTextUtils';
 import { useInteractiveAITutor } from './useInteractiveAITutor';
@@ -20,11 +19,6 @@ const GlobalStyles = () => (
   <style>{`
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-    @keyframes ping-slow {
-      75%, 100% { transform: scale(2); opacity: 0; }
-    }
-    .animate-ping-slow { animation: ping-slow 1.6s cubic-bezier(0,0,0.2,1) infinite; }
 
     @keyframes pulse-ring {
       0% { transform: scale(0.85); box-shadow: 0 0 0 0 rgba(239, 68, 68, .55); }
@@ -71,7 +65,6 @@ export default function InteractiveAIExplanationPanel({
     inputText,
     setInputText,
     isRecording,
-    liveText,
     currentLangObj,
     scrollRef,
     sendMessage,
@@ -84,11 +77,14 @@ export default function InteractiveAIExplanationPanel({
     handleMicPointerUp,
     handleMicPointerCancel,
     showText,
-    setShowText
+    setShowText,
+    replaySpecificAnswer,
+    handleClosePanel
   } = useInteractiveAITutor({
     open,
     settings,
-    initialPayload
+    initialPayload,
+    onClose
   });
 
   if (!open) return null;
@@ -107,10 +103,7 @@ export default function InteractiveAIExplanationPanel({
       {/* Header */}
       <div className="relative z-20 flex items-center justify-between px-4 h-16 border-b border-slate-200/50 backdrop-blur-sm">
         <button
-          onClick={() => {
-            stopEverything();
-            onClose?.();
-          }}
+          onClick={handleClosePanel}
           className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-200/60 text-slate-600 active:scale-90 shadow-sm"
         >
           <FaArrowLeft />
@@ -118,39 +111,41 @@ export default function InteractiveAIExplanationPanel({
 
         <div className="font-bold tracking-widest text-slate-800 text-sm">{title}</div>
 
-        <div className="w-10 h-10" /> {/* 去除右上角的停止，保留占位让文字居中 */}
+        <div className="w-10 h-10" /> 
       </div>
 
       {/* Body */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto no-scrollbar relative p-4 pb-36 flex flex-col z-10">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto relative p-4 pb-36 flex flex-col z-10 overscroll-contain">
         {!showText && !textMode ? (
-          <div className="flex-1 flex flex-col items-center justify-center">
+          <div className="flex-1 flex flex-col items-center justify-center min-h-full">
             <div className="relative flex items-center justify-center w-56 h-56 pointer-events-none">
-              {isAiSpeaking && <div className="absolute inset-0 rounded-full bg-pink-400/20 animate-ping-slow" />}
-              {isAiSpeaking && <div className="absolute inset-6 rounded-full bg-violet-400/20 animate-ping-slow" style={{ animationDelay: '.4s' }} />}
-              <div className={`relative z-10 flex items-center justify-center w-32 h-32 rounded-full transition-all duration-300 ${isAiSpeaking ? 'scale-110 bg-pink-500 shadow-[0_0_30px_rgba(236,72,153,.4)]' : 'bg-white shadow-sm border border-slate-100'}`}>
-                <FaMicrophone className={`text-5xl ${isAiSpeaking ? 'text-white' : 'text-slate-300'}`} />
-              </div>
+              {isAiSpeaking && <div className="absolute inset-0 rounded-full bg-pink-300/30 animate-ping" />}
+              {/* 动态女老师头像 */}
+              <img 
+                src="https://api.dicebear.com/7.x/bottts/svg?seed=Teacher&backgroundColor=fce4ec" 
+                alt="Teacher" 
+                className={`relative z-10 w-32 h-32 rounded-full border-[5px] border-white shadow-xl transition-all duration-300 object-cover ${
+                  isAiSpeaking ? 'scale-110 shadow-[0_0_30px_rgba(236,72,153,.5)]' : 'bg-pink-50'
+                }`}
+              />
             </div>
             <div className="mt-8 h-10 flex items-center justify-center">
-              {isAiSpeaking ? <div className="tts-bars"><span /><span /><span /><span /><span /></div> : <span className="text-sm tracking-widest text-slate-400 font-medium">{isRecording ? '正在倾听...' : isThinking ? '思考中...' : '请说话'}</span>}
+              {isAiSpeaking ? <div className="tts-bars"><span /><span /><span /><span /><span /></div> : <span className="text-sm tracking-widest text-slate-400 font-medium">{isRecording ? '正在倾听...' : isThinking ? '思考中...' : '期待你的提问~'}</span>}
             </div>
           </div>
         ) : (
-          <div className="w-full max-w-2xl mx-auto min-h-full flex flex-col justify-end">
+          <div className="w-full max-w-2xl mx-auto flex flex-col justify-end mt-auto">
             {history.map((msg) => {
               if (msg.role === 'error') {
-                return (
-                  <div key={msg.id} className="mb-4 pl-12 text-red-500 text-sm font-medium">
-                    {msg.text}
-                  </div>
-                );
+                return <div key={msg.id} className="mb-4 pl-12 text-red-500 text-sm font-medium">{msg.text}</div>;
               }
 
               if (msg.role === 'user') {
                 return (
-                  <div key={msg.id} className="mb-3 pl-12 text-[15px] leading-7 text-slate-500 whitespace-pre-wrap font-medium">
-                    {msg.text}
+                  <div key={msg.id} className="mb-3 pl-12 flex justify-end">
+                    <div className="bg-pink-100 text-pink-900 px-4 py-2.5 rounded-2xl rounded-tr-sm text-[15px] font-medium shadow-sm max-w-[90%] whitespace-pre-wrap">
+                      {msg.text}
+                    </div>
                   </div>
                 );
               }
@@ -158,25 +153,39 @@ export default function InteractiveAIExplanationPanel({
               const aiText = normalizeAssistantText(msg.text || '');
 
               return (
-                <div key={msg.id} className="mb-4 flex items-start gap-3">
-                  <div className="mt-0.5 w-9 h-9 rounded-full bg-pink-100 border border-pink-200 flex items-center justify-center text-pink-500 shrink-0 shadow-sm">
-                    <FaRobot size={14} />
+                <div key={msg.id} className="mb-5 flex items-start gap-3">
+                  <div className="mt-1 w-9 h-9 rounded-full overflow-hidden border border-pink-200 shadow-sm shrink-0 bg-pink-50">
+                     <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Teacher&backgroundColor=fce4ec" className="w-full h-full object-cover" alt="AI"/>
                   </div>
-                  <div className="flex-1 pt-0.5 text-[15px] leading-7 text-slate-700 whitespace-pre-wrap font-medium">
-                    {aiText || (msg.isStreaming ? '思考中...' : '')}
-                    {msg.isStreaming && (
-                      <span className="inline-block w-1.5 h-4 ml-1 align-middle bg-pink-400 animate-pulse" />
-                    )}
+                  <div className="flex-1">
+                    <div className="bg-white border border-slate-100 px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm">
+                      <div className="text-[15px] leading-7 text-slate-700 whitespace-pre-wrap font-medium inline">
+                        {aiText || (msg.isStreaming ? '思考中...' : '')}
+                        {msg.isStreaming && <span className="inline-block w-1.5 h-4 ml-1 align-middle bg-pink-400 animate-pulse" />}
+                      </div>
+                      
+                      {/* 重播播放按钮 */}
+                      {!msg.isStreaming && aiText && (
+                        <button 
+                          onClick={() => replaySpecificAnswer(msg.text)} 
+                          className="ml-2 mt-1 text-pink-400 hover:text-pink-600 active:scale-90 inline-flex items-center align-middle"
+                          title="重新朗读"
+                        >
+                          <FaVolumeUp size={16} />
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               );
             })}
 
-            {isRecording && (
+            {/* 当文字模式或者开启字幕，并且正在录音时，在输入框/上方显示识别状态 */}
+            {isRecording && textMode === false && (
               <div className="flex justify-start pl-12 mb-2">
-                <div className="max-w-[92%] text-cyan-800 rounded-xl px-3 py-2 text-sm bg-cyan-50 border border-cyan-200/60 shadow-sm font-medium">
+                <div className="max-w-[92%] text-cyan-800 rounded-xl px-4 py-2 text-sm bg-cyan-50 border border-cyan-200/60 shadow-sm font-medium">
                   <span className="opacity-80 mr-2">识别中：</span>
-                  <span>{liveText || '...'}</span>
+                  <span className="animate-pulse">{inputText || '...'}</span>
                 </div>
               </div>
             )}
@@ -224,11 +233,11 @@ export default function InteractiveAIExplanationPanel({
               </div>
             </div>
           ) : (
-            <div className="flex-1 ml-16 mr-16 relative flex items-center bg-slate-100 border border-slate-200 rounded-full p-1 shadow-inner">
+            <div className="flex-1 ml-16 mr-16 relative flex items-center bg-white border border-slate-200 rounded-full p-1 shadow-inner">
               <input
                 type="text"
                 className="flex-1 bg-transparent px-4 py-2 text-sm text-slate-800 outline-none placeholder-slate-400"
-                placeholder="继续问老师..."
+                placeholder={isRecording ? "听你说..." : "输入消息继续追问..."}
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyDown={(e) => {
@@ -240,17 +249,19 @@ export default function InteractiveAIExplanationPanel({
               />
               <button
                 onClick={() => {
+                  if (isRecording) {
+                    stopEverything(); // 如果正在录音点击按钮，强行停止发送
+                  }
                   sendMessage(inputText);
                   setInputText('');
                 }}
-                className="w-10 h-10 rounded-full bg-pink-500 text-white flex items-center justify-center shrink-0 shadow-sm"
+                className="w-10 h-10 rounded-full bg-pink-500 text-white flex items-center justify-center shrink-0 shadow-sm transition-transform active:scale-90"
               >
                 <FaPaperPlane size={14} />
               </button>
             </div>
           )}
 
-          {/* 右侧修改：不再是喇叭，而是字幕的开关或者停止按钮 */}
           <div className="absolute right-0 flex items-center justify-center gap-2">
             {(isAiSpeaking || isRecording || isThinking) ? (
               <button
@@ -275,11 +286,14 @@ export default function InteractiveAIExplanationPanel({
         </div>
       </div>
 
-      {/* 语言选择面板弹窗 (亮色版) */}
+      {/* 语言选择面板弹窗，增加 onClick 停止冒泡，使得点击遮罩能顺利关闭 */}
       {showLangPicker && (
         <div className="fixed inset-0 z-[350] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setShowLangPicker(false)} />
-          <div className="relative bg-white border border-slate-200 rounded-3xl p-6 w-full max-w-sm shadow-2xl animate-[fadeIn_.2s_ease-out]">
+          <div 
+            className="relative bg-white border border-slate-200 rounded-3xl p-6 w-full max-w-sm shadow-2xl animate-[fadeIn_.2s_ease-out]"
+            onClick={(e) => e.stopPropagation()}
+          >
             <h3 className="font-bold text-lg mb-4 text-center text-slate-800">选择识别语言</h3>
             <div className="grid grid-cols-2 gap-3">
               {RECOGNITION_LANGS.map((lang) => (
