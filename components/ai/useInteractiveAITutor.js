@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { streamChatCompletion } from './aiService';
 import { ttsEngine } from './ttsEngine';
 import { normalizeAssistantText, mergeTranscript, nowId } from './aiTextUtils';
 
@@ -167,46 +166,62 @@ export function useInteractiveAITutor({
       ...(visibleUserMessage ? [] : [{ role: 'user', content: text }])
     ];
 
-    await streamChatCompletion({
-      settings: {
-        apiUrl: settings?.apiUrl,
-        apiKey: settings?.apiKey,
-        model: settings?.model,
-        temperature: settings?.temperature,
-        ttsApiUrl: settings?.ttsApiUrl,
-        ttsVoice: settings?.zhVoice || settings?.ttsVoice,
-        ttsSpeed: settings?.ttsSpeed,
-        ttsPitch: settings?.ttsPitch
-      },
-      messages,
-      signal: controller.signal,
-      onStart: () => setIsThinking(true),
-      onUpdate: (fullText) => {
-        setIsThinking(false);
-        const visible = normalizeAssistantText(fullText);
-        setHistory((prev) =>
-          prev.map((m) => (m.id === aiMsgId ? { ...m, text: visible } : m))
-        );
-        scrollToBottom();
-      },
-      onSentence: (sentence) => {
-        ttsEngine.push(sentence);
-      },
-      onFinished: () => {
-        setIsThinking(false);
-        abortControllerRef.current = null;
-        setHistory((prev) =>
-          prev.map((m) => (m.id === aiMsgId ? { ...m, isStreaming: false } : m))
-        );
-      },
-      onError: (err) => {
-        setIsThinking(false);
-        setHistory((prev) => [
-          ...prev,
-          { id: nowId(), role: 'error', text: err?.message || 'AI 请求失败' }
-        ]);
+    try {
+      setIsThinking(true);
+
+      const res = await fetch(`${settings?.apiUrl?.replace(/\/+$/, '')}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${settings?.apiKey || ''}`
+        },
+        signal: controller.signal,
+        body: JSON.stringify({
+          model: settings?.model,
+          temperature: settings?.temperature,
+          stream: false,
+          messages
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error(`AI Error: ${res.status}`);
       }
-    });
+
+      const json = await res.json();
+
+      const fullText =
+        json?.choices?.[0]?.message?.content ||
+        json?.reply ||
+        json?.text ||
+        '';
+
+      if (!fullText) {
+        throw new Error('AI 没有返回内容');
+      }
+
+      const visible = normalizeAssistantText(fullText);
+
+      setHistory((prev) =>
+        prev.map((m) =>
+          m.id === aiMsgId ? { ...m, text: visible, isStreaming: false } : m
+        )
+      );
+
+      setIsThinking(false);
+      abortControllerRef.current = null;
+      scrollToBottom();
+
+      ttsEngine.push(visible);
+    } catch (err) {
+      if (err?.name === 'AbortError') return;
+
+      setIsThinking(false);
+      setHistory((prev) => [
+        ...prev,
+        { id: nowId(), role: 'error', text: err?.message || 'AI 请求失败' }
+      ]);
+    }
   };
 
   const sendMessage = async (text) => {
@@ -253,16 +268,7 @@ export function useInteractiveAITutor({
       }
 
       interimRef.current = interimText.trim();
-      setRecordFinalText(recordingFinalRef.current);
-      setLiveInterim(interimRef.current);
-
-      clearSilenceTimer();
-      silenceTimerRef.current = setTimeout(() => {
-        manualSubmitRecording();
-      }, 1400);
-    };
-
-    rec.onerror = () => stopRecordingOnly();
+      setRecordFinalText(recording     rec.onerror = () => stopRecordingOnly();
     rec.onend = () => stopRecordingOnly();
 
     recognitionRef.current = rec;
@@ -340,4 +346,4 @@ export function useInteractiveAITutor({
     stopEverything,
     replayLastAnswer
   };
-}
+  }
