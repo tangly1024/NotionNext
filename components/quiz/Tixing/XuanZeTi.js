@@ -9,8 +9,8 @@ import {
   FaCog
 } from 'react-icons/fa';
 import { pinyin } from 'pinyin-pro';
-import AISettingsModal from '../ai/AISettingsModal';
-import InteractiveAIExplanationPanel from '../ai/InteractiveAIExplanationPanel';
+import AISettingsModal from '../../ai/AISettingsModal';
+import InteractiveAIExplanationPanel from '../../ai/InteractiveAIExplanationPanel';
 
 // =================================================================================
 // 1. IndexedDB 缓存引擎
