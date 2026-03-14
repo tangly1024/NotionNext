@@ -109,7 +109,7 @@ const DEFAULT_SETTINGS = {
 };
 
 // =========================
-// 文本清理：隐藏标签/英文模板词/拼音/Markdown
+// 文本清理
 // =========================
 const LABEL_PREFIX_RE =
   /^\s*(情绪|反馈|纠错|目标句|缅文释义|Target Sentence|Meaning(?:\(MY\))?|Correction|Emotion|Feedback)\s*[:：]\s*/i;
@@ -420,8 +420,14 @@ export default function VoiceChat({ isOpen, onClose }) {
   const micActionLockRef = useRef(false);
 
   const silenceTimerRef = useRef(null);
+
   const recordingFinalRef = useRef('');
   const interimRef = useRef('');
+
+  const submitLockRef = useRef(false);
+  const sendLockRef = useRef(false);
+  const requestIdRef = useRef(0);
+  const lastSentRef = useRef({ text: '', time: 0 });
 
   const scrollToBottom = () => {
     if (!scrollRef.current) return;
@@ -480,11 +486,25 @@ export default function VoiceChat({ isOpen, onClose }) {
     const content = (text || '').trim();
     if (!content) return;
 
+    const now = Date.now();
+
+    if (
+      lastSentRef.current.text === content &&
+      now - lastSentRef.current.time < 1200
+    ) {
+      return;
+    }
+
+    if (sendLockRef.current) return;
+    sendLockRef.current = true;
+    lastSentRef.current = { text: content, time: now };
+
     ttsEngine.unlockAudio();
 
     if (!settings.apiKey) {
       alert('请先配置 API Key');
       setShowSettings(true);
+      sendLockRef.current = false;
       return;
     }
 
@@ -494,6 +514,7 @@ export default function VoiceChat({ isOpen, onClose }) {
     ttsEngine.stopAndClear();
     if (abortControllerRef.current) abortControllerRef.current.abort();
 
+    const currentRequestId = ++requestIdRef.current;
     setIsThinking(true);
 
     const aiMsgId = nowId();
@@ -533,7 +554,7 @@ export default function VoiceChat({ isOpen, onClose }) {
       let gotFirstChunk = false;
 
       while (true) {
-        if (controller.signal.aborted) break;
+        if (controller.signal.aborted || currentRequestId !== requestIdRef.current) break;
 
         const { done, value } = await reader.read();
         if (done) break;
@@ -543,6 +564,8 @@ export default function VoiceChat({ isOpen, onClose }) {
         raw = parts.pop() || '';
 
         for (const line of parts) {
+          if (controller.signal.aborted || currentRequestId !== requestIdRef.current) break;
+
           const ln = line.trim();
           if (!ln.startsWith('data:')) continue;
           const payload = ln.slice(5).trim();
@@ -554,7 +577,9 @@ export default function VoiceChat({ isOpen, onClose }) {
             if (!chunk) continue;
 
             if (!gotFirstChunk) {
-              setIsThinking(false);
+              if (currentRequestId === requestIdRef.current) {
+                setIsThinking(false);
+              }
               gotFirstChunk = true;
             }
 
@@ -562,13 +587,20 @@ export default function VoiceChat({ isOpen, onClose }) {
             sentenceBuffer += chunk;
 
             const visible = normalizeAssistantText(fullText);
-            setHistory((prev) => prev.map((m) => (m.id === aiMsgId ? { ...m, text: visible } : m)));
-            scrollToBottom();
+
+            if (currentRequestId === requestIdRef.current) {
+              setHistory((prev) =>
+                prev.map((m) => (m.id === aiMsgId ? { ...m, text: visible } : m))
+              );
+              scrollToBottom();
+            }
 
             const { sentences, rest } = splitSpeakable(sentenceBuffer);
             if (sentences.length) {
               for (const s of sentences) {
-                if (!controller.signal.aborted) ttsEngine.push(s);
+                if (!controller.signal.aborted && currentRequestId === requestIdRef.current) {
+                  ttsEngine.push(s);
+                }
               }
               sentenceBuffer = rest;
             }
@@ -576,17 +608,26 @@ export default function VoiceChat({ isOpen, onClose }) {
         }
       }
 
-      if (sentenceBuffer.trim() && !controller.signal.aborted) {
+      if (
+        sentenceBuffer.trim() &&
+        !controller.signal.aborted &&
+        currentRequestId === requestIdRef.current
+      ) {
         ttsEngine.push(sentenceBuffer.trim());
       }
     } catch (e) {
-      if (e.name !== 'AbortError') {
+      if (e.name !== 'AbortError' && currentRequestId === requestIdRef.current) {
         setHistory((prev) => [...prev, { id: nowId(), role: 'error', text: e.message }]);
       }
     } finally {
-      setIsThinking(false);
-      abortControllerRef.current = null;
-      setHistory((prev) => prev.map((m) => (m.id === aiMsgId ? { ...m, isStreaming: false } : m)));
+      if (currentRequestId === requestIdRef.current) {
+        setIsThinking(false);
+        abortControllerRef.current = null;
+        setHistory((prev) =>
+          prev.map((m) => (m.id === aiMsgId ? { ...m, isStreaming: false } : m))
+        );
+      }
+      sendLockRef.current = false;
     }
   };
 
@@ -609,7 +650,7 @@ export default function VoiceChat({ isOpen, onClose }) {
     rec.lang = recLang;
     rec.interimResults = true;
     rec.continuous = true;
-    rec.maxAlternatives = 3;
+    rec.maxAlternatives = 1;
 
     recordingFinalRef.current = '';
     interimRef.current = '';
@@ -618,15 +659,20 @@ export default function VoiceChat({ isOpen, onClose }) {
     setIsRecording(true);
 
     rec.onresult = (e) => {
+      let finalText = '';
       let interimText = '';
-      for (let i = e.resultIndex; i < e.results.length; i++) {
-        const t = e.results[i][0]?.transcript || '';
-        if (e.results[i].isFinal) recordingFinalRef.current += `${t} `;
-        else interimText += t;
+
+      for (let i = 0; i < e.results.length; i++) {
+        const t = (e.results[i][0]?.transcript || '').trim();
+        if (!t) continue;
+        if (e.results[i].isFinal) finalText += `${t} `;
+        else interimText += `${t} `;
       }
 
+      recordingFinalRef.current = finalText.trim();
       interimRef.current = interimText.trim();
-      setRecordFinalText(recordingFinalRef.current.trim());
+
+      setRecordFinalText(recordingFinalRef.current);
       setLiveInterim(interimRef.current);
 
       clearSilenceTimer();
@@ -639,6 +685,8 @@ export default function VoiceChat({ isOpen, onClose }) {
     rec.onerror = (e) => {
       setIsRecording(false);
       recognitionRef.current = null;
+      clearSilenceTimer();
+
       if (e?.error === 'not-allowed') {
         alert('麦克风权限被拒绝，请在浏览器设置里允许麦克风权限');
       }
@@ -647,6 +695,7 @@ export default function VoiceChat({ isOpen, onClose }) {
     rec.onend = () => {
       setIsRecording(false);
       recognitionRef.current = null;
+      clearSilenceTimer();
     };
 
     recognitionRef.current = rec;
@@ -657,9 +706,18 @@ export default function VoiceChat({ isOpen, onClose }) {
   };
 
   const manualSubmitRecording = () => {
-    const finalText = `${recordingFinalRef.current} ${interimRef.current}`.trim();
+    if (submitLockRef.current) return;
+    submitLockRef.current = true;
+
+    const finalText = recordingFinalRef.current.trim() || interimRef.current.trim();
+
     stopRecordingOnly();
     clearRecordingBuffer();
+
+    setTimeout(() => {
+      submitLockRef.current = false;
+    }, 320);
+
     if (finalText) sendMessage(finalText);
   };
 
