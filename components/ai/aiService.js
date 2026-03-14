@@ -1,92 +1,145 @@
 import { splitSpeakable } from './aiTextUtils';
 
 /**
- * 纯净的大模型流式请求服务 (复用于口语、选择题、短句练习等所有场景)
+ * 更稳的流式大模型请求服务
+ * 兼容更多返回格式，避免一直“思考中”
  */
 export async function streamChatCompletion({
   settings,
   messages,
   signal,
-  onStart,     // 开始思考时触发
-  onUpdate,    // 收到文字更新时触发 (传入最新完整可见文本)
-  onSentence,  // 分句完成时触发 (可对接 TTS)
-  onFinished,  // 结束时触发
-  onError      // 报错时触发
+  onStart,
+  onUpdate,
+  onSentence,
+  onFinished,
+  onError
 }) {
-  if (!settings.apiKey) {
+  if (!settings?.apiKey) {
     onError?.(new Error('请先配置 API Key'));
     return;
   }
 
   try {
     onStart?.();
-    const res = await fetch(`${settings.apiUrl.replace(/\/+$/, '')}/chat/completions`, {
+
+    const url = `${String(settings.apiUrl || '').replace(/\/+$/, '')}/chat/completions`;
+
+    const res = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${settings.apiKey}` },
-      signal: signal,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${settings.apiKey}`
+      },
+      signal,
       body: JSON.stringify({
         model: settings.model,
         temperature: settings.temperature,
         stream: true,
-        messages,
-      }),
+        messages
+      })
     });
 
-    if (!res.ok) throw new Error(`API Error: ${res.status}`);
+    if (!res.ok) {
+      throw new Error(`API Error: ${res.status}`);
+    }
+
+    if (!res.body) {
+      throw new Error('API 返回为空');
+    }
 
     const reader = res.body.getReader();
     const decoder = new TextDecoder('utf-8');
+
     let raw = '';
     let fullText = '';
     let sentenceBuffer = '';
 
+    const pushChunk = (chunk) => {
+      if (!chunk) return;
+
+      fullText += chunk;
+      sentenceBuffer += chunk;
+
+      onUpdate?.(fullText);
+
+      const { sentences, rest } = splitSpeakable(sentenceBuffer);
+      if (sentences.length) {
+        for (const s of sentences) {
+          if (!signal?.aborted) onSentence?.(s);
+        }
+        sentenceBuffer = rest;
+      }
+    };
+
     while (true) {
       if (signal?.aborted) break;
+
       const { done, value } = await reader.read();
       if (done) break;
 
       raw += decoder.decode(value, { stream: true });
-      const parts = raw.split('\n');
+
+      // 兼容 \r\n
+      const parts = raw.split(/\r?\n/);
       raw = parts.pop() || '';
 
       for (const line of parts) {
         if (signal?.aborted) break;
+
         const ln = line.trim();
+        if (!ln) continue;
         if (!ln.startsWith('data:')) continue;
+
         const payload = ln.slice(5).trim();
-        if (payload === '[DONE]') continue;
+        if (!payload || payload === '[DONE]') continue;
 
         try {
           const data = JSON.parse(payload);
-          const chunk = data.choices?.[0]?.delta?.content || '';
-          if (!chunk) continue;
 
-          fullText += chunk;
-          sentenceBuffer += chunk;
+          // 兼容多种 chunk 格式
+          const chunk =
+            data?.choices?.[0]?.delta?.content ||
+            data?.choices?.[0]?.message?.content ||
+            data?.choices?.[0]?.text ||
+            data?.delta?.content ||
+            data?.text ||
+            '';
 
-          // 更新完整可见文本给UI
-          onUpdate?.(fullText);
+          pushChunk(chunk);
+        } catch (_) {
+          // 忽略单条坏数据
+        }
+      }
+    }
 
-          // 执行分句并抛出给 TTS
-          const { sentences, rest } = splitSpeakable(sentenceBuffer);
-          if (sentences.length) {
-            for (const s of sentences) {
-              if (!signal?.aborted) onSentence?.(s);
-            }
-            sentenceBuffer = rest;
-          }
-        } catch {}
+    // 如果最后 raw 里还有一个完整 data，也尝试再吃一次
+    const tail = raw.trim();
+    if (tail.startsWith('data:')) {
+      const payload = tail.slice(5).trim();
+      if (payload && payload !== '[DONE]') {
+        try {
+          const data = JSON.parse(payload);
+          const chunk =
+            data?.choices?.[0]?.delta?.content ||
+            data?.choices?.[0]?.message?.content ||
+            data?.choices?.[0]?.text ||
+            data?.delta?.content ||
+            data?.text ||
+            '';
+          pushChunk(chunk);
+        } catch (_) {}
       }
     }
 
     if (sentenceBuffer.trim() && !signal?.aborted) {
       onSentence?.(sentenceBuffer.trim());
     }
-    
-    if (!signal?.aborted) onFinished?.(fullText);
 
+    if (!signal?.aborted) {
+      onFinished?.(fullText);
+    }
   } catch (e) {
-    if (e.name !== 'AbortError') {
+    if (e?.name !== 'AbortError') {
       onError?.(e);
     }
   }
