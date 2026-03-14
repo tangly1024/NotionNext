@@ -17,12 +17,16 @@ export const PROMPT_REGISTRY = {
 【规则】先讲意思，再讲场景，再提醒发音重点。中文示范，缅文解释。`,
 
   choice_explainer_default: `你是一位中文题目解析老师。
-【规则】用简洁中文和缅文辅助，解释为什么答案对或错，指出关键误区。`
+【规则】用简洁中文和缅文辅助，解释为什么答案对或错，指出关键误区。`,
+
+  // 新增：互动解析老师专属提示词
+  interactive_tutor_default: `你是一位互动题解析老师。请用简洁中文和缅文辅助解释并引导学生。
+【规则】
+1. 不要输出Markdown格式（如**、#等）。
+2. 核心考点用中文示范，原理和解释细节用缅文。
+3. 态度要循循善诱，像个耐心的老师。引导学生跟读或提问。`
 };
 
-/**
- * 场景对应的可选老师列表 (供 UI 下拉框使用)
- */
 export const PROMPT_OPTIONS = {
   free_talk: [
     { id: 'free_talk_default', name: '默认口语教练 (幽默毒舌)' },
@@ -38,13 +42,49 @@ export const PROMPT_OPTIONS = {
   ],
 };
 
-// 获取具体 prompt 内容
 export function getPromptById(promptId = 'free_talk_default') {
   return PROMPT_REGISTRY[promptId] || PROMPT_REGISTRY.free_talk_default;
 }
 
-// 获取某个场景下有哪些老师可选
 export function getPromptOptionsByScene(scene = 'free_talk') {
   return PROMPT_OPTIONS[scene] || PROMPT_OPTIONS.free_talk;
 }
+
 export const DEFAULT_CHAT_PROMPT = PROMPT_REGISTRY.free_talk_default;
+
+// 新增：构建互动题初始解析请求格式
+export function buildInteractiveBootstrapPrompt(payload) {
+  if (!payload) return '';
+
+  const {
+    questionText = '',
+    options = [],
+    selectedIds = [],
+    correctAnswers = [],
+    isRight = false
+  } = payload;
+
+  const selectedTexts = options
+    .filter((opt) => selectedIds.includes(String(opt.id)))
+    .map((opt) => opt.text);
+
+  const correctTexts = options
+    .filter((opt) => correctAnswers.includes(String(opt.id)))
+    .map((opt) => opt.text);
+
+  return `
+这是当前题目，请先主动给我讲解这道题：
+
+题目：${questionText || '无'}
+选项：${options.map((o) => `${o.id}. ${o.text}`).join('；')}
+学生选择：${selectedTexts.length ? selectedTexts.join('、') : '未选择'}
+正确答案：${correctTexts.length ? correctTexts.join('、') : '未知'}
+结果：${isRight ? '学生答对了' : '学生答错了'}
+
+请先完成三件事：
+1. 解释这题考什么
+2. 说明为什么正确答案是这个
+3. 如果学生答错了，先站在学生角度思考为什么选择这个答案，指出错误选项的关键误区
+
+讲完后，等待学生继续追问或跟读。`.trim();
+}
