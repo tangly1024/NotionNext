@@ -58,7 +58,7 @@ const idb = {
 const TTS_VOICES = {
   zh: 'zh-CN-XiaoxiaoMultilingualNeural',
   my: 'my-MM-ThihaNeural',
-  en: 'zh-CN-XiaoxiaoMultilingualNeural'
+  en: 'en-US-JennyNeural'
 };
 
 const RATE_MAP = {
@@ -270,10 +270,10 @@ const audioController = {
 const cssStyles = `
 .xzt-container { font-family: "Padauk","Noto Sans SC",sans-serif; display:flex; flex-direction:column; background:transparent; width:100%; height:100%; position:relative; }
 .xzt-header { flex-shrink:0; padding:14px 16px 6px; display:flex; justify-content:center; }
-.top-hint-row { width:100%; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:8px; }
+.top-hint-row { width:100%; display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:8px; }
 
+.top-left-text { font-size:14px; font-weight:900; color:#334155; line-height:1.2; }
 .top-actions { display:flex; align-items:center; gap:8px; }
-.task-text { font-size:13px; font-weight:900; color:#475569; line-height:1.1; text-align:right; }
 .settings-btn { width:38px; height:38px; border-radius:9999px; background:#fff; border:2px solid #e5e7eb; display:flex; align-items:center; justify-content:center; color:#64748b; box-shadow:0 3px 10px rgba(0,0,0,0.05); cursor:pointer; }
 
 .scene-wrapper { width:100%; display:flex; align-items:flex-end; gap:12px; }
@@ -288,7 +288,7 @@ const cssStyles = `
 .my-seg { font-size:1.05rem; font-weight:700; color:#334155; white-space:pre-wrap; }
 .bubble-play-btn { flex-shrink:0; width:44px; height:44px; border-radius:9999px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:inset 0 -2px 0 rgba(0,0,0,0.06); }
 
-.settings-pop { position:absolute; top:58px; right:16px; z-index:120; width:232px; background:#fff; border:2px solid #e5e7eb; border-radius:20px; box-shadow:0 14px 30px rgba(15,23,42,0.12); padding:12px; }
+.settings-pop { position:absolute; top:52px; right:0; z-index:120; width:232px; background:#fff; border:2px solid #e5e7eb; border-radius:20px; box-shadow:0 14px 30px rgba(15,23,42,0.12); padding:12px; }
 .settings-section-title { font-size:11px; font-weight:900; color:#94a3b8; text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; }
 .setting-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 2px; }
 .setting-label { font-size:13px; font-weight:900; color:#334155; }
@@ -435,10 +435,7 @@ function MiniSettings({ prefs, setPrefs, onClose }) {
             onClick={() => setPrefs((s) => ({ ...s, showQuestionPinyin: !s.showQuestionPinyin }))}
             style={{ background: prefs.showQuestionPinyin ? '#58cc02' : '#cbd5e1' }}
           >
-            <div
-              className="switch-dot"
-              style={{ left: prefs.showQuestionPinyin ? '22px' : '4px' }}
-            />
+            <div className="switch-dot" style={{ left: prefs.showQuestionPinyin ? '22px' : '4px' }} />
           </div>
         </div>
 
@@ -449,10 +446,7 @@ function MiniSettings({ prefs, setPrefs, onClose }) {
             onClick={() => setPrefs((s) => ({ ...s, showOptionPinyin: !s.showOptionPinyin }))}
             style={{ background: prefs.showOptionPinyin ? '#58cc02' : '#cbd5e1' }}
           >
-            <div
-              className="switch-dot"
-              style={{ left: prefs.showOptionPinyin ? '22px' : '4px' }}
-            />
+            <div className="switch-dot" style={{ left: prefs.showOptionPinyin ? '22px' : '4px' }} />
           </div>
         </div>
 
@@ -463,10 +457,7 @@ function MiniSettings({ prefs, setPrefs, onClose }) {
             onClick={() => setPrefs((s) => ({ ...s, autoPlay: !s.autoPlay }))}
             style={{ background: prefs.autoPlay ? '#58cc02' : '#cbd5e1' }}
           >
-            <div
-              className="switch-dot"
-              style={{ left: prefs.autoPlay ? '22px' : '4px' }}
-            />
+            <div className="switch-dot" style={{ left: prefs.autoPlay ? '22px' : '4px' }} />
           </div>
         </div>
 
@@ -675,14 +666,17 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
 
       await Promise.resolve(
         triggerAI({
-          scene: 'choice',
-          questionText,
-          questionImg,
-          options: shuffledOptions,
-          selectedIds,
-          correctAnswers,
-          isRight,
-          rawData: data
+          scene: 'interactive_explainer',
+          type: 'choice',
+          payload: {
+            questionText,
+            questionImg,
+            options: shuffledOptions,
+            selectedIds,
+            correctAnswers,
+            isRight,
+            rawData: data
+          }
         })
       );
     } catch (err) {
@@ -699,8 +693,9 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
       <div className="xzt-header">
         <div className="w-full relative">
           <div className="top-hint-row">
+            <div className="top-left-text">请选择正确答案</div>
+
             <div className="top-actions">
-              <div className="task-text">အဖြေမှန်ကို ရွေးပါ</div>
               <button className="settings-btn" onClick={() => setShowSettings((v) => !v)}>
                 <FaCog size={16} />
               </button>
