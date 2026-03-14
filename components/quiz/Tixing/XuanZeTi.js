@@ -772,8 +772,8 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext, tr
 结果：${isRight ? '学生答对了' : '学生答错了'}
 
 请用简洁中文解释：
-1. 为什么正确答案是这个
-2. 如果学生答错了，错因是什么
+1.站在学生的视角思考为什么答错了
+2.为什么正确答案是这个
 3. 最后给一句简短提醒
 `.trim();
   };
