@@ -138,14 +138,20 @@ export function useInteractiveAITutor({
 `.trim();
   };
 
-  const sendMessage = async (text) => {
-    const content = String(text || '').trim();
-    if (!content) return;
+  const runAIRequest = async ({ content, visibleUserMessage = true }) => {
+    const text = String(content || '').trim();
+    if (!text) return;
 
     stopEverything();
 
+    const baseHistory = [...historyRef.current];
+    let newHistory = baseHistory;
+
+    if (visibleUserMessage) {
+      newHistory = [...baseHistory, { id: nowId(), role: 'user', text }];
+    }
+
     const aiMsgId = nowId();
-    const newHistory = [...historyRef.current, { id: nowId(), role: 'user', text: content }];
     setHistory([...newHistory, { id: aiMsgId, role: 'ai', text: '', isStreaming: true }]);
     scrollToBottom();
 
@@ -157,7 +163,8 @@ export function useInteractiveAITutor({
       ...newHistory.map((h) => ({
         role: h.role === 'ai' ? 'assistant' : 'user',
         content: h.text
-      }))
+      })),
+      ...(visibleUserMessage ? [] : [{ role: 'user', content: text }])
     ];
 
     await streamChatCompletion({
@@ -202,6 +209,18 @@ export function useInteractiveAITutor({
     });
   };
 
+  const sendMessage = async (text) => {
+    const content = String(text || '').trim();
+    if (!content) return;
+    await runAIRequest({ content, visibleUserMessage: true });
+  };
+
+  const sendHiddenMessage = async (text) => {
+    const content = String(text || '').trim();
+    if (!content) return;
+    await runAIRequest({ content, visibleUserMessage: false });
+  };
+
   const startRecording = () => {
     const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRec) {
@@ -221,9 +240,11 @@ export function useInteractiveAITutor({
 
     rec.onresult = (e) => {
       let interimText = '';
+
       for (let i = e.resultIndex; i < e.results.length; i++) {
         const t = (e.results[i][0]?.transcript || '').trim();
         if (!t) continue;
+
         if (e.results[i].isFinal) {
           recordingFinalRef.current = mergeTranscript(recordingFinalRef.current, t);
         } else {
@@ -260,8 +281,12 @@ export function useInteractiveAITutor({
   };
 
   const replayLastAnswer = () => {
-    const lastAI = [...historyRef.current].reverse().find((item) => item.role === 'ai' && item.text);
+    const lastAI = [...historyRef.current]
+      .reverse()
+      .find((item) => item.role === 'ai' && item.text);
+
     if (!lastAI) return;
+
     ttsEngine.stopAndClear();
     ttsEngine.push(lastAI.text);
   };
@@ -287,7 +312,7 @@ export function useInteractiveAITutor({
       const firstPrompt = buildBootstrapPrompt(initialPayload);
       if (firstPrompt) {
         setBootstrapped(true);
-        sendMessage(firstPrompt);
+        sendHiddenMessage(firstPrompt);
       }
     }
 
