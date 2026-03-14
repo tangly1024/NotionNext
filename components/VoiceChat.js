@@ -60,6 +60,26 @@ const toFinite = (v, fallback = 0) => {
   return Number.isFinite(n) ? n : fallback;
 };
 
+// --- 安全的尾部重叠去重算法 (移植自第二个代码) ---
+const mergeTranscript = (prev, next) => {
+  const a = String(prev || '').trim();
+  const b = String(next || '').trim();
+  if (!a) return b;
+  if (!b) return a;
+
+  const maxOverlap = Math.min(a.length, b.length);
+  for (let len = maxOverlap; len >= 2; len--) {
+    if (a.slice(-len) === b.slice(0, len)) {
+      return a + b.slice(len);
+    }
+  }
+
+  if (b.startsWith(a)) return b;
+  if (a.endsWith(b)) return a;
+
+  return a + ' ' + b; // 加空格防止多语言拼接粘连
+};
+
 const RECOGNITION_LANGS = [
   { code: 'zh-CN', name: '中文 (普通话)', flag: '🇨🇳' },
   { code: 'my-MM', name: 'မြန်မာ (缅语)', flag: '🇲🇲' },
@@ -631,7 +651,7 @@ export default function VoiceChat({ isOpen, onClose }) {
     }
   };
 
-  // ===== ASR =====
+  // ===== ASR 语音识别 (已修复重复问题) =====
   const startRecording = () => {
     ttsEngine.unlockAudio();
     const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -652,24 +672,26 @@ export default function VoiceChat({ isOpen, onClose }) {
     rec.continuous = true;
     rec.maxAlternatives = 1;
 
-    recordingFinalRef.current = '';
-    interimRef.current = '';
-    setRecordFinalText('');
-    setLiveInterim('');
+    // 清空历史缓冲
+    clearRecordingBuffer();
     setIsRecording(true);
 
     rec.onresult = (e) => {
-      let finalText = '';
       let interimText = '';
 
-      for (let i = 0; i < e.results.length; i++) {
+      // 核心修复：从 e.resultIndex 开始增量遍历，并使用去重算法合并
+      for (let i = e.resultIndex; i < e.results.length; i++) {
         const t = (e.results[i][0]?.transcript || '').trim();
         if (!t) continue;
-        if (e.results[i].isFinal) finalText += `${t} `;
-        else interimText += `${t} `;
+        
+        if (e.results[i].isFinal) {
+          // 利用 mergeTranscript 进行尾部重叠去重
+          recordingFinalRef.current = mergeTranscript(recordingFinalRef.current, t);
+        } else {
+          interimText += `${t} `;
+        }
       }
 
-      recordingFinalRef.current = finalText.trim();
       interimRef.current = interimText.trim();
 
       setRecordFinalText(recordingFinalRef.current);
@@ -709,7 +731,8 @@ export default function VoiceChat({ isOpen, onClose }) {
     if (submitLockRef.current) return;
     submitLockRef.current = true;
 
-    const finalText = recordingFinalRef.current.trim() || interimRef.current.trim();
+    // 使用合并算法合并已确定的文本和尚在中间状态的文本
+    const finalText = mergeTranscript(recordingFinalRef.current, interimRef.current).trim();
 
     stopRecordingOnly();
     clearRecordingBuffer();
@@ -807,7 +830,9 @@ export default function VoiceChat({ isOpen, onClose }) {
     localStorage.setItem('ai_tutor_rec_lang_v1', recLang);
   }, [recLang]);
 
-  const liveText = [recordFinalText, liveInterim].filter(Boolean).join(' ');
+  // 渲染时安全拼接最终文本和中间文本
+  const liveText = mergeTranscript(recordFinalText, liveInterim);
+  
   if (!isOpen) return null;
 
   const currentLangObj = RECOGNITION_LANGS.find((l) => l.code === recLang) || RECOGNITION_LANGS[0];
