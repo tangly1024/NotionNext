@@ -268,7 +268,7 @@ export function useInteractiveAITutor({
       }
 
       interimRef.current = interimText.trim();
-      setRecordFinalText(recording     rec.onerror = () => stopRecordingOnly();
+      setRecordFinalText(recordingFinalRef.current);
     rec.onend = () => stopRecordingOnly();
 
     recognitionRef.current = rec;
