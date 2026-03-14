@@ -1,19 +1,15 @@
+// components/ai/aiTextUtils.js
 export const nowId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
-// 核心修复：更安全的尾部重叠去重算法
 export const mergeTranscript = (prev, next) => {
   const a = String(prev || '').trim();
   const b = String(next || '').trim();
   if (!a) return b;
   if (!b) return a;
-
   const maxOverlap = Math.min(a.length, b.length);
   for (let len = maxOverlap; len >= 2; len--) {
-    if (a.slice(-len) === b.slice(0, len)) {
-      return a + b.slice(len);
-    }
+    if (a.slice(-len) === b.slice(0, len)) return a + b.slice(len);
   }
-
   if (b.startsWith(a)) return b;
   if (a.endsWith(b)) return a;
   return a + ' ' + b; 
@@ -40,9 +36,13 @@ export const normalizeAssistantText = (text = '') =>
     .split('\n').map((line) => line.replace(LABEL_PREFIX_RE, '').replace(EN_TEMPLATE_WORD_RE, '').replace(/^\s*[-•]\s*/, '').trim())
     .filter((line) => !shouldHideLine(line)).join('\n').replace(/\n{3,}/g, '\n\n').trim();
 
+// 核心优化：不再粗暴地替换逗号、句号，保留给TTS引擎自己控制原生停顿的呼吸节奏。
 export const sanitizeForTTS = (text = '') =>
-  normalizeAssistantText(text).replace(/\([^)]*[a-zA-ZüÜvV][^)]*\)/g, '').replace(/[，。！？.!?,;:；：、]/g, ' ')
-    .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '').replace(/\s+/g, ' ').trim();
+  normalizeAssistantText(text)
+    .replace(/\([^)]*[a-zA-ZüÜvV][^)]*\)/g, '')
+    .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 
 export const splitMixedLanguage = (text) => {
   const segments = [];
@@ -53,6 +53,7 @@ export const splitMixedLanguage = (text) => {
     else if (/[\u1000-\u109F]/.test(char)) type = 'my';
     else if (/[a-zA-Z]/.test(char)) type = 'en';
 
+    // 如果是中立字符(空格/标点)，则附加给上一次的语言避免被强制切碎
     if (type !== 'neutral') {
       if (currentLang !== type && currentLang !== null) {
         segments.push({ text: currentBuffer, lang: currentLang });
@@ -64,10 +65,11 @@ export const splitMixedLanguage = (text) => {
   return segments;
 };
 
+// 核心优化：加入逗号和分号，缩短送进TTS的延迟，让音频更流畅连接。
 export const splitSpeakable = (buf) => {
   const out = []; let last = 0;
   for (let i = 0; i < buf.length; i++) {
-    if (/[。！？.!?\n]/.test(buf[i])) {
+    if (/[。！？.!?\n，,；;]/.test(buf[i])) {
       const s = buf.slice(last, i + 1).trim();
       if (s) out.push(s);
       last = i + 1;
