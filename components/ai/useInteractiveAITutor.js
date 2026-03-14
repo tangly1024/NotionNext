@@ -207,8 +207,14 @@ export function useInteractiveAITutor({
         })
       });
 
-      if (!res.ok) throw new Error(`API Error: ${res.status}`);
-      if (!res.body) throw new Error('API 返回为空');
+      if (!res.ok) {
+  const errText = await res.text();
+  throw new Error(`API Error: ${res.status} ${errText}`);
+}
+
+if (!res.body) {
+  throw new Error('API 返回为空');
+}
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder('utf-8');
