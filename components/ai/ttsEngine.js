@@ -1,124 +1,79 @@
-// components/ai/ttsEngine.js
-import { sanitizeForTTS, splitMixedLanguage } from './aiTextUtils';
-import { toFinite } from './aiConfig';
+// components/ai/aiTextUtils.js
+export const nowId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
-export class ExternalTTSQueue {
-  constructor() {
-    this.queue = [];
-    this.isPlaying = false;
-    this.currentAudio = null;
-    this.playToken = 0;
-    this.settingsRef = null;
-    this.onStateChange = null;
-    this.audioUnlocked = false;
-    this.prefetching = false;
-    this.prefetchAudio = null;
-    this.prefetchToken = null;
-    this.recentSegments = [];
+export const mergeTranscript = (prev, next) => {
+  const a = String(prev || '').trim();
+  const b = String(next || '').trim();
+  if (!a) return b;
+  if (!b) return a;
+  const maxOverlap = Math.min(a.length, b.length);
+  for (let len = maxOverlap; len >= 2; len--) {
+    if (a.slice(-len) === b.slice(0, len)) return a + b.slice(len);
   }
+  if (b.startsWith(a)) return b;
+  if (a.endsWith(b)) return a;
+  return a + ' ' + b; 
+};
 
-  setSettingsRef(ref) { this.settingsRef = ref; }
-  setStateCallback(cb) { this.onStateChange = cb; }
+const LABEL_PREFIX_RE = /^\s*(情绪|反馈|纠错|目标句|缅文释义|Target Sentence|Meaning(?:\(MY\))?|Correction|Emotion|Feedback)\s*[:：]\s*/i;
+const EN_TEMPLATE_WORD_RE = /\b(Target Sentence|Meaning(?:\(MY\))?|Romanization|Pinyin|Correction|Emotion|Feedback|Hint)\b/gi;
+const EN_ONLY_LINE_RE = /^[a-zA-Z0-9\u00C0-\u024F\u1E00-\u1EFFüÜvV\s'’.,;:!?-]+$/;
 
-  unlockAudio() {
-    if (this.audioUnlocked) return;
-    try {
-      const a = new Audio('data:audio/mp3;base64,//MkxAAQAAAAgAAAAAAAAAAAAAAP//AwAAAAAAAAAAAAA=');
-      a.play().then(() => { this.audioUnlocked = true; }).catch(() => {});
-    } catch {}
+export const shouldHideLine = (line) => {
+  const t = line.trim();
+  if (!t) return true;
+  if (/^[\s*#`_~\-\[\](){}<>|\\.,!?;:]+$/.test(t)) return true;
+  if (/(拼音|罗马音|romanization|pinyin)/i.test(t)) return true;
+  const hasZhOrMy = /[\u4e00-\u9fff\u1000-\u109F]/.test(t);
+  const hasLatin = /[a-zA-Z]/.test(t);
+  if (hasLatin && !hasZhOrMy) return true;
+  if (!hasZhOrMy && EN_ONLY_LINE_RE.test(t)) return true;
+  return false;
+};
+
+export const normalizeAssistantText = (text = '') =>
+  text.replace(/\r/g, '').replace(/\*\*/g, '').replace(/[`*_#~]/g, '').replace(/\[[^\]]*?\]/g, '')
+    .split('\n').map((line) => line.replace(LABEL_PREFIX_RE, '').replace(EN_TEMPLATE_WORD_RE, '').replace(/^\s*[-•]\s*/, '').trim())
+    .filter((line) => !shouldHideLine(line)).join('\n').replace(/\n{3,}/g, '\n\n').trim();
+
+// 核心优化：不再粗暴地替换逗号、句号，保留给TTS引擎自己控制原生停顿的呼吸节奏。
+export const sanitizeForTTS = (text = '') =>
+  normalizeAssistantText(text)
+    .replace(/\([^)]*[a-zA-ZüÜvV][^)]*\)/g, '')
+    .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+export const splitMixedLanguage = (text) => {
+  const segments = [];
+  let currentLang = null; let currentBuffer = '';
+  for (const char of text) {
+    let type = 'neutral';
+    if (/[\u4e00-\u9fa5]/.test(char)) type = 'zh';
+    else if (/[\u1000-\u109F]/.test(char)) type = 'my';
+    else if (/[a-zA-Z]/.test(char)) type = 'en';
+
+    // 如果是中立字符(空格/标点)，则附加给上一次的语言避免被强制切碎
+    if (type !== 'neutral') {
+      if (currentLang !== type && currentLang !== null) {
+        segments.push({ text: currentBuffer, lang: currentLang });
+        currentBuffer = char; currentLang = type;
+      } else { currentLang = type; currentBuffer += char; }
+    } else { currentBuffer += char; }
   }
+  if (currentBuffer.trim()) segments.push({ text: currentBuffer, lang: currentLang || 'zh' });
+  return segments;
+};
 
-  emitState() { this.onStateChange?.({ isPlaying: this.isPlaying }); }
-  sanitizeText(text) { return sanitizeForTTS(text); }
-
-  getVoiceForLang(lang) {
-    const s = this.settingsRef || {};
-    // 关键修正：将原先混用的中文多语言引擎改为原生缅甸语发音人
-    if (lang === 'my') return 'my-MM-NilarNeural'; 
-    if (lang === 'en') return 'en-US-JennyNeural';
-    return s.ttsVoice || 'zh-CN-XiaoxiaoMultilingualNeural';
-  }
-
-  buildUrl(text, voice) {
-    const s = this.settingsRef || {};
-    const rate = toFinite(s.ttsSpeed, 0);
-    const pitch = toFinite(s.ttsPitch, 0);
-    const baseUrl = s.ttsApiUrl || 'https://t.leftsite.cn/tts';
-    return `${baseUrl}?t=${encodeURIComponent(text)}&v=${encodeURIComponent(voice)}&r=${encodeURIComponent(rate)}&p=${encodeURIComponent(pitch)}`;
-  }
-
-  seenRecently(key) {
-    const now = Date.now();
-    this.recentSegments = this.recentSegments.filter((x) => now - x.t < 2500);
-    if (this.recentSegments.some((x) => x.k === key)) return true;
-    this.recentSegments.push({ k: key, t: now });
-    return false;
-  }
-
-  push(text) {
-    const clean = this.sanitizeText(text || '');
-    if (!clean) return;
-    const segments = splitMixedLanguage(clean);
-    for (const seg of segments) {
-      const segText = seg.text.trim();
-      if (!segText) continue;
-      const key = `${seg.lang}:${segText.toLowerCase()}`;
-      if (this.seenRecently(key)) continue;
-      this.queue.push({ text: segText, voice: this.getVoiceForLang(seg.lang) });
+// 核心优化：加入逗号和分号，缩短送进TTS的延迟，让音频更流畅连接。
+export const splitSpeakable = (buf) => {
+  const out = []; let last = 0;
+  for (let i = 0; i < buf.length; i++) {
+    if (/[。！？.!?\n，,；;]/.test(buf[i])) {
+      const s = buf.slice(last, i + 1).trim();
+      if (s) out.push(s);
+      last = i + 1;
     }
-    if (this.queue.length === 0) return;
-    this.emitState(); this.playNext(); this.prefetchNext();
   }
-
-  prefetchNext() {
-    if (this.prefetching || this.prefetchAudio || this.queue.length === 0) return;
-    const nextItem = this.queue[0];
-    this.prefetching = true;
-    const token = this.playToken;
-    const audio = new Audio(this.buildUrl(nextItem.text, nextItem.voice));
-    audio.preload = 'auto'; audio.crossOrigin = 'anonymous';
-    audio.oncanplaythrough = () => {
-      if (token !== this.playToken) return;
-      this.prefetchAudio = audio; this.prefetchToken = token; this.prefetching = false;
-    };
-    audio.onerror = () => { this.prefetching = false; };
-    audio.load();
-  }
-
-  playNext() {
-    if (this.isPlaying) return;
-    if (this.queue.length === 0) { this.emitState(); return; }
-
-    this.isPlaying = true; this.emitState();
-    const token = this.playToken;
-    const item = this.queue.shift();
-    const expectUrl = this.buildUrl(item.text, item.voice);
-
-    let audio = null;
-    if (this.prefetchAudio && this.prefetchToken === token && this.prefetchAudio.src === expectUrl) {
-      audio = this.prefetchAudio; this.prefetchAudio = null; this.prefetchToken = null;
-    } else {
-      audio = new Audio(expectUrl); audio.crossOrigin = 'anonymous'; audio.preload = 'auto';
-    }
-
-    this.currentAudio = audio;
-
-    const onEndOrError = () => {
-      if (token !== this.playToken) return;
-      this.currentAudio = null; this.isPlaying = false; this.emitState();
-      this.prefetchNext(); this.playNext();
-    };
-
-    audio.onended = onEndOrError; audio.onerror = onEndOrError; audio.play().catch(onEndOrError);
-    this.prefetchNext();
-  }
-
-  stopAndClear() {
-    this.playToken += 1; this.queue = []; this.recentSegments = [];
-    if (this.currentAudio) { this.currentAudio.pause(); this.currentAudio.removeAttribute('src'); this.currentAudio.load(); this.currentAudio = null; }
-    if (this.prefetchAudio) { this.prefetchAudio.pause(); this.prefetchAudio.removeAttribute('src'); this.prefetchAudio.load(); this.prefetchAudio = null; }
-    this.prefetching = false; this.prefetchToken = null; this.isPlaying = false; this.emitState();
-  }
-}
-
-export const ttsEngine = new ExternalTTSQueue();
+  return { sentences: out, rest: buf.slice(last) };
+};
