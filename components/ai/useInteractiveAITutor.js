@@ -2,7 +2,12 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ttsEngine } from './ttsEngine';
-import { normalizeAssistantText, mergeTranscript, nowId, splitSpeakable } from './aiTextUtils';
+import {
+  normalizeAssistantText,
+  mergeTranscript,
+  nowId,
+  splitSpeakable
+} from './aiTextUtils';
 
 const RECOGNITION_LANGS = [
   { code: 'zh-CN', name: '中文', flag: '🇨🇳' },
@@ -183,11 +188,18 @@ export function useInteractiveAITutor({
     abortControllerRef.current = controller;
 
     try {
+      const cleanedHistory = newHistory.filter((h) => {
+        if (h.role === 'error') return false;
+        if (h.role === 'ai' && !String(h.text || '').trim()) return false;
+        if (h.role === 'user' && !String(h.text || '').trim()) return false;
+        return true;
+      });
+
       const messages = [
         { role: 'system', content: initialSystemPrompt },
-        ...newHistory.map((h) => ({
+        ...cleanedHistory.map((h) => ({
           role: h.role === 'ai' ? 'assistant' : 'user',
-          content: h.text
+          content: String(h.text || '').trim()
         })),
         ...(visibleUserMessage ? [] : [{ role: 'user', content: text }])
       ];
@@ -208,13 +220,13 @@ export function useInteractiveAITutor({
       });
 
       if (!res.ok) {
-  const errText = await res.text();
-  throw new Error(`API Error: ${res.status} ${errText}`);
-}
+        const errText = await res.text();
+        throw new Error(`API Error: ${res.status} ${errText}`);
+      }
 
-if (!res.body) {
-  throw new Error('API 返回为空');
-}
+      if (!res.body) {
+        throw new Error('API 返回为空');
+      }
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder('utf-8');
@@ -240,7 +252,7 @@ if (!res.body) {
           if (!ln.startsWith('data:')) continue;
 
           const payload = ln.slice(5).trim();
-          if (payload === '[DONE]') continue;
+          if (!payload || payload === '[DONE]') continue;
 
           try {
             const data = JSON.parse(payload);
@@ -294,7 +306,7 @@ if (!res.body) {
     } catch (err) {
       if (err?.name !== 'AbortError' && currentRequestId === requestIdRef.current) {
         setHistory((prev) => [
-          ...prev,
+          ...prev.filter((m) => m.id !== aiMsgId),
           { id: nowId(), role: 'error', text: err?.message || 'AI 请求失败' }
         ]);
       }
@@ -303,7 +315,9 @@ if (!res.body) {
         setIsThinking(false);
         abortControllerRef.current = null;
         setHistory((prev) =>
-          prev.map((m) => (m.id === aiMsgId ? { ...m, isStreaming: false } : m))
+          prev
+            .map((m) => (m.id === aiMsgId ? { ...m, isStreaming: false } : m))
+            .filter((m) => !(m.id === aiMsgId && !String(m.text || '').trim()))
         );
       }
       sendLockRef.current = false;
