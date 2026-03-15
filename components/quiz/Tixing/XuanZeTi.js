@@ -11,20 +11,30 @@ import {
 } from 'react-icons/fa';
 import { pinyin } from 'pinyin-pro';
 import InteractiveAIExplanationPanel from '../../ai/InteractiveAIExplanationPanel';
+import {
+  getSavedInteractivePrefs,
+  getSavedInteractiveAISettings,
+  saveInteractivePrefs,
+  saveInteractiveAISettings,
+  speedLabelToPlayback
+} from '../../interactiveQuiz/interactiveSettings';
 
 // =================================================================================
-// 1. IndexedDB 缓存引擎
+// 1. IndexedDB 缓存
 // =================================================================================
+const DB_NAME = 'LessonCacheDB';
+const STORE_NAME = 'tts_audio';
+
 const idb = {
   db: null,
   async init() {
     if (typeof window === 'undefined' || this.db) return;
     return new Promise((resolve) => {
-      const request = indexedDB.open('LessonCacheDB', 1);
+      const request = indexedDB.open(DB_NAME, 1);
       request.onupgradeneeded = (e) => {
         const db = e.target.result;
-        if (!db.objectStoreNames.contains('tts_audio')) {
-          db.createObjectStore('tts_audio');
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
+          db.createObjectStore(STORE_NAME);
         }
       };
       request.onsuccess = (e) => {
@@ -38,8 +48,8 @@ const idb = {
     await this.init();
     if (!this.db) return null;
     return new Promise((resolve) => {
-      const tx = this.db.transaction('tts_audio', 'readonly');
-      const req = tx.objectStore('tts_audio').get(key);
+      const tx = this.db.transaction(STORE_NAME, 'readonly');
+      const req = tx.objectStore(STORE_NAME).get(key);
       req.onsuccess = () => resolve(req.result || null);
       req.onerror = () => resolve(null);
     });
@@ -48,14 +58,14 @@ const idb = {
     await this.init();
     if (!this.db) return;
     try {
-      const tx = this.db.transaction('tts_audio', 'readwrite');
-      tx.objectStore('tts_audio').put(blob, key);
+      const tx = this.db.transaction(STORE_NAME, 'readwrite');
+      tx.objectStore(STORE_NAME).put(blob, key);
     } catch (_) {}
   }
 };
 
 // =================================================================================
-// 2. 音效与通用工具
+// 2. 基础工具
 // =================================================================================
 function vibrate(pattern) {
   if (typeof navigator !== 'undefined' && navigator.vibrate) {
@@ -106,15 +116,6 @@ function playBeep(type = 'tap') {
   } catch (_) {}
 }
 
-const PREFS_STORAGE_KEY = 'quiz_choice_prefs_v4';
-const AI_STORAGE_KEY = 'interactive_ai_settings_v4';
-
-const RATE_MAP = {
-  slow: -30,
-  normal: 0,
-  fast: 20
-};
-
 const ZH_VOICE_OPTIONS = [
   { id: 'zh-CN-XiaoxiaoMultilingualNeural', name: '晓晓 (女)' },
   { id: 'zh-CN-XiaochenMultilingualNeural', name: '晓辰 (男)' },
@@ -129,57 +130,19 @@ const MY_VOICE_OPTIONS = [
   { id: 'my-MM-NilarNeural', name: 'Nilar' }
 ];
 
-const DEFAULT_PREFS = {
-  showQuestionPinyin: true,
-  showOptionPinyin: true,
-  autoPlay: true,
-  rateMode: 'normal'
-};
-
-const DEFAULT_AI_SETTINGS = {
-  apiUrl: '',
-  apiKey: '',
-  model: 'mistral-large-2512',
-  temperature: 0.2,
-  systemPrompt:
-    '你是一位互动题解析老师。请根据题目、选项、学生答案和正确答案，用简洁中文解释为什么对或错。不要太长，不要输出 Markdown。',
-  ttsApiUrl: 'https://t.leftsite.cn/tts',
-  zhVoice: 'zh-CN-XiaoxiaoMultilingualNeural',
-  myVoice: 'my-MM-ThihaNeural',
-  ttsSpeed: -10,
-  ttsPitch: 0,
-  soundFx: true,
-  vibration: true,
-  showText: true
-};
-
-function getSavedPrefs() {
-  if (typeof window === 'undefined') return DEFAULT_PREFS;
-  try {
-    const raw = localStorage.getItem(PREFS_STORAGE_KEY);
-    return raw ? { ...DEFAULT_PREFS, ...JSON.parse(raw) } : DEFAULT_PREFS;
-  } catch {
-    return DEFAULT_PREFS;
-  }
-}
-
-function getSavedAISettings() {
-  if (typeof window === 'undefined') return DEFAULT_AI_SETTINGS;
-  try {
-    const raw = localStorage.getItem(AI_STORAGE_KEY);
-    return raw ? { ...DEFAULT_AI_SETTINGS, ...JSON.parse(raw) } : DEFAULT_AI_SETTINGS;
-  } catch {
-    return DEFAULT_AI_SETTINGS;
-  }
-}
-
 // =================================================================================
-// 3. TTS 文本工具
+// 3. TTS
 // =================================================================================
 const TTS_VOICES = {
   zh: 'zh-CN-XiaoxiaoMultilingualNeural',
   my: 'my-MM-ThihaNeural',
   en: 'en-US-JennyNeural'
+};
+
+const RATE_MAP = {
+  slow: -30,
+  normal: 0,
+  fast: 20
 };
 
 const isChineseChar = (ch = '') => /[\u4e00-\u9fff]/.test(ch);
@@ -188,9 +151,8 @@ const isLatinOrDigit = (ch = '') => /[a-zA-Z0-9]/.test(ch);
 const isWhitespace = (ch = '') => /\s/.test(ch);
 const containsChinese = (text = '') => /[\u4e00-\u9fff]/.test(text);
 
-const isPunctuationOrSymbol = (ch = '') => {
-  return !isChineseChar(ch) && !isMyanmarChar(ch) && !isLatinOrDigit(ch) && !isWhitespace(ch);
-};
+const isPunctuationOrSymbol = (ch = '') =>
+  !isChineseChar(ch) && !isMyanmarChar(ch) && !isLatinOrDigit(ch) && !isWhitespace(ch);
 
 const detectWholeTextType = (text = '') => {
   const hasZh = /[\u4e00-\u9fff]/.test(text);
@@ -208,9 +170,7 @@ const detectWholeTextType = (text = '') => {
 
 function splitMixedText(text = '') {
   const wholeType = detectWholeTextType(text);
-  if (wholeType !== 'mixed') {
-    return [{ text: text.trim(), lang: wholeType }];
-  }
+  if (wholeType !== 'mixed') return [{ text: text.trim(), lang: wholeType || 'zh' }];
 
   const chars = Array.from(text);
   const segments = [];
@@ -230,10 +190,7 @@ function splitMixedText(text = '') {
     if (isChineseChar(ch)) lang = 'zh';
     else if (isMyanmarChar(ch)) lang = 'my';
     else if (isLatinOrDigit(ch)) lang = 'en';
-    else if (isWhitespace(ch)) {
-      currentText += ch;
-      continue;
-    } else if (isPunctuationOrSymbol(ch)) {
+    else if (isWhitespace(ch) || isPunctuationOrSymbol(ch)) {
       currentText += ch;
       continue;
     }
@@ -244,9 +201,8 @@ function splitMixedText(text = '') {
       continue;
     }
 
-    if (lang === currentLang) {
-      currentText += ch;
-    } else {
+    if (lang === currentLang) currentText += ch;
+    else {
       pushCurrent();
       currentLang = lang;
       currentText = ch;
@@ -254,11 +210,7 @@ function splitMixedText(text = '') {
   }
 
   pushCurrent();
-
-  if (!segments.length && text.trim()) {
-    return [{ text: text.trim(), lang: 'zh' }];
-  }
-
+  if (!segments.length && text.trim()) return [{ text: text.trim(), lang: 'zh' }];
   return segments;
 }
 
@@ -276,9 +228,6 @@ async function getTTSBlob(text, voice, rate = 0, apiUrl = 'https://t.leftsite.cn
   return blob;
 }
 
-// =================================================================================
-// 4. TTS 播放引擎
-// =================================================================================
 const audioController = {
   currentAudio: null,
   latestRequestId: 0,
@@ -379,7 +328,7 @@ const audioController = {
 };
 
 // =================================================================================
-// 5. 样式
+// 4. 样式
 // =================================================================================
 const cssStyles = `
 .xzt-container {
@@ -829,8 +778,8 @@ function SettingsPanel({ prefs, setPrefs, onClose, onOpenAISettings }) {
             ].map((item) => (
               <button
                 key={item.key}
-                className={`speed-btn ${prefs.rateMode === item.key ? 'active' : ''}`}
-                onClick={() => setPrefs((s) => ({ ...s, rateMode: item.key }))}
+                className={`speed-btn ${prefs.ttsSpeed === item.key ? 'active' : ''}`}
+                onClick={() => setPrefs((s) => ({ ...s, ttsSpeed: item.key }))}
               >
                 {item.label}
               </button>
@@ -867,7 +816,7 @@ function AISettingsPanel({ aiSettings, updateAISettings, onClose }) {
         <input
           className="text-input"
           placeholder="API URL"
-          value={aiSettings.apiUrl}
+          value={aiSettings.apiUrl || ''}
           onChange={(e) => updateAISettings({ apiUrl: e.target.value })}
         />
 
@@ -875,14 +824,14 @@ function AISettingsPanel({ aiSettings, updateAISettings, onClose }) {
           className="text-input"
           placeholder="API Key"
           type="password"
-          value={aiSettings.apiKey}
+          value={aiSettings.apiKey || ''}
           onChange={(e) => updateAISettings({ apiKey: e.target.value })}
         />
 
         <input
           className="text-input"
           placeholder="模型"
-          value={aiSettings.model}
+          value={aiSettings.model || ''}
           onChange={(e) => updateAISettings({ model: e.target.value })}
         />
 
@@ -893,7 +842,7 @@ function AISettingsPanel({ aiSettings, updateAISettings, onClose }) {
             min="0"
             max="1.2"
             step="0.05"
-            value={aiSettings.temperature}
+            value={aiSettings.temperature ?? 0.2}
             onChange={(e) => updateAISettings({ temperature: Number(e.target.value) })}
             style={{ width: '100%' }}
           />
@@ -903,7 +852,7 @@ function AISettingsPanel({ aiSettings, updateAISettings, onClose }) {
           className="textarea-input"
           rows={4}
           placeholder="系统提示词"
-          value={aiSettings.systemPrompt}
+          value={aiSettings.systemPrompt || ''}
           onChange={(e) => updateAISettings({ systemPrompt: e.target.value })}
         />
 
@@ -912,7 +861,7 @@ function AISettingsPanel({ aiSettings, updateAISettings, onClose }) {
         <input
           className="text-input"
           placeholder="TTS API URL"
-          value={aiSettings.ttsApiUrl}
+          value={aiSettings.ttsApiUrl || ''}
           onChange={(e) => updateAISettings({ ttsApiUrl: e.target.value })}
         />
 
@@ -949,7 +898,7 @@ function AISettingsPanel({ aiSettings, updateAISettings, onClose }) {
             min="-50"
             max="50"
             step="1"
-            value={aiSettings.ttsSpeed}
+            value={aiSettings.ttsSpeed ?? -10}
             onChange={(e) => updateAISettings({ ttsSpeed: Number(e.target.value) })}
             style={{ width: '100%' }}
           />
@@ -982,7 +931,7 @@ function AISettingsPanel({ aiSettings, updateAISettings, onClose }) {
 }
 
 // =================================================================================
-// 6. 主组件
+// 5. 主组件
 // =================================================================================
 export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) {
   const data = rawData?.content || rawData || {};
@@ -1022,8 +971,8 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
   const [questionImgVisible, setQuestionImgVisible] = useState(Boolean(questionImg));
   const [showAIExplanation, setShowAIExplanation] = useState(false);
 
-  const [prefs, setPrefs] = useState(() => getSavedPrefs());
-  const [aiSettings, setAISettings] = useState(() => getSavedAISettings());
+  const [prefs, setPrefs] = useState(() => getSavedInteractivePrefs());
+  const [aiSettings, setAISettings] = useState(() => getSavedInteractiveAISettings());
 
   const mountedRef = useRef(true);
   const timersRef = useRef([]);
@@ -1075,10 +1024,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
 
   useEffect(() => {
     const onPopState = () => {
-      const handled = closeTopOverlay();
-      if (!handled) {
-        // 交给页面正常返回
-      }
+      closeTopOverlay();
     };
 
     window.addEventListener('popstate', onPopState);
@@ -1106,22 +1052,18 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
   }, []);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(PREFS_STORAGE_KEY, JSON.stringify(prefs));
-    }
+    saveInteractivePrefs(prefs);
   }, [prefs]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(AI_STORAGE_KEY, JSON.stringify(aiSettings));
-    }
+    saveInteractiveAISettings(aiSettings);
   }, [aiSettings]);
 
   useEffect(() => {
     setQuestionImgVisible(Boolean(questionImg));
   }, [questionImg]);
 
-  const currentRate = RATE_MAP[prefs.rateMode] ?? 0;
+  const playbackSpeed = speedLabelToPlayback(prefs.ttsSpeed);
 
   useEffect(() => {
     clearTimers();
@@ -1144,7 +1086,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
       addTimer(() => {
         audioController.playMixed(
           questionText,
-          { rate: currentRate, aiSettings },
+          { rate: RATE_MAP[prefs.ttsSpeed] ?? 0, aiSettings },
           () => mountedRef.current && setIsQuestionPlaying(true),
           () => mountedRef.current && setIsQuestionPlaying(false)
         );
@@ -1155,7 +1097,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
       clearTimers();
       audioController.stop();
     };
-  }, [data?.id, questionText, prefs.autoPlay, currentRate]);
+  }, [data?.id, questionText, prefs.autoPlay, prefs.ttsSpeed]);
 
   const updateAISettings = (patch) => {
     setAISettings((prev) => ({ ...prev, ...patch }));
@@ -1181,7 +1123,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
     setSpeakingOptionId(null);
     audioController.playMixed(
       questionText,
-      { rate: currentRate, aiSettings },
+      { rate: RATE_MAP[prefs.ttsSpeed] ?? 0, aiSettings },
       () => mountedRef.current && setIsQuestionPlaying(true),
       () => mountedRef.current && setIsQuestionPlaying(false)
     );
@@ -1214,7 +1156,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
       setIsQuestionPlaying(false);
       audioController.playMixed(
         opt.text,
-        { rate: currentRate, aiSettings },
+        { rate: RATE_MAP[prefs.ttsSpeed] ?? 0, aiSettings },
         () => mountedRef.current && setSpeakingOptionId(sid),
         () => mountedRef.current && setSpeakingOptionId(null)
       );
@@ -1457,11 +1399,20 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
         settings={aiSettings}
         title="AI 讲题老师"
         initialPayload={{
+          questionType: 'choice',
           questionText,
-          options: shuffledOptions,
-          selectedIds,
-          correctAnswers,
-          isRight
+          questionImage: questionImg || '',
+          options: shuffledOptions.map((opt) => ({
+            id: String(opt.id),
+            text: opt.text,
+            imageUrl: opt.img || opt.imageUrl || ''
+          })),
+          selectedIds: selectedIds.map(String),
+          correctAnswers: correctAnswers.map(String),
+          isRight,
+          extraContext: {
+            multiSelect: correctAnswers.length > 1
+          }
         }}
       />
     </div>
