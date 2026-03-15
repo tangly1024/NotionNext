@@ -11,30 +11,28 @@ import {
 } from 'react-icons/fa';
 import { pinyin } from 'pinyin-pro';
 import InteractiveAIExplanationPanel from '../../ai/InteractiveAIExplanationPanel';
+import AISettingsModal from '../../ai/AISettingsModal';
 import {
   getSavedInteractivePrefs,
   getSavedInteractiveAISettings,
   saveInteractivePrefs,
   saveInteractiveAISettings,
-  speedLabelToPlayback
+  speedLabelToRate
 } from '../../interactiveQuiz/interactiveSettings';
 
 // =================================================================================
-// 1. IndexedDB 缓存
+// 1. IndexedDB 缓存引擎
 // =================================================================================
-const DB_NAME = 'LessonCacheDB';
-const STORE_NAME = 'tts_audio';
-
 const idb = {
   db: null,
   async init() {
     if (typeof window === 'undefined' || this.db) return;
     return new Promise((resolve) => {
-      const request = indexedDB.open(DB_NAME, 1);
+      const request = indexedDB.open('LessonCacheDB', 1);
       request.onupgradeneeded = (e) => {
         const db = e.target.result;
-        if (!db.objectStoreNames.contains(STORE_NAME)) {
-          db.createObjectStore(STORE_NAME);
+        if (!db.objectStoreNames.contains('tts_audio')) {
+          db.createObjectStore('tts_audio');
         }
       };
       request.onsuccess = (e) => {
@@ -48,8 +46,8 @@ const idb = {
     await this.init();
     if (!this.db) return null;
     return new Promise((resolve) => {
-      const tx = this.db.transaction(STORE_NAME, 'readonly');
-      const req = tx.objectStore(STORE_NAME).get(key);
+      const tx = this.db.transaction('tts_audio', 'readonly');
+      const req = tx.objectStore('tts_audio').get(key);
       req.onsuccess = () => resolve(req.result || null);
       req.onerror = () => resolve(null);
     });
@@ -58,14 +56,14 @@ const idb = {
     await this.init();
     if (!this.db) return;
     try {
-      const tx = this.db.transaction(STORE_NAME, 'readwrite');
-      tx.objectStore(STORE_NAME).put(blob, key);
+      const tx = this.db.transaction('tts_audio', 'readwrite');
+      tx.objectStore('tts_audio').put(blob, key);
     } catch (_) {}
   }
 };
 
 // =================================================================================
-// 2. 基础工具
+// 2. 音效与通用工具
 // =================================================================================
 function vibrate(pattern) {
   if (typeof navigator !== 'undefined' && navigator.vibrate) {
@@ -116,33 +114,13 @@ function playBeep(type = 'tap') {
   } catch (_) {}
 }
 
-const ZH_VOICE_OPTIONS = [
-  { id: 'zh-CN-XiaoxiaoMultilingualNeural', name: '晓晓 (女)' },
-  { id: 'zh-CN-XiaochenMultilingualNeural', name: '晓辰 (男)' },
-  { id: 'zh-CN-XiaoxiaoNeural', name: '晓晓标准' },
-  { id: 'zh-CN-YunxiNeural', name: '云希' },
-  { id: 'zh-CN-YunjianNeural', name: '云健' },
-  { id: 'zh-CN-XiaoyiNeural', name: '晓伊' }
-];
-
-const MY_VOICE_OPTIONS = [
-  { id: 'my-MM-ThihaNeural', name: 'Thiha' },
-  { id: 'my-MM-NilarNeural', name: 'Nilar' }
-];
-
 // =================================================================================
-// 3. TTS
+// 3. TTS 文本工具
 // =================================================================================
 const TTS_VOICES = {
   zh: 'zh-CN-XiaoxiaoMultilingualNeural',
   my: 'my-MM-ThihaNeural',
   en: 'en-US-JennyNeural'
-};
-
-const RATE_MAP = {
-  slow: -30,
-  normal: 0,
-  fast: 20
 };
 
 const isChineseChar = (ch = '') => /[\u4e00-\u9fff]/.test(ch);
@@ -201,8 +179,9 @@ function splitMixedText(text = '') {
       continue;
     }
 
-    if (lang === currentLang) currentText += ch;
-    else {
+    if (lang === currentLang) {
+      currentText += ch;
+    } else {
       pushCurrent();
       currentLang = lang;
       currentText = ch;
@@ -210,6 +189,7 @@ function splitMixedText(text = '') {
   }
 
   pushCurrent();
+
   if (!segments.length && text.trim()) return [{ text: text.trim(), lang: 'zh' }];
   return segments;
 }
@@ -228,6 +208,9 @@ async function getTTSBlob(text, voice, rate = 0, apiUrl = 'https://t.leftsite.cn
   return blob;
 }
 
+// =================================================================================
+// 4. TTS 播放引擎
+// =================================================================================
 const audioController = {
   currentAudio: null,
   latestRequestId: 0,
@@ -328,7 +311,7 @@ const audioController = {
 };
 
 // =================================================================================
-// 4. 样式
+// 5. 样式
 // =================================================================================
 const cssStyles = `
 .xzt-container {
@@ -624,44 +607,6 @@ const cssStyles = `
 }
 .speed-btn.active { background:#ecfccb; border-color:#bef264; color:#3f6212; }
 
-.select-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:8px; }
-.small-choice-btn {
-  border:2px solid #e5e7eb;
-  background:#fff;
-  color:#475569;
-  border-radius:12px;
-  font-size:11px;
-  font-weight:900;
-  padding:10px 8px;
-  cursor:pointer;
-  text-align:center;
-}
-.small-choice-btn.active {
-  background:#f5f3ff;
-  border-color:#c4b5fd;
-  color:#6d28d9;
-}
-.text-input {
-  width:100%;
-  border:2px solid #e5e7eb;
-  border-radius:12px;
-  padding:10px 12px;
-  font-size:12px;
-  color:#334155;
-  outline:none;
-  margin-top:8px;
-}
-.textarea-input {
-  width:100%;
-  border:2px solid #e5e7eb;
-  border-radius:12px;
-  padding:10px 12px;
-  font-size:12px;
-  color:#334155;
-  outline:none;
-  resize:vertical;
-  margin-top:8px;
-}
 .jump-btn {
   width:100%;
   border:2px solid #ddd6fe;
@@ -799,139 +744,8 @@ function SettingsPanel({ prefs, setPrefs, onClose, onOpenAISettings }) {
   );
 }
 
-function AISettingsPanel({ aiSettings, updateAISettings, onClose }) {
-  return (
-    <div className="panel-modal" style={{ zIndex: 1300 }}>
-      <div className="modal-backdrop" onClick={onClose} />
-      <div className="panel-card relative">
-        <div className="panel-header">
-          <span className="panel-title">AI 设置</span>
-          <button className="panel-close-btn" onClick={onClose}>
-            <FaTimes />
-          </button>
-        </div>
-
-        <div className="settings-section-title" style={{ marginTop: 0 }}>模型接口</div>
-
-        <input
-          className="text-input"
-          placeholder="API URL"
-          value={aiSettings.apiUrl || ''}
-          onChange={(e) => updateAISettings({ apiUrl: e.target.value })}
-        />
-
-        <input
-          className="text-input"
-          placeholder="API Key"
-          type="password"
-          value={aiSettings.apiKey || ''}
-          onChange={(e) => updateAISettings({ apiKey: e.target.value })}
-        />
-
-        <input
-          className="text-input"
-          placeholder="模型"
-          value={aiSettings.model || ''}
-          onChange={(e) => updateAISettings({ model: e.target.value })}
-        />
-
-        <div style={{ marginTop: 10 }}>
-          <div className="setting-label" style={{ marginBottom: 8 }}>AI 温度</div>
-          <input
-            type="range"
-            min="0"
-            max="1.2"
-            step="0.05"
-            value={aiSettings.temperature ?? 0.2}
-            onChange={(e) => updateAISettings({ temperature: Number(e.target.value) })}
-            style={{ width: '100%' }}
-          />
-        </div>
-
-        <textarea
-          className="textarea-input"
-          rows={4}
-          placeholder="系统提示词"
-          value={aiSettings.systemPrompt || ''}
-          onChange={(e) => updateAISettings({ systemPrompt: e.target.value })}
-        />
-
-        <div className="settings-section-title">发音设置</div>
-
-        <input
-          className="text-input"
-          placeholder="TTS API URL"
-          value={aiSettings.ttsApiUrl || ''}
-          onChange={(e) => updateAISettings({ ttsApiUrl: e.target.value })}
-        />
-
-        <div className="setting-label" style={{ marginBottom: 6, marginTop: 10 }}>中文声音</div>
-        <div className="select-grid-2">
-          {ZH_VOICE_OPTIONS.map((item) => (
-            <button
-              key={item.id}
-              className={`small-choice-btn ${aiSettings.zhVoice === item.id ? 'active' : ''}`}
-              onClick={() => updateAISettings({ zhVoice: item.id })}
-            >
-              {item.name}
-            </button>
-          ))}
-        </div>
-
-        <div className="setting-label" style={{ marginTop: 12, marginBottom: 6 }}>缅语声音</div>
-        <div className="select-grid-2">
-          {MY_VOICE_OPTIONS.map((item) => (
-            <button
-              key={item.id}
-              className={`small-choice-btn ${aiSettings.myVoice === item.id ? 'active' : ''}`}
-              onClick={() => updateAISettings({ myVoice: item.id })}
-            >
-              {item.name}
-            </button>
-          ))}
-        </div>
-
-        <div style={{ marginTop: 12 }}>
-          <div className="setting-label" style={{ marginBottom: 8 }}>AI 朗读语速</div>
-          <input
-            type="range"
-            min="-50"
-            max="50"
-            step="1"
-            value={aiSettings.ttsSpeed ?? -10}
-            onChange={(e) => updateAISettings({ ttsSpeed: Number(e.target.value) })}
-            style={{ width: '100%' }}
-          />
-        </div>
-
-        <div className="setting-row" style={{ marginTop: 4 }}>
-          <span className="setting-label">震动反馈</span>
-          <div
-            className="switch"
-            onClick={() => updateAISettings({ vibration: !aiSettings.vibration })}
-            style={{ background: aiSettings.vibration ? '#7c3aed' : '#cbd5e1' }}
-          >
-            <div className="switch-dot" style={{ left: aiSettings.vibration ? '22px' : '4px' }} />
-          </div>
-        </div>
-
-        <div className="setting-row">
-          <span className="setting-label">音效反馈</span>
-          <div
-            className="switch"
-            onClick={() => updateAISettings({ soundFx: !aiSettings.soundFx })}
-            style={{ background: aiSettings.soundFx ? '#7c3aed' : '#cbd5e1' }}
-          >
-            <div className="switch-dot" style={{ left: aiSettings.soundFx ? '22px' : '4px' }} />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // =================================================================================
-// 5. 主组件
+// 6. 主组件
 // =================================================================================
 export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) {
   const data = rawData?.content || rawData || {};
@@ -1063,7 +877,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
     setQuestionImgVisible(Boolean(questionImg));
   }, [questionImg]);
 
-  const playbackSpeed = speedLabelToPlayback(prefs.ttsSpeed);
+  const currentRate = speedLabelToRate(prefs.ttsSpeed);
 
   useEffect(() => {
     clearTimers();
@@ -1086,7 +900,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
       addTimer(() => {
         audioController.playMixed(
           questionText,
-          { rate: RATE_MAP[prefs.ttsSpeed] ?? 0, aiSettings },
+          { rate: currentRate, aiSettings },
           () => mountedRef.current && setIsQuestionPlaying(true),
           () => mountedRef.current && setIsQuestionPlaying(false)
         );
@@ -1097,7 +911,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
       clearTimers();
       audioController.stop();
     };
-  }, [data?.id, questionText, prefs.autoPlay, prefs.ttsSpeed]);
+  }, [data?.id, questionText, prefs.autoPlay, currentRate]);
 
   const updateAISettings = (patch) => {
     setAISettings((prev) => ({ ...prev, ...patch }));
@@ -1123,7 +937,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
     setSpeakingOptionId(null);
     audioController.playMixed(
       questionText,
-      { rate: RATE_MAP[prefs.ttsSpeed] ?? 0, aiSettings },
+      { rate: currentRate, aiSettings },
       () => mountedRef.current && setIsQuestionPlaying(true),
       () => mountedRef.current && setIsQuestionPlaying(false)
     );
@@ -1156,7 +970,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
       setIsQuestionPlaying(false);
       audioController.playMixed(
         opt.text,
-        { rate: RATE_MAP[prefs.ttsSpeed] ?? 0, aiSettings },
+        { rate: currentRate, aiSettings },
         () => mountedRef.current && setSpeakingOptionId(sid),
         () => mountedRef.current && setSpeakingOptionId(null)
       );
@@ -1202,7 +1016,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
     setIsQuestionPlaying(false);
     setSpeakingOptionId(null);
 
-    if (!aiSettings.apiUrl || !aiSettings.apiKey) {
+    if (!aiSettings.apiKey || !aiSettings.apiUrl || !aiSettings.model) {
       openOverlay('ai-settings', setShowAISettings);
       return;
     }
@@ -1385,13 +1199,13 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
         />
       )}
 
-      {showAISettings && (
-        <AISettingsPanel
-          aiSettings={aiSettings}
-          updateAISettings={updateAISettings}
-          onClose={() => setShowAISettings(false)}
-        />
-      )}
+      <AISettingsModal
+        open={showAISettings}
+        settings={aiSettings}
+        updateSettings={updateAISettings}
+        onClose={() => setShowAISettings(false)}
+        scene="exercise"
+      />
 
       <InteractiveAIExplanationPanel
         open={showAIExplanation}
