@@ -51,7 +51,7 @@ export default function InteractiveAIExplanationPanel({
   settings,
   title = 'AI 讲题老师',
   initialPayload = null,
-  onClose // 接收外部传入的真实关闭方法
+  onClose
 }) {
   const {
     history,
@@ -85,7 +85,7 @@ export default function InteractiveAIExplanationPanel({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex flex-col w-full h-[100dvh] bg-slate-50 text-slate-800 overflow-hidden">
+    <div className="fixed inset-0 z-[9990] flex flex-col w-full h-[100dvh] bg-slate-50 text-slate-800 overflow-hidden">
       <GlobalStyles />
 
       <div
@@ -98,20 +98,19 @@ export default function InteractiveAIExplanationPanel({
       <div className="relative z-20 flex items-center justify-between px-4 h-16 border-b border-slate-200/50 backdrop-blur-sm">
         <button
           onClick={() => {
-            stopEverything(); // 停掉音频和请求
-            onClose?.();      // 通知父级组件关闭
+            stopEverything();
+            onClose?.();      
           }}
           className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-200/60 text-slate-600 active:scale-90 shadow-sm"
         >
           <FaArrowLeft />
         </button>
-
         <div className="font-bold tracking-widest text-slate-800 text-sm">{title}</div>
         <div className="w-10 h-10" />
       </div>
 
       {/* Body */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto relative p-4 pb-36 flex flex-col z-10 overscroll-contain">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto relative p-4 pb-40 flex flex-col z-10 overscroll-contain">
         {!showText && !textMode ? (
           <div className="flex-1 flex flex-col items-center justify-center min-h-full">
             <div className="relative flex items-center justify-center w-56 h-56 pointer-events-none">
@@ -264,16 +263,29 @@ export default function InteractiveAIExplanationPanel({
         </div>
       </div>
 
+      {/* 核心修复：绝对顶级 z-index，彻底采用 onPointerDown 强制阻断一切事件冒泡 */}
       {showLangPicker && (
-        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm cursor-pointer" onClick={() => setShowLangPicker(false)} />
-          <div className="relative bg-white border border-slate-200 rounded-3xl p-6 w-full max-w-sm shadow-2xl animate-[fadeIn_.2s_ease-out] z-10" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
+          <div 
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm" 
+            onPointerDown={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              setShowLangPicker(false);
+            }} 
+          />
+          <div 
+            className="relative bg-white border border-slate-200 rounded-3xl p-6 w-full max-w-sm shadow-2xl animate-[fadeIn_.2s_ease-out]" 
+            onPointerDown={(e) => e.stopPropagation()}
+          >
             <h3 className="font-bold text-lg mb-4 text-center text-slate-800">选择识别语言</h3>
             <div className="grid grid-cols-2 gap-3">
               {RECOGNITION_LANGS.map((lang) => (
                 <button
                   key={lang.code}
-                  onClick={() => {
+                  onPointerDown={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
                     setRecLang(lang.code);
                     setShowLangPicker(false);
                   }}
@@ -281,8 +293,8 @@ export default function InteractiveAIExplanationPanel({
                     recLang === lang.code ? 'border-pink-500 bg-pink-50' : 'border-slate-200 bg-slate-50 hover:bg-slate-100'
                   }`}
                 >
-                  <span className="text-2xl">{lang.flag}</span>
-                  <span className="font-bold text-xs text-slate-600">{lang.name}</span>
+                  <span className="text-2xl pointer-events-none">{lang.flag}</span>
+                  <span className="font-bold text-xs text-slate-600 pointer-events-none">{lang.name}</span>
                 </button>
               ))}
             </div>
