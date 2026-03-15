@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { FaTimes } from 'react-icons/fa';
 import {
   PROVIDERS,
@@ -45,15 +46,21 @@ export default function AISettingsModal({
   onClose,
   scene = 'exercise'
 }) {
-  if (!open) return null;
+  const [mounted, setMounted] = useState(false);
 
-  const provider = getProviderById(settings?.providerId);
   const assistants = useMemo(() => {
     if (scene === 'exercise') return EXERCISE_ASSISTANTS;
     return EXERCISE_ASSISTANTS;
   }, [scene]);
 
+  const provider = getProviderById(settings?.providerId);
   const currentAssistant = getExerciseAssistantById(settings?.assistantId);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || !open) return null;
 
   const handleProviderChange = (providerId) => {
     const nextProvider = getProviderById(providerId);
@@ -78,8 +85,8 @@ export default function AISettingsModal({
     });
   };
 
-  return (
-    <div className="fixed inset-0 z-[1300] flex items-center justify-center p-4">
+  return createPortal(
+    <div className="fixed inset-0 z-[2147483600] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/55 backdrop-blur-sm" onClick={onClose} />
 
       <div className="relative z-10 flex max-h-[90vh] w-full max-w-md flex-col overflow-hidden rounded-3xl border border-white/10 bg-white shadow-2xl">
@@ -319,6 +326,7 @@ export default function AISettingsModal({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
