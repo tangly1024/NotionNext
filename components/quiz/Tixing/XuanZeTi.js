@@ -1208,27 +1208,28 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
       />
 
       <InteractiveAIExplanationPanel
-        open={showAIExplanation}
-        onClose={() => setShowAIExplanation(false)}
-        settings={aiSettings}
-        title="AI 讲题老师"
-        initialPayload={{
-          questionType: 'choice',
-          questionText,
-          questionImage: questionImg || '',
-          options: shuffledOptions.map((opt) => ({
-            id: String(opt.id),
-            text: opt.text,
-            imageUrl: opt.img || opt.imageUrl || ''
-          })),
-          selectedIds: selectedIds.map(String),
-          correctAnswers: correctAnswers.map(String),
-          isRight,
-          extraContext: {
-            multiSelect: correctAnswers.length > 1
-          }
-        }}
-      />
+  open={showAIExplanation}
+  onClose={() => setShowAIExplanation(false)}
+  settings={aiSettings}
+  updateSettings={updateAISettings}
+  title="AI 讲题老师"
+  initialPayload={{
+    questionType: 'choice',
+    questionText,
+    questionImage: questionImg || '',
+    options: shuffledOptions.map((opt) => ({
+      id: String(opt.id),
+      text: opt.text,
+      imageUrl: opt.img || opt.imageUrl || ''
+    })),
+    selectedIds: selectedIds.map(String),
+    correctAnswers: correctAnswers.map(String),
+    isRight,
+    extraContext: {
+      multiSelect: correctAnswers.length > 1
+    }
+  }}
+/>
     </div>
   );
 }
