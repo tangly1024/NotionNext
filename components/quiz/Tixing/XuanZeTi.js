@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import {
   FaVolumeUp,
   FaCheck,
@@ -382,11 +382,12 @@ const audioController = {
 // =================================================================================
 const cssStyles = `
 .xzt-container { font-family:"Padauk","Noto Sans SC",sans-serif; display:flex; flex-direction:column; background:transparent; width:100%; height:100%; position:relative; }
-.xzt-header { flex-shrink:0; padding:8px 16px 2px; display:flex; justify-content:center; }
-.top-hint-row { width:100%; display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:4px; }
-.top-left-text { font-size:15px; font-weight:900; color:#334155; line-height:1.2; }
-.top-actions { display:flex; align-items:center; gap:10px; }
-.settings-btn { display:flex; align-items:center; justify-content:center; color:#64748b; cursor:pointer; font-size:18px; padding:2px; background:none; border:none; }
+.xzt-header { flex-shrink:0; padding:16px 16px 2px; display:flex; flex-direction:column; }
+.top-bar-row { width:100%; display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:12px; }
+.progress-bar-container { flex:1; height:12px; background:#e2e8f0; border-radius:999px; overflow:hidden; }
+.progress-bar-fill { height:100%; background:#58cc02; border-radius:999px; width:45%; transition:width 0.3s ease; }
+.settings-btn { display:flex; align-items:center; justify-content:center; color:#94a3b8; cursor:pointer; font-size:20px; padding:4px; background:none; border:none; transition:color 0.2s; }
+.settings-btn:active { color:#64748b; }
 
 .scene-wrapper { width:100%; display:flex; align-items:flex-start; gap:12px; margin-top:-4px; }
 .teacher-img { height:138px; object-fit:contain; flex-shrink:0; margin-top:6px; }
@@ -561,15 +562,15 @@ const cssStyles = `
 
 .settings-pop {
   position:absolute;
-  top:38px;
-  right:0;
+  top:58px;
+  right:16px;
   z-index:120;
-  width:300px;
+  width:320px;
   background:#fff;
   border:2px solid #e5e7eb;
-  border-radius:20px;
-  box-shadow:0 14px 30px rgba(15,23,42,0.12);
-  padding:14px;
+  border-radius:24px;
+  box-shadow:0 20px 40px rgba(15,23,42,0.15);
+  padding:16px;
 }
 .settings-section-title {
   font-size:11px;
@@ -580,19 +581,19 @@ const cssStyles = `
   margin-bottom:10px;
   margin-top:14px;
 }
-.setting-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 2px; }
-.setting-label { font-size:13px; font-weight:900; color:#334155; }
-.switch { width:42px; height:24px; border-radius:9999px; position:relative; transition:all .2s; cursor:pointer; }
-.switch-dot { position:absolute; top:3px; width:16px; height:16px; border-radius:9999px; background:#fff; transition:all .2s; box-shadow:0 1px 4px rgba(0,0,0,.15); }
+.setting-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 4px; }
+.setting-label { font-size:14px; font-weight:900; color:#334155; }
+.switch { width:46px; height:26px; border-radius:9999px; position:relative; transition:all .2s; cursor:pointer; }
+.switch-dot { position:absolute; top:3px; width:20px; height:20px; border-radius:9999px; background:#fff; transition:all .2s; box-shadow:0 1px 4px rgba(0,0,0,.15); }
 .speed-group { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:6px; }
 .speed-btn {
   border:2px solid #e5e7eb;
   background:#fff;
   color:#64748b;
-  border-radius:12px;
-  font-size:12px;
+  border-radius:14px;
+  font-size:13px;
   font-weight:900;
-  padding:10px 0;
+  padding:12px 0;
   cursor:pointer;
 }
 .speed-btn.active { background:#ecfccb; border-color:#bef264; color:#3f6212; }
@@ -603,7 +604,7 @@ const cssStyles = `
   background:#fff;
   color:#475569;
   border-radius:12px;
-  font-size:11px;
+  font-size:12px;
   font-weight:900;
   padding:10px 8px;
   cursor:pointer;
@@ -617,9 +618,10 @@ const cssStyles = `
 .text-input {
   width:100%;
   border:2px solid #e5e7eb;
-  border-radius:12px;
-  padding:10px 12px;
-  font-size:12px;
+  border-radius:14px;
+  padding:12px 14px;
+  font-size:13px;
+  font-weight:600;
   color:#334155;
   outline:none;
   margin-top:8px;
@@ -627,9 +629,10 @@ const cssStyles = `
 .textarea-input {
   width:100%;
   border:2px solid #e5e7eb;
-  border-radius:12px;
-  padding:10px 12px;
-  font-size:12px;
+  border-radius:14px;
+  padding:12px 14px;
+  font-size:13px;
+  font-weight:600;
   color:#334155;
   outline:none;
   resize:vertical;
@@ -679,178 +682,219 @@ function renderTextWithOptionalPinyin(text, showPinyin, textClass = 'zh-char', p
   });
 }
 
+// 核心重构：双栏选项卡设置面板，外加滚动条支持
 function SettingsPanel({ prefs, setPrefs, aiSettings, updateAISettings, onClose }) {
+  const [activeTab, setActiveTab] = useState('basic');
+
   return (
     <>
-      <div className="fixed inset-0 z-[110]" onClick={onClose} />
-      <div className="settings-pop">
-        <div className="flex justify-between items-center mb-2">
-          <span className="font-bold text-slate-700">设置</span>
-          <button onClick={onClose}>
-            <FaTimes className="text-slate-400" />
+      <div className="fixed inset-0 z-[110] bg-black/10 backdrop-blur-[1px]" onClick={onClose} />
+      <div className="settings-pop flex flex-col max-h-[80vh]">
+        <div className="flex justify-between items-center mb-3 shrink-0">
+          <span className="font-black text-slate-800 text-lg">系统设置</span>
+          <button onClick={onClose} className="p-1">
+            <FaTimes className="text-slate-400 hover:text-slate-600" size={18} />
           </button>
         </div>
 
-        <div className="settings-section-title" style={{ marginTop: 0 }}>学习设置</div>
-
-        <div className="setting-row">
-          <span className="setting-label">题干拼音</span>
-          <div
-            className="switch"
-            onClick={() => setPrefs((s) => ({ ...s, showQuestionPinyin: !s.showQuestionPinyin }))}
-            style={{ background: prefs.showQuestionPinyin ? '#58cc02' : '#cbd5e1' }}
+        <div className="flex gap-2 mb-3 shrink-0 bg-slate-100 p-1.5 rounded-xl">
+          <button 
+            className={`flex-1 py-2 text-[13px] font-black rounded-lg transition-colors ${activeTab === 'basic' ? 'bg-white shadow-sm text-pink-500' : 'text-slate-500 hover:text-slate-700'}`}
+            onClick={() => setActiveTab('basic')}
           >
-            <div className="switch-dot" style={{ left: prefs.showQuestionPinyin ? '22px' : '4px' }} />
-          </div>
-        </div>
-
-        <div className="setting-row">
-          <span className="setting-label">选项拼音</span>
-          <div
-            className="switch"
-            onClick={() => setPrefs((s) => ({ ...s, showOptionPinyin: !s.showOptionPinyin }))}
-            style={{ background: prefs.showOptionPinyin ? '#58cc02' : '#cbd5e1' }}
+            答题偏好
+          </button>
+          <button 
+            className={`flex-1 py-2 text-[13px] font-black rounded-lg transition-colors ${activeTab === 'ai' ? 'bg-white shadow-sm text-pink-500' : 'text-slate-500 hover:text-slate-700'}`}
+            onClick={() => setActiveTab('ai')}
           >
-            <div className="switch-dot" style={{ left: prefs.showOptionPinyin ? '22px' : '4px' }} />
-          </div>
+            AI 配置
+          </button>
         </div>
 
-        <div className="setting-row">
-          <span className="setting-label">自动朗读</span>
-          <div
-            className="switch"
-            onClick={() => setPrefs((s) => ({ ...s, autoPlay: !s.autoPlay }))}
-            style={{ background: prefs.autoPlay ? '#58cc02' : '#cbd5e1' }}
-          >
-            <div className="switch-dot" style={{ left: prefs.autoPlay ? '22px' : '4px' }} />
-          </div>
-        </div>
+        <div className="overflow-y-auto flex-1 slim-scrollbar pr-1 pb-4">
+          
+          {activeTab === 'basic' && (
+            <div className="space-y-2">
+              <div className="setting-row">
+                <span className="setting-label">题干拼音</span>
+                <div
+                  className="switch"
+                  onClick={() => setPrefs((s) => ({ ...s, showQuestionPinyin: !s.showQuestionPinyin }))}
+                  style={{ background: prefs.showQuestionPinyin ? '#58cc02' : '#cbd5e1' }}
+                >
+                  <div className="switch-dot" style={{ left: prefs.showQuestionPinyin ? '24px' : '3px' }} />
+                </div>
+              </div>
 
-        <div style={{ marginTop: 8 }}>
-          <div className="setting-label" style={{ marginBottom: 8 }}>题目语速</div>
-          <div className="speed-group">
-            {[
-              { key: 'slow', label: '慢' },
-              { key: 'normal', label: '正常' },
-              { key: 'fast', label: '快' }
-            ].map((item) => (
-              <button
-                key={item.key}
-                className={`speed-btn ${prefs.rateMode === item.key ? 'active' : ''}`}
-                onClick={() => setPrefs((s) => ({ ...s, rateMode: item.key }))}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-        </div>
+              <div className="setting-row">
+                <span className="setting-label">选项拼音</span>
+                <div
+                  className="switch"
+                  onClick={() => setPrefs((s) => ({ ...s, showOptionPinyin: !s.showOptionPinyin }))}
+                  style={{ background: prefs.showOptionPinyin ? '#58cc02' : '#cbd5e1' }}
+                >
+                  <div className="switch-dot" style={{ left: prefs.showOptionPinyin ? '24px' : '3px' }} />
+                </div>
+              </div>
 
-        <div className="settings-section-title">AI 设置</div>
+              <div className="setting-row">
+                <span className="setting-label">自动朗读</span>
+                <div
+                  className="switch"
+                  onClick={() => setPrefs((s) => ({ ...s, autoPlay: !s.autoPlay }))}
+                  style={{ background: prefs.autoPlay ? '#58cc02' : '#cbd5e1' }}
+                >
+                  <div className="switch-dot" style={{ left: prefs.autoPlay ? '24px' : '3px' }} />
+                </div>
+              </div>
 
-        <input
-          className="text-input"
-          placeholder="API URL"
-          value={aiSettings.apiUrl}
-          onChange={(e) => updateAISettings({ apiUrl: e.target.value })}
-        />
+              <div className="pt-2">
+                <div className="setting-label" style={{ marginBottom: 8 }}>题目朗读语速</div>
+                <div className="speed-group">
+                  {[
+                    { key: 'slow', label: '慢' },
+                    { key: 'normal', label: '正常' },
+                    { key: 'fast', label: '快' }
+                  ].map((item) => (
+                    <button
+                      key={item.key}
+                      className={`speed-btn ${prefs.rateMode === item.key ? 'active' : ''}`}
+                      onClick={() => setPrefs((s) => ({ ...s, rateMode: item.key }))}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-        <input
-          className="text-input"
-          placeholder="API Key"
-          type="password"
-          value={aiSettings.apiKey}
-          onChange={(e) => updateAISettings({ apiKey: e.target.value })}
-        />
+              <div className="border-t border-slate-100 mt-4 pt-2">
+                <div className="setting-row" style={{ marginTop: 4 }}>
+                  <span className="setting-label">震动反馈</span>
+                  <div
+                    className="switch"
+                    onClick={() => updateAISettings({ vibration: !aiSettings.vibration })}
+                    style={{ background: aiSettings.vibration ? '#7c3aed' : '#cbd5e1' }}
+                  >
+                    <div className="switch-dot" style={{ left: aiSettings.vibration ? '24px' : '3px' }} />
+                  </div>
+                </div>
 
-        <input
-          className="text-input"
-          placeholder="模型"
-          value={aiSettings.model}
-          onChange={(e) => updateAISettings({ model: e.target.value })}
-        />
+                <div className="setting-row">
+                  <span className="setting-label">音效反馈</span>
+                  <div
+                    className="switch"
+                    onClick={() => updateAISettings({ soundFx: !aiSettings.soundFx })}
+                    style={{ background: aiSettings.soundFx ? '#7c3aed' : '#cbd5e1' }}
+                  >
+                    <div className="switch-dot" style={{ left: aiSettings.soundFx ? '24px' : '3px' }} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
-        <div style={{ marginTop: 10 }}>
-          <div className="setting-label" style={{ marginBottom: 8 }}>AI 温度</div>
-          <input
-            type="range"
-            min="0"
-            max="1.2"
-            step="0.05"
-            value={aiSettings.temperature}
-            onChange={(e) => updateAISettings({ temperature: Number(e.target.value) })}
-            style={{ width: '100%' }}
-          />
-        </div>
+          {activeTab === 'ai' && (
+            <div className="space-y-4 pt-1">
+              <div>
+                <input
+                  className="text-input"
+                  placeholder="API URL (例如: https://api.openai.com/v1)"
+                  value={aiSettings.apiUrl}
+                  onChange={(e) => updateAISettings({ apiUrl: e.target.value })}
+                />
+              </div>
 
-        <textarea
-          className="textarea-input"
-          rows={4}
-          placeholder="系统提示词"
-          value={aiSettings.systemPrompt}
-          onChange={(e) => updateAISettings({ systemPrompt: e.target.value })}
-        />
+              <div>
+                <input
+                  className="text-input"
+                  placeholder="API Key (sk-...)"
+                  type="password"
+                  value={aiSettings.apiKey}
+                  onChange={(e) => updateAISettings({ apiKey: e.target.value })}
+                />
+              </div>
 
-        <div className="settings-section-title">AI 发音人</div>
+              <div className="flex gap-2">
+                <div className="flex-1">
+                  <input
+                    className="text-input"
+                    placeholder="大模型名称 (如 mistral-large)"
+                    value={aiSettings.model}
+                    onChange={(e) => updateAISettings({ model: e.target.value })}
+                  />
+                </div>
+                <div className="w-16">
+                   <input
+                    className="text-input text-center px-1"
+                    placeholder="Temp"
+                    type="number"
+                    step="0.1"
+                    value={aiSettings.temperature}
+                    onChange={(e) => updateAISettings({ temperature: Number(e.target.value) })}
+                  />
+                </div>
+              </div>
 
-        <div className="setting-label" style={{ marginBottom: 6 }}>中文声音</div>
-        <div className="select-grid-2">
-          {ZH_VOICE_OPTIONS.map((item) => (
-            <button
-              key={item.id}
-              className={`small-choice-btn ${aiSettings.zhVoice === item.id ? 'active' : ''}`}
-              onClick={() => updateAISettings({ zhVoice: item.id })}
-            >
-              {item.name}
-            </button>
-          ))}
-        </div>
+              <div>
+                <textarea
+                  className="textarea-input"
+                  rows={3}
+                  placeholder="老师预设提示词"
+                  value={aiSettings.systemPrompt}
+                  onChange={(e) => updateAISettings({ systemPrompt: e.target.value })}
+                />
+              </div>
 
-        <div className="setting-label" style={{ marginTop: 12, marginBottom: 6 }}>缅语声音</div>
-        <div className="select-grid-2">
-          {MY_VOICE_OPTIONS.map((item) => (
-            <button
-              key={item.id}
-              className={`small-choice-btn ${aiSettings.myVoice === item.id ? 'active' : ''}`}
-              onClick={() => updateAISettings({ myVoice: item.id })}
-            >
-              {item.name}
-            </button>
-          ))}
-        </div>
+              <div className="border-t border-slate-100 pt-3">
+                <div className="settings-section-title">TTS 发音配置</div>
 
-        <div style={{ marginTop: 12 }}>
-          <div className="setting-label" style={{ marginBottom: 8 }}>AI 朗读语速</div>
-          <input
-            type="range"
-            min="-50"
-            max="50"
-            step="1"
-            value={aiSettings.ttsSpeed}
-            onChange={(e) => updateAISettings({ ttsSpeed: Number(e.target.value) })}
-            style={{ width: '100%' }}
-          />
-        </div>
+                <div className="setting-label" style={{ marginBottom: 6 }}>中文发音人</div>
+                <div className="select-grid-2">
+                  {ZH_VOICE_OPTIONS.map((item) => (
+                    <button
+                      key={item.id}
+                      className={`small-choice-btn ${aiSettings.zhVoice === item.id ? 'active' : ''}`}
+                      onClick={() => updateAISettings({ zhVoice: item.id })}
+                    >
+                      {item.name}
+                    </button>
+                  ))}
+                </div>
 
-        <div className="setting-row" style={{ marginTop: 4 }}>
-          <span className="setting-label">震动反馈</span>
-          <div
-            className="switch"
-            onClick={() => updateAISettings({ vibration: !aiSettings.vibration })}
-            style={{ background: aiSettings.vibration ? '#7c3aed' : '#cbd5e1' }}
-          >
-            <div className="switch-dot" style={{ left: aiSettings.vibration ? '22px' : '4px' }} />
-          </div>
-        </div>
+                <div className="setting-label" style={{ marginTop: 12, marginBottom: 6 }}>缅语发音人</div>
+                <div className="select-grid-2">
+                  {MY_VOICE_OPTIONS.map((item) => (
+                    <button
+                      key={item.id}
+                      className={`small-choice-btn ${aiSettings.myVoice === item.id ? 'active' : ''}`}
+                      onClick={() => updateAISettings({ myVoice: item.id })}
+                    >
+                      {item.name}
+                    </button>
+                  ))}
+                </div>
 
-        <div className="setting-row">
-          <span className="setting-label">音效反馈</span>
-          <div
-            className="switch"
-            onClick={() => updateAISettings({ soundFx: !aiSettings.soundFx })}
-            style={{ background: aiSettings.soundFx ? '#7c3aed' : '#cbd5e1' }}
-          >
-            <div className="switch-dot" style={{ left: aiSettings.soundFx ? '22px' : '4px' }} />
-          </div>
+                <div style={{ marginTop: 16 }}>
+                  <div className="setting-label flex justify-between" style={{ marginBottom: 8 }}>
+                    <span>AI 朗读语速</span>
+                    <span className="text-pink-500 font-bold">{aiSettings.ttsSpeed}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="-50"
+                    max="50"
+                    step="1"
+                    className="accent-pink-500"
+                    value={aiSettings.ttsSpeed}
+                    onChange={(e) => updateAISettings({ ttsSpeed: Number(e.target.value) })}
+                    style={{ width: '100%' }}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
       </div>
     </>
@@ -895,13 +939,42 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
   const [showSettings, setShowSettings] = useState(false);
   const [cardPopId, setCardPopId] = useState(null);
   const [questionImgVisible, setQuestionImgVisible] = useState(Boolean(questionImg));
-  const [showAIExplanation, setShowAIExplanation] = useState(false);
+  
+  // 核心修复：引入虚拟路由状态管理，拦截返回手势
+  const [activeOverlay, setActiveOverlay] = useState(null);
 
   const [prefs, setPrefs] = useState(() => getSavedPrefs());
   const [aiSettings, setAISettings] = useState(() => getSavedAISettings());
 
   const mountedRef = useRef(true);
   const timersRef = useRef([]);
+
+  // --- 手势拦截挂载 ---
+  const openOverlay = useCallback((overlayType) => {
+    setActiveOverlay((prev) => {
+      if (prev === overlayType) return prev;
+      if (typeof window !== 'undefined') {
+        window.history.pushState({ overlay: overlayType }, '', window.location.href);
+      }
+      return overlayType;
+    });
+  }, []);
+
+  const closeOverlay = useCallback(() => {
+    if (activeOverlay && typeof window !== 'undefined') {
+      window.history.back(); // 走 popstate 关闭
+      return;
+    }
+    setActiveOverlay(null);
+  }, [activeOverlay]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onPopState = () => setActiveOverlay(null);
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+  // --------------------
 
   const clearTimers = () => {
     timersRef.current.forEach(clearTimeout);
@@ -950,7 +1023,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
     setSpeakingOptionId(null);
     setShowSettings(false);
     setCardPopId(null);
-    setShowAIExplanation(false);
+    setActiveOverlay(null);
 
     if (questionText && prefs.autoPlay) {
       addTimer(() => {
@@ -1063,7 +1136,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
       alert('请先在设置中配置大模型 API Key');
       return;
     }
-    setShowAIExplanation(true);
+    openOverlay('ai-explanation'); // 走手势拦截开启
   };
 
   return (
@@ -1072,15 +1145,20 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
 
       <div className="xzt-header">
         <div className="w-full relative">
-          <div className="top-hint-row">
-            <div className="top-left-text">请选择正确答案</div>
-
-            <div className="top-actions">
-              <button className="settings-btn" onClick={() => setShowSettings((v) => !v)}>
-                <FaCog size={18} />
-              </button>
+          
+          {/* 核心修复：顶部改成进度条和设置按钮一排，且进度条短点 */}
+          <div className="top-bar-row">
+            {/* 这个假的进度条只作为 UI 装饰满足用户要求 */}
+            <div className="progress-bar-container max-w-[150px]">
+              <div className="progress-bar-fill"></div>
             </div>
+
+            <button className="settings-btn" onClick={() => setShowSettings((v) => !v)}>
+              <FaCog />
+            </button>
           </div>
+
+          <div className="top-left-text mb-2">请选择正确答案</div>
 
           {showSettings && (
             <SettingsPanel
@@ -1236,9 +1314,10 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
         </button>
       </div>
 
+      {/* 绑定为 activeOverlay 状态控制，同时交由内部 onClose 通知回退 */}
       <InteractiveAIExplanationPanel
-        open={showAIExplanation}
-        onClose={() => setShowAIExplanation(false)}
+        open={activeOverlay === 'ai-explanation'}
+        onClose={closeOverlay}
         settings={aiSettings}
         title="AI 讲题老师"
         initialPayload={{
