@@ -19,14 +19,12 @@ const GlobalStyles = () => (
   <style>{`
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
     @keyframes pulse-ring {
       0% { transform: scale(0.85); box-shadow: 0 0 0 0 rgba(239, 68, 68, .55); }
       70% { transform: scale(1); box-shadow: 0 0 0 18px rgba(239, 68, 68, 0); }
       100% { transform: scale(0.85); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
     .animate-pulse-ring { animation: pulse-ring 1.3s infinite; }
-
     @keyframes bars {
       0%,100% { transform: scaleY(.35); opacity:.45; }
       50% { transform: scaleY(1); opacity:1; }
@@ -41,7 +39,6 @@ const GlobalStyles = () => (
     .tts-bars span:nth-child(3){ animation-delay:.12s; }
     .tts-bars span:nth-child(4){ animation-delay:.18s; }
     .tts-bars span:nth-child(5){ animation-delay:.24s; }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
@@ -54,7 +51,7 @@ export default function InteractiveAIExplanationPanel({
   settings,
   title = 'AI 讲题老师',
   initialPayload = null,
-  onClose
+  onClose // 接收外部传入的真实关闭方法
 }) {
   const {
     history,
@@ -78,23 +75,19 @@ export default function InteractiveAIExplanationPanel({
     handleMicPointerCancel,
     showText,
     setShowText,
-    replaySpecificAnswer,
-    handleClosePanel
+    replaySpecificAnswer
   } = useInteractiveAITutor({
     open,
     settings,
-    initialPayload,
-    onClose
+    initialPayload
   });
 
   if (!open) return null;
 
   return (
-    // 核心修复：提升 z-index 到 9999 覆盖所有层
     <div className="fixed inset-0 z-[9999] flex flex-col w-full h-[100dvh] bg-slate-50 text-slate-800 overflow-hidden">
       <GlobalStyles />
 
-      {/* 亮色毛玻璃背景 */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-30 pointer-events-none"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1400')" }}
@@ -104,14 +97,16 @@ export default function InteractiveAIExplanationPanel({
       {/* Header */}
       <div className="relative z-20 flex items-center justify-between px-4 h-16 border-b border-slate-200/50 backdrop-blur-sm">
         <button
-          onClick={handleClosePanel}
+          onClick={() => {
+            stopEverything(); // 停掉音频和请求
+            onClose?.();      // 通知父级组件关闭
+          }}
           className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-200/60 text-slate-600 active:scale-90 shadow-sm"
         >
           <FaArrowLeft />
         </button>
 
         <div className="font-bold tracking-widest text-slate-800 text-sm">{title}</div>
-
         <div className="w-10 h-10" />
       </div>
 
@@ -121,7 +116,6 @@ export default function InteractiveAIExplanationPanel({
           <div className="flex-1 flex flex-col items-center justify-center min-h-full">
             <div className="relative flex items-center justify-center w-56 h-56 pointer-events-none">
               {isAiSpeaking && <div className="absolute inset-0 rounded-full bg-pink-300/30 animate-ping" />}
-              {/* 动态女老师头像 */}
               <img 
                 src="https://api.dicebear.com/7.x/bottts/svg?seed=Teacher&backgroundColor=fce4ec" 
                 alt="Teacher" 
@@ -195,7 +189,6 @@ export default function InteractiveAIExplanationPanel({
       {/* Bottom Control */}
       <div className="absolute bottom-0 left-0 right-0 z-30 pb-[max(24px,env(safe-area-inset-bottom))] px-5 bg-gradient-to-t from-white via-white/95 to-transparent pt-12 pointer-events-auto">
         <div className="max-w-md mx-auto relative flex items-center justify-center h-20">
-          
           <button
             onClick={() => setTextMode((v) => !v)}
             className="absolute left-0 w-12 h-12 rounded-full bg-slate-100 border border-slate-200 text-slate-500 active:scale-95 transition-transform shadow-sm flex items-center justify-center"
@@ -211,24 +204,14 @@ export default function InteractiveAIExplanationPanel({
                 onPointerCancel={handleMicPointerCancel}
                 onContextMenu={(e) => e.preventDefault()}
                 className={`touch-none w-20 h-20 rounded-full flex items-center justify-center text-white shadow-xl transition-all duration-300 ${
-                  isRecording
-                    ? 'bg-red-500 animate-pulse-ring scale-95'
-                    : 'bg-gradient-to-r from-pink-500 to-rose-500 hover:scale-105 active:scale-95'
+                  isRecording ? 'bg-red-500 animate-pulse-ring scale-95' : 'bg-gradient-to-r from-pink-500 to-rose-500 hover:scale-105 active:scale-95'
                 }`}
               >
                 {isRecording ? <FaPaperPlane className="text-3xl animate-pulse" /> : <FaMicrophone className="text-3xl" />}
               </button>
 
               <div className="absolute -bottom-6 text-[10px] font-bold text-slate-400 tracking-widest uppercase pointer-events-none whitespace-nowrap">
-                {isRecording ? (
-                  <span className="text-red-400">点击发送 · 静默自动发送</span>
-                ) : isThinking ? (
-                  <span className="text-amber-500">思考中...</span>
-                ) : isAiSpeaking ? (
-                  <div className="tts-bars"><span /><span /><span /><span /><span /></div>
-                ) : (
-                  `长按切换语言 · ${currentLangObj.flag} ${currentLangObj.name}`
-                )}
+                {isRecording ? <span className="text-red-400">点击发送 · 静默自动发送</span> : isThinking ? <span className="text-amber-500">思考中...</span> : isAiSpeaking ? <div className="tts-bars"><span /><span /><span /><span /><span /></div> : `长按切换语言 · ${currentLangObj.flag} ${currentLangObj.name}`}
               </div>
             </div>
           ) : (
@@ -248,9 +231,7 @@ export default function InteractiveAIExplanationPanel({
               />
               <button
                 onClick={() => {
-                  if (isRecording) {
-                    stopEverything(); 
-                  }
+                  if (isRecording) stopEverything(); 
                   sendMessage(inputText);
                   setInputText('');
                 }}
@@ -273,9 +254,7 @@ export default function InteractiveAIExplanationPanel({
               <button
                 onClick={() => setShowText((v) => !v)}
                 className={`w-12 h-12 rounded-full border flex items-center justify-center transition-colors shadow-sm active:scale-95 ${
-                  showText 
-                    ? 'bg-pink-100 border-pink-200 text-pink-500' 
-                    : 'bg-slate-100 border-slate-200 text-slate-500'
+                  showText ? 'bg-pink-100 border-pink-200 text-pink-500' : 'bg-slate-100 border-slate-200 text-slate-500'
                 }`}
               >
                 {showText ? <FaClosedCaptioning size={18} /> : <FaCommentSlash size={18} />}
@@ -285,19 +264,10 @@ export default function InteractiveAIExplanationPanel({
         </div>
       </div>
 
-      {/* 核心修复：语言选择面板提升层级且修复点击冒泡和点击背景关闭问题 */}
       {showLangPicker && (
         <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
-          {/* 背景遮罩，点击它关闭 */}
-          <div 
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm cursor-pointer" 
-            onClick={() => setShowLangPicker(false)} 
-          />
-          {/* 弹窗内容区，onClick 停止冒泡防止点这里也关掉 */}
-          <div 
-            className="relative bg-white border border-slate-200 rounded-3xl p-6 w-full max-w-sm shadow-2xl animate-[fadeIn_.2s_ease-out] z-10"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm cursor-pointer" onClick={() => setShowLangPicker(false)} />
+          <div className="relative bg-white border border-slate-200 rounded-3xl p-6 w-full max-w-sm shadow-2xl animate-[fadeIn_.2s_ease-out] z-10" onClick={(e) => e.stopPropagation()}>
             <h3 className="font-bold text-lg mb-4 text-center text-slate-800">选择识别语言</h3>
             <div className="grid grid-cols-2 gap-3">
               {RECOGNITION_LANGS.map((lang) => (
@@ -308,9 +278,7 @@ export default function InteractiveAIExplanationPanel({
                     setShowLangPicker(false);
                   }}
                   className={`p-4 rounded-2xl border flex flex-col items-center justify-center gap-2 transition-colors active:scale-95 ${
-                    recLang === lang.code
-                      ? 'border-pink-500 bg-pink-50'
-                      : 'border-slate-200 bg-slate-50 hover:bg-slate-100'
+                    recLang === lang.code ? 'border-pink-500 bg-pink-50' : 'border-slate-200 bg-slate-50 hover:bg-slate-100'
                   }`}
                 >
                   <span className="text-2xl">{lang.flag}</span>
