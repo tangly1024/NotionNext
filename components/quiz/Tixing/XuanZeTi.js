@@ -7,10 +7,7 @@ import {
   FaSpinner,
   FaRobot,
   FaCog,
-  FaRedo,
-  FaSlidersH,
-  FaBrain,
-  FaChevronLeft
+  FaBrain
 } from 'react-icons/fa';
 import { pinyin } from 'pinyin-pro';
 import InteractiveAIExplanationPanel from '../../ai/InteractiveAIExplanationPanel';
@@ -152,7 +149,8 @@ const DEFAULT_AI_SETTINGS = {
   ttsSpeed: -10,
   ttsPitch: 0,
   soundFx: true,
-  vibration: true
+  vibration: true,
+  showText: true
 };
 
 function getSavedPrefs() {
@@ -384,7 +382,21 @@ const audioController = {
 // 5. 样式
 // =================================================================================
 const cssStyles = `
-.xzt-container { font-family:"Padauk","Noto Sans SC",sans-serif; display:flex; flex-direction:column; background:transparent; width:100%; height:100%; position:relative; overflow:hidden; }
+.xzt-container {
+  font-family:"Padauk","Noto Sans SC",sans-serif;
+  display:flex;
+  flex-direction:column;
+  background:transparent;
+  width:100%;
+  height:100%;
+  position:relative;
+  overflow:hidden;
+}
+.xzt-container.ai-open .result-sheet,
+.xzt-container.ai-open .submit-bar {
+  visibility:hidden;
+  pointer-events:none;
+}
 .xzt-header { flex-shrink:0; padding:8px 16px 2px; display:flex; justify-content:center; }
 .top-hint-row { width:100%; display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:4px; }
 .top-left-text { font-size:15px; font-weight:900; color:#334155; line-height:1.2; }
@@ -456,11 +468,35 @@ const cssStyles = `
   object-fit:cover;
 }
 
-.xzt-scroll-area { flex:1; overflow-y:auto; padding:10px 16px 132px; display:flex; flex-direction:column; align-items:center; -webkit-overflow-scrolling:touch; }
+.xzt-scroll-area {
+  flex:1;
+  overflow-y:auto;
+  padding:10px 16px 132px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  -webkit-overflow-scrolling:touch;
+}
 .options-grid { width:100%; display:grid; gap:12px; grid-template-columns:1fr; }
 .options-grid.has-images { grid-template-columns:1fr 1fr; }
 
-.option-card { background:#fff; border-radius:20px; padding:14px; border:2px solid #e5e7eb; border-bottom-width:5px; cursor:pointer; transition:all .12s ease; display:flex; align-items:center; justify-content:center; min-height:68px; position:relative; user-select:none; -webkit-tap-highlight-color:transparent; box-shadow:0 2px 0 rgba(0,0,0,0.02); }
+.option-card {
+  background:#fff;
+  border-radius:20px;
+  padding:14px;
+  border:2px solid #e5e7eb;
+  border-bottom-width:5px;
+  cursor:pointer;
+  transition:all .12s ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:68px;
+  position:relative;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  box-shadow:0 2px 0 rgba(0,0,0,0.02);
+}
 .option-card:active { transform:translateY(2px); border-bottom-width:3px; }
 .option-card.selected { border-color:#84cc16; background:#f7fee7; color:#4d7c0f; }
 .option-card.playing { border-color:#60a5fa; background:#eff6ff; color:#1d4ed8; }
@@ -572,7 +608,7 @@ const cssStyles = `
 .panel-modal {
   position:fixed;
   inset:0;
-  z-index:1000;
+  z-index:1200;
   display:flex;
   align-items:flex-end;
   justify-content:center;
@@ -736,12 +772,9 @@ function renderTextWithOptionalPinyin(text, showPinyin, textClass = 'zh-char', p
   });
 }
 
-// =================================================================================
-// 6. 弹层组件
-// =================================================================================
 function SettingsPanel({ prefs, setPrefs, onClose, onOpenAISettings }) {
   return (
-    <div className="panel-modal z-[1200]">
+    <div className="panel-modal" style={{ zIndex: 1200 }}>
       <div className="modal-backdrop" onClick={onClose} />
       <div className="panel-card relative">
         <div className="panel-header">
@@ -819,7 +852,7 @@ function SettingsPanel({ prefs, setPrefs, onClose, onOpenAISettings }) {
 
 function AISettingsPanel({ aiSettings, updateAISettings, onClose }) {
   return (
-    <div className="panel-modal z-[1300]">
+    <div className="panel-modal" style={{ zIndex: 1300 }}>
       <div className="modal-backdrop" onClick={onClose} />
       <div className="panel-card relative">
         <div className="panel-header">
@@ -949,7 +982,7 @@ function AISettingsPanel({ aiSettings, updateAISettings, onClose }) {
 }
 
 // =================================================================================
-// 7. 主组件
+// 6. 主组件
 // =================================================================================
 export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) {
   const data = rawData?.content || rawData || {};
@@ -1044,7 +1077,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
     const onPopState = () => {
       const handled = closeTopOverlay();
       if (!handled) {
-        // 没有弹层时，交给正常页面返回
+        // 交给页面正常返回
       }
     };
 
@@ -1223,8 +1256,11 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
   };
 
   const handleAI = () => {
+    audioController.stop();
+    setIsQuestionPlaying(false);
+    setSpeakingOptionId(null);
+
     if (!aiSettings.apiUrl || !aiSettings.apiKey) {
-      setShowResultSheet(true);
       openOverlay('ai-settings', setShowAISettings);
       return;
     }
@@ -1235,7 +1271,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
   };
 
   return (
-    <div className="xzt-container">
+    <div className={`xzt-container ${showAIExplanation ? 'ai-open' : ''}`}>
       <style dangerouslySetInnerHTML={{ __html: cssStyles }} />
 
       <div className="xzt-header">
@@ -1359,7 +1395,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
         </div>
       </div>
 
-      {!isSubmitted && (
+      {!isSubmitted && !showAIExplanation && (
         <div className="submit-bar">
           <button className="submit-btn" disabled={!selectedIds.length} onClick={handleSubmit}>
             检查答案
@@ -1367,7 +1403,11 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
         </div>
       )}
 
-      <div className={`result-sheet ${showResultSheet ? 'show' : ''} ${isRight ? 'correct' : 'wrong'}`}>
+      <div
+        className={`result-sheet ${showResultSheet && !showAIExplanation ? 'show' : ''} ${
+          isRight ? 'correct' : 'wrong'
+        }`}
+      >
         <div className="sheet-header">
           {isRight ? <FaCheck /> : <FaTimes />}
           <span>{isRight ? '答对了！' : '再试试看'}</span>
