@@ -11,14 +11,12 @@ const toFinite = (v, fallback = 0) => {
   return Number.isFinite(n) ? n : fallback;
 };
 
-export function useInteractiveAITutor({ open, settings, initialPayload = null, onClose }) {
+export function useInteractiveAITutor({ open, settings, initialPayload = null }) {
   const [history, setHistory] = useState([]);
   const historyRef = useRef([]);
   const [isThinking, setIsThinking] = useState(false);
   const [isAiSpeaking, setIsAiSpeaking] = useState(false);
   const [textMode, setTextMode] = useState(true);
-  
-  // 用于文字模式输入和展示语音实时识别状态
   const [inputText, setInputText] = useState('');
   
   const [isRecording, setIsRecording] = useState(false);
@@ -31,7 +29,6 @@ export function useInteractiveAITutor({ open, settings, initialPayload = null, o
   const recognitionRef = useRef(null);
   const longPressTimerRef = useRef(null);
 
-  // --- 核心修复：纯 Ref 驱动的语音识别状态，杜绝闭包获取不到新值 ---
   const finalTextRef = useRef('');
   const speechDisplayRef = useRef('');
   const autoSendTimerRef = useRef(null);
@@ -50,7 +47,6 @@ export function useInteractiveAITutor({ open, settings, initialPayload = null, o
     return settings?.systemPrompt || PROMPT_REGISTRY.interactive_tutor_default;
   }, [settings]);
 
-  // 获取语言缓存
   useEffect(() => {
     try {
       const lang = localStorage.getItem(AI_REC_LANG_KEY);
@@ -79,25 +75,15 @@ export function useInteractiveAITutor({ open, settings, initialPayload = null, o
     ttsEngine.stopAndClear(); setIsThinking(false); setIsAiSpeaking(false);
   };
 
-  // 终极发送方法：切断所有录音，处理缓存文字并发起AI请求
   const stopAndSend = (textToForce) => {
     if (hasAutoSentRef.current) return;
     hasAutoSentRef.current = true;
 
-    if (autoSendTimerRef.current) {
-      clearTimeout(autoSendTimerRef.current);
-      autoSendTimerRef.current = null;
-    }
-
-    if (recognitionRef.current) {
-      try { recognitionRef.current.stop(); } catch {}
-      recognitionRef.current = null;
-    }
+    if (autoSendTimerRef.current) { clearTimeout(autoSendTimerRef.current); autoSendTimerRef.current = null; }
+    if (recognitionRef.current) { try { recognitionRef.current.stop(); } catch {} recognitionRef.current = null; }
     setIsRecording(false);
 
     const finalStr = String(textToForce !== undefined ? textToForce : speechDisplayRef.current).trim();
-
-    // 强制同步清空所有状态
     speechDisplayRef.current = '';
     finalTextRef.current = '';
     setInputText('');
@@ -115,7 +101,6 @@ export function useInteractiveAITutor({ open, settings, initialPayload = null, o
     }
     sendLockRef.current = true;
     
-    // 确保打断当前录音状态
     if (recognitionRef.current) { try { recognitionRef.current.stop(); } catch {} recognitionRef.current = null; }
     setIsRecording(false);
     
@@ -136,9 +121,7 @@ export function useInteractiveAITutor({ open, settings, initialPayload = null, o
 
     try {
       const cleanedHistory = newHistory.filter((h) => {
-        if (h.role === 'error') return false;
-        if (h.role === 'ai' && !String(h.text || '').trim()) return false;
-        if (h.role === 'user' && !String(h.text || '').trim()) return false;
+        if (h.role === 'error' || (h.role === 'ai' && !String(h.text || '').trim()) || (h.role === 'user' && !String(h.text || '').trim())) return false;
         return true;
       });
 
@@ -264,7 +247,6 @@ export function useInteractiveAITutor({ open, settings, initialPayload = null, o
       
       const currentDisplay = mergeTranscript(finalTextRef.current, interimText);
       speechDisplayRef.current = currentDisplay;
-      // 借用 inputText 把识别过程上屏
       setInputText(currentDisplay);
 
       if (autoSendTimerRef.current) clearTimeout(autoSendTimerRef.current);
@@ -275,14 +257,9 @@ export function useInteractiveAITutor({ open, settings, initialPayload = null, o
       }, toFinite(settings?.asrSilenceMs, 1500));
     };
 
-    rec.onerror = () => {
-      setIsRecording(false);
-      recognitionRef.current = null;
-    };
-    
+    rec.onerror = () => { setIsRecording(false); recognitionRef.current = null; };
     rec.onend = () => {
-      setIsRecording(false);
-      recognitionRef.current = null;
+      setIsRecording(false); recognitionRef.current = null;
       if (!hasAutoSentRef.current && speechDisplayRef.current.trim()) {
         stopAndSend(speechDisplayRef.current);
       }
@@ -319,12 +296,8 @@ export function useInteractiveAITutor({ open, settings, initialPayload = null, o
     micActionLockRef.current = true;
     setTimeout(() => { micActionLockRef.current = false; }, 220);
     
-    // 如果录音中则手动停止发送，否则启动录音
-    if (isRecording) {
-      stopAndSend(speechDisplayRef.current);
-    } else {
-      startRecording();
-    }
+    if (isRecording) stopAndSend(speechDisplayRef.current);
+    else startRecording();
   };
 
   const handleMicPointerCancel = () => {
@@ -333,43 +306,18 @@ export function useInteractiveAITutor({ open, settings, initialPayload = null, o
   };
 
   useEffect(() => { historyRef.current = history; }, [history]);
+  
   useEffect(() => {
     ttsEngine.setStateCallback(({ isPlaying }) => setIsAiSpeaking(isPlaying));
     return () => ttsEngine.setStateCallback(null);
   }, []);
 
-  // 挂载拦截安卓侧滑返回，避免把前一个页面弹掉
   useEffect(() => {
-    if (open) {
-      window.history.pushState({ interactiveModalOpen: true }, '');
-      const handlePopState = () => {
-        stopEverything();
-        if (onClose) onClose();
-      };
-      window.addEventListener('popstate', handlePopState);
-      return () => {
-        window.removeEventListener('popstate', handlePopState);
-      };
-    } else {
+    if (!open) {
       stopEverything();
       setHistory([]);
       bootstrappedRef.current = false;
-    }
-  }, [open, onClose]);
-
-  // 关闭组件自身的方法，会安全地 popState 避免历史记录错乱
-  const handleClosePanel = () => {
-    stopEverything();
-    if (window.history.state?.interactiveModalOpen) {
-      window.history.back(); // 这会触发 popstate，自然会调 onClose
-    } else {
-      onClose?.();
-    }
-  };
-
-  useEffect(() => {
-    if (!open) return;
-    if (!bootstrappedRef.current) {
+    } else if (!bootstrappedRef.current) {
       const payload = initialPayloadRef.current;
       const firstPrompt = buildInteractiveBootstrapPrompt(payload);
       if (firstPrompt) { bootstrappedRef.current = true; sendHiddenMessage(firstPrompt); }
@@ -382,7 +330,6 @@ export function useInteractiveAITutor({ open, settings, initialPayload = null, o
     history, isThinking, isAiSpeaking, textMode, setTextMode, inputText, setInputText,
     isRecording, currentLangObj, scrollRef, sendMessage, startRecording, stopAndSend,
     stopEverything, replaySpecificAnswer, recLang, setRecLang, showLangPicker, setShowLangPicker, 
-    handleMicPointerDown, handleMicPointerUp, handleMicPointerCancel, showText, setShowText,
-    handleClosePanel
+    handleMicPointerDown, handleMicPointerUp, handleMicPointerCancel, showText, setShowText
   };
-      }
+}
