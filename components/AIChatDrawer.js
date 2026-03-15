@@ -1618,7 +1618,7 @@ function AiChatContent() {
           {!history.length && !isLoading && (
             <div className="text-center text-gray-400 mb-20 opacity-80 mt-20">
               <div className="w-20 h-20 bg-pink-50 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl">🌍</div>
-              <div className="font-bold">886.best 中缅交友社区</div>
+              <div className="font-bold">886.best 中缅语伴网</div>
             </div>
           )}
 
