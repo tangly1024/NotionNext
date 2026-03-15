@@ -2,7 +2,17 @@
 
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { FaArrowLeft, FaPaperPlane, FaMicrophone, FaStop, FaKeyboard, FaClosedCaptioning, FaCommentSlash, FaVolumeUp, FaSlidersH } from 'react-icons/fa';
+import {
+  FaArrowLeft,
+  FaPaperPlane,
+  FaMicrophone,
+  FaStop,
+  FaKeyboard,
+  FaClosedCaptioning,
+  FaCommentSlash,
+  FaVolumeUp,
+  FaSlidersH
+} from 'react-icons/fa';
 import { AI_SCENES, buildExerciseBootstrapPrompt } from './aiAssistants';
 import { normalizeAssistantText } from './aiTextUtils';
 import { useAISettings } from './useAISettings';
@@ -48,11 +58,14 @@ export default function InteractiveAIExplanationPanel({
   open,
   title = 'AI 讲题老师',
   initialPayload = null,
-  onClose
+  onClose,
+  settings,
+  updateSettings
 }) {
   const [mounted, setMounted] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
+  // 保留内部默认能力，作为兜底
   const {
     allSettings,
     resolvedSettings,
@@ -62,6 +75,15 @@ export default function InteractiveAIExplanationPanel({
     selectAssistant,
     resetScenePrompt
   } = useAISettings(AI_SCENES.EXERCISE);
+
+  // 优先使用父组件传进来的设置
+  const effectiveSettings = settings || resolvedSettings;
+  const effectiveUpdateSettings =
+    updateSettings ||
+    ((patch) => {
+      updateSceneSettings?.(patch);
+      updateSharedSettings?.(patch);
+    });
 
   const {
     history,
@@ -89,7 +111,7 @@ export default function InteractiveAIExplanationPanel({
   } = useAISession({
     open,
     scene: AI_SCENES.EXERCISE,
-    settings: resolvedSettings,
+    settings: effectiveSettings,
     initialPayload,
     bootstrapBuilder: buildExerciseBootstrapPrompt,
     defaultTextMode: true
@@ -362,14 +384,10 @@ export default function InteractiveAIExplanationPanel({
 
         <AISettingsModal
           open={showSettings}
-          scene={AI_SCENES.EXERCISE}
-          allSettings={allSettings}
-          updateSharedSettings={updateSharedSettings}
-          updateSceneSettings={updateSceneSettings}
-          selectProvider={selectProvider}
-          selectAssistant={selectAssistant}
-          resetScenePrompt={resetScenePrompt}
+          settings={effectiveSettings}
+          updateSettings={effectiveUpdateSettings}
           onClose={() => setShowSettings(false)}
+          scene="exercise"
         />
       </div>
     </>,
