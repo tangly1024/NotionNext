@@ -9,7 +9,7 @@ const BLOG = {
 
   THEME: process.env.NEXT_PUBLIC_THEME || 'hexo', // ← 改成 hexo 主题
   LANG: process.env.NEXT_PUBLIC_LANG || 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
-  SINCE: process.env.NEXT_PUBLIC_SINCE || 2021, // e.g if leave this empty, current year will be used.
+  SINCE: process.env.NEXT_PUBLIC_SINCE || 2026, // e.g if leave this empty, current year will be used.
 
   PSEUDO_STATIC: process.env.NEXT_PUBLIC_PSEUDO_STATIC || true, // 伪静态路径，开启后所有文章URL都以 .html 结尾。
   NEXT_REVALIDATE_SECOND: process.env.NEXT_PUBLIC_REVALIDATE_SECOND || 300, // ← 改成 300 秒（5 分钟），减少首次白屏/404 概率
