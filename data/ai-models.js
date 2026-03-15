@@ -5,15 +5,15 @@ export const PROVIDERS = {
     id: 'openai',
     name: 'OpenAI',
     icon: 'fa-brain',
-    baseUrl: 'https://api.openai.com/v1',
-    models: ['gpt-4o', 'gpt-4o-mini'],
+    baseUrl: 'https://www.galaapi.com/v1',
+    models: ['gemini-3.1-flash-lite-preview', 'gemini-2.5-flash-lite'],
   },
   deepseek: {
-    id: 'deepseek',
+    id: 'iflow',
     name: 'DeepSeek',
     icon: 'fa-globe', // 用地球/水相关的图标代表
-    baseUrl: 'https://api.deepseek.com/v1',
-    models: ['deepseek-chat'],
+    baseUrl: 'https://apis.iflow.cn/v1',
+    models: ['deepseek-v3.2','qwen3-235b'],
   },
   qwen: {
     id: 'qwen',
