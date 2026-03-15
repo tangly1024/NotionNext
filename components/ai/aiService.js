@@ -1,35 +1,61 @@
-import { splitSpeakable } from './aiTextUtils';
+import { getProviderById } from './aiProviders';
 
-/**
- * 更稳的流式大模型请求服务
- * 兼容更多返回格式，避免一直“思考中”
- */
+function buildChatEndpoint(settings) {
+  const provider = getProviderById(settings?.providerId);
+  const baseUrl = String(settings?.apiUrl || provider?.baseUrl || '').replace(/\/+$/, '');
+  return `${baseUrl}/chat/completions`;
+}
+
+function buildHeaders(settings) {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${settings?.apiKey || ''}`
+  };
+
+  if (settings?.providerId === 'openrouter' && typeof window !== 'undefined') {
+    headers['HTTP-Referer'] = window.location.origin;
+    headers['X-Title'] = 'AI Tutor';
+  }
+
+  return headers;
+}
+
+function extractTextChunk(data) {
+  return (
+    data?.choices?.[0]?.delta?.content ||
+    data?.choices?.[0]?.message?.content ||
+    data?.choices?.[0]?.text ||
+    data?.delta?.content ||
+    data?.text ||
+    ''
+  );
+}
+
 export async function streamChatCompletion({
   settings,
   messages,
   signal,
   onStart,
   onUpdate,
-  onSentence,
   onFinished,
   onError
 }) {
   if (!settings?.apiKey) {
-    onError?.(new Error('请先配置 API Key'));
+    onError?.(new Error('请先填写 API Key'));
+    return;
+  }
+
+  if (!settings?.model) {
+    onError?.(new Error('请先选择模型'));
     return;
   }
 
   try {
     onStart?.();
 
-    const url = `${String(settings.apiUrl || '').replace(/\/+$/, '')}/chat/completions`;
-
-    const res = await fetch(url, {
+    const response = await fetch(buildChatEndpoint(settings), {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${settings.apiKey}`
-      },
+      headers: buildHeaders(settings),
       signal,
       body: JSON.stringify({
         model: settings.model,
@@ -39,37 +65,19 @@ export async function streamChatCompletion({
       })
     });
 
-    if (!res.ok) {
-      throw new Error(`API Error: ${res.status}`);
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status}`);
     }
 
-    if (!res.body) {
+    if (!response.body) {
       throw new Error('API 返回为空');
     }
 
-    const reader = res.body.getReader();
+    const reader = response.body.getReader();
     const decoder = new TextDecoder('utf-8');
 
     let raw = '';
     let fullText = '';
-    let sentenceBuffer = '';
-
-    const pushChunk = (chunk) => {
-      if (!chunk) return;
-
-      fullText += chunk;
-      sentenceBuffer += chunk;
-
-      onUpdate?.(fullText);
-
-      const { sentences, rest } = splitSpeakable(sentenceBuffer);
-      if (sentences.length) {
-        for (const s of sentences) {
-          if (!signal?.aborted) onSentence?.(s);
-        }
-        sentenceBuffer = rest;
-      }
-    };
 
     while (true) {
       if (signal?.aborted) break;
@@ -78,69 +86,49 @@ export async function streamChatCompletion({
       if (done) break;
 
       raw += decoder.decode(value, { stream: true });
-
-      // 兼容 \r\n
       const parts = raw.split(/\r?\n/);
       raw = parts.pop() || '';
 
       for (const line of parts) {
         if (signal?.aborted) break;
 
-        const ln = line.trim();
-        if (!ln) continue;
-        if (!ln.startsWith('data:')) continue;
+        const trimmed = line.trim();
+        if (!trimmed || !trimmed.startsWith('data:')) continue;
 
-        const payload = ln.slice(5).trim();
+        const payload = trimmed.slice(5).trim();
         if (!payload || payload === '[DONE]') continue;
 
         try {
           const data = JSON.parse(payload);
-
-          // 兼容多种 chunk 格式
-          const chunk =
-            data?.choices?.[0]?.delta?.content ||
-            data?.choices?.[0]?.message?.content ||
-            data?.choices?.[0]?.text ||
-            data?.delta?.content ||
-            data?.text ||
-            '';
-
-          pushChunk(chunk);
-        } catch (_) {
-          // 忽略单条坏数据
-        }
+          const chunk = extractTextChunk(data);
+          if (!chunk) continue;
+          fullText += chunk;
+          onUpdate?.(fullText);
+        } catch {}
       }
     }
 
-    // 如果最后 raw 里还有一个完整 data，也尝试再吃一次
     const tail = raw.trim();
     if (tail.startsWith('data:')) {
       const payload = tail.slice(5).trim();
       if (payload && payload !== '[DONE]') {
         try {
           const data = JSON.parse(payload);
-          const chunk =
-            data?.choices?.[0]?.delta?.content ||
-            data?.choices?.[0]?.message?.content ||
-            data?.choices?.[0]?.text ||
-            data?.delta?.content ||
-            data?.text ||
-            '';
-          pushChunk(chunk);
-        } catch (_) {}
+          const chunk = extractTextChunk(data);
+          if (chunk) {
+            fullText += chunk;
+            onUpdate?.(fullText);
+          }
+        } catch {}
       }
-    }
-
-    if (sentenceBuffer.trim() && !signal?.aborted) {
-      onSentence?.(sentenceBuffer.trim());
     }
 
     if (!signal?.aborted) {
       onFinished?.(fullText);
     }
-  } catch (e) {
-    if (e?.name !== 'AbortError') {
-      onError?.(e);
+  } catch (error) {
+    if (error?.name !== 'AbortError') {
+      onError?.(error);
     }
   }
 }
