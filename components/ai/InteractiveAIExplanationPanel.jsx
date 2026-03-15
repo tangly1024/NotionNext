@@ -51,10 +51,10 @@ const GlobalStyles = () => (
 
 export default function InteractiveAIExplanationPanel({
   open,
-  onClose,
   settings,
   title = 'AI 讲题老师',
-  initialPayload = null
+  initialPayload = null,
+  onClose
 }) {
   const {
     history,
@@ -90,7 +90,8 @@ export default function InteractiveAIExplanationPanel({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[300] flex flex-col w-full h-[100dvh] bg-slate-50 text-slate-800 overflow-hidden">
+    // 核心修复：提升 z-index 到 9999 覆盖所有层
+    <div className="fixed inset-0 z-[9999] flex flex-col w-full h-[100dvh] bg-slate-50 text-slate-800 overflow-hidden">
       <GlobalStyles />
 
       {/* 亮色毛玻璃背景 */}
@@ -111,7 +112,7 @@ export default function InteractiveAIExplanationPanel({
 
         <div className="font-bold tracking-widest text-slate-800 text-sm">{title}</div>
 
-        <div className="w-10 h-10" /> 
+        <div className="w-10 h-10" />
       </div>
 
       {/* Body */}
@@ -158,13 +159,12 @@ export default function InteractiveAIExplanationPanel({
                      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Teacher&backgroundColor=fce4ec" className="w-full h-full object-cover" alt="AI"/>
                   </div>
                   <div className="flex-1">
-                    <div className="bg-white border border-slate-100 px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm">
+                    <div className="bg-white border border-slate-100 px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm inline-block">
                       <div className="text-[15px] leading-7 text-slate-700 whitespace-pre-wrap font-medium inline">
                         {aiText || (msg.isStreaming ? '思考中...' : '')}
                         {msg.isStreaming && <span className="inline-block w-1.5 h-4 ml-1 align-middle bg-pink-400 animate-pulse" />}
                       </div>
                       
-                      {/* 重播播放按钮 */}
                       {!msg.isStreaming && aiText && (
                         <button 
                           onClick={() => replaySpecificAnswer(msg.text)} 
@@ -180,7 +180,6 @@ export default function InteractiveAIExplanationPanel({
               );
             })}
 
-            {/* 当文字模式或者开启字幕，并且正在录音时，在输入框/上方显示识别状态 */}
             {isRecording && textMode === false && (
               <div className="flex justify-start pl-12 mb-2">
                 <div className="max-w-[92%] text-cyan-800 rounded-xl px-4 py-2 text-sm bg-cyan-50 border border-cyan-200/60 shadow-sm font-medium">
@@ -194,7 +193,7 @@ export default function InteractiveAIExplanationPanel({
       </div>
 
       {/* Bottom Control */}
-      <div className="absolute bottom-0 left-0 right-0 z-30 pb-[max(24px,env(safe-area-inset-bottom))] px-5 bg-gradient-to-t from-white via-white/95 to-transparent pt-12">
+      <div className="absolute bottom-0 left-0 right-0 z-30 pb-[max(24px,env(safe-area-inset-bottom))] px-5 bg-gradient-to-t from-white via-white/95 to-transparent pt-12 pointer-events-auto">
         <div className="max-w-md mx-auto relative flex items-center justify-center h-20">
           
           <button
@@ -250,7 +249,7 @@ export default function InteractiveAIExplanationPanel({
               <button
                 onClick={() => {
                   if (isRecording) {
-                    stopEverything(); // 如果正在录音点击按钮，强行停止发送
+                    stopEverything(); 
                   }
                   sendMessage(inputText);
                   setInputText('');
@@ -286,12 +285,17 @@ export default function InteractiveAIExplanationPanel({
         </div>
       </div>
 
-      {/* 语言选择面板弹窗，增加 onClick 停止冒泡，使得点击遮罩能顺利关闭 */}
+      {/* 核心修复：语言选择面板提升层级且修复点击冒泡和点击背景关闭问题 */}
       {showLangPicker && (
-        <div className="fixed inset-0 z-[350] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setShowLangPicker(false)} />
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
+          {/* 背景遮罩，点击它关闭 */}
           <div 
-            className="relative bg-white border border-slate-200 rounded-3xl p-6 w-full max-w-sm shadow-2xl animate-[fadeIn_.2s_ease-out]"
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm cursor-pointer" 
+            onClick={() => setShowLangPicker(false)} 
+          />
+          {/* 弹窗内容区，onClick 停止冒泡防止点这里也关掉 */}
+          <div 
+            className="relative bg-white border border-slate-200 rounded-3xl p-6 w-full max-w-sm shadow-2xl animate-[fadeIn_.2s_ease-out] z-10"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="font-bold text-lg mb-4 text-center text-slate-800">选择识别语言</h3>
@@ -303,10 +307,10 @@ export default function InteractiveAIExplanationPanel({
                     setRecLang(lang.code);
                     setShowLangPicker(false);
                   }}
-                  className={`p-4 rounded-2xl border flex flex-col items-center justify-center gap-2 transition-colors ${
+                  className={`p-4 rounded-2xl border flex flex-col items-center justify-center gap-2 transition-colors active:scale-95 ${
                     recLang === lang.code
                       ? 'border-pink-500 bg-pink-50'
-                      : 'border-slate-200 bg-slate-50 active:bg-slate-100'
+                      : 'border-slate-200 bg-slate-50 hover:bg-slate-100'
                   }`}
                 >
                   <span className="text-2xl">{lang.flag}</span>
