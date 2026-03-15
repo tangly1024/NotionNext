@@ -326,8 +326,9 @@ const cssStyles = `
 }
 .xzt-container.ai-open .result-sheet,
 .xzt-container.ai-open .submit-bar {
-  visibility:hidden;
-  pointer-events:none;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 .xzt-header { flex-shrink:0; padding:8px 16px 2px; display:flex; justify-content:center; }
 .top-hint-row { width:100%; display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:4px; }
@@ -450,6 +451,7 @@ const cssStyles = `
   display:flex;
   justify-content:center;
   z-index:30;
+  transition: opacity 0.3s;
 }
 .submit-btn {
   width:100%;
@@ -481,7 +483,7 @@ const cssStyles = `
   flex-direction:column;
   gap:12px;
   transform:translateY(100%);
-  transition:transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
   box-shadow:0 -10px 30px rgba(0,0,0,0.08);
   z-index:100;
 }
@@ -540,7 +542,7 @@ const cssStyles = `
 .panel-modal {
   position:fixed;
   inset:0;
-  z-index:1200;
+  z-index:2147483600; /* 修改此处的 z-index 保证覆盖所有进度条 */
   display:flex;
   align-items:flex-end;
   justify-content:center;
@@ -668,7 +670,7 @@ function renderTextWithOptionalPinyin(text, showPinyin, textClass = 'zh-char', p
 
 function SettingsPanel({ prefs, setPrefs, onClose, onOpenAISettings }) {
   return (
-    <div className="panel-modal" style={{ zIndex: 1200 }}>
+    <div className="panel-modal">
       <div className="modal-backdrop" onClick={onClose} />
       <div className="panel-card relative">
         <div className="panel-header">
@@ -784,6 +786,9 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
   const [cardPopId, setCardPopId] = useState(null);
   const [questionImgVisible, setQuestionImgVisible] = useState(Boolean(questionImg));
   const [showAIExplanation, setShowAIExplanation] = useState(false);
+
+  // 【核心修改】计算当前是否有任意一层全屏 Modal 盖住了本页面
+  const hasOverlayOpen = showAIExplanation || showAISettings || showSettings;
 
   const [prefs, setPrefs] = useState(() => getSavedInteractivePrefs());
   const [aiSettings, setAISettings] = useState(() => getSavedInteractiveAISettings());
@@ -1027,7 +1032,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
   };
 
   return (
-    <div className={`xzt-container ${showAIExplanation ? 'ai-open' : ''}`}>
+    <div className={`xzt-container ${hasOverlayOpen ? 'ai-open' : ''}`}>
       <style dangerouslySetInnerHTML={{ __html: cssStyles }} />
 
       <div className="xzt-header">
@@ -1151,7 +1156,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
         </div>
       </div>
 
-      {!isSubmitted && !showAIExplanation && (
+      {!isSubmitted && (
         <div className="submit-bar">
           <button className="submit-btn" disabled={!selectedIds.length} onClick={handleSubmit}>
             检查答案
@@ -1160,7 +1165,7 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
       )}
 
       <div
-        className={`result-sheet ${showResultSheet && !showAIExplanation ? 'show' : ''} ${
+        className={`result-sheet ${showResultSheet ? 'show' : ''} ${
           isRight ? 'correct' : 'wrong'
         }`}
       >
@@ -1208,28 +1213,28 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
       />
 
       <InteractiveAIExplanationPanel
-  open={showAIExplanation}
-  onClose={() => setShowAIExplanation(false)}
-  settings={aiSettings}
-  updateSettings={updateAISettings}
-  title="AI 讲题老师"
-  initialPayload={{
-    questionType: 'choice',
-    questionText,
-    questionImage: questionImg || '',
-    options: shuffledOptions.map((opt) => ({
-      id: String(opt.id),
-      text: opt.text,
-      imageUrl: opt.img || opt.imageUrl || ''
-    })),
-    selectedIds: selectedIds.map(String),
-    correctAnswers: correctAnswers.map(String),
-    isRight,
-    extraContext: {
-      multiSelect: correctAnswers.length > 1
-    }
-  }}
-/>
+        open={showAIExplanation}
+        onClose={() => setShowAIExplanation(false)}
+        settings={aiSettings}
+        updateSettings={updateAISettings}
+        title="AI 讲题老师"
+        initialPayload={{
+          questionType: 'choice',
+          questionText,
+          questionImage: questionImg || '',
+          options: shuffledOptions.map((opt) => ({
+            id: String(opt.id),
+            text: opt.text,
+            imageUrl: opt.img || opt.imageUrl || ''
+          })),
+          selectedIds: selectedIds.map(String),
+          correctAnswers: correctAnswers.map(String),
+          isRight,
+          extraContext: {
+            multiSelect: correctAnswers.length > 1
+          }
+        }}
+      />
     </div>
   );
 }
