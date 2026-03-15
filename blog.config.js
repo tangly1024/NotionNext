@@ -12,7 +12,7 @@ const BLOG = {
   SINCE: process.env.NEXT_PUBLIC_SINCE || 2026, // e.g if leave this empty, current year will be used.
 
   PSEUDO_STATIC: process.env.NEXT_PUBLIC_PSEUDO_STATIC || true, // 伪静态路径，开启后所有文章URL都以 .html 结尾。
-  NEXT_REVALIDATE_SECOND: process.env.NEXT_PUBLIC_REVALIDATE_SECOND || 300, // ← 改成 300 秒（5 分钟），减少首次白屏/404 概率
+  NEXT_REVALIDATE_SECOND: process.env.NEXT_PUBLIC_REVALIDATE_SECOND || 60, // ← 改回官方数据60
   APPEARANCE: process.env.NEXT_PUBLIC_APPEARANCE || 'light', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
   APPEARANCE_DARK_TIME: process.env.NEXT_PUBLIC_APPEARANCE_DARK_TIME || [18, 6], // 夜间模式起至时间，false时关闭根据时间自动切换夜间模式
 
