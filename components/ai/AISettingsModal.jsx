@@ -6,7 +6,7 @@ import {
   getProviderById,
   getDefaultModelByProvider,
   getExerciseAssistantById
-} from '../../interactiveQuiz/interactiveSettings';
+} from '../interactiveQuiz/interactiveSettings';
 
 const ZH_VOICE_OPTIONS = [
   { id: 'zh-CN-XiaoxiaoMultilingualNeural', name: '晓晓 (女)' },
