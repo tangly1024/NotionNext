@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import {
   FaTimes,
-  FaChevronDown,
-  FaChevronUp,
+  FaChevronRight,
+  FaChevronLeft,
   FaCheck,
   FaEye,
   FaEyeSlash
@@ -16,7 +16,7 @@ import {
   getExerciseAssistantById
 } from '../interactiveQuiz/interactiveSettings';
 
-const ZH_VOICE_OPTIONS = [
+const ZH_VOICE_OPTIONS =[
   { id: 'zh-CN-XiaoxiaoMultilingualNeural', name: '晓晓 (女)' },
   { id: 'zh-CN-XiaochenMultilingualNeural', name: '晓辰 (男)' },
   { id: 'zh-CN-XiaoxiaoNeural', name: '晓晓标准' },
@@ -25,10 +25,12 @@ const ZH_VOICE_OPTIONS = [
   { id: 'zh-CN-XiaoyiNeural', name: '晓伊' }
 ];
 
-const MY_VOICE_OPTIONS = [
+const MY_VOICE_OPTIONS =[
   { id: 'my-MM-ThihaNeural', name: 'Thiha' },
   { id: 'my-MM-NilarNeural', name: 'Nilar' }
 ];
+
+// ================= UI 基础组件 =================
 
 function ChoiceButton({ active, onClick, children, icon }) {
   return (
@@ -42,27 +44,15 @@ function ChoiceButton({ active, onClick, children, icon }) {
             : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50'
         }`}
     >
-      {icon ? (
-        <span
-          className={`mr-2 text-lg transition-colors ${
-            active
-              ? 'text-violet-600'
-              : 'text-slate-400 group-hover:text-slate-500'
-          }`}
-        >
+      {icon && (
+        <span className={`mr-2 text-lg transition-colors ${active ? 'text-violet-600' : 'text-slate-400'}`}>
           {icon}
         </span>
-      ) : null}
-
+      )}
       <span className="relative z-10">{children}</span>
-
       <div
         className={`absolute right-3 flex h-4 w-4 items-center justify-center rounded-full transition-all duration-200
-          ${
-            active
-              ? 'scale-100 bg-violet-500 opacity-100'
-              : 'scale-50 bg-transparent opacity-0'
-          }`}
+          ${active ? 'scale-100 bg-violet-500 opacity-100' : 'scale-50 bg-transparent opacity-0'}`}
       >
         <FaCheck size={8} className="text-white" />
       </div>
@@ -76,26 +66,15 @@ function SwitchRow({ label, checked, onChange, desc }) {
       type="button"
       onClick={onChange}
       className={`flex w-full items-center justify-between rounded-xl border-2 p-3.5 text-left transition-all duration-200 active:scale-[0.99] ${
-        checked
-          ? 'border-violet-200 bg-violet-50/50'
-          : 'border-slate-200 bg-white hover:bg-slate-50'
+        checked ? 'border-violet-200 bg-violet-50' : 'border-slate-200 bg-white hover:bg-slate-50'
       }`}
-      role="switch"
-      aria-checked={checked}
     >
       <div>
-        <div
-          className={`text-[14px] font-bold ${
-            checked ? 'text-violet-800' : 'text-slate-700'
-          }`}
-        >
+        <div className={`text-[14px] font-bold ${checked ? 'text-violet-800' : 'text-slate-700'}`}>
           {label}
         </div>
-        {desc ? (
-          <div className="mt-0.5 text-xs font-medium text-slate-400">{desc}</div>
-        ) : null}
+        {desc && <div className="mt-0.5 text-xs font-medium text-slate-400">{desc}</div>}
       </div>
-
       <span
         className={`relative inline-flex h-7 w-12 shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ${
           checked ? 'bg-violet-500' : 'bg-slate-300'
@@ -111,55 +90,32 @@ function SwitchRow({ label, checked, onChange, desc }) {
   );
 }
 
-function AccordionCard({ id, title, expandedSection, toggleSection, children }) {
-  const isOpen = expandedSection === id;
-
+function MainMenuItem({ title, value, icon, isLast, onClick }) {
   return (
-    <div
-      className={`overflow-hidden rounded-2xl border transition-all duration-200 ${
-        isOpen
-          ? 'border-violet-200 bg-white shadow-lg shadow-violet-100/40'
-          : 'border-slate-200 bg-white shadow-sm hover:border-slate-300'
+    <button
+      type="button"
+      onClick={onClick}
+      className={`flex w-full items-center justify-between bg-white p-4 active:bg-slate-50 transition-colors ${
+        !isLast ? 'border-b border-slate-100' : ''
       }`}
     >
-      <button
-        type="button"
-        className="flex w-full items-center justify-between px-5 py-4 text-left"
-        onClick={() => toggleSection(id)}
-      >
-        <span
-          className={`text-[15px] font-black tracking-wide transition-colors ${
-            isOpen ? 'text-violet-700' : 'text-slate-700'
-          }`}
-        >
-          {title}
-        </span>
-
-        <span
-          className={`flex h-7 w-7 items-center justify-center rounded-full transition-colors ${
-            isOpen
-              ? 'bg-violet-100 text-violet-600'
-              : 'bg-slate-100 text-slate-400'
-          }`}
-        >
-          {isOpen ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />}
-        </span>
-      </button>
-
-      <div
-        className={`grid transition-all duration-300 ease-in-out ${
-          isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-        }`}
-      >
-        <div className="overflow-hidden">
-          <div className="space-y-5 border-t border-slate-100 bg-slate-50/50 p-5">
-            {children}
-          </div>
+      <div className="flex items-center gap-3 overflow-hidden">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-lg">
+          {icon}
+        </div>
+        <div className="flex flex-col items-start truncate text-left">
+          <span className="text-[15px] font-black text-slate-800">{title}</span>
+          <span className="mt-0.5 truncate text-[12px] font-bold text-slate-400 w-[200px]">
+            {value}
+          </span>
         </div>
       </div>
-    </div>
+      <FaChevronRight className="shrink-0 text-slate-300" size={14} />
+    </button>
   );
 }
+
+// ================= 主模态框组件 =================
 
 export default function AISettingsModal({
   open,
@@ -169,26 +125,34 @@ export default function AISettingsModal({
   scene = 'exercise'
 }) {
   const [mounted, setMounted] = useState(false);
-  const [expandedSection, setExpandedSection] = useState('core');
+  
+  // 核心导航状态：'main', 'core', 'assistant', 'voice'
+  const [activePage, setActivePage] = useState('main'); 
   const [draft, setDraft] = useState(settings || {});
   const [showApiKey, setShowApiKey] = useState(false);
 
-  const assistants = EXERCISE_ASSISTANTS;
+  // 滑动返回的手势状态
+  const[dragX, setDragX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const touchStartX = useRef(0);
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+  },[]);
 
   useEffect(() => {
     if (open) {
       setDraft(settings || {});
-      setExpandedSection('core');
+      setActivePage('main');
       setShowApiKey(false);
+      setDragX(0);
     }
   }, [open, settings]);
 
   const provider = getProviderById(draft?.providerId);
   const currentAssistant = getExerciseAssistantById(draft?.assistantId);
+  const zhVoiceName = ZH_VOICE_OPTIONS.find((v) => v.id === draft?.zhVoice)?.name || '未设置';
+  const myVoiceName = MY_VOICE_OPTIONS.find((v) => v.id === draft?.myVoice)?.name || '未设置';
 
   const hasChanges = useMemo(() => {
     return JSON.stringify(draft || {}) !== JSON.stringify(settings || {});
@@ -196,45 +160,29 @@ export default function AISettingsModal({
 
   if (!mounted || !open) return null;
 
-  const patchDraft = (patch) => {
-    setDraft((prev) => ({
-      ...prev,
-      ...patch
-    }));
-  };
+  const patchDraft = (patch) => setDraft((prev) => ({ ...prev, ...patch }));
 
   const handleProviderChange = (providerId) => {
     const nextProvider = getProviderById(providerId);
     if (!nextProvider) return;
-
     const currentModel = draft?.model || '';
-    const nextModels = nextProvider.models || [];
     const nextModel =
-      nextProvider.allowCustomModel || nextModels.includes(currentModel)
+      nextProvider.allowCustomModel || (nextProvider.models ||[]).includes(currentModel)
         ? currentModel || getDefaultModelByProvider(providerId)
         : getDefaultModelByProvider(providerId);
 
     patchDraft({
       providerId,
-      apiUrl: nextProvider.allowCustomApiUrl
-        ? draft?.apiUrl || nextProvider.apiUrl || ''
-        : nextProvider.apiUrl || '',
+      apiUrl: nextProvider.allowCustomApiUrl ? draft?.apiUrl || nextProvider.apiUrl || '' : nextProvider.apiUrl || '',
       model: nextModel
     });
   };
 
   const handleAssistantChange = (assistantId) => {
     const assistant = getExerciseAssistantById(assistantId);
-    if (!assistant) return;
-
-    patchDraft({
-      assistantId,
-      systemPrompt: assistant?.prompt || ''
-    });
-  };
-
-  const toggleSection = (section) => {
-    setExpandedSection((prev) => (prev === section ? null : section));
+    if (assistant) {
+      patchDraft({ assistantId, systemPrompt: assistant.prompt || '' });
+    }
   };
 
   const handleClose = () => {
@@ -247,67 +195,161 @@ export default function AISettingsModal({
     onClose?.();
   };
 
+  // ================= 手势滑动逻辑 =================
+  const onTouchStart = (e) => {
+    if (activePage === 'main') return;
+    const x = e.touches[0].clientX;
+    if (x > 50) return; // 仅在屏幕最左侧 50px 边缘允许触发右滑返回
+    touchStartX.current = x;
+    setIsDragging(true);
+  };
+
+  const onTouchMove = (e) => {
+    if (!isDragging) return;
+    const deltaX = Math.max(0, e.touches[0].clientX - touchStartX.current); // 仅允许向右滑
+    setDragX(deltaX);
+  };
+
+  const onTouchEnd = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    // 超过屏幕宽度的 25% 判定为返回，否则弹回
+    if (dragX > window.innerWidth * 0.25) {
+      setActivePage('main');
+    }
+    setDragX(0);
+  };
+
+  // ================= 视图渲染辅助 =================
+  const renderSubPageWrapper = (id, title, children) => {
+    const isActive = activePage === id;
+    // 当非主页时，当前活动页或者正在被拖动的页应该被看到
+    const isVisible = isActive || (isDragging && dragX > 0);
+    const transformX = isActive ? dragX : '100%';
+
+    return (
+      <div
+        className={`absolute inset-0 z-20 flex flex-col bg-slate-50 shadow-[-10px_0_20px_rgba(0,0,0,0.05)] ${
+          !isDragging ? 'transition-transform duration-300 ease-out' : ''
+        }`}
+        style={{
+          transform: `translateX(${typeof transformX === 'number' ? `${transformX}px` : transformX})`,
+          visibility: isVisible ? 'visible' : 'hidden'
+        }}
+      >
+        <div className="flex h-14 shrink-0 items-center justify-between border-b border-slate-200 bg-white px-2">
+          <button
+            onClick={() => setActivePage('main')}
+            className="flex h-10 w-10 items-center justify-center text-slate-500 transition active:scale-95"
+          >
+            <FaChevronLeft size={16} />
+          </button>
+          <div className="text-[16px] font-black text-slate-800">{title}</div>
+          <div className="w-10" /> {/* 占位以居中标题 */}
+        </div>
+        <div className="flex-1 overflow-y-auto px-5 py-6 space-y-5 pb-[max(24px,env(safe-area-inset-bottom))]">
+          {children}
+        </div>
+      </div>
+    );
+  };
+
   return createPortal(
     <div className="fixed inset-0 z-[2147483600]">
-      <div
-        className="absolute inset-0 bg-slate-900/40 backdrop-blur-md transition-opacity"
-        onClick={handleClose}
-      />
+      {/* 蒙层 */}
+      <div className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity" onClick={handleClose} />
 
-      <div className="absolute inset-x-0 bottom-0 z-10 mx-auto w-full max-w-lg">
-        <div className="max-h-[92vh] overflow-hidden rounded-t-[2rem] border border-white/30 bg-slate-100 shadow-2xl">
-          <div className="pb-[max(12px,env(safe-area-inset-bottom))]">
-            <div className="flex justify-center pt-2">
-              <div className="h-1.5 w-10 rounded-full bg-slate-300" />
-            </div>
-
-            <div className="sticky top-0 z-20 flex items-center justify-between border-b border-slate-200 bg-white/90 px-5 py-4 backdrop-blur-md">
-              <div className="min-w-0">
-                <div className="text-[18px] font-black text-slate-800">
-                  AI 高级设置
+      {/* 模态框主体 (固定高度防穿透) */}
+      <div className="absolute inset-x-0 bottom-0 mx-auto w-full max-w-lg">
+        <div className="relative h-[85vh] w-full overflow-hidden rounded-t-[2rem] bg-slate-100 shadow-2xl">
+          
+          {/* 统一的手势监听包装器 */}
+          <div 
+            className="absolute inset-0"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            onTouchCancel={onTouchEnd}
+          >
+            {/* ====== 一级页面：菜单导航 ====== */}
+            <div
+              className={`absolute inset-0 flex flex-col bg-slate-100 transition-transform duration-300 ease-out z-10 ${
+                activePage !== 'main' ? '-translate-x-[30%]' : 'translate-x-0'
+              }`}
+            >
+              <div className="shrink-0 pb-2">
+                <div className="flex justify-center pt-3 pb-1">
+                  <div className="h-1.5 w-10 rounded-full bg-slate-300" />
                 </div>
-                <div className="mt-0.5 text-[12px] font-bold text-slate-400">
-                  个性化配置模型、助手与语音偏好
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={handleClose}
-                className="ml-3 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-700 active:scale-95"
-              >
-                <FaTimes size={16} />
-              </button>
-            </div>
-
-            <div className="border-b border-slate-200 bg-white px-5 py-3">
-              <div className="grid grid-cols-2 gap-2 text-xs font-bold">
-                <div className="rounded-xl bg-slate-50 px-3 py-2 text-slate-500">
-                  服务商：
-                  <span className="ml-1 text-slate-700">
-                    {provider?.name || '未设置'}
-                  </span>
-                </div>
-                <div className="rounded-xl bg-slate-50 px-3 py-2 text-slate-500">
-                  助手：
-                  <span className="ml-1 text-slate-700">
-                    {currentAssistant?.name || '未设置'}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="max-h-[calc(92vh-190px)] overflow-y-auto px-5 py-5 space-y-4 no-scrollbar">
-              <AccordionCard
-                id="core"
-                title="1. 核心模型配置"
-                expandedSection={expandedSection}
-                toggleSection={toggleSection}
-              >
-                <div>
-                  <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">
-                    服务商
+                <div className="flex items-center justify-between px-6 py-2">
+                  <div>
+                    <div className="text-[20px] font-black text-slate-800">高级设置</div>
+                    <div className="text-[12px] font-bold text-slate-400">进行高度个性化的 AI 调整</div>
                   </div>
+                  <button
+                    type="button"
+                    onClick={handleClose}
+                    className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-slate-500 transition active:scale-95"
+                  >
+                    <FaTimes size={14} />
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex-1 overflow-y-auto px-5 py-2 space-y-4">
+                <div className="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+                  <MainMenuItem
+                    title="1. 核心模型配置"
+                    value={`${provider?.name || '未知'} · ${draft?.model || '默认'}`}
+                    icon="⚙️"
+                    onClick={() => setActivePage('core')}
+                  />
+                  <MainMenuItem
+                    title="2. 讲题助手与设定"
+                    value={currentAssistant?.name || '未选定预设'}
+                    icon="🤖"
+                    onClick={() => setActivePage('assistant')}
+                  />
+                  <MainMenuItem
+                    title="3. 语音引擎与反馈"
+                    value={`${zhVoiceName} / ${myVoiceName}`}
+                    icon="🔊"
+                    isLast
+                    onClick={() => setActivePage('voice')}
+                  />
+                </div>
+              </div>
+
+              <div className="shrink-0 border-t border-slate-200 bg-white px-5 py-4 pb-[max(16px,env(safe-area-inset-bottom))]">
+                <div className="mb-3 text-center text-[12px] font-bold text-slate-400">
+                  {hasChanges ? '有未保存的修改项' : '当前参数已是最新'}
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={handleClose}
+                    className="h-12 rounded-2xl border-2 border-slate-200 bg-white text-[15px] font-black text-slate-700 transition active:scale-[0.98]"
+                  >
+                    取消
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSave}
+                    className={`h-12 rounded-2xl text-[15px] font-black text-white transition active:scale-[0.98] ${
+                      hasChanges ? 'bg-violet-600 shadow-lg shadow-violet-200' : 'bg-slate-300'
+                    }`}
+                  >
+                    保存并应用
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* ====== 二级页面 1：核心模型 ====== */}
+            {renderSubPageWrapper('core', '核心模型配置', (
+              <>
+                <div>
+                  <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">服务商选择</div>
                   <div className="grid grid-cols-2 gap-3">
                     {PROVIDERS.map((item) => (
                       <ChoiceButton
@@ -322,35 +364,30 @@ export default function AISettingsModal({
                   </div>
                 </div>
 
-                {provider?.allowCustomApiUrl ? (
+                {provider?.allowCustomApiUrl && (
                   <div>
-                    <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">
-                      接口地址
-                    </div>
+                    <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">自定义接口地址</div>
                     <input
-                      className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-[14px] font-bold text-slate-700 transition-all placeholder:text-slate-300 hover:border-slate-300 focus:border-violet-500 focus:outline-none focus:ring-4 focus:ring-violet-500/10"
-                      placeholder="例如 https://xxx.com/v1"
+                      className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-[14px] font-bold text-slate-700 outline-none focus:border-violet-500"
+                      placeholder="如: https://api.openai.com/v1"
                       value={draft?.apiUrl || ''}
                       onChange={(e) => patchDraft({ apiUrl: e.target.value })}
                     />
                   </div>
-                ) : null}
+                )}
 
                 <div>
-                  <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">
-                    模型选择
-                  </div>
-
+                  <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">模型标识符</div>
                   {provider?.allowCustomModel ? (
                     <input
-                      className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-[14px] font-bold text-slate-700 transition-all placeholder:text-slate-300 hover:border-slate-300 focus:border-violet-500 focus:outline-none focus:ring-4 focus:ring-violet-500/10"
-                      placeholder="输入模型名称"
+                      className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-[14px] font-bold text-slate-700 outline-none focus:border-violet-500"
+                      placeholder="输入模型名称 (如: gpt-4)"
                       value={draft?.model || ''}
                       onChange={(e) => patchDraft({ model: e.target.value })}
                     />
                   ) : (
                     <div className="grid grid-cols-1 gap-3">
-                      {(provider?.models || []).map((model) => (
+                      {(provider?.models ||[]).map((model) => (
                         <ChoiceButton
                           key={model}
                           active={draft?.model === model}
@@ -364,93 +401,54 @@ export default function AISettingsModal({
                 </div>
 
                 <div>
-                  <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">
-                    API Key
-                  </div>
-
+                  <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">API Key 密钥</div>
                   <div className="relative">
                     <input
                       type={showApiKey ? 'text' : 'password'}
                       autoComplete="off"
-                      className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 pr-12 text-[14px] font-bold text-slate-700 transition-all placeholder:text-slate-300 hover:border-slate-300 focus:border-violet-500 focus:outline-none focus:ring-4 focus:ring-violet-500/10"
-                      placeholder="在此输入您的密钥"
+                      className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 pr-12 text-[14px] font-bold text-slate-700 outline-none focus:border-violet-500"
+                      placeholder="在此粘贴您的密钥"
                       value={draft?.apiKey || ''}
                       onChange={(e) => patchDraft({ apiKey: e.target.value })}
                     />
                     <button
                       type="button"
                       onClick={() => setShowApiKey((prev) => !prev)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-slate-600"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-slate-400 transition hover:text-slate-600"
                     >
-                      {showApiKey ? <FaEyeSlash size={15} /> : <FaEye size={15} />}
+                      {showApiKey ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
                     </button>
                   </div>
                 </div>
-              </AccordionCard>
+              </>
+            ))}
 
-              <AccordionCard
-                id="assistant"
-                title="2. 讲题助手与设定"
-                expandedSection={expandedSection}
-                toggleSection={toggleSection}
-              >
+            {/* ====== 二级页面 2：讲题助手 ====== */}
+            {renderSubPageWrapper('assistant', '讲题助手与设定', (
+              <>
                 <div>
-                  <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">
-                    助手角色预设
-                  </div>
-
+                  <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">助手角色预设</div>
                   <div className="grid grid-cols-1 gap-3">
-                    {assistants.map((assistant) => {
+                    {EXERCISE_ASSISTANTS.map((assistant) => {
                       const isActive = draft?.assistantId === assistant.id;
-
                       return (
                         <button
                           key={assistant.id}
                           type="button"
                           onClick={() => handleAssistantChange(assistant.id)}
-                          className={`group flex w-full items-center rounded-2xl border-2 p-3.5 text-left transition-all duration-200 active:scale-[0.99]
-                            ${
-                              isActive
-                                ? 'border-violet-500 bg-violet-50/70 shadow-md shadow-violet-100/50'
-                                : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
-                            }`}
+                          className={`group flex w-full items-center rounded-2xl border-2 p-3.5 text-left transition-all active:scale-[0.99]
+                            ${isActive ? 'border-violet-500 bg-violet-50/70' : 'border-slate-200 bg-white hover:border-slate-300'}`}
                         >
-                          <div
-                            className={`mr-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-2xl transition-all duration-300
-                              ${
-                                isActive
-                                  ? 'bg-violet-200 text-violet-700 scale-105'
-                                  : 'bg-slate-100 text-slate-500 group-hover:scale-105 group-hover:bg-slate-200'
-                              }`}
-                          >
+                          <div className={`mr-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-2xl transition-all ${isActive ? 'bg-violet-200 text-violet-700' : 'bg-slate-100'}`}>
                             {assistant.icon}
                           </div>
-
                           <div className="flex-1">
-                            <div
-                              className={`text-[15px] font-black transition-colors ${
-                                isActive ? 'text-violet-800' : 'text-slate-700'
-                              }`}
-                            >
+                            <div className={`text-[15px] font-black ${isActive ? 'text-violet-800' : 'text-slate-700'}`}>
                               {assistant.name}
                             </div>
-                            <div className="mt-0.5 text-[12px] font-bold text-slate-400">
-                              选中后自动应用此人设规则
-                            </div>
+                            <div className="mt-0.5 text-[12px] font-bold text-slate-400">选中后重置为专属提示词</div>
                           </div>
-
-                          <div
-                            className={`ml-3 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-all duration-200
-                              ${
-                                isActive
-                                  ? 'border-violet-500 bg-violet-500'
-                                  : 'border-slate-300 bg-transparent'
-                              }`}
-                          >
-                            {isActive ? (
-                              <FaCheck size={10} className="text-white" />
-                            ) : null}
-                          </div>
+                          {isActive && <div className="ml-3 flex h-5 w-5 items-center justify-center rounded-full bg-violet-500"><FaCheck size={10} className="text-white" /></div>}
                         </button>
                       );
                     })}
@@ -459,26 +457,18 @@ export default function AISettingsModal({
 
                 <div>
                   <div className="mb-2.5 flex items-center justify-between">
-                    <div className="text-[11px] font-black uppercase tracking-widest text-slate-400">
-                      系统提示词 (微调)
-                    </div>
-
+                    <div className="text-[11px] font-black uppercase tracking-widest text-slate-400">系统提示词 (进阶微调)</div>
                     <button
                       type="button"
-                      className="rounded-lg bg-violet-100 px-2 py-1 text-[11px] font-black text-violet-600 transition active:scale-95 hover:bg-violet-200"
-                      onClick={() =>
-                        patchDraft({
-                          systemPrompt: currentAssistant?.prompt || ''
-                        })
-                      }
+                      className="rounded-md bg-violet-100 px-2 py-1 text-[11px] font-black text-violet-600 active:bg-violet-200"
+                      onClick={() => patchDraft({ systemPrompt: currentAssistant?.prompt || '' })}
                     >
                       重置为默认
                     </button>
                   </div>
-
                   <textarea
-                    rows={5}
-                    className="w-full resize-y rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-[13px] font-semibold leading-relaxed text-slate-600 transition-all placeholder:text-slate-300 hover:border-slate-300 focus:border-violet-500 focus:outline-none focus:ring-4 focus:ring-violet-500/10"
+                    rows={6}
+                    className="w-full resize-none rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-[13px] font-semibold leading-relaxed text-slate-600 outline-none focus:border-violet-500"
                     placeholder="在此微调 AI 的行事规则..."
                     value={draft?.systemPrompt || ''}
                     onChange={(e) => patchDraft({ systemPrompt: e.target.value })}
@@ -487,55 +477,43 @@ export default function AISettingsModal({
 
                 <div>
                   <div className="mb-3 flex items-center justify-between">
-                    <div className="text-[11px] font-black uppercase tracking-widest text-slate-400">
-                      AI 发散温度 (Temperature)
-                    </div>
+                    <div className="text-[11px] font-black uppercase tracking-widest text-slate-400">发散温度 Temperature</div>
                     <div className="flex w-10 items-center justify-center rounded-lg bg-violet-100 py-1 text-[12px] font-black text-violet-700">
                       {draft?.temperature ?? 0.2}
                     </div>
                   </div>
-
                   <input
                     type="range"
                     min="0"
                     max="1.2"
                     step="0.05"
                     value={draft?.temperature ?? 0.2}
-                    onChange={(e) =>
-                      patchDraft({ temperature: Number(e.target.value) })
-                    }
-                    className="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-violet-500 transition-all hover:bg-slate-300 focus:outline-none"
+                    onChange={(e) => patchDraft({ temperature: Number(e.target.value) })}
+                    className="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-violet-500"
                   />
-
                   <div className="mt-2 flex justify-between px-1 text-[10px] font-bold text-slate-400">
-                    <span>精确保守 (0.0)</span>
-                    <span>发散创造 (1.2)</span>
+                    <span>精确 (0.0)</span>
+                    <span>发散 (1.2)</span>
                   </div>
                 </div>
-              </AccordionCard>
+              </>
+            ))}
 
-              <AccordionCard
-                id="voice"
-                title="3. 语音引擎与触感反馈"
-                expandedSection={expandedSection}
-                toggleSection={toggleSection}
-              >
+            {/* ====== 二级页面 3：语音触感 ====== */}
+            {renderSubPageWrapper('voice', '语音与反馈配置', (
+              <>
                 <div>
-                  <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">
-                    TTS 接口地址
-                  </div>
+                  <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">TTS 接口基址</div>
                   <input
-                    className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-[14px] font-bold text-slate-700 transition-all placeholder:text-slate-300 hover:border-slate-300 focus:border-violet-500 focus:outline-none focus:ring-4 focus:ring-violet-500/10"
-                    placeholder="输入 TTS API URL"
+                    className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-[14px] font-bold text-slate-700 outline-none focus:border-violet-500"
+                    placeholder="文本转语音 API URL"
                     value={draft?.ttsApiUrl || ''}
                     onChange={(e) => patchDraft({ ttsApiUrl: e.target.value })}
                   />
                 </div>
 
                 <div>
-                  <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">
-                    中文发音人选择
-                  </div>
+                  <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">中文发音人</div>
                   <div className="grid grid-cols-2 gap-3">
                     {ZH_VOICE_OPTIONS.map((item) => (
                       <ChoiceButton
@@ -550,9 +528,7 @@ export default function AISettingsModal({
                 </div>
 
                 <div>
-                  <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">
-                    缅语发音人选择
-                  </div>
+                  <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">缅语发音人</div>
                   <div className="grid grid-cols-2 gap-3">
                     {MY_VOICE_OPTIONS.map((item) => (
                       <ChoiceButton
@@ -569,50 +545,20 @@ export default function AISettingsModal({
                 <div className="flex flex-col gap-3 pt-2">
                   <SwitchRow
                     label="设备震动反馈"
-                    desc="交互时提供触感震动 (需设备支持)"
+                    desc="操作及交互时提供触感反馈"
                     checked={!!draft?.vibration}
-                    onChange={() =>
-                      patchDraft({ vibration: !draft?.vibration })
-                    }
+                    onChange={() => patchDraft({ vibration: !draft?.vibration })}
                   />
-
                   <SwitchRow
                     label="应用内置音效"
-                    desc="答对答错时播放提示音"
+                    desc="答题正确、错误时播放音效"
                     checked={!!draft?.soundFx}
                     onChange={() => patchDraft({ soundFx: !draft?.soundFx })}
                   />
                 </div>
-              </AccordionCard>
-            </div>
+              </>
+            ))}
 
-            <div className="border-t border-slate-200 bg-white px-5 py-3">
-              <div className="mb-3 text-center text-[11px] font-bold text-slate-400">
-                {hasChanges ? '你有未保存的修改' : '当前没有未保存修改'}
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={handleClose}
-                  className="h-12 rounded-2xl border border-slate-200 bg-white text-[14px] font-black text-slate-700 transition active:scale-[0.98]"
-                >
-                  取消
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleSave}
-                  className={`h-12 rounded-2xl text-[14px] font-black text-white transition active:scale-[0.98] ${
-                    hasChanges
-                      ? 'bg-violet-600 shadow-lg shadow-violet-200'
-                      : 'bg-slate-300'
-                  }`}
-                >
-                  保存设置
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
