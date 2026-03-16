@@ -10,7 +10,7 @@ import {
   FaBrain
 } from 'react-icons/fa';
 import { pinyin } from 'pinyin-pro';
-import InteractiveAIExplanationPanel from '../../interactiveQuiz/InteractiveAIExplanationPanel';
+import InteractiveAIExplanationPanel from '../../ai/InteractiveAIExplanationPanel';
 import AISettingsModal from '../../ai/AISettingsModal';
 import {
   getSavedInteractivePrefs,
