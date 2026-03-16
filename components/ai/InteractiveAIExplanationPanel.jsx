@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import {
   FaArrowLeft,
@@ -55,6 +55,29 @@ const GlobalStyles = () => (
   `}</style>
 );
 
+const SHARED_KEYS = [
+  'providerId',
+  'apiUrl',
+  'apiKey',
+  'model',
+  'ttsApiUrl',
+  'ttsVoice',
+  'zhVoice',
+  'myVoice',
+  'ttsSpeed',
+  'ttsPitch',
+  'soundFx',
+  'vibration'
+];
+
+const SCENE_KEYS = [
+  'assistantId',
+  'systemPrompt',
+  'temperature',
+  'showText',
+  'asrSilenceMs'
+];
+
 export default function InteractiveAIExplanationPanel({
   open,
   title = 'AI 讲题老师',
@@ -73,12 +96,39 @@ export default function InteractiveAIExplanationPanel({
   } = useAISettings(AI_SCENES.EXERCISE);
 
   const effectiveSettings = settings || resolvedSettings;
-  const effectiveUpdateSettings =
-    updateSettings ||
-    ((patch) => {
-      updateSceneSettings?.(patch);
-      updateSharedSettings?.(patch);
-    });
+
+  const fallbackUpdateSettings = useCallback(
+    (patch = {}) => {
+      const sharedPatch = {};
+      const scenePatch = {};
+
+      Object.entries(patch).forEach(([key, value]) => {
+        if (SHARED_KEYS.includes(key)) sharedPatch[key] = value;
+        if (SCENE_KEYS.includes(key)) scenePatch[key] = value;
+      });
+
+      if (Object.keys(sharedPatch).length) {
+        updateSharedSettings(sharedPatch);
+      }
+
+      if (Object.keys(scenePatch).length) {
+        updateSceneSettings(AI_SCENES.EXERCISE, scenePatch);
+      }
+    },
+    [updateSharedSettings, updateSceneSettings]
+  );
+
+  const effectiveUpdateSettings = updateSettings || fallbackUpdateSettings;
+
+  const isAIReady = useMemo(() => {
+    return Boolean(
+      effectiveSettings?.apiKey &&
+      effectiveSettings?.apiUrl &&
+      effectiveSettings?.model
+    );
+  }, [effectiveSettings]);
+
+  const sessionOpen = open && isAIReady;
 
   const {
     history,
@@ -104,7 +154,7 @@ export default function InteractiveAIExplanationPanel({
     setShowText,
     replaySpecificAnswer
   } = useAISession({
-    open,
+    open: sessionOpen,
     scene: AI_SCENES.EXERCISE,
     settings: effectiveSettings,
     initialPayload,
@@ -117,10 +167,16 @@ export default function InteractiveAIExplanationPanel({
   }, []);
 
   useEffect(() => {
+    if (open && !isAIReady) {
+      setShowSettings(true);
+    }
+  }, [open, isAIReady]);
+
+  useEffect(() => {
     if (!open) return undefined;
     const prevBodyOverflow = document.body.style.overflow;
     const prevHtmlOverflow = document.documentElement.style.overflow;
-    
+
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
 
@@ -135,14 +191,12 @@ export default function InteractiveAIExplanationPanel({
   return createPortal(
     <>
       <div className="fixed inset-0 z-[2147483000] bg-black/40 backdrop-blur-sm" />
-      <div className="fixed inset-0 z-[2147483001] flex h-[100dvh] w-full flex-col overflow-hidden bg-white text-slate-800">
+      <div className="fixed inset-0 z-[2147483001] isolate flex h-[100dvh] w-full flex-col overflow-hidden bg-white text-slate-800">
         <GlobalStyles />
-        
-        {/* 背景层美化 */}
+
         <div className="absolute inset-0 ai-chat-bg opacity-70" />
 
-        {/* 顶部导航美化（毛玻璃效果） */}
-        <div className="relative z-20 flex h-16 items-center justify-between border-b border-white/50 bg-white/70 backdrop-blur-md px-4 shadow-sm">
+        <div className="relative z-20 flex h-16 items-center justify-between border-b border-white/50 bg-white/70 px-4 shadow-sm backdrop-blur-md">
           <button
             type="button"
             onClick={() => {
@@ -154,8 +208,8 @@ export default function InteractiveAIExplanationPanel({
             <FaArrowLeft />
           </button>
 
-          <div className="text-[15px] font-black tracking-widest text-slate-800 flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
+          <div className="flex items-center gap-2 text-[15px] font-black tracking-widest text-slate-800">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
             {title}
           </div>
 
@@ -168,14 +222,29 @@ export default function InteractiveAIExplanationPanel({
           </button>
         </div>
 
-        {/* 聊天内容区 */}
         <div
           ref={scrollRef}
           className={`relative z-10 flex-1 overflow-y-auto p-4 pb-44 ${
             showLangPicker ? 'pointer-events-none select-none' : ''
           }`}
         >
-          {!showText ? (
+          {!isAIReady ? (
+            <div className="flex min-h-full flex-col items-center justify-center px-6 text-center">
+              <div className="mb-4 text-5xl">🤖</div>
+              <div className="text-lg font-black text-slate-800">先完成 AI 设置</div>
+              <div className="mt-2 text-sm font-medium leading-6 text-slate-500">
+                需要先填写 API Key、接口地址和模型，才能开始自动讲题。
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowSettings(true)}
+                className="mt-6 rounded-2xl bg-pink-500 px-5 py-3 text-sm font-black text-white shadow-sm active:scale-95"
+              >
+                去设置
+              </button>
+            </div>
+          ) : !showText ? (
             <div className="flex min-h-full flex-1 flex-col items-center justify-center">
               <div className="relative flex h-56 w-56 items-center justify-center">
                 {isAiSpeaking && <div className="absolute inset-0 animate-ping rounded-full bg-pink-300/40" />}
@@ -188,9 +257,15 @@ export default function InteractiveAIExplanationPanel({
                 />
               </div>
 
-              <div className="mt-8 flex h-10 items-center justify-center bg-white/80 px-6 py-2 rounded-full shadow-sm border border-slate-100 backdrop-blur-sm">
+              <div className="mt-8 flex h-10 items-center justify-center rounded-full border border-slate-100 bg-white/80 px-6 py-2 shadow-sm backdrop-blur-sm">
                 {isAiSpeaking ? (
-                  <div className="tts-bars flex items-center gap-1"><span /><span /><span /><span /><span /></div>
+                  <div className="tts-bars flex items-center gap-1">
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                  </div>
                 ) : (
                   <span className="text-sm font-bold tracking-widest text-slate-500">
                     {isRecording ? '正在倾听...' : isThinking ? '思考中...' : '期待你的提问~'}
@@ -203,7 +278,7 @@ export default function InteractiveAIExplanationPanel({
               {history.map((msg) => {
                 if (msg.role === 'error') {
                   return (
-                    <div key={msg.id} className="mb-4 text-center text-xs font-bold text-red-500 bg-red-50 py-2 rounded-xl mx-8">
+                    <div key={msg.id} className="mx-8 mb-4 rounded-xl bg-red-50 py-2 text-center text-xs font-bold text-red-500">
                       {msg.text}
                     </div>
                   );
@@ -236,7 +311,7 @@ export default function InteractiveAIExplanationPanel({
                         <div className="inline whitespace-pre-wrap text-[15px] font-medium leading-relaxed text-slate-700">
                           {aiText || (msg.isStreaming ? '思考中...' : '')}
                           {msg.isStreaming && (
-                            <span className="ml-1 inline-block h-4 w-1.5 animate-pulse align-middle bg-pink-400 rounded-full" />
+                            <span className="ml-1 inline-block h-4 w-1.5 animate-pulse rounded-full bg-pink-400 align-middle" />
                           )}
                         </div>
 
@@ -244,7 +319,7 @@ export default function InteractiveAIExplanationPanel({
                           <button
                             type="button"
                             onClick={() => replaySpecificAnswer(msg.text)}
-                            className="ml-3 mt-1 inline-flex items-center align-middle text-slate-300 hover:text-pink-500 active:scale-90 transition-colors"
+                            className="ml-3 mt-1 inline-flex items-center align-middle text-slate-300 transition-colors hover:text-pink-500 active:scale-90"
                             title="重新朗读"
                           >
                             <FaVolumeUp size={16} />
@@ -267,102 +342,119 @@ export default function InteractiveAIExplanationPanel({
           )}
         </div>
 
-        {/* 底部输入控制区美化 */}
-        <div className="absolute bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-xl px-5 pb-[max(24px,env(safe-area-inset-bottom))] pt-4 shadow-[0_-10px_40px_rgba(0,0,0,.08)]">
-          <div className="relative mx-auto flex h-20 max-w-md items-center justify-center">
-            <button
-              type="button"
-              onClick={() => setTextMode((value) => !value)}
-              className="absolute left-0 flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-transform hover:bg-slate-50 active:scale-95"
-            >
-              {textMode ? <FaMicrophone size={18} /> : <FaKeyboard size={18} />}
-            </button>
-
-            {!textMode ? (
-              <div className="flex w-full flex-col items-center">
-                <button
-                  type="button"
-                  onPointerDown={handleMicPointerDown}
-                  onPointerUp={handleMicPointerUp}
-                  onPointerCancel={handleMicPointerCancel}
-                  onPointerLeave={handleMicPointerCancel}
-                  onContextMenu={(e) => e.preventDefault()}
-                  className={`touch-none flex h-20 w-20 items-center justify-center rounded-full text-white shadow-[0_10px_25px_rgba(236,72,153,.3)] transition-all duration-300 ${
-                    isRecording
-                      ? 'animate-pulse-ring scale-95 bg-pink-500'
-                      : 'bg-gradient-to-br from-pink-400 to-rose-500 hover:scale-105 active:scale-95'
-                  }`}
-                >
-                  {isRecording ? <FaPaperPlane className="animate-pulse text-3xl" /> : <FaMicrophone className="text-3xl" />}
-                </button>
-
-                <div className="pointer-events-none absolute -bottom-6 whitespace-nowrap text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                  {isRecording ? (
-                    <span className="text-pink-500">点击发送 · 静默自动发送</span>
-                  ) : isThinking ? (
-                    <span className="text-violet-500">思考中...</span>
-                  ) : isAiSpeaking ? (
-                    <div className="tts-bars flex gap-1"><span /><span /><span /><span /><span /></div>
-                  ) : (
-                    `长按切换语言 · ${currentLangObj.flag} ${currentLangObj.name}`
-                  )}
-                </div>
-              </div>
-            ) : (
-              <div className="relative ml-16 mr-16 flex flex-1 items-center rounded-full border-2 border-slate-100 bg-white p-1.5 shadow-sm transition focus-within:border-pink-200 focus-within:shadow-md">
-                <input
-                  type="text"
-                  className="flex-1 bg-transparent px-4 py-2 text-sm font-medium text-slate-800 outline-none placeholder-slate-400"
-                  placeholder={isRecording ? '听你说...' : '输入消息继续追问...'}
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && inputText.trim()) {
-                      sendMessage(inputText);
-                      setInputText('');
-                    }
-                  }}
-                />
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (isRecording) stopEverything();
-                    if (inputText.trim()) {
-                      sendMessage(inputText);
-                      setInputText('');
-                    }
-                  }}
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-pink-400 to-rose-500 text-white shadow-md transition-transform active:scale-90"
-                >
-                  <FaPaperPlane size={14} className="-ml-0.5" />
-                </button>
-              </div>
-            )}
-
-            <div className="absolute right-0 flex items-center justify-center gap-2">
-              {isAiSpeaking || isRecording || isThinking ? (
-                <button
-                  type="button"
-                  onClick={stopEverything}
-                  className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-transform active:scale-95"
-                >
-                  <FaStop size={18} className="text-red-400" />
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setShowText((value) => !value)}
-                  className={`flex h-12 w-12 items-center justify-center rounded-full border shadow-sm transition-colors active:scale-95 ${
-                    showText
-                      ? 'border-pink-200 bg-pink-50 text-pink-500'
-                      : 'border-slate-200 bg-white text-slate-500'
-                  }`}
-                >
-                  {showText ? <FaClosedCaptioning size={18} /> : <FaCommentSlash size={18} />}
-                </button>
-              )}
+        <div className="absolute bottom-0 left-0 right-0 z-30 bg-white/80 px-5 pb-[max(24px,env(safe-area-inset-bottom))] pt-4 shadow-[0_-10px_40px_rgba(0,0,0,.08)] backdrop-blur-xl">
+          {!isAIReady ? (
+            <div className="relative mx-auto flex h-20 max-w-md items-center justify-center">
+              <button
+                type="button"
+                onClick={() => setShowSettings(true)}
+                className="rounded-full bg-pink-500 px-6 py-3 text-sm font-black text-white shadow-sm active:scale-95"
+              >
+                打开 AI 设置
+              </button>
             </div>
-          </div>
+          ) : (
+            <div className="relative mx-auto flex h-20 max-w-md items-center justify-center">
+              <button
+                type="button"
+                onClick={() => setTextMode((value) => !value)}
+                className="absolute left-0 flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-transform hover:bg-slate-50 active:scale-95"
+              >
+                {textMode ? <FaMicrophone size={18} /> : <FaKeyboard size={18} />}
+              </button>
+
+              {!textMode ? (
+                <div className="flex w-full flex-col items-center">
+                  <button
+                    type="button"
+                    onPointerDown={handleMicPointerDown}
+                    onPointerUp={handleMicPointerUp}
+                    onPointerCancel={handleMicPointerCancel}
+                    onPointerLeave={handleMicPointerCancel}
+                    onContextMenu={(e) => e.preventDefault()}
+                    className={`touch-none flex h-20 w-20 items-center justify-center rounded-full text-white shadow-[0_10px_25px_rgba(236,72,153,.3)] transition-all duration-300 ${
+                      isRecording
+                        ? 'animate-pulse-ring scale-95 bg-pink-500'
+                        : 'bg-gradient-to-br from-pink-400 to-rose-500 hover:scale-105 active:scale-95'
+                    }`}
+                  >
+                    {isRecording ? <FaPaperPlane className="animate-pulse text-3xl" /> : <FaMicrophone className="text-3xl" />}
+                  </button>
+
+                  <div className="pointer-events-none absolute -bottom-6 whitespace-nowrap text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                    {isRecording ? (
+                      <span className="text-pink-500">点击发送 · 静默自动发送</span>
+                    ) : isThinking ? (
+                      <span className="text-violet-500">思考中...</span>
+                    ) : isAiSpeaking ? (
+                      <div className="tts-bars flex gap-1">
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                      </div>
+                    ) : (
+                      `长按切换语言 · ${currentLangObj.flag} ${currentLangObj.name}`
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="relative ml-16 mr-16 flex flex-1 items-center rounded-full border-2 border-slate-100 bg-white p-1.5 shadow-sm transition focus-within:border-pink-200 focus-within:shadow-md">
+                  <input
+                    type="text"
+                    className="flex-1 bg-transparent px-4 py-2 text-sm font-medium text-slate-800 outline-none placeholder-slate-400"
+                    placeholder={isRecording ? '听你说...' : '输入消息继续追问...'}
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && inputText.trim()) {
+                        sendMessage(inputText);
+                        setInputText('');
+                      }
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (isRecording) stopEverything();
+                      if (inputText.trim()) {
+                        sendMessage(inputText);
+                        setInputText('');
+                      }
+                    }}
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-pink-400 to-rose-500 text-white shadow-md transition-transform active:scale-90"
+                  >
+                    <FaPaperPlane size={14} className="-ml-0.5" />
+                  </button>
+                </div>
+              )}
+
+              <div className="absolute right-0 flex items-center justify-center gap-2">
+                {isAiSpeaking || isRecording || isThinking ? (
+                  <button
+                    type="button"
+                    onClick={stopEverything}
+                    className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-transform active:scale-95"
+                  >
+                    <FaStop size={18} className="text-red-400" />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setShowText((value) => !value)}
+                    className={`flex h-12 w-12 items-center justify-center rounded-full border shadow-sm transition-colors active:scale-95 ${
+                      showText
+                        ? 'border-pink-200 bg-pink-50 text-pink-500'
+                        : 'border-slate-200 bg-white text-slate-500'
+                    }`}
+                  >
+                    {showText ? <FaClosedCaptioning size={18} /> : <FaCommentSlash size={18} />}
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         <RecognitionLanguagePicker
@@ -384,4 +476,4 @@ export default function InteractiveAIExplanationPanel({
     </>,
     document.body
   );
-}
+                      }
