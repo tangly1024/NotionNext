@@ -88,5 +88,3 @@ const Footer = ({ title }) => {
 }
 
 export default Footer
-
-footer版权信息备份
