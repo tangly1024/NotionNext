@@ -65,7 +65,7 @@ const Footer = ({ title }) => {
 
           {/* BIO - 修改为你的新描述 */}
           <div className='mt-6 font-bold tracking-[0.4em] text-xs uppercase opacity-80 w-full text-center'>
-            Architect · Traveler · Life Explorer
+            架构师 · 旅行家 · 人生体验家
           </div>
 
           {/* 备案 */}
