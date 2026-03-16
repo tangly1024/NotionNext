@@ -9,7 +9,7 @@ const CONFIG = {
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
     { title: '欢迎来到我的领地🎉', url: 'https://Kingsleyqi.cn' },
-    { title: '这是我的世界', url: 'https://kingsleyqi.cn' }
+    { title: '这里有我的生活态度与一切💯', url: 'https://kingsleyqi.cn' }
   ],
 
   // 英雄区左右侧组件颠倒位置
