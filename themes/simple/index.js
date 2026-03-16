@@ -405,20 +405,29 @@ const LayoutLearningHome = () => {
       </div>
 
       {/* 底部导航 */}
-      <nav className='fixed bottom-0 left-0 right-0 z-[50] bg-white/95 backdrop-blur-xl border-t border-slate-100 px-4 pt-3 pb-[calc(env(safe-area-inset-bottom)+10px)] shadow-[0_-10px_20px_rgba(0,0,0,0.08)]'>
-        <div className='flex items-center justify-between'>
-          <FooterItem icon={MessageCircle} label='消息' />
-          <FooterItem icon={Globe2} label='社区' />
-          <FooterItem icon={Users} label='语伴' />
-          <FooterItem icon={Compass} label='动态' />
-          <Link href='/' className='flex flex-col items-center gap-1 text-indigo-600 active:scale-90 transition-transform'>
-            <div className='bg-indigo-50 p-1.5 rounded-xl border border-indigo-100'>
-              <BookOpen size={22} />
-            </div>
-            <span className='text-[10px] font-bold'>学习</span>
-          </Link>
-        </div>
-      </nav>
+<nav className='fixed bottom-0 left-0 right-0 z-[50] bg-white/95 backdrop-blur-xl border-t border-slate-100 px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+6px)] shadow-[0_-4px_10px_rgba(0,0,0,0.05)]'>
+  <div className='flex justify-around items-center'>
+    <FooterItem icon={MessageCircle} label='消息' />
+    <FooterItem icon={Globe2} label='社区' />
+    <FooterItem icon={Users} label='语伴' />
+    <FooterItem icon={Compass} label='动态' />
+    <Link href='/' className='flex flex-col items-center gap-1 text-indigo-600 active:scale-90 transition-transform'>
+      <div className='bg-indigo-50 p-1.5 rounded-xl border border-indigo-100'>
+        <BookOpen size={22} />
+      </div>
+      <span className='text-[9px] font-bold'>学习</span>
+    </Link>
+  </div>
+</nav>
+
+function FooterItem({ icon: Icon, label }) {
+  return (
+    <div className='flex flex-col items-center gap-0.5 text-slate-500 active:scale-90 transition-all'>
+      <Icon size={20} />
+      <span className='text-[9px] font-bold'>{label}</span>
+    </div>
+  )
+  }
 
       {/* 书库弹窗 */}
       <AnimatePresence>
