@@ -10,8 +10,18 @@ const XuanZeTi = dynamic(() => import('../../../components/quiz/Tixing/XuanZeTi'
   ssr: false,
   loading: () => (
     <div className="flex-1 flex flex-col items-center justify-center h-full bg-white">
-      <div className="w-12 h-12 border-4 border-[#e5e5e5] border-t-[#58cc02] rounded-full animate-spin mb-4"></div>
+      <div className="w-12 h-12 border-4 border-[#e5e5e5] border-t-[#58cc02] rounded-full animate-spin mb-4" />
       <p className="text-gray-400 font-black tracking-widest animate-pulse">引擎启动中...</p>
+    </div>
+  )
+});
+ // 添加 PaiXuTi 的动态导入
+const PaiXuTi = dynamic(() => import('../../../components/quiz/Tixing/PaiXuTi'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex-1 flex flex-col items-center justify-center h-full bg-white">
+      <div className="w-12 h-12 border-4 border-[#e5e5e5] border-t-[#58cc02] rounded-full animate-spin mb-4" />
+      <p className="text-gray-400 font-black tracking-widest animate-pulse">排序题加载中...</p>
     </div>
   )
 });
@@ -36,6 +46,9 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
   const shakeTimerRef = useRef(null);
 
   const [restored, setRestored] = useState(false);
+
+  // 新增：子组件弹层是否打开（AI讲题 / AI设置 / 学习设置）
+  const [isQuestionOverlayOpen, setIsQuestionOverlayOpen] = useState(false);
 
   useEffect(() => {
     if (!lessonData?.questions) return;
@@ -83,7 +96,6 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
     setRestored(true);
   }, [lessonData, explicitLessonId]);
 
-  // 本地保存进行中的关卡进度
   useEffect(() => {
     if (!restored) return;
     if (typeof window === 'undefined') return;
@@ -351,31 +363,42 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
 
   return (
     <div className="flex flex-col h-[100dvh] bg-white overflow-hidden relative selection:bg-transparent">
-      {/* 顶部进度条 */}
-      <div className="pt-8 pb-4 px-6 shrink-0">
-        <div className="h-3.5 bg-[#e5e5e5] rounded-full relative">
-          {progressPulse && (
-            <motion.div
-              className="absolute inset-0 bg-[#58cc02] rounded-full"
-              initial={{ opacity: 0.8, scale: 1 }}
-              animate={{ opacity: 0, scaleY: 2.5, scaleX: 1.05 }}
-              transition={{ duration: 0.5 }}
-            />
-          )}
-
+      {/* 顶部进度条：只有题目主界面显示，弹层页全部隐藏 */}
+      <AnimatePresence initial={false}>
+        {!isQuestionOverlayOpen && (
           <motion.div
-            className="absolute top-0 left-0 bottom-0 bg-[#58cc02] rounded-full z-10"
-            initial={{ width: 0 }}
-            animate={{ width: `${progressPercent}%` }}
-            transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+            key="quiz-top-progress"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.18 }}
+            className="pt-8 pb-4 px-6 shrink-0"
           >
-            <div className="absolute top-1 left-2 right-2 h-[30%] bg-white/30 rounded-full" />
+            <div className="h-3.5 bg-[#e5e5e5] rounded-full relative overflow-hidden">
+              {progressPulse && (
+                <motion.div
+                  className="absolute inset-0 bg-[#58cc02] rounded-full"
+                  initial={{ opacity: 0.8, scale: 1 }}
+                  animate={{ opacity: 0, scaleY: 2.5, scaleX: 1.05 }}
+                  transition={{ duration: 0.5 }}
+                />
+              )}
+
+              <motion.div
+                className="absolute top-0 left-0 bottom-0 bg-[#58cc02] rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${progressPercent}%` }}
+                transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+              >
+                <div className="absolute top-1 left-2 right-2 h-[30%] bg-white/30 rounded-full" />
+              </motion.div>
+            </div>
           </motion.div>
-        </div>
-      </div>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
-        {isDoingWrongQueue && (
+        {!isQuestionOverlayOpen && isDoingWrongQueue && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
@@ -388,7 +411,7 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
       </AnimatePresence>
 
       <AnimatePresence mode="wait">
-        {comboFlash && (
+        {!isQuestionOverlayOpen && comboFlash && (
           <motion.div
             key={comboFlash.id}
             initial={{ opacity: 0, y: -20, scale: 0.5, rotate: 10 }}
@@ -426,6 +449,7 @@ export default function QuizPage({ lessonData, currentRoadmap, explicitLessonId 
               onCorrect={handleCorrect}
               onWrong={handleWrong}
               onNext={handleNext}
+              onOverlayChange={setIsQuestionOverlayOpen}
               triggerAI={async (params) => {
                 console.log('AI解析请求:', params);
               }}
