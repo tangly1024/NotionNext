@@ -7,7 +7,7 @@ const BLOG = {
     process.env.NOTION_PAGE_ID ||
     '30eb6394e3f581d192a6e869e7d56347',  // ← 你的数据库 ID，已填入
 
-  THEME: process.env.NEXT_PUBLIC_THEME || 'heo', // ← 改成 heo 主题
+  THEME: process.env.NEXT_PUBLIC_THEME || 'heox', // ← 改成 heox 主题
   LANG: process.env.NEXT_PUBLIC_LANG || 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
   SINCE: process.env.NEXT_PUBLIC_SINCE || 2026, // e.g if leave this empty, current year will be used.
 
