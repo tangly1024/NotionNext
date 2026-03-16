@@ -6,12 +6,10 @@ import {
   FaArrowRight,
   FaSpinner,
   FaRobot,
-  FaCog,
-  FaBrain
+  FaCog
 } from 'react-icons/fa';
 import { pinyin } from 'pinyin-pro';
 import InteractiveAIExplanationPanel from '../../ai/InteractiveAIExplanationPanel';
-import AISettingsModal from '../../ai/AISettingsModal';
 import {
   getSavedInteractivePrefs,
   getSavedInteractiveAISettings,
@@ -20,9 +18,6 @@ import {
   speedLabelToRate
 } from '../../interactiveQuiz/interactiveSettings';
 
-// =================================================================================
-// 1. IndexedDB 缓存引擎
-// =================================================================================
 const idb = {
   db: null,
   async init() {
@@ -62,9 +57,6 @@ const idb = {
   }
 };
 
-// =================================================================================
-// 2. 音效与通用工具
-// =================================================================================
 function vibrate(pattern) {
   if (typeof navigator !== 'undefined' && navigator.vibrate) {
     navigator.vibrate(pattern);
@@ -114,9 +106,6 @@ function playBeep(type = 'tap') {
   } catch (_) {}
 }
 
-// =================================================================================
-// 3. TTS 文本工具
-// =================================================================================
 const TTS_VOICES = {
   zh: 'zh-CN-XiaoxiaoMultilingualNeural',
   my: 'my-MM-ThihaNeural',
@@ -208,9 +197,6 @@ async function getTTSBlob(text, voice, rate = 0, apiUrl = 'https://t.leftsite.cn
   return blob;
 }
 
-// =================================================================================
-// 4. TTS 播放引擎
-// =================================================================================
 const audioController = {
   currentAudio: null,
   latestRequestId: 0,
@@ -310,9 +296,6 @@ const audioController = {
   }
 };
 
-// =================================================================================
-// 5. 样式
-// =================================================================================
 const cssStyles = `
 .xzt-container {
   font-family:"Padauk","Noto Sans SC",sans-serif;
@@ -868,22 +851,6 @@ const cssStyles = `
   color:#3f6212;
 }
 
-.jump-btn {
-  width:100%;
-  border:2px solid #ddd6fe;
-  background:#faf5ff;
-  color:#7c3aed;
-  border-radius:14px;
-  padding:12px 14px;
-  font-size:13px;
-  font-weight:900;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  cursor:pointer;
-  margin-top:10px;
-}
-
 .bounce-in {
   animation:xzt-bounce .28s ease-out;
 }
@@ -938,7 +905,7 @@ function renderTextWithOptionalPinyin(text, showPinyin, textClass = 'zh-char', p
   });
 }
 
-function SettingsPanel({ prefs, setPrefs, onClose, onOpenAISettings }) {
+function SettingsPanel({ prefs, setPrefs, onClose }) {
   return (
     <div className="panel-modal">
       <div className="modal-backdrop" onClick={onClose} />
@@ -950,7 +917,9 @@ function SettingsPanel({ prefs, setPrefs, onClose, onOpenAISettings }) {
           </button>
         </div>
 
-        <div className="settings-section-title" style={{ marginTop: 0 }}>显示与朗读</div>
+        <div className="settings-section-title" style={{ marginTop: 0 }}>
+          显示与朗读
+        </div>
 
         <div className="setting-row">
           <span className="setting-label">题干拼音</span>
@@ -959,7 +928,10 @@ function SettingsPanel({ prefs, setPrefs, onClose, onOpenAISettings }) {
             onClick={() => setPrefs((s) => ({ ...s, showQuestionPinyin: !s.showQuestionPinyin }))}
             style={{ background: prefs.showQuestionPinyin ? '#58cc02' : '#cbd5e1' }}
           >
-            <div className="switch-dot" style={{ left: prefs.showQuestionPinyin ? '22px' : '4px' }} />
+            <div
+              className="switch-dot"
+              style={{ left: prefs.showQuestionPinyin ? '22px' : '4px' }}
+            />
           </div>
         </div>
 
@@ -970,7 +942,10 @@ function SettingsPanel({ prefs, setPrefs, onClose, onOpenAISettings }) {
             onClick={() => setPrefs((s) => ({ ...s, showOptionPinyin: !s.showOptionPinyin }))}
             style={{ background: prefs.showOptionPinyin ? '#58cc02' : '#cbd5e1' }}
           >
-            <div className="switch-dot" style={{ left: prefs.showOptionPinyin ? '22px' : '4px' }} />
+            <div
+              className="switch-dot"
+              style={{ left: prefs.showOptionPinyin ? '22px' : '4px' }}
+            />
           </div>
         </div>
 
@@ -986,7 +961,9 @@ function SettingsPanel({ prefs, setPrefs, onClose, onOpenAISettings }) {
         </div>
 
         <div style={{ marginTop: 8 }}>
-          <div className="setting-label" style={{ marginBottom: 8 }}>题目语速</div>
+          <div className="setting-label" style={{ marginBottom: 8 }}>
+            题目语速
+          </div>
           <div className="speed-group">
             {[
               { key: 'slow', label: '慢' },
@@ -1003,23 +980,18 @@ function SettingsPanel({ prefs, setPrefs, onClose, onOpenAISettings }) {
             ))}
           </div>
         </div>
-
-        <button className="jump-btn" onClick={onOpenAISettings}>
-          <span className="flex items-center gap-2">
-            <FaBrain />
-            AI 设置
-          </span>
-          <FaArrowRight />
-        </button>
       </div>
     </div>
   );
 }
 
-// =================================================================================
-// 6. 主组件
-// =================================================================================
-export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) {
+export default function XuanZeTi({
+  data: rawData,
+  onCorrect,
+  onWrong,
+  onNext,
+  onOverlayChange
+}) {
   const data = rawData?.content || rawData || {};
   const question = data.question || {};
   const questionText = typeof question === 'string' ? question : question.text || '';
@@ -1052,12 +1024,11 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
   const [speakingOptionId, setSpeakingOptionId] = useState(null);
   const [showResultSheet, setShowResultSheet] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [showAISettings, setShowAISettings] = useState(false);
   const [cardPopId, setCardPopId] = useState(null);
   const [questionImgVisible, setQuestionImgVisible] = useState(Boolean(questionImg));
   const [showAIExplanation, setShowAIExplanation] = useState(false);
 
-  const hasOverlayOpen = showAIExplanation || showAISettings || showSettings;
+  const hasOverlayOpen = showAIExplanation || showSettings;
 
   const [prefs, setPrefs] = useState(() => getSavedInteractivePrefs());
   const [aiSettings, setAISettings] = useState(() => getSavedInteractiveAISettings());
@@ -1065,6 +1036,13 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
   const mountedRef = useRef(true);
   const timersRef = useRef([]);
   const overlayStackRef = useRef([]);
+
+  useEffect(() => {
+    onOverlayChange?.(hasOverlayOpen);
+    return () => {
+      onOverlayChange?.(false);
+    };
+  }, [hasOverlayOpen, onOverlayChange]);
 
   const clearTimers = () => {
     timersRef.current.forEach(clearTimeout);
@@ -1079,7 +1057,6 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
 
   const closeOverlayByType = useCallback((type) => {
     if (type === 'ai-explanation') setShowAIExplanation(false);
-    if (type === 'ai-settings') setShowAISettings(false);
     if (type === 'settings') setShowSettings(false);
   }, []);
 
@@ -1122,10 +1099,6 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
   useEffect(() => {
     syncOverlayStack('settings', showSettings);
   }, [showSettings, syncOverlayStack]);
-
-  useEffect(() => {
-    syncOverlayStack('ai-settings', showAISettings);
-  }, [showAISettings, syncOverlayStack]);
 
   useEffect(() => {
     syncOverlayStack('ai-explanation', showAIExplanation);
@@ -1179,7 +1152,6 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
     setIsQuestionPlaying(false);
     setSpeakingOptionId(null);
     setShowSettings(false);
-    setShowAISettings(false);
     setCardPopId(null);
     setShowAIExplanation(false);
 
@@ -1295,23 +1267,11 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
     openOverlay('settings', setShowSettings);
   };
 
-  const handleOpenAISettings = () => {
-    setShowSettings(false);
-    openOverlay('ai-settings', setShowAISettings);
-  };
-
   const handleAI = () => {
     audioController.stop();
     setIsQuestionPlaying(false);
     setSpeakingOptionId(null);
-
-    if (!aiSettings.apiKey || !aiSettings.apiUrl || !aiSettings.model) {
-      openOverlay('ai-settings', setShowAISettings);
-      return;
-    }
-
     setShowSettings(false);
-    setShowAISettings(false);
     openOverlay('ai-explanation', setShowAIExplanation);
   };
 
@@ -1482,17 +1442,8 @@ export default function XuanZeTi({ data: rawData, onCorrect, onWrong, onNext }) 
           prefs={prefs}
           setPrefs={setPrefs}
           onClose={() => setShowSettings(false)}
-          onOpenAISettings={handleOpenAISettings}
         />
       )}
-
-      <AISettingsModal
-        open={showAISettings}
-        settings={aiSettings}
-        updateSettings={updateAISettings}
-        onClose={() => setShowAISettings(false)}
-        scene="exercise"
-      />
 
       <InteractiveAIExplanationPanel
         open={showAIExplanation}
