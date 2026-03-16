@@ -221,8 +221,7 @@ const LayoutLearningHome = () => {
         )}
       </AnimatePresence>
 
-      {/* 调整了 pb-36 为 pb-28 适配变矮的底部导航 */}
-      <div className='relative z-10 mx-auto w-full max-w-md px-4 pb-28 pt-6'>
+      <div className='relative z-10 mx-auto w-full max-w-md px-4 pb-24 pt-6'>
         {/* 顶部 */}
         <header className='mb-8 flex items-center gap-4'>
           <button
@@ -404,20 +403,21 @@ const LayoutLearningHome = () => {
         </section>
       </div>
 
-      {/* 底部导航 (高度已调小，按钮已向中间靠拢) */}
-<nav className='fixed bottom-0 left-0 right-0 z-[50] bg-white/95 backdrop-blur-xl border-t border-slate-100 pt-2 pb-[calc(env(safe-area-inset-bottom)+4px)] shadow-[0_-10px_20px_rgba(0,0,0,0.08)]'>
-  <div className='flex items-center justify-around max-w-[240px] mx-auto px-2'>
-    <FooterItem icon={MessageCircle} />
-    <FooterItem icon={Globe2} />
-    <FooterItem icon={Users} />
-    <FooterItem icon={Compass} />
-    <Link href='/' className='flex flex-col items-center gap-0.5 text-indigo-600 active:scale-90 transition-transform'>
-      <div className='bg-indigo-50 p-1.5 rounded-[10px] border border-indigo-100'>
-        <BookOpen size={20} />
-      </div>
-    </Link>
-  </div>
-</nav>
+      {/* 底部导航 (类似微信：均匀散开全屏宽度，纯大图标，无文字，高度适中) */}
+      <nav className='fixed bottom-0 left-0 right-0 z-[50] bg-white/95 backdrop-blur-xl border-t border-slate-100 pt-3 pb-[calc(env(safe-area-inset-bottom)+12px)] shadow-[0_-10px_20px_rgba(0,0,0,0.08)]'>
+        <div className='flex items-center justify-between w-full max-w-md mx-auto px-6'>
+          <FooterItem icon={MessageCircle} />
+          <FooterItem icon={Globe2} />
+          <FooterItem icon={Users} />
+          <FooterItem icon={Compass} />
+          {/* 主按钮带一点背景框区分 */}
+          <Link href='/' className='flex flex-col items-center justify-center text-indigo-600 active:scale-90 transition-transform p-1'>
+            <div className='bg-indigo-50 p-2.5 rounded-xl border border-indigo-100 shadow-sm'>
+              <BookOpen size={26} strokeWidth={2.5} />
+            </div>
+          </Link>
+        </div>
+      </nav>
 
       {/* 所有全屏弹窗统一挂载在此，防止组件卸载导致底层滚动位置丢失 */}
       <AnimatePresence>
@@ -441,11 +441,12 @@ const LayoutLearningHome = () => {
   )
 }
 
+// 修改后的 FooterItem 组件，移除文字，放大图标
 function FooterItem({ icon: Icon }) {
   return (
-    <div className='flex flex-col items-center gap-1 text-slate-500 active:scale-90 transition-all'>
-      <Icon size={20} />
-    </div>
+    <button type="button" className='flex flex-col items-center justify-center p-2 text-slate-500 hover:text-slate-800 active:scale-90 transition-all'>
+      <Icon size={25} strokeWidth={2} />
+    </button>
   )
 }
 
