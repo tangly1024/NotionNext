@@ -9,7 +9,7 @@ const Footer = ({ title }) => {
   const copyrightDate = parseInt(since) < currentYear ? since + '-' + currentYear : currentYear
 
   return (
-    <footer className='relative z-10 w-full bg-white/95 dark:bg-gray-950/95 text-gray-600 dark:text-gray-100 text-sm p-8 border-t border-gray-200 dark:border-gray-800'>
+    <footer className='relative z-10 dark:bg-black w-full bg-hexo-light-gray text-gray-600 dark:text-gray-100 text-sm p-8'>
       {/* 使用 items-center 确保 flex 子元素垂直轴对齐，text-center 确保文字对齐 */}
       <div className='max-w-screen-xl mx-auto flex flex-col items-center justify-center text-center space-y-8'>
 
@@ -23,7 +23,7 @@ const Footer = ({ title }) => {
           </div>
         </div>
 
-        {/* 2. 联系方式 */}
+        {/* 2. 联系方式 - 修正 Flex 逻辑确保在移动端不会因宽度不同而显得偏移 */}
         <div className='w-full flex flex-col items-center space-y-4'>
           <div className='flex items-center justify-center space-x-3'>
             <span className='text-gray-400'>联系</span>
@@ -37,14 +37,15 @@ const Footer = ({ title }) => {
           </div>
         </div>
 
-        {/* 3. 版权区块 */}
-        <div className='w-full pt-8 flex flex-col items-center'>
+        {/* 3. 版权区块 - 彻底修复偏左问题 */}
+        <div className='w-full pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col items-center'>
 
-          {/* 版权行 */}
+          {/* 版权行：移除所有浮动的竖杠，使用 gap 自动分配间距 */}
           <div className='flex items-center justify-center gap-x-2 w-full'>
             <span className='whitespace-nowrap'>© {copyrightDate}</span>
             <i className='fas fa-heart text-red-500 animate-pulse text-[10px]' /> 
             <span className='font-medium whitespace-nowrap'>Kingsley Qi</span>
+            {/* PV 统计设为绝对定位偏移或确保不占宽，避免挤压中心 */}
             <span id="busuanzi_container_site_pv" className='font-mono text-[10px] opacity-40 ml-1'>
               <span id="busuanzi_value_site_pv"></span>
             </span>
@@ -63,9 +64,9 @@ const Footer = ({ title }) => {
             </a>
           </div>
 
-          {/* BIO - 修改为你的新描述 */}
+          {/* BIO - 强制取消可能的默认间距 */}
           <div className='mt-6 font-bold tracking-[0.4em] text-xs uppercase opacity-80 w-full text-center'>
-            Architect · Traveler · Life Explorer
+            {siteConfig('BIO')}
           </div>
 
           {/* 备案 */}
