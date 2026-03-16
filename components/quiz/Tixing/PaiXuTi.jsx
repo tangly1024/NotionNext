@@ -26,8 +26,7 @@ import {
   FaSpinner,
   FaRedo,
   FaRobot,
-  FaCog,
-  FaBrain
+  FaCog
 } from 'react-icons/fa';
 import { pinyin } from 'pinyin-pro';
 import InteractiveAIExplanationPanel from '../../ai/InteractiveAIExplanationPanel';
@@ -39,9 +38,6 @@ import {
   speedLabelToPlayback
 } from '../../interactiveQuiz/interactiveSettings';
 
-// =================================================================================
-// 1. IndexedDB 缓存
-// =================================================================================
 const DB_NAME = 'LessonCacheDB';
 const STORE_NAME = 'tts_audio';
 
@@ -84,9 +80,6 @@ const idb = {
   }
 };
 
-// =================================================================================
-// 2. 基础工具
-// =================================================================================
 function vibrate(pattern) {
   if (typeof navigator !== 'undefined' && navigator.vibrate) {
     navigator.vibrate(pattern);
@@ -110,23 +103,6 @@ function playSfx(type) {
   } catch (_) {}
 }
 
-const ZH_VOICE_OPTIONS = [
-  { id: 'zh-CN-XiaoxiaoMultilingualNeural', name: '晓晓 (女)' },
-  { id: 'zh-CN-XiaochenMultilingualNeural', name: '晓辰 (男)' },
-  { id: 'zh-CN-XiaoxiaoNeural', name: '晓晓标准' },
-  { id: 'zh-CN-YunxiNeural', name: '云希' },
-  { id: 'zh-CN-YunjianNeural', name: '云健' },
-  { id: 'zh-CN-XiaoyiNeural', name: '晓伊' }
-];
-
-const MY_VOICE_OPTIONS = [
-  { id: 'my-MM-ThihaNeural', name: 'Thiha' },
-  { id: 'my-MM-NilarNeural', name: 'Nilar' }
-];
-
-// =================================================================================
-// 3. TTS
-// =================================================================================
 const TTS_VOICES = {
   zh: 'zh-CN-XiaoxiaoMultilingualNeural',
   my: 'my-MM-ThihaNeural',
@@ -319,9 +295,6 @@ const audioController = {
   }
 };
 
-// =================================================================================
-// 4. 样式
-// =================================================================================
 const styles = `
 .pxt-container {
   font-family: "Padauk", "Noto Sans SC", sans-serif;
@@ -658,42 +631,6 @@ const styles = `
   border-color:#c4b5fd;
   color:#6d28d9;
 }
-.text-input {
-  width:100%;
-  border:2px solid #e5e7eb;
-  border-radius:12px;
-  padding:10px 12px;
-  font-size:12px;
-  color:#334155;
-  outline:none;
-  margin-top:8px;
-}
-.textarea-input {
-  width:100%;
-  border:2px solid #e5e7eb;
-  border-radius:12px;
-  padding:10px 12px;
-  font-size:12px;
-  color:#334155;
-  outline:none;
-  resize:vertical;
-  margin-top:8px;
-}
-.jump-btn {
-  width:100%;
-  border:2px solid #ddd6fe;
-  background:#faf5ff;
-  color:#7c3aed;
-  border-radius:14px;
-  padding:12px 14px;
-  font-size:13px;
-  font-weight:900;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  cursor:pointer;
-  margin-top:10px;
-}
 `;
 
 function CardContent({ text, showPinyin = true }) {
@@ -747,7 +684,7 @@ function SortableItem({ id, content, isPool, onClick, isOverlay, showPinyin = tr
   );
 }
 
-function SettingsPanel({ prefs, setPrefs, onClose, onOpenAISettings }) {
+function SettingsPanel({ prefs, setPrefs, onClose }) {
   return (
     <div className="panel-modal" style={{ zIndex: 1200 }}>
       <div className="modal-backdrop" onClick={onClose} />
@@ -759,7 +696,9 @@ function SettingsPanel({ prefs, setPrefs, onClose, onOpenAISettings }) {
           </button>
         </div>
 
-        <div className="settings-section-title" style={{ marginTop: 0 }}>显示与朗读</div>
+        <div className="settings-section-title" style={{ marginTop: 0 }}>
+          显示与朗读
+        </div>
 
         <div className="setting-row">
           <span className="setting-label">显示拼音</span>
@@ -784,7 +723,9 @@ function SettingsPanel({ prefs, setPrefs, onClose, onOpenAISettings }) {
         </div>
 
         <div style={{ marginTop: 8 }}>
-          <div className="setting-label" style={{ marginBottom: 8 }}>朗读速度</div>
+          <div className="setting-label" style={{ marginBottom: 8 }}>
+            朗读速度
+          </div>
           <div className="select-grid-2">
             {[
               { key: 'slow', label: '慢速' },
@@ -801,112 +742,6 @@ function SettingsPanel({ prefs, setPrefs, onClose, onOpenAISettings }) {
             ))}
           </div>
         </div>
-
-        <button className="jump-btn" onClick={onOpenAISettings}>
-          <span className="flex items-center gap-2">
-            <FaBrain />
-            AI 设置
-          </span>
-          <FaArrowRight />
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function AISettingsPanel({ aiSettings, updateAISettings, onClose }) {
-  return (
-    <div className="panel-modal" style={{ zIndex: 1300 }}>
-      <div className="modal-backdrop" onClick={onClose} />
-      <div className="panel-card relative">
-        <div className="panel-header">
-          <span className="panel-title">AI 设置</span>
-          <button className="panel-close-btn" onClick={onClose}>
-            <FaTimes />
-          </button>
-        </div>
-
-        <div className="settings-section-title" style={{ marginTop: 0 }}>模型接口</div>
-
-        <input
-          className="text-input"
-          placeholder="API URL"
-          value={aiSettings.apiUrl || ''}
-          onChange={(e) => updateAISettings({ apiUrl: e.target.value })}
-        />
-
-        <input
-          className="text-input"
-          placeholder="API Key"
-          type="password"
-          value={aiSettings.apiKey || ''}
-          onChange={(e) => updateAISettings({ apiKey: e.target.value })}
-        />
-
-        <input
-          className="text-input"
-          placeholder="模型"
-          value={aiSettings.model || ''}
-          onChange={(e) => updateAISettings({ model: e.target.value })}
-        />
-
-        <textarea
-          className="textarea-input"
-          rows={4}
-          placeholder="系统提示词"
-          value={aiSettings.systemPrompt || ''}
-          onChange={(e) => updateAISettings({ systemPrompt: e.target.value })}
-        />
-
-        <div className="settings-section-title">发音与反馈</div>
-
-        <div className="setting-label" style={{ marginBottom: 6 }}>中文声音</div>
-        <div className="select-grid-2">
-          {ZH_VOICE_OPTIONS.map((item) => (
-            <button
-              key={item.id}
-              className={`small-choice-btn ${aiSettings.zhVoice === item.id ? 'active' : ''}`}
-              onClick={() => updateAISettings({ zhVoice: item.id })}
-            >
-              {item.name}
-            </button>
-          ))}
-        </div>
-
-        <div className="setting-label" style={{ marginTop: 12, marginBottom: 6 }}>缅语声音</div>
-        <div className="select-grid-2">
-          {MY_VOICE_OPTIONS.map((item) => (
-            <button
-              key={item.id}
-              className={`small-choice-btn ${aiSettings.myVoice === item.id ? 'active' : ''}`}
-              onClick={() => updateAISettings({ myVoice: item.id })}
-            >
-              {item.name}
-            </button>
-          ))}
-        </div>
-
-        <div className="setting-row" style={{ marginTop: 8 }}>
-          <span className="setting-label">震动反馈</span>
-          <div
-            className="switch"
-            onClick={() => updateAISettings({ vibration: !aiSettings.vibration })}
-            style={{ background: aiSettings.vibration ? '#7c3aed' : '#cbd5e1' }}
-          >
-            <div className="switch-dot" style={{ left: aiSettings.vibration ? '22px' : '4px' }} />
-          </div>
-        </div>
-
-        <div className="setting-row">
-          <span className="setting-label">音效反馈</span>
-          <div
-            className="switch"
-            onClick={() => updateAISettings({ soundFx: !aiSettings.soundFx })}
-            style={{ background: aiSettings.soundFx ? '#7c3aed' : '#cbd5e1' }}
-          >
-            <div className="switch-dot" style={{ left: aiSettings.soundFx ? '22px' : '4px' }} />
-          </div>
-        </div>
       </div>
     </div>
   );
@@ -916,7 +751,13 @@ function isOrderedResult(status) {
   return status === 'success' || status === 'error';
 }
 
-export default function PaiXuTi({ data: rawData, onCorrect, onNext, onWrong }) {
+export default function PaiXuTi({
+  data: rawData,
+  onCorrect,
+  onNext,
+  onWrong,
+  onOverlayChange
+}) {
   const data = rawData?.content || rawData || {};
   const { title = '', items = [], correctOrder = [], imageUrl = '' } = data;
 
@@ -927,7 +768,6 @@ export default function PaiXuTi({ data: rawData, onCorrect, onNext, onWrong }) {
   const [gameStatus, setGameStatus] = useState('idle');
   const [isPlaying, setIsPlaying] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [showAISettings, setShowAISettings] = useState(false);
   const [showAIExplanation, setShowAIExplanation] = useState(false);
 
   const [prefs, setPrefs] = useState(() => getSavedInteractivePrefs());
@@ -935,6 +775,15 @@ export default function PaiXuTi({ data: rawData, onCorrect, onNext, onWrong }) {
 
   const mountedRef = useRef(true);
   const overlayStackRef = useRef([]);
+
+  const hasOverlayOpen = showAIExplanation || showSettings;
+
+  useEffect(() => {
+    onOverlayChange?.(hasOverlayOpen);
+    return () => {
+      onOverlayChange?.(false);
+    };
+  }, [hasOverlayOpen, onOverlayChange]);
 
   const findItem = useCallback(
     (id) => items.find((i) => String(i.id) === String(id)),
@@ -970,7 +819,6 @@ export default function PaiXuTi({ data: rawData, onCorrect, onNext, onWrong }) {
 
   const closeOverlayByType = useCallback((type) => {
     if (type === 'ai-explanation') setShowAIExplanation(false);
-    if (type === 'ai-settings') setShowAISettings(false);
     if (type === 'settings') setShowSettings(false);
   }, []);
 
@@ -1015,10 +863,6 @@ export default function PaiXuTi({ data: rawData, onCorrect, onNext, onWrong }) {
   }, [showSettings, syncOverlayStack]);
 
   useEffect(() => {
-    syncOverlayStack('ai-settings', showAISettings);
-  }, [showAISettings, syncOverlayStack]);
-
-  useEffect(() => {
     syncOverlayStack('ai-explanation', showAIExplanation);
   }, [showAIExplanation, syncOverlayStack]);
 
@@ -1030,7 +874,6 @@ export default function PaiXuTi({ data: rawData, onCorrect, onNext, onWrong }) {
     setActiveId(null);
     setGameStatus('idle');
     setShowSettings(false);
-    setShowAISettings(false);
     setShowAIExplanation(false);
     overlayStackRef.current = [];
     audioController.stop();
@@ -1150,22 +993,10 @@ export default function PaiXuTi({ data: rawData, onCorrect, onNext, onWrong }) {
     openOverlay('settings', setShowSettings);
   };
 
-  const handleOpenAISettings = () => {
-    setShowSettings(false);
-    openOverlay('ai-settings', setShowAISettings);
-  };
-
   const handleAskAI = () => {
     audioController.stop();
     setIsPlaying(false);
-
-    if (!aiSettings.apiUrl || !aiSettings.apiKey) {
-      openOverlay('ai-settings', setShowAISettings);
-      return;
-    }
-
     setShowSettings(false);
-    setShowAISettings(false);
     openOverlay('ai-explanation', setShowAIExplanation);
   };
 
@@ -1176,7 +1007,7 @@ export default function PaiXuTi({ data: rawData, onCorrect, onNext, onWrong }) {
   const allWordsText = items.map((i) => i.text).join(' / ');
 
   return (
-    <div className={`pxt-container ${showAIExplanation ? 'ai-open' : ''}`}>
+    <div className={`pxt-container ${hasOverlayOpen ? 'ai-open' : ''}`}>
       <style>{styles}</style>
 
       <DndContext
@@ -1355,15 +1186,6 @@ export default function PaiXuTi({ data: rawData, onCorrect, onNext, onWrong }) {
           prefs={prefs}
           setPrefs={setPrefs}
           onClose={() => setShowSettings(false)}
-          onOpenAISettings={handleOpenAISettings}
-        />
-      ) : null}
-
-      {showAISettings ? (
-        <AISettingsPanel
-          aiSettings={aiSettings}
-          updateAISettings={updateAISettings}
-          onClose={() => setShowAISettings(false)}
         />
       ) : null}
 
@@ -1371,6 +1193,7 @@ export default function PaiXuTi({ data: rawData, onCorrect, onNext, onWrong }) {
         open={showAIExplanation}
         onClose={() => setShowAIExplanation(false)}
         settings={aiSettings}
+        updateSettings={updateAISettings}
         title="AI 讲题老师"
         initialPayload={{
           questionType: 'sorting',
