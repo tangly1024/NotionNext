@@ -1,6 +1,13 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { FaTimes, FaChevronDown, FaChevronUp, FaCheckCircle } from 'react-icons/fa';
+import {
+  FaTimes,
+  FaChevronRight,
+  FaChevronLeft,
+  FaCheck,
+  FaEye,
+  FaEyeSlash
+} from 'react-icons/fa';
 import {
   PROVIDERS,
   EXERCISE_ASSISTANTS,
@@ -9,150 +16,447 @@ import {
   getExerciseAssistantById
 } from '../interactiveQuiz/interactiveSettings';
 
-// 漂亮的高对比度选择按钮
-function ChoiceButton({ active, onClick, children }) {
+const ZH_VOICE_OPTIONS =[
+  { id: 'zh-CN-XiaoxiaoMultilingualNeural', name: '晓晓 (女)' },
+  { id: 'zh-CN-XiaochenMultilingualNeural', name: '晓辰 (男)' },
+  { id: 'zh-CN-XiaoxiaoNeural', name: '晓晓标准' },
+  { id: 'zh-CN-YunxiNeural', name: '云希' },
+  { id: 'zh-CN-YunjianNeural', name: '云健' },
+  { id: 'zh-CN-XiaoyiNeural', name: '晓伊' }
+];
+
+const MY_VOICE_OPTIONS =[
+  { id: 'my-MM-ThihaNeural', name: 'Thiha' },
+  { id: 'my-MM-NilarNeural', name: 'Nilar' }
+];
+
+// ================= UI 基础组件 =================
+
+function ChoiceButton({ active, onClick, children, icon }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`relative flex items-center justify-center rounded-2xl border-2 px-3 py-3.5 text-sm font-bold transition-all ${
-        active
-          ? 'border-violet-600 bg-violet-50 text-violet-700 shadow-sm'
-          : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 active:bg-slate-50'
-      }`}
+      className={`group relative flex w-full items-center justify-center rounded-xl border-2 px-3 py-3 text-[14px] font-bold transition-all duration-200 ease-out active:scale-[0.98]
+        ${
+          active
+            ? 'border-violet-500 bg-violet-50 text-violet-700 shadow-[0_2px_10px_-3px_rgba(139,92,246,0.2)]'
+            : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
+        }`}
     >
-      {children}
+      {icon && <span className={`mr-2 text-lg ${active ? 'text-violet-600' : 'text-slate-400'}`}>{icon}</span>}
+      <span className="relative z-10">{children}</span>
       {active && (
-        <div className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-violet-600 text-[10px] text-white shadow-sm">
-          <FaCheckCircle />
+        <div className="absolute right-3 flex h-4 w-4 items-center justify-center rounded-full bg-violet-500">
+          <FaCheck size={8} className="text-white" />
         </div>
       )}
     </button>
   );
 }
 
-export default function AISettingsModal({ open, settings, updateSettings, onClose }) {
-  const [mounted, setMounted] = useState(false);
-  const [expandedSection, setExpandedSection] = useState('core'); 
+function SwitchRow({ label, checked, onChange, desc }) {
+  return (
+    <button
+      type="button"
+      onClick={onChange}
+      className={`flex w-full items-center justify-between rounded-xl border-2 p-3.5 text-left transition-all active:scale-[0.99] ${
+        checked ? 'border-violet-200 bg-violet-50' : 'border-slate-200 bg-white hover:border-slate-300'
+      }`}
+    >
+      <div>
+        <div className={`text-[14px] font-bold ${checked ? 'text-violet-800' : 'text-slate-700'}`}>{label}</div>
+        {desc && <div className="mt-0.5 text-[11px] font-medium text-slate-400">{desc}</div>}
+      </div>
+      <div className={`relative inline-flex h-7 w-12 shrink-0 rounded-full border-2 border-transparent transition-colors ${checked ? 'bg-violet-500' : 'bg-slate-300'}`}>
+        <span className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-sm transition ${checked ? 'translate-x-5' : 'translate-x-0'}`} />
+      </div>
+    </button>
+  );
+}
 
-  const provider = getProviderById(settings?.providerId);
-  const currentAssistant = getExerciseAssistantById(settings?.assistantId);
+// ================= 独立封装的二级页面 (带手势返回) =================
+// 将滑动监听局限在子页面组件内，避免污染全局和引发报错白屏
+function SubPage({ id, currentPage, onBack, title, children }) {
+  const isActive = currentPage === id;
+  const [dragX, setDragX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const startX = useRef(0);
+  const currentX = useRef(0);
 
-  useEffect(() => { setMounted(true); }, []);
+  const handleTouchStart = (e) => {
+    if (!isActive) return;
+    const x = e.touches[0].clientX;
+    // 限制：只能从屏幕最左侧边缘（前 40 像素）滑动才触发返回
+    if (x > 40) return; 
+    startX.current = x;
+    currentX.current = x;
+    setIsDragging(true);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    currentX.current = e.touches[0].clientX;
+    const delta = Math.max(0, currentX.current - startX.current);
+    setDragX(delta);
+  };
+
+  const handleTouchEnd = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    // 滑动超过 100 像素，判定为返回上一页
+    if (dragX > 100) {
+      onBack();
+    }
+    setDragX(0); // 恢复初始状态，依靠 CSS 动画滑出
+  };
+
+  // 动画状态：激活且正在拖拽时跟随手指，激活不拖拽时停留在0，未激活时滚到屏幕外(100%)
+  const transformValue = isActive 
+    ? (isDragging ? `translateX(${dragX}px)` : 'translateX(0)') 
+    : 'translateX(100%)';
+  const transitionClass = isDragging ? '' : 'transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]';
+
+  return (
+    <div
+      className={`absolute inset-0 z-20 flex flex-col bg-slate-50 shadow-[-15px_0_30px_rgba(0,0,0,0.05)] ${transitionClass}`}
+      style={{ transform: transformValue }}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
+    >
+      {/* 头部导航栏 */}
+      <div className="flex h-[52px] shrink-0 items-center justify-between border-b border-slate-200 bg-white/90 px-2 backdrop-blur-md">
+        <button
+          onClick={onBack}
+          className="flex h-10 w-10 items-center justify-center text-slate-500 active:scale-95 transition"
+        >
+          <FaChevronLeft size={16} />
+        </button>
+        <div className="text-[16px] font-black tracking-wide text-slate-800">{title}</div>
+        <div className="w-10" />
+      </div>
+
+      {/* 滚动内容区 */}
+      <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-6 space-y-5 pb-[max(24px,env(safe-area-inset-bottom))]">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+
+// ================= 主模态框组件 =================
+
+export default function AISettingsModal({ open, settings, updateSettings, onClose, scene = 'exercise' }) {
+  const[mounted, setMounted] = useState(false);
+  const [activePage, setActivePage] = useState('main'); // 'main' | 'core' | 'assistant' | 'voice'
+  const[draft, setDraft] = useState({});
+  const [showApiKey, setShowApiKey] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  },[]);
+
+  // 每次打开弹窗，初始化数据与状态
+  useEffect(() => {
+    if (open) {
+      setDraft(settings || {});
+      setActivePage('main');
+      setShowApiKey(false);
+    }
+  }, [open, settings]);
+
   if (!mounted || !open) return null;
+
+  // 安全取值
+  const provider = getProviderById(draft?.providerId);
+  const currentAssistant = getExerciseAssistantById(draft?.assistantId);
+  const zhVoiceName = ZH_VOICE_OPTIONS.find((v) => v.id === draft?.zhVoice)?.name || '未设置';
+  const myVoiceName = MY_VOICE_OPTIONS.find((v) => v.id === draft?.myVoice)?.name || '未设置';
+  const hasChanges = JSON.stringify(draft || {}) !== JSON.stringify(settings || {});
+
+  const patchDraft = (patch) => setDraft((prev) => ({ ...prev, ...patch }));
 
   const handleProviderChange = (providerId) => {
     const nextProvider = getProviderById(providerId);
-    updateSettings({
+    if (!nextProvider) return;
+    const currentModel = draft?.model || '';
+    const validModels = nextProvider.models ||[];
+    const nextModel = nextProvider.allowCustomModel || validModels.includes(currentModel)
+        ? currentModel || getDefaultModelByProvider(providerId)
+        : getDefaultModelByProvider(providerId);
+
+    patchDraft({
       providerId,
-      apiUrl: nextProvider.allowCustomApiUrl ? settings?.apiUrl || '' : nextProvider.apiUrl,
-      model: getDefaultModelByProvider(providerId)
+      apiUrl: nextProvider.allowCustomApiUrl ? draft?.apiUrl || nextProvider.apiUrl || '' : nextProvider.apiUrl || '',
+      model: nextModel
     });
   };
 
-  const AccordionHeader = ({ id, title, icon }) => (
-    <div 
-      className={`flex cursor-pointer items-center justify-between rounded-2xl px-4 py-4 transition-colors ${
-        expandedSection === id ? 'bg-slate-100' : 'bg-slate-50 hover:bg-slate-100'
-      }`}
-      onClick={() => setExpandedSection(expandedSection === id ? null : id)}
+  const handleAssistantChange = (assistantId) => {
+    const assistant = getExerciseAssistantById(assistantId);
+    if (assistant) patchDraft({ assistantId, systemPrompt: assistant.prompt || '' });
+  };
+
+  const MainMenuItem = ({ title, desc, icon, onClick, isLast }) => (
+    <button
+      onClick={onClick}
+      className={`flex w-full items-center justify-between bg-white px-5 py-4 transition active:bg-slate-50 ${!isLast ? 'border-b border-slate-100' : ''}`}
     >
-      <span className="flex items-center gap-2 font-black text-slate-700">
-        {title}
-      </span>
-      {expandedSection === id ? <FaChevronUp size={12} className="text-slate-400" /> : <FaChevronDown size={12} className="text-slate-400" />}
-    </div>
+      <div className="flex items-center gap-4 overflow-hidden">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100/80 text-[20px]">{icon}</div>
+        <div className="flex flex-col items-start truncate">
+          <span className="text-[15px] font-black text-slate-800">{title}</span>
+          <span className="mt-1 truncate text-[12px] font-bold text-slate-400 max-w-[200px]">{desc}</span>
+        </div>
+      </div>
+      <FaChevronRight className="shrink-0 text-slate-300" size={14} />
+    </button>
   );
 
+  // 强制采用行内 style Z-Index，防止 Tailwind JIT 编译遗漏任意值导致弹窗埋在下层
   return createPortal(
-    <div className="fixed inset-0 z-[2147483647] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-md" onClick={onClose} />
+    <div className="fixed inset-0 flex items-end justify-center" style={{ zIndex: 999999 }}>
+      {/* 黑色半透明遮罩层 */}
+      <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onClick={onClose} />
 
-      <div className="relative z-10 flex max-h-[85vh] w-full max-w-md flex-col overflow-hidden rounded-[32px] bg-white shadow-2xl">
-        {/* 头部 */}
-        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-5">
-          <div className="text-lg font-black text-slate-800">AI 设置</div>
-          <button onClick={onClose} className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors">
-            <FaTimes size={16} />
-          </button>
-        </div>
+      {/* 弹窗主体结构（圆角面板） */}
+      <div className="relative w-full max-w-lg overflow-hidden rounded-t-3xl bg-slate-100 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] h-[85vh]">
+        
+        {/* 隔离各个页面的绝对定位容器，避免页面间高度互相干扰 */}
+        <div className="relative h-full w-full overflow-hidden">
 
-        {/* 内容 */}
-        <div className="flex-1 overflow-y-auto px-5 py-5 no-scrollbar space-y-4">
-          
-          {/* 1. 核心模型 */}
-          <div className="space-y-3">
-            <AccordionHeader id="core" title="核心模型配置" />
-            {expandedSection === 'core' && (
-              <div className="px-1 py-2 space-y-5 animate-in fade-in slide-in-from-top-2 duration-200">
+          {/* ====== 1. 首页 (菜单页) ====== */}
+          <div 
+            className={`absolute inset-0 z-10 flex flex-col transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+              activePage === 'main' ? 'translate-x-0 opacity-100' : '-translate-x-[30%] opacity-50'
+            }`}
+          >
+            {/* 顶部标题区 */}
+            <div className="shrink-0 bg-slate-100 pb-2">
+              <div className="flex justify-center pt-3 pb-2"><div className="h-1.5 w-10 rounded-full bg-slate-300" /></div>
+              <div className="flex items-center justify-between px-6 py-2">
                 <div>
-                  <label className="mb-2 block text-[11px] font-black uppercase text-slate-400">选择服务商</label>
-                  <div className="grid grid-cols-2 gap-3">
-                    {PROVIDERS.map((item) => (
-                      <ChoiceButton key={item.id} active={settings?.providerId === item.id} onClick={() => handleProviderChange(item.id)}>
-                        <span className="mr-2">{item.icon}</span>{item.name}
-                      </ChoiceButton>
-                    ))}
-                  </div>
+                  <div className="text-[20px] font-black text-slate-800">高级设置</div>
+                  <div className="mt-0.5 text-[12px] font-bold text-slate-400">进行高度个性化的 AI 调整</div>
                 </div>
-                {provider?.allowCustomApiUrl && (
-                  <div>
-                    <label className="mb-2 block text-[11px] font-black uppercase text-slate-400">接口地址</label>
-                    <input className="w-full rounded-2xl border-2 border-slate-100 bg-slate-50 px-4 py-3 text-sm font-bold outline-none focus:border-violet-500 focus:bg-white" 
-                           placeholder="https://..." value={settings?.apiUrl || ''} onChange={(e) => updateSettings({ apiUrl: e.target.value })} />
-                  </div>
-                )}
-                <div>
-                  <label className="mb-2 block text-[11px] font-black uppercase text-slate-400">API KEY</label>
-                  <input type="password" className="w-full rounded-2xl border-2 border-slate-100 bg-slate-50 px-4 py-3 text-sm font-bold outline-none focus:border-violet-500 focus:bg-white" 
-                         placeholder="输入您的密钥" value={settings?.apiKey || ''} onChange={(e) => updateSettings({ apiKey: e.target.value })} />
-                </div>
+                <button onClick={onClose} className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200/80 text-slate-500 active:scale-95 transition">
+                  <FaTimes size={14} />
+                </button>
               </div>
-            )}
+            </div>
+
+            {/* 菜单列表区 */}
+            <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-2 space-y-4">
+              <div className="overflow-hidden rounded-2xl border border-slate-200 shadow-sm bg-white">
+                <MainMenuItem
+                  title="核心模型配置"
+                  desc={`${provider?.name || '未知'} · ${draft?.model || '默认'}`}
+                  icon="⚙️"
+                  onClick={() => setActivePage('core')}
+                />
+                <MainMenuItem
+                  title="讲题助手与设定"
+                  desc={currentAssistant?.name || '未选定预设'}
+                  icon="🤖"
+                  onClick={() => setActivePage('assistant')}
+                />
+                <MainMenuItem
+                  title="语音引擎与反馈"
+                  desc={`${zhVoiceName} / ${myVoiceName}`}
+                  icon="🔊"
+                  isLast
+                  onClick={() => setActivePage('voice')}
+                />
+              </div>
+            </div>
+
+            {/* 底部保存条 */}
+            <div className="shrink-0 border-t border-slate-200 bg-white px-5 py-4 pb-[max(16px,env(safe-area-inset-bottom))]">
+              <div className="mb-3 text-center text-[11px] font-bold text-slate-400">
+                {hasChanges ? '有未保存的修改项' : '当前参数已是最新'}
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="h-12 rounded-2xl border-2 border-slate-200 bg-white text-[15px] font-black text-slate-700 transition active:scale-[0.98]"
+                >
+                  取消
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { updateSettings(draft); onClose(); }}
+                  className={`h-12 rounded-2xl text-[15px] font-black text-white transition active:scale-[0.98] ${
+                    hasChanges ? 'bg-violet-600 shadow-lg shadow-violet-200' : 'bg-slate-300'
+                  }`}
+                >
+                  保存并应用
+                </button>
+              </div>
+            </div>
           </div>
 
-          {/* 2. 讲题助手 */}
-          <div className="space-y-3">
-            <AccordionHeader id="assistant" title="讲题助手设定" />
-            {expandedSection === 'assistant' && (
-              <div className="px-1 py-2 space-y-4">
+
+          {/* ====== 2. 子页面：核心模型 ====== */}
+          <SubPage id="core" currentPage={activePage} onBack={() => setActivePage('main')} title="核心模型配置">
+            <div>
+              <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">服务商选择</div>
+              <div className="grid grid-cols-2 gap-3">
+                {PROVIDERS.map((item) => (
+                  <ChoiceButton key={item.id} active={draft?.providerId === item.id} onClick={() => handleProviderChange(item.id)} icon={item.icon}>
+                    {item.name}
+                  </ChoiceButton>
+                ))}
+              </div>
+            </div>
+            {provider?.allowCustomApiUrl && (
+              <div>
+                <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">自定义接口地址</div>
+                <input
+                  className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-[14px] font-bold text-slate-700 outline-none focus:border-violet-500"
+                  placeholder="如: https://api.openai.com/v1"
+                  value={draft?.apiUrl || ''}
+                  onChange={(e) => patchDraft({ apiUrl: e.target.value })}
+                />
+              </div>
+            )}
+            <div>
+              <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">模型标识符</div>
+              {provider?.allowCustomModel ? (
+                <input
+                  className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-[14px] font-bold text-slate-700 outline-none focus:border-violet-500"
+                  placeholder="输入模型名称 (如: gpt-4o)"
+                  value={draft?.model || ''}
+                  onChange={(e) => patchDraft({ model: e.target.value })}
+                />
+              ) : (
                 <div className="grid grid-cols-1 gap-3">
-                  {EXERCISE_ASSISTANTS.map((as) => (
-                    <button key={as.id} onClick={() => updateSettings({ assistantId: as.id, systemPrompt: as.prompt })}
-                            className={`flex items-center gap-4 rounded-2xl border-2 p-4 text-left transition-all ${
-                              settings?.assistantId === as.id ? 'border-violet-600 bg-violet-50' : 'border-slate-100 hover:border-slate-200'
-                            }`}>
-                      <span className="text-2xl">{as.icon}</span>
-                      <div className="flex-1">
-                        <div className={`font-black ${settings?.assistantId === as.id ? 'text-violet-700' : 'text-slate-700'}`}>{as.name}</div>
-                        <div className="text-[11px] font-bold text-slate-400">点击切换此角色</div>
-                      </div>
-                      {settings?.assistantId === as.id && <FaCheckCircle className="text-violet-600" />}
-                    </button>
+                  {(provider?.models ||[]).map((model) => (
+                    <ChoiceButton key={model} active={draft?.model === model} onClick={() => patchDraft({ model })}>{model}</ChoiceButton>
                   ))}
                 </div>
+              )}
+            </div>
+            <div>
+              <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">API Key 密钥</div>
+              <div className="relative">
+                <input
+                  type={showApiKey ? 'text' : 'password'}
+                  className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 pr-12 text-[14px] font-bold text-slate-700 outline-none focus:border-violet-500"
+                  placeholder="在此粘贴您的密钥"
+                  value={draft?.apiKey || ''}
+                  onChange={(e) => patchDraft({ apiKey: e.target.value })}
+                />
+                <button type="button" onClick={() => setShowApiKey(!showApiKey)} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-slate-400">
+                  {showApiKey ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
+                </button>
               </div>
-            )}
-          </div>
+            </div>
+          </SubPage>
 
-          {/* 3. 语音反馈 */}
-          <div className="space-y-3">
-            <AccordionHeader id="voice" title="语音与反馈" />
-            {expandedSection === 'voice' && (
-              <div className="px-1 py-2 space-y-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <button onClick={() => updateSettings({ vibration: !settings?.vibration })}
-                          className={`rounded-2xl border-2 py-4 text-sm font-black transition-all ${
-                            settings?.vibration ? 'border-violet-600 bg-violet-50 text-violet-700' : 'border-slate-100 text-slate-500'
-                          }`}>震动：{settings?.vibration ? 'ON' : 'OFF'}</button>
-                  <button onClick={() => updateSettings({ soundFx: !settings?.soundFx })}
-                          className={`rounded-2xl border-2 py-4 text-sm font-black transition-all ${
-                            settings?.soundFx ? 'border-violet-600 bg-violet-50 text-violet-700' : 'border-slate-100 text-slate-500'
-                          }`}>音效：{settings?.soundFx ? 'ON' : 'OFF'}</button>
-                </div>
+
+          {/* ====== 3. 子页面：讲题助手 ====== */}
+          <SubPage id="assistant" currentPage={activePage} onBack={() => setActivePage('main')} title="讲题助手与设定">
+            <div>
+              <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">助手角色预设</div>
+              <div className="grid grid-cols-1 gap-3">
+                {EXERCISE_ASSISTANTS.map((assistant) => {
+                  const isActive = draft?.assistantId === assistant.id;
+                  return (
+                    <button
+                      key={assistant.id}
+                      onClick={() => handleAssistantChange(assistant.id)}
+                      className={`group flex w-full items-center rounded-2xl border-2 p-3.5 text-left transition active:scale-[0.99] ${isActive ? 'border-violet-500 bg-violet-50' : 'border-slate-200 bg-white hover:border-slate-300'}`}
+                    >
+                      <div className={`mr-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-2xl ${isActive ? 'bg-violet-200 text-violet-700' : 'bg-slate-100'}`}>{assistant.icon}</div>
+                      <div className="flex-1">
+                        <div className={`text-[15px] font-black ${isActive ? 'text-violet-800' : 'text-slate-700'}`}>{assistant.name}</div>
+                        <div className="mt-0.5 text-[12px] font-bold text-slate-400">选中后重置为专属提示词</div>
+                      </div>
+                      {isActive && <div className="ml-3 flex h-5 w-5 items-center justify-center rounded-full bg-violet-500"><FaCheck size={10} className="text-white" /></div>}
+                    </button>
+                  );
+                })}
               </div>
-            )}
-          </div>
+            </div>
+            <div>
+              <div className="mb-2.5 flex items-center justify-between">
+                <div className="text-[11px] font-black uppercase tracking-widest text-slate-400">系统提示词 (进阶微调)</div>
+                <button type="button" className="rounded-md bg-violet-100 px-2 py-1 text-[11px] font-black text-violet-600 active:bg-violet-200" onClick={() => patchDraft({ systemPrompt: currentAssistant?.prompt || '' })}>
+                  重置为默认
+                </button>
+              </div>
+              <textarea
+                rows={6}
+                className="w-full resize-none rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-[13px] font-semibold leading-relaxed text-slate-600 outline-none focus:border-violet-500"
+                placeholder="在此微调 AI 的行事规则..."
+                value={draft?.systemPrompt || ''}
+                onChange={(e) => patchDraft({ systemPrompt: e.target.value })}
+              />
+            </div>
+            <div>
+              <div className="mb-3 flex items-center justify-between">
+                <div className="text-[11px] font-black uppercase tracking-widest text-slate-400">发散温度 Temperature</div>
+                <div className="flex w-10 items-center justify-center rounded-lg bg-violet-100 py-1 text-[12px] font-black text-violet-700">{draft?.temperature ?? 0.2}</div>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="1.2"
+                step="0.05"
+                value={draft?.temperature ?? 0.2}
+                onChange={(e) => patchDraft({ temperature: Number(e.target.value) })}
+                className="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-violet-500"
+              />
+            </div>
+          </SubPage>
+
+
+          {/* ====== 4. 子页面：语音与反馈 ====== */}
+          <SubPage id="voice" currentPage={activePage} onBack={() => setActivePage('main')} title="语音与反馈配置">
+            <div>
+              <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">TTS 接口基址</div>
+              <input
+                className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-[14px] font-bold text-slate-700 outline-none focus:border-violet-500"
+                placeholder="文本转语音 API URL"
+                value={draft?.ttsApiUrl || ''}
+                onChange={(e) => patchDraft({ ttsApiUrl: e.target.value })}
+              />
+            </div>
+            <div>
+              <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">中文发音人</div>
+              <div className="grid grid-cols-2 gap-3">
+                {ZH_VOICE_OPTIONS.map((item) => (
+                  <ChoiceButton key={item.id} active={draft?.zhVoice === item.id} onClick={() => patchDraft({ zhVoice: item.id })}>{item.name}</ChoiceButton>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div className="mb-2.5 text-[11px] font-black uppercase tracking-widest text-slate-400">缅语发音人</div>
+              <div className="grid grid-cols-2 gap-3">
+                {MY_VOICE_OPTIONS.map((item) => (
+                  <ChoiceButton key={item.id} active={draft?.myVoice === item.id} onClick={() => patchDraft({ myVoice: item.id })}>{item.name}</ChoiceButton>
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-col gap-3 pt-2">
+              <SwitchRow
+                label="设备震动反馈"
+                desc="操作及交互时提供触感反馈"
+                checked={!!draft?.vibration}
+                onChange={() => patchDraft({ vibration: !draft?.vibration })}
+              />
+              <SwitchRow
+                label="应用内置音效"
+                desc="答题正确、错误时播放音效"
+                checked={!!draft?.soundFx}
+                onChange={() => patchDraft({ soundFx: !draft?.soundFx })}
+              />
+            </div>
+          </SubPage>
 
         </div>
       </div>
