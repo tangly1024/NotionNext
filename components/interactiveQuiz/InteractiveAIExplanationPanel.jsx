@@ -3,12 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { FaArrowLeft, FaPaperPlane, FaMicrophone, FaStop, FaKeyboard, FaClosedCaptioning, FaCommentSlash, FaVolumeUp, FaSlidersH } from 'react-icons/fa';
-import { AI_SCENES, buildExerciseBootstrapPrompt } from './aiAssistants';
-import { normalizeAssistantText } from './aiTextUtils';
-import { useAISettings } from './useAISettings';
-import { useAISession } from './useAISession';
-import AISettingsModal from './AISettingsModal';
-import RecognitionLanguagePicker from './RecognitionLanguagePicker';
+import { AI_SCENES, buildExerciseBootstrapPrompt } from '../ai/aiAssistants';
+import { normalizeAssistantText } from '../ai/aiTextUtils';
+import { useAISettings } from '../ai/useAISettings';
+import { useAISession } from '../ai/useAISession';
+import AISettingsModal from '../ai/AISettingsModal';
+import RecognitionLanguagePicker from '../ai/RecognitionLanguagePicker';
 
 const GlobalStyles = () => (
   <style>{`
