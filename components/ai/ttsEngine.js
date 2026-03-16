@@ -28,9 +28,12 @@ export class ExternalTTSQueue {
     if (this.audioUnlocked || typeof Audio === 'undefined') return;
     try {
       const audio = new Audio('data:audio/mp3;base64,//MkxAAQAAAAgAAAAAAAAAAAAAAP//AwAAAAAAAAAAAAA=');
-      audio.play().then(() => {
-        this.audioUnlocked = true;
-      }).catch(() => {});
+      audio
+        .play()
+        .then(() => {
+          this.audioUnlocked = true;
+        })
+        .catch(() => {});
     } catch {}
   }
 
@@ -44,9 +47,9 @@ export class ExternalTTSQueue {
 
   getVoiceForLang(lang) {
     const settings = this.settingsRef || {};
-    if (lang === 'my') return 'my-MM-NilarNeural';
-    if (lang === 'en') return 'en-US-JennyNeural';
-    return settings.ttsVoice || 'zh-CN-XiaoxiaoMultilingualNeural';
+    if (lang === 'my') return settings.myVoice || 'my-MM-ThihaNeural';
+    if (lang === 'en') return settings.enVoice || 'en-US-JennyNeural';
+    return settings.zhVoice || settings.ttsVoice || 'zh-CN-XiaoxiaoMultilingualNeural';
   }
 
   buildUrl(text, voice) {
