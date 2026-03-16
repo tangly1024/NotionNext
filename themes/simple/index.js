@@ -404,7 +404,7 @@ const LayoutLearningHome = () => {
       </div>
 
       {/* 底部导航 (类似微信：均匀散开全屏宽度，纯大图标，无文字，高度适中) */}
-      <nav className='fixed bottom-0 left-0 right-0 z-[50] bg-white/95 backdrop-blur-xl border-t border-slate-100 pt-3 pb-[calc(env(safe-area-inset-bottom)+12px)] shadow-[0_-10px_20px_rgba(0,0,0,0.08)]'>
+      <nav className='fixed bottom-0 left-0 right-0 z-[50] bg-white/95 backdrop-blur-xl border-t border-slate-100 pt-2 pb-[calc(env(safe-area-inset-bottom)+9px)] shadow-[0_-10px_20px_rgba(0,0,0,0.08)]'>
         <div className='flex items-center justify-between w-full max-w-md mx-auto px-6'>
           <FooterItem icon={MessageCircle} />
           <FooterItem icon={Globe2} />
