@@ -140,7 +140,7 @@ function CircleIconButton({
         danger
           ? 'bg-red-50 text-red-500 hover:bg-red-100 shadow-sm border border-red-100'
           : active
-          ? 'bg-pink-100 text-pink-500 hover:bg-pink-200 shadow-sm'
+          ? 'bg-white text-pink-500 hover:bg-pink-200 shadow-sm'
           : 'bg-white text-slate-500 hover:bg-slate-50 shadow-sm border border-slate-100'
       } ${className}`}
     >
@@ -347,57 +347,61 @@ function BottomControlBar({
             </CircleIconButton>
 
             {/* 中间：输入区或大麦克风 */}
-            <div className="flex-1 flex justify-center">
-              {!textMode ? (
-                <div className="flex flex-col items-center justify-center pb-2">
-                  <button
-                    type="button"
-                    onPointerDown={onMicPointerDown}
-                    onPointerUp={onMicPointerUp}
-                    onPointerCancel={onMicPointerUp}
-                    onPointerLeave={onMicPointerUp}
-                    onContextMenu={(e) => e.preventDefault()}
-                    className={`touch-none flex h-[84px] w-[84px] items-center justify-center rounded-full text-white transition-all duration-300 ${
-                      isRecording
-                        ? 'bg-pink-500 scale-95 shadow-inner'
-                        : 'bg-gradient-to-br from-pink-400 to-rose-500 shadow-lg hover:scale-105 active:scale-95'
-                    }`}
-                    aria-label="按住说话，长按切换语言"
-                  >
-                    {isRecording ? (
-                      <FaPaperPlane className="text-3xl" />
-                    ) : (
-                      <FaMicrophone className="text-3xl" />
-                    )}
-                  </button>
-                  <div className="mt-3 min-h-[16px] whitespace-nowrap text-[11px] font-bold text-slate-400">
-                    {isRecording ? (
-                      <span className="text-pink-400">松开/静默自动发送</span>
-                    ) : (
-                      `长按切换语言 · ${currentLangObj?.flag || ''} ${currentLangObj?.name || '未知语言'}`
-                    )}
-                  </div>
-                </div>
-              ) : (
-                <div className="flex w-full items-end rounded-3xl bg-white p-1.5 shadow-sm border border-slate-200 focus-within:border-pink-300 focus-within:ring-2 focus-within:ring-pink-100 transition-all">
-                  <textarea
-                    ref={textareaRef}
-                    rows={1}
-                    className="allow-select flex-1 resize-none bg-transparent px-3 py-2.5 text-[15px] font-medium text-slate-700 outline-none placeholder-slate-400 no-scrollbar"
-                    placeholder="输入消息..."
-                    value={inputText}
-                    onChange={handleTextareaInput}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' && !e.shiftKey) {
-                        e.preventDefault();
-                        if (inputText.trim()) {
-                          sendMessage(inputText);
-                          setInputText('');
-                          resetTextareaHeight();
-                        }
-                      }
-                    }}
-                  />
+<div className="flex-1 flex justify-center">
+  {!textMode ? (
+    <div className="flex flex-col items-center justify-center pb-2">
+      <button
+        type="button"
+        onPointerDown={onMicPointerDown}
+        onPointerUp={onMicPointerUp}
+        onPointerCancel={onMicPointerUp}
+        onPointerLeave={onMicPointerUp}
+        onContextMenu={(e) => e.preventDefault()}
+        className={`touch-none flex h-[168px] w-[168px] items-center justify-center rounded-full text-white transition-all duration-300 ${
+          isRecording
+            ? 'bg-pink-500 scale-95 shadow-inner'
+            : 'bg-gradient-to-br from-pink-500 to-rose-500 shadow-xl hover:scale-105 active:scale-95'
+        }`}
+        aria-label="按住说话，长按切换语言"
+      >
+        {isRecording ? (
+          <FaPaperPlane className="text-6xl" />
+        ) : (
+          <FaMicrophone className="text-6xl" />
+        )}
+      </button>
+
+      <div className="mt-4 min-h-[20px] whitespace-nowrap text-[13px] font-bold text-slate-400">
+        {isRecording ? (
+          <span className="text-pink-500">松开/静默自动发送</span>
+        ) : (
+          `长按切换语言 · ${currentLangObj?.flag || ''} ${currentLangObj?.name || '未知语言'}`
+        )}
+      </div>
+    </div>
+  ) : (
+    <div className="flex w-full items-end rounded-3xl bg-white p-1.5 shadow-sm border border-slate-200 focus-within:border-pink-300 focus-within:ring-2 focus-within:ring-pink-100 transition-all">
+      <textarea
+        ref={textareaRef}
+        rows={1}
+        className="allow-select flex-1 resize-none bg-transparent px-3 py-2.5 text-[15px] font-medium text-slate-700 outline-none placeholder-slate-400 no-scrollbar"
+        placeholder="输入消息..."
+        value={inputText}
+        onChange={handleTextareaInput}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            if (inputText.trim()) {
+              sendMessage(inputText);
+              setInputText('');
+              resetTextareaHeight();
+            }
+          }
+        }}
+      />
+    </div>
+  )}
+</div>
                   <button
                     type="button"
                     onClick={() => {
