@@ -304,6 +304,123 @@ const Style = () => {
           transition-duration: 0.7s;
         }
       }
+
+      /* AI文章摘要字体大小 */
+      .font-bold.ml-2 {
+        font-size: 18px;
+      }
+
+      /* 卡片遮罩背景颜色 */
+      .bg-black {
+        box-shadow: 
+          0 -120px 140px -12px rgba(26, 34, 64, 0.95) inset,
+          0 -80px 100px -8px rgba(85, 60, 154, 0.6) inset;
+      }
+
+      /* 标签颜色 */
+      .hover\:bg-indigo-600:hover {
+        background-color: #ff6817;
+      }
+      .group:hover .group-hover\:bg-indigo-600 {
+        background-color: #ff6817;
+      }
+      .bg-indigo-600 {
+        background-color: #ff6817;
+      }
+      .hover\:text-indigo-600:hover {
+        color: #3a86ff;
+      }
+
+      /* 推荐文章字体颜色 */
+      .group:hover .group-hover\:text-indigo-600 {
+        color: #3a86ff;
+      }
+
+      /* 首页字体颜色 */
+      .group:hover .group-hover\:text-indigo-700 {
+        color: #3a86ff;
+      }
+      .hover\:text-indigo-700:hover {
+        color: #3a86ff;
+      }
+
+      /* 目录字体颜色 */
+      .text-indigo-600 {
+        color: #3a86ff;
+      }
+
+      /* 复选框颜色 */
+      .hover\:border-indigo-600:hover {
+        border-color: rgba(58, 134, 255, 0.6);
+        box-shadow:
+          0 0 0 1px rgba(58, 134, 255, 0.6),
+          0 8px 24px rgba(58, 134, 255, 0.1);
+        transition: border-color 0.25s cubic-bezier(.2,.8,.2,1),
+                    box-shadow 0.25s cubic-bezier(.2,.8,.2,1);
+      }
+      .hover\:border-blue-600:hover {
+        border-color: rgba(160, 210, 255, 0.65);
+        box-shadow:
+          inset 0 0 0 999px rgba(160, 210, 255, 0.05),
+          inset 0 1px 0 rgba(255, 255, 255, 0.20),
+          0 0 0 6px rgba(140, 200, 255, 0.22),
+          0 12px 30px rgba(0, 0, 0, 0.12);
+        transition:
+          border-color 0.22s cubic-bezier(.2,.8,.2,1),
+          box-shadow 0.22s cubic-bezier(.2,.8,.2,1);
+      }
+      .dark .hover\:border-indigo-600:hover {
+        border-color: rgba(120, 170, 255, 0.75);
+        box-shadow:
+          0 0 0 1px rgba(120, 170, 255, 0.45),
+          0 10px 26px rgba(0, 0, 0, 0.45);
+      }
+      .dark .hover\:border-blue-600:hover {
+        border-color: rgba(170, 215, 255, 0.70);
+        box-shadow:
+          inset 0 0 0 999px rgba(170, 215, 255, 0.035),
+          inset 0 1px 0 rgba(255, 255, 255, 0.10),
+          0 0 0 6px rgba(140, 200, 255, 0.20),
+          0 16px 40px rgba(0, 0, 0, 0.55);
+      }
+
+      .notion a:not(.notion-page-link):not(.notion-collection-card):not(.notion-hash-link):not(.notion-bookmark):not(.blog-link) {
+          position: relative;
+          color: rgba(33, 150, 243, 1);
+          transition: box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          text-decoration: none;
+          border-radius: 5px;
+      }
+
+      .notion a:not(.notion-page-link):not(.notion-collection-card):not(.notion-hash-link):not(.notion-bookmark)::after {
+          content: '';
+          position: absolute;
+          left: 50%;
+          bottom: -0.07em;
+          width: 0;
+          height: 0.1rem;
+          background-image: linear-gradient(90.68deg, #b439df 0.26%, #e5337e 102.37%);
+          transition: width 0.3s ease, left 0.3s ease;
+          display: block;
+          transform: translateX(-50%);
+      }
+
+      .notion a:not(.notion-page-link):not(.notion-collection-card):not(.notion-hash-link):not(.notion-bookmark):not(.blog-link):hover,
+      .notion a:not(.notion-page-link):not(.notion-collection-card):not(.notion-hash-link):not(.notion-bookmark):not(.blog-link):focus {
+          box-shadow: inset 0 -1.5em 0 rgba(33, 150, 243, 0.2);
+          color: rgba(33, 150, 243, 1);
+          border-radius: 6px;
+      }
+
+      .notion a:not(.notion-page-link):not(.notion-collection-card):not(.notion-hash-link):not(.notion-bookmark):not(.blog-link):hover::after,
+      .notion a:not(.notion-page-link):not(.notion-collection-card):not(.notion-hash-link):not(.notion-bookmark):not(.blog-link):focus::after {
+          width: 100%;
+          left: 50%;
+      }
+
+      .notion-table-of-contents-item:hover {
+        background-color: #ebf4ff !important;
+      }
     `}</style>
   )
 }
