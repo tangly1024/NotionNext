@@ -2,16 +2,15 @@
 
 import React, { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import {
-  FaArrowLeft,
-  FaBars,
-  FaPaperPlane,
-  FaMicrophone,
-  FaStop,
-  FaKeyboard,
+import { 
+  FaArrowLeft, 
+  FaBars, 
+  FaPaperPlane, 
+  FaMicrophone, 
+  FaStop, 
+  FaKeyboard, 
   FaClosedCaptioning,
-  FaCommentSlash,
-  FaVolumeUp
+  FaVolumeUp 
 } from 'react-icons/fa';
 import { pinyin } from 'pinyin-pro';
 import { AI_SCENES, buildExerciseBootstrapPrompt } from './aiAssistants';
@@ -30,7 +29,7 @@ const GlobalStyles = () => (
     .touch-none { touch-action: none; }
     
     @keyframes pulse-ring { 
-      0% { transform: scale(0.95); box-shadow:0 0 0 0 rgba(236,72,153,0.5);}
+      0% { transform: scale(0.95); box-shadow:0 0 0 0 rgba(236,72,153,0.6);}
       70%{transform:scale(1.05);box-shadow:0 0 0 20px rgba(236,72,153,0);}
       100%{transform:scale(0.95);box-shadow:0 0 0 0 rgba(236,72,153,0);}
     }
@@ -45,7 +44,7 @@ const SHARED_KEYS =['providerId','apiUrl','apiKey','model','ttsApiUrl','ttsVoice
 const SCENE_KEYS = ['assistantId','systemPrompt','temperature','showText','asrSilenceMs'];
 
 // ======================================
-// 拼音组件
+// 拼音组件 (修复行高，防止缅文重叠)
 // ======================================
 const PinyinText = React.memo(({ text='', showPinyin=false, isStreaming=false }) => {
   const tokens = useMemo(()=>{
@@ -67,7 +66,8 @@ const PinyinText = React.memo(({ text='', showPinyin=false, isStreaming=false })
   },[text]);
 
   return (
-    <div className="flex flex-wrap items-end text-[17px] text-slate-800 font-medium leading-[1.8] tracking-wide gap-y-3">
+    // 使用 leading-[2.5] 和 gap-y-5 增大行间距，避免多语言上下重叠
+    <div className="flex flex-wrap items-end text-[17px] text-slate-800 font-medium leading-[2.5] tracking-wide gap-y-5">
       {tokens.map((t,idx)=>(
         <div key={`${idx}-${t.text}`} className={`flex flex-col items-center justify-end ${t.isZh?'mx-[1.5px]':''}`}>
           {showPinyin && t.isZh && (
@@ -81,7 +81,7 @@ const PinyinText = React.memo(({ text='', showPinyin=false, isStreaming=false })
           <span className="leading-none whitespace-pre-wrap">{t.text}</span>
         </div>
       ))}
-      {isStreaming && <span className="ml-1 mt-1 inline-block h-[18px] w-[3px] animate-pulse bg-pink-500 rounded-full" />}
+      {isStreaming && <span className="ml-1 mt-2 inline-block h-[18px] w-[3px] animate-pulse bg-pink-500 rounded-full" />}
     </div>
   );
 });
@@ -114,7 +114,8 @@ function AIAvatarCenter({ isSpeaking, isRecording, isThinking }) {
           <div className="absolute inset-0 rounded-full border-[1.5px] border-pink-400/60 animate-ripple-1"/>
           <div className="absolute inset-0 rounded-full border-[1.5px] border-pink-400/40 animate-ripple-2"/>
         </>}
-        <div className="relative z-10 h-[80px] w-[80px] rounded-full overflow-hidden border-[1.5px] border-slate-200/80 bg-white shadow-md">
+        {/* 头像动效：讲话时放大并发光 */}
+        <div className={`relative z-10 h-[80px] w-[80px] rounded-full overflow-hidden border-[2px] border-slate-200/80 bg-white shadow-md transition-all duration-300 ${isSpeaking ? 'scale-110 shadow-[0_4px_20px_rgba(236,72,153,0.4)] border-pink-300' : 'scale-100'}`}>
           <img src="https://audio.886.best/chinese-vocab-audio/%E5%9B%BE%E7%89%87/images.jpeg" alt="AI Teacher" loading="lazy" onError={e=>{e.currentTarget.src='https://api.dicebear.com/7.x/bottts/svg?seed=fallback';}} className="h-full w-full object-cover rounded-full"/>
         </div>
       </div>
@@ -131,26 +132,42 @@ function AIAvatarCenter({ isSpeaking, isRecording, isThinking }) {
 // ======================================
 // 聊天区
 // ======================================
-function ChatList({ history=[], isRecording, textMode, inputText='', replaySpecificAnswer, scrollRef }) {
+function ChatList({ history=[], isRecording, textMode, inputText='', isAiSpeaking, stopEverything, replaySpecificAnswer, scrollRef }) {
   const [pinyinMap,setPinyinMap]=useState({});
   const togglePinyin=(id)=>setPinyinMap(prev=>({...prev,[id]:!prev[id]}));
+
   return (
     <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-6 no-scrollbar scroll-smooth">
       <div className="mx-auto flex w-full max-w-2xl flex-col pb-8">
         {history.map(msg=>{
           if(msg.role==='error') return <div key={msg.id} className="mb-6 text-left text-sm font-bold text-red-500 bg-red-50 p-3 rounded-xl border border-red-100">⚠️ {msg.text}</div>;
-          if(msg.role==='user') return <div key={msg.id} className="mb-8 w-full text-left pl-2"><div className="text-[15px] font-medium leading-[1.8] text-slate-400 tracking-wide">{msg.text}</div></div>;
+          if(msg.role==='user') return <div key={msg.id} className="mb-8 w-full text-left pl-2"><div className="text-[15px] font-medium leading-[2.2] text-slate-400 tracking-wide">{msg.text}</div></div>;
+          
           const aiText = normalizeAssistantText(msg.text||'');
           const showPinyin = pinyinMap[msg.id];
+          
           return (
             <div key={msg.id} className="mb-14 w-full flex flex-col items-start">
               <PinyinText text={aiText} showPinyin={showPinyin} isStreaming={msg.isStreaming}/>
-              {!msg.isStreaming && aiText && <div className="flex items-center gap-5 mt-4 pl-1">
-                <button onClick={()=>replaySpecificAnswer(msg.text)} className="text-slate-300 hover:text-pink-500 transition-colors p-1" title="朗读">
-                  <FaVolumeUp size={20}/>
-                </button>
-                <button onClick={()=>togglePinyin(msg.id)} className={`text-[12px] font-black px-2.5 py-1 rounded-md transition-colors ${showPinyin?'bg-slate-200 text-slate-600':'bg-white border border-slate-200 text-slate-400 shadow-sm hover:text-pink-400 hover:border-pink-200'}`} title="拼音">拼</button>
-              </div>}
+              {!msg.isStreaming && aiText && (
+                <div className="flex items-center gap-4 mt-5 pl-1">
+                  {/* 重播/停止按钮：播放时显示停止 */}
+                  <button 
+                    onClick={() => isAiSpeaking ? stopEverything() : replaySpecificAnswer(msg.text)} 
+                    className={`flex items-center justify-center h-8 w-8 rounded-full transition-colors shadow-sm ${isAiSpeaking ? 'bg-pink-100 text-pink-500 border border-pink-200' : 'bg-white text-slate-400 border border-slate-200 hover:text-pink-500 hover:border-pink-200'}`} 
+                    title={isAiSpeaking ? "停止播放" : "朗读"}
+                  >
+                    {isAiSpeaking ? <FaStop size={12}/> : <FaVolumeUp size={14}/>}
+                  </button>
+                  <button 
+                    onClick={()=>togglePinyin(msg.id)} 
+                    className={`text-[12px] font-black px-3 py-1.5 rounded-full transition-colors ${showPinyin?'bg-slate-700 text-white shadow-md':'bg-white border border-slate-200 text-slate-400 shadow-sm hover:text-pink-400 hover:border-pink-200'}`} 
+                    title="拼音"
+                  >
+                    拼
+                  </button>
+                </div>
+              )}
             </div>
           );
         })}
@@ -176,13 +193,31 @@ function BottomControlBar({ textMode, setTextMode, inputText, setInputText, send
     {code:'ru',label:'Русский',flag:'🇷🇺'},
     {code:'my',label:'မြန်မာစာ',flag:'🇲🇲'}
   ];
-  const [showLangMenu,setShowLangMenu]=useState(false);
-  const [currentLang,setCurrentLang]=useState(LANGUAGES[0]);
+  const[showLangMenu, setShowLangMenu] = useState(false);
+  const [currentLang, setCurrentLang] = useState(LANGUAGES[0]);
   const longPressTimer = useRef(null);
+  const textareaRef = useRef(null);
+
+  // 高度自适应
+  const handleInput = (e) => {
+    setInputText(e.target.value);
+    if(textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
+
+  const handleSend = () => {
+    if(inputText.trim()){
+      sendMessage(inputText); 
+      setInputText('');
+      if(textareaRef.current) textareaRef.current.style.height = 'auto'; // 发送后重置高度
+    }
+  };
 
   const handleMicDown=(e)=>{
     if(e.cancelable) e.preventDefault();
-    longPressTimer.current = setTimeout(()=>setShowLangMenu(true), 600);
+    longPressTimer.current = setTimeout(() => setShowLangMenu(true), 500);
     handleMicPointerDown(e, currentLang.code);
   };
   
@@ -192,72 +227,105 @@ function BottomControlBar({ textMode, setTextMode, inputText, setInputText, send
     handleMicPointerUp(e);
   };
 
-  const selectLang=(lang)=>{
+  const selectLang=(e, lang)=>{
+    e.preventDefault();
+    e.stopPropagation();
     setCurrentLang(lang); 
     setShowLangMenu(false);
   };
 
   return (
-    <div className="flex-none bg-[#f8fafc] px-4 pt-4 pb-[calc(env(safe-area-inset-bottom)+24px)] z-30">
-      <div className="flex items-center justify-center gap-4 max-w-sm mx-auto relative">
-        <button onClick={()=>setTextMode(!textMode)} className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white border border-slate-200 text-slate-500 hover:text-slate-700 active:scale-95 transition shadow-sm">
+    // 修改为 px-5 增加左右安全距离，底部使用 12px 更加紧凑舒适
+    <div className="flex-none bg-[#f8fafc] px-5 pt-3 pb-[calc(env(safe-area-inset-bottom)+12px)] z-30">
+      {/* 增大了间距 gap-5，使用 items-end 保证文本框撑大时按钮在底部对齐 */}
+      <div className="flex items-end justify-center gap-5 max-w-lg mx-auto relative">
+        
+        {/* 左侧切换按钮 */}
+        <button 
+          onClick={()=>setTextMode(!textMode)} 
+          className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white border border-slate-200 text-slate-500 hover:text-slate-700 active:scale-95 transition shadow-sm mb-[1px]"
+        >
           {textMode ? <FaMicrophone size={20}/> : <FaKeyboard size={20}/>}
         </button>
 
-        <div className="flex-1 flex justify-center w-full max-w-[220px]">
+        {/* 中间输入/语音 */}
+        <div className="flex-1 flex justify-center w-full max-w-[260px]">
           {textMode ? (
-            <div className="w-full h-12 flex items-center border border-slate-200 rounded-full bg-white shadow-sm overflow-hidden">
-              <input 
-                type="text" 
+            // 自适应高度文本框容器
+            <div className="w-full flex items-end border border-slate-200 rounded-[24px] bg-white shadow-sm overflow-hidden min-h-[48px]">
+              <textarea 
+                ref={textareaRef}
                 value={inputText} 
-                onChange={e=>setInputText(e.target.value)} 
+                onChange={handleInput} 
                 placeholder="继续问老师..." 
-                className="flex-1 h-full pl-5 pr-2 text-slate-800 text-base outline-none bg-transparent" 
-                onKeyDown={e=>{if(e.key==='Enter'&&inputText.trim()){sendMessage(inputText); setInputText('');}}}
+                className="flex-1 max-h-32 resize-none py-[13px] pl-5 pr-2 text-slate-800 text-[15px] outline-none bg-transparent no-scrollbar leading-snug" 
+                rows={1}
+                onKeyDown={e=>{
+                  if(e.key==='Enter' && !e.shiftKey){
+                    e.preventDefault();
+                    handleSend();
+                  }
+                }}
               />
-              <button onClick={()=>{if(inputText.trim()){sendMessage(inputText); setInputText('');}}} className="px-4 text-pink-500 hover:text-pink-600">
+              <button onClick={handleSend} className="p-3 mb-[1px] text-pink-500 hover:text-pink-600">
                 <FaPaperPlane size={18}/>
               </button>
             </div>
           ) : (
-            <div className="relative flex justify-center">
+            <div className="relative flex justify-center pb-[1px]">
               <button 
                 onPointerDown={handleMicDown} 
                 onPointerUp={handleMicUp} 
                 onPointerCancel={handleMicPointerCancel} 
                 onPointerLeave={handleMicPointerCancel} 
                 onContextMenu={e=>e.preventDefault()} 
-                className={`touch-none h-16 w-16 rounded-full text-white flex items-center justify-center transition-all shadow-md ${isRecording ? 'bg-pink-500 scale-110 animate-pulse-ring' : isAiSpeaking||isThinking ? 'bg-pink-300' : 'bg-pink-500'}`}
+                className={`touch-none h-[56px] w-[56px] rounded-full text-white flex items-center justify-center transition-all duration-300 shadow-md ${isRecording ? 'bg-pink-500 scale-[1.15] shadow-[0_4px_20px_rgba(236,72,153,0.5)] animate-pulse-ring' : isAiSpeaking||isThinking ? 'bg-pink-300' : 'bg-pink-500'}`}
               >
-                {isRecording ? <FaStop size={24}/> : <FaMicrophone size={24}/>}
+                {isRecording ? <FaStop size={22}/> : <FaMicrophone size={24}/>}
               </button>
               
-              {isRecording && <div className="absolute -bottom-8 w-max flex justify-center gap-1.5 text-[11px] text-pink-500 font-bold animate-pulse"><span>{currentLang.flag}</span><span>{currentLang.label}</span></div>}
+              {isRecording && <div className="absolute -bottom-6 w-max flex justify-center gap-1.5 text-[11px] text-pink-500 font-bold animate-pulse"><span>{currentLang.flag}</span><span>{currentLang.label}</span></div>}
               
+              {/* 长按语言选择菜单：完全居中，增加最大高度防溢出 */}
               {showLangMenu && (
-                <div className="absolute bottom-[80px] left-1/2 -translate-x-1/2 bg-white border border-slate-200 shadow-xl rounded-2xl p-3 grid grid-cols-2 gap-2 w-[280px] z-50">
-                  <div className="col-span-2 text-center text-xs text-slate-400 font-bold pb-2 border-b border-slate-100 mb-1">选择您要说的语言</div>
-                  {LANGUAGES.map(lang=>(
-                    <button key={lang.code} onClick={()=>selectLang(lang)} className="flex items-center justify-start px-3 py-2.5 rounded-xl hover:bg-slate-100 active:bg-slate-200 transition">
-                      <span className="text-base mr-2">{lang.flag}</span>
-                      <span className="text-sm font-medium text-slate-700">{lang.label}</span>
-                    </button>
-                  ))}
-                </div>
+                <>
+                  <div className="fixed inset-0 z-[50]" onPointerDown={()=>setShowLangMenu(false)}/>
+                  <div className="absolute bottom-[calc(100%+20px)] left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-xl border border-slate-200 shadow-[0_10px_40px_rgba(0,0,0,0.12)] rounded-3xl p-2 w-[240px] max-h-[300px] overflow-y-auto z-[60] no-scrollbar">
+                    <div className="sticky top-0 bg-white/95 backdrop-blur-sm z-10 text-center text-xs text-slate-400 font-bold pb-2 pt-1 border-b border-slate-100 mb-1">
+                      选择识别语言
+                    </div>
+                    <div className="grid grid-cols-1 gap-0.5">
+                      {LANGUAGES.map(lang=>(
+                        <button key={lang.code} onPointerDown={(e)=>selectLang(e, lang)} className="flex items-center justify-between px-4 py-3.5 rounded-2xl hover:bg-slate-100 active:bg-slate-200 transition">
+                          <span className="text-[15px] font-medium text-slate-700">{lang.label}</span>
+                          <span className="text-xl">{lang.flag}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </>
               )}
             </div>
           )}
         </div>
 
-        <button onClick={()=>setShowText(!showText)} className="relative flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white border border-slate-200 text-slate-500 hover:text-slate-700 active:scale-95 transition shadow-sm">
+        {/* 右侧字幕按钮：极其清晰的状态显示 */}
+        <button 
+          onClick={()=>setShowText(!showText)} 
+          className={`relative flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full transition-all shadow-sm mb-[1px] border ${showText ? 'bg-slate-800 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-400'}`}
+        >
           <FaClosedCaptioning size={20}/>
-          {!showText && <span className="absolute w-[2px] h-[26px] bg-slate-500 rotate-45 rounded-full border border-white"></span>}
+          <span className={`absolute -top-1 -right-1 text-[9px] font-black px-1.5 py-0.5 rounded-full border border-white tracking-wider ${showText ? 'bg-green-500 text-white' : 'bg-slate-200 text-slate-500'}`}>
+            {showText ? 'ON' : 'OFF'}
+          </span>
         </button>
+        
       </div>
     </div>
   );
 }
 
+// ======================================
 // ======================================
 // 主组件
 // ======================================
@@ -297,28 +365,117 @@ export default function InteractiveAIExplanationPanel({
   const sessionOpen = open && isAIReady;
 
   const {
-  history = [],
-  isThinking,
-  isAiSpeaking,
-  textMode,
-  setTextMode,
-  inputText = '',
-  setInputText,
-  isRecording,
-  scrollRef,
-  sendMessage,
-  stopEverything,
-  handleMicPointerDown,
-  handleMicPointerUp,
-  handleMicPointerCancel,
-  replaySpecificAnswer,
-  showText,
-  setShowText
-} = useAISession({
-  open: sessionOpen,
-  scene: AI_SCENES.EXERCISE,
-  settings: effectiveSettings,
-  initialPayload: initialPayload,
-  bootstrapBuilder: buildExerciseBootstrapPrompt,
-  defaultTextMode: false
-});
+    history =[],
+    isThinking,
+    isAiSpeaking,
+    textMode,
+    setTextMode,
+    inputText = '',
+    setInputText,
+    isRecording,
+    scrollRef,
+    sendMessage,
+    stopEverything,
+    handleMicPointerDown,
+    handleMicPointerUp,
+    handleMicPointerCancel,
+    replaySpecificAnswer,
+    showText,
+    setShowText
+  } = useAISession({
+    open: sessionOpen,
+    scene: AI_SCENES.EXERCISE,
+    settings: effectiveSettings,
+    initialPayload,
+    bootstrapBuilder: buildExerciseBootstrapPrompt,
+    defaultTextMode: false
+  });
+
+  const actualShowText = showText ?? localShowText;
+  const toggleShowText = val => { if (setShowText) setShowText(val); else setLocalShowText(val); };
+
+  useEffect(() => setMounted(true),[]);
+  useEffect(() => { if (open && !isAIReady) setShowSettings(true); }, [open, isAIReady]);
+
+  // 禁止滚动穿透
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, [open]);
+
+  // 滚动到底部逻辑
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 150;
+    if (nearBottom || isRecording) {
+      el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
+    }
+  }, [history, inputText, isRecording, scrollRef]);
+
+  if (!mounted || !open) return null;
+
+  return createPortal(
+    <>
+      <GlobalStyles />
+      <div className="fixed inset-0 z-[2147483000] bg-slate-900/40 backdrop-blur-sm" />
+
+      <div className="no-select fixed inset-0 z-[2147483001] flex flex-col bg-[#f8fafc] text-slate-800 font-sans h-[100dvh]">
+        <HeaderBar
+          title={title}
+          onBack={() => { stopEverything(); onClose?.(); }}
+          onOpenSettings={() => setShowSettings(true)}
+        />
+
+        {!isAIReady ? (
+          <div className="flex-1 flex flex-col items-center justify-center text-slate-400 pb-20">
+            <span className="text-4xl mb-4">⚙️</span>
+            <p className="text-sm font-bold">请点击右上角配置 AI 模型</p>
+          </div>
+        ) : actualShowText ? (
+          <ChatList
+            history={history}
+            isRecording={isRecording}
+            textMode={textMode}
+            inputText={inputText}
+            isAiSpeaking={isAiSpeaking}
+            stopEverything={stopEverything}
+            replaySpecificAnswer={replaySpecificAnswer}
+            scrollRef={scrollRef}
+          />
+        ) : (
+          <AIAvatarCenter
+            isSpeaking={isAiSpeaking}
+            isRecording={isRecording}
+            isThinking={isThinking}
+          />
+        )}
+
+        {isAIReady && (
+          <BottomControlBar
+            textMode={textMode}
+            setTextMode={setTextMode}
+            inputText={inputText}
+            setInputText={setInputText}
+            sendMessage={sendMessage}
+            isRecording={isRecording}
+            isAiSpeaking={isAiSpeaking}
+            isThinking={isThinking}
+            stopEverything={stopEverything}
+            handleMicPointerDown={handleMicPointerDown}
+            handleMicPointerUp={handleMicPointerUp}
+            handleMicPointerCancel={handleMicPointerCancel}
+            showText={actualShowText}
+            setShowText={toggleShowText}
+          />
+        )}
+
+        <RecognitionLanguagePicker open={false} recLang={null} setRecLang={() => {}} onClose={() => {}} theme="light" />
+        <AISettingsModal open={showSettings} settings={effectiveSettings} updateSettings={effectiveUpdateSettings} onClose={() => setShowSettings(false)} scene="exercise" />
+      </div>
+    </>,
+    document.body
+  );
+}
