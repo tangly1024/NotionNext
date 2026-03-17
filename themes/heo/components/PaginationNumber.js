@@ -71,7 +71,7 @@ const PaginationNumber = ({ page, totalPage }) => {
           aria-label={locale?.PAGINATION?.PREV || 'Previous page'}
           className={`${showPrev ? 'block' : 'invisible'}`}
         >
-          <div className='hover:border-indigo-600 dark:hover:border-yellow-600 relative w-24 h-10 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border dark:border-gray-600 rounded-lg cursor-pointer group'>
+          <div className='hover:border-indigo-600 dark:hover:border-indigo-500 relative w-24 h-10 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border dark:border-gray-600 rounded-lg cursor-pointer group'>
             <i className='fas fa-angle-left mr-2 transition-all duration-200 transform group-hover:-translate-x-4' />
             <div className='absolute translate-x-4 ml-2 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0'>
               {locale.PAGINATION.PREV}
@@ -84,7 +84,7 @@ const PaginationNumber = ({ page, totalPage }) => {
           {pages}
 
           {/* 跳转页码 */}
-          <div className='bg-white hover:bg-gray-100 dark:hover:bg-yellow-600  dark:bg-[#1e1e1e]  h-10 border dark:border-gray-600 flex justify-center items-center rounded-lg group hover:border-indigo-600 transition-all duration-200'>
+          <div className='bg-white hover:bg-gray-100 dark:hover:bg-indigo-500  dark:bg-[#1e1e1e]  h-10 border dark:border-gray-600 flex justify-center items-center rounded-lg group hover:border-indigo-600 transition-all duration-200'>
             <input
               value={value}
               onInput={handleInputChange}
@@ -101,7 +101,7 @@ const PaginationNumber = ({ page, totalPage }) => {
             />
             <div
               onClick={jumpToPage}
-              className='cursor-pointer hover:bg-indigo-600  dark:bg-[#1e1e1e] dark:hover:bg-yellow-600 hover:text-white px-4 py-2 group-hover:px-2 group-hover:mx-1 group-hover:rounded bg-white'
+              className='cursor-pointer hover:bg-indigo-600  dark:bg-[#1e1e1e] dark:hover:bg-indigo-500 hover:text-white px-4 py-2 group-hover:px-2 group-hover:mx-1 group-hover:rounded bg-white'
             >
               <ChevronDoubleRight className={'w-4 h-4'} />
             </div>
@@ -118,7 +118,7 @@ const PaginationNumber = ({ page, totalPage }) => {
           aria-label={locale?.PAGINATION?.NEXT || 'Next page'}
           className={`${showNext ? 'block' : 'invisible'}`}
         >
-          <div className='hover:border-indigo-600 dark:hover:border-yellow-600 relative w-24 h-10 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border dark:border-gray-600 rounded-lg cursor-pointer group'>
+          <div className='hover:border-indigo-600 dark:hover:border-indigo-500 relative w-24 h-10 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border dark:border-gray-600 rounded-lg cursor-pointer group'>
             <i className='fas fa-angle-right mr-2 transition-all duration-200 transform group-hover:translate-x-6' />
             <div className='absolute -translate-x-10 ml-2 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:-translate-x-2'>
               {locale.PAGINATION.NEXT}
@@ -184,9 +184,9 @@ function getPageElement(page, currentPage, pagePrefix) {
       aria-current={selected ? 'page' : undefined}
       className={
         (selected
-          ? 'bg-indigo-600 dark:bg-yellow-600 text-white '
+          ? 'bg-indigo-600 dark:bg-indigo-500 text-white '
           : 'dark:bg-[#1e1e1e] bg-white') +
-        ' hover:border-indigo-600 dark:hover:bg-yellow-600 dark:border-gray-600 px-4 border py-2 rounded-lg drop-shadow-sm duration-200 transition-colors'
+        ' hover:border-indigo-600 dark:hover:bg-indigo-500 dark:border-gray-600 px-4 border py-2 rounded-lg drop-shadow-sm duration-200 transition-colors'
       }
     >
       {page}

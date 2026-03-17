@@ -21,7 +21,7 @@ export default function PostCopyright({ siteInfo }) {
   const { locale } = useGlobal()
   const author = siteConfig('AUTHOR')
   const HEO_HERO_TITLE_3 = siteConfig('HEO_HERO_TITLE_3')
-  const homeHref = siteConfig('SUB_PATH', '') || '/'
+  const homeHref = siteConfig('SUB_PATH', '') || '/about'
   const enableRSS = siteConfig('ENABLE_RSS')
   const authorAvatar = siteInfo?.icon || siteInfo?.pageCover || '/favicon.svg'
 
