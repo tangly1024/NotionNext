@@ -350,7 +350,7 @@ img {
   html.dark .dark\:border-gray-700\/30,
   html.dark .dark\:bg-gray-800\/90,
   html.dark #theme-heo .dark\:bg-black,
-  html.dark #theme-heo .dark\:bg-hexo-black-gray {
+  html.dark .dark\:bg-hexo-black-gray {
     background: color-mix(in srgb, var(--info-card-primary) 6%, #0f172a 94%) !important;
   }
 }
