@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { createPortal } from 'react-dom';
+import { pinyin } from 'pinyin-pro'; // 引入拼音库
 import {
   FaArrowLeft,
   FaPaperPlane,
@@ -11,7 +12,7 @@ import {
   FaClosedCaptioning,
   FaCommentSlash,
   FaVolumeUp,
-  FaSlidersH
+  FaSlidersH,
 } from 'react-icons/fa';
 import { AI_SCENES, buildExerciseBootstrapPrompt } from './aiAssistants';
 import { normalizeAssistantText } from './aiTextUtils';
@@ -25,112 +26,89 @@ const GlobalStyles = () => (
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    @keyframes pulse-ring {
-      0% {
-        transform: scale(0.9);
-        box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.45);
-      }
-      70% {
-        transform: scale(1.02);
-        box-shadow: 0 0 0 24px rgba(236, 72, 153, 0);
-      }
-      100% {
-        transform: scale(0.9);
-        box-shadow: 0 0 0 0 rgba(236, 72, 153, 0);
-      }
-    }
-    .animate-pulse-ring { animation: pulse-ring 1.35s infinite; }
-
-    @keyframes bars {
-      0%,100% { transform: scaleY(.35); opacity:.45; }
-      50% { transform: scaleY(1); opacity:1; }
-    }
-    .tts-bars span {
-      display:inline-block;
-      width:4px;
-      height:20px;
-      border-radius:999px;
-      background: linear-gradient(180deg,#fb7185,#f472b6);
-      margin:0 2px;
-      transform-origin: bottom;
-      animation: bars 0.55s ease-in-out infinite;
-    }
-    .tts-bars span:nth-child(2){ animation-delay:.06s; }
-    .tts-bars span:nth-child(3){ animation-delay:.12s; }
-    .tts-bars span:nth-child(4){ animation-delay:.18s; }
-    .tts-bars span:nth-child(5){ animation-delay:.24s; }
-
-    .ai-dark-bg {
-      background:
-        radial-gradient(circle at top left, rgba(244,114,182,0.12), transparent 28%),
-        radial-gradient(circle at top right, rgba(168,85,247,0.14), transparent 32%),
-        radial-gradient(circle at bottom center, rgba(244,114,182,0.08), transparent 30%),
-        linear-gradient(180deg, #0f0a16 0%, #15101f 45%, #120d1a 100%);
+    /* 浅色干净背景 */
+    .ai-light-bg {
+      background: #f8fafc;
+      background-image: 
+        radial-gradient(circle at top right, rgba(244,114,182,0.03), transparent 40%),
+        radial-gradient(circle at bottom left, rgba(168,85,247,0.03), transparent 40%);
     }
 
-    .glass-panel {
-      background: rgba(24, 18, 34, 0.68);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255,255,255,0.07);
-      box-shadow: 0 10px 35px rgba(0,0,0,.22);
+    /* 防止屏幕手机浏览器复制、长按选中等操作 */
+    .prevent-browser-actions {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    
+    /* 允许输入框选中打字 */
+    .allow-select {
+      -webkit-user-select: auto;
+      user-select: auto;
     }
 
-    .soft-panel {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    /* 语音头像朗读时的动态效果 */
+    @keyframes tts-speak {
+      0% { transform: translateY(0px) scale(1); filter: drop-shadow(0 10px 15px rgba(236, 72, 153, 0.1)); }
+      50% { transform: translateY(-5px) scale(1.03); filter: drop-shadow(0 15px 25px rgba(236, 72, 153, 0.3)); }
+      100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 10px 15px rgba(236, 72, 153, 0.1)); }
+    }
+    .animate-tts-speak { 
+      animation: tts-speak 2s ease-in-out infinite; 
     }
 
-    .assistant-bubble {
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.16);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-    }
-
-    .user-bubble {
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-      box-shadow: 0 10px 28px rgba(236,72,153,0.28);
-    }
-
+    /* 滚动条美化 */
     .subtle-scroll::-webkit-scrollbar {
-      width: 6px;
+      width: 4px;
     }
     .subtle-scroll::-webkit-scrollbar-thumb {
-      background: rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.1);
       border-radius: 999px;
     }
     .subtle-scroll::-webkit-scrollbar-track {
       background: transparent;
     }
+
+    /* 拼音 Ruby 标签对齐修复 */
+    ruby {
+      ruby-align: center;
+    }
   `}</style>
 );
 
 const SHARED_KEYS = [
-  'providerId',
-  'apiUrl',
-  'apiKey',
-  'model',
-  'ttsApiUrl',
-  'ttsVoice',
-  'zhVoice',
-  'myVoice',
-  'ttsSpeed',
-  'ttsPitch',
-  'soundFx',
-  'vibration'
+  'providerId', 'apiUrl', 'apiKey', 'model', 'ttsApiUrl', 
+  'ttsVoice', 'zhVoice', 'myVoice', 'ttsSpeed', 'ttsPitch', 
+  'soundFx', 'vibration'
 ];
 
 const SCENE_KEYS = [
-  'assistantId',
-  'systemPrompt',
-  'temperature',
-  'showText',
-  'asrSilenceMs'
+  'assistantId', 'systemPrompt', 'temperature', 'showText', 'asrSilenceMs'
 ];
+
+// 拼音渲染组件：解决偏移，增加间距和行高
+const PinyinText = ({ text }) => {
+  // 使用 type: 'all' 返回包含 isZh、origin、pinyin 的对象数组，准确处理多音字上下文
+  const result = pinyin(text, { type: 'all' });
+
+  return (
+    <div className="leading-[2.8] tracking-[0.2em] text-[15px] text-slate-800 break-words">
+      {result.map((item, i) => {
+        if (item.isZh) {
+          return (
+            <ruby key={i} className="mx-[3px]">
+              {item.origin}
+              <rt className="text-[10px] text-slate-400 font-normal prevent-browser-actions -translate-y-[2px] block text-center">
+                {item.pinyin}
+              </rt>
+            </ruby>
+          );
+        }
+        return <span key={i}>{item.origin}</span>;
+      })}
+    </div>
+  );
+};
 
 function CircleIconButton({
   onClick,
@@ -145,12 +123,12 @@ function CircleIconButton({
       type="button"
       title={title}
       onClick={onClick}
-      className={`flex h-11 w-11 items-center justify-center rounded-full border transition-all active:scale-95 ${
+      className={`flex h-11 w-11 items-center justify-center rounded-full transition-all active:scale-95 ${
         danger
-          ? 'border-red-400/20 bg-red-400/10 text-red-300 hover:bg-red-400/15'
+          ? 'bg-red-50 text-red-500 hover:bg-red-100'
           : active
-          ? 'border-pink-400/30 bg-pink-400/15 text-pink-200 hover:bg-pink-400/20'
-          : 'border-white/10 bg-white/5 text-slate-200 hover:bg-white/10'
+          ? 'bg-pink-100 text-pink-500 hover:bg-pink-200'
+          : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
       } ${className}`}
     >
       {children}
@@ -166,8 +144,8 @@ function HeaderBar({ title, onBack, onOpenSettings, modelName }) {
       </CircleIconButton>
 
       <div className="flex flex-col items-center justify-center text-center">
-        <div className="flex items-center gap-2 text-[15px] font-black tracking-[0.18em] text-white">
-          <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,.8)]" />
+        <div className="flex items-center gap-2 text-[15px] font-black tracking-[0.18em] text-slate-800">
+          <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,.5)]" />
           {title}
         </div>
         <div className="mt-0.5 text-[11px] font-medium text-slate-400">
@@ -186,15 +164,14 @@ function SetupEmptyState({ onOpenSettings }) {
   return (
     <div className="flex min-h-full flex-col items-center justify-center px-6 text-center">
       <div className="mb-4 text-5xl">🤖</div>
-      <div className="text-lg font-black text-white">先完成 AI 设置</div>
-      <div className="mt-2 max-w-sm text-sm font-medium leading-6 text-slate-400">
+      <div className="text-lg font-black text-slate-800">先完成 AI 设置</div>
+      <div className="mt-2 max-w-sm text-sm font-medium leading-6 text-slate-500">
         需要先填写 API Key、接口地址和模型，才能开始自动讲题。
       </div>
-
       <button
         type="button"
         onClick={onOpenSettings}
-        className="mt-6 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 px-5 py-3 text-sm font-black text-white shadow-[0_10px_25px_rgba(236,72,153,.28)] transition-transform active:scale-95"
+        className="mt-6 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 px-5 py-3 text-sm font-black text-white shadow-[0_10px_25px_rgba(236,72,153,.25)] transition-transform active:scale-95"
       >
         去设置
       </button>
@@ -205,40 +182,22 @@ function SetupEmptyState({ onOpenSettings }) {
 function VoiceCenterState({ isAiSpeaking, isRecording, isThinking }) {
   return (
     <div className="flex min-h-full flex-1 flex-col items-center justify-center">
-      <div className="relative flex h-56 w-56 items-center justify-center">
-        <div className="absolute inset-0 rounded-full bg-pink-400/10 blur-3xl" />
-        {isAiSpeaking && <div className="absolute inset-4 animate-ping rounded-full bg-pink-400/20" />}
-
-        <div
-          className={`relative z-10 flex h-36 w-36 items-center justify-center rounded-full border border-white/10 bg-white/5 p-2 shadow-[0_20px_60px_rgba(236,72,153,.18)] transition-all duration-300 ${
-            isAiSpeaking ? 'scale-110 ring-4 ring-pink-300/10' : ''
+      <div className="relative flex items-center justify-center">
+        <img
+          src="https://audio.886.best/chinese-vocab-audio/%E5%9B%BE%E7%89%87/images.jpeg"
+          alt="Teacher"
+          className={`h-48 w-48 object-cover rounded-xl transition-all duration-300 shadow-sm ${
+            isAiSpeaking ? 'animate-tts-speak' : ''
           }`}
-        >
-          <img
-            src="https://api.dicebear.com/7.x/bottts/svg?seed=Teacher&backgroundColor=fce4ec"
-            alt="Teacher"
-            className="h-full w-full rounded-full object-cover"
-          />
-        </div>
+        />
       </div>
 
-      <div className="mt-8 flex min-h-[44px] items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-2 backdrop-blur-sm">
-        {isAiSpeaking ? (
-          <div className="tts-bars flex items-center gap-1">
-            <span />
-            <span />
-            <span />
-            <span />
-            <span />
-          </div>
-        ) : (
-          <span className="text-sm font-bold tracking-[0.18em] text-slate-300">
-            {isRecording ? '正在倾听...' : isThinking ? '思考中...' : '期待你的提问'}
-          </span>
-        )}
+      <div className="mt-10 flex min-h-[44px] items-center justify-center">
+        <span className="text-sm font-bold tracking-[0.18em] text-slate-400">
+          {isRecording ? '正在倾听...' : isThinking ? '思考中...' : '期待你的提问'}
+        </span>
       </div>
-
-      <div className="mt-4 max-w-xs text-center text-xs leading-6 text-slate-500">
+      <div className="mt-2 max-w-xs text-center text-xs leading-6 text-slate-400">
         按住下方麦克风可以直接提问，我会帮你分步骤讲解题目。
       </div>
     </div>
@@ -252,24 +211,34 @@ function ChatList({
   inputText,
   replaySpecificAnswer
 }) {
+  // 记录哪些消息开启了拼音显示
+  const [pinyinMsgs, setPinyinMsgs] = useState(new Set());
+
+  const togglePinyin = (id) => {
+    setPinyinMsgs((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
   return (
-    <div className="mx-auto flex min-h-full w-full max-w-2xl flex-col">
+    <div className="mx-auto flex min-h-full w-full max-w-2xl flex-col px-2">
       {history.map((msg) => {
         if (msg.role === 'error') {
           return (
-            <div
-              key={msg.id}
-              className="mx-8 mb-4 rounded-2xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-center text-xs font-bold text-red-200"
-            >
+            <div key={msg.id} className="mx-8 mb-4 rounded-xl bg-red-50 px-4 py-3 text-center text-xs font-bold text-red-400">
               {msg.text}
             </div>
           );
         }
 
+        // 用户文本：颜色较浅，无头像无气泡
         if (msg.role === 'user') {
           return (
-            <div key={msg.id} className="mb-4 flex justify-end pl-12">
-              <div className="user-bubble max-w-[90%] whitespace-pre-wrap rounded-[22px] rounded-tr-md px-5 py-3 text-[15px] font-medium leading-7 text-white">
+            <div key={msg.id} className="mb-6 flex justify-end pl-12">
+              <div className="whitespace-pre-wrap text-[15px] font-medium leading-7 text-slate-400">
                 {msg.text}
               </div>
             </div>
@@ -277,45 +246,55 @@ function ChatList({
         }
 
         const aiText = normalizeAssistantText(msg.text || '');
+        const showPinyin = pinyinMsgs.has(msg.id);
 
+        // AI 文本：颜色较深，无头像无气泡
         return (
-          <div key={msg.id} className="mb-6 flex items-start gap-3">
-            <div className="mt-1 h-10 w-10 shrink-0 overflow-hidden rounded-full border border-white/10 bg-white/5 shadow-md">
-              <img
-                src="https://api.dicebear.com/7.x/bottts/svg?seed=Teacher&backgroundColor=fce4ec"
-                className="h-full w-full object-cover"
-                alt="AI"
-              />
-            </div>
-
-            <div className="flex-1">
-              <div className="assistant-bubble inline-block rounded-[22px] rounded-tl-md px-5 py-4">
-                <div className="inline whitespace-pre-wrap text-[15px] font-medium leading-7 text-slate-100">
+          <div key={msg.id} className="mb-8 flex flex-col items-start pr-8">
+            <div className="w-full">
+              {showPinyin && !msg.isStreaming && aiText ? (
+                <PinyinText text={aiText} />
+              ) : (
+                <div className="inline whitespace-pre-wrap text-[15px] font-medium leading-7 text-slate-800 break-words">
                   {aiText || (msg.isStreaming ? '思考中...' : '')}
                   {msg.isStreaming && (
                     <span className="ml-1 inline-block h-4 w-1.5 animate-pulse rounded-full bg-pink-400 align-middle" />
                   )}
                 </div>
+              )}
 
-                {!msg.isStreaming && aiText && (
+              {/* 操作按钮区：播放和拼音切换 */}
+              {!msg.isStreaming && aiText && (
+                <div className="mt-2 flex items-center gap-3">
                   <button
                     type="button"
                     onClick={() => replaySpecificAnswer(msg.text)}
-                    className="ml-3 mt-1 inline-flex items-center align-middle text-slate-400 transition-colors hover:text-pink-300 active:scale-90"
+                    className="inline-flex items-center text-slate-300 transition-colors hover:text-pink-400 active:scale-90"
                     title="重新朗读"
                   >
                     <FaVolumeUp size={16} />
                   </button>
-                )}
-              </div>
+                  <button
+                    type="button"
+                    onClick={() => togglePinyin(msg.id)}
+                    className={`inline-flex items-center text-[12px] font-bold transition-colors active:scale-90 ${
+                      showPinyin ? 'text-pink-400' : 'text-slate-300 hover:text-pink-400'
+                    }`}
+                    title="切换拼音"
+                  >
+                    拼
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         );
       })}
 
+      {/* 录音时的用户占位 */}
       {isRecording && textMode === false && (
-        <div className="mb-4 flex justify-end pl-12">
-          <div className="user-bubble max-w-[90%] rounded-[22px] rounded-tr-md px-5 py-3 text-[15px] font-medium text-white opacity-90">
+        <div className="mb-6 flex justify-end pl-12">
+          <div className="text-[15px] font-medium text-slate-300 opacity-90">
             <span className="animate-pulse">{inputText || '正在聆听...'}</span>
           </div>
         </div>
@@ -344,31 +323,33 @@ function BottomControlBar({
   currentLangObj
 }) {
   return (
-    <div className="absolute bottom-0 left-0 right-0 z-30 px-4 pb-[max(20px,env(safe-area-inset-bottom))] pt-3">
-      <div className="glass-panel mx-auto w-full max-w-3xl rounded-[28px] px-4 py-3">
+    <div className="absolute bottom-0 left-0 right-0 z-30 px-4 pb-[max(20px,env(safe-area-inset-bottom))] pt-2 bg-transparent">
+      <div className="mx-auto w-full max-w-3xl px-2">
         {!isAIReady ? (
           <div className="flex h-20 items-center justify-center">
             <button
               type="button"
               onClick={onOpenSettings}
-              className="rounded-full bg-gradient-to-r from-pink-500 to-rose-500 px-6 py-3 text-sm font-black text-white shadow-[0_10px_25px_rgba(236,72,153,.28)] active:scale-95"
+              className="rounded-full bg-gradient-to-r from-pink-500 to-rose-500 px-6 py-3 text-sm font-black text-white shadow-md active:scale-95"
             >
               打开 AI 设置
             </button>
           </div>
         ) : (
           <div className="flex items-center gap-3">
+            {/* 切换输入模式按钮 */}
             <CircleIconButton
               onClick={() => setTextMode((value) => !value)}
               active={!textMode}
               title={textMode ? '切换语音输入' : '切换文字输入'}
-              className="shrink-0"
+              className="shrink-0 bg-white shadow-sm border border-slate-100"
             >
-              {textMode ? <FaMicrophone size={17} /> : <FaKeyboard size={17} />}
+              {textMode ? <FaMicrophone size={16} /> : <FaKeyboard size={16} />}
             </CircleIconButton>
 
             <div className="flex-1">
               {!textMode ? (
+                // 语音模式：只有麦克风按钮，无动态波浪
                 <div className="flex flex-col items-center justify-center">
                   <button
                     type="button"
@@ -377,43 +358,37 @@ function BottomControlBar({
                     onPointerCancel={handleMicPointerCancel}
                     onPointerLeave={handleMicPointerCancel}
                     onContextMenu={(e) => e.preventDefault()}
-                    className={`touch-none flex h-20 w-20 items-center justify-center rounded-full text-white transition-all duration-300 ${
+                    className={`touch-none flex h-[72px] w-[72px] items-center justify-center rounded-full text-white transition-all duration-300 ${
                       isRecording
-                        ? 'animate-pulse-ring bg-pink-500'
-                        : 'bg-gradient-to-br from-pink-500 to-rose-500 shadow-[0_14px_35px_rgba(236,72,153,.28)] hover:scale-105 active:scale-95'
+                        ? 'bg-pink-500 scale-95'
+                        : 'bg-gradient-to-br from-pink-400 to-rose-500 shadow-md hover:scale-105 active:scale-95'
                     }`}
                   >
                     {isRecording ? (
-                      <FaPaperPlane className="animate-pulse text-3xl" />
+                      <FaPaperPlane className="text-2xl" />
                     ) : (
-                      <FaMicrophone className="text-3xl" />
+                      <FaMicrophone className="text-2xl" />
                     )}
                   </button>
-
-                  <div className="mt-3 min-h-[18px] whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                    {isRecording ? (
-                      <span className="text-pink-300">点击发送 · 静默自动发送</span>
+                  <div className="mt-2 min-h-[16px] whitespace-nowrap text-[10px] font-bold text-slate-400">
+                     {isRecording ? (
+                      <span className="text-pink-400">松开/静默自动发送</span>
                     ) : isThinking ? (
-                      <span className="text-violet-300">思考中...</span>
+                      <span>思考中...</span>
                     ) : isAiSpeaking ? (
-                      <div className="tts-bars flex gap-1">
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                      </div>
+                      <span>正在讲话...</span>
                     ) : (
                       `长按切换语言 · ${currentLangObj.flag} ${currentLangObj.name}`
                     )}
                   </div>
                 </div>
               ) : (
-                <div className="flex items-center rounded-full border border-white/10 bg-white/5 p-1.5 shadow-inner backdrop-blur-sm">
+                // 键盘模式：输入框、发送按钮、字幕按钮紧凑排列在中间
+                <div className="flex items-center rounded-full bg-white px-2 py-1.5 shadow-sm border border-slate-100">
                   <input
                     type="text"
-                    className="flex-1 bg-transparent px-4 py-2 text-sm font-medium text-white outline-none placeholder-slate-500"
-                    placeholder={isRecording ? '听你说...' : '输入消息继续追问...'}
+                    className="allow-select flex-1 bg-transparent px-3 py-2 text-sm font-medium text-slate-700 outline-none placeholder-slate-400"
+                    placeholder={isRecording ? '听你说...' : '输入消息...'}
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
                     onKeyDown={(e) => {
@@ -423,44 +398,55 @@ function BottomControlBar({
                       }
                     }}
                   />
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (isRecording) stopEverything();
-                      if (inputText.trim()) {
-                        sendMessage(inputText);
-                        setInputText('');
-                      }
-                    }}
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-[0_8px_20px_rgba(236,72,153,.28)] transition-transform active:scale-90"
-                  >
-                    <FaPaperPlane size={14} className="-ml-0.5" />
-                  </button>
+                  <div className="flex items-center gap-1 shrink-0 pr-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (isRecording) stopEverything();
+                        if (inputText.trim()) {
+                          sendMessage(inputText);
+                          setInputText('');
+                        }
+                      }}
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-pink-500 text-white shadow-sm transition-transform active:scale-90"
+                    >
+                      <FaPaperPlane size={12} className="-ml-0.5" />
+                    </button>
+                    {/* 字幕按钮移到中间 */}
+                    <button
+                      type="button"
+                      onClick={() => setShowText((value) => !value)}
+                      className={`flex h-9 w-9 items-center justify-center rounded-full transition-colors ${
+                        showText ? 'bg-slate-100 text-pink-500' : 'text-slate-400 hover:bg-slate-50'
+                      }`}
+                      title={showText ? '隐藏字幕' : '显示字幕'}
+                    >
+                      {showText ? <FaClosedCaptioning size={15} /> : <FaCommentSlash size={15} />}
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
 
-            <div className="shrink-0">
-              {isAiSpeaking || isRecording || isThinking ? (
-                <CircleIconButton
-                  onClick={stopEverything}
-                  danger
-                  title="停止"
-                  className="h-12 w-12"
-                >
-                  <FaStop size={17} />
-                </CircleIconButton>
-              ) : (
-                <CircleIconButton
-                  onClick={() => setShowText((value) => !value)}
-                  active={showText}
-                  title={showText ? '隐藏字幕' : '显示字幕'}
-                  className="h-12 w-12"
-                >
-                  {showText ? <FaClosedCaptioning size={18} /> : <FaCommentSlash size={18} />}
-                </CircleIconButton>
-              )}
-            </div>
+            {/* 语音模式下，停止/字幕按钮 */}
+            {!textMode && (
+              <div className="shrink-0">
+                {isAiSpeaking || isRecording || isThinking ? (
+                  <CircleIconButton onClick={stopEverything} danger title="停止" className="bg-white shadow-sm border border-slate-100">
+                    <FaStop size={16} />
+                  </CircleIconButton>
+                ) : (
+                  <CircleIconButton
+                    onClick={() => setShowText((value) => !value)}
+                    active={showText}
+                    title={showText ? '隐藏字幕' : '显示字幕'}
+                    className="bg-white shadow-sm border border-slate-100"
+                  >
+                    {showText ? <FaClosedCaptioning size={16} /> : <FaCommentSlash size={16} />}
+                  </CircleIconButton>
+                )}
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -583,16 +569,11 @@ export default function InteractiveAIExplanationPanel({
     <>
       <GlobalStyles />
 
-      <div className="fixed inset-0 z-[2147483000] bg-black/60 backdrop-blur-sm" />
+      <div className="fixed inset-0 z-[2147483000] bg-black/30 backdrop-blur-sm" />
 
-      <div className="fixed inset-0 z-[2147483001] isolate flex h-[100dvh] w-full flex-col overflow-hidden text-white">
-        <div className="ai-dark-bg absolute inset-0" />
-
-        <div className="pointer-events-none absolute inset-0 opacity-40">
-          <div className="absolute left-[-10%] top-[-10%] h-[280px] w-[280px] rounded-full bg-pink-500/10 blur-3xl" />
-          <div className="absolute right-[-10%] top-[10%] h-[260px] w-[260px] rounded-full bg-violet-500/10 blur-3xl" />
-          <div className="absolute bottom-[-5%] left-[20%] h-[220px] w-[220px] rounded-full bg-rose-500/10 blur-3xl" />
-        </div>
+      {/* 注入 prevent-browser-actions 防止长按复制等行为 */}
+      <div className="prevent-browser-actions fixed inset-0 z-[2147483001] isolate flex h-[100dvh] w-full flex-col overflow-hidden text-slate-800">
+        <div className="ai-light-bg absolute inset-0" />
 
         <HeaderBar
           title={title}
