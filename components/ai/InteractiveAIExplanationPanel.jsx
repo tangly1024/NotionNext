@@ -34,7 +34,7 @@ function PinyinText({ text, showPinyin, isStreaming }) {
 
     for (let i = 0; i < text.length; i++) {
       const char = text[i];
-      const isZh = /[\u4e00-\u9fff]/.test(char) || /[^\x00-\x7F]/.test(char); // 汉字+其他非ascii
+      const isZh = /[\u4e00-\u9fff]/.test(char) || /[^\x00-\x7F]/.test(char);
       if (isZh) {
         if (currentNonZh) {
           result.push({ text: currentNonZh, isZh: false });
@@ -50,11 +50,13 @@ function PinyinText({ text, showPinyin, isStreaming }) {
   }, [text]);
 
   return (
-    <div className="flex flex-wrap items-end text-[16px] text-slate-800 font-medium leading-[1.8]">
+    <div className="flex flex-wrap items-end text-[16px] text-slate-800 font-medium leading-[2]">
       {tokens.map((t, idx) => (
-        <div key={idx} className={`flex flex-col items-center justify-end ${t.isZh ? 'mx-[2px]' : 'mx-[1px]'}`}>
+        <div key={idx} className={`flex flex-col items-center justify-end ${t.isZh ? 'mx-[3px]' : 'mx-[1px]'}`}>
           {showPinyin && t.isZh && (
-            <span className="text-[9px] leading-none text-slate-500 mb-1 font-sans tracking-tighter">{t.py}</span>
+            <span className="text-[9px] leading-none text-slate-500 mb-1 font-sans tracking-tighter">
+              {t.py}
+            </span>
           )}
           <span className="leading-none whitespace-pre-wrap">{t.text}</span>
         </div>
@@ -69,11 +71,11 @@ function PinyinText({ text, showPinyin, isStreaming }) {
 // ======================================
 function HeaderBar({ title, onBack, onOpenSettings }) {
   return (
-    <div className="relative z-20 flex h-[60px] items-center justify-between px-4 bg-[#f4f6f8]/95 backdrop-blur-md border-b border-slate-200/60">
+    <div className="relative z-20 flex h-[60px] items-center justify-between px-4 bg-[#f4f6f8]/95">
       <button onClick={onBack} className="flex h-10 w-10 items-center justify-center text-slate-500 hover:text-slate-800 transition-transform active:scale-90">
         <FaArrowLeft size={18} />
       </button>
-      <div className="text-[13px] font-black tracking-[0.15em] text-slate-800 uppercase">{title}</div>
+      <div className="text-[15px] font-bold text-slate-800">{title}</div>
       <button onClick={onOpenSettings} className="flex h-10 w-10 items-center justify-center text-slate-400 hover:text-slate-800 transition-transform active:scale-90">
         <FaSlidersH size={18} />
       </button>
@@ -86,9 +88,9 @@ function HeaderBar({ title, onBack, onOpenSettings }) {
 // ======================================
 function AIAvatar({ isSpeaking }) {
   return (
-    <div className="relative flex items-center justify-center mb-2">
-      <div className="h-20 w-20 rounded-full overflow-hidden border-4 border-white shadow-lg">
-        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Teacher&backgroundColor=fce4ec" alt="AI" className="h-full w-full object-cover" />
+    <div className="relative flex flex-col items-center justify-center mb-4">
+      <div className="h-24 w-24 rounded-full overflow-hidden border-4 border-white shadow-lg">
+        <img src="https://audio.886.best/chinese-vocab-audio/%E5%9B%BE%E7%89%87/images.jpeg" alt="AI" className="h-full w-full object-cover" />
       </div>
       {isSpeaking && (
         <div className="absolute bottom-0 flex h-10 w-32 items-end justify-between gap-1">
@@ -115,42 +117,26 @@ function ChatList({ history, isRecording, textMode, inputText, replaySpecificAns
   const togglePinyin = (id) => setPinyinMap((prev) => ({ ...prev, [id]: !prev[id] }));
 
   return (
-    <div className="mx-auto flex w-full max-w-2xl flex-col pt-4 pb-4">
+    <div className="mx-auto flex w-full max-w-2xl flex-col pt-2 pb-4 bg-gradient-to-b from-[#fdfafb] to-[#fce7f3] rounded-xl p-2">
       {history.map((msg) => {
-        if (msg.role === 'error') {
-          return <div key={msg.id} className="mb-6 text-left text-sm font-bold text-red-500 bg-red-50 p-3 rounded-xl">⚠️ {msg.text}</div>;
-        }
-        if (msg.role === 'user') {
-          return (
-            <div key={msg.id} className="mb-6 w-full text-left pl-2">
-              <div className="text-[14px] font-medium leading-relaxed text-slate-400 tracking-wide">{msg.text}</div>
-            </div>
-          );
-        }
+        if (msg.role === 'error') return <div key={msg.id} className="mb-6 text-left text-sm font-bold text-red-500 p-2 rounded-lg bg-red-50">⚠️ {msg.text}</div>;
+        if (msg.role === 'user') return <div key={msg.id} className="mb-6 w-full text-left pl-2 text-slate-500">{msg.text}</div>;
         const aiText = normalizeAssistantText(msg.text || '');
         const showPinyin = pinyinMap[msg.id];
         return (
-          <div key={msg.id} className="mb-10 w-full flex flex-col items-start">
-            <div className="bg-white/90 border border-slate-200 rounded-2xl px-4 py-3 shadow-sm">
-              <PinyinText text={aiText} showPinyin={showPinyin} isStreaming={msg.isStreaming} />
-            </div>
+          <div key={msg.id} className="mb-8 w-full flex flex-col items-start">
+            <PinyinText text={aiText} showPinyin={showPinyin} isStreaming={msg.isStreaming} />
             {!msg.isStreaming && aiText && (
               <div className="flex items-center gap-3 mt-2 pl-1">
-                <button onClick={() => replaySpecificAnswer(msg.text)} className="flex items-center justify-center text-slate-300 hover:text-pink-500 transition-colors active:scale-90 p-1" title="朗读">
-                  <FaVolumeUp size={16} />
-                </button>
-                <button onClick={() => togglePinyin(msg.id)} className={`flex items-center justify-center text-[11px] font-black px-2 py-0.5 rounded-md transition-colors active:scale-90 ${showPinyin ? 'bg-slate-200 text-slate-700' : 'bg-white border border-slate-200 text-slate-400 shadow-sm hover:text-slate-600'}`} title="注音">
-                  拼
-                </button>
+                <button onClick={() => replaySpecificAnswer(msg.text)} className="text-slate-300 hover:text-pink-500 p-1" title="朗读"><FaVolumeUp size={16} /></button>
+                <button onClick={() => togglePinyin(msg.id)} className={`text-[11px] font-black px-2 py-0.5 rounded-md ${showPinyin ? 'bg-slate-200 text-slate-700' : 'bg-white border border-slate-200 text-slate-400 shadow-sm hover:text-slate-600'}`} title="拼音">拼</button>
               </div>
             )}
           </div>
         );
       })}
       {isRecording && textMode === false && inputText && (
-        <div className="mb-5 w-full text-left pl-2">
-          <div className="text-[14px] font-medium leading-relaxed text-pink-300 animate-pulse tracking-wide">{inputText}</div>
-        </div>
+        <div className="mb-5 w-full text-left pl-2 text-pink-400 animate-pulse">{inputText}</div>
       )}
     </div>
   );
@@ -163,20 +149,18 @@ function BottomControlBar({ textMode, setTextMode, isRecording, isThinking, isAi
   return (
     <div className="absolute bottom-4 left-0 right-0 z-30 px-5 pointer-events-none">
       <div className="mx-auto w-full max-w-md pointer-events-auto flex items-center justify-between">
-        <button onClick={() => setTextMode(!textMode)} className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-transform active:scale-95">
-          {textMode ? <FaMicrophone size={18} /> : <FaKeyboard size={18} />}
-        </button>
+        <button onClick={() => setTextMode(!textMode)} className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm">{textMode ? <FaMicrophone size={18} /> : <FaKeyboard size={18} />}</button>
         <button
           onPointerDown={handleMicPointerDown}
           onPointerUp={handleMicPointerUp}
           onPointerCancel={handleMicPointerCancel}
           onPointerLeave={handleMicPointerCancel}
           onContextMenu={(e) => e.preventDefault()}
-          className={`touch-none flex h-20 w-20 items-center justify-center rounded-full text-white transition-all duration-300 ${isRecording ? 'bg-pink-500 animate-pulse-ring scale-95' : 'bg-pink-500 shadow-[0_10px_25px_rgba(236,72,153,.35)] hover:scale-105 active:scale-95'}`}
+          className={`touch-none flex h-20 w-20 items-center justify-center rounded-full text-white transition-all duration-300 ${isRecording ? 'bg-pink-500 animate-pulse-ring scale-95' : 'bg-pink-500 shadow-lg hover:scale-105 active:scale-95'}`}
         >
           {isAiSpeaking || isThinking ? <FaStop className="text-3xl" onClick={(e) => { e.stopPropagation(); stopEverything(); }} /> : <FaMicrophone className="text-3xl" />}
         </button>
-        <button onClick={() => setShowText(!showText)} className={`flex h-12 w-12 items-center justify-center rounded-full transition-all active:scale-90 ${showText ? 'bg-pink-500 text-white shadow-md' : 'bg-slate-200/70 text-slate-500'}`}>
+        <button onClick={() => setShowText(!showText)} className={`flex h-12 w-12 items-center justify-center rounded-full ${showText ? 'bg-pink-500 text-white shadow-md' : 'bg-slate-200 text-slate-500'}`}>
           {showText ? <FaClosedCaptioning size={18} /> : <FaCommentSlash size={18} />}
         </button>
       </div>
@@ -185,7 +169,7 @@ function BottomControlBar({ textMode, setTextMode, isRecording, isThinking, isAi
 }
 
 // ======================================
-// 主入口
+// 主组件
 // ======================================
 export default function InteractiveAIExplanationPanel({ open, title = 'AI 讲题老师', initialPayload = null, onClose, settings, updateSettings }) {
   const [mounted, setMounted] = useState(false);
@@ -197,7 +181,7 @@ export default function InteractiveAIExplanationPanel({ open, title = 'AI 讲题
   const isAIReady = useMemo(() => Boolean(effectiveSettings?.apiKey && effectiveSettings?.apiUrl && effectiveSettings?.model), [effectiveSettings]);
   const sessionOpen = open && isAIReady;
 
-  const { history, isThinking, isAiSpeaking, textMode, setTextMode, inputText, setInputText, isRecording, currentLangObj, scrollRef, sendMessage, stopEverything, recLang, setRecLang, showLangPicker, setShowLangPicker, handleMicPointerDown, handleMicPointerUp, handleMicPointerCancel, replaySpecificAnswer, showText, setShowText } = useAISession({
+  const { history, isThinking, isAiSpeaking, textMode, setTextMode, inputText, setInputText, isRecording, scrollRef, sendMessage, stopEverything, handleMicPointerDown, handleMicPointerUp, handleMicPointerCancel, replaySpecificAnswer, showText, setShowText } = useAISession({
     open: sessionOpen,
     scene: AI_SCENES.EXERCISE,
     settings: effectiveSettings,
@@ -218,10 +202,10 @@ export default function InteractiveAIExplanationPanel({ open, title = 'AI 讲题
 
   return createPortal(
     <>
-      <div className="fixed inset-0 z-[2147483000] bg-black/40 backdrop-blur-sm" />
-      <div className="fixed inset-0 z-[2147483001] isolate flex h-[100dvh] w-full flex-col overflow-hidden bg-[#f4f6f8] text-slate-800 font-sans">
+      <div className="fixed inset-0 z-[2147483000] bg-black/40" />
+      <div className="fixed inset-0 z-[2147483001] flex h-[100dvh] w-full flex-col overflow-hidden bg-[#f4f6f8] text-slate-800 font-sans">
         <HeaderBar title={title} onBack={() => { stopEverything(); onClose?.(); }} onOpenSettings={() => setShowSettings(true)} />
-        <div ref={scrollRef} className={`relative z-10 flex-1 overflow-y-auto px-6 pt-4 pb-[200px] no-scrollbar scroll-smooth ${showLangPicker ? 'pointer-events-none' : ''}`}>
+        <div ref={scrollRef} className={`relative z-10 flex-1 overflow-y-auto px-4 pt-4 pb-[200px] scroll-smooth`}>
           {sessionOpen ? (
             <>
               <AIAvatar isSpeaking={isAiSpeaking} />
@@ -229,14 +213,14 @@ export default function InteractiveAIExplanationPanel({ open, title = 'AI 讲题
               {!history.length && !isRecording && <div className="text-slate-500 text-sm mt-2">期待你的提问~</div>}
             </>
           ) : (
-            <div className="flex h-full flex-col items-center justify-center text-slate-400 pb-20">
+            <div className="flex h-full flex-col items-center justify-center text-slate-400">
               <span className="text-4xl mb-4">⚙️</span>
               <p className="text-sm font-bold">请点击右上角配置 AI 模型</p>
             </div>
           )}
         </div>
         {sessionOpen && <BottomControlBar textMode={textMode} setTextMode={setTextMode} isRecording={isRecording} isThinking={isThinking} isAiSpeaking={isAiSpeaking} inputText={inputText} setInputText={setInputText} sendMessage={sendMessage} stopEverything={stopEverything} handleMicPointerDown={handleMicPointerDown} handleMicPointerUp={handleMicPointerUp} handleMicPointerCancel={handleMicPointerCancel} showText={actualShowText} setShowText={toggleShowText} />}
-        <RecognitionLanguagePicker open={showLangPicker} recLang={recLang} setRecLang={setRecLang} onClose={() => setShowLangPicker(false)} theme="light" />
+        <RecognitionLanguagePicker open={false} recLang={null} setRecLang={() => {}} onClose={() => {}} theme="light" />
         <AISettingsModal open={showSettings} settings={effectiveSettings} updateSettings={updateSettings || ((p)=>{updateSharedSettings(p); updateSceneSettings(AI_SCENES.EXERCISE,p);})} onClose={() => setShowSettings(false)} scene="exercise" />
       </div>
     </>,
