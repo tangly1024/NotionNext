@@ -2,15 +2,16 @@
 
 import React, { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { 
-  FaArrowLeft, 
-  FaBars, 
-  FaPaperPlane, 
-  FaMicrophone, 
-  FaStop, 
-  FaKeyboard, 
+import {
+  FaArrowLeft,
+  FaBars,
+  FaPaperPlane,
+  FaMicrophone,
+  FaStop,
+  FaKeyboard,
   FaClosedCaptioning,
-  FaVolumeUp 
+  FaCommentSlash,
+  FaVolumeUp
 } from 'react-icons/fa';
 import { pinyin } from 'pinyin-pro';
 import { AI_SCENES, buildExerciseBootstrapPrompt } from './aiAssistants';
@@ -70,7 +71,6 @@ const PinyinText = React.memo(({ text='', showPinyin=false, isStreaming=false })
       {tokens.map((t,idx)=>(
         <div key={`${idx}-${t.text}`} className={`flex flex-col items-center justify-end ${t.isZh?'mx-[1.5px]':''}`}>
           {showPinyin && t.isZh && (
-            /* 指定 Arial, sans-serif 字体可修复第一声（ā, ō）等声调偏移的问题 */
             <span 
               className="text-[11px] leading-none text-blue-500 mb-[3px] font-normal tracking-tight" 
               style={{ fontFamily: 'Arial, sans-serif' }}
@@ -181,7 +181,6 @@ function BottomControlBar({ textMode, setTextMode, inputText, setInputText, send
   const longPressTimer = useRef(null);
 
   const handleMicDown=(e)=>{
-    // 防止手机端长按弹出系统菜单
     if(e.cancelable) e.preventDefault();
     longPressTimer.current = setTimeout(()=>setShowLangMenu(true), 600);
     handleMicPointerDown(e, currentLang.code);
@@ -200,18 +199,11 @@ function BottomControlBar({ textMode, setTextMode, inputText, setInputText, send
 
   return (
     <div className="flex-none bg-[#f8fafc] px-4 pt-4 pb-[calc(env(safe-area-inset-bottom)+24px)] z-30">
-      {/* 使用 gap-5 和 justify-center 将按钮聚拢 */}
       <div className="flex items-center justify-center gap-4 max-w-sm mx-auto relative">
-        
-        {/* 左侧切换按钮：正圆形 */}
-        <button 
-          onClick={()=>setTextMode(!textMode)} 
-          className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white border border-slate-200 text-slate-500 hover:text-slate-700 active:scale-95 transition shadow-sm"
-        >
+        <button onClick={()=>setTextMode(!textMode)} className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white border border-slate-200 text-slate-500 hover:text-slate-700 active:scale-95 transition shadow-sm">
           {textMode ? <FaMicrophone size={20}/> : <FaKeyboard size={20}/>}
         </button>
 
-        {/* 中间输入/语音 */}
         <div className="flex-1 flex justify-center w-full max-w-[220px]">
           {textMode ? (
             <div className="w-full h-12 flex items-center border border-slate-200 rounded-full bg-white shadow-sm overflow-hidden">
@@ -235,7 +227,6 @@ function BottomControlBar({ textMode, setTextMode, inputText, setInputText, send
                 onPointerCancel={handleMicPointerCancel} 
                 onPointerLeave={handleMicPointerCancel} 
                 onContextMenu={e=>e.preventDefault()} 
-                // touch-none 防止在手机浏览器上滑动屏幕导致事件中断
                 className={`touch-none h-16 w-16 rounded-full text-white flex items-center justify-center transition-all shadow-md ${isRecording ? 'bg-pink-500 scale-110 animate-pulse-ring' : isAiSpeaking||isThinking ? 'bg-pink-300' : 'bg-pink-500'}`}
               >
                 {isRecording ? <FaStop size={24}/> : <FaMicrophone size={24}/>}
@@ -243,7 +234,6 @@ function BottomControlBar({ textMode, setTextMode, inputText, setInputText, send
               
               {isRecording && <div className="absolute -bottom-8 w-max flex justify-center gap-1.5 text-[11px] text-pink-500 font-bold animate-pulse"><span>{currentLang.flag}</span><span>{currentLang.label}</span></div>}
               
-              {/* 长按语言选择菜单：完全居中 */}
               {showLangMenu && (
                 <div className="absolute bottom-[80px] left-1/2 -translate-x-1/2 bg-white border border-slate-200 shadow-xl rounded-2xl p-3 grid grid-cols-2 gap-2 w-[280px] z-50">
                   <div className="col-span-2 text-center text-xs text-slate-400 font-bold pb-2 border-b border-slate-100 mb-1">选择您要说的语言</div>
@@ -259,24 +249,15 @@ function BottomControlBar({ textMode, setTextMode, inputText, setInputText, send
           )}
         </div>
 
-        {/* 右侧字幕按钮：正圆形，CC样式 */}
-        <button 
-          onClick={()=>setShowText(!showText)} 
-          className="relative flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white border border-slate-200 text-slate-500 hover:text-slate-700 active:scale-95 transition shadow-sm"
-        >
+        <button onClick={()=>setShowText(!showText)} className="relative flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white border border-slate-200 text-slate-500 hover:text-slate-700 active:scale-95 transition shadow-sm">
           <FaClosedCaptioning size={20}/>
-          {/* 当不显示字幕时，画一条优美的斜杠 */}
-          {!showText && (
-            <span className="absolute w-[2px] h-[26px] bg-slate-500 rotate-45 rounded-full border border-white"></span>
-          )}
+          {!showText && <span className="absolute w-[2px] h-[26px] bg-slate-500 rotate-45 rounded-full border border-white"></span>}
         </button>
-        
       </div>
     </div>
   );
 }
 
-// ======================================
 // ======================================
 // 主组件
 // ======================================
@@ -316,115 +297,28 @@ export default function InteractiveAIExplanationPanel({
   const sessionOpen = open && isAIReady;
 
   const {
-    history =[],
-    isThinking,
-    isAiSpeaking,
-    textMode,
-    setTextMode,
-    inputText = '',
-    setInputText,
-    isRecording,
-    scrollRef,
-    sendMessage,
-    stopEverything,
-    handleMicPointerDown,
-    handleMicPointerUp,
-    handleMicPointerCancel,
-    replaySpecificAnswer,
-    showText,
-    setShowText
-  } = useAISession({
-    open: sessionOpen,
-    scene: AI_SCENES.EXERCISE,
-    settings: effectiveSettings,
-    initialPayload,
-    bootstrapBuilder: buildExerciseBootstrapPrompt,
-    defaultTextMode: false
-  });
-
-  const actualShowText = showText ?? localShowText;
-  const toggleShowText = val => { if (setShowText) setShowText(val); else setLocalShowText(val); };
-
-  useEffect(() => setMounted(true),[]);
-  useEffect(() => { if (open && !isAIReady) setShowSettings(true); }, [open, isAIReady]);
-
-  // 禁止滚动穿透
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = prev; };
-  }, [open]);
-
-  // 滚动到底部逻辑
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 150;
-    if (nearBottom || isRecording) {
-      el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
-    }
-  }, [history, inputText, isRecording, scrollRef]);
-
-  if (!mounted || !open) return null;
-
-  return createPortal(
-    <>
-      <GlobalStyles />
-      <div className="fixed inset-0 z-[2147483000] bg-slate-900/40 backdrop-blur-sm" />
-
-      <div className="no-select fixed inset-0 z-[2147483001] flex flex-col bg-[#f8fafc] text-slate-800 font-sans h-[100dvh]">
-        <HeaderBar
-          title={title}
-          onBack={() => { stopEverything(); onClose?.(); }}
-          onOpenSettings={() => setShowSettings(true)}
-        />
-
-        {!isAIReady ? (
-          <div className="flex-1 flex flex-col items-center justify-center text-slate-400 pb-20">
-            <span className="text-4xl mb-4">⚙️</span>
-            <p className="text-sm font-bold">请点击右上角配置 AI 模型</p>
-          </div>
-        ) : actualShowText ? (
-          <ChatList
-            history={history}
-            isRecording={isRecording}
-            textMode={textMode}
-            inputText={inputText}
-            replaySpecificAnswer={replaySpecificAnswer}
-            scrollRef={scrollRef}
-          />
-        ) : (
-          <AIAvatarCenter
-            isSpeaking={isAiSpeaking}
-            isRecording={isRecording}
-            isThinking={isThinking}
-          />
-        )}
-
-        {isAIReady && (
-          <BottomControlBar
-            textMode={textMode}
-            setTextMode={setTextMode}
-            inputText={inputText}
-            setInputText={setInputText}
-            sendMessage={sendMessage}
-            isRecording={isRecording}
-            isAiSpeaking={isAiSpeaking}
-            isThinking={isThinking}
-            stopEverything={stopEverything}
-            handleMicPointerDown={handleMicPointerDown}
-            handleMicPointerUp={handleMicPointerUp}
-            handleMicPointerCancel={handleMicPointerCancel}
-            showText={actualShowText}
-            setShowText={toggleShowText}
-          />
-        )}
-
-        <RecognitionLanguagePicker open={false} recLang={null} setRecLang={() => {}} onClose={() => {}} theme="light" />
-        <AISettingsModal open={showSettings} settings={effectiveSettings} updateSettings={effectiveUpdateSettings} onClose={() => setShowSettings(false)} scene="exercise" />
-      </div>
-    </>,
-    document.body
-  );
-}
+  history = [],
+  isThinking,
+  isAiSpeaking,
+  textMode,
+  setTextMode,
+  inputText = '',
+  setInputText,
+  isRecording,
+  scrollRef,
+  sendMessage,
+  stopEverything,
+  handleMicPointerDown,
+  handleMicPointerUp,
+  handleMicPointerCancel,
+  replaySpecificAnswer,
+  showText,
+  setShowText
+} = useAISession({
+  open: sessionOpen,
+  scene: AI_SCENES.EXERCISE,
+  settings: effectiveSettings,
+  initialPayload: initialPayload,
+  bootstrapBuilder: buildExerciseBootstrapPrompt,
+  defaultTextMode: false
+});
