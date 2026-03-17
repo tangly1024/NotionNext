@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { pinyin } from 'pinyin-pro'; // 引入拼音库
+import { pinyin } from 'pinyin-pro';
 import {
   FaArrowLeft,
   FaPaperPlane,
@@ -69,9 +69,12 @@ const GlobalStyles = () => (
       background: transparent;
     }
 
-    /* 拼音 Ruby 标签对齐修复 */
+    /* 拼音 Ruby 标签对齐修复并增加行距 */
     ruby {
       ruby-align: center;
+    }
+    .pinyin-text {
+      line-height: 3.2rem;
     }
   `}</style>
 );
@@ -86,12 +89,11 @@ const SCENE_KEYS = [
   'assistantId', 'systemPrompt', 'temperature', 'showText', 'asrSilenceMs'
 ];
 
-// 拼音渲染组件
 const PinyinText = ({ text }) => {
   const result = pinyin(text, { type: 'all' });
 
   return (
-    <div className="leading-[2.8] tracking-[0.2em] text-[15px] text-slate-800 break-words">
+    <div className="pinyin-text tracking-[0.2em] text-[15px] text-slate-800 break-words">
       {result.map((item, i) => {
         if (item.isZh) {
           return (
@@ -109,21 +111,13 @@ const PinyinText = ({ text }) => {
   );
 };
 
-// 重新调色的操作按钮
-function CircleIconButton({
-  onClick,
-  children,
-  active = false,
-  danger = false,
-  className = '',
-  title
-}) {
+function CircleIconButton({ onClick, children, active = false, danger = false, className = '', title }) {
   return (
     <button
       type="button"
       title={title}
       onClick={onClick}
-      className={`flex h-12 w-12 items-center justify-center rounded-full transition-all border active:scale-95 shadow-sm ${
+      className={`flex items-center justify-center rounded-full transition-all border active:scale-95 shadow-sm ${
         danger
           ? 'bg-red-50 text-red-500 border-red-100 hover:bg-red-100'
           : active
@@ -171,7 +165,7 @@ function SetupEmptyState({ onOpenSettings }) {
       <button
         type="button"
         onClick={onOpenSettings}
-        className="mt-6 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-3 text-sm font-black text-white shadow-[0_10px_25px_rgba(99,102,241,.3)] transition-transform active:scale-95"
+        className="mt-6 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-3 text-sm font-black text-white shadow-md transition-transform active:scale-95"
       >
         去设置
       </button>
@@ -204,13 +198,7 @@ function VoiceCenterState({ isAiSpeaking, isRecording, isThinking }) {
   );
 }
 
-function ChatList({
-  history,
-  isRecording,
-  textMode,
-  inputText,
-  replaySpecificAnswer
-}) {
+function ChatList({ history, isRecording, textMode, inputText, replaySpecificAnswer }) {
   const [pinyinMsgs, setPinyinMsgs] = useState(new Set());
 
   const togglePinyin = (id) => {
@@ -252,7 +240,7 @@ function ChatList({
               {showPinyin && !msg.isStreaming && aiText ? (
                 <PinyinText text={aiText} />
               ) : (
-                <div className="inline whitespace-pre-wrap text-[15px] font-medium leading-7 text-slate-800 break-words">
+                <div className="inline whitespace-pre-wrap text-[15px] font-medium leading-8 text-slate-800 break-words">
                   {aiText || (msg.isStreaming ? '思考中...' : '')}
                   {msg.isStreaming && (
                     <span className="ml-1 inline-block h-4 w-1.5 animate-pulse rounded-full bg-indigo-400 align-middle" />
@@ -287,7 +275,6 @@ function ChatList({
         );
       })}
 
-      {/* 录音时的用户占位 */}
       {isRecording && textMode === false && (
         <div className="mb-6 flex justify-end pl-12">
           <div className="text-[15px] font-medium text-slate-400 opacity-90">
@@ -333,7 +320,6 @@ function BottomControlBar({
           </div>
         ) : (
           <div className="flex items-center justify-between gap-3">
-            {/* 切换输入模式按钮 */}
             <div className="shrink-0 flex justify-center w-12">
               <CircleIconButton
                 onClick={() => setTextMode((value) => !value)}
@@ -346,7 +332,6 @@ function BottomControlBar({
 
             <div className="flex-1 flex justify-center relative">
               {!textMode ? (
-                // 放大版语音识别按钮区
                 <div className="flex flex-col items-center justify-center">
                   <button
                     type="button"
@@ -355,19 +340,19 @@ function BottomControlBar({
                     onPointerCancel={handleMicPointerCancel}
                     onPointerLeave={handleMicPointerCancel}
                     onContextMenu={(e) => e.preventDefault()}
-                    className={`touch-none flex h-28 w-28 items-center justify-center rounded-full text-white transition-all duration-300 shadow-xl ${
+                    className={`touch-none flex h-56 w-56 items-center justify-center rounded-full text-white transition-all duration-300 shadow-xl ${
                       isRecording
                         ? 'bg-red-500 scale-95 shadow-red-500/50 animate-pulse'
                         : 'bg-gradient-to-br from-blue-500 to-indigo-600 hover:scale-105 active:scale-95 shadow-blue-500/40'
                     }`}
                   >
                     {isRecording ? (
-                      <FaStop className="text-4xl" />
+                      <FaStop className="text-6xl" />
                     ) : (
-                      <FaMicrophone className="text-5xl" />
+                      <FaMicrophone className="text-7xl" />
                     )}
                   </button>
-                  <div className="absolute -bottom-6 w-full text-center whitespace-nowrap text-[11px] font-bold text-slate-400">
+                  <div className="absolute -bottom-6 w-full text-center whitespace-nowrap text-[12px] font-bold text-slate-500">
                      {isRecording ? (
                       <span className="text-red-500">松开 / 静默自动发送</span>
                     ) : isThinking ? (
@@ -380,7 +365,6 @@ function BottomControlBar({
                   </div>
                 </div>
               ) : (
-                // 键盘模式：输入框、发送按钮、字幕按钮紧凑排列
                 <div className="flex w-full items-center rounded-full bg-white px-2 py-1.5 shadow-sm border border-slate-200">
                   <input
                     type="text"
@@ -389,7 +373,7 @@ function BottomControlBar({
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
                     onKeyDown={(e) => {
-                      if (e.nativeEvent.isComposing) return; // 防止中文拼音回车误发
+                      if (e.nativeEvent.isComposing) return;
                       if (e.key === 'Enter' && inputText.trim()) {
                         e.preventDefault();
                         sendMessage(inputText);
@@ -411,7 +395,6 @@ function BottomControlBar({
                     >
                       <FaPaperPlane size={14} className="-ml-0.5" />
                     </button>
-                    {/* 字幕按钮内聚到输入框右侧 */}
                     <button
                       type="button"
                       onClick={() => setShowText((value) => !value)}
@@ -427,30 +410,29 @@ function BottomControlBar({
               )}
             </div>
 
-            {/* 右侧占位或功能按钮：文本模式下隐藏以让出空间给输入框 */}
             {!textMode && (
-              <div className="shrink-0 flex justify-center w-12">
-                {isAiSpeaking || isRecording || isThinking ? (
-                  <CircleIconButton onClick={stopEverything} danger title="停止">
-                    <FaStop size={18} />
-                  </CircleIconButton>
-                ) : (
-                  <CircleIconButton
-                    onClick={() => setShowText((value) => !value)}
-                    active={showText}
-                    title={showText ? '隐藏字幕' : '显示字幕'}
-                  >
-                    {showText ? <FaClosedCaptioning size={18} /> : <FaCommentSlash size={18} />}
-                  </CircleIconButton>
+                  <div className="shrink-0 flex justify-center w-12">
+                    {isAiSpeaking || isRecording || isThinking ? (
+                      <CircleIconButton onClick={stopEverything} danger title="停止">
+                        <FaStop size={18} />
+                      </CircleIconButton>
+                    ) : (
+                      <CircleIconButton
+                        onClick={() => setShowText((value) => !value)}
+                        active={showText}
+                        title={showText ? '隐藏字幕' : '显示字幕'}
+                      >
+                        {showText ? <FaClosedCaptioning size={18} /> : <FaCommentSlash size={18} />}
+                      </CircleIconButton>
+                    )}
+                  </div>
                 )}
               </div>
             )}
           </div>
-        )}
-      </div>
-    </div>
-  );
-}
+        </div>
+      );
+    }
 
 export default function InteractiveAIExplanationPanel({
   open,
@@ -463,12 +445,7 @@ export default function InteractiveAIExplanationPanel({
   const [mounted, setMounted] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
-  const {
-    resolvedSettings,
-    updateSharedSettings,
-    updateSceneSettings
-  } = useAISettings(AI_SCENES.EXERCISE);
-
+  const { resolvedSettings, updateSharedSettings, updateSceneSettings } = useAISettings(AI_SCENES.EXERCISE);
   const effectiveSettings = settings || resolvedSettings;
 
   const fallbackUpdateSettings = useCallback(
@@ -481,13 +458,8 @@ export default function InteractiveAIExplanationPanel({
         if (SCENE_KEYS.includes(key)) scenePatch[key] = value;
       });
 
-      if (Object.keys(sharedPatch).length) {
-        updateSharedSettings(sharedPatch);
-      }
-
-      if (Object.keys(scenePatch).length) {
-        updateSceneSettings(AI_SCENES.EXERCISE, scenePatch);
-      }
+      if (Object.keys(sharedPatch).length) updateSharedSettings(sharedPatch);
+      if (Object.keys(scenePatch).length) updateSceneSettings(AI_SCENES.EXERCISE, scenePatch);
     },
     [updateSharedSettings, updateSceneSettings]
   );
@@ -548,7 +520,6 @@ export default function InteractiveAIExplanationPanel({
 
   useEffect(() => {
     if (!open) return undefined;
-
     const prevBodyOverflow = document.body.style.overflow;
     const prevHtmlOverflow = document.documentElement.style.overflow;
 
@@ -569,7 +540,6 @@ export default function InteractiveAIExplanationPanel({
 
       <div className="fixed inset-0 z-[2147483000] bg-black/40 backdrop-blur-sm" />
 
-      {/* 注入 prevent-browser-actions 防止长按复制等行为 */}
       <div className="prevent-browser-actions fixed inset-0 z-[2147483001] isolate flex h-[100dvh] w-full flex-col overflow-hidden text-slate-800">
         <div className="ai-light-bg absolute inset-0" />
 
@@ -585,7 +555,6 @@ export default function InteractiveAIExplanationPanel({
 
         <div
           ref={scrollRef}
-          // 增加 pb-56 给下方变大的麦克风按钮留足空间，防止遮挡聊天记录
           className={`subtle-scroll relative z-10 flex-1 overflow-y-auto px-4 pb-56 pt-2 ${
             showLangPicker ? 'pointer-events-none select-none' : ''
           }`}
@@ -648,4 +617,4 @@ export default function InteractiveAIExplanationPanel({
     </>,
     document.body
   );
-}
+      }
