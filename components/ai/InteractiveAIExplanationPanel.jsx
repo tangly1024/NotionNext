@@ -380,11 +380,11 @@ function BottomControlBar({
       </div>
     </div>
   ) : (
-    <div className="flex w-full items-end rounded-3xl bg-white p-1.5 shadow-sm border border-slate-200 focus-within:border-pink-300 focus-within:ring-2 focus-within:ring-pink-100 transition-all">
+    <div className="flex w-full items-end rounded-3xl border border-slate-200 bg-white p-1.5 shadow-sm transition-all focus-within:border-pink-300 focus-within:ring-2 focus-within:ring-pink-100">
       <textarea
         ref={textareaRef}
         rows={1}
-        className="allow-select flex-1 resize-none bg-transparent px-3 py-2.5 text-[15px] font-medium text-slate-700 outline-none placeholder-slate-400 no-scrollbar"
+        className="allow-select no-scrollbar flex-1 resize-none bg-transparent px-3 py-2.5 text-[15px] font-medium text-slate-700 outline-none placeholder-slate-400"
         placeholder="输入消息..."
         value={inputText}
         onChange={handleTextareaInput}
