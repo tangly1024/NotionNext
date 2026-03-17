@@ -25,12 +25,12 @@ export function InfoCard(props) {
   return (
     <Card className='wow fadeInUp card-gradient text-white flex flex-col w-72 overflow-hidden rounded-2xl relative'>
       {/* 信息卡牌第一行 */}
-      <div className='flex justify-between'>
+      <div className='flex justify-center relative'>
         {/* 问候语 */}
         <GreetingsWords />
         {/* 头像 */}
         <div
-          className={`${isSlugPage ? 'absolute right-0 -mt-8 -mr-6 hover:opacity-0 hover:scale-150 blur' : 'cursor-pointer'} justify-center items-center flex dark:text-gray-100 transform transitaion-all duration-200`}>
+          className={`${isSlugPage ? '-mt-8 -mr-6 hover:opacity-0 hover:scale-150 blur' : 'cursor-pointer'} absolute right-0 justify-center items-center flex dark:text-gray-100 transform transitaion-all duration-200`}>
           <LazyImage
             src={siteInfo?.icon}
             className='rounded-full'
@@ -40,7 +40,7 @@ export function InfoCard(props) {
         </div>
       </div>
 
-      <h2 className='text-3xl font-extrabold mt-3'>{siteConfig('AUTHOR')}</h2>
+      <h2 className='text-3xl font-extrabold mt-3 text-center text-blue-900 dark:text-white'>{siteConfig('AUTHOR')}</h2>
 
       {/* 公告栏 */}
       <Announcement post={notice} style={{ color: 'white !important' }} />
