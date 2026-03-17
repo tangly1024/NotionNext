@@ -421,6 +421,10 @@ const Style = () => {
       .notion-table-of-contents-item:hover {
         background-color: #ebf4ff !important;
       }
+
+      .dark .notion-table-of-contents-item:hover {
+        background-color: #9a34122e !important;
+      }
     `}</style>
   )
 }

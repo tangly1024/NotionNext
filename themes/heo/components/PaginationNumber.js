@@ -140,7 +140,7 @@ const PaginationNumber = ({ page, totalPage }) => {
           }}
           rel='prev'
           aria-label={locale?.PAGINATION?.PREV || 'Previous page'}
-          className={`${showPrev ? 'block' : 'hidden'} dark:text-white relative w-full flex-1 h-14 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-xl cursor-pointer`}
+          className={`${showPrev ? 'block' : 'hidden'} dark:text-white relative w-full flex-1 h-14 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-3xl cursor-pointer`}
         >
           {locale.PAGINATION.PREV}
         </SmartLink>
@@ -155,7 +155,7 @@ const PaginationNumber = ({ page, totalPage }) => {
           }}
           rel='next'
           aria-label={locale?.PAGINATION?.NEXT || 'Next page'}
-          className={`${showNext ? 'block' : 'hidden'} dark:text-white relative w-full flex-1 h-14 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-xl cursor-pointer`}
+          className={`${showNext ? 'block' : 'hidden'} dark:text-white relative w-full flex-1 h-14 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-3xl cursor-pointer`}
         >
           {locale.PAGINATION.NEXT}
         </SmartLink>

@@ -332,10 +332,7 @@ img {
   }
 
   .dark .card-gradient {
-    background: linear-gradient(165deg,
-      color-mix(in srgb, var(--info-card-primary) 18%, #0f172a 75%) 0%,
-      color-mix(in srgb, var(--info-card-primary) 12%, #0f172a 82%) 52%,
-      color-mix(in srgb, var(--info-card-primary) 10%, #1e293b 70%) 100%);
+    background: color-mix(in srgb, var(--info-card-primary) 6%, #0f172a 94%);
     border-color: rgba(100, 116, 139, 0.56);
     box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
@@ -343,5 +340,17 @@ img {
   .dark .card-gradient:hover {
     border-color: rgba(59, 130, 246, 0.48);
     box-shadow: 0 24px 52px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  /* 统一所有卡片的暗黑模式背景 */
+  html.dark #theme-heo .card,
+  html.dark .dark\:bg-\[\#1e1e1e\],
+  html.dark #theme-heo .dark\:bg-\[\#191919ee\],
+  html.dark #theme-heo .dark\:lg\:bg-\[\#1e1e1e\],
+  html.dark .dark\:border-gray-700\/30,
+  html.dark .dark\:bg-gray-800\/90,
+  html.dark #theme-heo .dark\:bg-black,
+  html.dark #theme-heo .dark\:bg-hexo-black-gray {
+    background: color-mix(in srgb, var(--info-card-primary) 6%, #0f172a 94%) !important;
   }
 }
