@@ -7,7 +7,7 @@ import { siteConfig } from '@/lib/config'
  * @param {*} props
  * @returns
  */
-export default function Footer(props) {
+export default function Footer() {
   const d = new Date()
   const currentYear = d.getFullYear()
   const since = siteConfig('SINCE')
