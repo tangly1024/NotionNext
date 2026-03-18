@@ -254,7 +254,7 @@ export default function AlgoliaSearchModal({ cRef }) {
           isModalOpen ? 'opacity-100 translate-y-0' : 'invisible opacity-0 translate-y-6'
         } relative z-50 flex w-full max-w-xl flex-col rounded-[1.75rem] border bg-white p-4 shadow transition-all duration-300 dark:border-gray-800 dark:bg-hexo-black-gray sm:p-5 max-h-[75vh] sm:max-h-[80vh] h-auto min-h-[10rem] mx-auto hover:border-blue-600 overflow-hidden`}>
         <div className='flex justify-between items-center'>
-          <div className='text-2xl text-blue-600 dark:text-yellow-600 font-bold'>
+          <div className='text-2xl text-blue-600 dark:text-indigo-500 font-bold'>
             搜索
           </div>
           <div>
@@ -295,7 +295,7 @@ export default function AlgoliaSearchModal({ cRef }) {
               onClick={() => onJumpSearchResult(index)}
               className={`cursor-pointer replace my-2 p-2 duration-100 
               rounded-lg
-              ${activeIndex === index ? 'bg-blue-600 dark:bg-yellow-600' : ''}`}>
+              ${activeIndex === index ? 'bg-blue-600 dark:bg-indigo-500' : ''}`}>
               <a
                 className={`${activeIndex === index ? ' text-white' : ' text-black dark:text-gray-300 '}`}>
                 {result.title}
@@ -364,7 +364,7 @@ function TagGroups() {
             className={'cursor-pointer inline-block whitespace-nowrap'}>
             <div
               className={
-                'flex items-center text-black dark:text-gray-300 hover:bg-blue-600 dark:hover:bg-yellow-600 hover:scale-110 hover:text-white rounded-lg px-2 py-0.5 duration-150 transition-all'
+                'flex items-center text-black dark:text-gray-300 hover:bg-blue-600 dark:hover:bg-indigo-500 hover:scale-110 hover:text-white rounded-lg px-2 py-0.5 duration-150 transition-all'
               }>
               <div className='text-lg'>{tag.name} </div>
               {tag.count ? (
@@ -394,7 +394,7 @@ function Pagination(props) {
       {Array.from({ length: totalPage }, (_, i) => {
         const classNames =
           page === i
-            ? 'font-bold text-white bg-blue-600 dark:bg-yellow-600 rounded'
+            ? 'font-bold text-white bg-blue-600 dark:bg-indigo-500 rounded'
             : 'hover:text-blue-600 hover:font-bold dark:text-gray-300'
 
         return (
