@@ -46,7 +46,7 @@ export function InfoCard(props) {
       <Announcement post={notice} style={{ color: 'white !important' }} />
 
       <div className='flex justify-between'>
-        <div className='flex space-x-3  hover:text-black dark:hover:text-white'>
+        <div className='flex space-x-3 dark:hover:text-white'>
           {/* 两个社交按钮 */}
           {url1 && (
             <div className='w-10 text-center bg-indigo-400 p-2 rounded-full  transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
@@ -84,11 +84,11 @@ function MoreButton() {
     <SmartLink href={url3}>
       <div
         className={
-          'group bg-indigo-400 dark:bg-yellow-500 hover:bg-white dark:hover:bg-black hover:text-black dark:hover:text-white flex items-center transition-colors duration-200 py-2 px-3 rounded-full space-x-1'
+          'group bg-indigo-400 dark:bg-yellow-500 hover:bg-white dark:hover:bg-black dark:hover:text-white flex items-center transition-colors duration-200 py-2 px-3 rounded-full space-x-1'
         }>
         <ArrowRightCircle
           className={
-            'group-hover:stroke-black dark:group-hover:stroke-white w-6 h-6 transition-all duration-100'
+            'dark:group-hover:stroke-white w-6 h-6 transition-all duration-100'
           }
         />
         <div className='font-bold'>{text3}</div>
