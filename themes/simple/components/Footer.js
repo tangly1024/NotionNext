@@ -28,8 +28,8 @@ export default function Footer(props) {
           {/* <a href="#" className="text-black no-underline hover:underline">Privacy Policy</a> */}
           {siteConfig('BEI_AN') && (
             <a
-              href='https://beian.miit.gov.cn/'
-              className='underline ml-4'>
+              href={siteConfig('BEI_AN_LINK', 'https://beian.miit.gov.cn/')}
+              className='beian-link no-underline hover:underline ml-4'>
               {siteConfig('BEI_AN')}
             </a>
           )}

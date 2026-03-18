@@ -51,6 +51,11 @@ const Style = () => {
       color: #dd3333;
       cursor: pointer;
   }
+
+  /* 备案号链接：保持下划线 */
+  #theme-simple .beian-link {
+      text-decoration: underline;
+  }
   
   
 
