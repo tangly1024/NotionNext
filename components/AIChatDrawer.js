@@ -1,5 +1,3 @@
---- START OF FILE Paste March 18, 2026 - 11:01PM ---
-
 import React, {
   Fragment,
   memo,
@@ -1159,5 +1157,3 @@ export default function AIChatWrapper(props) {
     </Transition>
   );
 }
-
---- END OF FILE ---
