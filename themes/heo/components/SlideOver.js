@@ -83,7 +83,7 @@ export default function SlideOver(props) {
                       <div className='absolute right-4 top-4 z-10'>
                         <button
                           type='button'
-                          className='w-10 h-10 rounded-2xl bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-gray-200/50 dark:border-gray-600/50 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:scale-105 transition-all duration-200 shadow-lg'
+                          className='w-10 h-10 rounded-2xl bg-white/92 dark:bg-gray-800/90 backdrop-blur-sm border border-slate-200/70 dark:border-gray-600/50 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:scale-105 transition-all duration-200 shadow-lg outline-none'
                           onClick={() => setOpen(false)}>
                           <span className='sr-only'>Close panel</span>
                           <i className='fa-solid fa-xmark text-base'></i>
