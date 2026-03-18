@@ -48,8 +48,8 @@ export default function PostCopyright({ siteInfo }) {
           <div className='flex flex-wrap items-center gap-3 lg:justify-end'>
             <SmartLink
               href={homeHref}
-              className='inline-flex items-center gap-2 rounded-2xl border border-slate-200/80 bg-white/90 px-4 py-2.5 text-sm font-medium text-slate-700 shadow-[0_10px_24px_rgba(15,23,42,0.04)] transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300/90 hover:text-slate-900 dark:border-slate-700/60 dark:bg-white/5 dark:text-slate-200 dark:hover:border-slate-600/80 dark:hover:text-white'>
-              <i className='fas fa-feather-pointed text-sm text-slate-400 dark:text-slate-500' />
+              className='inline-flex items-center gap-2 rounded-2xl border border-blue-200/70 bg-blue-50/70 px-4 py-2.5 text-sm font-medium text-indigo-600 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-300/80 hover:bg-blue-50 dark:border-blue-400/20 dark:bg-blue-400/[0.08] dark:hover:border-blue-300/35 dark:hover:bg-blue-400/[0.12]'>
+              <i className='fas fa-feather-pointed text-sm text-blue-400 dark:text-blue-500' />
               <span>访问作者</span>
             </SmartLink>
 
