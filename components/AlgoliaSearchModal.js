@@ -96,15 +96,16 @@ export default function AlgoliaSearchModal({ cRef }) {
     'enter',
     e => {
       if (isInputFocused && searchResults.length > 0) {
-        onJumpSearchResult(index)
+        onJumpSearchResult()
       }
     },
     { enableOnFormTags: true }
   )
   // 跳转Search结果
-  const onJumpSearchResult = () => {
-    if (searchResults.length > 0) {
-      const searchResult = searchResults[activeIndex]
+  const onJumpSearchResult = (targetIndex) => {
+    const i = targetIndex !== undefined ? targetIndex : activeIndex
+    if (searchResults.length > 0 && searchResults[i]) {
+      const searchResult = searchResults[i]
       window.location.href = `${siteConfig('SUB_PATH', '')}/${searchResult.slug || searchResult.objectID}`
     }
   }
