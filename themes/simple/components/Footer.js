@@ -19,17 +19,17 @@ export default function Footer(props) {
       <DarkModeButton className='text-center pt-4' />
 
       <div className='text-yellow-300 container mx-auto max-w-4xl py-6 md:flex flex-wrap md:flex-no-wrap md:justify-between items-center text-sm'>
-        <div className='text-center'>
+        <div className='text-center text-base md:text-base leading-normal'>
           &copy;{`${copyrightDate}`} {siteConfig('AUTHOR')}. All rights
           reserved.
         </div>
-        <div className='md:p-0 text-center md:text-right text-xs'>
+        <div className='md:p-0 text-center md:text-right text-sm leading-normal'>
           {/* 右侧链接 */}
           {/* <a href="#" className="text-black no-underline hover:underline">Privacy Policy</a> */}
           {siteConfig('BEI_AN') && (
             <a
               href={siteConfig('BEI_AN_LINK')}
-              className='no-underline hover:underline ml-4'>
+              className='no-underline hover:underline ml-2'>
               {siteConfig('BEI_AN')}
             </a>
           )}
