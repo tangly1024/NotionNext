@@ -59,6 +59,7 @@
     "@vercel/analytics": "^1.5.0",
     "algoliasearch": "^4.25.2",
     "axios": "^1.7.2",
+    "franc": "^6.2.0",
     "critters": "^0.0.23",
     "feed": "^4.2.2",
     "firebase": "^12.9.0",
