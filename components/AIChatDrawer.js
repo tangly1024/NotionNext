@@ -362,26 +362,37 @@ const buildUserMsgContent = (srcLang, tgtLang, text, hasImage) => {
   return parts.join('\n\n');
 };
 
-const buildSuggestionInstruction = (tgtLangName) => `你现在是用户的“聊天嘴替”，正在和好友微信聊天。请针对对方的消息，生成3条不同的回复建议，每条都要有鲜明的风格。
+const buildSuggestionInstruction = (srcLangName, tgtLangName) => `
+你现在在和好友微信聊天。根据对方消息和提供的历史上下文，生成3条不同的回复建议，每条都要有鲜明的风格，像朋友自然聊天。
 
 【可选风格池】
 - 幽默调侃：轻松搞笑，带点玩笑
-- 高情商回应：体贴、暖心、高情商，让对方感觉被理解
-- 温柔共情：顺着对方说，表达理解和支持
+- 暖心体贴：体贴、关心，让对方感觉被理解
+- 理解安慰：顺着对方说，表达共情和支持
 - 直接反问：自然带出新话题
 - 俏皮撒娇：可爱的语气，适合亲密关系
 
 【要求】
 1. 从以上风格中任选3种，确保3条风格各不相同
-2. 根据对方消息内容，选择最合适的风格组合
-3. 回复必须口语化、自然，有情绪，像真人微信聊天，避免书面语，客套话，Ai 腔
-4. 回复要简短有力，每条控制在 10字以内，符合日常聊天习惯
-5. 输出语言必须是：${tgtLangName}
-6. 输出格式必须是 JSON 数组，不要包含任何 markdown 标记或其他多余文字。
+2. 根据语境选择最合适的风格组合
+3. 回复必须口语化、自然，像真人微信聊天，带情绪，可以带表情、拟声词或口头语，避免书面语和官腔
+4. 每条简短有力，10-12字以内为佳
+5. 输出严格 JSON 数组格式，不要包含 markdown、额外空格或换行
+
+【数据结构要求】
+数组中的每个对象必须包含：
+- "display": 用 ${tgtLangName} 表达的回复建议（供用户查看选择）
+- "copy": 对应的 ${srcLangName} 翻译（供用户点击复制直接发送）
 
 【示例】
 对方消息："今晚加班好累啊"
-输出：["抱抱，辛苦啦", "下班没？一起干饭", "累成狗了，我也是"]`;
+输出：
+[
+  {"display": "辛苦啦，要不要我去接你？", "copy": "ဖက်ထားမယ်၊ ပင်ပန်းနေပြီလား"},
+  {"display": "下班啦？一起干饭去", "copy": "အလုပ်ဆင်းပြီလား၊ အတူတူ ထမင်းသွားစားရအောင်"},
+  {"display": "累成狗了我也是😭", "copy": "အရမ်းပင်ပန်းနေပြီ၊ ငါလည်းတူတူပဲ🥹"}
+]
+`;
 
 // -----------------------------
 // Hooks
@@ -405,7 +416,6 @@ function usePersistentSettings() {
         apiKeys: parsed?.apiKeys || {},
         customProviders: Array.isArray(parsed?.customProviders) ? parsed.customProviders : [],
       };
-      // Ensure suggestion provider exists, fallback to default if missing
       if (!normalized.suggestionProvider) normalized.suggestionProvider = normalized.provider;
       setSettings(normalized);
     } catch {
@@ -710,7 +720,7 @@ function useTranslator({ settings, sourceLang, targetLang, setSourceLang, setTar
           const body = {
             model,
             messages,
-            temperature: 0, // 翻译用0比较好，如果是回复建议可以稍微大点，但统一用0也没问题
+            temperature: 0, 
           };
 
           if (config.preferJsonMode && preferJson) {
@@ -783,7 +793,7 @@ function useTranslator({ settings, sourceLang, targetLang, setSourceLang, setTar
   );
 
   const fetchSuggestions = useCallback(
-    async (translatedText, tgtLang, reqId) => {
+    async (translatedText, srcLang, tgtLang, reqId, currentHistory) => {
       if (!translatedText) return;
       suggestionAbortControllerRef.current?.abort();
       const controller = new AbortController();
@@ -792,16 +802,33 @@ function useTranslator({ settings, sourceLang, targetLang, setSourceLang, setTar
       updateHistoryItem(`${reqId}_a`, { isSuggesting: true });
 
       try {
+        // 构建上下文 (提取最近的对话记录，不包含当前正在请求的这条)
+        const contextHistory = currentHistory.slice(-20).filter(h => h.role === 'ai' && h.originalText);
+        let userContent = "";
+
+        if (contextHistory.length > 0) {
+          userContent += "【近期聊天上下文】\n";
+          contextHistory.forEach(h => {
+            // 如果历史记录的源语言 == 触发语言，说明是对方发来的话
+            const isOpponent = h.srcLang === settings.suggestionTriggerLang;
+            const speaker = isOpponent ? "对方" : "我";
+            const trans = h.results?.[0]?.translation || '';
+            userContent += `${speaker}: ${h.originalText} (译: ${trans})\n`;
+          });
+          userContent += "\n";
+        }
+        userContent += `【对方最新消息】\n${translatedText}\n\n请根据以上语境给出回复建议。`;
+
         const messages = [
-          { role: 'system', content: buildSuggestionInstruction(getLangName(tgtLang)) },
-          { role: 'user', content: `对方消息："${translatedText}"` },
+          { role: 'system', content: buildSuggestionInstruction(getLangName(srcLang), getLangName(tgtLang)) },
+          { role: 'user', content: userContent },
         ];
 
         const result = await fetchAi({
           messages,
           providerId: settings.suggestionProvider,
           signal: controller.signal,
-          preferJson: false, // 避免某些模型对 array 返回报错
+          preferJson: false,
         });
 
         let suggestions = [];
@@ -810,7 +837,12 @@ function useTranslator({ settings, sourceLang, targetLang, setSourceLang, setTar
           const start = clean.indexOf('[');
           const end = clean.lastIndexOf(']');
           if (start >= 0 && end > start) {
-            suggestions = JSON.parse(clean.substring(start, end + 1));
+            const parsed = JSON.parse(clean.substring(start, end + 1));
+            // 兼容处理：确保返回的是对象数组
+            suggestions = parsed.map(item => {
+              if (typeof item === 'string') return { display: item, copy: item };
+              return item;
+            });
           }
         } catch (e) {
           console.warn('解析建议失败', e);
@@ -827,7 +859,7 @@ function useTranslator({ settings, sourceLang, targetLang, setSourceLang, setTar
         }
       }
     },
-    [fetchAi, settings.suggestionProvider, updateHistoryItem]
+    [fetchAi, settings.suggestionProvider, settings.suggestionTriggerLang, updateHistoryItem]
   );
 
   const translate = useCallback(
@@ -855,6 +887,9 @@ function useTranslator({ settings, sourceLang, targetLang, setSourceLang, setTar
         setSourceLang(currentSource);
         setTargetLang(currentTarget);
       }
+
+      // 捕获当前的 history 状态作为上下文传给建议模型
+      const snapshotHistory = history;
 
       setIsLoading(true);
       appendHistory({
@@ -974,7 +1009,13 @@ function useTranslator({ settings, sourceLang, targetLang, setSourceLang, setTar
             currentSource === settings.suggestionTriggerLang &&
             isCacheableTranslationResults(aiMessage.results)
           ) {
-            fetchSuggestions(aiMessage.results[0].translation, currentTarget, reqId);
+            fetchSuggestions(
+              aiMessage.results[0].translation, 
+              currentSource, 
+              currentTarget, 
+              reqId, 
+              snapshotHistory
+            );
           }
         }
       } catch (error) {
@@ -996,6 +1037,7 @@ function useTranslator({ settings, sourceLang, targetLang, setSourceLang, setTar
       appendHistory,
       fetchAi,
       fetchSuggestions,
+      history,
       playTTS,
       resolveProviderConfig,
       setSourceLang,
@@ -1025,14 +1067,15 @@ function useTranslator({ settings, sourceLang, targetLang, setSourceLang, setTar
 // UI Components
 // -----------------------------
 
-const SuggestionBubble = memo(function SuggestionBubble({ text }) {
+const SuggestionBubble = memo(function SuggestionBubble({ suggestion }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(text);
+      // 复制的是源语言（对方的语言），发给对方直接能看懂
+      await navigator.clipboard.writeText(suggestion.copy || suggestion.display);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1000);
+      setTimeout(() => setCopied(false), 1200);
     } catch {}
   };
 
@@ -1042,16 +1085,15 @@ const SuggestionBubble = memo(function SuggestionBubble({ text }) {
       className="relative bg-white/90 text-amber-600 border border-amber-100/80 px-3.5 py-2 rounded-2xl text-[14px] shadow-sm h-auto min-h-[36px] whitespace-pre-wrap break-words text-left active:scale-95 transition-all w-fit"
     >
       {copied ? (
-        <span className="flex items-center gap-1 text-green-600 font-bold">
-          <i className="fas fa-check" /> 已复制
+        <span className="flex items-center gap-1.5 text-green-600 font-bold">
+          <i className="fas fa-check" /> 已复制原文
         </span>
       ) : (
-        <span className="leading-tight">{text}</span>
+        <span className="leading-tight">{suggestion.display}</span>
       )}
     </button>
   );
 });
-
 
 const TranslationCard = memo(function TranslationCard({
   data,
@@ -1079,43 +1121,44 @@ const TranslationCard = memo(function TranslationCard({
   };
 
   return (
-    <div
-      onClick={handleCopy}
-      className="bg-white/95 backdrop-blur-sm border border-gray-100 rounded-2xl p-4 shadow-sm active:scale-[0.98] transition-all cursor-pointer relative group mb-3"
-    >
+    <div className="bg-white/95 backdrop-blur-sm border border-gray-100 rounded-2xl p-4 shadow-sm transition-all relative group mb-3">
       {copied && (
-        <div className="absolute inset-0 bg-black/5 flex items-center justify-center z-10 rounded-2xl">
+        <div className="absolute inset-0 bg-black/5 flex items-center justify-center z-10 rounded-2xl pointer-events-none">
           <span className="bg-black/70 text-white text-xs px-2 py-1 rounded-md">已复制</span>
         </div>
       )}
 
-      <div className="text-[18px] leading-relaxed font-medium text-gray-800 break-words whitespace-pre-wrap">
-        {data.translation}
+      {/* 译文主体区域，点击复制 */}
+      <div 
+        onClick={handleCopy}
+        className="cursor-pointer active:scale-[0.99] transition-transform"
+      >
+        <div className="text-[18px] leading-relaxed font-medium text-gray-800 break-words whitespace-pre-wrap">
+          {data.translation}
+        </div>
+
+        {data.back_translation && (
+          <div className="mt-2 text-[13px] text-gray-400 break-words whitespace-pre-wrap">
+            {data.back_translation}
+          </div>
+        )}
       </div>
 
-      {data.back_translation && (
-        <div className="mt-2 text-[13px] text-gray-400 break-words whitespace-pre-wrap">
-          {data.back_translation}
-        </div>
-      )}
-
-      <div className="absolute bottom-2 right-2 flex gap-2">
+      {/* 底部操作栏，独立成行，不再和文字挤在一排 */}
+      <div className="mt-3 pt-3 border-t border-gray-100/60 flex justify-end gap-4">
         <button
           onClick={handleEdit}
-          className="p-2 text-gray-300 hover:text-blue-500 opacity-50 hover:opacity-100"
+          className="flex items-center text-[13px] text-gray-400 hover:text-blue-500 transition-colors"
           title="编辑并保存到用户词典"
         >
-          <i className="fas fa-edit" />
+          <i className="fas fa-edit mr-1.5" /> 加入词典
         </button>
         <button
-          onClick={(event) => {
-            event.stopPropagation();
-            onPlay();
-          }}
-          className="p-2 text-gray-300 hover:text-pink-500 opacity-50 hover:opacity-100"
+          onClick={onPlay}
+          className="flex items-center text-[13px] text-gray-400 hover:text-pink-500 transition-colors"
           title="朗读"
         >
-          <i className="fas fa-volume-up" />
+          <i className="fas fa-volume-up mr-1.5" /> 朗读
         </button>
       </div>
     </div>
@@ -1582,7 +1625,7 @@ function SettingsModal({ settings, onSave, onClose }) {
   );
 }
 
-function ProviderSwitch({ settings, value, onChange, defaultIcon = "fa-robot", className = "text-pink-500 hover:bg-pink-50" }) {
+function ProviderSwitch({ settings, value, onChange, defaultIcon, buttonClass, activeClass }) {
   const currentIcon = useMemo(() => {
     if (String(value).startsWith('custom_')) {
       const currentCustom = (settings.customProviders || []).find((p) => p.id === value);
@@ -1593,7 +1636,7 @@ function ProviderSwitch({ settings, value, onChange, defaultIcon = "fa-robot", c
 
   return (
     <Menu as="div" className="relative">
-      <Menu.Button className={`w-10 h-10 flex items-center justify-center rounded-full transition-colors ${className}`}>
+      <Menu.Button className={`w-10 h-10 flex items-center justify-center rounded-full transition-colors ${buttonClass}`}>
         <i className={`fas ${currentIcon} text-lg`} />
       </Menu.Button>
       <Transition
@@ -1613,7 +1656,7 @@ function ProviderSwitch({ settings, value, onChange, defaultIcon = "fa-robot", c
                 <button
                   onClick={() => onChange(provider.id)}
                   className={`flex w-full items-center px-3 py-2.5 text-xs font-bold rounded-xl ${
-                    value === provider.id ? 'bg-gray-100 text-gray-800' : active ? 'bg-gray-50' : ''
+                    value === provider.id ? activeClass : active ? 'bg-gray-50' : ''
                   }`}
                 >
                   <i className={`fas ${provider.icon} w-5 text-center`} /> {provider.name}
@@ -1631,7 +1674,7 @@ function ProviderSwitch({ settings, value, onChange, defaultIcon = "fa-robot", c
                     <button
                       onClick={() => onChange(provider.id)}
                       className={`flex w-full items-center px-3 py-2.5 text-xs font-bold rounded-xl ${
-                        value === provider.id ? 'bg-gray-100 text-gray-800' : active ? 'bg-gray-50' : ''
+                        value === provider.id ? activeClass : active ? 'bg-gray-50' : ''
                       }`}
                     >
                       <i className={`fas ${provider.icon || 'fa-robot'} w-5 text-center`} /> {provider.name}
@@ -1901,13 +1944,13 @@ function AiChatContent() {
                   {(item.isSuggesting || (item.suggestions && item.suggestions.length > 0)) && (
                     <div className="ml-2 mt-2">
                       {item.isSuggesting ? (
-                        <div className="text-xs text-amber-500 flex items-center gap-2">
+                        <div className="text-xs text-amber-500 flex items-center gap-2 font-bold">
                           <i className="fas fa-circle-notch fa-spin" /> 正在生成回复建议...
                         </div>
                       ) : (
                         <div className="flex flex-wrap gap-2">
                           {item.suggestions.map((sug, idx) => (
-                            <SuggestionBubble key={idx} text={sug} />
+                            <SuggestionBubble key={idx} suggestion={sug} />
                           ))}
                         </div>
                       )}
@@ -1955,22 +1998,24 @@ function AiChatContent() {
 
               <div className="w-px h-5 bg-gray-200 mx-1" />
               
-              {/* 翻译模型切换 */}
+              {/* 翻译模型切换 (粉色系) */}
               <ProviderSwitch 
                 settings={settings} 
                 value={settings.provider} 
                 onChange={(val) => setSettings(prev => ({...prev, provider: val}))} 
                 defaultIcon="fa-robot"
-                className="text-pink-500 hover:bg-pink-50"
+                buttonClass="text-pink-500 hover:bg-pink-50"
+                activeClass="bg-pink-50 text-pink-600"
               />
-              {/* 回复建议模型切换 */}
+              {/* 回复建议模型切换 (黄色系) */}
               {settings.enableSuggestions && (
                 <ProviderSwitch 
                   settings={settings} 
                   value={settings.suggestionProvider} 
                   onChange={(val) => setSettings(prev => ({...prev, suggestionProvider: val}))} 
                   defaultIcon="fa-lightbulb"
-                  className="text-amber-500 hover:bg-amber-50 ml-0.5"
+                  buttonClass="text-amber-500 hover:bg-amber-50 ml-0.5"
+                  activeClass="bg-amber-50 text-amber-600"
                 />
               )}
             </div>
