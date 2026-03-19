@@ -10,21 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout 仓库代码和数据
+      # 1. Checkout 仓库
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. 安装 Node.js
+      # 2. 安装 Node.js（升级到 24）
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 24
 
       # 3. 安装依赖
       - name: Install dependencies
-        run: npm ci
+        run: |
+          # 如果没有 package-lock.json，可使用 npm install
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
 
-      # 4. 构建静态站点（Next.js）
+      # 4. 构建静态站点
       - name: Build and export site
         run: |
           npm run build
@@ -36,7 +42,7 @@ jobs:
           mkdir -p dist
           zip -r dist/offline.zip out/
 
-      # 6. 上传构建产物（v4）
+      # 6. 上传构建产物
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
