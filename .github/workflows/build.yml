@@ -1,0 +1,43 @@
+name: Build NotionNext Offline
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-offline:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout 仓库代码和数据
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. 安装 Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # 3. 安装依赖
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. 构建静态站点（包括仓库里的数据）
+      - name: Build and export site
+        run: |
+          npm run build
+          npm run export
+
+      # 5. 打包输出为 zip 文件
+      - name: Package build
+        run: |
+          mkdir -p dist
+          zip -r dist/offline.zip out/
+
+      # 6. 上传构建产物
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: offline-site
+          path: dist/offline.zip
