@@ -3,6 +3,7 @@ import { useGlobal } from '@/lib/global'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useRef } from 'react'
+import { createPortal } from 'react-dom'
 
 const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
 
@@ -27,6 +28,9 @@ export default function SearchButton(props) {
         <div onClick={handleSearch} title={locale.NAV.SEARCH} alt={locale.NAV.SEARCH} className='cursor-pointer hover:bg-[rgba(139,92,246,0.12)] dark:hover:bg-[rgba(139,92,246,0.2)] rounded-full w-10 h-10 flex justify-center items-center duration-200 transition-all'>
             <i title={locale.NAV.SEARCH} className="fa-solid fa-magnifying-glass" />
         </div>
-        <AlgoliaSearchModal cRef={searchModal} {...props}/>
+        {typeof document !== 'undefined'
+          ? createPortal(<AlgoliaSearchModal cRef={searchModal} {...props}/>, document.body)
+          : null
+        }
     </>
 }
