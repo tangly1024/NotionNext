@@ -260,10 +260,10 @@ const Header = props => {
                     {props.post.title}
                   </span>
                 ) : (
-                  <h1 className='font-bold text-center text-light-400 dark:text-gray-400 whitespace-nowrap'>
+                  <h2 className='font-bold text-center text-light-400 dark:text-gray-400 whitespace-nowrap'>
                     {siteConfig('AUTHOR') || siteConfig('TITLE')}{' '}
                     {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}
-                  </h1>
+                  </h2>
                 )}
               </div>
             </div>
