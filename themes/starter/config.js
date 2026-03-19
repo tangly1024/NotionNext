@@ -320,7 +320,7 @@ const CONFIG = {
         },
         {
           TITLE: '升级指南',
-          URL: 'https://docs.tangly1024.com/article/how-to-update-notionnext'
+          URL: 'https://docs.tangly1024.com/article/how-to-update'
         },
         { TITLE: '最新版本', URL: 'https://docs.tangly1024.com/article/latest' }
       ]

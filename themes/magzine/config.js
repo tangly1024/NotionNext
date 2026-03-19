@@ -90,7 +90,7 @@ const CONFIG = {
         },
         {
           title: '安装教程',
-          href: 'https://docs.tangly1024.com/article/how-to-update-notionnext'
+          href: 'https://docs.tangly1024.com/article/how-to-update'
         },
         { title: 'SEO推广', href: 'https://seo.tangly1024.com/' }
       ]

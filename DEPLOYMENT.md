@@ -262,10 +262,10 @@ volumes:
 
 ```bash
 # 构建镜像
-docker build -t notionnext .
+docker build -t NotionNext .
 
 # 运行容器
-docker run -p 3000:3000 -e NOTION_PAGE_ID=your-id notionnext
+docker run -p 3000:3000 -e NOTION_PAGE_ID=your-id NotionNext
 
 # 使用 Docker Compose
 docker-compose up -d
