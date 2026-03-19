@@ -20,7 +20,7 @@ import {
 } from '@/lib/userDict';
 
 // -----------------------------
-// Constants / Storage helpers
+// Constants / i18n / Storage helpers
 // -----------------------------
 const SETTINGS_KEY = 'ai886_settings_v2';
 const AI_CACHE_PREFIX = 'ai886_translate_cache_v3:';
@@ -38,7 +38,7 @@ const NON_CACHEABLE_TRANSLATIONS = new Set([
 const DEFAULT_SETTINGS = {
   apiKeys: {},
   provider: DEFAULT_PROVIDER,
-  suggestionProvider: DEFAULT_PROVIDER, 
+  suggestionProvider: DEFAULT_PROVIDER,
   customProviders: [],
   customPrompt: '',
   ttsSpeed: 1.0,
@@ -47,12 +47,13 @@ const DEFAULT_SETTINGS = {
   chatBackgroundUrl: '',
   filterThinking: true,
   enableBackTranslation: false,
-  enableSuggestions: true,            
-  suggestionTriggerLang: 'my-MM',     
+  enableSuggestions: true,
+  suggestionTriggerLang: 'my-MM',
   lastSourceLang: 'zh-CN',
   lastTargetLang: 'my-MM',
   voiceAutoSendDelay: 1800,
   rememberApiKeys: true,
+  uiLang: 'zh-CN', // UI 显示语言: zh-CN 或 my-MM
 };
 
 const SUPPORTED_LANGUAGES = [
@@ -66,8 +67,114 @@ const SUPPORTED_LANGUAGES = [
   { code: 'ru-RU', name: 'Русский', flag: '🇷🇺' },
 ];
 
+const UI_TEXT = {
+  'zh-CN': {
+    settingsTitle: '设置',
+    tabApi: '接口配置',
+    tabDict: '用户词典',
+    tabCommon: '通用设置',
+    transNode: '翻译节点配置 (不影响建议)',
+    builtinGroup: '内置节点',
+    customGroup: '自定义节点',
+    btnNew: '+ 新增',
+    confirmDel: '确认删除该节点？',
+    nodeName: '节点名称',
+    nodeIcon: '图标类名',
+    baseUrl: '接口地址 (Base URL)',
+    modelList: '模型名称 (多个用逗号分隔)',
+    apiKey: 'API Key / 令牌',
+    apiKeyPlaceholder: '该供应商的 API Key',
+    saveKey: '保存 API Key 到浏览器',
+    saveKeyDesc: '关闭后仅保存节点配置，不保存密钥',
+    customPrompt: '自定义提示词（可选）',
+    importJson: '导入 JSON',
+    exportJson: '导出 JSON',
+    noDict: '暂无自定义词条',
+    clearAll: '清空所有词典',
+    confirmClear: '确认清空全部用户词典？',
+    enableSug: '启用 AI 回复建议',
+    triggerLang: '触发语言（原文）',
+    enableBackTrans: '开启回译',
+    autoTts: '自动朗读',
+    silentDelay: '静默发送延迟',
+    ttsSpeed: 'TTS 朗读语速',
+    saveBtn: '保存配置',
+    transModelSelector: '翻译模型',
+    sugModelSelector: '回复建议模型',
+    camera: '拍照',
+    album: '相册',
+    listening: '听你说，随时点击停止...',
+    inputPlaceholder: '输入翻译内容...',
+    translating: '翻译中...',
+    srcLang: '源语言',
+    tgtLang: '目标语言',
+    voiceLang: '语音识别语言',
+    appName: '中缅语伴网',
+    editDictTitle: '修改并保存到用户词典（之后将优先应用该翻译）：',
+    savedDict: '已保存到用户词典',
+    copied: '已复制原文',
+    copiedTrans: '已复制',
+    addDictBtn: '加入词典',
+    readBtn: '朗读',
+    generatingSug: '正在生成回复建议...',
+  },
+  'my-MM': {
+    settingsTitle: 'ဆက်တင်များ',
+    tabApi: 'API',
+    tabDict: 'အဘိဓာန်',
+    tabCommon: 'အထွေထွေ',
+    transNode: 'ဘာသာပြန်မော်ဒယ် (အကြံပြုချက်ကိုမထိခိုက်ပါ)',
+    builtinGroup: 'မူလမော်ဒယ်များ',
+    customGroup: 'စိတ်ကြိုက်မော်ဒယ်များ',
+    btnNew: '+ အသစ်ထည့်ရန်',
+    confirmDel: 'ဖျက်ရန် သေချာပါသလား?',
+    nodeName: 'အမည်',
+    nodeIcon: 'Icon',
+    baseUrl: 'API URL',
+    modelList: 'Model Name',
+    apiKey: 'API Key / သော့ချက်',
+    apiKeyPlaceholder: 'API Key ထည့်ပါ',
+    saveKey: 'API Key ကို ဘရောက်ဇာတွင် မှတ်ထားမည်',
+    saveKeyDesc: 'ပိတ်ထားပါက API Key ကို မှတ်ထားမည်မဟုတ်ပါ',
+    customPrompt: 'စိတ်ကြိုက် Prompt (ရွေးချယ်နိုင်သည်)',
+    importJson: 'တင်သွင်းရန်',
+    exportJson: 'တင်ပို့ရန်',
+    noDict: 'အဘိဓာန် ဗလာဖြစ်နေပါသည်',
+    clearAll: 'အားလုံးဖျက်ရန်',
+    confirmClear: 'အားလုံးဖျက်ရန် သေချာပါသလား?',
+    enableSug: 'AI အကြံပြုချက်ဖွင့်ရန်',
+    triggerLang: 'အစပျိုးဘာသာစကား',
+    enableBackTrans: 'ပြန်လည်ဘာသာပြန်ခြင်း',
+    autoTts: 'အလိုအလျောက်အသံထွက်',
+    silentDelay: 'အသံတိတ်နှောင့်နှေးမှု',
+    ttsSpeed: 'အသံထွက်အမြန်နှုန်း',
+    saveBtn: 'သိမ်းဆည်းရန်',
+    transModelSelector: 'ဘာသာပြန်မော်ဒယ်',
+    sugModelSelector: 'အကြံပြုချက်မော်ဒယ်',
+    camera: 'ကင်မရာ',
+    album: 'ဓာတ်ပုံ',
+    listening: 'ပြောပါ၊ ရပ်ရန်နှိပ်ပါ...',
+    inputPlaceholder: 'ဘာသာပြန်မည့်စာသား ရိုက်ထည့်ပါ...',
+    translating: 'ဘာသာပြန်နေသည်...',
+    srcLang: 'မူရင်းဘာသာစကား',
+    tgtLang: 'ဘာသာပြန်ဘာသာစကား',
+    voiceLang: 'အသံဘာသာစကား',
+    appName: '886.best ဘာသာပြန်',
+    editDictTitle: 'ပြင်ဆင်ပြီး အဘိဓာန်သို့ သိမ်းဆည်းရန်:',
+    savedDict: 'အဘိဓာန်သို့ သိမ်းဆည်းပြီးပါပြီ',
+    copied: 'ကူးယူပြီးပါပြီ',
+    copiedTrans: 'ကူးယူပြီးပါပြီ',
+    addDictBtn: 'အဘိဓာန်သို့ထည့်ရန်',
+    readBtn: 'အသံထွက်ဖတ်ရန်',
+    generatingSug: 'အကြံပြုချက်များကို ဖန်တီးနေသည်...',
+  }
+};
+
+const t = (key, lang = 'zh-CN') => UI_TEXT[lang]?.[key] || UI_TEXT['zh-CN'][key] || '';
+
 const GlobalStyles = () => (
   <style>{`
+    /* 屏蔽浏览器选择文字等操作 */
     body {
       -webkit-touch-callout: none;
       -webkit-user-select: none;
@@ -665,7 +772,7 @@ function useSpeechInput({ sourceLang, delayMs, onSend }) {
   };
 }
 
-function useTranslator({ settings, sourceLang, targetLang, setSourceLang, setTargetLang, playTTS }) {
+function useTranslator({ settings, sourceLang, targetLang, updateLangs, playTTS }) {
   const abortControllerRef = useRef(null);
   const suggestionAbortControllerRef = useRef(null);
   const currentRequestIdRef = useRef(null);
@@ -883,7 +990,7 @@ function useTranslator({ settings, sourceLang, targetLang, setSourceLang, setTar
 
       let currentSource = sourceLang;
       let currentTarget = targetLang;
-      // 自动识别文本语言并切换
+      // 自动识别文本语言并切换 (修复竞态条件版)
       const detected = detectScript(safeText);
 
       if (detected && detected !== currentSource) {
@@ -893,8 +1000,9 @@ function useTranslator({ settings, sourceLang, targetLang, setSourceLang, setTar
         } else {
           currentSource = detected;
         }
-        setSourceLang(currentSource);
-        setTargetLang(currentTarget);
+        if (currentSource !== sourceLang || currentTarget !== targetLang) {
+          updateLangs(currentSource, currentTarget);
+        }
       }
 
       const snapshotHistory = history;
@@ -1048,8 +1156,7 @@ function useTranslator({ settings, sourceLang, targetLang, setSourceLang, setTar
       history,
       playTTS,
       resolveProviderConfig,
-      setSourceLang,
-      setTargetLang,
+      updateLangs,
       settings,
       sourceLang,
       targetLang,
@@ -1075,7 +1182,7 @@ function useTranslator({ settings, sourceLang, targetLang, setSourceLang, setTar
 // UI Components
 // -----------------------------
 
-const SuggestionBubble = memo(function SuggestionBubble({ suggestion }) {
+const SuggestionBubble = memo(function SuggestionBubble({ suggestion, uiLang }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -1093,7 +1200,7 @@ const SuggestionBubble = memo(function SuggestionBubble({ suggestion }) {
     >
       {copied ? (
         <span className="flex items-center gap-1.5 text-green-600 font-bold">
-          <i className="fas fa-check" /> 已复制原文
+          <i className="fas fa-check" /> {t('copied', uiLang)}
         </span>
       ) : (
         <span className="leading-tight">{suggestion.display}</span>
@@ -1108,6 +1215,7 @@ const TranslationCard = memo(function TranslationCard({
   originalText,
   srcLang,
   tgtLang,
+  uiLang,
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -1121,17 +1229,17 @@ const TranslationCard = memo(function TranslationCard({
 
   const handleEdit = async (event) => {
     event.stopPropagation();
-    const nextTranslation = prompt('修改并保存到用户词典（之后将优先应用该翻译）：', data.translation);
+    const nextTranslation = prompt(t('editDictTitle', uiLang), data.translation);
     if (!nextTranslation?.trim() || nextTranslation.trim() === data.translation) return;
     await saveToUserDict(srcLang, tgtLang, originalText, nextTranslation.trim());
-    alert('已保存到用户词典');
+    alert(t('savedDict', uiLang));
   };
 
   return (
     <div className="bg-white/95 backdrop-blur-sm border border-gray-100 rounded-2xl p-4 shadow-sm transition-all relative group mb-3">
       {copied && (
         <div className="absolute inset-0 bg-black/5 flex items-center justify-center z-10 rounded-2xl pointer-events-none">
-          <span className="bg-black/70 text-white text-xs px-2 py-1 rounded-md">已复制</span>
+          <span className="bg-black/70 text-white text-xs px-2 py-1 rounded-md">{t('copiedTrans', uiLang)}</span>
         </div>
       )}
 
@@ -1154,16 +1262,16 @@ const TranslationCard = memo(function TranslationCard({
         <button
           onClick={handleEdit}
           className="flex items-center text-[13px] text-gray-400 hover:text-blue-500 transition-colors"
-          title="编辑并保存到用户词典"
+          title={t('addDictBtn', uiLang)}
         >
-          <i className="fas fa-edit mr-1.5" /> 加入词典
+          <i className="fas fa-edit mr-1.5" /> {t('addDictBtn', uiLang)}
         </button>
         <button
           onClick={onPlay}
           className="flex items-center text-[13px] text-gray-400 hover:text-pink-500 transition-colors"
-          title="朗读"
+          title={t('readBtn', uiLang)}
         >
-          <i className="fas fa-volume-up mr-1.5" /> 朗读
+          <i className="fas fa-volume-up mr-1.5" /> {t('readBtn', uiLang)}
         </button>
       </div>
     </div>
@@ -1171,8 +1279,23 @@ const TranslationCard = memo(function TranslationCard({
 });
 
 function LanguagePicker({ title, open, onClose, value, onChange }) {
+  const [safeToClose, setSafeToClose] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      setSafeToClose(false);
+      // 防止长按释放时的 pointerup 瞬间击穿导致弹窗刚弹出就关闭
+      const timer = setTimeout(() => setSafeToClose(true), 400);
+      return () => clearTimeout(timer);
+    }
+  }, [open]);
+
+  const handleClose = () => {
+    if (safeToClose) onClose();
+  };
+
   return (
-    <Dialog open={open} onClose={onClose} className="relative z-[10003]">
+    <Dialog open={open} onClose={handleClose} className="relative z-[10003]">
       <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" />
       <div className="fixed inset-0 flex items-end sm:items-center justify-center sm:p-4 pb-0">
         <Dialog.Panel className="w-full max-w-sm bg-white rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl max-h-[70vh] flex flex-col">
@@ -1206,6 +1329,8 @@ function SettingsModal({ settings, onSave, onClose }) {
   const [data, setData] = useState({ ...DEFAULT_SETTINGS, ...settings });
   const [tab, setTab] = useState('api');
   const [dictList, setDictList] = useState([]);
+
+  const uiLang = data.uiLang;
 
   const loadDict = useCallback(async () => {
     const list = await getAllUserDict();
@@ -1251,16 +1376,28 @@ function SettingsModal({ settings, onSave, onClose }) {
       <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" />
       <div className="fixed inset-0 flex items-center justify-center p-4">
         <Dialog.Panel className="w-full max-w-lg bg-white rounded-3xl shadow-2xl flex flex-col max-h-[85vh]">
-          <div className="flex bg-gray-50/50 rounded-t-3xl border-b">
+          {/* Header 包含国旗语言切换按钮 */}
+          <div className="relative flex justify-center items-center py-4 border-b bg-gray-50/50 rounded-t-3xl">
+            <div className="font-bold text-gray-800 text-lg">{t('settingsTitle', uiLang)}</div>
+            <button
+              onClick={() => setData(prev => ({ ...prev, uiLang: prev.uiLang === 'zh-CN' ? 'my-MM' : 'zh-CN' }))}
+              className="absolute right-4 text-2xl hover:scale-110 transition-transform active:scale-95"
+              title="切换系统语言"
+            >
+              {uiLang === 'zh-CN' ? '🇨🇳' : '🇲🇲'}
+            </button>
+          </div>
+
+          <div className="flex bg-gray-50/50 border-b">
             {[
-              { key: 'api', label: '接口配置 / API' },
-              { key: 'dict', label: '用户词典 / အဘိဓာန်' },
-              { key: 'common', label: '通用设置 / အထွေထွေ' },
+              { key: 'api', label: t('tabApi', uiLang) },
+              { key: 'dict', label: t('tabDict', uiLang) },
+              { key: 'common', label: t('tabCommon', uiLang) },
             ].map((item) => (
               <button
                 key={item.key}
                 onClick={() => setTab(item.key)}
-                className={`flex-1 py-4 text-xs sm:text-sm font-bold ${
+                className={`flex-1 py-3 text-sm font-bold ${
                   tab === item.key ? 'text-pink-600 bg-white shadow-sm' : 'text-gray-500'
                 }`}
               >
@@ -1274,13 +1411,13 @@ function SettingsModal({ settings, onSave, onClose }) {
               <div className="space-y-5">
                 <div className="flex gap-2 items-end">
                   <div className="flex-1">
-                    <label className="text-xs sm:text-sm font-bold text-gray-700 mb-2 block">翻译节点配置 / ဘာသာပြန်မော်ဒယ် (不影响建议节点)</label>
+                    <label className="text-sm font-bold text-gray-700 mb-2 block">{t('transNode', uiLang)}</label>
                     <select
                       className="w-full bg-gray-50 border rounded-xl p-3 text-sm"
                       value={data.provider}
                       onChange={(e) => setData((prev) => ({ ...prev, provider: e.target.value }))}
                     >
-                      <optgroup label="内置节点">
+                      <optgroup label={t('builtinGroup', uiLang)}>
                         {Object.values(PROVIDERS).map((provider) => (
                           <option key={provider.id} value={provider.id}>
                             {provider.name}
@@ -1288,7 +1425,7 @@ function SettingsModal({ settings, onSave, onClose }) {
                         ))}
                       </optgroup>
                       {!!data.customProviders?.length && (
-                        <optgroup label="自定义节点">
+                        <optgroup label={t('customGroup', uiLang)}>
                           {data.customProviders.map((provider) => (
                             <option key={provider.id} value={provider.id}>
                               {provider.name}
@@ -1308,7 +1445,7 @@ function SettingsModal({ settings, onSave, onClose }) {
                           ...(prev.customProviders || []),
                           {
                             id: newId,
-                            name: '新自定义节点',
+                            name: 'New Provider',
                             icon: 'fa-robot',
                             baseUrl: '',
                             models: '',
@@ -1319,7 +1456,7 @@ function SettingsModal({ settings, onSave, onClose }) {
                     }}
                     className="bg-pink-50 text-pink-600 px-4 py-3 rounded-xl text-sm font-bold whitespace-nowrap"
                   >
-                    + 新增
+                    {t('btnNew', uiLang)}
                   </button>
                 </div>
 
@@ -1338,7 +1475,7 @@ function SettingsModal({ settings, onSave, onClose }) {
                         <div className="absolute top-2 right-2 flex gap-1">
                           <button
                             onClick={() => {
-                              if (!window.confirm('确认删除该节点？ / ဖျက်ရန် သေချာပါသလား?')) return;
+                              if (!window.confirm(t('confirmDel', uiLang))) return;
                               const nextList = (data.customProviders || []).filter(
                                 (p) => p.id !== data.provider
                               );
@@ -1357,17 +1494,16 @@ function SettingsModal({ settings, onSave, onClose }) {
 
                         <div className="flex gap-2 pt-2">
                           <div className="flex-1">
-                            <label className="text-xs font-bold text-gray-500 mb-1 block">节点名称 / အမည်</label>
+                            <label className="text-xs font-bold text-gray-500 mb-1 block">{t('nodeName', uiLang)}</label>
                             <input
                               type="text"
                               className="w-full border rounded-xl p-2.5 text-sm"
-                              placeholder="例如：个人专线"
                               value={provider.name || ''}
                               onChange={(e) => updateProvider('name', e.target.value)}
                             />
                           </div>
                           <div className="w-1/3">
-                            <label className="text-xs font-bold text-gray-500 mb-1 block">图标 / Icon</label>
+                            <label className="text-xs font-bold text-gray-500 mb-1 block">{t('nodeIcon', uiLang)}</label>
                             <input
                               type="text"
                               className="w-full border rounded-xl p-2.5 text-sm"
@@ -1380,7 +1516,7 @@ function SettingsModal({ settings, onSave, onClose }) {
 
                         <div>
                           <label className="text-xs font-bold text-gray-500 mb-1 block">
-                            接口地址 / API URL
+                            {t('baseUrl', uiLang)}
                           </label>
                           <input
                             type="text"
@@ -1393,7 +1529,7 @@ function SettingsModal({ settings, onSave, onClose }) {
 
                         <div>
                           <label className="text-xs font-bold text-gray-500 mb-1 block">
-                            模型名称 / Model Name
+                            {t('modelList', uiLang)}
                           </label>
                           <input
                             type="text"
@@ -1406,7 +1542,7 @@ function SettingsModal({ settings, onSave, onClose }) {
 
                         <div>
                           <label className="text-xs font-bold text-gray-500 mb-1 block">
-                            API Key / သော့ချက်
+                            {t('apiKey', uiLang)}
                           </label>
                           <input
                             type="password"
@@ -1421,11 +1557,11 @@ function SettingsModal({ settings, onSave, onClose }) {
                   })()
                 ) : (
                   <div>
-                    <label className="text-xs sm:text-sm font-bold text-gray-700 mb-2 block">通行密钥 / API Key</label>
+                    <label className="text-sm font-bold text-gray-700 mb-2 block">{t('apiKey', uiLang)}</label>
                     <input
                       type="password"
                       className="w-full bg-gray-50 border rounded-xl p-3 text-sm"
-                      placeholder="该供应商的 API Key"
+                      placeholder={t('apiKeyPlaceholder', uiLang)}
                       value={data.apiKeys?.[data.provider] || ''}
                       onChange={(e) =>
                         setData((prev) => ({
@@ -1439,8 +1575,8 @@ function SettingsModal({ settings, onSave, onClose }) {
 
                 <div className="flex justify-between items-center bg-amber-50 border border-amber-100 rounded-xl px-4 py-3">
                   <div>
-                    <div className="text-xs sm:text-sm font-bold text-amber-800">保存 API Key 到浏览器</div>
-                    <div className="text-xs text-amber-700 mt-1">关闭后仅保存节点配置，不保存密钥</div>
+                    <div className="text-sm font-bold text-amber-800">{t('saveKey', uiLang)}</div>
+                    <div className="text-xs text-amber-700 mt-1">{t('saveKeyDesc', uiLang)}</div>
                   </div>
                   <input
                     type="checkbox"
@@ -1453,10 +1589,9 @@ function SettingsModal({ settings, onSave, onClose }) {
                 </div>
 
                 <div>
-                  <label className="text-xs sm:text-sm font-bold text-gray-700 mb-2 block">自定义提示词 / စိတ်ကြိုက် Prompt (可选)</label>
+                  <label className="text-sm font-bold text-gray-700 mb-2 block">{t('customPrompt', uiLang)}</label>
                   <textarea
                     className="w-full bg-gray-50 border rounded-xl p-3 text-sm h-24"
-                    placeholder="例如：请使用敬语翻译..."
                     value={data.customPrompt || ''}
                     onChange={(e) => setData((prev) => ({ ...prev, customPrompt: e.target.value }))}
                   />
@@ -1468,20 +1603,20 @@ function SettingsModal({ settings, onSave, onClose }) {
               <div className="space-y-4">
                 <div className="flex gap-2">
                   <label className="flex-1 bg-pink-50 text-pink-600 text-center py-2 rounded-xl text-sm font-bold cursor-pointer hover:bg-pink-100 transition-colors">
-                    导入 JSON / တင်သွင်းရန်
+                    {t('importJson', uiLang)}
                     <input type="file" accept=".json" hidden onChange={handleImportJSON} />
                   </label>
                   <button
                     onClick={handleExportJSON}
                     className="flex-1 bg-blue-50 text-blue-600 py-2 rounded-xl text-sm font-bold hover:bg-blue-100 transition-colors"
                   >
-                    导出 JSON / တင်ပို့ရန်
+                    {t('exportJson', uiLang)}
                   </button>
                 </div>
 
                 <div className="bg-gray-50 rounded-xl p-2 min-h-[200px] max-h-[300px] overflow-y-auto">
                   {!dictList.length ? (
-                    <p className="text-center text-gray-400 mt-10 text-sm">暂无自定义词条</p>
+                    <p className="text-center text-gray-400 mt-10 text-sm">{t('noDict', uiLang)}</p>
                   ) : (
                     dictList.map((item) => (
                       <div
@@ -1508,13 +1643,13 @@ function SettingsModal({ settings, onSave, onClose }) {
 
                 <button
                   onClick={async () => {
-                    if (!window.confirm('确认清空全部用户词典？ / အားလုံးဖျက်ရန် သေချာပါသလား?')) return;
+                    if (!window.confirm(t('confirmClear', uiLang))) return;
                     await clearUserDict();
                     await loadDict();
                   }}
                   className="w-full text-red-500 text-sm py-2 border border-red-100 rounded-xl font-bold hover:bg-red-50"
                 >
-                  清空所有词典 / အားလုံးဖျက်ရန်
+                  {t('clearAll', uiLang)}
                 </button>
               </div>
             )}
@@ -1523,7 +1658,7 @@ function SettingsModal({ settings, onSave, onClose }) {
               <div className="space-y-5">
                 <div className="bg-amber-50/50 p-4 rounded-xl space-y-4 border border-amber-100">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm font-bold text-amber-900">启用 AI 回复建议 / အကြံပြုချက်ဖွင့်ရန်</span>
+                    <span className="text-sm font-bold text-amber-900">{t('enableSug', uiLang)}</span>
                     <input
                       type="checkbox"
                       checked={data.enableSuggestions}
@@ -1533,7 +1668,7 @@ function SettingsModal({ settings, onSave, onClose }) {
                   </div>
                   {data.enableSuggestions && (
                     <div className="flex justify-between items-center">
-                      <span className="text-sm font-bold text-amber-800">触发语言 / အစပျိုးဘာသာစကား</span>
+                      <span className="text-sm font-bold text-amber-800">{t('triggerLang', uiLang)}</span>
                       <select
                         className="bg-white border rounded-lg px-2 py-1 text-sm outline-none"
                         value={data.suggestionTriggerLang}
@@ -1548,7 +1683,7 @@ function SettingsModal({ settings, onSave, onClose }) {
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-bold">开启回译 / ပြန်လည်ဘာသာပြန်ခြင်း</span>
+                  <span className="text-sm font-bold">{t('enableBackTrans', uiLang)}</span>
                   <input
                     type="checkbox"
                     checked={data.enableBackTranslation}
@@ -1560,7 +1695,7 @@ function SettingsModal({ settings, onSave, onClose }) {
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-bold">自动朗读 / အလိုအလျောက်အသံထွက်</span>
+                  <span className="text-sm font-bold">{t('autoTts', uiLang)}</span>
                   <input
                     type="checkbox"
                     checked={data.autoPlayTTS}
@@ -1572,7 +1707,7 @@ function SettingsModal({ settings, onSave, onClose }) {
                 <div className="bg-gray-50 p-4 rounded-xl space-y-4">
                   <div>
                     <div className="text-sm font-bold flex justify-between mb-2">
-                      <span>静默发送延迟 / အသံတိတ်နှောင့်နှေးမှု</span>
+                      <span>{t('silentDelay', uiLang)}</span>
                       <span className="text-pink-500">{Number(data.voiceAutoSendDelay) / 1000}s</span>
                     </div>
                     <input
@@ -1593,7 +1728,7 @@ function SettingsModal({ settings, onSave, onClose }) {
 
                   <div className="border-t pt-4">
                     <div className="text-sm font-bold flex justify-between mb-2">
-                      <span>TTS 朗读语速 / အသံထွက်အမြန်နှုန်း</span>
+                      <span>{t('ttsSpeed', uiLang)}</span>
                       <span className="text-pink-500">{Number(data.ttsSpeed || 1).toFixed(1)}x</span>
                     </div>
                     <input
@@ -1621,7 +1756,7 @@ function SettingsModal({ settings, onSave, onClose }) {
               }}
               className="w-full py-3 bg-pink-500 text-white rounded-xl font-bold shadow-lg active:scale-95 transition-transform"
             >
-              保存配置 / သိမ်းဆည်းရန်
+              {t('saveBtn', uiLang)}
             </button>
           </div>
         </Dialog.Panel>
@@ -1631,6 +1766,7 @@ function SettingsModal({ settings, onSave, onClose }) {
 }
 
 function DualModelSelector({ settings, setSettings }) {
+  const uiLang = settings.uiLang;
   const currentTransIcon = useMemo(() => {
     if (String(settings.provider).startsWith('custom_')) {
       const currentCustom = (settings.customProviders || []).find((p) => p.id === settings.provider);
@@ -1653,11 +1789,11 @@ function DualModelSelector({ settings, setSettings }) {
         leaveFrom="opacity-100 scale-100"
         leaveTo="opacity-0 scale-95"
       >
-        <Popover.Panel className={`absolute bottom-full right-0 mb-2 bg-white rounded-2xl shadow-xl border overflow-hidden p-2 outline-none max-h-[60vh] overflow-y-auto slim-scrollbar z-50 ${settings.enableSuggestions ? 'w-[320px]' : 'w-48'}`}>
+        <Popover.Panel className={`absolute bottom-full right-0 mb-2 bg-white rounded-2xl shadow-xl border overflow-hidden p-2 outline-none max-h-[60vh] overflow-y-auto slim-scrollbar z-50 ${settings.enableSuggestions ? 'w-[300px]' : 'w-48'}`}>
           <div className="flex gap-2">
             {/* 左侧：翻译模型 */}
             <div className="flex-1 flex flex-col gap-1">
-              <div className="text-[11px] text-gray-400 font-bold px-2 py-1 leading-tight">翻译模型<br/>ဘာသာပြန်မော်ဒယ်</div>
+              <div className="text-[11px] text-gray-400 font-bold px-2 py-1">{t('transModelSelector', uiLang)}</div>
               {Object.values(PROVIDERS).map((p) => (
                 <button
                   key={p.id}
@@ -1671,7 +1807,7 @@ function DualModelSelector({ settings, setSettings }) {
               ))}
               {!!settings.customProviders?.length && (
                 <>
-                  <div className="text-[11px] text-gray-400 font-bold px-2 py-1 mt-1 border-t pt-2 leading-tight">自定义节点<br/>စိတ်ကြိုက်မော်ဒယ်</div>
+                  <div className="text-[11px] text-gray-400 font-bold px-2 py-1 mt-1 border-t pt-2">{t('customGroup', uiLang)}</div>
                   {settings.customProviders.map((p) => (
                     <button
                       key={p.id}
@@ -1692,7 +1828,7 @@ function DualModelSelector({ settings, setSettings }) {
               <>
                 <div className="w-px bg-gray-100 my-1 shrink-0" />
                 <div className="flex-1 flex flex-col gap-1">
-                  <div className="text-[11px] text-gray-400 font-bold px-2 py-1 leading-tight">回复建议模型<br/>အကြံပြုချက်မော်ဒယ်</div>
+                  <div className="text-[11px] text-gray-400 font-bold px-2 py-1">{t('sugModelSelector', uiLang)}</div>
                   {Object.values(PROVIDERS).map((p) => (
                     <button
                       key={p.id + '_sug'}
@@ -1706,7 +1842,7 @@ function DualModelSelector({ settings, setSettings }) {
                   ))}
                   {!!settings.customProviders?.length && (
                     <>
-                      <div className="text-[11px] text-gray-400 font-bold px-2 py-1 mt-1 border-t pt-2 leading-tight">自定义节点<br/>စိတ်ကြိုက်မော်ဒယ်</div>
+                      <div className="text-[11px] text-gray-400 font-bold px-2 py-1 mt-1 border-t pt-2">{t('customGroup', uiLang)}</div>
                       {settings.customProviders.map((p) => (
                         <button
                           key={p.id + '_sug'}
@@ -1735,6 +1871,8 @@ function DualModelSelector({ settings, setSettings }) {
 // -----------------------------
 function AiChatContent() {
   const { settings, setSettings, loaded } = usePersistentSettings();
+  const uiLang = settings.uiLang || 'zh-CN';
+  
   const [sourceLang, setSourceLang] = useState(DEFAULT_SETTINGS.lastSourceLang);
   const [targetLang, setTargetLang] = useState(DEFAULT_SETTINGS.lastTargetLang);
   const [inputImages, setInputImages] = useState([]);
@@ -1757,39 +1895,25 @@ function AiChatContent() {
     setTargetLang(settings.lastTargetLang || DEFAULT_SETTINGS.lastTargetLang);
   }, [loaded, settings.lastSourceLang, settings.lastTargetLang]);
 
-  const persistLangs = useCallback(
-    (src, tgt) => {
-      setSettings((prev) => ({
-        ...prev,
-        lastSourceLang: src,
-        lastTargetLang: tgt,
-      }));
-    },
-    [setSettings]
-  );
+  // Combined language updater to fix race conditions during auto-swap
+  const updateLangs = useCallback((src, tgt) => {
+    setSourceLang(src);
+    setTargetLang(tgt);
+    setSettings((prev) => ({
+      ...prev,
+      lastSourceLang: src,
+      lastTargetLang: tgt,
+    }));
+  }, [setSettings]);
 
-  const setSourceWithPersist = useCallback(
-    (value) => {
-      setSourceLang(value);
-      persistLangs(value, targetLang);
-    },
-    [persistLangs, targetLang]
-  );
-
-  const setTargetWithPersist = useCallback(
-    (value) => {
-      setTargetLang(value);
-      persistLangs(sourceLang, value);
-    },
-    [persistLangs, sourceLang]
-  );
+  const setSourceWithPersist = useCallback((value) => { updateLangs(value, targetLang); }, [updateLangs, targetLang]);
+  const setTargetWithPersist = useCallback((value) => { updateLangs(sourceLang, value); }, [updateLangs, sourceLang]);
 
   const { history, isLoading, translate } = useTranslator({
     settings,
     sourceLang,
     targetLang,
-    setSourceLang: setSourceWithPersist,
-    setTargetLang: setTargetWithPersist,
+    updateLangs,
     playTTS,
   });
 
@@ -1859,12 +1983,10 @@ function AiChatContent() {
   }, []);
 
   const swapLanguages = useCallback(() => {
-    setSourceLang(targetLang);
-    setTargetLang(sourceLang);
-    persistLangs(targetLang, sourceLang);
-  }, [persistLangs, sourceLang, targetLang]);
+    updateLangs(targetLang, sourceLang);
+  }, [updateLangs, sourceLang, targetLang]);
 
-  const handleMicPointerDown = () => {
+  const handleMicPointerDown = (e) => {
     isLongPressRef.current = false;
     longPressTimerRef.current = setTimeout(() => {
       isLongPressRef.current = true;
@@ -1902,7 +2024,7 @@ function AiChatContent() {
           <div className="w-9" />
 
           <div className="flex flex-col items-center justify-center select-none">
-            <h1 className="font-bold text-gray-800 text-lg leading-tight tracking-wide">中缅语伴网</h1>
+            <h1 className="font-bold text-gray-800 text-lg leading-tight tracking-wide">{t('appName', uiLang)}</h1>
             <div className="flex items-center gap-1.5 mt-0.5">
               <svg
                 className="w-4 h-4 text-blue-500 drop-shadow-[0_0_4px_rgba(59,130,246,0.5)]"
@@ -1949,7 +2071,7 @@ function AiChatContent() {
               <div className="w-20 h-20 bg-pink-50 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl">
                 🌍
               </div>
-              <div className="font-bold">886.best 中缅语伴网</div>
+              <div className="font-bold">{t('appName', uiLang)}</div>
             </div>
           )}
 
@@ -1996,6 +2118,7 @@ function AiChatContent() {
                       originalText={item.originalText}
                       srcLang={item.srcLang}
                       tgtLang={item.tgtLang}
+                      uiLang={uiLang}
                       onPlay={() => playTTS(result.translation, item.tgtLang, settings)}
                     />
                   ))}
@@ -2005,12 +2128,12 @@ function AiChatContent() {
                     <div className="ml-2 mt-2">
                       {item.isSuggesting ? (
                         <div className="text-xs text-amber-500 flex items-center gap-2 font-bold">
-                          <i className="fas fa-circle-notch fa-spin" /> 正在生成回复建议...
+                          <i className="fas fa-circle-notch fa-spin" /> {t('generatingSug', uiLang)}
                         </div>
                       ) : (
                         <div className="flex flex-wrap gap-2">
                           {item.suggestions.map((sug, idx) => (
-                            <SuggestionBubble key={idx} suggestion={sug} />
+                            <SuggestionBubble key={idx} suggestion={sug} uiLang={uiLang} />
                           ))}
                         </div>
                       )}
@@ -2025,7 +2148,7 @@ function AiChatContent() {
             <div className="flex justify-start mb-6">
               <div className="bg-white/90 px-5 py-3 rounded-2xl shadow-sm text-pink-500 font-bold text-sm">
                 <i className="fas fa-circle-notch fa-spin mr-2" />
-                翻译中...
+                {t('translating', uiLang)}
               </div>
             </div>
           )}
@@ -2088,7 +2211,7 @@ function AiChatContent() {
                           active ? 'bg-pink-50 text-pink-600' : ''
                         }`}
                       >
-                        <i className="fas fa-camera w-6" /> 拍照
+                        <i className="fas fa-camera w-6" /> {t('camera', uiLang)}
                       </button>
                     )}
                   </Menu.Item>
@@ -2100,7 +2223,7 @@ function AiChatContent() {
                           active ? 'bg-pink-50 text-pink-600' : ''
                         }`}
                       >
-                        <i className="fas fa-image w-6" /> 相册
+                        <i className="fas fa-image w-6" /> {t('album', uiLang)}
                       </button>
                     )}
                   </Menu.Item>
@@ -2137,7 +2260,7 @@ function AiChatContent() {
 
               <textarea
                 className="w-full bg-transparent border-none outline-none resize-none px-2 py-1.5 max-h-[120px] text-[16px] leading-relaxed no-scrollbar placeholder-gray-400"
-                placeholder={isRecording ? '听你说，随时点击停止...' : '输入翻译内容...'}
+                placeholder={isRecording ? t('listening', uiLang) : t('inputPlaceholder', uiLang)}
                 rows={1}
                 value={inputVal}
                 onChange={(e) => setManualValue(e.target.value)}
@@ -2156,8 +2279,10 @@ function AiChatContent() {
               onPointerLeave={handleMicPointerUp}
               onClick={(e) => {
                 if (isLongPressRef.current) {
+                  // 如果是长按引发的点击事件，拦截并重置
                   e.preventDefault();
                   e.stopPropagation();
+                  isLongPressRef.current = false;
                   return;
                 }
                 if (isRecording) {
@@ -2189,21 +2314,21 @@ function AiChatContent() {
       </div>
 
       <LanguagePicker
-        title="选择源语言 / မူရင်းဘာသာစကား"
+        title={t('srcLang', uiLang)}
         open={showSrcPicker}
         onClose={() => setShowSrcPicker(false)}
         value={sourceLang}
         onChange={setSourceWithPersist}
       />
       <LanguagePicker
-        title="选择目标语言 / ဘာသာပြန်ဘာသာစကား"
+        title={t('tgtLang', uiLang)}
         open={showTgtPicker}
         onClose={() => setShowTgtPicker(false)}
         value={targetLang}
         onChange={setTargetWithPersist}
       />
       <LanguagePicker
-        title="语音识别语言 / အသံဘာသာစကား"
+        title={t('voiceLang', uiLang)}
         open={showVoiceLangPicker}
         onClose={() => setShowVoiceLangPicker(false)}
         value={sourceLang}
