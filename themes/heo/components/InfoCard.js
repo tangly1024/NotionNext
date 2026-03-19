@@ -101,8 +101,18 @@ function MoreButton() {
  * 欢迎语
  */
 function GreetingsWords() {
-  const greetings = siteConfig('HEO_INFOCARD_GREETINGS', null, CONFIG)
+  const router = useRouter()
+  const { locale } = router
+  const greetingsConfig = siteConfig('HEO_INFOCARD_GREETINGS', null, CONFIG)
+
+  // 根据当前 locale 获取对应的问候语数组
+  // 如果是对象格式（多语言），则根据 locale 选择；否则直接使用数组
+  const greetings = typeof greetingsConfig === 'object' && !Array.isArray(greetingsConfig)
+    ? (greetingsConfig[locale] || greetingsConfig['zh-CN'] || Object.values(greetingsConfig)[0])
+    : greetingsConfig
+
   const [greeting, setGreeting] = useState(greetings[0])
+
   // 每次点击，随机获取greetings中的一个
   const handleChangeGreeting = () => {
     const randomIndex = Math.floor(Math.random() * greetings.length)

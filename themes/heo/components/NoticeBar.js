@@ -1,6 +1,8 @@
 import { ArrowRightCircle } from '@/components/HeroIcons'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
+import { getLocaleConfig } from '@/lib/locale-config'
+import { useRouter } from 'next/router'
 import CONFIG from '../config'
 import Swipe from './Swipe'
 
@@ -8,7 +10,13 @@ import Swipe from './Swipe'
  * 通知横幅
  */
 export function NoticeBar() {
-  let notices = siteConfig('HEO_NOTICE_BAR', null, CONFIG)
+  const router = useRouter()
+  const { locale: routerLocale } = router
+  let noticesConfig = siteConfig('HEO_NOTICE_BAR', null, CONFIG)
+
+  // Get locale-aware notices
+  let notices = getLocaleConfig(noticesConfig, routerLocale)
+
   const { locale } = useGlobal()
   if (typeof notices === 'string') {
     notices = JSON.parse(notices)

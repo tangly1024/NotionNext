@@ -7,11 +7,18 @@ const CONFIG = {
   HEO_SITE_CREATE_TIME: '2024-09-21', // 建站日期，用于计算网站运行的第几天
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
-  HEO_NOTICE_BAR: [
-    { title: '🎉 欢迎来到 CharliiAI 博客', url: 'https://www.charliiai.com' },
-    { title: '📚 AIGC 与实用技能精选文章', url: '/tag/精选' },
-    { title: '🚀 探索 AI 创作与科创落地', url: '/tag/AI落地' }
-  ],
+  HEO_NOTICE_BAR: {
+    'zh-CN': [
+      { title: '🎉 欢迎来到 CharliiAI 博客', url: 'https://www.charliiai.com' },
+      { title: '📚 AIGC 与实用技能精选文章', url: '/tag/精选' },
+      { title: '🚀 探索 AI 创作与科创落地', url: '/tag/AI落地' }
+    ],
+    'en-US': [
+      { title: '🎉 Welcome to CharliiAI Blog', url: 'https://www.charliiai.com' },
+      { title: '📚 Featured Articles on AIGC & Practical Skills', url: '/tag/Featured' },
+      { title: '🚀 Explore AI Creation & Innovation', url: '/tag/AI-Innovation' }
+    ]
+  },
 
 
   // 英雄区左右侧组件颠倒位置
@@ -20,35 +27,71 @@ const CONFIG = {
   HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '探索 AI',
-  HEO_HERO_TITLE_2: '与 自动化 未来',
+  HEO_HERO_TITLE_1: {
+    'zh-CN': '探索 AI',
+    'en-US': 'Explore AI'
+  },
+  HEO_HERO_TITLE_2: {
+    'zh-CN': '与 自动化 未来',
+    'en-US': 'and Automation Future'
+  },
   HEO_HERO_TITLE_3: 'CHARLIIAI.COM',
-  HEO_HERO_TITLE_4: '数字智能助手',
-  HEO_HERO_TITLE_5: '打造属于你的 AI 领导力',
+  HEO_HERO_TITLE_4: {
+    'zh-CN': '数字智能助手',
+    'en-US': 'Digital Intelligence Assistant'
+  },
+  HEO_HERO_TITLE_5: {
+    'zh-CN': '打造属于你的 AI 领导力',
+    'en-US': 'Build Your AI Leadership'
+  },
   HEO_HERO_TITLE_LINK: 'https://www.charliiai.com',
 
   // 英雄区遮罩文字（核心SEO关键词）
-  HEO_HERO_COVER_TITLE: 'AIGC · 效率 · 科创 · 落地 · AI创作',
+  HEO_HERO_COVER_TITLE: {
+    'zh-CN': 'AIGC · 效率 · 科创 · 落地 · AI创作',
+    'en-US': 'AIGC · Efficiency · Innovation · Implementation · AI Creation'
+  },
 
   // 英雄区置顶分类（关键词导向，更专业）
-  HEO_HERO_CATEGORY_1: { title: 'AIGC应用实践', url: '/tag/AIGC应用' },
-  HEO_HERO_CATEGORY_2: { title: '效率与生产力工具', url: '/tag/效率工具' },
-  HEO_HERO_CATEGORY_3: { title: 'AI科创与落地', url: '/tag/AI落地' },
+  HEO_HERO_CATEGORY_1: {
+    'zh-CN': { title: 'AIGC应用实践', url: '/tag/AIGC应用' },
+    'en-US': { title: 'AIGC Applications', url: '/tag/AIGC-Applications' }
+  },
+  HEO_HERO_CATEGORY_2: {
+    'zh-CN': { title: '效率与生产力工具', url: '/tag/效率工具' },
+    'en-US': { title: 'Productivity Tools', url: '/tag/Productivity-Tools' }
+  },
+  HEO_HERO_CATEGORY_3: {
+    'zh-CN': { title: 'AI科创与落地', url: '/tag/AI落地' },
+    'en-US': { title: 'AI Innovation & Implementation', url: '/tag/AI-Innovation' }
+  },
 
   // 英雄区右侧推荐文章标签
   HEO_HERO_RECOMMEND_POST_TAG: 'Popular',
   HEO_HERO_RECOMMEND_POST_SORT_BY_UPDATE_TIME: true,
 
   // 右侧个人资料卡牌欢迎语（突出科创、落地、应用）
-  HEO_INFOCARD_GREETINGS: [
-    '你好！我是 Charlii博士',
-    '🤖 专注 AIGC 与 AI创作应用',
-    '📚 分享效率提升与实用技能',
-    '🚀 聚焦AI科创与落地实践',
-    '🌍 探索出海与全球化经验',
-    '💡 让AI成为生产力伙伴',
-    '🔍 助力打造超级个体'
-  ],
+  // 支持多语言，根据当前 locale 显示不同内容
+  HEO_INFOCARD_GREETINGS: {
+    'zh-CN': [
+      '你好！我是 Charlii博士',
+      '🤖 专注 AIGC 与 AI创作应用',
+      '📚 分享效率提升与实用技能',
+      '🚀 聚焦AI科创与落地实践',
+      '🌍 探索出海与全球化经验',
+      '💡 让AI成为生产力伙伴',
+      '🔍 助力打造超级个体'
+    ],
+    'en-US': [
+      'Hello! I\'m Dr. Charlii',
+      '🤖 Focused on AIGC & AI Creative Applications',
+      '📚 Sharing Productivity & Practical Skills',
+      '🚀 Exploring AI Innovation & Implementation',
+      '🌍 Global Expansion & Cross-border Experience',
+      '💡 Making AI Your Productivity Partner',
+      '🔍 Building Super Individuals'
+    ]
+  },
 
 
 
@@ -125,9 +168,18 @@ const CONFIG = {
   ],
 
   HEO_SOCIAL_CARD: true, // 显示右侧社群卡片
-  HEO_SOCIAL_CARD_TITLE_1: '交流频道',
-  HEO_SOCIAL_CARD_TITLE_2: '添加微信，加入微信群讨论',
-  HEO_SOCIAL_CARD_TITLE_3: '点击扫码添加微信',
+  HEO_SOCIAL_CARD_TITLE_1: {
+    'zh-CN': '交流频道',
+    'en-US': 'Community'
+  },
+  HEO_SOCIAL_CARD_TITLE_2: {
+    'zh-CN': '添加微信，加入微信群讨论',
+    'en-US': 'Add WeChat to join group discussions'
+  },
+  HEO_SOCIAL_CARD_TITLE_3: {
+    'zh-CN': '点击扫码添加微信',
+    'en-US': 'Scan QR code to add WeChat'
+  },
   HEO_SOCIAL_CARD_URL: 'https://img.fy6b.com/2024/11/27/047d91d78264b.png', // 你的微信二维码图片
 
 
