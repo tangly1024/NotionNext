@@ -21,6 +21,7 @@ export default function TouchMeCard() {
   const title1 = getLocaleConfig(siteConfig('HEO_SOCIAL_CARD_TITLE_1', null, CONFIG), routerLocale)
   const title2 = getLocaleConfig(siteConfig('HEO_SOCIAL_CARD_TITLE_2', null, CONFIG), routerLocale)
   const title3 = getLocaleConfig(siteConfig('HEO_SOCIAL_CARD_TITLE_3', null, CONFIG), routerLocale)
+  const socialCardUrl = getLocaleConfig(siteConfig('HEO_SOCIAL_CARD_URL', null, CONFIG), routerLocale)
 
   return (
     <div className={'relative h-28 text-white flex flex-col'}>
@@ -43,7 +44,7 @@ export default function TouchMeCard() {
           </div>
         }
         backContent={
-          <SmartLink href={siteConfig('HEO_SOCIAL_CARD_URL', null, CONFIG)}>
+          <SmartLink href={socialCardUrl}>
             <div className='font-[1000] text-xl h-full'>
               {title3}
             </div>

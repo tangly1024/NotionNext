@@ -1,6 +1,7 @@
 import { ArrowRightCircle } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
+import { getLocaleConfig } from '@/lib/locale-config'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -16,11 +17,13 @@ import Card from './Card'
 export function InfoCard(props) {
   const { siteInfo, notice } = props
   const router = useRouter()
+  const { locale: routerLocale } = router
   // 在文章详情页特殊处理
   const isSlugPage = router.pathname.indexOf('/[prefix]') === 0
   const url1 = siteConfig('HEO_INFO_CARD_URL1', null, CONFIG)
   const icon1 = siteConfig('HEO_INFO_CARD_ICON1', null, CONFIG)
-  const url2 = siteConfig('HEO_INFO_CARD_URL2', null, CONFIG)
+  const url2Config = siteConfig('HEO_INFO_CARD_URL2', null, CONFIG)
+  const url2 = getLocaleConfig(url2Config, routerLocale)
   const icon2 = siteConfig('HEO_INFO_CARD_ICON2', null, CONFIG)
   return (
     <Card className='wow fadeInUp bg-[#4f65f0] dark:bg-yellow-600 text-white flex flex-col w-72 overflow-hidden relative'>

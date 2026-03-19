@@ -100,7 +100,10 @@ const CONFIG = {
   HEO_INFO_CARD_URL1: '/aboutme',
   HEO_INFO_CARD_ICON1: 'fas fa-user',
 
-  HEO_INFO_CARD_URL2: 'https://img.fy6b.com/2024/11/27/047d91d78264b.png', // 你的微信二维码图片地址
+  HEO_INFO_CARD_URL2: {
+    'zh-CN': 'https://cdn.jsdelivr.net/gh/kenchikuliu/picx-images@main/social-cards/charlii.png',
+    'en-US': 'https://cdn.jsdelivr.net/gh/kenchikuliu/picx-images@main/social-cards/charliiai—en.png'
+  }, // 你的微信二维码图片地址
   HEO_INFO_CARD_ICON2: 'fab fa-weixin', // 微信图标
 
   HEO_INFO_CARD_URL3: 'https://www.charliiai.com',
@@ -180,7 +183,10 @@ const CONFIG = {
     'zh-CN': '点击扫码添加微信',
     'en-US': 'Scan QR code to add WeChat'
   },
-  HEO_SOCIAL_CARD_URL: 'https://img.fy6b.com/2024/11/27/047d91d78264b.png', // 你的微信二维码图片
+  HEO_SOCIAL_CARD_URL: {
+    'zh-CN': 'https://cdn.jsdelivr.net/gh/kenchikuliu/picx-images@main/social-cards/charlii.png',
+    'en-US': 'https://cdn.jsdelivr.net/gh/kenchikuliu/picx-images@main/social-cards/charliiai—en.png'
+  }, // 你的微信二维码图片
 
 
 
