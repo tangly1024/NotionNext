@@ -18,8 +18,8 @@ export default function Footer() {
     <footer className='relative w-full bg-black px-6 border-t border-gray-700'>
       <DarkModeButton className='text-center pt-4' />
 
-      <div className='text-yellow-300 container mx-auto max-w-7xl py-10 md:flex md:justify-between md:items-center text-sm border-b border-gray-700'>
-        <div className='text-center md:text-left text-[42px] leading-relaxed md:text-[38px]'>
+      <div className='text-white container mx-auto max-w-7xl py-10 md:flex md:justify-between md:items-center text-base border-b border-gray-700'>
+        <div className='text-center md:text-left leading-relaxed'>
           <span>
             &copy;{`${copyrightDate}`} {siteConfig('AUTHOR')}. All rights
             reserved.
@@ -33,7 +33,7 @@ export default function Footer() {
           )}
           <BeiAnGongAn />
         </div>
-        <div className='text-center md:text-right text-[40px] md:text-[36px] mt-4 md:mt-0'>
+        <div className='text-center md:text-right mt-4 md:mt-0'>
           <span className='no-underline'>
             Powered by
             <a
