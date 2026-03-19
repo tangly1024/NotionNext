@@ -5,45 +5,44 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+# 防止重复触发：如果有新任务，自动取消正在运行的旧任务
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-offline:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout 仓库
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # 升级到 v4 更稳
 
-      # 2. 安装 Node.js（升级到 24）
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 20 # NotionNext 建议用 20 Lts，24 太新可能不稳定
 
-      # 3. 安装依赖
       - name: Install dependencies
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
+        # 使用 --legacy-peer-deps 防止 NotionNext 复杂的依赖冲突
+        run: npm install --legacy-peer-deps
 
-      # 4. 构建静态站点
       - name: Build and export site
+        # 确保 NotionNext 生成的是静态 out 文件夹
         run: |
           npm run build
           npm run export
+        env:
+          NEXT_PUBLIC_IS_OFFLINE: 'true' # 注入离线标识（如果有）
 
-      # 5. 打包输出为 zip 文件（使用绝对路径确保可找到）
       - name: Package build
+        # 直接在当前目录操作，避免绝对路径引用错误
         run: |
-          mkdir -p $GITHUB_WORKSPACE/dist
-          zip -r $GITHUB_WORKSPACE/dist/offline.zip $GITHUB_WORKSPACE/out
+          zip -r offline-bundle.zip out/
 
-      # 6. 上传构建产物（使用绝对路径）
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: offline-site
-          path: $GITHUB_WORKSPACE/dist/offline.zip
+          name: NotionNext-Offline-App-Source
+          path: offline-bundle.zip
+          retention-days: 7 # 产物保留 7 天，节省空间
