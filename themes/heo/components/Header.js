@@ -130,18 +130,6 @@ const Header = props => {
         .fade-in-up {
           animation: fade-in-up 0.3s ease-in-out;
         }
-        .heo-glass-nav {
-          background-color: rgba(255, 255, 255, 0.65);
-          backdrop-filter: blur(20px) saturate(160%);
-          -webkit-backdrop-filter: blur(20px) saturate(160%);
-          border-bottom: none;
-        }
-        :global(.dark) .heo-glass-nav {
-          background-color: rgba(27, 28, 32, 0.65);
-          backdrop-filter: blur(24px) saturate(120%);
-          -webkit-backdrop-filter: blur(24px) saturate(120%);
-          border-bottom: none;
-        }
       `}</style>
 
       {/* fixed时留白高度 */}
@@ -155,7 +143,7 @@ const Header = props => {
         className={`z-20 h-16 top-0 w-full duration-300 transition-all
             ${fixedNav ? 'fixed' : 'relative bg-transparent'} 
             ${textWhite ? 'text-white ' : 'text-black dark:text-white'}  
-            ${navBgWhite ? 'heo-glass-nav' : 'bg-transparent'}`}>
+            ${navBgWhite ? 'bg-white dark:bg-[#18171d] shadow' : 'bg-transparent'}`}>
         <div className='flex h-full mx-auto justify-between items-center max-w-[86rem] px-6'>
           {/* 左侧logo */}
           <Logo {...props} />
@@ -170,10 +158,10 @@ const Header = props => {
             </div>
             <div
               className={`absolute transition-all duration-700 ${activeIndex === 1 ? 'opacity-100 mb-0' : '-mb-20 opacity-0 invisible'}`}>
-              <h2 className='font-bold text-center text-light-400 dark:text-gray-400'>
+              <h1 className='font-bold text-center text-light-400 dark:text-gray-400'>
                 {siteConfig('AUTHOR') || siteConfig('TITLE')}{' '}
                 {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}
-              </h2>
+              </h1>
             </div>
           </div>
 
