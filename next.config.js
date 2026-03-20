@@ -89,6 +89,9 @@ const nextConfig = {
     : process.env.NEXT_BUILD_STANDALONE === 'true'
       ? 'standalone'
       : undefined,
+  // 静态导出时统一使用目录路由（/post/ -> /post/index.html），
+  // 避免部署到仅支持目录索引的静态服务器时访问文章页出现 404。
+  trailingSlash: !!process.env.EXPORT,
   staticPageGenerationTimeout: 120,
 
   // 性能优化配置
