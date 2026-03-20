@@ -271,7 +271,7 @@ const Header = props => {
 
           {/* 右侧药丸 - 操作按钮 */}
           <div className={`nav-pill flex flex-shrink-0 justify-end items-center
-              ${navBgWhite ? 'glass-active px-0.5 py-0.5' : 'w-48'}`}>
+              ${navBgWhite ? 'glass-active px-0.5 py-0.5' : ''}`}>
             <RandomPostButton {...props} />
             <SearchButton {...props} />
             {!JSON.parse(siteConfig('THEME_SWITCH')) && (
