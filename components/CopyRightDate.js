@@ -19,7 +19,7 @@ export default function CopyRightDate() {
         <a
           href={siteConfig('LINK')}
           className='underline font-semibold dark:text-gray-300'>
-          💖Spring
+          💖茉灵智库
         </a>
         <svg
           width="22px"
