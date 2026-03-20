@@ -1,48 +1,67 @@
-name: Build NotionNext Offline
+name: Build Android APK
 
 on:
   push:
-    branches: [ main ]
+    branches: ["master"] # 如果主分支是 main，请改成 main
   workflow_dispatch:
 
-# 防止重复触发：如果有新任务，自动取消正在运行的旧任务
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
-  build-offline:
+  build:
+    name: Build APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4 # 升级到 v4 更稳
+      # 1️⃣ 下载仓库
+      - name: Checkout Repository
+        uses: actions/checkout@v6
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      # 2️⃣ 设置 JDK 17
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
-          node-version: 20 # NotionNext 建议用 20 Lts，24 太新可能不稳定
+          distribution: temurin
+          java-version: '17'
 
-      - name: Install dependencies
-        # 使用 --legacy-peer-deps 防止 NotionNext 复杂的依赖冲突
-        run: npm install --legacy-peer-deps
+      # 3️⃣ 设置 Android SDK
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
-      - name: Build and export site
-        # 确保 NotionNext 生成的是静态 out 文件夹
-        run: |
-          npm run build
-          npm run export
-        env:
-          NEXT_PUBLIC_IS_OFFLINE: 'true' # 注入离线标识（如果有）
+      # 4️⃣ 缓存 Gradle
+      - name: Cache Gradle
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
 
-      - name: Package build
-        # 直接在当前目录操作，避免绝对路径引用错误
-        run: |
-          zip -r offline-bundle.zip out/
+      # 5️⃣ 授权 Gradle
+      - name: Grant Execute Permission
+        run: chmod +x gradlew
 
-      - name: Upload artifact
+      # 6️⃣ 构建 Debug APK
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug --stacktrace
+
+      # 7️⃣ 构建 Release APK (无需签名也可先生成 unsigned)
+      - name: Build Release APK
+        run: ./gradlew assembleRelease --stacktrace
+
+      # 8️⃣ 上传 APK Artifact
+      - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
-          name: NotionNext-Offline-App-Source
-          path: offline-bundle.zip
-          retention-days: 7 # 产物保留 7 天，节省空间
+          name: android-apks
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/outputs/apk/release/app-release-unsigned.apk
+
+      # 9️⃣ 输出下载链接（可在 Actions 页面看到 Artifact）
+      - name: Show Download Info
+        run: |
+          echo "✅ Debug APK: Actions -> android-apks -> app-debug.apk"
+          echo "✅ Release APK: Actions -> android-apks -> app-release-unsigned.apk"
