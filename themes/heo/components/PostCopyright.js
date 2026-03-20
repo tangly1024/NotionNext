@@ -1,9 +1,10 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import CONFIG from '../config'
+import NotByAI from '@/components/NotByAI'
 
 /**
  * 版权声明
@@ -27,9 +28,9 @@ export default function PostCopyright() {
       <ul className='overflow-x-auto whitespace-nowrap text-sm dark:bg-gray-900 bg-gray-100 p-5 leading-8 border-l-2 border-indigo-500'>
         <li>
           <strong className='mr-2'>{locale.COMMON.AUTHOR}:</strong>
-          <Link href={'/about'} className='hover:underline'>
+          <SmartLink href={'/about'} className='hover:underline'>
             {siteConfig('AUTHOR')}
-          </Link>
+          </SmartLink>
         </li>
         <li>
           <strong className='mr-2'>{locale.COMMON.URL}:</strong>
@@ -43,6 +44,11 @@ export default function PostCopyright() {
           <strong className='mr-2'>{locale.COMMON.COPYRIGHT}:</strong>
           {locale.COMMON.COPYRIGHT_NOTICE}
         </li>
+        {siteConfig('HEO_ARTICLE_NOT_BY_AI', false, CONFIG) && (
+          <li>
+            <NotByAI />
+          </li>
+        )}
       </ul>
     </section>
   )
