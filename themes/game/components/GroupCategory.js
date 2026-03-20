@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 function GroupCategory({ currentCategory, categoryOptions }) {
   if (!categoryOptions) {
@@ -7,16 +7,16 @@ function GroupCategory({ currentCategory, categoryOptions }) {
 
   return (
     <div className='flex items-center'>
-      <Link className='mx-2' href='/category'>
+      <SmartLink className='mx-2' href='/category'>
         <i className='fas fa-bars' />
-      </Link>
+      </SmartLink>
       <div
         id='category-list'
         className='dark:border-gray-600 flex flex-wrap py-1'>
         {categoryOptions.map(category => {
           const selected = currentCategory === category.name
           return (
-            <Link
+            <SmartLink
               key={category.name}
               href={`/category/${category.name}`}
               passHref
@@ -32,7 +32,7 @@ function GroupCategory({ currentCategory, categoryOptions }) {
               {/* <span className='text-xs flex items-start pl-2 h-full'>
                 {category.count}
               </span> */}
-            </Link>
+            </SmartLink>
           )
         })}
       </div>

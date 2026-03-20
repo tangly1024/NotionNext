@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 
 /**
@@ -28,7 +28,7 @@ const PaginationNumber = ({ page, totalPage }) => {
       data-aos-anchor-placement='top-bottom'
       className='mt-5 py-3 flex justify-center items-end font-medium text-black hover:shadow-xl duration-200 transition-all bg-white dark:bg-hexo-black-gray dark:text-gray-300 shadow space-x-2'>
       {/* 上一页 */}
-      <Link
+      <SmartLink
         href={{
           pathname:
             currentPage - 1 === 1
@@ -45,12 +45,12 @@ const PaginationNumber = ({ page, totalPage }) => {
           } hover:border-t-2 border-white  hover:border-gray-400 dark:hover:border-gray-400 w-8 h-8 justify-center flex items-center cursor-pointer duration-200 transition-all hover:font-bold`}>
           <i className='fas fa-angle-left' />
         </div>
-      </Link>
+      </SmartLink>
 
       {pages}
 
       {/* 下一页 */}
-      <Link
+      <SmartLink
         href={{
           pathname: `${pagePrefix}/page/${currentPage + 1}`,
           query: router.query.s ? { s: router.query.s } : {}
@@ -64,7 +64,7 @@ const PaginationNumber = ({ page, totalPage }) => {
           } hover:border-t-2 border-white  hover:border-gray-400 dark:hover:border-gray-400 w-8 h-8 justify-center flex items-center cursor-pointer duration-200 transition-all hover:font-bold`}>
           <i className='fas fa-angle-right' />
         </div>
-      </Link>
+      </SmartLink>
     </div>
   )
 }
@@ -129,7 +129,7 @@ function generatePages(pagePrefix, page, currentPage, totalPage) {
  */
 function getPageElement(pagePrefix, page, currentPage) {
   return (
-    <Link
+    <SmartLink
       href={page === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${page}`}
       key={page}
       passHref
@@ -140,7 +140,7 @@ function getPageElement(pagePrefix, page, currentPage) {
         ' border-white  dark:hover:border-gray-400 cursor-pointer w-8 h-8 justify-center flex items-center font-light hover:font-bold'
       }>
       {page}
-    </Link>
+    </SmartLink>
   )
 }
 

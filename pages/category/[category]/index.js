@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/db/getSiteData'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -15,7 +15,7 @@ export default function Category(props) {
 
 export async function getStaticProps({ params: { category }, locale }) {
   const from = 'category-props'
-  let props = await getGlobalData({ from, locale })
+  let props = await fetchGlobalAllData({ from, locale })
 
   // 过滤状态
   props.posts = props.allPages?.filter(
@@ -55,7 +55,7 @@ export async function getStaticProps({ params: { category }, locale }) {
 
 export async function getStaticPaths() {
   const from = 'category-paths'
-  const { categoryOptions } = await getGlobalData({ from })
+  const { categoryOptions } = await fetchGlobalAllData({ from })
   return {
     paths: Object.keys(categoryOptions).map(category => ({
       params: { category: categoryOptions[category]?.name }

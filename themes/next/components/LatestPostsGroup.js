@@ -1,6 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 
 /**
@@ -30,7 +30,7 @@ const LatestPostsGroup = ({ latestPosts }) => {
         const selected =
           currentPath === `${siteConfig('SUB_PATH', '')}/${post.slug}`
         return (
-          <Link
+          <SmartLink
             key={post.id}
             title={post.title}
             href={post?.href}
@@ -46,7 +46,7 @@ const LatestPostsGroup = ({ latestPosts }) => {
               }>
               <li className='line-clamp-2'>{post.title}</li>
             </div>
-          </Link>
+          </SmartLink>
         )
       })}
     </>

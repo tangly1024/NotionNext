@@ -16,11 +16,6 @@ export default function CopyRightDate() {
     <span className='whitespace-nowrap flex items-center gap-x-1'>
       <i className='fas fa-copyright' />
       <span>{copyrightDate}</span>
-      <a
-        href={siteConfig('LINK')}
-        className='underline font-semibold dark:text-gray-300 '>
-        {siteConfig('AUTHOR')}
-      </a>
     </span>
   )
 }
