@@ -442,11 +442,11 @@ const LayoutLearningHome = () => {
 
       {/* 底部导航: 学习、消息、语伴、动态、招聘(隐藏)、社区 */}
       <nav className='fixed bottom-0 left-0 right-0 z-[50] bg-white/95 backdrop-blur-xl border-t border-slate-100 pt-1 pb-[calc(env(safe-area-inset-bottom)+7px)] shadow-[0_-10px_20px_rgba(0,0,0,0.08)]'>
-        <div className='flex items-center justify-between w-full max-w-md mx-auto px-6'>
+        <div className='flex items-center grid-cols-5 w-full max-w-md mx-auto px-6'>
           {/* 学习 (因为是在站内，用内部 Link) */}
           <FooterLink href="/" icon={BookOpen} isInternal />
           {/* 消息 */}
-          <FooterLink href="https://bbs.886.best/user/mei/chats" icon={MessageCircle} />
+          <FooterLink href="https://bbs.886.best/chats" icon={MessageCircle} />
           {/* 语伴 */}
           <FooterLink href="https://bbs.886.best/" icon={Users} />
           {/* 动态 */}
