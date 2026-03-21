@@ -88,7 +88,7 @@ function generateLocalesSitemap(link, allPages, locale) {
   const postFields =
     allPages
       ?.filter(p => p.status === BLOG.NOTION_PROPERTY_NAME.status_publish)
-      // 过滤掉外部链接(http开头)和锚点链接(#开头)
+      // 过滤掉外部链接(http)和锚点链接(#)
       ?.filter(p => p.slug && !p.slug.startsWith('http') && !p.slug.startsWith('#'))
       ?.map(post => {
         const slugWithoutLeadingSlash = post?.slug.startsWith('/')
