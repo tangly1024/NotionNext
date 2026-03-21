@@ -17,7 +17,7 @@ const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
   } else {
     return (
       <div className=''>
-        <div className='pb-4 dark:text-gray-300' id={archiveTitle}>
+        <div className='pb-4 text-xl font-bold dark:text-gray-300' id={archiveTitle}>
           {archiveTitle}
         </div>
         <ul>
@@ -39,14 +39,14 @@ const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
               <div
                 key={post.id}
                 className={
-                  'cursor-pointer flex flex-row mb-4 h-24 md:flex-row group w-full  dark:border-gray-600 hover:border-indigo-600  dark:hover:border-yellow-600 duration-300 transition-colors justify-between overflow-hidden rounded-2xl'
+                  'cursor-pointer flex flex-row mb-4 md:flex-row group w-full bg-white dark:bg-[#1e1e1e] border border-gray-200/60 dark:border-gray-600 hover:border-indigo-600 dark:hover:border-yellow-600 hover:shadow-md dark:hover:shadow-black/20 duration-300 transition-all justify-between overflow-hidden rounded-2xl'
                 }>
                 {/* 图片封面 */}
                 {showPageCover && (
-                  <div>
+                  <div className='flex-shrink-0'>
                     <SmartLink href={post?.href} passHref legacyBehavior>
                       <LazyImage
-                        className={'rounded-xl bg-center bg-cover w-40 h-24'}
+                        className={'rounded-xl bg-center bg-cover w-28 h-full md:w-40 object-cover'}
                         src={post?.pageCoverThumbnail}
                       />
                     </SmartLink>
@@ -54,8 +54,8 @@ const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
                 )}
 
                 {/* 文字区块 */}
-                <div className={'flex px-2 flex-col justify-between w-full'}>
-                  <div>
+                <div className={'flex px-3 py-3 md:px-4 md:py-3 flex-col justify-between w-full gap-1.5'}>
+                  <div className='flex flex-col gap-1.5'>
                     {/* 分类 */}
                     {post?.category && (
                       <div
@@ -74,7 +74,7 @@ const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
                       href={post?.href}
                       passHref
                       className={
-                        ' group-hover:text-indigo-700 group-hover:dark:text-indigo-400 text-black dark:text-gray-100 dark:group-hover:text-yellow-600 line-clamp-2 replace cursor-pointer text-xl font-extrabold leading-tight'
+                        ' group-hover:text-indigo-700 group-hover:dark:text-indigo-400 text-black dark:text-gray-100 dark:group-hover:text-yellow-600 line-clamp-2 replace cursor-pointer text-lg font-semibold leading-tight'
                       }>
                       <span className='menu-link '>{post.title}</span>
                     </SmartLink>
