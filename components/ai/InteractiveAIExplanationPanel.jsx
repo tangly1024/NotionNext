@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { pinyin } from 'pinyin-pro';
 import {
   FaArrowLeft,
   FaPaperPlane,
@@ -12,7 +11,7 @@ import {
   FaClosedCaptioning,
   FaCommentSlash,
   FaVolumeUp,
-  FaSlidersH,
+  FaSlidersH
 } from 'react-icons/fa';
 import { AI_SCENES, buildExerciseBootstrapPrompt } from './aiAssistants';
 import { normalizeAssistantText } from './aiTextUtils';
@@ -26,103 +25,132 @@ const GlobalStyles = () => (
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* 浅蓝干净清新背景 */
-    .ai-light-bg {
-      background: #f0f7ff;
-      background-image: 
-        radial-gradient(circle at top left, rgba(59,130,246,0.06), transparent 50%),
-        radial-gradient(circle at bottom right, rgba(99,102,241,0.06), transparent 50%);
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(0.9);
+        box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.45);
+      }
+      70% {
+        transform: scale(1.02);
+        box-shadow: 0 0 0 24px rgba(236, 72, 153, 0);
+      }
+      100% {
+        transform: scale(0.9);
+        box-shadow: 0 0 0 0 rgba(236, 72, 153, 0);
+      }
+    }
+    .animate-pulse-ring { animation: pulse-ring 1.35s infinite; }
+
+    @keyframes bars {
+      0%,100% { transform: scaleY(.35); opacity:.45; }
+      50% { transform: scaleY(1); opacity:1; }
+    }
+    .tts-bars span {
+      display:inline-block;
+      width:4px;
+      height:20px;
+      border-radius:999px;
+      background: linear-gradient(180deg,#fb7185,#f472b6);
+      margin:0 2px;
+      transform-origin: bottom;
+      animation: bars 0.55s ease-in-out infinite;
+    }
+    .tts-bars span:nth-child(2){ animation-delay:.06s; }
+    .tts-bars span:nth-child(3){ animation-delay:.12s; }
+    .tts-bars span:nth-child(4){ animation-delay:.18s; }
+    .tts-bars span:nth-child(5){ animation-delay:.24s; }
+
+    .ai-dark-bg {
+      background:
+        radial-gradient(circle at top left, rgba(244,114,182,0.12), transparent 28%),
+        radial-gradient(circle at top right, rgba(168,85,247,0.14), transparent 32%),
+        radial-gradient(circle at bottom center, rgba(244,114,182,0.08), transparent 30%),
+        linear-gradient(180deg, #0f0a16 0%, #15101f 45%, #120d1a 100%);
     }
 
-    /* 防止屏幕手机浏览器复制、长按选中等操作 */
-    .prevent-browser-actions {
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      user-select: none;
-    }
-    
-    /* 允许输入框选中打字 */
-    .allow-select {
-      -webkit-user-select: auto;
-      user-select: auto;
+    .glass-panel {
+      background: rgba(24, 18, 34, 0.68);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.07);
+      box-shadow: 0 10px 35px rgba(0,0,0,.22);
     }
 
-    /* 语音头像朗读时的增强版动态效果 */
-    @keyframes tts-speak {
-      0% { transform: translateY(0px) scale(1); filter: drop-shadow(0 10px 15px rgba(99, 102, 241, 0.2)); }
-      50% { transform: translateY(-8px) scale(1.12); filter: drop-shadow(0 20px 25px rgba(99, 102, 241, 0.4)); box-shadow: 0 0 35px rgba(99,102,241,0.35); }
-      100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 10px 15px rgba(99, 102, 241, 0.2)); }
-    }
-    .animate-tts-speak { 
-      animation: tts-speak 2s ease-in-out infinite; 
+    .soft-panel {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     }
 
-    /* 滚动条美化 */
+    .assistant-bubble {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.16);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .user-bubble {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      box-shadow: 0 10px 28px rgba(236,72,153,0.28);
+    }
+
     .subtle-scroll::-webkit-scrollbar {
-      width: 4px;
+      width: 6px;
     }
     .subtle-scroll::-webkit-scrollbar-thumb {
-      background: rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.10);
       border-radius: 999px;
     }
     .subtle-scroll::-webkit-scrollbar-track {
       background: transparent;
     }
-
-    /* 拼音 Ruby 标签对齐修复并增加行距 */
-    ruby {
-      ruby-align: center;
-    }
-    .pinyin-text {
-      line-height: 3.2rem;
-    }
   `}</style>
 );
 
 const SHARED_KEYS = [
-  'providerId', 'apiUrl', 'apiKey', 'model', 'ttsApiUrl', 
-  'ttsVoice', 'zhVoice', 'myVoice', 'ttsSpeed', 'ttsPitch', 
-  'soundFx', 'vibration'
+  'providerId',
+  'apiUrl',
+  'apiKey',
+  'model',
+  'ttsApiUrl',
+  'ttsVoice',
+  'zhVoice',
+  'myVoice',
+  'ttsSpeed',
+  'ttsPitch',
+  'soundFx',
+  'vibration'
 ];
 
 const SCENE_KEYS = [
-  'assistantId', 'systemPrompt', 'temperature', 'showText', 'asrSilenceMs'
+  'assistantId',
+  'systemPrompt',
+  'temperature',
+  'showText',
+  'asrSilenceMs'
 ];
 
-const PinyinText = ({ text }) => {
-  const result = pinyin(text, { type: 'all' });
-
-  return (
-    <div className="pinyin-text tracking-[0.2em] text-[15px] text-slate-800 break-words">
-      {result.map((item, i) => {
-        if (item.isZh) {
-          return (
-            <ruby key={i} className="mx-[3px]">
-              {item.origin}
-              <rt className="text-[10px] text-slate-400 font-normal prevent-browser-actions -translate-y-[2px] block text-center">
-                {item.pinyin}
-              </rt>
-            </ruby>
-          );
-        }
-        return <span key={i}>{item.origin}</span>;
-      })}
-    </div>
-  );
-};
-
-function CircleIconButton({ onClick, children, active = false, danger = false, className = '', title }) {
+function CircleIconButton({
+  onClick,
+  children,
+  active = false,
+  danger = false,
+  className = '',
+  title
+}) {
   return (
     <button
       type="button"
       title={title}
       onClick={onClick}
-      className={`flex items-center justify-center rounded-full transition-all border active:scale-95 shadow-sm ${
+      className={`flex h-11 w-11 items-center justify-center rounded-full border transition-all active:scale-95 ${
         danger
-          ? 'bg-red-50 text-red-500 border-red-100 hover:bg-red-100'
+          ? 'border-red-400/20 bg-red-400/10 text-red-300 hover:bg-red-400/15'
           : active
-          ? 'bg-indigo-100 text-indigo-600 border-indigo-200 hover:bg-indigo-200'
-          : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50'
+          ? 'border-pink-400/30 bg-pink-400/15 text-pink-200 hover:bg-pink-400/20'
+          : 'border-white/10 bg-white/5 text-slate-200 hover:bg-white/10'
       } ${className}`}
     >
       {children}
@@ -133,13 +161,13 @@ function CircleIconButton({ onClick, children, active = false, danger = false, c
 function HeaderBar({ title, onBack, onOpenSettings, modelName }) {
   return (
     <div className="relative z-20 flex h-16 items-center justify-between px-4">
-      <CircleIconButton onClick={onBack} title="返回" className="h-11 w-11 !border-transparent !bg-transparent !shadow-none hover:!bg-slate-100">
+      <CircleIconButton onClick={onBack} title="返回">
         <FaArrowLeft />
       </CircleIconButton>
 
       <div className="flex flex-col items-center justify-center text-center">
-        <div className="flex items-center gap-2 text-[15px] font-black tracking-[0.18em] text-slate-800">
-          <span className="h-2 w-2 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,.6)]" />
+        <div className="flex items-center gap-2 text-[15px] font-black tracking-[0.18em] text-white">
+          <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,.8)]" />
           {title}
         </div>
         <div className="mt-0.5 text-[11px] font-medium text-slate-400">
@@ -147,7 +175,7 @@ function HeaderBar({ title, onBack, onOpenSettings, modelName }) {
         </div>
       </div>
 
-      <CircleIconButton onClick={onOpenSettings} title="设置" className="h-11 w-11 !border-transparent !bg-transparent !shadow-none hover:!bg-slate-100">
+      <CircleIconButton onClick={onOpenSettings} title="设置">
         <FaSlidersH />
       </CircleIconButton>
     </div>
@@ -158,14 +186,15 @@ function SetupEmptyState({ onOpenSettings }) {
   return (
     <div className="flex min-h-full flex-col items-center justify-center px-6 text-center">
       <div className="mb-4 text-5xl">🤖</div>
-      <div className="text-lg font-black text-slate-800">先完成 AI 设置</div>
-      <div className="mt-2 max-w-sm text-sm font-medium leading-6 text-slate-500">
+      <div className="text-lg font-black text-white">先完成 AI 设置</div>
+      <div className="mt-2 max-w-sm text-sm font-medium leading-6 text-slate-400">
         需要先填写 API Key、接口地址和模型，才能开始自动讲题。
       </div>
+
       <button
         type="button"
         onClick={onOpenSettings}
-        className="mt-6 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-3 text-sm font-black text-white shadow-md transition-transform active:scale-95"
+        className="mt-6 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 px-5 py-3 text-sm font-black text-white shadow-[0_10px_25px_rgba(236,72,153,.28)] transition-transform active:scale-95"
       >
         去设置
       </button>
@@ -176,46 +205,62 @@ function SetupEmptyState({ onOpenSettings }) {
 function VoiceCenterState({ isAiSpeaking, isRecording, isThinking }) {
   return (
     <div className="flex min-h-full flex-1 flex-col items-center justify-center">
-      <div className="relative flex items-center justify-center">
-        <img
-          src="https://audio.886.best/chinese-vocab-audio/%E5%9B%BE%E7%89%87/images.jpeg"
-          alt="Teacher"
-          className={`h-48 w-48 object-cover rounded-full border-4 border-white transition-all duration-300 shadow-xl ${
-            isAiSpeaking ? 'animate-tts-speak' : ''
+      <div className="relative flex h-56 w-56 items-center justify-center">
+        <div className="absolute inset-0 rounded-full bg-pink-400/10 blur-3xl" />
+        {isAiSpeaking && <div className="absolute inset-4 animate-ping rounded-full bg-pink-400/20" />}
+
+        <div
+          className={`relative z-10 flex h-36 w-36 items-center justify-center rounded-full border border-white/10 bg-white/5 p-2 shadow-[0_20px_60px_rgba(236,72,153,.18)] transition-all duration-300 ${
+            isAiSpeaking ? 'scale-110 ring-4 ring-pink-300/10' : ''
           }`}
-        />
+        >
+          <img
+            src="https://api.dicebear.com/7.x/bottts/svg?seed=Teacher&backgroundColor=fce4ec"
+            alt="Teacher"
+            className="h-full w-full rounded-full object-cover"
+          />
+        </div>
       </div>
 
-      <div className="mt-12 flex min-h-[44px] items-center justify-center">
-        <span className="text-sm font-bold tracking-[0.18em] text-slate-400">
-          {isRecording ? '正在倾听...' : isThinking ? '思考中...' : '期待你的提问'}
-        </span>
+      <div className="mt-8 flex min-h-[44px] items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-2 backdrop-blur-sm">
+        {isAiSpeaking ? (
+          <div className="tts-bars flex items-center gap-1">
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
+        ) : (
+          <span className="text-sm font-bold tracking-[0.18em] text-slate-300">
+            {isRecording ? '正在倾听...' : isThinking ? '思考中...' : '期待你的提问'}
+          </span>
+        )}
       </div>
-      <div className="mt-2 max-w-xs text-center text-xs leading-6 text-slate-400">
+
+      <div className="mt-4 max-w-xs text-center text-xs leading-6 text-slate-500">
         按住下方麦克风可以直接提问，我会帮你分步骤讲解题目。
       </div>
     </div>
   );
 }
 
-function ChatList({ history, isRecording, textMode, inputText, replaySpecificAnswer }) {
-  const [pinyinMsgs, setPinyinMsgs] = useState(new Set());
-
-  const togglePinyin = (id) => {
-    setPinyinMsgs((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-
+function ChatList({
+  history,
+  isRecording,
+  textMode,
+  inputText,
+  replaySpecificAnswer
+}) {
   return (
-    <div className="mx-auto flex min-h-full w-full max-w-2xl flex-col px-2">
+    <div className="mx-auto flex min-h-full w-full max-w-2xl flex-col">
       {history.map((msg) => {
         if (msg.role === 'error') {
           return (
-            <div key={msg.id} className="mx-8 mb-4 rounded-xl bg-red-50 px-4 py-3 text-center text-xs font-bold text-red-400">
+            <div
+              key={msg.id}
+              className="mx-8 mb-4 rounded-2xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-center text-xs font-bold text-red-200"
+            >
               {msg.text}
             </div>
           );
@@ -223,8 +268,8 @@ function ChatList({ history, isRecording, textMode, inputText, replaySpecificAns
 
         if (msg.role === 'user') {
           return (
-            <div key={msg.id} className="mb-6 flex justify-end pl-12">
-              <div className="whitespace-pre-wrap text-[15px] font-medium leading-7 text-slate-500">
+            <div key={msg.id} className="mb-4 flex justify-end pl-12">
+              <div className="user-bubble max-w-[90%] whitespace-pre-wrap rounded-[22px] rounded-tr-md px-5 py-3 text-[15px] font-medium leading-7 text-white">
                 {msg.text}
               </div>
             </div>
@@ -232,52 +277,45 @@ function ChatList({ history, isRecording, textMode, inputText, replaySpecificAns
         }
 
         const aiText = normalizeAssistantText(msg.text || '');
-        const showPinyin = pinyinMsgs.has(msg.id);
 
         return (
-          <div key={msg.id} className="mb-8 flex flex-col items-start pr-8">
-            <div className="w-full">
-              {showPinyin && !msg.isStreaming && aiText ? (
-                <PinyinText text={aiText} />
-              ) : (
-                <div className="inline whitespace-pre-wrap text-[15px] font-medium leading-8 text-slate-800 break-words">
+          <div key={msg.id} className="mb-6 flex items-start gap-3">
+            <div className="mt-1 h-10 w-10 shrink-0 overflow-hidden rounded-full border border-white/10 bg-white/5 shadow-md">
+              <img
+                src="https://api.dicebear.com/7.x/bottts/svg?seed=Teacher&backgroundColor=fce4ec"
+                className="h-full w-full object-cover"
+                alt="AI"
+              />
+            </div>
+
+            <div className="flex-1">
+              <div className="assistant-bubble inline-block rounded-[22px] rounded-tl-md px-5 py-4">
+                <div className="inline whitespace-pre-wrap text-[15px] font-medium leading-7 text-slate-100">
                   {aiText || (msg.isStreaming ? '思考中...' : '')}
                   {msg.isStreaming && (
-                    <span className="ml-1 inline-block h-4 w-1.5 animate-pulse rounded-full bg-indigo-400 align-middle" />
+                    <span className="ml-1 inline-block h-4 w-1.5 animate-pulse rounded-full bg-pink-400 align-middle" />
                   )}
                 </div>
-              )}
 
-              {!msg.isStreaming && aiText && (
-                <div className="mt-2 flex items-center gap-3">
+                {!msg.isStreaming && aiText && (
                   <button
                     type="button"
                     onClick={() => replaySpecificAnswer(msg.text)}
-                    className="inline-flex items-center text-slate-300 transition-colors hover:text-indigo-500 active:scale-90"
+                    className="ml-3 mt-1 inline-flex items-center align-middle text-slate-400 transition-colors hover:text-pink-300 active:scale-90"
                     title="重新朗读"
                   >
                     <FaVolumeUp size={16} />
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => togglePinyin(msg.id)}
-                    className={`inline-flex items-center text-[12px] font-bold transition-colors active:scale-90 ${
-                      showPinyin ? 'text-indigo-500' : 'text-slate-300 hover:text-indigo-500'
-                    }`}
-                    title="切换拼音"
-                  >
-                    拼
-                  </button>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         );
       })}
 
       {isRecording && textMode === false && (
-        <div className="mb-6 flex justify-end pl-12">
-          <div className="text-[15px] font-medium text-slate-400 opacity-90">
+        <div className="mb-4 flex justify-end pl-12">
+          <div className="user-bubble max-w-[90%] rounded-[22px] rounded-tr-md px-5 py-3 text-[15px] font-medium text-white opacity-90">
             <span className="animate-pulse">{inputText || '正在聆听...'}</span>
           </div>
         </div>
@@ -306,31 +344,30 @@ function BottomControlBar({
   currentLangObj
 }) {
   return (
-    <div className="absolute bottom-0 left-0 right-0 z-30 px-4 pb-[max(20px,env(safe-area-inset-bottom))] pt-2 bg-gradient-to-t from-[#f0f7ff] via-[#f0f7ff]/90 to-transparent">
-      <div className="mx-auto w-full max-w-3xl px-2">
+    <div className="absolute bottom-0 left-0 right-0 z-30 px-4 pb-[max(20px,env(safe-area-inset-bottom))] pt-3">
+      <div className="glass-panel mx-auto w-full max-w-3xl rounded-[28px] px-4 py-3">
         {!isAIReady ? (
           <div className="flex h-20 items-center justify-center">
             <button
               type="button"
               onClick={onOpenSettings}
-              className="rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-3 text-sm font-black text-white shadow-md active:scale-95"
+              className="rounded-full bg-gradient-to-r from-pink-500 to-rose-500 px-6 py-3 text-sm font-black text-white shadow-[0_10px_25px_rgba(236,72,153,.28)] active:scale-95"
             >
               打开 AI 设置
             </button>
           </div>
         ) : (
-          <div className="flex items-center justify-between gap-3">
-            <div className="shrink-0 flex justify-center w-12">
-              <CircleIconButton
-                onClick={() => setTextMode((value) => !value)}
-                active={!textMode}
-                title={textMode ? '切换语音输入' : '切换文字输入'}
-              >
-                {textMode ? <FaMicrophone size={18} /> : <FaKeyboard size={18} />}
-              </CircleIconButton>
-            </div>
+          <div className="flex items-center gap-3">
+            <CircleIconButton
+              onClick={() => setTextMode((value) => !value)}
+              active={!textMode}
+              title={textMode ? '切换语音输入' : '切换文字输入'}
+              className="shrink-0"
+            >
+              {textMode ? <FaMicrophone size={17} /> : <FaKeyboard size={17} />}
+            </CircleIconButton>
 
-            <div className="flex-1 flex justify-center relative">
+            <div className="flex-1">
               {!textMode ? (
                 <div className="flex flex-col items-center justify-center">
                   <button
@@ -340,99 +377,96 @@ function BottomControlBar({
                     onPointerCancel={handleMicPointerCancel}
                     onPointerLeave={handleMicPointerCancel}
                     onContextMenu={(e) => e.preventDefault()}
-                    className={`touch-none flex h-56 w-56 items-center justify-center rounded-full text-white transition-all duration-300 shadow-xl ${
+                    className={`touch-none flex h-20 w-20 items-center justify-center rounded-full text-white transition-all duration-300 ${
                       isRecording
-                        ? 'bg-red-500 scale-95 shadow-red-500/50 animate-pulse'
-                        : 'bg-gradient-to-br from-blue-500 to-indigo-600 hover:scale-105 active:scale-95 shadow-blue-500/40'
+                        ? 'animate-pulse-ring bg-pink-500'
+                        : 'bg-gradient-to-br from-pink-500 to-rose-500 shadow-[0_14px_35px_rgba(236,72,153,.28)] hover:scale-105 active:scale-95'
                     }`}
                   >
                     {isRecording ? (
-                      <FaStop className="text-6xl" />
+                      <FaPaperPlane className="animate-pulse text-3xl" />
                     ) : (
-                      <FaMicrophone className="text-7xl" />
+                      <FaMicrophone className="text-3xl" />
                     )}
                   </button>
-                  <div className="absolute -bottom-6 w-full text-center whitespace-nowrap text-[12px] font-bold text-slate-500">
-                     {isRecording ? (
-                      <span className="text-red-500">松开 / 静默自动发送</span>
+
+                  <div className="mt-3 min-h-[18px] whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">
+                    {isRecording ? (
+                      <span className="text-pink-300">点击发送 · 静默自动发送</span>
                     ) : isThinking ? (
-                      <span className="text-indigo-400">思考中...</span>
+                      <span className="text-violet-300">思考中...</span>
                     ) : isAiSpeaking ? (
-                      <span className="text-indigo-400">正在讲话...</span>
+                      <div className="tts-bars flex gap-1">
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                      </div>
                     ) : (
-                      `长按切换语言 · ${currentLangObj?.flag || ''} ${currentLangObj?.name || ''}`
+                      `长按切换语言 · ${currentLangObj.flag} ${currentLangObj.name}`
                     )}
                   </div>
                 </div>
               ) : (
-                <div className="flex w-full items-center rounded-full bg-white px-2 py-1.5 shadow-sm border border-slate-200">
+                <div className="flex items-center rounded-full border border-white/10 bg-white/5 p-1.5 shadow-inner backdrop-blur-sm">
                   <input
                     type="text"
-                    className="allow-select flex-1 bg-transparent px-3 py-2 text-[15px] font-medium text-slate-700 outline-none placeholder-slate-400"
-                    placeholder={isRecording ? '听你说...' : '输入消息...'}
+                    className="flex-1 bg-transparent px-4 py-2 text-sm font-medium text-white outline-none placeholder-slate-500"
+                    placeholder={isRecording ? '听你说...' : '输入消息继续追问...'}
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
                     onKeyDown={(e) => {
-                      if (e.nativeEvent.isComposing) return;
                       if (e.key === 'Enter' && inputText.trim()) {
-                        e.preventDefault();
                         sendMessage(inputText);
                         setInputText('');
                       }
                     }}
                   />
-                  <div className="flex items-center gap-1 shrink-0 pr-1">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (isRecording) stopEverything();
-                        if (inputText.trim()) {
-                          sendMessage(inputText);
-                          setInputText('');
-                        }
-                      }}
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-500 hover:bg-indigo-600 text-white shadow-sm transition-transform active:scale-90"
-                    >
-                      <FaPaperPlane size={14} className="-ml-0.5" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setShowText((value) => !value)}
-                      className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
-                        showText ? 'bg-indigo-50 text-indigo-600' : 'text-slate-400 hover:bg-slate-50'
-                      }`}
-                      title={showText ? '隐藏字幕' : '显示字幕'}
-                    >
-                      {showText ? <FaClosedCaptioning size={18} /> : <FaCommentSlash size={18} />}
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (isRecording) stopEverything();
+                      if (inputText.trim()) {
+                        sendMessage(inputText);
+                        setInputText('');
+                      }
+                    }}
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-[0_8px_20px_rgba(236,72,153,.28)] transition-transform active:scale-90"
+                  >
+                    <FaPaperPlane size={14} className="-ml-0.5" />
+                  </button>
                 </div>
               )}
             </div>
 
-            {!textMode && (
-                  <div className="shrink-0 flex justify-center w-12">
-                    {isAiSpeaking || isRecording || isThinking ? (
-                      <CircleIconButton onClick={stopEverything} danger title="停止">
-                        <FaStop size={18} />
-                      </CircleIconButton>
-                    ) : (
-                      <CircleIconButton
-                        onClick={() => setShowText((value) => !value)}
-                        active={showText}
-                        title={showText ? '隐藏字幕' : '显示字幕'}
-                      >
-                        {showText ? <FaClosedCaptioning size={18} /> : <FaCommentSlash size={18} />}
-                      </CircleIconButton>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
+            <div className="shrink-0">
+              {isAiSpeaking || isRecording || isThinking ? (
+                <CircleIconButton
+                  onClick={stopEverything}
+                  danger
+                  title="停止"
+                  className="h-12 w-12"
+                >
+                  <FaStop size={17} />
+                </CircleIconButton>
+              ) : (
+                <CircleIconButton
+                  onClick={() => setShowText((value) => !value)}
+                  active={showText}
+                  title={showText ? '隐藏字幕' : '显示字幕'}
+                  className="h-12 w-12"
+                >
+                  {showText ? <FaClosedCaptioning size={18} /> : <FaCommentSlash size={18} />}
+                </CircleIconButton>
+              )}
+            </div>
           </div>
-        </div>
-      );
-    }
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function InteractiveAIExplanationPanel({
   open,
@@ -445,7 +479,12 @@ export default function InteractiveAIExplanationPanel({
   const [mounted, setMounted] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
-  const { resolvedSettings, updateSharedSettings, updateSceneSettings } = useAISettings(AI_SCENES.EXERCISE);
+  const {
+    resolvedSettings,
+    updateSharedSettings,
+    updateSceneSettings
+  } = useAISettings(AI_SCENES.EXERCISE);
+
   const effectiveSettings = settings || resolvedSettings;
 
   const fallbackUpdateSettings = useCallback(
@@ -458,8 +497,13 @@ export default function InteractiveAIExplanationPanel({
         if (SCENE_KEYS.includes(key)) scenePatch[key] = value;
       });
 
-      if (Object.keys(sharedPatch).length) updateSharedSettings(sharedPatch);
-      if (Object.keys(scenePatch).length) updateSceneSettings(AI_SCENES.EXERCISE, scenePatch);
+      if (Object.keys(sharedPatch).length) {
+        updateSharedSettings(sharedPatch);
+      }
+
+      if (Object.keys(scenePatch).length) {
+        updateSceneSettings(AI_SCENES.EXERCISE, scenePatch);
+      }
     },
     [updateSharedSettings, updateSceneSettings]
   );
@@ -520,6 +564,7 @@ export default function InteractiveAIExplanationPanel({
 
   useEffect(() => {
     if (!open) return undefined;
+
     const prevBodyOverflow = document.body.style.overflow;
     const prevHtmlOverflow = document.documentElement.style.overflow;
 
@@ -538,10 +583,16 @@ export default function InteractiveAIExplanationPanel({
     <>
       <GlobalStyles />
 
-      <div className="fixed inset-0 z-[2147483000] bg-black/40 backdrop-blur-sm" />
+      <div className="fixed inset-0 z-[2147483000] bg-black/60 backdrop-blur-sm" />
 
-      <div className="prevent-browser-actions fixed inset-0 z-[2147483001] isolate flex h-[100dvh] w-full flex-col overflow-hidden text-slate-800">
-        <div className="ai-light-bg absolute inset-0" />
+      <div className="fixed inset-0 z-[2147483001] isolate flex h-[100dvh] w-full flex-col overflow-hidden text-white">
+        <div className="ai-dark-bg absolute inset-0" />
+
+        <div className="pointer-events-none absolute inset-0 opacity-40">
+          <div className="absolute left-[-10%] top-[-10%] h-[280px] w-[280px] rounded-full bg-pink-500/10 blur-3xl" />
+          <div className="absolute right-[-10%] top-[10%] h-[260px] w-[260px] rounded-full bg-violet-500/10 blur-3xl" />
+          <div className="absolute bottom-[-5%] left-[20%] h-[220px] w-[220px] rounded-full bg-rose-500/10 blur-3xl" />
+        </div>
 
         <HeaderBar
           title={title}
@@ -555,7 +606,7 @@ export default function InteractiveAIExplanationPanel({
 
         <div
           ref={scrollRef}
-          className={`subtle-scroll relative z-10 flex-1 overflow-y-auto px-4 pb-56 pt-2 ${
+          className={`subtle-scroll relative z-10 flex-1 overflow-y-auto px-4 pb-44 pt-2 ${
             showLangPicker ? 'pointer-events-none select-none' : ''
           }`}
         >
@@ -617,4 +668,4 @@ export default function InteractiveAIExplanationPanel({
     </>,
     document.body
   );
-      }
+}
