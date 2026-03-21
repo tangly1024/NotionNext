@@ -36,17 +36,19 @@ import {
   Sparkles,
   Map,
   KeyRound,
-  QrCode
+  QrCode,
+  Lock,
+  ChevronLeft
 } from 'lucide-react'
 import BlogPostBar from './components/BlogPostBar'
 import CONFIG from './config'
 import { Style } from './style'
 
-// --- 动态导入组件 ---
-const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false, loading: () => <div className="p-4 text-center text-slate-500">加载中...</div> })
-const BookLibrary = dynamic(() => import('@/components/BookLibrary'), { ssr: false, loading: () => <div className="p-4 text-center text-slate-500">加载中...</div> })
-const AIChatDrawer = dynamic(() => import('@/components/AIChatDrawer'), { ssr: false, loading: () => <div className="p-4 text-center text-slate-500">加载中...</div> })
-const VoiceChat = dynamic(() => import('@/components/VoiceChat'), { ssr: false, loading: () => <div className="p-4 text-center text-slate-500">加载中...</div> })
+// --- 动态导入组件，优化首屏加载 ---
+const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
+const BookLibrary = dynamic(() => import('@/components/BookLibrary'), { ssr: false })
+const AIChatDrawer = dynamic(() => import('@/components/AIChatDrawer'), { ssr: false })
+const VoiceChat = dynamic(() => import('@/components/VoiceChat'), { ssr: false })
 const BlogListScroll = dynamic(() => import('./components/BlogListScroll'), { ssr: false })
 const BlogArchiveItem = dynamic(() => import('./components/BlogArchiveItem'), { ssr: false })
 const ArticleLock = dynamic(() => import('./components/ArticleLock'), { ssr: false })
@@ -68,6 +70,7 @@ const RecommendPosts = dynamic(() => import('./components/RecommendPosts'), { ss
 const ThemeGlobalSimple = createContext()
 export const useSimpleGlobal = () => useContext(ThemeGlobalSimple)
 
+// --- 静态常量数据 ---
 const pinyinNav = [
   { zh: '声母', mm: 'ဗျည်း', icon: Mic, href: '/pinyin/initials', bg: 'bg-blue-100/90', color: 'text-blue-700' },
   { zh: '韵母', mm: 'သရ', icon: Music2, href: '/pinyin/finals', bg: 'bg-emerald-100/90', color: 'text-emerald-700' },
@@ -77,58 +80,27 @@ const pinyinNav = [
 
 const coreTools = [
   { zh: 'AI 翻译', mm: 'AI ဘာသာပြန်', icon: Globe, action: 'translator', bg: 'bg-indigo-50', iconColor: 'text-indigo-600' },
-  { zh: '免费书籍', mm: 'စာကြည့်တိုက်', icon: Library, action: 'library', bg: 'bg-cyan-50', iconColor: 'text-cyan-600' },
+  { zh: '书籍库', mm: 'စာကြည့်တိုက်', icon: Library, action: 'library', bg: 'bg-cyan-50', iconColor: 'text-cyan-600' },
   { zh: '单词收藏', mm: 'မှတ်ထားသော စာလုံး', icon: Star, href: '/words', bg: 'bg-slate-50', iconColor: 'text-slate-700' },
-  { zh: '口语收藏', mm: 'မှတ်ထားသော စကားပြော', icon: Volume2, href: '/oral', bg: 'bg-slate-50', iconColor: 'text-slate-700' }
+  { zh: '口语收藏', mm: 'စကားပြော', icon: Volume2, href: '/oral', bg: 'bg-slate-50', iconColor: 'text-slate-700' }
 ]
 
 const systemCourses = [
-  {
-    badge: 'Words',
-    title: '日常高频词汇',
-    mmDesc: 'အခြေခံ စကားလုံးများကို လေ့လာပါ။',
-    bgImg: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=1200',
-    href: '/vocabulary',
-    color: 'from-blue-600/90'
-  },
-  {
-    badge: 'Oral',
-    title: '场景口语短句',
-    mmDesc: 'အခြေအနေလိုက် စကားပြော လေ့ကျင့်မှု',
-    bgImg: 'https://images.unsplash.com/photo-1528712306091-ed0763094c98?auto=format&fit=crop&q=80&w=1200',
-    href: '/oral',
-    color: 'from-emerald-600/90'
-  },
-  {
-    badge: 'Patterns',
-    title: '实用句型结构',
-    mmDesc: 'ဝါကျတည်ဆောက်ပုံများ',
-    bgImg: 'https://images.unsplash.com/photo-1455390582262-044cdead27d8?auto=format&fit=crop&q=80&w=1200',
-    action: 'vip', // 点击触发激活码/分销弹窗
-    color: 'from-purple-600/90',
-    isLock: true
-  },
-  {
-    badge: 'Grammar',
-    title: '核心语法解析',
-    mmDesc: 'အခြေခံသဒ္ဒါရှင်းလင်းချက်',
-    bgImg: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=1200',
-    action: 'vip', // 点击触发激活码/分销弹窗
-    color: 'from-orange-600/90',
-    isLock: true
-  }
+  { badge: 'WORDS', title: '日常高频词汇', mmDesc: 'အခြေခံ စကားလုံးများကို လေ့လာပါ။', bgImg: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=1200', href: '/vocabulary', color: 'from-blue-600/90' },
+  { badge: 'ORAL', title: '场景口语短句', mmDesc: 'အခြေအနေလိုက် စကားပြော လေ့ကျင့်မှု', bgImg: 'https://images.unsplash.com/photo-1528712306091-ed0763094c98?auto=format&fit=crop&q=80&w=1200', href: '/oral', color: 'from-emerald-600/90' },
+  { badge: 'PATTERNS', title: '实用句型结构', mmDesc: 'ဝါကျတည်ဆောက်ပုံများ', bgImg: 'https://images.unsplash.com/photo-1455390582262-044cdead27d8?auto=format&fit=crop&q=80&w=1200', action: 'vip', color: 'from-purple-600/90', isLock: true },
+  { badge: 'GRAMMAR', title: '核心语法解析', mmDesc: 'အခြေခံသဒ္ဒါရှင်းလင်းချက်', bgImg: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=1200', action: 'vip', color: 'from-orange-600/90', isLock: true }
 ]
 
-// 底部导航栏：加入 JS Bridge 拦截，实现 0 秒切换
+// --- 底部秒切组件 (JS Bridge) ---
 function FooterLink({ href, icon: Icon, tabName, className = '' }) {
   const handleClick = (e) => {
-    // 检查是否在 Android WebView 中且注册了 JS 接口
+    // 检测是否在 APP 的 WebView 环境中
     if (typeof window !== 'undefined' && window.AndroidInterface && window.AndroidInterface.switchTab) {
-      e.preventDefault(); // 阻止浏览器原本的跳转
-      window.AndroidInterface.switchTab(tabName || href); // 触发原生秒切
+      e.preventDefault();
+      window.AndroidInterface.switchTab(tabName || href);
     }
   };
-
   return (
     <a href={href} onClick={handleClick} className={`flex flex-col items-center justify-center p-2 text-slate-500 hover:text-slate-800 active:scale-90 transition-all ${className}`}>
       <Icon size={26} strokeWidth={2} />
@@ -136,16 +108,16 @@ function FooterLink({ href, icon: Icon, tabName, className = '' }) {
   )
 }
 
+// --- 主页面核心组件 ---
 const LayoutLearningHome = () => {
   const router = useRouter()
   const [activeOverlay, setActiveOverlay] = useState(null)
+  const [cdk, setCdk] = useState('')
 
   const openOverlay = useCallback((overlayType) => {
     setActiveOverlay((prev) => {
       if (prev === overlayType) return prev
-      if (typeof window !== 'undefined') {
-        window.history.pushState({ overlay: overlayType }, '', window.location.href)
-      }
+      if (typeof window !== 'undefined') window.history.pushState({ overlay: overlayType }, '', window.location.href)
       return overlayType
     })
   }, [])
@@ -158,6 +130,7 @@ const LayoutLearningHome = () => {
     setActiveOverlay(null)
   }, [activeOverlay])
 
+  // 处理物理返回键与 Popstate
   useEffect(() => {
     if (typeof window === 'undefined') return
     const onPopState = () => setActiveOverlay(null)
@@ -165,96 +138,71 @@ const LayoutLearningHome = () => {
     return () => window.removeEventListener('popstate', onPopState)
   }, [])
 
+  // --- 电报级侧滑手势算法 ---
   useEffect(() => {
-    if (typeof document === 'undefined') return
-    const prev = document.body.style.overflow
-    if (activeOverlay) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = prev
-    }
-    return () => document.body.style.overflow = prev
-  }, [activeOverlay])
-
-  // --- 重点：增加全局边缘右滑手势 (类电报) ---
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    let startX = 0;
-    let startY = 0;
+    if (typeof window === 'undefined') return
+    let startX = 0
+    let startY = 0
 
     const handleTouchStart = (e) => {
-      startX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
-    };
+      startX = e.touches[0].clientX
+      startY = e.touches[0].clientY
+    }
 
     const handleTouchEnd = (e) => {
-      const endX = e.changedTouches[0].clientX;
-      const endY = e.changedTouches[0].clientY;
-      const deltaX = endX - startX;
-      const deltaY = Math.abs(endY - startY);
+      const endX = e.changedTouches[0].clientX
+      const endY = e.changedTouches[0].clientY
+      const deltaX = endX - startX
+      const deltaY = Math.abs(endY - startY)
 
-      // 判定条件：从屏幕极左侧(startX < 30)开始滑，向右滑超过60px，且上下偏移不大
-      if (startX < 30 && deltaX > 60 && deltaY < 50) {
-        openOverlay('menu');
+      // 判定：左侧边缘 40px 内起滑，向右滑 > 80px，上下偏移 < 50px
+      if (startX < 40 && deltaX > 80 && deltaY < 50) {
+        openOverlay('menu')
       }
-    };
+    }
 
-    window.addEventListener('touchstart', handleTouchStart);
-    window.addEventListener('touchend', handleTouchEnd);
+    window.addEventListener('touchstart', handleTouchStart)
+    window.addEventListener('touchend', handleTouchEnd)
     return () => {
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchend', handleTouchEnd);
-    };
-  }, [openOverlay]);
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchend', handleTouchEnd)
+    }
+  }, [openOverlay])
 
-  const glassCard = 'bg-white/95 backdrop-blur-xl border border-white/60 shadow-lg shadow-slate-200/50 rounded-2xl transition-all active:scale-95 cursor-pointer hover:shadow-xl hover:shadow-slate-300/60'
+  const glassCard = 'bg-white/95 backdrop-blur-xl border border-white/60 shadow-lg shadow-slate-200/50 rounded-2xl transition-all active:scale-95 hover:shadow-xl'
 
   return (
     <main className='relative min-h-[100dvh] overflow-x-hidden text-slate-900'>
-      <div className='fixed inset-0 -z-30'>
-        <img src='/images/home-bg.jpg' alt='' aria-hidden='true' className='h-full w-full object-cover' />
-        <div className='absolute inset-0 bg-white/50 backdrop-blur-2xl' />
-        <div className='absolute inset-0 bg-gradient-to-b from-white/20 via-white/10 to-white/30' />
+      {/* 动态背景 */}
+      <div className='fixed inset-0 -z-30 overflow-hidden'>
+        <img src='/images/home-bg.jpg' alt='' className='h-full w-full object-cover scale-105 blur-[2px]' />
+        <div className='absolute inset-0 bg-white/40 backdrop-blur-2xl' />
       </div>
 
-      {/* 电报(Telegram)级平滑侧滑菜单 */}
+      {/* 1. 电报风格侧滑菜单 */}
       <AnimatePresence>
         {activeOverlay === 'menu' && (
           <div className='fixed inset-0 z-[160] flex'>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              onClick={closeOverlay}
-              className='absolute inset-0 bg-slate-900/40 backdrop-blur-sm'
-            />
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={closeOverlay} className='absolute inset-0 bg-slate-900/40 backdrop-blur-sm' />
             <motion.aside
-              initial={{ x: '-100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '-100%' }}
-              transition={{ type: 'spring', damping: 28, stiffness: 250, mass: 0.8 }}
-              drag='x'
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={{ left: 1, right: 0 }} 
-              onDragEnd={(e, info) => {
-                if (info.offset.x < -60 || info.velocity.x < -300) closeOverlay()
-              }}
+              initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              drag='x' dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={(e, info) => { if (info.offset.x < -50) closeOverlay() }}
               className='relative w-[280px] h-full bg-white/95 backdrop-blur-xl shadow-2xl flex flex-col border-r border-slate-100'
             >
               <div className='p-6 border-b border-slate-100 flex items-center justify-between'>
                 <div>
-                  <h2 className='text-xl font-black text-slate-900'>菜单</h2>
-                  <p className='text-xs text-slate-500'>中缅学习中心</p>
+                  <h2 className='text-xl font-black text-slate-900 tracking-tighter'>菜单中心</h2>
+                  <p className='text-[10px] text-slate-400 uppercase font-bold'>Navigation</p>
                 </div>
-                <button onClick={closeOverlay} className='p-2 bg-slate-100 hover:bg-slate-200 rounded-full active:scale-90 transition-colors'>
-                  <X size={20} className='text-slate-800' />
-                </button>
+                <button onClick={closeOverlay} className='p-2 bg-slate-100 rounded-full active:scale-90 transition-all'><X size={18} /></button>
               </div>
-              <nav className='p-4 space-y-2'>
-                {['首页', 'HSK 课程', 'AI 翻译', '书籍库', '设置'].map(item => (
-                  <button key={item} type='button' className='w-full text-left p-4 text-slate-800 font-bold hover:bg-slate-50 rounded-xl transition-colors'>
-                    {item}
+              <nav className='p-4 space-y-2 overflow-y-auto'>
+                {['学习首页', 'HSK 课程', 'AI 翻译', '单词本', '个人设置'].map(item => (
+                  <button key={item} className='w-full text-left p-4 text-slate-700 font-bold hover:bg-indigo-50 hover:text-indigo-600 rounded-2xl transition-all flex items-center justify-between group'>
+                    {item} <ChevronRight size={16} className='opacity-0 group-hover:opacity-100 transition-all' />
                   </button>
                 ))}
               </nav>
@@ -263,64 +211,45 @@ const LayoutLearningHome = () => {
         )}
       </AnimatePresence>
 
-      {/* 课程解锁/激活码/分销付款 弹窗 */}
+      {/* 2. VIP 课程激活与导师弹窗 */}
       <AnimatePresence>
         {activeOverlay === 'vip' && (
           <div className='fixed inset-0 z-[160] flex items-center justify-center p-4'>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={closeOverlay} className='absolute inset-0 bg-slate-900/60 backdrop-blur-md' />
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              onClick={closeOverlay}
-              className='absolute inset-0 bg-slate-900/60 backdrop-blur-sm'
-            />
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0, y: 10 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 10 }}
-              className='relative w-full max-w-sm bg-white/95 backdrop-blur-2xl rounded-[2rem] p-6 shadow-2xl border border-white/50 z-10 overflow-hidden'
+              initial={{ scale: 0.9, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className='relative w-full max-w-sm bg-white/95 backdrop-blur-2xl rounded-[2.5rem] p-7 shadow-2xl border border-white/50 z-10'
             >
-              <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl"></div>
-              
-              <div className='flex justify-between items-start mb-4'>
-                <div className='w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-orange-500/30'>
-                  <KeyRound size={24} />
+              <div className='flex justify-between items-start mb-6'>
+                <div className='w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-orange-200'>
+                  <KeyRound size={28} />
                 </div>
-                <button onClick={closeOverlay} className='p-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full transition-colors'>
-                  <X size={18} />
-                </button>
+                <button onClick={closeOverlay} className='p-2 bg-slate-100 rounded-full'><X size={20} /></button>
               </div>
+              <h3 className='text-2xl font-black text-slate-900 mb-2'>解锁高级课程</h3>
+              <p className='text-sm text-slate-500 mb-6 leading-relaxed'>此内容为会员专享。请联系分销导师转账获取激活码。</p>
               
-              <h3 className='text-xl font-black text-slate-900 mb-1'>解锁高级内容</h3>
-              <p className='text-[13px] text-slate-500 mb-5 leading-relaxed'>此课程为付费内容。获取激活码，立即解锁所有句型与语法特权。</p>
-              
-              {/* 二级分销人员信息卡片 */}
-              <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 mb-5">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
-                    {/* 导师头像 */}
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Tutor" />
-                  </div>
-                  <div>
-                    <p className="text-[13px] font-bold text-slate-800">专属导师：@Admin (代理)</p>
-                    <p className="text-[10px] text-slate-500">扫码转账后，私信我获取激活码</p>
-                  </div>
+              {/* 二级分销导师信息 */}
+              <div className="bg-indigo-50/50 p-4 rounded-3xl border border-indigo-100 mb-6 flex items-center gap-4 group cursor-pointer active:scale-95 transition-all">
+                <div className="w-12 h-12 rounded-full bg-white border-2 border-indigo-200 flex items-center justify-center text-indigo-500 overflow-hidden shadow-sm">
+                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Lucky" alt="Agent" />
                 </div>
-                <button className="flex items-center justify-center gap-2 w-full py-2.5 bg-blue-50 text-blue-600 font-bold text-[13px] rounded-xl active:scale-95 transition-all">
-                  <QrCode size={16} /> 查看收款码并私信
-                </button>
+                <div className='flex-1'>
+                  <p className="text-xs font-black text-indigo-400 uppercase tracking-widest">专属导师</p>
+                  <p className="text-sm font-bold text-slate-800">@Admin_Agent (在线)</p>
+                </div>
+                <div className='p-2 bg-white rounded-xl text-indigo-600 shadow-sm'><QrCode size={20} /></div>
               </div>
 
-              {/* 输入激活码 */}
-              <div className='relative'>
-                <input 
-                  type="text" 
-                  placeholder="请输入 16 位激活码 (CDK)" 
-                  className="w-full bg-white border border-slate-200 px-4 py-3.5 rounded-xl text-[14px] font-medium outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all uppercase tracking-wider"
+              {/* CDK 输入框 */}
+              <div className='relative flex flex-col gap-3'>
+                <input
+                  type="text" value={cdk} onChange={(e) => setCdk(e.target.value.toUpperCase())}
+                  placeholder="输入 16 位激活码"
+                  className="w-full bg-white border-2 border-slate-100 px-5 py-4 rounded-2xl text-sm font-bold outline-none focus:border-indigo-500 transition-all uppercase tracking-widest placeholder:text-slate-300 placeholder:tracking-normal"
                 />
-                <button className='absolute right-2 top-2 bottom-2 px-4 bg-slate-900 hover:bg-slate-800 text-white font-bold text-[13px] rounded-lg active:scale-95 transition-all'>
-                  立即激活
+                <button className='w-full py-4 bg-slate-900 hover:bg-black text-white font-black rounded-2xl active:scale-95 transition-all shadow-xl shadow-slate-200'>
+                  立即解锁内容
                 </button>
               </div>
             </motion.div>
@@ -328,163 +257,135 @@ const LayoutLearningHome = () => {
         )}
       </AnimatePresence>
 
-      <div className='relative z-10 mx-auto w-full max-w-md px-4 pb-24 pt-6'>
-        {/* 顶部 */}
-        <header className='mb-8 flex items-center justify-between'>
-          <div className='flex items-center gap-2'>
-            <button type='button' onClick={() => openOverlay('menu')} className='p-2 -ml-2 active:scale-90 transition-transform'>
-              <Menu className='h-8 w-8 text-slate-800' />
-            </button>
-            <div className='ml-1'>
-              <h1 className='text-xl font-black text-slate-900 leading-none'>中缅文学习中心</h1>
-              <div className='mt-1.5 flex items-center gap-1 text-[10px] font-bold text-slate-600 uppercase tracking-widest'>
-                <Sparkles size={12} className='text-blue-500' /><span>Premium Hub</span>
+      {/* 主内容区 */}
+      <div className='relative z-10 mx-auto w-full max-w-md px-5 pb-32 pt-8'>
+        {/* 导航头 */}
+        <header className='mb-10 flex items-center justify-between'>
+          <div className='flex items-center gap-3'>
+            <button onClick={() => openOverlay('menu')} className='p-1 active:scale-75 transition-all'><Menu className='h-8 w-8 text-slate-800' /></button>
+            <div className='flex flex-col'>
+              <h1 className='text-xl font-black text-slate-900 tracking-tighter leading-none'>中缅文学习中心</h1>
+              <div className='mt-1 flex items-center gap-1.5 text-[9px] font-black text-blue-500 uppercase tracking-widest'>
+                <Sparkles size={10} fill="currentColor" /> <span>Premium Access</span>
               </div>
             </div>
           </div>
-          {/* 头像登录按钮：这里目前直接写个占位，以后接了 Cookie 判断如果未登录弹 login */}
-          <button className="flex items-center justify-center w-10 h-10 rounded-full bg-white/80 border border-slate-200 shadow-sm active:scale-90 transition-all text-slate-600 backdrop-blur-md">
-            <User size={20} />
+          {/* 头像登录按钮：跳转论坛登录 */}
+          <button onClick={() => window.location.href='https://bbs.886.best/login'} className="w-11 h-11 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 shadow-sm active:scale-90 transition-all">
+            <User size={22} strokeWidth={2.5} />
           </button>
         </header>
 
-        {/* 拼音导航 */}
-        <section className='grid grid-cols-4 gap-3'>
+        {/* 拼音网格 */}
+        <section className='grid grid-cols-4 gap-3 mb-6'>
           {pinyinNav.map(item => (
             <Link key={item.zh} href={item.href} className={`${glassCard} flex flex-col items-center py-4`}>
-              <div className={`flex h-9 w-9 items-center justify-center rounded-full ${item.bg} mb-2`}>
-                <item.icon className={`h-4 w-4 ${item.color}`} />
-              </div>
+              <div className={`flex h-10 w-10 items-center justify-center rounded-full ${item.bg} mb-2 shadow-inner`}><item.icon size={18} className={item.color} /></div>
               <p className='text-[13px] font-black text-slate-800'>{item.zh}</p>
-              <p className='text-[9px] font-medium text-slate-700 mt-0.5'>{item.mm}</p>
+              <p className='text-[8px] font-bold text-slate-400 mt-0.5'>{item.mm}</p>
             </Link>
           ))}
         </section>
 
-        {/* 核心工具 */}
-        <section className='mt-4 grid grid-cols-2 gap-3'>
-          {coreTools.map(tool => {
-            const content = (
-              <div className='flex items-center gap-3'>
-                <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${tool.bg} ${tool.iconColor}`}>
-                  <tool.icon size={20} />
-                </div>
-                <div className='min-w-0'>
-                  <p className='truncate text-[13px] font-black text-slate-800'>{tool.zh}</p>
-                  <p className='truncate text-[9px] text-slate-700'>{tool.mm}</p>
-                </div>
+        {/* 工具按钮 */}
+        <section className='grid grid-cols-2 gap-3 mb-8'>
+          {coreTools.map(tool => (
+            <button
+              key={tool.zh}
+              onClick={() => tool.action ? openOverlay(tool.action) : (window.location.href=tool.href)}
+              className={`${glassCard} p-4 flex items-center gap-3 text-left`}
+            >
+              <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${tool.bg} ${tool.iconColor} shadow-sm`}><tool.icon size={20} /></div>
+              <div>
+                <p className='text-[13px] font-black text-slate-800'>{tool.zh}</p>
+                <p className='text-[8px] font-bold text-slate-400'>{tool.mm}</p>
               </div>
-            )
-            return tool.action ? (
-              <button key={tool.zh} type='button' onClick={() => openOverlay(tool.action)} className={`${glassCard} p-3.5 text-left`}>{content}</button>
-            ) : (
-              <Link key={tool.zh} href={tool.href} className={`${glassCard} p-3.5`}>{content}</Link>
-            )
-          })}
+            </button>
+          ))}
         </section>
 
-        {/* AI 真人私教对练 */}
-        <section className='mt-8 mb-2'>
-          <button type='button' onClick={() => openOverlay('ai-tutor')} className='group relative w-full h-[140px] overflow-hidden rounded-[2.5rem] shadow-xl text-left transition-all active:scale-95 border border-white/60'>
-            <img src='https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&q=80&w=1200' alt='AI TUTOR' className='absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105' />
-            <div className='absolute inset-0 bg-gradient-to-r from-slate-900/85 to-slate-900/25' />
-            <div className='relative z-10 flex h-full flex-col justify-center px-6'>
-              <div className='mb-2 flex items-center gap-1.5'>
-                <span className='rounded-full bg-pink-500 px-2.5 py-0.5 text-[10px] font-black tracking-wider text-white shadow-sm border border-pink-400/30'>AI TUTOR</span>
-                <Sparkles size={14} className='text-pink-300 animate-pulse' />
+        {/* AI 私教大通栏 */}
+        <section className='mb-8'>
+          <button onClick={() => openOverlay('ai-tutor')} className='group relative w-full h-[150px] overflow-hidden rounded-[2.5rem] shadow-2xl shadow-indigo-100 text-left active:scale-[0.97] transition-all border border-white/60'>
+            <img src='https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&q=80&w=1200' alt='' className='absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700' />
+            <div className='absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/40 to-transparent' />
+            <div className='relative z-10 h-full flex flex-col justify-center px-8'>
+              <div className='mb-2 flex items-center gap-2'>
+                <span className='px-2 py-0.5 bg-indigo-500 text-[9px] font-black text-white rounded-full tracking-widest uppercase'>Active Now</span>
+                <div className='w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse'></div>
               </div>
-              <h3 className='text-xl font-black text-white drop-shadow-md'>AI 真人私教对练</h3>
-              <p className='mt-1 text-xs font-medium text-white/95 drop-shadow-sm'>沉浸式真实口语对话</p>
+              <h3 className='text-2xl font-black text-white drop-shadow-md'>AI 真人私教</h3>
+              <p className='text-xs font-medium text-white/80 mt-1'>沉浸式纯正口语实战对练</p>
             </div>
           </button>
         </section>
 
-        {/* 系统课程 */}
-        <section className='mt-8'>
-          <div className='mb-4 flex items-center gap-2 px-1'>
-            <BookOpen className='h-4 w-4 text-slate-400' />
-            <h2 className='text-[11px] font-black tracking-[0.2em] text-slate-500 uppercase'>SYSTEM COURSES</h2>
+        {/* 课程列表 */}
+        <section className='flex flex-col gap-5'>
+          <div className='flex items-center justify-between px-1'>
+            <h2 className='text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]'>System Courses</h2>
+            <div className='h-px flex-1 bg-slate-100 ml-4'></div>
           </div>
-          <div className='flex flex-col gap-4'>
-            {systemCourses.map(course => {
-              const cardContent = (
-                <>
-                  <img src={course.bgImg} alt={course.title} className='absolute inset-0 h-full w-full object-cover' />
-                  <div className={`absolute inset-0 bg-gradient-to-r ${course.color} to-transparent`} />
-                  <div className='relative flex h-full flex-col justify-center px-8'>
-                    <span className='w-fit rounded-lg bg-white/25 backdrop-blur-md px-2 py-0.5 text-[9px] font-black text-white mb-2 uppercase border border-white/30'>
-                      {course.badge}
-                    </span>
-                    <h3 className='text-2xl font-black text-white drop-shadow-md flex items-center gap-2'>
-                      {course.title}
-                      {course.isLock && <KeyRound size={18} className="text-amber-300 drop-shadow-sm" />}
-                    </h3>
-                    <p className='text-xs font-medium text-white/95 drop-shadow-sm mt-1'>{course.mmDesc}</p>
-                  </div>
-                </>
-              );
-
-              return course.action ? (
-                <button key={course.title} onClick={() => openOverlay(course.action)} className='group relative h-40 text-left overflow-hidden rounded-[2.5rem] shadow-lg border border-white/60 active:scale-[0.98] transition-all'>
-                  {cardContent}
-                </button>
-              ) : (
-                <Link key={course.title} href={course.href} className='group relative h-40 overflow-hidden rounded-[2.5rem] shadow-lg border border-white/60 active:scale-[0.98] transition-all'>
-                  {cardContent}
-                </Link>
-              )
-            })}
-          </div>
+          {systemCourses.map(course => (
+            <button
+              key={course.title}
+              onClick={() => course.action ? openOverlay(course.action) : (window.location.href=course.href)}
+              className='group relative h-44 overflow-hidden rounded-[2.8rem] shadow-xl border border-white/60 active:scale-[0.98] transition-all text-left'
+            >
+              <img src={course.bgImg} className='absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-700' alt='' />
+              <div className={`absolute inset-0 bg-gradient-to-r ${course.color} to-transparent opacity-90`} />
+              <div className='relative p-9 h-full flex flex-col justify-center'>
+                <span className='w-fit px-2 py-0.5 bg-white/20 backdrop-blur-md border border-white/30 text-[8px] font-black text-white rounded-lg mb-3 uppercase tracking-tighter'>{course.badge}</span>
+                <h3 className='text-2xl font-black text-white flex items-center gap-2 drop-shadow-sm'>
+                  {course.title} 
+                  {course.isLock && <Lock size={18} fill="currentColor" className='text-amber-300 ml-1' />}
+                </h3>
+                <p className='text-white/90 text-xs font-medium mt-1'>{course.mmDesc}</p>
+              </div>
+              <div className='absolute bottom-6 right-8 w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all'>
+                <ChevronRight size={20} />
+              </div>
+            </button>
+          ))}
         </section>
       </div>
 
-      {/* 底部导航: 使用 JS Bridge 传参 tabName 实现 0 秒切换 */}
-      <nav className='fixed bottom-0 left-0 right-0 z-[50] bg-white/95 backdrop-blur-xl border-t border-slate-100 pt-1 pb-[calc(env(safe-area-inset-bottom)+7px)] shadow-[0_-10px_20px_rgba(0,0,0,0.08)]'>
-        <div className='flex items-center justify-between w-full max-w-md mx-auto px-6'>
+      {/* 3. 底部秒切导航栏 (JS Bridge) */}
+      <nav className='fixed bottom-0 left-0 right-0 z-[50] bg-white/90 backdrop-blur-2xl border-t border-slate-100 pt-2 pb-[calc(env(safe-area-inset-bottom)+8px)] shadow-[0_-15px_30px_rgba(0,0,0,0.05)]'>
+        <div className='flex items-center justify-between w-full max-w-md mx-auto px-8'>
           <FooterLink href="/" icon={BookOpen} tabName="study" />
           <FooterLink href="https://bbs.886.best/chats" icon={MessageCircle} tabName="msg" />
           <FooterLink href="https://bbs.886.best/" icon={Users} tabName="forum" />
           <FooterLink href="https://bbs.886.best/recent" icon={Compass} tabName="recent" />
-          <FooterLink href="#" icon={Briefcase} className="hidden" />
           <FooterLink href="https://bbs.886.best/" icon={Globe2} tabName="community" />
         </div>
       </nav>
 
+      {/* 全屏动态挂载组件 */}
       <AnimatePresence>
-        {activeOverlay === 'translator' && <div className='fixed inset-0 z-[150]'><AIChatDrawer isOpen={true} onClose={closeOverlay} /></div>}
-        {activeOverlay === 'ai-tutor' && <div className='fixed inset-0 z-[150]'><VoiceChat isOpen={true} onClose={closeOverlay} /></div>}
-        {activeOverlay === 'library' && <div className='fixed inset-0 z-[150]'><BookLibrary isOpen={true} onClose={closeOverlay} /></div>}
+        {activeOverlay === 'translator' && <div className='fixed inset-0 z-[170]'><AIChatDrawer isOpen={true} onClose={closeOverlay} /></div>}
+        {activeOverlay === 'ai-tutor' && <div className='fixed inset-0 z-[170]'><VoiceChat isOpen={true} onClose={closeOverlay} /></div>}
+        {activeOverlay === 'library' && <div className='fixed inset-0 z-[170]'><BookLibrary isOpen={true} onClose={closeOverlay} /></div>}
       </AnimatePresence>
     </main>
   )
 }
 
-// ... 底部框架代码 (LayoutBase 等) 保持原样 ...
-export {
-  Layout404, LayoutArchive, LayoutBase, LayoutCategoryIndex, LayoutIndex,
-  LayoutPostList, LayoutSearch, LayoutSlug, LayoutTagIndex, CONFIG as THEME_CONFIG
-}
-
-// ===================== 基础布局框架 =====================
+// --- 基础布局框架 (LayoutBase) ---
 const LayoutBase = props => {
   const { children, slotTop } = props
-  const { onLoading, fullWidth } = useGlobal()
+  const { onLoading } = useGlobal()
   const searchModal = useRef(null)
   const router = useRouter()
   const pathname = router?.pathname || ''
 
-  const isLearningRoute =
-    pathname === '/' ||
-    pathname.startsWith('/vocabulary') ||
-    pathname.startsWith('/pinyin') ||
-    pathname.startsWith('/course') ||
-    pathname.startsWith('/oral') ||
-    pathname.startsWith('/learn')
+  // 判定是否为学习类路由，若是，则采用极简纯净布局
+  const isEdu = ['/', '/vocabulary', '/pinyin', '/course', '/oral', '/learn'].some(r => pathname === r || pathname.startsWith(r))
 
-  if (isLearningRoute) {
+  if (isEdu) {
     return (
       <ThemeGlobalSimple.Provider value={{ searchModal }}>
-        <div id='theme-simple' className={`${siteConfig('FONT_STYLE')} min-h-screen`}>
+        <div id='theme-simple' className={`${siteConfig('FONT_STYLE')} min-h-screen bg-white`}>
           <Style />
           {children}
         </div>
@@ -492,6 +393,7 @@ const LayoutBase = props => {
     )
   }
 
+  // 博客类常规布局
   return (
     <ThemeGlobalSimple.Provider value={{ searchModal }}>
       <div id='theme-simple' className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col bg-white dark:bg-black scroll-smooth`}>
@@ -499,120 +401,38 @@ const LayoutBase = props => {
         {siteConfig('SIMPLE_TOP_BAR', null, CONFIG) && <TopBar {...props} />}
         <Header {...props} />
         <NavBar {...props} />
-        <div id='container-wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' w-full flex-1 flex items-start max-w-9/10 mx-auto pt-12'}>
+        <div id='container-wrapper' className='w-full flex-1 flex items-start max-w-9/10 mx-auto pt-12'>
           <div id='container-inner' className='w-full flex-grow min-h-fit'>
             <Transition show={!onLoading} appear={true} enter='transition duration-700' enterFrom='opacity-0 translate-y-16' enterTo='opacity-100 translate-y-0'>
               {slotTop}
               {children}
             </Transition>
-            <AdSlot type='native' />
           </div>
-          {!fullWidth && (
-            <div id='right-sidebar' className='hidden xl:block flex-none sticky top-8 w-96 border-l border-gray-100 pl-12'>
-              <SideBar {...props} />
-            </div>
-          )}
         </div>
-        <div className='fixed right-4 bottom-4 z-20'>
-          <JumpToTopButton />
-        </div>
-        <AlgoliaSearchModal cRef={searchModal} {...props} />
         <Footer {...props} />
+        <AlgoliaSearchModal cRef={searchModal} {...props} />
       </div>
     </ThemeGlobalSimple.Provider>
   )
 }
 
+// --- 页面路由映射 ---
 const LayoutIndex = props => <LayoutLearningHome {...props} />
-
-const LayoutPostList = props => (
-  <>
-    <BlogPostBar {...props} />
-    {siteConfig('POST_LIST_STYLE') === 'page'
-      ? <BlogListPage {...props} />
-      : <BlogListScroll {...props} />}
-  </>
-)
-
-const LayoutSearch = props => {
-  const { keyword } = props
-  useEffect(() => {
-    if (isBrowser) {
-      replaceSearchResult({
-        doms: document.getElementById('posts-wrapper'),
-        search: keyword,
-        target: { element: 'span', className: 'text-red-500' }
-      })
-    }
-  }, [keyword])
-  return <LayoutPostList {...props} slotTop={siteConfig('ALGOLIA_APP_ID') ? null : <SearchInput {...props} />} />
-}
-
-const LayoutArchive = props => (
-  <div className='mb-10 pb-20 md:py-12 p-3 min-h-screen w-full'>
-    {Object.keys(props.archivePosts).map(archiveTitle => (
-      <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={props.archivePosts} />
-    ))}
-  </div>
-)
-
+const LayoutPostList = props => <>{siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}</>
+const LayoutSearch = props => <LayoutPostList {...props} slotTop={<SearchInput {...props} />} />
+const LayoutArchive = props => <div className='mb-10 pb-20 p-5 w-full'>{Object.keys(props.archivePosts).map(a => <BlogArchiveItem key={a} archiveTitle={a} archivePosts={props.archivePosts} />)}</div>
 const LayoutSlug = props => {
-  const { post, lock, validPassword, prev, next, recommendPosts } = props
-  const { fullWidth } = useGlobal()
+  const { post, lock, validPassword } = props
   return (
-    <>
+    <div className='w-full max-w-4xl mx-auto'>
       {lock && <ArticleLock validPassword={validPassword} />}
-      {!lock && post && (
-        <div className={`px-2 ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
-          <ArticleInfo post={post} />
-          <WWAds orientation='horizontal' className='w-full' />
-          <div id='article-wrapper'>{!lock && <NotionPage post={post} />}</div>
-          <ShareBar post={post} />
-          <AdSlot type='in-article' />
-          {post?.type === 'Post' && (
-            <>
-              <ArticleAround prev={prev} next={next} />
-              <RecommendPosts recommendPosts={recommendPosts} />
-            </>
-          )}
-          <Comment frontMatter={post} />
-        </div>
-      )}
-    </>
+      {!lock && post && <div className='px-4'><ArticleInfo post={post} /><div id='article-wrapper' className='mt-8'><NotionPage post={post} /></div><Comment frontMatter={post} /></div>}
+    </div>
   )
 }
-
-const Layout404 = props => <>404 Not found.</>
-
-const LayoutCategoryIndex = props => (
-  <div id='category-list' className='duration-200 flex flex-wrap'>
-    {props.categoryOptions?.map(c => (
-      <SmartLink key={c.name} href={`/category/${c.name}`} passHref legacyBehavior>
-        <div className='hover:bg-gray-100 px-5 cursor-pointer py-2'>
-          <i className='mr-4 fas fa-folder' />
-          {c.name}({c.count})
-        </div>
-      </SmartLink>
-    ))}
-  </div>
-)
-
-const LayoutTagIndex = props => (
-  <div id='tags-list' className='duration-200 flex flex-wrap'>
-    {props.tagOptions.map(t => (
-      <div key={t.name} className='p-2'>
-        <SmartLink
-          href={`/tag/${encodeURIComponent(t.name)}`}
-          className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200 mr-2 py-1 px-2 text-xs notion-${t.color}_background`}
-        >
-          <div className='font-light'>
-            <i className='mr-1 fas fa-tag' /> {t.name + (t.count ? `(${t.count})` : '')}
-          </div>
-        </SmartLink>
-      </div>
-    ))}
-  </div>
-)
+const Layout404 = props => <div className='flex h-[60vh] items-center justify-center font-black text-slate-300 text-4xl uppercase tracking-tighter'>404 Not Found</div>
+const LayoutCategoryIndex = props => <div id='category-list' className='p-8 flex flex-wrap gap-4'>{props.categoryOptions?.map(c => <Link key={c.name} href={`/category/${c.name}`} className='px-6 py-3 bg-slate-50 rounded-2xl font-bold hover:bg-indigo-600 hover:text-white transition-all shadow-sm'>{c.name} ({c.count})</Link>)}</div>
+const LayoutTagIndex = props => <div id='tags-list' className='p-8 flex flex-wrap gap-2'>{props.tagOptions.map(t => <Link key={t.name} href={`/tag/${t.name}`} className='px-4 py-2 bg-slate-100 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all shadow-sm'># {t.name}</Link>)}</div>
 
 export {
   Layout404,
