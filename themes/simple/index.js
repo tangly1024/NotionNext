@@ -30,10 +30,13 @@ import {
   Music2,
   Star,
   Users,
+  User,
   Volume2,
   X,
   Sparkles,
-  Map 
+  Map,
+  KeyRound,
+  QrCode
 } from 'lucide-react'
 import BlogPostBar from './components/BlogPostBar'
 import CONFIG from './config'
@@ -44,7 +47,6 @@ const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal
 const BookLibrary = dynamic(() => import('@/components/BookLibrary'), { ssr: false, loading: () => <div className="p-4 text-center text-slate-500">加载中...</div> })
 const AIChatDrawer = dynamic(() => import('@/components/AIChatDrawer'), { ssr: false, loading: () => <div className="p-4 text-center text-slate-500">加载中...</div> })
 const VoiceChat = dynamic(() => import('@/components/VoiceChat'), { ssr: false, loading: () => <div className="p-4 text-center text-slate-500">加载中...</div> })
-
 const BlogListScroll = dynamic(() => import('./components/BlogListScroll'), { ssr: false })
 const BlogArchiveItem = dynamic(() => import('./components/BlogArchiveItem'), { ssr: false })
 const ArticleLock = dynamic(() => import('./components/ArticleLock'), { ssr: false })
@@ -83,7 +85,6 @@ const coreTools = [
 const systemCourses = [
   {
     badge: 'Words',
-    sub: '词汇 (VOCABULARY)',
     title: '日常高频词汇',
     mmDesc: 'အခြေခံ စကားလုံးများကို လေ့လာပါ။',
     bgImg: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=1200',
@@ -92,55 +93,46 @@ const systemCourses = [
   },
   {
     badge: 'Oral',
-    sub: '短句 (ORAL)',
     title: '场景口语短句',
     mmDesc: 'အခြေအနေလိုက် စကားပြော လေ့ကျင့်မှု',
     bgImg: 'https://images.unsplash.com/photo-1528712306091-ed0763094c98?auto=format&fit=crop&q=80&w=1200',
     href: '/oral',
     color: 'from-emerald-600/90'
   },
-  // 新增：句型占位
   {
     badge: 'Patterns',
-    sub: '句型 (PATTERNS)',
     title: '实用句型结构',
     mmDesc: 'ဝါကျတည်ဆောက်ပုံများ',
     bgImg: 'https://images.unsplash.com/photo-1455390582262-044cdead27d8?auto=format&fit=crop&q=80&w=1200',
-    href: '#', // 占位链接
-    color: 'from-purple-600/90'
+    action: 'vip', // 点击触发激活码/分销弹窗
+    color: 'from-purple-600/90',
+    isLock: true
   },
-  // 新增：语法占位
   {
     badge: 'Grammar',
-    sub: '语法 (GRAMMAR)',
     title: '核心语法解析',
     mmDesc: 'အခြေခံသဒ္ဒါရှင်းလင်းချက်',
     bgImg: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=1200',
-    href: '#', // 占位链接
-    color: 'from-orange-600/90'
-  },
-  {
-    badge: 'HSK 1',
-    sub: '入门 (INTRO)',
-    title: 'HSK Level 1',
-    mmDesc: 'အသုံးအများဆုံး စကားလုံးများနှင့် သဒ္ဒါ',
-    bgImg: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&q=80&w=1200',
-    href: '/course/hsk1',
-    color: 'from-indigo-600/90'
+    action: 'vip', // 点击触发激活码/分销弹窗
+    color: 'from-orange-600/90',
+    isLock: true
   }
 ]
 
-// 底部无文字纯图标链接组件
-function FooterLink({ href, icon: Icon, isInternal = false, className = '' }) {
-  const content = (
-    <div className={`flex flex-col items-center justify-center p-2 text-slate-500 hover:text-slate-800 active:scale-90 transition-all ${className}`}>
+// 底部导航栏：加入 JS Bridge 拦截，实现 0 秒切换
+function FooterLink({ href, icon: Icon, tabName, className = '' }) {
+  const handleClick = (e) => {
+    // 检查是否在 Android WebView 中且注册了 JS 接口
+    if (typeof window !== 'undefined' && window.AndroidInterface && window.AndroidInterface.switchTab) {
+      e.preventDefault(); // 阻止浏览器原本的跳转
+      window.AndroidInterface.switchTab(tabName || href); // 触发原生秒切
+    }
+  };
+
+  return (
+    <a href={href} onClick={handleClick} className={`flex flex-col items-center justify-center p-2 text-slate-500 hover:text-slate-800 active:scale-90 transition-all ${className}`}>
       <Icon size={26} strokeWidth={2} />
-    </div>
-  )
-  return isInternal ? (
-    <Link href={href}>{content}</Link>
-  ) : (
-    <a href={href}>{content}</a>
+    </a>
   )
 }
 
@@ -181,23 +173,46 @@ const LayoutLearningHome = () => {
     } else {
       document.body.style.overflow = prev
     }
-    return () => {
-      document.body.style.overflow = prev
-    }
+    return () => document.body.style.overflow = prev
   }, [activeOverlay])
+
+  // --- 重点：增加全局边缘右滑手势 (类电报) ---
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    let startX = 0;
+    let startY = 0;
+
+    const handleTouchStart = (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    };
+
+    const handleTouchEnd = (e) => {
+      const endX = e.changedTouches[0].clientX;
+      const endY = e.changedTouches[0].clientY;
+      const deltaX = endX - startX;
+      const deltaY = Math.abs(endY - startY);
+
+      // 判定条件：从屏幕极左侧(startX < 30)开始滑，向右滑超过60px，且上下偏移不大
+      if (startX < 30 && deltaX > 60 && deltaY < 50) {
+        openOverlay('menu');
+      }
+    };
+
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchend', handleTouchEnd);
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [openOverlay]);
 
   const glassCard = 'bg-white/95 backdrop-blur-xl border border-white/60 shadow-lg shadow-slate-200/50 rounded-2xl transition-all active:scale-95 cursor-pointer hover:shadow-xl hover:shadow-slate-300/60'
 
   return (
     <main className='relative min-h-[100dvh] overflow-x-hidden text-slate-900'>
-      {/* 背景层 */}
       <div className='fixed inset-0 -z-30'>
-        <img
-          src='/images/home-bg.jpg'
-          alt=''
-          aria-hidden='true'
-          className='h-full w-full object-cover'
-        />
+        <img src='/images/home-bg.jpg' alt='' aria-hidden='true' className='h-full w-full object-cover' />
         <div className='absolute inset-0 bg-white/50 backdrop-blur-2xl' />
         <div className='absolute inset-0 bg-gradient-to-b from-white/20 via-white/10 to-white/30' />
       </div>
@@ -218,13 +233,11 @@ const LayoutLearningHome = () => {
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
-              // 采用物理弹簧属性，实现类似电报的丝滑顺滑拉出效果
               transition={{ type: 'spring', damping: 28, stiffness: 250, mass: 0.8 }}
               drag='x'
               dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={{ left: 1, right: 0 }} // 向右拉死，向左拉可回弹
+              dragElastic={{ left: 1, right: 0 }} 
               onDragEnd={(e, info) => {
-                // 拖拽释放时的判断：向左滑动超过 60px 或速度过快，则关闭
                 if (info.offset.x < -60 || info.velocity.x < -300) closeOverlay()
               }}
               className='relative w-[280px] h-full bg-white/95 backdrop-blur-xl shadow-2xl flex flex-col border-r border-slate-100'
@@ -234,21 +247,13 @@ const LayoutLearningHome = () => {
                   <h2 className='text-xl font-black text-slate-900'>菜单</h2>
                   <p className='text-xs text-slate-500'>中缅学习中心</p>
                 </div>
-                <button
-                  type='button'
-                  onClick={closeOverlay}
-                  className='p-2 bg-slate-100 hover:bg-slate-200 rounded-full active:scale-90 transition-colors'
-                >
+                <button onClick={closeOverlay} className='p-2 bg-slate-100 hover:bg-slate-200 rounded-full active:scale-90 transition-colors'>
                   <X size={20} className='text-slate-800' />
                 </button>
               </div>
               <nav className='p-4 space-y-2'>
                 {['首页', 'HSK 课程', 'AI 翻译', '书籍库', '设置'].map(item => (
-                  <button
-                    key={item}
-                    type='button'
-                    className='w-full text-left p-4 text-slate-800 font-bold hover:bg-slate-50 rounded-xl transition-colors'
-                  >
+                  <button key={item} type='button' className='w-full text-left p-4 text-slate-800 font-bold hover:bg-slate-50 rounded-xl transition-colors'>
                     {item}
                   </button>
                 ))}
@@ -258,33 +263,95 @@ const LayoutLearningHome = () => {
         )}
       </AnimatePresence>
 
+      {/* 课程解锁/激活码/分销付款 弹窗 */}
+      <AnimatePresence>
+        {activeOverlay === 'vip' && (
+          <div className='fixed inset-0 z-[160] flex items-center justify-center p-4'>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={closeOverlay}
+              className='absolute inset-0 bg-slate-900/60 backdrop-blur-sm'
+            />
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 10 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 10 }}
+              className='relative w-full max-w-sm bg-white/95 backdrop-blur-2xl rounded-[2rem] p-6 shadow-2xl border border-white/50 z-10 overflow-hidden'
+            >
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl"></div>
+              
+              <div className='flex justify-between items-start mb-4'>
+                <div className='w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-orange-500/30'>
+                  <KeyRound size={24} />
+                </div>
+                <button onClick={closeOverlay} className='p-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full transition-colors'>
+                  <X size={18} />
+                </button>
+              </div>
+              
+              <h3 className='text-xl font-black text-slate-900 mb-1'>解锁高级内容</h3>
+              <p className='text-[13px] text-slate-500 mb-5 leading-relaxed'>此课程为付费内容。获取激活码，立即解锁所有句型与语法特权。</p>
+              
+              {/* 二级分销人员信息卡片 */}
+              <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 mb-5">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
+                    {/* 导师头像 */}
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Tutor" />
+                  </div>
+                  <div>
+                    <p className="text-[13px] font-bold text-slate-800">专属导师：@Admin (代理)</p>
+                    <p className="text-[10px] text-slate-500">扫码转账后，私信我获取激活码</p>
+                  </div>
+                </div>
+                <button className="flex items-center justify-center gap-2 w-full py-2.5 bg-blue-50 text-blue-600 font-bold text-[13px] rounded-xl active:scale-95 transition-all">
+                  <QrCode size={16} /> 查看收款码并私信
+                </button>
+              </div>
+
+              {/* 输入激活码 */}
+              <div className='relative'>
+                <input 
+                  type="text" 
+                  placeholder="请输入 16 位激活码 (CDK)" 
+                  className="w-full bg-white border border-slate-200 px-4 py-3.5 rounded-xl text-[14px] font-medium outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all uppercase tracking-wider"
+                />
+                <button className='absolute right-2 top-2 bottom-2 px-4 bg-slate-900 hover:bg-slate-800 text-white font-bold text-[13px] rounded-lg active:scale-95 transition-all'>
+                  立即激活
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
       <div className='relative z-10 mx-auto w-full max-w-md px-4 pb-24 pt-6'>
-        {/* 顶部：去掉了边框和背景 */}
-        <header className='mb-8 flex items-center gap-2'>
-          <button
-            type='button'
-            onClick={() => openOverlay('menu')}
-            className='p-2 -ml-2 active:scale-90 transition-transform'
-          >
-            <Menu className='h-8 w-8 text-slate-800' />
-          </button>
-          <div className='ml-1'>
-            <h1 className='text-xl font-black text-slate-900 leading-none'>中缅文学习中心</h1>
-            <div className='mt-1.5 flex items-center gap-1 text-[10px] font-bold text-slate-600 uppercase tracking-widest'>
-              <Sparkles size={12} className='text-blue-500' />
-              <span>Premium Hub</span>
+        {/* 顶部 */}
+        <header className='mb-8 flex items-center justify-between'>
+          <div className='flex items-center gap-2'>
+            <button type='button' onClick={() => openOverlay('menu')} className='p-2 -ml-2 active:scale-90 transition-transform'>
+              <Menu className='h-8 w-8 text-slate-800' />
+            </button>
+            <div className='ml-1'>
+              <h1 className='text-xl font-black text-slate-900 leading-none'>中缅文学习中心</h1>
+              <div className='mt-1.5 flex items-center gap-1 text-[10px] font-bold text-slate-600 uppercase tracking-widest'>
+                <Sparkles size={12} className='text-blue-500' /><span>Premium Hub</span>
+              </div>
             </div>
           </div>
+          {/* 头像登录按钮：这里目前直接写个占位，以后接了 Cookie 判断如果未登录弹 login */}
+          <button className="flex items-center justify-center w-10 h-10 rounded-full bg-white/80 border border-slate-200 shadow-sm active:scale-90 transition-all text-slate-600 backdrop-blur-md">
+            <User size={20} />
+          </button>
         </header>
 
         {/* 拼音导航 */}
         <section className='grid grid-cols-4 gap-3'>
           {pinyinNav.map(item => (
-            <Link
-              key={item.zh}
-              href={item.href}
-              className={`${glassCard} flex flex-col items-center py-4`}
-            >
+            <Link key={item.zh} href={item.href} className={`${glassCard} flex flex-col items-center py-4`}>
               <div className={`flex h-9 w-9 items-center justify-center rounded-full ${item.bg} mb-2`}>
                 <item.icon className={`h-4 w-4 ${item.color}`} />
               </div>
@@ -308,176 +375,94 @@ const LayoutLearningHome = () => {
                 </div>
               </div>
             )
-
             return tool.action ? (
-              <button
-                key={tool.zh}
-                type='button'
-                onClick={() => openOverlay(tool.action)}
-                className={`${glassCard} p-3.5 text-left`}
-              >
-                {content}
-              </button>
+              <button key={tool.zh} type='button' onClick={() => openOverlay(tool.action)} className={`${glassCard} p-3.5 text-left`}>{content}</button>
             ) : (
-              <Link key={tool.zh} href={tool.href} className={`${glassCard} p-3.5`}>
-                {content}
-              </Link>
+              <Link key={tool.zh} href={tool.href} className={`${glassCard} p-3.5`}>{content}</Link>
             )
           })}
         </section>
 
-        {/* 发音技巧 */}
-        <section className='mt-4'>
-          <Link href='/pinyin/tips' className={`${glassCard} flex items-center justify-between p-4`}>
-            <div className='flex items-center gap-4'>
-              <div className='rounded-xl bg-orange-100 p-2 text-orange-700'>
-                <Lightbulb size={20} />
-              </div>
-              <div>
-                <p className='text-[14px] font-black text-slate-800'>发音技巧 (Tips)</p>
-                <p className='text-[10px] text-slate-700'>အသံထွက်နည်းလမ်းများ</p>
-              </div>
-            </div>
-            <ChevronRight className='h-5 w-5 text-slate-400' />
-          </Link>
-        </section>
-
         {/* AI 真人私教对练 */}
         <section className='mt-8 mb-2'>
-          <button
-            type='button'
-            onClick={() => openOverlay('ai-tutor')}
-            className='group relative w-full h-[140px] overflow-hidden rounded-[2.5rem] shadow-xl text-left transition-all active:scale-95 border border-white/60'
-          >
-            <img
-              src='https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&q=80&w=1200'
-              alt='AI 真人私教对练'
-              className='absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105'
-            />
+          <button type='button' onClick={() => openOverlay('ai-tutor')} className='group relative w-full h-[140px] overflow-hidden rounded-[2.5rem] shadow-xl text-left transition-all active:scale-95 border border-white/60'>
+            <img src='https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&q=80&w=1200' alt='AI TUTOR' className='absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105' />
             <div className='absolute inset-0 bg-gradient-to-r from-slate-900/85 to-slate-900/25' />
-
             <div className='relative z-10 flex h-full flex-col justify-center px-6'>
               <div className='mb-2 flex items-center gap-1.5'>
-                <span className='rounded-full bg-pink-500 px-2.5 py-0.5 text-[10px] font-black tracking-wider text-white shadow-sm border border-pink-400/30'>
-                  AI TUTOR
-                </span>
+                <span className='rounded-full bg-pink-500 px-2.5 py-0.5 text-[10px] font-black tracking-wider text-white shadow-sm border border-pink-400/30'>AI TUTOR</span>
                 <Sparkles size={14} className='text-pink-300 animate-pulse' />
               </div>
               <h3 className='text-xl font-black text-white drop-shadow-md'>AI 真人私教对练</h3>
-              <p className='mt-1 text-xs font-medium text-white/95 drop-shadow-sm'>
-                沉浸式真实口语对话
-              </p>
+              <p className='mt-1 text-xs font-medium text-white/95 drop-shadow-sm'>沉浸式真实口语对话</p>
             </div>
           </button>
-        </section>
-
-        {/* 主线闯关地图 */}
-        <section className='mt-4'>
-          <Link
-            href='/learn'
-            className={`${glassCard} relative flex items-center gap-4 p-5 overflow-hidden border-l-[6px] border-l-green-500`}
-          >
-            {/* 装饰微光 */}
-            <div className='absolute -right-6 -top-6 h-24 w-24 rounded-full bg-green-500/10 blur-2xl' />
-            
-            {/* 图标盒子 */}
-            <div className='relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-green-400 to-emerald-600 text-white shadow-lg shadow-green-200 transition-transform active:scale-110'>
-              <Map size={26} />
-            </div>
-
-            {/* 内容区 */}
-            <div className='relative flex-1'>
-              <div className='flex items-center gap-2'>
-                <h3 className='text-lg font-black text-slate-900 uppercase leading-tight'>主线闯关地图</h3>
-                <span className='rounded bg-green-500 px-1.5 py-0.5 text-[9px] font-black text-white animate-pulse'>NEW</span>
-              </div>
-              <p className='text-[13px] font-bold text-slate-600 mt-0.5'>စနစ်တကျ လေ့လာရန် လမ်းပြမြေပုံ</p>
-              
-              {/* 游戏化进度条装饰 */}
-              <div className="mt-3 flex items-center gap-2">
-                <div className="h-1.5 w-full max-w-[110px] rounded-full bg-slate-100 overflow-hidden">
-                  <div className="h-full w-2/5 bg-green-500 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.4)]" />
-                </div>
-                <span className="text-[9px] font-black text-green-600 tracking-tighter opacity-70">CONTINUE</span>
-              </div>
-            </div>
-
-            <ChevronRight className='h-5 w-5 text-slate-300 shrink-0' />
-          </Link>
         </section>
 
         {/* 系统课程 */}
         <section className='mt-8'>
           <div className='mb-4 flex items-center gap-2 px-1'>
             <BookOpen className='h-4 w-4 text-slate-400' />
-            <h2 className='text-[11px] font-black tracking-[0.2em] text-slate-500 uppercase'>
-              SYSTEM COURSES
-            </h2>
+            <h2 className='text-[11px] font-black tracking-[0.2em] text-slate-500 uppercase'>SYSTEM COURSES</h2>
           </div>
           <div className='flex flex-col gap-4'>
-            {systemCourses.map(course => (
-              <Link
-                key={course.title}
-                href={course.href}
-                className='group relative h-40 overflow-hidden rounded-[2.5rem] shadow-lg border border-white/60 active:scale-[0.98] transition-all'
-              >
-                <img
-                  src={course.bgImg}
-                  alt={course.title}
-                  className='absolute inset-0 h-full w-full object-cover'
-                />
-                <div className={`absolute inset-0 bg-gradient-to-r ${course.color} to-transparent`} />
-                <div className='relative flex h-full flex-col justify-center px-8'>
-                  <span className='w-fit rounded-lg bg-white/25 backdrop-blur-md px-2 py-0.5 text-[9px] font-black text-white mb-2 uppercase border border-white/30'>
-                    {course.badge}
-                  </span>
-                  <h3 className='text-2xl font-black text-white drop-shadow-md'>{course.title}</h3>
-                  <p className='text-xs font-medium text-white/95 drop-shadow-sm mt-1'>{course.mmDesc}</p>
-                </div>
-              </Link>
-            ))}
+            {systemCourses.map(course => {
+              const cardContent = (
+                <>
+                  <img src={course.bgImg} alt={course.title} className='absolute inset-0 h-full w-full object-cover' />
+                  <div className={`absolute inset-0 bg-gradient-to-r ${course.color} to-transparent`} />
+                  <div className='relative flex h-full flex-col justify-center px-8'>
+                    <span className='w-fit rounded-lg bg-white/25 backdrop-blur-md px-2 py-0.5 text-[9px] font-black text-white mb-2 uppercase border border-white/30'>
+                      {course.badge}
+                    </span>
+                    <h3 className='text-2xl font-black text-white drop-shadow-md flex items-center gap-2'>
+                      {course.title}
+                      {course.isLock && <KeyRound size={18} className="text-amber-300 drop-shadow-sm" />}
+                    </h3>
+                    <p className='text-xs font-medium text-white/95 drop-shadow-sm mt-1'>{course.mmDesc}</p>
+                  </div>
+                </>
+              );
+
+              return course.action ? (
+                <button key={course.title} onClick={() => openOverlay(course.action)} className='group relative h-40 text-left overflow-hidden rounded-[2.5rem] shadow-lg border border-white/60 active:scale-[0.98] transition-all'>
+                  {cardContent}
+                </button>
+              ) : (
+                <Link key={course.title} href={course.href} className='group relative h-40 overflow-hidden rounded-[2.5rem] shadow-lg border border-white/60 active:scale-[0.98] transition-all'>
+                  {cardContent}
+                </Link>
+              )
+            })}
           </div>
         </section>
       </div>
 
-      {/* 底部导航: 学习、消息、语伴、动态、招聘(隐藏)、社区 */}
+      {/* 底部导航: 使用 JS Bridge 传参 tabName 实现 0 秒切换 */}
       <nav className='fixed bottom-0 left-0 right-0 z-[50] bg-white/95 backdrop-blur-xl border-t border-slate-100 pt-1 pb-[calc(env(safe-area-inset-bottom)+7px)] shadow-[0_-10px_20px_rgba(0,0,0,0.08)]'>
         <div className='flex items-center justify-between w-full max-w-md mx-auto px-6'>
-          {/* 学习 (因为是在站内，用内部 Link) */}
-          <FooterLink href="/" icon={BookOpen} isInternal />
-          {/* 消息 */}
-          <FooterLink href="https://bbs.886.best/chats" icon={MessageCircle} />
-          {/* 语伴 */}
-          <FooterLink href="https://bbs.886.best/" icon={Users} />
-          {/* 动态 */}
-          <FooterLink href="https://bbs.886.best/recent" icon={Compass} />
-          {/* 招聘 (目前占位，用 className hidden 隐藏) */}
+          <FooterLink href="/" icon={BookOpen} tabName="study" />
+          <FooterLink href="https://bbs.886.best/chats" icon={MessageCircle} tabName="msg" />
+          <FooterLink href="https://bbs.886.best/" icon={Users} tabName="forum" />
+          <FooterLink href="https://bbs.886.best/recent" icon={Compass} tabName="recent" />
           <FooterLink href="#" icon={Briefcase} className="hidden" />
-          {/* 社区 */}
-          <FooterLink href="https://bbs.886.best/" icon={Globe2} />
+          <FooterLink href="https://bbs.886.best/" icon={Globe2} tabName="community" />
         </div>
       </nav>
 
-      {/* 所有全屏弹窗统一挂载在此，防止组件卸载导致底层滚动位置丢失 */}
       <AnimatePresence>
-        {activeOverlay === 'translator' && (
-          <div className='fixed inset-0 z-[150]'>
-            <AIChatDrawer isOpen={true} onClose={closeOverlay} />
-          </div>
-        )}
-        {activeOverlay === 'ai-tutor' && (
-          <div className='fixed inset-0 z-[150]'>
-            <VoiceChat isOpen={true} onClose={closeOverlay} />
-          </div>
-        )}
-        {activeOverlay === 'library' && (
-          <div className='fixed inset-0 z-[150]'>
-            <BookLibrary isOpen={true} onClose={closeOverlay} />
-          </div>
-        )}
+        {activeOverlay === 'translator' && <div className='fixed inset-0 z-[150]'><AIChatDrawer isOpen={true} onClose={closeOverlay} /></div>}
+        {activeOverlay === 'ai-tutor' && <div className='fixed inset-0 z-[150]'><VoiceChat isOpen={true} onClose={closeOverlay} /></div>}
+        {activeOverlay === 'library' && <div className='fixed inset-0 z-[150]'><BookLibrary isOpen={true} onClose={closeOverlay} /></div>}
       </AnimatePresence>
     </main>
   )
+}
+
+// ... 底部框架代码 (LayoutBase 等) 保持原样 ...
+export {
+  Layout404, LayoutArchive, LayoutBase, LayoutCategoryIndex, LayoutIndex,
+  LayoutPostList, LayoutSearch, LayoutSlug, LayoutTagIndex, CONFIG as THEME_CONFIG
 }
 
 // ===================== 基础布局框架 =====================
