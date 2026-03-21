@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { pinyin } from 'pinyin-pro';
 import {
@@ -56,11 +56,33 @@ const GlobalStyles = () => (
   `}</style>
 );
 
+// 区分全局设置与场景设置的 Key，确保保存正确生效
+const SHARED_KEYS = [
+  'providerId',
+  'apiUrl',
+  'apiKey',
+  'model',
+  'ttsApiUrl',
+  'ttsVoice',
+  'zhVoice',
+  'myVoice',
+  'ttsSpeed',
+  'ttsPitch',
+  'soundFx',
+  'vibration'
+];
+
+const SCENE_KEYS = [
+  'assistantId',
+  'systemPrompt',
+  'temperature',
+  'showText',
+  'asrSilenceMs'
+];
+
 // 将文本转换为上方带拼音的 React 节点 (利用 ruby 标签)
 function renderTextWithRubyPinyin(text = '') {
-  // 利用正则切分，保留所有单个汉字作为一个元素
   const parts = String(text || '').split(/([\u4e00-\u9fff])/g);
-  
   return (
     <div className="leading-[3.5rem] text-[16px]">
       {parts.map((char, index) => {
@@ -89,8 +111,6 @@ export default function InteractiveAIExplanationPanel({
 }) {
   const [mounted, setMounted] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  
-  // 记录哪条消息开启了拼音显示 (存 boolean 即可)
   const [pinyinPreviewMap, setPinyinPreviewMap] = useState({});
 
   const { resolvedSettings, updateSharedSettings, updateSceneSettings } = useAISettings(
@@ -99,20 +119,40 @@ export default function InteractiveAIExplanationPanel({
 
   const effectiveSettings = settings || resolvedSettings;
 
-  const effectiveUpdateSettings =
-    updateSettings ||
-    ((patch) => {
-      updateSceneSettings?.(AI_SCENES.EXERCISE, patch);
-      updateSharedSettings?.(patch);
-    });
+  // 正确区分保存项，解决填了API保存后依旧提示未填写的问题
+  const fallbackUpdateSettings = useCallback(
+    (patch = {}) => {
+      const sharedPatch = {};
+      const scenePatch = {};
 
-  const hasAIConfig = useMemo(() => {
+      Object.entries(patch).forEach(([key, value]) => {
+        if (SHARED_KEYS.includes(key)) sharedPatch[key] = value;
+        if (SCENE_KEYS.includes(key)) scenePatch[key] = value;
+      });
+
+      if (Object.keys(sharedPatch).length) {
+        updateSharedSettings(sharedPatch);
+      }
+
+      if (Object.keys(scenePatch).length) {
+        updateSceneSettings(AI_SCENES.EXERCISE, scenePatch);
+      }
+    },
+    [updateSharedSettings, updateSceneSettings]
+  );
+
+  const effectiveUpdateSettings = updateSettings || fallbackUpdateSettings;
+
+  const isAIReady = useMemo(() => {
     return Boolean(
-      String(effectiveSettings?.apiUrl || '').trim() &&
-      String(effectiveSettings?.apiKey || '').trim() &&
-      String(effectiveSettings?.model || '').trim()
+      effectiveSettings?.apiKey &&
+      effectiveSettings?.apiUrl &&
+      effectiveSettings?.model
     );
-  }, [effectiveSettings?.apiUrl, effectiveSettings?.apiKey, effectiveSettings?.model]);
+  }, [effectiveSettings]);
+
+  // 只有在配置完备的情况下，才真正开启会话，避免报错
+  const sessionOpen = open && isAIReady;
 
   const {
     history,
@@ -138,7 +178,7 @@ export default function InteractiveAIExplanationPanel({
     setShowText,
     replaySpecificAnswer
   } = useAISession({
-    open,
+    open: sessionOpen,
     scene: AI_SCENES.EXERCISE,
     settings: effectiveSettings,
     initialPayload,
@@ -165,10 +205,10 @@ export default function InteractiveAIExplanationPanel({
   }, [open]);
 
   useEffect(() => {
-    if (open && !hasAIConfig) {
+    if (open && !isAIReady) {
       setShowSettings(true);
     }
-  }, [open, hasAIConfig]);
+  }, [open, isAIReady]);
 
   useEffect(() => {
     if (!open) {
@@ -204,9 +244,16 @@ export default function InteractiveAIExplanationPanel({
             <FaArrowLeft />
           </button>
 
-          <div className="flex items-center gap-2 text-[15px] font-black tracking-widest text-slate-800">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
-            {title}
+          <div className="flex flex-col items-center justify-center text-center">
+            <div className="flex items-center gap-2 text-[15px] font-black tracking-widest text-slate-800">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
+              {title}
+            </div>
+            {effectiveSettings?.model && (
+              <div className="mt-0.5 text-[11px] font-medium text-slate-400">
+                模型: {effectiveSettings.model}
+              </div>
+            )}
           </div>
 
           <button
@@ -224,7 +271,20 @@ export default function InteractiveAIExplanationPanel({
             showLangPicker ? 'pointer-events-none select-none' : ''
           }`}
         >
-          {!showText ? (
+          {!isAIReady ? (
+            <div className="flex min-h-full flex-col items-center justify-center px-6 text-center">
+              <div className="text-lg font-black text-slate-700">尚未完成 AI 设置</div>
+              <div className="mt-2 text-sm text-slate-500">
+                请点击上方按钮或下方去设置填写 API。
+              </div>
+              <button
+                onClick={() => setShowSettings(true)}
+                className="mt-6 rounded-full bg-pink-500 px-6 py-2 text-white shadow-md active:scale-95"
+              >
+                去设置
+              </button>
+            </div>
+          ) : !showText ? (
             <div className="flex min-h-full flex-1 flex-col items-center justify-center">
               <div className="relative flex h-56 w-56 items-center justify-center">
                 {/* 朗读时的动态声波纹效果 */}
@@ -347,15 +407,25 @@ export default function InteractiveAIExplanationPanel({
 
         <div className="absolute bottom-0 left-0 right-0 z-30 bg-white/88 px-5 pb-[max(24px,env(safe-area-inset-bottom))] pt-4 shadow-[0_-10px_40px_rgba(0,0,0,.08)] backdrop-blur-xl">
           <div className="relative mx-auto flex h-20 max-w-md items-center justify-center">
-            <button
-              type="button"
-              onClick={() => setTextMode((value) => !value)}
-              className="absolute left-0 flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-transform hover:bg-slate-50 active:scale-95"
-            >
-              {textMode ? <FaMicrophone size={18} /> : <FaKeyboard size={18} />}
-            </button>
+            {isAIReady && (
+              <button
+                type="button"
+                onClick={() => setTextMode((value) => !value)}
+                className="absolute left-0 flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-transform hover:bg-slate-50 active:scale-95"
+              >
+                {textMode ? <FaMicrophone size={18} /> : <FaKeyboard size={18} />}
+              </button>
+            )}
 
-            {!textMode ? (
+            {!isAIReady ? (
+               <button
+                  type="button"
+                  onClick={() => setShowSettings(true)}
+                  className="rounded-full bg-gradient-to-r from-pink-500 to-rose-500 px-6 py-3 text-sm font-black text-white shadow-[0_10px_25px_rgba(236,72,153,.28)] active:scale-95"
+                >
+                  去配置参数
+               </button>
+            ) : !textMode ? (
               <div className="flex w-full flex-col items-center">
                 <button
                   type="button"
@@ -364,7 +434,7 @@ export default function InteractiveAIExplanationPanel({
                   onPointerCancel={handleMicPointerCancel}
                   onPointerLeave={handleMicPointerCancel}
                   onContextMenu={(e) => e.preventDefault()}
-                  // 将麦克风按钮改为白色背景、粉色图标增加对比度
+                  // 麦克风按钮改为白色背景、粉色图标增加对比度
                   className={`touch-none flex h-20 w-20 items-center justify-center rounded-full shadow-[0_10px_25px_rgba(236,72,153,.2)] transition-all duration-300 ${
                     isRecording
                       ? 'animate-pulse-ring scale-95 bg-pink-500 text-white'
@@ -427,29 +497,31 @@ export default function InteractiveAIExplanationPanel({
               </div>
             )}
 
-            <div className="absolute right-0 flex items-center justify-center gap-2">
-              {isAiSpeaking || isRecording || isThinking ? (
-                <button
-                  type="button"
-                  onClick={stopEverything}
-                  className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-transform active:scale-95"
-                >
-                  <FaStop size={18} className="text-red-400" />
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setShowText((value) => !value)}
-                  className={`flex h-12 w-12 items-center justify-center rounded-full border shadow-sm transition-colors active:scale-95 ${
-                    showText
-                      ? 'border-pink-200 bg-pink-50 text-pink-500'
-                      : 'border-slate-200 bg-white text-slate-500'
-                  }`}
-                >
-                  {showText ? <FaClosedCaptioning size={18} /> : <FaCommentSlash size={18} />}
-                </button>
-              )}
-            </div>
+            {isAIReady && (
+              <div className="absolute right-0 flex items-center justify-center gap-2">
+                {isAiSpeaking || isRecording || isThinking ? (
+                  <button
+                    type="button"
+                    onClick={stopEverything}
+                    className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-transform active:scale-95"
+                  >
+                    <FaStop size={18} className="text-red-400" />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setShowText((value) => !value)}
+                    className={`flex h-12 w-12 items-center justify-center rounded-full border shadow-sm transition-colors active:scale-95 ${
+                      showText
+                        ? 'border-pink-200 bg-pink-50 text-pink-500'
+                        : 'border-slate-200 bg-white text-slate-500'
+                    }`}
+                  >
+                    {showText ? <FaClosedCaptioning size={18} /> : <FaCommentSlash size={18} />}
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
