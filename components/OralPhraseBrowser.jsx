@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { pinyin } from 'pinyin-pro';
-
+import VoiceChat from '../ai/VoiceChat';
 // ============================================================================
 // 1. 工具函数
 // ============================================================================
@@ -691,7 +691,10 @@ export default function OralPhraseBrowser({
   const [aiMessage, setAiMessage] = useState('');
   const [aiError, setAiError] = useState('');
   const [aiCurrentItem, setAiCurrentItem] = useState(null);
-
+  // 新增：控制全屏VoiceChat的状态
+  const [voiceChatOpen, setVoiceChatOpen] = useState(false);
+  const [voiceChatPayload, setVoiceChatPayload] = useState(null);
+  
   const playSessionRef = useRef(0);
   const speechSessionRef = useRef(0);
 
@@ -1037,7 +1040,10 @@ export default function OralPhraseBrowser({
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        openAITeacher(item);
+                        stopAllInteractiveAudio();
+                        setSpeechResult(null);
+                        setVoiceChatPayload(item);
+                        setVoiceChatOpen(true);
                       }}
                       className="relative w-14 h-14 rounded-full flex items-center justify-center shadow-md transition-all overflow-hidden bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white hover:scale-105"
                       title="AI 老师"
@@ -1181,6 +1187,15 @@ export default function OralPhraseBrowser({
         )}
       </AnimatePresence>
 
+      {/* 新增：挂载全屏AI聊天室 */}
+      <VoiceChat
+        isOpen={voiceChatOpen}
+        initialPayload={voiceChatPayload}
+        onClose={() => {
+          setVoiceChatOpen(false);
+          setVoiceChatPayload(null);
+        }}
+      />
       <style jsx global>{`
         .font-pinyin {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
