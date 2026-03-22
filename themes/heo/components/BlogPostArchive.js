@@ -54,7 +54,7 @@ const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
                 )}
 
                 {/* 文字区块 */}
-                <div className={'flex px-3 py-3 md:px-4 md:py-3 flex-col justify-between w-full gap-1.5'}>
+                <div className={'flex px-2 py-3 md:px-4 md:py-3 flex-col justify-between w-full gap-1.5'}>
                   <div className='flex flex-col gap-1.5'>
                     {/* 分类 */}
                     {post?.category && (
@@ -74,7 +74,7 @@ const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
                       href={post?.href}
                       passHref
                       className={
-                        ' group-hover:text-indigo-700 group-hover:dark:text-indigo-400 text-black dark:text-gray-100 dark:group-hover:text-yellow-600 line-clamp-2 replace cursor-pointer text-lg font-semibold leading-tight'
+                        ' group-hover:text-indigo-700 group-hover:dark:text-indigo-400 text-black dark:text-gray-100 dark:group-hover:text-yellow-600 line-clamp-2 replace cursor-pointer text-base md:text-lg font-semibold leading-tight'
                       }>
                       <span className='menu-link '>{post.title}</span>
                     </SmartLink>
@@ -88,7 +88,7 @@ const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
                   <div className='md:flex-nowrap flex-wrap md:justify-start inline-block'>
                     <div>
                       {' '}
-                      {post.tagItems?.map(tag => (
+                      {post.tagItems?.slice(0, 2).map(tag => (
                         <TagItemMini key={tag.name} tag={tag} />
                       ))}
                     </div>

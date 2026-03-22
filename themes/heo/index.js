@@ -221,11 +221,11 @@ const LayoutArchive = props => {
   const { archivePosts, siteInfo } = props
   // 归档页顶部显示条，如果是默认归档则不显示。分类详情页显示分类列表，标签详情页显示当前标签
   return (
-    <div className='p-5 rounded-3xl border dark:border-gray-600 max-w-6xl w-full bg-white dark:bg-[#1e1e1e]'>
+    <div className='p-2 md:p-5 rounded-3xl border dark:border-gray-600 max-w-6xl w-full bg-white dark:bg-[#1e1e1e]'>
       {/* 文章分类条 */}
       <CategoryBar {...props} border={false} />
 
-      <div className='px-3'>
+      <div className='p-2 md:p-6'>
         {Object.keys(archivePosts).map(archiveTitle => (
           <BlogPostArchive
             key={archiveTitle}
