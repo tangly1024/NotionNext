@@ -7,8 +7,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { pinyin } from 'pinyin-pro';
-import InteractiveAIExplanationPanel from '@/components/ai/InteractiveAIExplanationPanel';
-import { AI_SCENES } from '@/components/ai/aiAssistants';
+import VoiceChat from './ai/VoiceChat';
 // ============================================================================
 // 1. 工具函数
 // ============================================================================
@@ -1188,11 +1187,9 @@ export default function OralPhraseBrowser({
         )}
       </AnimatePresence>
 
-      {/* 挂载通用 AI 面板，并指定为“口语场景” */}
-      <InteractiveAIExplanationPanel
-        open={voiceChatOpen}
-        title="AI 口语教练"
-        scene={AI_SCENES.ORAL} // <--- 关键！告诉它这是口语场景
+      {/* 新增：挂载全屏AI聊天室 */}
+      <VoiceChat
+        isOpen={voiceChatOpen}
         initialPayload={voiceChatPayload}
         onClose={() => {
           setVoiceChatOpen(false);
