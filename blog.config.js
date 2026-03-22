@@ -3,7 +3,7 @@ const BLOG = {
 
   NOTION_PAGE_ID:
     process.env.NOTION_PAGE_ID ||
-    '',
+    '02ab3b8678004aa69e9e415905ef32a5',
   THEME: process.env.NEXT_PUBLIC_THEME || 'heo',
   LANG: process.env.NEXT_PUBLIC_LANG || 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
   SINCE: process.env.NEXT_PUBLIC_SINCE || 2021, // e.g if leave this empty, current year will be used.
