@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { FaArrowLeft, FaPaperPlane, FaMicrophone, FaKeyboard, FaStop, FaClosedCaptioning, FaCommentSlash, FaSlidersH } from 'react-icons/fa';
 import { AI_SCENES, buildOralBootstrapPrompt } from './aiAssistants';
 import { mergeTranscript, normalizeAssistantText } from './aiTextUtils';
@@ -26,18 +26,47 @@ const GlobalStyles = () => (
   `}</style>
 );
 
+// 新增：区分全局设置与场景设置的 Key
+const SHARED_KEYS = [
+  'providerId', 'apiUrl', 'apiKey', 'model',
+  'ttsApiUrl', 'ttsVoice', 'zhVoice', 'myVoice',
+  'ttsSpeed', 'ttsPitch', 'soundFx', 'vibration'
+];
+
+const SCENE_KEYS = [
+  'assistantId', 'systemPrompt', 'temperature', 'showText', 'asrSilenceMs'
+];
+
 export default function VoiceChat({ isOpen, onClose, initialPayload }) {
   const [showSettings, setShowSettings] = useState(false);
 
   const {
-    allSettings,
     resolvedSettings,
     updateSharedSettings,
-    updateSceneSettings,
-    selectProvider,
-    selectAssistant,
-    resetScenePrompt
+    updateSceneSettings
   } = useAISettings(AI_SCENES.ORAL);
+
+  // 新增：桥接函数，正确分发 settings 的更新（和另一套 UI 保持一致）
+  const fallbackUpdateSettings = useCallback(
+    (patch = {}) => {
+      const sharedPatch = {};
+      const scenePatch = {};
+
+      Object.entries(patch).forEach(([key, value]) => {
+        if (SHARED_KEYS.includes(key)) sharedPatch[key] = value;
+        if (SCENE_KEYS.includes(key)) scenePatch[key] = value;
+      });
+
+      if (Object.keys(sharedPatch).length) {
+        updateSharedSettings(sharedPatch);
+      }
+
+      if (Object.keys(scenePatch).length) {
+        updateSceneSettings(AI_SCENES.ORAL, scenePatch);
+      }
+    },
+    [updateSharedSettings, updateSceneSettings]
+  );
 
   const {
     history,
@@ -69,7 +98,7 @@ export default function VoiceChat({ isOpen, onClose, initialPayload }) {
     scene: AI_SCENES.ORAL,
     settings: resolvedSettings,
     initialPayload: initialPayload,
-    bootstrapBuilder: buildOralBootstrapPrompt, // 触发上面写的开场白
+    bootstrapBuilder: buildOralBootstrapPrompt, // 触发口语开场白
     defaultTextMode: false
   });
 
@@ -315,12 +344,8 @@ export default function VoiceChat({ isOpen, onClose, initialPayload }) {
       <AISettingsModal
         open={showSettings}
         scene={AI_SCENES.ORAL}
-        allSettings={allSettings}
-        updateSharedSettings={updateSharedSettings}
-        updateSceneSettings={updateSceneSettings}
-        selectProvider={selectProvider}
-        selectAssistant={selectAssistant}
-        resetScenePrompt={resetScenePrompt}
+        settings={resolvedSettings} // 修改为符合新 API 的传参
+        updateSettings={fallbackUpdateSettings} // 修改为新的统一更新函数
         onClose={() => setShowSettings(false)}
       />
     </div>
