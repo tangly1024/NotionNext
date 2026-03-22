@@ -57,7 +57,7 @@ export default function CategoryBar(props) {
         </div>
         <SmartLink
           href='/category'
-          className='whitespace-nowrap font-bold text-gray-900 dark:text-white transition-colors duration-200 hover:text-indigo-600 dark:hover:text-indigo-400'>
+          className='whitespace-nowrap font-bold text-gray-900 dark:text-white transition-colors duration-200 hover:text-indigo-600 dark:hover:text-indigo-400 mr-3'>
           {locale.MENU.CATEGORY}
         </SmartLink>
       </div>
