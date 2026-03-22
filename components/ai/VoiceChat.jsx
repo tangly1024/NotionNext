@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { FaArrowLeft, FaPaperPlane, FaMicrophone, FaKeyboard, FaStop, FaClosedCaptioning, FaCommentSlash, FaSlidersH } from 'react-icons/fa';
-import { AI_SCENES } from './aiAssistants';
+import { AI_SCENES, buildOralBootstrapPrompt } from './aiAssistants';
 import { mergeTranscript, normalizeAssistantText } from './aiTextUtils';
 import { useAISettings } from './useAISettings';
 import { useAISession } from './useAISession';
@@ -26,7 +26,7 @@ const GlobalStyles = () => (
   `}</style>
 );
 
-export default function VoiceChat({ isOpen, onClose }) {
+export default function VoiceChat({ isOpen, onClose, initialPayload }) {
   const [showSettings, setShowSettings] = useState(false);
 
   const {
@@ -68,7 +68,8 @@ export default function VoiceChat({ isOpen, onClose }) {
     open: isOpen,
     scene: AI_SCENES.ORAL,
     settings: resolvedSettings,
-    initialPayload: null,
+    initialPayload: initialPayload,
+    bootstrapBuilder: buildOralBootstrapPrompt, // 触发上面写的开场白
     defaultTextMode: false
   });
 
