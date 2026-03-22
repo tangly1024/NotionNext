@@ -1199,7 +1199,6 @@ export default function OralPhraseBrowser({
           setVoiceChatPayload(null);
         }}
       />
-      />
       <style jsx global>{`
         .font-pinyin {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
