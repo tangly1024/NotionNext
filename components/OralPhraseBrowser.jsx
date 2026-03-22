@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { pinyin } from 'pinyin-pro';
-import VoiceChat from '../ai/VoiceChat';
+import VoiceChat from './ai/VoiceChat';
 // ============================================================================
 // 1. 工具函数
 // ============================================================================
