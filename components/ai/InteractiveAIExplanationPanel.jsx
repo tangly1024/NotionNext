@@ -14,7 +14,7 @@ import {
   FaVolumeUp,
   FaSlidersH
 } from 'react-icons/fa';
-import { AI_SCENES, buildExerciseBootstrapPrompt } from './aiAssistants';
+import { AI_SCENES, buildExerciseBootstrapPrompt, buildOralBootstrapPrompt } from './aiAssistants';
 import { normalizeAssistantText } from './aiTextUtils';
 import { useAISettings } from './useAISettings';
 import { useAISession } from './useAISession';
@@ -107,14 +107,15 @@ export default function InteractiveAIExplanationPanel({
   initialPayload = null,
   onClose,
   settings,
-  updateSettings
+  updateSettings,
+  scene = AI_SCENES.EXERCISE // 默认是做题场景，保证其他页面不报错
 }) {
   const [mounted, setMounted] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [pinyinPreviewMap, setPinyinPreviewMap] = useState({});
 
   const { resolvedSettings, updateSharedSettings, updateSceneSettings } = useAISettings(
-    AI_SCENES.EXERCISE
+    scene
   );
 
   const effectiveSettings = settings || resolvedSettings;
@@ -135,7 +136,7 @@ export default function InteractiveAIExplanationPanel({
       }
 
       if (Object.keys(scenePatch).length) {
-        updateSceneSettings(AI_SCENES.EXERCISE, scenePatch);
+        updateSceneSettings(scene, scenePatch);
       }
     },
     [updateSharedSettings, updateSceneSettings]
@@ -179,7 +180,7 @@ export default function InteractiveAIExplanationPanel({
     replaySpecificAnswer
   } = useAISession({
     open: sessionOpen,
-    scene: AI_SCENES.EXERCISE,
+    scene: scene,
     settings: effectiveSettings,
     initialPayload,
     bootstrapBuilder: buildExerciseBootstrapPrompt,
@@ -538,7 +539,7 @@ export default function InteractiveAIExplanationPanel({
           settings={effectiveSettings}
           updateSettings={effectiveUpdateSettings}
           onClose={() => setShowSettings(false)}
-          scene="exercise"
+          scene={scene}
         />
       </div>
     </>,
