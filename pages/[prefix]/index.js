@@ -13,6 +13,27 @@ import { useRouter } from 'next/router'
 import { idToUuid } from 'notion-utils'
 import { useEffect, useState } from 'react'
 
+function resolvePostRootPrefix(NOTION_CONFIG) {
+  const pattern = siteConfig(
+    'POST_URL_PREFIX',
+    BLOG.POST_URL_PREFIX,
+    NOTION_CONFIG
+  )
+
+  if (typeof pattern !== 'string') return ''
+
+  const segments = pattern
+    .split('/')
+    .map(item => item.trim())
+    .filter(Boolean)
+
+  const slugIndex = segments.indexOf('%slug%')
+  if (slugIndex <= 0) return ''
+
+  const staticPrefix = segments.slice(0, slugIndex).join('/')
+  return staticPrefix.includes('%') ? '' : staticPrefix
+}
+
 /**
  * 根据notion的slug访问页面
  * 只解析一级目录例如 /about
@@ -119,6 +140,19 @@ export async function getStaticProps({ params: { prefix }, locale }) {
     prefix,
     locale,
   })
+
+  if (!props?.post) {
+    const postRootPrefix = resolvePostRootPrefix(props?.NOTION_CONFIG)
+    if (postRootPrefix && prefix === postRootPrefix) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false
+        }
+      }
+    }
+  }
+
   return {
     props,
     revalidate: process.env.EXPORT
