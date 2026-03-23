@@ -67,8 +67,27 @@ export const useSimpleGlobal = () => useContext(ThemeGlobalSimple)
  */
 const LayoutBase = props => {
   const { children, slotTop } = props
+  const { post } = props
   const { onLoading, fullWidth } = useGlobal()
+  const router = useRouter()
   const searchModal = useRef(null)
+  const hideRightSidebarOnPages = siteConfig(
+    'SIMPLE_HIDE_RIGHT_SIDEBAR_ON_PAGES',
+    null,
+    CONFIG
+  )
+  const onlyShowRightSidebarOnHome = siteConfig(
+    'SIMPLE_RIGHT_SIDEBAR_ONLY_HOME',
+    null,
+    CONFIG
+  )
+  const isHomePage = router.pathname === '/'
+  const shouldShowRightSidebar =
+    !fullWidth &&
+    (!onlyShowRightSidebarOnHome || isHomePage) &&
+    !(hideRightSidebarOnPages && post?.type === 'Page')
+
+  const containerWidthClass = shouldShowRightSidebar ? 'max-w-9/10' : 'max-w-full'
 
   return (
     <ThemeGlobalSimple.Provider value={{ searchModal }}>
@@ -91,7 +110,7 @@ const LayoutBase = props => {
           className={
             (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
               ? 'flex-row-reverse'
-              : '') + ' w-full flex-1 flex items-start max-w-9/10 mx-auto pt-12'
+              : '') + ` w-full flex-1 flex items-start ${containerWidthClass} mx-auto pt-12`
           }>
           <div id='container-inner ' className='w-full flex-grow min-h-fit'>
             <Transition
@@ -111,7 +130,7 @@ const LayoutBase = props => {
             <AdSlot type='native' />
           </div>
 
-          {fullWidth ? null : (
+          {shouldShowRightSidebar && (
             <div
               id='right-sidebar'
               className='hidden xl:block flex-none sticky top-8 w-96 border-l dark:border-gray-800 pl-12 border-gray-100'>
@@ -225,7 +244,10 @@ const LayoutSlug = props => {
       {lock && <ArticleLock validPassword={validPassword} />}
 
       {!lock && post && (
-        <div className={`px-2  ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
+        <div
+          className={`px-2 ${
+            fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'
+          }`}>
           {/* 文章信息 */}
           <ArticleInfo post={post} />
 

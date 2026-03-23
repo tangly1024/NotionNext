@@ -12,6 +12,10 @@ const CONFIG = {
   SIMPLE_POST_COVER_ENABLE: process.env.NEXT_PUBLIC_SIMPLE_POST_COVER_ENABLE || false, // 是否展示博客封面
 
   SIMPLE_ARTICLE_RECOMMEND_POSTS: process.env.NEXT_PUBLIC_SIMPLE_ARTICLE_RECOMMEND_POSTS || true, // 文章详情底部显示推荐
+  SIMPLE_HIDE_RIGHT_SIDEBAR_ON_PAGES:
+    process.env.NEXT_PUBLIC_SIMPLE_HIDE_RIGHT_SIDEBAR_ON_PAGES || true, // Notion Page 类型页面隐藏右侧栏
+  SIMPLE_RIGHT_SIDEBAR_ONLY_HOME:
+    process.env.NEXT_PUBLIC_SIMPLE_RIGHT_SIDEBAR_ONLY_HOME || false, // 仅在首页显示右侧栏
 
   // 菜单配置
   SIMPLE_MENU_CATEGORY: true, // 显示分类
