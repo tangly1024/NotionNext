@@ -52,8 +52,6 @@ const Style = () => {
       cursor: pointer;
   }
   
-  
-
   `}</style>
 }
 
