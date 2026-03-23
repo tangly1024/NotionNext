@@ -56,7 +56,7 @@ const CONFIG = {
   HEO_INFO_CARD_ICON1: 'fa-regular fa-comment-dots',
   HEO_INFO_CARD_URL2: '/about',
   HEO_INFO_CARD_ICON2: 'fas fa-user',
-  HEO_INFO_CARD_URL3: 'https://home.nuaa.tech/gzh/index.html',
+  HEO_INFO_CARD_URL3: 'https://go.88lin.eu.org/gzh/index.html',
   HEO_INFO_CARD_TEXT3: '公众号',
 
   // 用户技能图标
@@ -131,7 +131,7 @@ const CONFIG = {
   HEO_SOCIAL_CARD_TITLE_1: '公众号',
   HEO_SOCIAL_CARD_TITLE_2: '防失联关注微信公众号',
   HEO_SOCIAL_CARD_TITLE_3: '点击扫码关注公众号',
-  HEO_SOCIAL_CARD_URL: 'https://home.nuaa.tech/gzh/index.html',
+  HEO_SOCIAL_CARD_URL: 'https://go.88lin.eu.org/gzh/index.html',
 
   // 底部统计面板文案
   HEO_POST_COUNT_TITLE: '文章数:',
