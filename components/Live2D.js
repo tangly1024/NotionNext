@@ -10,9 +10,12 @@ import { useEffect } from 'react'
  */
 export default function Live2D() {
   const { theme, switchTheme } = useGlobal()
-  const showPet = JSON.parse(siteConfig('WIDGET_PET'))
+  const widgetPet = siteConfig('WIDGET_PET')
+  const widgetPetSwitchTheme = siteConfig('WIDGET_PET_SWITCH_THEME')
+  const showPet = widgetPet === true || widgetPet === 'true'
   const petLink = siteConfig('WIDGET_PET_LINK')
-  const petSwitchTheme = siteConfig('WIDGET_PET_SWITCH_THEME')
+  const petSwitchTheme =
+    widgetPetSwitchTheme === true || widgetPetSwitchTheme === 'true'
 
   useEffect(() => {
     if (showPet && !isMobile()) {
