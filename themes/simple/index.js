@@ -67,8 +67,25 @@ export const useSimpleGlobal = () => useContext(ThemeGlobalSimple)
  */
 const LayoutBase = props => {
   const { children, slotTop } = props
+  const { post } = props
   const { onLoading, fullWidth } = useGlobal()
+  const router = useRouter()
   const searchModal = useRef(null)
+  const hideRightSidebarOnPages = siteConfig(
+    'SIMPLE_HIDE_RIGHT_SIDEBAR_ON_PAGES',
+    null,
+    CONFIG
+  )
+  const onlyShowRightSidebarOnHome = siteConfig(
+    'SIMPLE_RIGHT_SIDEBAR_ONLY_HOME',
+    null,
+    CONFIG
+  )
+  const isHomePage = router.pathname === '/'
+  const shouldShowRightSidebar =
+    !fullWidth &&
+    (!onlyShowRightSidebarOnHome || isHomePage) &&
+    !(hideRightSidebarOnPages && post?.type === 'Page')
 
   return (
     <ThemeGlobalSimple.Provider value={{ searchModal }}>
@@ -111,7 +128,7 @@ const LayoutBase = props => {
             <AdSlot type='native' />
           </div>
 
-          {fullWidth ? null : (
+          {shouldShowRightSidebar && (
             <div
               id='right-sidebar'
               className='hidden xl:block flex-none sticky top-8 w-96 border-l dark:border-gray-800 pl-12 border-gray-100'>
