@@ -87,8 +87,6 @@ const LayoutBase = props => {
     (!onlyShowRightSidebarOnHome || isHomePage) &&
     !(hideRightSidebarOnPages && post?.type === 'Page')
 
-  const containerWidthClass = shouldShowRightSidebar ? 'max-w-9/10' : 'max-w-full'
-
   return (
     <ThemeGlobalSimple.Provider value={{ searchModal }}>
       <div
@@ -110,7 +108,10 @@ const LayoutBase = props => {
           className={
             (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
               ? 'flex-row-reverse'
-              : '') + ` w-full flex-1 flex items-start ${containerWidthClass} mx-auto pt-12`
+              : '') +
+              ` w-full flex-1 flex items-start ${
+                shouldShowRightSidebar ? 'max-w-9/10' : 'max-w-full'
+              } mx-auto pt-12`
           }>
           <div id='container-inner ' className='w-full flex-grow min-h-fit'>
             <Transition
