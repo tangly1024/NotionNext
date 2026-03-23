@@ -23,11 +23,22 @@ const Style = () => {
   }
   
   #theme-simple .blog-item-title {
-    color: #276077;
+    color: var(--notion-blue);
   }
   
   .dark #theme-simple .blog-item-title {
     color: #d1d5db;
+  }
+
+  #theme-simple .text-blue-400,
+  #theme-simple .text-blue-600,
+  #theme-simple .border-blue-400 {
+    color: var(--notion-blue) !important;
+    border-color: var(--notion-blue) !important;
+  }
+
+  .dark #theme-simple .dark\\:text-blue-300 {
+    color: var(--notion-blue) !important;
   }
   
   .notion {
