@@ -4,6 +4,7 @@ import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import NotionIcon from '@/components/NotionIcon'
+import LazyImage from '@/components/LazyImage'
 
 /**
  * 文章描述
@@ -14,13 +15,36 @@ export default function ArticleInfo (props) {
   const { post } = props
 
   const { locale } = useGlobal()
+  const titleCoverEnabled = siteConfig('SIMPLE_POST_TITLE_COVER_ENABLE', null, CONFIG)
+  const titleCover = post?.pageCover || post?.pageCoverThumbnail
+  const useTitleCover = titleCoverEnabled && Boolean(titleCover)
 
   return (
-        <section className="mt-2 text-gray-600 dark:text-gray-400 leading-8">
-            <h2
-                className="blog-item-title mb-5 font-bold text-black text-xl md:text-2xl no-underline">
-                {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post?.pageIcon} />}{post?.title}
-            </h2>
+        <section className='mt-2 text-gray-600 dark:text-gray-400 leading-8'>
+            <div
+                className={`${
+                  useTitleCover
+                    ? 'relative overflow-hidden rounded-xl p-8 md:p-10 mb-6'
+                    : ''
+                }`}>
+                {useTitleCover && (
+                    <>
+                        <LazyImage
+                            src={titleCover}
+                            alt={post?.title || 'post cover'}
+                            className='absolute inset-0 w-full h-full object-cover'
+                        />
+                        <div className='absolute inset-0 bg-black/50 dark:bg-black/60' />
+                    </>
+                )}
+
+                <h2
+                    className={`blog-item-title ${useTitleCover ? 'simple-post-title-cover' : ''} font-bold text-black text-xl md:text-2xl no-underline ${
+                      useTitleCover ? 'relative z-10 mb-0 text-white dark:text-white' : 'mb-5'
+                    }`}>
+                    {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post?.pageIcon} />}{post?.title}
+                </h2>
+            </div>
 
             <div className='flex flex-wrap text-gray-700 dark:text-gray-300'>
                 {post?.type !== 'Page' && (

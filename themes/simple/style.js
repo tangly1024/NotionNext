@@ -30,6 +30,10 @@ const Style = () => {
     color: #d1d5db;
   }
 
+  #theme-simple .blog-item-title.simple-post-title-cover {
+    color: #fff !important;
+  }
+
   #theme-simple .text-blue-400,
   #theme-simple .text-blue-600,
   #theme-simple .border-blue-400 {
