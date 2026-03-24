@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import {
   Mic, StopCircle, Sparkles, X, Volume2, Star, Play,
   Square, Settings2, ChevronLeft, Loader2, Heart, Zap, Brain
@@ -691,14 +691,84 @@ export default function OralPhraseBrowser({
   const [aiMessage, setAiMessage] = useState('');
   const [aiError, setAiError] = useState('');
   const [aiCurrentItem, setAiCurrentItem] = useState(null);
-  // 新增：控制全屏VoiceChat的状态
+  
+  // 控制全屏VoiceChat的状态
   const [voiceChatOpen, setVoiceChatOpen] = useState(false);
   const [voiceChatPayload, setVoiceChatPayload] = useState(null);
   
   const playSessionRef = useRef(0);
   const speechSessionRef = useRef(0);
+  const overlayStackRef = useRef([]);
 
   const { scrollY } = useScroll();
+
+  // ============================================================================
+  // History API / 手势返回弹窗拦截机制
+  // ============================================================================
+  const closeOverlayByType = useCallback((type) => {
+    if (type === 'settings') setShowSettings(false);
+    if (type === 'spelling') setSpellingItem(null);
+    if (type === 'aiTeacher') {
+      AITeacherEngine.stop();
+      setAiLoading(false);
+      setAiOpen(false);
+    }
+    if (type === 'voiceChat') {
+      setVoiceChatOpen(false);
+      setVoiceChatPayload(null);
+    }
+  }, []);
+
+  const closeTopOverlay = useCallback(() => {
+    const top = overlayStackRef.current[overlayStackRef.current.length - 1];
+    if (!top) return false;
+    closeOverlayByType(top);
+    return true;
+  }, [closeOverlayByType]);
+
+  const openOverlay = useCallback((type, setter, payload = true) => {
+    if (typeof window === 'undefined') {
+      setter(payload);
+      return;
+    }
+    const alreadyTop = overlayStackRef.current[overlayStackRef.current.length - 1] === type;
+    setter(payload);
+    if (!alreadyTop) {
+      overlayStackRef.current.push(type);
+      window.history.pushState({ __opbOverlay: type }, '');
+    }
+  }, []);
+
+  const syncOverlayStack = useCallback((type, visible) => {
+    if (visible) return;
+    overlayStackRef.current = overlayStackRef.current.filter((t) => t !== type);
+  }, []);
+
+  useEffect(() => {
+    const onPopState = () => {
+      closeTopOverlay();
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, [closeTopOverlay]);
+
+  useEffect(() => {
+    syncOverlayStack('settings', showSettings);
+  }, [showSettings, syncOverlayStack]);
+
+  useEffect(() => {
+    syncOverlayStack('spelling', !!spellingItem);
+  }, [spellingItem, syncOverlayStack]);
+
+  useEffect(() => {
+    syncOverlayStack('aiTeacher', aiOpen);
+  }, [aiOpen, syncOverlayStack]);
+
+  useEffect(() => {
+    syncOverlayStack('voiceChat', voiceChatOpen);
+  }, [voiceChatOpen, syncOverlayStack]);
+
+  // ============================================================================
 
   useEffect(() => {
     const savedSet = localStorage.getItem(settingsStorageKey);
@@ -721,6 +791,7 @@ export default function OralPhraseBrowser({
       AITeacherEngine.stop();
       SpeechEngine.stop();
       AudioEngine.stop();
+      overlayStackRef.current = [];
     };
   }, []);
 
@@ -859,7 +930,7 @@ export default function OralPhraseBrowser({
     setAiCurrentItem(item);
     setAiMessage('');
     setAiError('');
-    setAiOpen(true);
+    openOverlay('aiTeacher', setAiOpen, true);
 
     await askAITeacher(item);
   };
@@ -940,7 +1011,13 @@ export default function OralPhraseBrowser({
           </button>
 
           <button
-            onClick={() => setShowSettings(!showSettings)}
+            onClick={() => {
+              if (!showSettings) {
+                openOverlay('settings', setShowSettings, true);
+              } else {
+                setShowSettings(false);
+              }
+            }}
             className="p-2 text-slate-400 hover:text-blue-600"
           >
             <Settings2 size={20} />
@@ -1028,7 +1105,7 @@ export default function OralPhraseBrowser({
                         playSessionRef.current += 1;
                         AudioEngine.stop();
                         setPlayingId(null);
-                        setSpellingItem(item);
+                        openOverlay('spelling', setSpellingItem, item);
                       }}
                       className="text-slate-300 hover:text-blue-500 transition-all p-2"
                       title="拼读练习"
@@ -1043,7 +1120,7 @@ export default function OralPhraseBrowser({
                         stopAllInteractiveAudio();
                         setSpeechResult(null);
                         setVoiceChatPayload(item);
-                        setVoiceChatOpen(true);
+                        openOverlay('voiceChat', setVoiceChatOpen, true);
                       }}
                       className="relative w-14 h-14 rounded-full flex items-center justify-center shadow-md transition-all overflow-hidden bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white hover:scale-105"
                       title="AI 老师"
@@ -1077,7 +1154,7 @@ export default function OralPhraseBrowser({
                     </button>
                   </div>
 
-                  {/* 发音评分入口：从中间主按钮挪到下方，更不打架 */}
+                  {/* 发音评分入口 */}
                   <div className="flex justify-center mt-4">
                     <button
                       onClick={(e) => {
@@ -1187,7 +1264,7 @@ export default function OralPhraseBrowser({
         )}
       </AnimatePresence>
 
-      {/* 新增：挂载全屏AI聊天室 */}
+      {/* 挂载全屏AI聊天室 */}
       <VoiceChat
         isOpen={voiceChatOpen}
         initialPayload={voiceChatPayload}
