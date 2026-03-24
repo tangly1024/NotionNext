@@ -15,9 +15,8 @@ export default function ArticleInfo (props) {
   const { post } = props
 
   const { locale } = useGlobal()
-  const titleCoverEnabled = siteConfig('SIMPLE_POST_TITLE_COVER_ENABLE', null, CONFIG)
   const titleCover = post?.pageCover || post?.pageCoverThumbnail
-  const useTitleCover = titleCoverEnabled && Boolean(titleCover)
+  const useTitleCover = Boolean(titleCover)
 
   return (
         <section className='mt-2 text-gray-600 dark:text-gray-400 leading-8'>
