@@ -14,8 +14,8 @@ export const oralCategories = [
       },
       {
         id: 'thanks',
-        title: '感谢道歉',
-        subtitle: '谢谢 / 对不起',
+        title: '回应问候',
+        subtitle: '谢谢/我很好 ',
         cover: 'https://images.pexels.com/photos/36308161/pexels-photo-36308161.jpeg',
         locked: false,
       },
