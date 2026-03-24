@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { siteConfig } from '@/lib/config'
 import LazyImage from '@/components/LazyImage'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 /**
  * 作者团队
  * @returns 
@@ -46,12 +46,12 @@ export const Team = () => {
                             </div>
 
                             <div className='mt-8 w-full flex justify-end py-2'>
-                                <Link
+                                <SmartLink
                                     href={siteConfig('PROXIO_ABOUT_BUTTON_URL', '')}
                                     className='px-4 py-2 rounded-3xl border dark:border-gray-200 border-[#333333] text-base font-medium text-dark hover:bg-gray-100 dark:text-white dark:hover:bg-white dark:hover:text-black duration-200'>
                                     {siteConfig('PROXIO_ABOUT_BUTTON_TEXT')}
                                     <i className="pl-4 fa-solid fa-arrow-right"></i>
-                                </Link>
+                                </SmartLink>
                             </div>
                         </div>
                     </div>

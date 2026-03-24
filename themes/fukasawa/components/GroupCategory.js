@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 function GroupCategory ({ currentCategory, categories }) {
   if (!categories) {
@@ -10,7 +10,7 @@ function GroupCategory ({ currentCategory, categories }) {
       {categories.map(category => {
         const selected = currentCategory === category.name
         return (
-          <Link
+          <SmartLink
             key={category.name}
             href={`/category/${category.name}`}
             passHref
@@ -20,7 +20,7 @@ function GroupCategory ({ currentCategory, categories }) {
               '  text-sm w-full items-center duration-300 px-2  cursor-pointer py-1 font-light'}>
 
             <i className={`${selected ? 'text-white fa-folder-open' : 'fa-folder text-gray-400'} fas mr-2`} />{category.name}({category.count})
-          </Link>
+          </SmartLink>
         )
       })}
     </div>

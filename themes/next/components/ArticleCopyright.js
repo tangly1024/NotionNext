@@ -1,5 +1,5 @@
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
 import NotByAI from '@/components/NotByAI'
@@ -14,9 +14,9 @@ export default function ArticleCopyright({ author, url }) {
       <ul className='overflow-x-auto whitespace-nowrap text-sm dark:bg-gray-700 bg-gray-100 p-5 leading-8 border-l-2 border-blue-500'>
         <li>
           <strong className='mr-2'>{locale.COMMON.AUTHOR}:</strong>
-          <Link href={'/about'} className='hover:underline'>
+          <SmartLink href={'/about'} className='hover:underline'>
             {author}
-          </Link>
+          </SmartLink>
         </li>
         <li>
           <strong className='mr-2'>{locale.COMMON.URL}:</strong>

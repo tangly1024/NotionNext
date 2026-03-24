@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useState } from 'react'
 
 export const MenuItemDrop = ({ link }) => {
@@ -11,7 +11,7 @@ export const MenuItemDrop = ({ link }) => {
       onMouseOut={() => changeShow(false)}
       className='relative py-1.5 px-5 duration-300 text-base justify-between hover:bg-gray-700 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center '>
       {!hasSubMenu && (
-        <Link
+        <SmartLink
           href={link?.href}
           target={link?.target}
           className='w-full my-auto items-center justify-between flex '>
@@ -20,7 +20,7 @@ export const MenuItemDrop = ({ link }) => {
             {link.name}
           </div>
           {link.slot}
-        </Link>
+        </SmartLink>
       )}
 
       {hasSubMenu && (
@@ -46,7 +46,7 @@ export const MenuItemDrop = ({ link }) => {
           {link?.subMenus?.map(sLink => {
             return (
               <li key={sLink.id}>
-                <Link
+                <SmartLink
                   href={sLink.href}
                   target={link?.target}
                   className='my-auto h-9 pl-4 items-center justify-start flex not:last-child:border-b-0 border-b text-gray-700 dark:text-gray-200  hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200  dark:border-gray-800 '>
@@ -55,7 +55,7 @@ export const MenuItemDrop = ({ link }) => {
                   )}
                   {sLink.name}
                   {sLink.slot}
-                </Link>
+                </SmartLink>
               </li>
             )
           })}

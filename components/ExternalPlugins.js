@@ -1,5 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import { convertInnerUrl } from '@/lib/notion/convertInnerUrl'
+import { convertInnerUrl } from '@/lib/db/notion/convertInnerUrl'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
@@ -129,6 +129,9 @@ const ExternalPlugin = props => {
 
   const ENABLE_ICON_FONT = siteConfig('ENABLE_ICON_FONT', false)
 
+  const UMAMI_HOST = siteConfig('UMAMI_HOST', null, NOTION_CONFIG)
+  const UMAMI_ID = siteConfig('UMAMI_ID', null, NOTION_CONFIG)
+
   // 自定义样式css和js引入
   if (isBrowser) {
     // 初始化AOS动画
@@ -178,8 +181,11 @@ const ExternalPlugin = props => {
   useEffect(() => {
     // 执行注入脚本
     // eslint-disable-next-line no-eval
+    if (GLOBAL_JS && GLOBAL_JS.trim() !== '') {
+      // console.log('Inject JS:', GLOBAL_JS);
+    }
     eval(GLOBAL_JS)
-  }, [])
+  })
 
   if (DISABLE_PLUGIN) {
     return null
@@ -393,6 +399,11 @@ const ExternalPlugin = props => {
           `
           }}
         />
+      )}
+
+      {/* UMAMI 统计 */}
+      {UMAMI_ID && (
+        <script async defer src={UMAMI_HOST} data-website-id={UMAMI_ID}></script>
       )}
 
       {/* 谷歌统计 */}

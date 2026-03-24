@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
@@ -28,33 +28,33 @@ export default function ArticleInfo(props) {
             <div className='space-x-2'>
               <span className='text-sm'>
                 发布于
-                <Link
+                <SmartLink
                   className='p-1 hover:text-red-400 transition-all duration-200'
                   href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}>
                   {post.date?.start_date || post.createdTime}
-                </Link>
+                </SmartLink>
               </span>
             </div>
 
             <div className='text-sm'>
               {/* {post.category && (
-                <Link href={`/category/${post.category}`} className='p-1'>
+                <SmartLink href={`/category/${post.category}`} className='p-1'>
                   {' '}
                   <span className='hover:text-red-400 transition-all duration-200'>
                     <i className='fa-regular fa-folder mr-0.5' />
                     {post.category}
                   </span>
-                </Link>
+                </SmartLink>
               )} */}
               {post?.tags &&
                 post?.tags?.length > 0 &&
                 post?.tags.map(t => (
-                  <Link
+                  <SmartLink
                     key={t}
                     href={`/tag/${t}`}
                     className=' hover:text-red-400 transition-all duration-200'>
                     <span> #{t}</span>
-                  </Link>
+                  </SmartLink>
                 ))}
             </div>
           </header>
