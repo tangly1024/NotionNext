@@ -5,6 +5,7 @@ import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import NotionIcon from '@/components/NotionIcon'
 import LazyImage from '@/components/LazyImage'
+import { useRouter } from 'next/router'
 
 /**
  * 文章描述
@@ -15,9 +16,13 @@ export default function ArticleInfo (props) {
   const { post } = props
 
   const { locale } = useGlobal()
+  const router = useRouter()
+  const isHomePage = router.pathname === '/'
   const titleCoverEnabled = siteConfig('SIMPLE_POST_TITLE_COVER_ENABLE', null, CONFIG)
   const titleCover = post?.pageCover || post?.pageCoverThumbnail
-  const useTitleCover = titleCoverEnabled && Boolean(titleCover)
+  const forceEnablePageCover = post?.type === 'Page' && !isHomePage
+  const useTitleCover =
+    Boolean(titleCover) && (titleCoverEnabled || forceEnablePageCover)
 
   return (
         <section className='mt-2 text-gray-600 dark:text-gray-400 leading-8'>
