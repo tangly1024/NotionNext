@@ -1,12 +1,13 @@
+// data/oral/index.js
 export const oralDataMap = {
-  'daily/greeting': () => import('./daily/greeting.json').then((m) => m.default),
- // 'daily/thanks': () => import('./daily/thanks.json').then((m) => m.default),
- // 'daily/selfintro': () => import('./daily/selfintro.json').then((m) => m.default),
+  'daily/greeting': () => fetch('/data/oral/daily/greeting.json').then(res => res.json()),
+  // 'daily/thanks': () => fetch('/data/oral/daily/thanks.json').then(res => res.json()),
+ // 'daily/selfintro': () => fetch('/data/oral/daily/selfintro.json').then(res => res.json()),
 
- // 'travel/airport': () => import('./travel/airport.json').then((m) => m.default),
-//  'travel/hotel': () => import('./travel/hotel.json').then((m) => m.default),
-//  'travel/direction': () => import('./travel/direction.json').then((m) => m.default),
+  // 'travel/airport': () => fetch('/data/oral/travel/airport.json').then(res => res.json()),
+ // 'travel/hotel': () => fetch('/data/oral/travel/hotel.json').then(res => res.json()),
+ // 'travel/direction': () => fetch('/data/oral/travel/direction.json').then(res => res.json()),
 
- // 'medical/registration': () => import('./medical/registration.json').then((m) => m.default),
- // 'medical/symptoms': () => import('./medical/symptoms.json').then((m) => m.default),
+ // 'medical/registration': () => fetch('/data/oral/medical/registration.json').then(res => res.json()),
+ // 'medical/symptoms': () => fetch('/data/oral/medical/symptoms.json').then(res => res.json()),
 };
