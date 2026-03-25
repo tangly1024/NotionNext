@@ -9,8 +9,8 @@ const CONFIG = {
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
      { title: '一站式电子手帐教程', url: '/' },
-    // { title: '访问文档中心获取更多帮助', url: 'https://docs.tangly1024.com' }
-     { title: '访问帮助中心获取更多帮助', url: '/help' }
+    { title: '访问文档中心获取更多帮助', url: 'https://noooter.com/#/help' }
+    //  { title: '访问帮助中心获取更多帮助', url: '/help' }
   ],
 
   // 英雄区左右侧组件颠倒位置
@@ -52,12 +52,12 @@ const CONFIG = {
   // 个人资料底部按钮
  HEO_INFO_CARD_URL1: 'https://noooter.com',
   HEO_INFO_CARD_ICON1: 'fas fa-house',
-  HEO_INFO_CARD_URL2: '/about',
+  HEO_INFO_CARD_URL2: 'https://noooter.com/#/about',
   HEO_INFO_CARD_ICON2: 'fas fa-circle-info',
   HEO_INFO_CARD_URL3: '/contribution',
   HEO_INFO_CARD_TEXT3: '我要投稿',
 
-  // 用户技能图标
+  // APP图标
   HEO_GROUP_ICONS: [
     {
       title_1: 'Drawboard',
@@ -127,8 +127,8 @@ const CONFIG = {
 
   HEO_SOCIAL_CARD: true, // 是否显示右侧，点击加入社群按钮
   HEO_SOCIAL_CARD_TITLE_1: '交流频道',
-  HEO_SOCIAL_CARD_TITLE_2: '加入我们的社群讨论分享',
-  HEO_SOCIAL_CARD_TITLE_3: '点击加入社群',
+  HEO_SOCIAL_CARD_TITLE_2: '加入我们的微信群吧！',
+  HEO_SOCIAL_CARD_TITLE_3: '点击加入社群', 
   HEO_SOCIAL_CARD_URL: '/join',
 
   // 底部统计面板文案
