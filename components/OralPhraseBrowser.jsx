@@ -8,6 +8,7 @@ import {
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { pinyin } from 'pinyin-pro';
 import VoiceChat from './ai/VoiceChat';
+
 // ============================================================================
 // 1. 工具函数
 // ============================================================================
@@ -225,7 +226,7 @@ const SpeechEngine = {
 };
 
 // ============================================================================
-// 3. AI 老师引擎：保证只保留最后一个回答
+// 3. AI 老师引擎
 // ============================================================================
 const AITeacherEngine = {
   abortController: null,
@@ -703,8 +704,10 @@ export default function OralPhraseBrowser({
   const { scrollY } = useScroll();
 
   // ============================================================================
-  // History API / 手势返回弹窗拦截机制
+  // History API / 手势返回弹窗拦截机制 (终极修复版)
   // ============================================================================
+  const isNavigatingBackRef = useRef(false);
+
   const closeOverlayByType = useCallback((type) => {
     if (type === 'settings') setShowSettings(false);
     if (type === 'spelling') setSpellingItem(null);
@@ -724,6 +727,27 @@ export default function OralPhraseBrowser({
     if (!top) return false;
     closeOverlayByType(top);
     return true;
+  }, [closeOverlayByType]);
+
+  // 手动关闭必定消耗掉记录，防止僵尸历史导致滑动失效
+  const handleManualClose = useCallback((type) => {
+    if (typeof window === 'undefined') {
+      closeOverlayByType(type);
+      return;
+    }
+    const top = overlayStackRef.current[overlayStackRef.current.length - 1];
+    if (top === type) {
+      if (!isNavigatingBackRef.current) {
+        isNavigatingBackRef.current = true;
+        closeOverlayByType(type);
+        window.history.back(); // 主动清理栈
+        setTimeout(() => {
+          isNavigatingBackRef.current = false;
+        }, 150);
+      }
+    } else {
+      closeOverlayByType(type);
+    }
   }, [closeOverlayByType]);
 
   const openOverlay = useCallback((type, setter, payload = true) => {
@@ -746,7 +770,10 @@ export default function OralPhraseBrowser({
 
   useEffect(() => {
     const onPopState = () => {
-      closeTopOverlay();
+      // 若非主动清理触发的回退，说明是用户物理/手势返回，关闭顶层弹窗
+      if (!isNavigatingBackRef.current) {
+        closeTopOverlay();
+      }
     };
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
@@ -767,6 +794,9 @@ export default function OralPhraseBrowser({
   useEffect(() => {
     syncOverlayStack('voiceChat', voiceChatOpen);
   }, [voiceChatOpen, syncOverlayStack]);
+
+  // 用于彻底解决 Xieyin 谐音穿透 VoiceChat 及顶层 UI 被透传的问题
+  const hasOverlay = showSettings || !!spellingItem || aiOpen || voiceChatOpen;
 
   // ============================================================================
 
@@ -924,17 +954,6 @@ export default function OralPhraseBrowser({
     );
   };
 
-  const openAITeacher = async (item) => {
-    stopAllInteractiveAudio();
-    setSpeechResult(null);
-    setAiCurrentItem(item);
-    setAiMessage('');
-    setAiError('');
-    openOverlay('aiTeacher', setAiOpen, true);
-
-    await askAITeacher(item);
-  };
-
   const askAITeacher = async (item, extraPrompt = '') => {
     if (!item) return;
 
@@ -987,7 +1006,8 @@ export default function OralPhraseBrowser({
     <div className="min-h-screen bg-[#F5F7FA] font-sans text-slate-900 max-w-md mx-auto relative overflow-x-hidden pb-32">
       <motion.div
         animate={{ y: isHeaderVisible ? 0 : -80 }}
-        className="fixed top-0 left-0 right-0 z-[100] bg-white/85 backdrop-blur-md border-b border-slate-100 h-14 max-w-md mx-auto px-4 flex justify-between items-center"
+        className="fixed top-0 left-0 right-0 bg-white/85 backdrop-blur-md border-b border-slate-100 h-14 max-w-md mx-auto px-4 flex justify-between items-center transition-all duration-300"
+        style={{ zIndex: hasOverlay ? 0 : 100, opacity: hasOverlay ? 0 : 1 }}
       >
         <button onClick={handleBack} className="p-2 -ml-2 text-slate-500 hover:text-slate-900">
           <ChevronLeft size={24} />
@@ -1015,7 +1035,7 @@ export default function OralPhraseBrowser({
               if (!showSettings) {
                 openOverlay('settings', setShowSettings, true);
               } else {
-                setShowSettings(false);
+                handleManualClose('settings');
               }
             }}
             className="p-2 text-slate-400 hover:text-blue-600"
@@ -1028,11 +1048,11 @@ export default function OralPhraseBrowser({
       <AnimatePresence>
         {showSettings && (
           <>
-            <div className="fixed inset-0 z-[9998] bg-black/40 backdrop-blur-[2px]" onClick={() => setShowSettings(false)} />
+            <div className="fixed inset-0 z-[9998] bg-black/40 backdrop-blur-[2px]" onClick={() => handleManualClose('settings')} />
             <SettingsPanel
               settings={settings}
               setSettings={setSettings}
-              onClose={() => setShowSettings(false)}
+              onClose={() => handleManualClose('settings')}
             />
           </>
         )}
@@ -1075,7 +1095,10 @@ export default function OralPhraseBrowser({
                 onClick={() => handleCardPlay(item)}
               >
                 {xieyinText && (
-                  <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 z-10 flex justify-center pointer-events-none">
+                  <div 
+                    className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 flex justify-center pointer-events-none transition-opacity duration-300"
+                    style={{ zIndex: hasOverlay ? 0 : 10, opacity: hasOverlay ? 0 : 1 }}
+                  >
                     <div className="bg-pink-50 text-blue-600 px-4 py-1.5 rounded-full text-[13px] font-black border border-pink-100 shadow-sm flex items-center gap-1.5 whitespace-nowrap overflow-visible">
                       <Zap size={14} className="shrink-0 fill-pink-400 text-pink-400" />
                       <span className="truncate pt-0.5 font-burmese">{xieyinText}</span>
@@ -1235,7 +1258,7 @@ export default function OralPhraseBrowser({
           <SpellingModal
             item={spellingItem}
             settings={settings}
-            onClose={() => setSpellingItem(null)}
+            onClose={() => handleManualClose('spelling')}
           />
         )}
       </AnimatePresence>
@@ -1248,11 +1271,7 @@ export default function OralPhraseBrowser({
             message={aiMessage}
             error={aiError}
             settings={settings}
-            onClose={() => {
-              AITeacherEngine.stop();
-              setAiLoading(false);
-              setAiOpen(false);
-            }}
+            onClose={() => handleManualClose('aiTeacher')}
             onReplay={replayAIMessage}
             onAskAgain={() => {
               askAITeacher(
@@ -1268,11 +1287,9 @@ export default function OralPhraseBrowser({
       <VoiceChat
         isOpen={voiceChatOpen}
         initialPayload={voiceChatPayload}
-        onClose={() => {
-          setVoiceChatOpen(false);
-          setVoiceChatPayload(null);
-        }}
+        onClose={() => handleManualClose('voiceChat')}
       />
+      
       <style jsx global>{`
         .font-pinyin {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
