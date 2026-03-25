@@ -14,7 +14,7 @@ import {
   FaVolumeUp,
   FaSlidersH
 } from 'react-icons/fa';
-import { AI_SCENES, buildExerciseBootstrapPrompt, buildOralBootstrapPrompt } from './aiAssistants';
+import { AI_SCENES, buildOralBootstrapPrompt } from './aiAssistants';
 import { normalizeAssistantText } from './aiTextUtils';
 import { useAISettings } from './useAISettings';
 import { useAISession } from './useAISession';
@@ -56,31 +56,16 @@ const GlobalStyles = () => (
   `}</style>
 );
 
-// 区分全局设置与场景设置的 Key，确保保存正确生效
 const SHARED_KEYS = [
-  'providerId',
-  'apiUrl',
-  'apiKey',
-  'model',
-  'ttsApiUrl',
-  'ttsVoice',
-  'zhVoice',
-  'myVoice',
-  'ttsSpeed',
-  'ttsPitch',
-  'soundFx',
-  'vibration'
+  'providerId', 'apiUrl', 'apiKey', 'model', 'ttsApiUrl',
+  'ttsVoice', 'zhVoice', 'myVoice', 'ttsSpeed', 'ttsPitch',
+  'soundFx', 'vibration'
 ];
 
 const SCENE_KEYS = [
-  'assistantId',
-  'systemPrompt',
-  'temperature',
-  'showText',
-  'asrSilenceMs'
+  'assistantId', 'systemPrompt', 'temperature', 'showText', 'asrSilenceMs'
 ];
 
-// 将文本转换为上方带拼音的 React 节点 (利用 ruby 标签)
 function renderTextWithRubyPinyin(text = '') {
   const parts = String(text || '').split(/([\u4e00-\u9fff])/g);
   return (
@@ -102,28 +87,21 @@ function renderTextWithRubyPinyin(text = '') {
 }
 
 export default function VoiceChat({
-  open,
+  isOpen,
   title = 'AI 口语教练',
   initialPayload = null,
   onClose,
   settings,
   updateSettings,
-  scene = AI_SCENES.ORAL // 默认是口语场景
+  scene = AI_SCENES.ORAL
 }) {
   const [mounted, setMounted] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [pinyinPreviewMap, setPinyinPreviewMap] = useState({});
-  
-  // 新增：用于处理延迟关闭，吃掉幽灵点击
-  const [isClosing, setIsClosing] = useState(false);
 
-  const { resolvedSettings, updateSharedSettings, updateSceneSettings } = useAISettings(
-    scene
-  );
-
+  const { resolvedSettings, updateSharedSettings, updateSceneSettings } = useAISettings(scene);
   const effectiveSettings = settings || resolvedSettings;
 
-  // 正确区分保存项，解决填了API保存后依旧提示未填写的问题
   const fallbackUpdateSettings = useCallback(
     (patch = {}) => {
       const sharedPatch = {};
@@ -134,13 +112,8 @@ export default function VoiceChat({
         if (SCENE_KEYS.includes(key)) scenePatch[key] = value;
       });
 
-      if (Object.keys(sharedPatch).length) {
-        updateSharedSettings(sharedPatch);
-      }
-
-      if (Object.keys(scenePatch).length) {
-        updateSceneSettings(scene, scenePatch);
-      }
+      if (Object.keys(sharedPatch).length) updateSharedSettings(sharedPatch);
+      if (Object.keys(scenePatch).length) updateSceneSettings(scene, scenePatch);
     },
     [updateSharedSettings, updateSceneSettings, scene]
   );
@@ -148,15 +121,10 @@ export default function VoiceChat({
   const effectiveUpdateSettings = updateSettings || fallbackUpdateSettings;
 
   const isAIReady = useMemo(() => {
-    return Boolean(
-      effectiveSettings?.apiKey &&
-      effectiveSettings?.apiUrl &&
-      effectiveSettings?.model
-    );
+    return Boolean(effectiveSettings?.apiKey && effectiveSettings?.apiUrl && effectiveSettings?.model);
   }, [effectiveSettings]);
 
-  // 只有在配置完备的情况下，才真正开启会话，避免报错
-  const sessionOpen = open && isAIReady;
+  const sessionOpen = isOpen && isAIReady;
 
   const {
     history,
@@ -186,9 +154,8 @@ export default function VoiceChat({
     scene: scene,
     settings: effectiveSettings,
     initialPayload,
-    // 根据场景动态选择引导词
-    bootstrapBuilder: scene === AI_SCENES.ORAL ? buildOralBootstrapPrompt : buildExerciseBootstrapPrompt,
-    defaultTextMode: false // 口语默认不展示输入框
+    bootstrapBuilder: buildOralBootstrapPrompt,
+    defaultTextMode: false
   });
 
   useEffect(() => {
@@ -196,11 +163,7 @@ export default function VoiceChat({
   }, []);
 
   useEffect(() => {
-    if (!open) return undefined;
-    
-    // 打开时重置关闭状态
-    setIsClosing(false);
-    
+    if (!isOpen) return undefined;
     const prevBodyOverflow = document.body.style.overflow;
     const prevHtmlOverflow = document.documentElement.style.overflow;
 
@@ -211,59 +174,37 @@ export default function VoiceChat({
       document.body.style.overflow = prevBodyOverflow;
       document.documentElement.style.overflow = prevHtmlOverflow;
     };
-  }, [open]);
+  }, [isOpen]);
 
   useEffect(() => {
-    if (open && !isAIReady) {
+    if (isOpen && !isAIReady) {
       setShowSettings(true);
     }
-  }, [open, isAIReady]);
+  }, [isOpen, isAIReady]);
 
   useEffect(() => {
-    if (!open) {
-      setPinyinPreviewMap({});
-    }
-  }, [open]);
+    if (!isOpen) setPinyinPreviewMap({});
+  }, [isOpen]);
 
   const togglePinyinPreview = (msgId) => {
-    setPinyinPreviewMap((prev) => ({
-      ...prev,
-      [msgId]: !prev[msgId]
-    }));
+    setPinyinPreviewMap((prev) => ({ ...prev, [msgId]: !prev[msgId] }));
   };
 
-  if (!mounted || !open) return null;
+  if (!mounted || !isOpen) return null;
 
   return createPortal(
     <>
-      {/* 遮罩层：增加 translateZ(0) 防底层动画穿透，增加 opacity 动画防幽灵点击 */}
-      <div 
-        className={`fixed inset-0 z-[2147483000] bg-black/40 backdrop-blur-sm transition-opacity duration-200 ${isClosing ? 'opacity-0' : 'opacity-100'}`} 
-        style={{ transform: 'translateZ(0)' }}
-      />
-      
-      {/* 主面板容器：删除了 h-[100dvh] 防底部闪烁，增加了 translateZ(0) 防谐音穿透 */}
-      <div 
-        className={`fixed inset-0 z-[2147483001] flex w-full flex-col overflow-hidden bg-white text-slate-800 transition-opacity duration-200 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
-        style={{ transform: 'translateZ(0)' }}
-      >
+      <div className="fixed inset-0 z-[2147483000] bg-black/40 backdrop-blur-sm" />
+      <div className="fixed inset-0 z-[2147483001] flex h-[100dvh] w-full flex-col overflow-hidden bg-white text-slate-800">
         <GlobalStyles />
         <div className="absolute inset-0 ai-chat-bg opacity-70 pointer-events-none" />
 
         <div className="relative z-20 flex h-16 items-center justify-between border-b border-white/50 bg-white/70 px-4 shadow-sm backdrop-blur-md">
           <button
             type="button"
-            onClick={(e) => {
-              e.preventDefault();
+            onClick={() => {
               stopEverything();
-              
-              // 【核心修复：防退错页面】
-              // 先触发动画变透明，但物理元素留在原地 350 毫秒吃掉“幽灵点击”
-              setIsClosing(true);
-              setTimeout(() => {
-                setIsClosing(false);
-                onClose?.();
-              }, 350);
+              onClose?.();
             }}
             className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-600 shadow-sm transition-transform active:scale-90"
           >
@@ -319,7 +260,6 @@ export default function VoiceChat({
                     <div className="absolute inset-4 animate-pulse-ring rounded-full bg-pink-300/40" style={{ animationDelay: '0.4s' }} />
                   </>
                 )}
-                
                 <img
                   src="https://audio.886.best/chinese-vocab-audio/%E5%9B%BE%E7%89%87/images.jpeg"
                   alt="Teacher"
@@ -330,15 +270,10 @@ export default function VoiceChat({
                   }`}
                 />
               </div>
-
               <div className="mt-8 flex h-10 items-center justify-center rounded-full border border-slate-100 bg-white/80 px-6 py-2 shadow-sm backdrop-blur-sm">
                 {isAiSpeaking ? (
                   <div className="tts-bars flex items-center gap-1">
-                    <span />
-                    <span />
-                    <span />
-                    <span />
-                    <span />
+                    <span /><span /><span /><span /><span />
                   </div>
                 ) : (
                   <span className="text-sm font-bold tracking-widest text-slate-500">
@@ -352,15 +287,11 @@ export default function VoiceChat({
               {history.map((msg) => {
                 if (msg.role === 'error') {
                   return (
-                    <div
-                      key={msg.id}
-                      className="mx-8 mb-4 rounded-xl bg-red-50 py-2 text-center text-xs font-bold text-red-500"
-                    >
+                    <div key={msg.id} className="mx-8 mb-4 rounded-xl bg-red-50 py-2 text-center text-xs font-bold text-red-500">
                       {msg.text}
                     </div>
                   );
                 }
-
                 if (msg.role === 'user') {
                   return (
                     <div key={msg.id} className="mb-6 flex justify-end pl-12">
@@ -370,9 +301,7 @@ export default function VoiceChat({
                     </div>
                   );
                 }
-
                 const aiText = normalizeAssistantText(msg.text || '');
-
                 return (
                   <div key={msg.id} className="mb-8 flex flex-col">
                     <div className="flex-1 px-2 py-1">
@@ -381,12 +310,10 @@ export default function VoiceChat({
                           ? renderTextWithRubyPinyin(aiText || (msg.isStreaming ? '思考中...' : ''))
                           : (aiText || (msg.isStreaming ? '思考中...' : ''))
                         }
-                        
                         {msg.isStreaming && (
                           <span className="ml-1 inline-block h-4 w-1.5 animate-pulse rounded-full bg-pink-400 align-middle" />
                         )}
                       </div>
-
                       {!msg.isStreaming && aiText && (
                         <div className="mt-3 flex items-center gap-4 border-t border-slate-100 pt-3">
                           <button
@@ -397,7 +324,6 @@ export default function VoiceChat({
                           >
                             <FaVolumeUp size={16} />
                           </button>
-
                           <button
                             type="button"
                             onClick={() => togglePinyinPreview(msg.id)}
@@ -416,7 +342,6 @@ export default function VoiceChat({
                   </div>
                 );
               })}
-
               {isRecording && textMode === false && (
                 <div className="mb-6 flex justify-end pl-12">
                   <div className="max-w-[90%] px-2 py-1 text-[15px] font-medium text-slate-400 text-right opacity-80">
@@ -477,11 +402,7 @@ export default function VoiceChat({
                     <span className="text-violet-500">思考中...</span>
                   ) : isAiSpeaking ? (
                     <div className="tts-bars flex gap-1">
-                      <span />
-                      <span />
-                      <span />
-                      <span />
-                      <span />
+                      <span /><span /><span /><span /><span />
                     </div>
                   ) : (
                     `长按说话 · ${currentLangObj.flag} ${currentLangObj.name}`
