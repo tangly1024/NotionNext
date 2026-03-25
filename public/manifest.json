@@ -1,0 +1,19 @@
+{
+  "name": "茉灵智库",
+  "short_name": "茉灵智库",
+  "description": "分享技术与生活的无限可能✨",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

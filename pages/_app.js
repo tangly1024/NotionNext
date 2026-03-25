@@ -16,12 +16,20 @@ import { getQueryParam } from '../lib/utils'
 // 各种扩展插件 这个要阻塞引入
 import BLOG from '@/blog.config'
 import ExternalPlugins from '@/components/ExternalPlugins'
+import Head from 'next/head'
 import SEO from '@/components/SEO'
 import { zhCN } from '@clerk/localizations'
 import dynamic from 'next/dynamic'
+import { useEffect } from 'react'
 // import { ClerkProvider } from '@clerk/nextjs'
 const ClerkProvider = dynamic(() =>
   import('@clerk/nextjs').then(m => m.ClerkProvider)
+)
+const PWAInstallPrompt = dynamic(
+  () => import('@/components/PWAInstallPrompt'),
+  {
+    ssr: false
+  }
 )
 
 /**
@@ -32,6 +40,12 @@ const ClerkProvider = dynamic(() =>
 const MyApp = ({ Component, pageProps }) => {
   // 一些可能出现 bug 的样式，可以统一放入该钩子进行调整
   useAdjustStyle()
+
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {})
+    }
+  }, [])
 
   const route = useRouter()
   const theme = useMemo(() => {
@@ -63,6 +77,11 @@ const MyApp = ({ Component, pageProps }) => {
   )
   return (
     <>
+      <Head>
+        <link rel='manifest' href='/manifest.json' />
+        <meta name='theme-color' content='#3b82f6' />
+      </Head>
+      <PWAInstallPrompt />
       {enableClerk ? (
         <ClerkProvider localization={zhCN}>{content}</ClerkProvider>
       ) : (
