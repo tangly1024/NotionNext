@@ -1,17 +1,17 @@
 // data/oral/index.js
-// 动态导入口语数据，直接从源码目录 import，避免 fetch 和 CF 404
+// 使用 fetch 从 public 目录读取 JSON，保证 CF Pages 可以访问
 export const oralDataMap = {
   'daily/greeting': () =>
-    import('./daily/greeting.json').then((mod) => mod.default),
+    fetch('/data/oral/daily/greeting.json').then(res => res.json()),
 
-  // 后续解锁的模块也可以按同样方式添加：
-  // 'daily/thanks': () => import('./daily/thanks.json').then(mod => mod.default),
-  // 'daily/selfintro': () => import('./daily/selfintro.json').then(mod => mod.default),
+  // 后续模块也可以按相同方式添加：
+  // 'daily/thanks': () => fetch('/data/oral/daily/thanks.json').then(res => res.json()),
+  // 'daily/selfintro': () => fetch('/data/oral/daily/selfintro.json').then(res => res.json()),
 
-  // 'travel/airport': () => import('./travel/airport.json').then(mod => mod.default),
-  // 'travel/hotel': () => import('./travel/hotel.json').then(mod => mod.default),
-  // 'travel/direction': () => import('./travel/direction.json').then(mod => mod.default),
+  // 'travel/airport': () => fetch('/data/oral/travel/airport.json').then(res => res.json()),
+  // 'travel/hotel': () => fetch('/data/oral/travel/hotel.json').then(res => res.json()),
+  // 'travel/direction': () => fetch('/data/oral/travel/direction.json').then(res => res.json()),
 
-  // 'medical/registration': () => import('./medical/registration.json').then(mod => mod.default),
-  // 'medical/symptoms': () => import('./medical/symptoms.json').then(mod => mod.default),
+  // 'medical/registration': () => fetch('/data/oral/medical/registration.json').then(res => res.json()),
+  // 'medical/symptoms': () => fetch('/data/oral/medical/symptoms.json').then(res => res.json()),
 };
