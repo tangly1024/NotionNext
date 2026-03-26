@@ -1,6 +1,3 @@
-'use client';
-
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { oralCategories } from '@/data/oralData';
 
@@ -21,21 +18,34 @@ const IconLock = ({ size = 18 }) => (
   </svg>
 );
 
-const pick = (v) => (Array.isArray(v) ? v[0] : v);
-
 const getCover = (id, originalCover) => {
   if (originalCover) return originalCover;
   return `https://picsum.photos/seed/oral-sub-${id}/600/600`;
 };
 
-export default function OralCategoryPage() {
-  const router = useRouter();
-  const categoryId = pick(router.query.categoryId);
+export async function getStaticPaths() {
+  const paths = oralCategories.map((cat) => ({
+    params: { categoryId: cat.id },
+  }));
 
-  if (!router.isReady) return null;
+  return {
+    paths,
+    fallback: false,
+  };
+}
 
-  const categoryData = oralCategories.find((c) => c.id === categoryId);
+export async function getStaticProps({ params }) {
+  const categoryId = params?.categoryId || null;
+  const categoryData = oralCategories.find((c) => c.id === categoryId) || null;
 
+  return {
+    props: {
+      categoryData,
+    },
+  };
+}
+
+export default function OralCategoryPage({ categoryData }) {
   if (!categoryData) {
     return (
       <main
@@ -43,7 +53,7 @@ export default function OralCategoryPage() {
           minHeight: '100vh',
           background: 'linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)',
           padding: 24,
-          fontFamily: 'sans-serif'
+          fontFamily: 'sans-serif',
         }}
       >
         <div style={{ textAlign: 'center', color: '#64748B' }}>未找到该分类</div>
@@ -59,7 +69,7 @@ export default function OralCategoryPage() {
         minHeight: '100vh',
         background: 'linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)',
         paddingBottom: 80,
-        fontFamily: 'sans-serif'
+        fontFamily: 'sans-serif',
       }}
     >
       <div style={{ maxWidth: 640, margin: '0 auto', padding: '16px 16px 32px' }}>
@@ -67,7 +77,7 @@ export default function OralCategoryPage() {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 12
+            gap: 12,
           }}
         >
           {subItems.map((sub) => {
@@ -90,10 +100,8 @@ export default function OralCategoryPage() {
                   }}
                 />
 
-                {/* 顶部轻暗层，让图片更柔和 */}
                 <div className="oral-sub-soft-overlay" />
 
-                {/* 底部玻璃拟态浮层 */}
                 <div className="oral-sub-glass">
                   <h3 className="oral-sub-title">{sub.title}</h3>
                   {sub.subtitle ? (
@@ -101,7 +109,6 @@ export default function OralCategoryPage() {
                   ) : null}
                 </div>
 
-                {/* 锁定遮罩 */}
                 {isLocked && (
                   <div className="oral-sub-lock-mask">
                     <div className="oral-sub-lock-badge">
