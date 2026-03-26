@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { oralCategories } from '@/data/oralData';
-import { oralDataMap } from '@/data/oral';
 
 const OralPhraseBrowser = dynamic(
   () => import('@/components/OralPhraseBrowser'),
@@ -47,14 +46,17 @@ export default function OralPlayerPage() {
       setError('');
 
       try {
-        const key = `${categoryId}/${listId}`;
-        const loader = oralDataMap[key];
+        const url = `/data/oral/${categoryId}/${listId}.json`;
+        const res = await fetch(url, {
+          headers: { Accept: 'application/json' },
+        });
 
-        if (!loader) {
-          throw new Error(`未找到口语数据映射：${key}`);
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(`加载失败: ${url}, status=${res.status}, body=${text.slice(0, 120)}`);
         }
 
-        const data = await loader();
+        const data = await res.json();
 
         if (!mounted) return;
 
@@ -68,6 +70,7 @@ export default function OralPlayerPage() {
 
         setPhrases(list);
       } catch (err) {
+        console.error('oral load error:', err);
         if (!mounted) return;
         setError(err?.message || '加载失败');
         setPhrases([]);
