@@ -55,18 +55,15 @@ export default function FlipCard(props) {
           pointer-events: none;
         }
 
-        .flip-card:hover .flip-card-inner,
-        .flip-card:focus-within .flip-card-inner {
+        .flip-card:hover .flip-card-inner {
           transform: rotateY(180deg);
         }
 
-        .flip-card:hover .flip-card-front,
-        .flip-card:focus-within .flip-card-front {
+        .flip-card:hover .flip-card-front {
           pointer-events: none;
         }
 
-        .flip-card:hover .flip-card-back,
-        .flip-card:focus-within .flip-card-back {
+        .flip-card:hover .flip-card-back {
           pointer-events: auto;
         }
       `}</style>
