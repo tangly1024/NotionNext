@@ -10,6 +10,7 @@ export const MenuItemDrop = ({ link }) => {
   }
 
   const hasSubMenu = link?.subMenus?.length > 0
+  const label = link?.name || link?.title
 
   return (
     <li className='mx-3 my-2'>
@@ -20,14 +21,14 @@ export const MenuItemDrop = ({ link }) => {
         {!hasSubMenu && (
           <div className='block text-black dark:text-gray-50 nav'>
             <SmartLink href={link?.href} target={link?.target}>
-              {link?.icon && <i className={link?.icon} />} {link?.name}
+              {link?.icon && <i className={link?.icon} />} {label}
             </SmartLink>
           </div>
         )}
 
         {hasSubMenu && (
           <div className='block text-black dark:text-gray-50 nav'>
-            {link?.icon && <i className={link?.icon} />} {link?.name}
+            {link?.icon && <i className={link?.icon} />} {label}
             <i
               className={`px-2 fas fa-chevron-down duration-500 transition-all ${show ? ' rotate-180' : ''}`}></i>
           </div>
@@ -44,8 +45,8 @@ export const MenuItemDrop = ({ link }) => {
                   className='not:last-child:border-b-0 border-b text-gray-700 dark:text-gray-200  hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200  dark:border-gray-800 py-3 pr-6 pl-3'>
                   <SmartLink href={sLink.href} target={link?.target}>
                     <span className='text-sm text-nowrap font-extralight'>
-                      {link?.icon && <i className={sLink?.icon}> &nbsp; </i>}
-                      {sLink.title}
+                      {sLink?.icon && <i className={sLink?.icon}> &nbsp; </i>}
+                      {sLink?.name || sLink?.title}
                     </span>
                   </SmartLink>
                 </div>

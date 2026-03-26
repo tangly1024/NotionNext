@@ -1,8 +1,6 @@
 import Comment from '@/components/Comment'
-import Live2D from '@/components/Live2D'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
-import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { deepClone, isBrowser } from '@/lib/utils'
@@ -65,7 +63,7 @@ const LayoutBase = props => {
         {/* 主区 */}
         <main
           id='out-wrapper'
-          className={`relative m-auto flex-grow w-full transition-all ${!fullWidth ? 'max-w-2xl px-4' : 'px-4 md:px-24'}`}>
+          className={`relative m-auto flex-grow w-full transition-all ${!fullWidth ? 'max-w-3xl px-4' : 'px-4 md:px-24'}`}>
           <Transition
             show={!onLoading}
             appear={true}
@@ -89,11 +87,6 @@ const LayoutBase = props => {
         {/* 右下悬浮 */}
         <div className='fixed right-4 bottom-4'>
           <JumpToTopButton />
-        </div>
-
-        {/* 左下悬浮 */}
-        <div className='bottom-4 -left-14 fixed justify-end z-40'>
-          <Live2D />
         </div>
 
         {/* 搜索框 */}
@@ -231,7 +224,7 @@ const LayoutSlug = props => {
             const article = document.querySelector('#article-wrapper #notion-article')
             if (!article) {
               router.push('/404').then(() => {
-                console.warn('找不到页面', router.asPath)
+                console.warn('Page not found', router.asPath)
               })
             }
           }
@@ -251,7 +244,6 @@ const LayoutSlug = props => {
             <div id='article-wrapper'>
               <NotionPage post={post} />
             </div>
-            <ShareBar post={post} />
             <Comment frontMatter={post} />
             <ArticleFooter />
           </>
@@ -274,7 +266,7 @@ const Layout404 = props => {
       const article = isBrowser && document.getElementById('article-wrapper')
       if (!article) {
         router.push('/').then(() => {
-          // console.log('找不到页面', router.asPath)
+          // console.log('Page not found', router.asPath)
         })
       }
     }, 3000)
@@ -285,7 +277,7 @@ const Layout404 = props => {
             <div className='dark:text-gray-200'>
                 <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'><i className='mr-2 fas fa-spinner animate-spin' />404</h2>
                 <div className='inline-block text-left h-32 leading-10 items-center'>
-                    <h2 className='m-0 p-0'>页面无法加载，即将返回首页</h2>
+                    <h2 className='m-0 p-0'>Page not found. Redirecting to the home page.</h2>
                 </div>
             </div>
         </div>

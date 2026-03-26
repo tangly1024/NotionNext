@@ -5,22 +5,64 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
 import { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/router'
 import CONFIG from '../config'
 import { MenuItemCollapse } from './MenuItemCollapse'
 import { MenuItemDrop } from './MenuItemDrop'
 import RandomPostButton from './RandomPostButton'
 import SearchButton from './SearchButton'
 import { SvgIcon } from './SvgIcon'
+
+const normalizeLinkHref = link => {
+  if (!link) {
+    return '/'
+  }
+  if (link.href) {
+    return link.href
+  }
+  if (link.slug) {
+    return link.slug.startsWith('/') ? link.slug : `/${link.slug}`
+  }
+  return '/'
+}
+
+const normalizeNavLink = link => {
+  if (!link) {
+    return null
+  }
+
+  return {
+    ...link,
+    name: link.name || link.title || '',
+    href: normalizeLinkHref(link),
+    show: link.show !== false,
+    subMenus: Array.isArray(link.subMenus)
+      ? link.subMenus.map(subLink => ({
+          ...subLink,
+          name: subLink?.name || subLink?.title || '',
+          href: normalizeLinkHref(subLink),
+          show: subLink?.show !== false
+        }))
+      : []
+  }
+}
 /**
  * 顶部导航
  */
 const Nav = props => {
   const { post, fullWidth, siteInfo } = props
+  const router = useRouter()
   const autoCollapseNavBar = siteConfig(
     'NOBELIUM_AUTO_COLLAPSE_NAV_BAR',
     true,
     CONFIG
   )
+  const isHomePage = router.pathname === '/'
+  const description = siteConfig('DESCRIPTION') || siteConfig('BIO')
+  const navLogo =
+    siteConfig('NOBELIUM_NAV_NOTION_ICON') && siteInfo?.icon
+      ? siteInfo.icon
+      : siteConfig('AVATAR') || siteConfig('BLOG_FAVICON')
 
   const navRef = useRef(null)
   const sentinalRef = useRef([])
@@ -48,16 +90,17 @@ const Nav = props => {
       <div
         className={`sticky-nav m-auto w-full h-6 flex flex-row justify-between items-center mb-2 md:mb-12 py-8 bg-opacity-60 ${
           !fullWidth ? 'max-w-3xl px-4' : 'px-4 md:px-24'
-        }`}
+        } ${isHomePage ? 'homepage-nav' : ''}`}
         id='sticky-nav'
         ref={navRef}>
         <div className='flex items-center'>
           <SmartLink href='/' aria-label={siteConfig('TITLE')}>
             <div className='h-6 w-6'>
-              {/* <SvgIcon/> */}
-              {siteConfig('NOBELIUM_NAV_NOTION_ICON') ? (
+              {navLogo ? (
                 <LazyImage
-                  src={siteInfo?.icon}
+                  className='blog-logo'
+                  priority
+                  src={navLogo}
                   width={24}
                   height={24}
                   alt={siteConfig('AUTHOR')}
@@ -74,7 +117,11 @@ const Nav = props => {
           ) : (
             <p className='logo line-clamp-1 overflow-ellipsis ml-2 font-medium text-gray-800 dark:text-gray-300 header-name whitespace-nowrap'>
               {siteConfig('TITLE')}
-              {/* ,{' '}<span className="font-normal">{siteConfig('DESCRIPTION')}</span> */}
+              {isHomePage && description ? (
+                <>
+                  , <span className='font-normal'>{description}</span>
+                </>
+              ) : null}
             </p>
           )}
         </div>
@@ -94,13 +141,6 @@ const NavBar = props => {
 
   const { locale } = useGlobal()
   let links = [
-    {
-      id: 2,
-      name: locale.NAV.RSS,
-      href: '/feed',
-      show: siteConfig('ENABLE_RSS') && siteConfig('NOBELIUM_MENU_RSS'),
-      target: '_blank'
-    },
     {
       icon: 'fas fa-search',
       name: locale.NAV.SEARCH,
@@ -126,45 +166,63 @@ const NavBar = props => {
       show: siteConfig('NOBELIUM_MENU_TAG')
     }
   ]
-  if (customNav) {
-    links = links.concat(customNav)
+  const normalizedCustomNav = customNav?.map(normalizeNavLink).filter(Boolean)
+  const normalizedCustomMenu = customMenu
+    ?.map(normalizeNavLink)
+    .filter(Boolean)
+
+  if (normalizedCustomNav?.length) {
+    links = links.concat(normalizedCustomNav)
   }
 
-  // 如果 开启自定义菜单，则覆盖Page生成的菜单
+  // 如果开启自定义菜单，则优先读取Menu/SubMenu；为空时回退到Page菜单
   if (siteConfig('CUSTOM_MENU')) {
-    links = customMenu
+    links = normalizedCustomMenu?.length ? normalizedCustomMenu : normalizedCustomNav
   }
 
-  if (!links || links.length === 0) {
-    return null
-  }
+  const hasMenuLinks = !!(links && links.length > 0)
 
   return (
     <div className='flex-shrink-0 flex'>
-      <ul className='hidden md:flex flex-row'>
-        {links?.map((link, index) => (
-          <MenuItemDrop key={index} link={link} />
-        ))}
-      </ul>
-      <div className='md:hidden'>
-        <Collapse
-          collapseRef={collapseRef}
-          isOpen={isOpen}
-          type='vertical'
-          className='fixed top-16 right-6'>
-          <div className='dark:border-black bg-white dark:bg-black rounded border p-2 text-sm'>
-            {links?.map((link, index) => (
-              <MenuItemCollapse
-                key={index}
-                link={link}
-                onHeightChange={param =>
-                  collapseRef.current?.updateCollapseHeight(param)
-                }
-              />
-            ))}
-          </div>
-        </Collapse>
-      </div>
+      {hasMenuLinks && (
+        <ul className='hidden md:flex flex-row'>
+          {links?.map((link, index) => (
+            <MenuItemDrop key={index} link={link} />
+          ))}
+        </ul>
+      )}
+      {hasMenuLinks && (
+        <div className='md:hidden'>
+          <Collapse
+            collapseRef={collapseRef}
+            isOpen={isOpen}
+            type='vertical'
+            className='fixed top-16 right-6'>
+            <div className='dark:border-black bg-white dark:bg-black rounded border p-2 text-sm'>
+              {links?.map((link, index) => (
+                <MenuItemCollapse
+                  key={index}
+                  link={link}
+                  onHeightChange={param =>
+                    collapseRef.current?.updateCollapseHeight(param)
+                  }
+                />
+              ))}
+            </div>
+          </Collapse>
+        </div>
+      )}
+
+      {siteConfig('ENABLE_RSS') && siteConfig('NOBELIUM_MENU_RSS') && (
+        <SmartLink
+          href='/rss.xml'
+          target='_blank'
+          aria-label={locale.NAV.RSS}
+          title={locale.NAV.RSS}
+          className='cursor-pointer hover:bg-black hover:bg-opacity-10 rounded-full w-10 h-10 flex justify-center items-center duration-200 transition-all'>
+          <i className='fa-solid fa-rss' />
+        </SmartLink>
+      )}
 
       {siteConfig('NOBELIUM_MENU_DARKMODE_BUTTON') && (
         <DarkModeButton className='text-center p-2.5 hover:bg-black hover:bg-opacity-10 rounded-full' />
@@ -174,9 +232,11 @@ const NavBar = props => {
         <RandomPostButton {...props} />
       )}
       {siteConfig('NOBELIUM_MENU_SEARCH_BUTTON') && <SearchButton {...props} />}
-      <i
-        onClick={toggleOpen}
-        className='fas fa-bars cursor-pointer px-5 flex justify-center items-center md:hidden'></i>
+      {hasMenuLinks && (
+        <i
+          onClick={toggleOpen}
+          className='fas fa-bars cursor-pointer px-5 flex justify-center items-center md:hidden'></i>
+      )}
     </div>
   )
 }

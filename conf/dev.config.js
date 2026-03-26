@@ -5,8 +5,8 @@ module.exports = {
   SUB_PATH: '', // leave this empty unless you want to deploy in a folder
   DEBUG: process.env.NEXT_PUBLIC_DEBUG || false, // 是否显示调试按钮
   // TAILWINDCSS 配置的自定义颜色，作废
-  BACKGROUND_LIGHT: '#eeeeee', // use hex value, don't forget '#' e.g #fffefc
-  BACKGROUND_DARK: '#000000', // use hex value, don't forget '#'
+  BACKGROUND_LIGHT: '#ffffff', // use hex value, don't forget '#' e.g #fffefc
+  BACKGROUND_DARK: '#18181B', // use hex value, don't forget '#'
 
   // Redis 缓存数据库地址
   REDIS_URL: process.env.REDIS_URL || '',

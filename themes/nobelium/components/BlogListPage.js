@@ -22,7 +22,7 @@ export const BlogListPage = props => {
     .replace('.html', '')
 
   return (
-    <div className='w-full md:pr-12 my-6'>
+    <div className='w-full my-6'>
       <div id='posts-wrapper'>
         {posts?.map(post => (
           <BlogPost key={post.id} post={post} />

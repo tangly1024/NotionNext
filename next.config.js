@@ -140,14 +140,14 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;"
   },
 
-  // 默认将feed重定向至 /public/rss/feed.xml
+  // 兼容旧的 /feed 链接，统一跳转到新的 /rss.xml 路由
   redirects: process.env.EXPORT
     ? undefined
     : () => {
         return [
           {
             source: '/feed',
-            destination: '/rss/feed.xml',
+            destination: '/rss.xml',
             permanent: true
           }
         ]
@@ -335,6 +335,7 @@ const nextConfig = {
     // export 静态导出时 忽略/pages/sitemap.xml.js ， 否则和getServerSideProps这个动态文件冲突
     const pages = { ...defaultPathMap }
     delete pages['/sitemap.xml']
+    delete pages['/rss.xml']
     delete pages['/auth']
     return pages
   },
