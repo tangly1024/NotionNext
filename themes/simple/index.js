@@ -110,7 +110,9 @@ const LayoutBase = props => {
               ? 'flex-row-reverse'
               : '') +
               ` w-full flex-1 flex items-start ${
-                shouldShowRightSidebar ? 'max-w-9/10' : 'max-w-full'
+                shouldShowRightSidebar
+                  ? 'max-w-[min(92vw,1600px)] px-4 2xl:px-6'
+                  : 'max-w-full'
               } mx-auto pt-12`
           }>
           <div id='container-inner ' className='w-full flex-grow min-h-fit'>
