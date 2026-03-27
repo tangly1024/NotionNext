@@ -354,9 +354,3 @@ img {
     background: color-mix(in srgb, var(--info-card-primary) 6%, #0f172a 94%) !important;
   }
 }
-
-/* PWA install prompt animation */
-@keyframes pwa-slide-up {
-  from { opacity: 0; transform: translateX(-50%) translateY(1rem); }
-  to { opacity: 1; transform: translateX(-50%) translateY(0); }
-}

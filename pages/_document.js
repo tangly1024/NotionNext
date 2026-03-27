@@ -45,8 +45,6 @@ class MyDocument extends Document {
         <Head>
           {/* 预先设置深色模式，避免闪烁 */}
           <script dangerouslySetInnerHTML={{ __html: darkModeScript }} />
-          {/* PWA manifest */}
-          <link rel='manifest' href='/manifest.json' />
           <meta httpEquiv='x-dns-prefetch-control' content='on' />
           <meta name='applicable-device' content='pc,mobile' />
           {/* 预加载字体 */}
