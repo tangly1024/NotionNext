@@ -221,6 +221,7 @@ const ExternalPlugin = props => {
       {/* <VConsole /> */}
       {ENABLE_NPROGRSS && <LoadingProgress />}
       <AosAnimation />
+      <PWAInstall />
       {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && <LA51 />}
       {COZE_BOT_ID && <Coze />}
 
@@ -518,6 +519,9 @@ const Coze = dynamic(() => import('@/components/Coze'), {
   ssr: false
 })
 const LA51 = dynamic(() => import('@/components/LA51'), {
+  ssr: false
+})
+const PWAInstall = dynamic(() => import('@/components/PWAInstall'), {
   ssr: false
 })
 const TianliGPT = dynamic(() => import('@/components/TianliGPT'), {
