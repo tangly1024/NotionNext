@@ -61,7 +61,7 @@
     "js-md5": "^0.8.3",
     "lodash.throttle": "^4.1.1",
     "memory-cache": "^0.2.0",
-    "next": "^14.2.30",
+    "next": "^14.2.35",
     "notion-client": "7.7.1",
     "notion-utils": "7.7.1",
     "react": "^18.3.1",
