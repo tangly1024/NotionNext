@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
@@ -27,16 +29,6 @@ export default function OralPlayerPage() {
   const [phrases, setPhrases] = useState([]);
   const [error, setError] = useState('');
 
-  console.log('[oral] render', {
-    query: router.query,
-    categoryId,
-    listId,
-    loading,
-    error,
-    phrasesLength: phrases.length,
-    href: typeof window !== 'undefined' ? window.location.href : '',
-  });
-
   const categoryData = useMemo(() => {
     return oralCategories.find((c) => c.id === categoryId);
   }, [categoryId]);
@@ -46,22 +38,7 @@ export default function OralPlayerPage() {
   }, [categoryData, listId]);
 
   useEffect(() => {
-    console.log('[oral] effect start', {
-      isReady: router.isReady,
-      query: router.query,
-      categoryId,
-      listId,
-      href: typeof window !== 'undefined' ? window.location.href : '',
-    });
-
-    if (!router.isReady || !categoryId || !listId) {
-      console.log('[oral] skip load', {
-        isReady: router.isReady,
-        categoryId,
-        listId,
-      });
-      return;
-    }
+    if (!router.isReady || !categoryId || !listId) return;
 
     let mounted = true;
 
@@ -71,47 +48,15 @@ export default function OralPlayerPage() {
 
       try {
         const key = `${categoryId}/${listId}`;
-        console.log('[oral] loading key =', key);
-
         const loader = oralDataMap[key];
-        console.log('[oral] loader exists =', !!loader);
 
         if (!loader) {
           throw new Error(`未找到口语数据映射：${key}`);
         }
 
-        const url = `/data/oral/${categoryId}/${listId}.json`;
-        console.log('[oral] expected url =', url);
-
-        // 先单独 debug 一次直接 fetch，看 CF 实际返回什么
-        const debugRes = await fetch(url, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-          },
-        });
-
-        const debugText = await debugRes.text();
-
-        console.log('[oral] debug fetch result', {
-          url,
-          status: debugRes.status,
-          ok: debugRes.ok,
-          contentType: debugRes.headers.get('content-type'),
-          preview: debugText.slice(0, 200),
-        });
-
-        // 再走你原来的 oralDataMap
         const data = await loader();
 
         if (!mounted) return;
-
-        console.log('[oral] loader data =', data);
-        console.log('[oral] loader data type =', {
-          isArray: Array.isArray(data),
-          itemsIsArray: Array.isArray(data?.items),
-          phrasesIsArray: Array.isArray(data?.phrases),
-        });
 
         const list = Array.isArray(data)
           ? data
@@ -121,14 +66,10 @@ export default function OralPlayerPage() {
               ? data.phrases
               : [];
 
-        console.log('[oral] parsed list length =', list.length);
-        console.log('[oral] parsed list first 3 =', list.slice(0, 3));
-
         setPhrases(list);
       } catch (err) {
-        console.error('[oral] load error', err);
         if (!mounted) return;
-        setError(String(err?.message || err || '加载失败'));
+        setError(err?.message || '加载失败');
         setPhrases([]);
       } finally {
         if (mounted) setLoading(false);
@@ -139,7 +80,6 @@ export default function OralPlayerPage() {
 
     return () => {
       mounted = false;
-      console.log('[oral] cleanup');
     };
   }, [router.isReady, categoryId, listId]);
 
@@ -164,9 +104,7 @@ export default function OralPlayerPage() {
   if (error) {
     return (
       <main style={{ minHeight: '100vh', backgroundColor: '#F8FAFC', padding: 24 }}>
-        <div style={{ textAlign: 'center', color: '#DC2626', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
-          {error}
-        </div>
+        <div style={{ textAlign: 'center', color: '#DC2626' }}>{error}</div>
       </main>
     );
   }
