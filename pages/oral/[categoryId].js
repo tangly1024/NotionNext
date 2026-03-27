@@ -102,7 +102,7 @@ export default function OralCategoryPage({ categoryData }) {
 
                 <div className="oral-sub-soft-overlay" />
 
-                <div className="oral-sub-glass">
+                <div className="oral-sub-text">
                   <h3 className="oral-sub-title">{sub.title}</h3>
                   {sub.subtitle ? (
                     <p className="oral-sub-subtitle">{sub.subtitle}</p>
@@ -142,7 +142,7 @@ export default function OralCategoryPage({ categoryData }) {
             width: 100%;
             aspect-ratio: 1 / 1.18;
             overflow: hidden;
-            border-radius: 24px;
+            border-radius: 12px;
             background: #e2e8f0;
             box-shadow:
               0 10px 30px rgba(15, 23, 42, 0.08),
@@ -178,28 +178,19 @@ export default function OralCategoryPage({ categoryData }) {
             background:
               linear-gradient(
                 to top,
-                rgba(15, 23, 42, 0.18) 0%,
-                rgba(15, 23, 42, 0.08) 45%,
-                rgba(15, 23, 42, 0.03) 100%
+                rgba(0, 0, 0, 0.3) 0%,
+                rgba(0, 0, 0, 0.1) 45%,
+                rgba(0, 0, 0, 0) 100%
               );
             z-index: 1;
           }
 
-          .oral-sub-glass {
+          .oral-sub-text {
             position: absolute;
             left: 8px;
             right: 8px;
             bottom: 8px;
             z-index: 2;
-            padding: 10px 10px 9px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.16);
-            border: 1px solid rgba(255, 255, 255, 0.24);
-            backdrop-filter: blur(10px) saturate(140%);
-            -webkit-backdrop-filter: blur(10px) saturate(140%);
-            box-shadow:
-              inset 0 1px 0 rgba(255, 255, 255, 0.22),
-              0 8px 24px rgba(15, 23, 42, 0.14);
           }
 
           .oral-sub-title {
@@ -208,7 +199,7 @@ export default function OralCategoryPage({ categoryData }) {
             font-weight: 900;
             line-height: 1.25;
             color: #ffffff;
-            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.22);
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
             letter-spacing: -0.2px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -224,7 +215,7 @@ export default function OralCategoryPage({ categoryData }) {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.16);
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
           }
 
           .oral-sub-lock-mask {
@@ -237,6 +228,7 @@ export default function OralCategoryPage({ categoryData }) {
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 12px;
           }
 
           .oral-sub-lock-badge {
@@ -256,22 +248,19 @@ export default function OralCategoryPage({ categoryData }) {
               inset 0 1px 0 rgba(255, 255, 255, 0.18);
           }
 
-          .locked .oral-sub-glass {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.18);
-          }
-
           @media (max-width: 420px) {
             .oral-sub-card {
-              border-radius: 22px;
+              border-radius: 10px;
             }
 
-            .oral-sub-glass {
-              left: 7px;
-              right: 7px;
-              bottom: 7px;
-              padding: 9px 9px 8px;
-              border-radius: 14px;
+            .oral-sub-lock-mask {
+              border-radius: 10px; /* 和卡片一致 */
+            }
+
+            .oral-sub-text {
+              left: 6px;
+              right: 6px;
+              bottom: 6px;
             }
 
             .oral-sub-title {
