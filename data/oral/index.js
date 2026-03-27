@@ -1,49 +1,17 @@
 // data/oral/index.js
-
-const loadJson = async (url) => {
-  console.log('[oralDataMap] fetch start:', url);
-
-  const res = await fetch(url, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-    },
-  });
-
-  const contentType = res.headers.get('content-type');
-  const text = await res.text();
-
-  console.log('[oralDataMap] fetch done:', {
-    url,
-    status: res.status,
-    ok: res.ok,
-    contentType,
-    preview: text.slice(0, 200),
-  });
-
-  if (!res.ok) {
-    throw new Error(`读取失败: ${url}, status=${res.status}, body=${text.slice(0, 200)}`);
-  }
-
-  try {
-    return JSON.parse(text);
-  } catch (e) {
-    console.error('[oralDataMap] JSON parse error:', e);
-    throw new Error(`JSON 解析失败: ${url}`);
-  }
-};
-
+// 使用 fetch 从 public 目录读取 JSON，保证 CF Pages 可以访问
 export const oralDataMap = {
-  'daily/greeting': () => loadJson('/data/oral/daily/greeting.json'),
+  'daily/greeting': () =>
+    fetch('/data/oral/daily/greeting.json').then(res => res.json()),
 
-  // 后续模块按同样方式加
-  // 'daily/thanks': () => loadJson('/data/oral/daily/thanks.json'),
-  // 'daily/selfintro': () => loadJson('/data/oral/daily/selfintro.json'),
+  // 后续模块也可以按相同方式添加：
+  // 'daily/thanks': () => fetch('/data/oral/daily/thanks.json').then(res => res.json()),
+  // 'daily/selfintro': () => fetch('/data/oral/daily/selfintro.json').then(res => res.json()),
 
-  // 'travel/airport': () => loadJson('/data/oral/travel/airport.json'),
-  // 'travel/hotel': () => loadJson('/data/oral/travel/hotel.json'),
-  // 'travel/direction': () => loadJson('/data/oral/travel/direction.json'),
+  // 'travel/airport': () => fetch('/data/oral/travel/airport.json').then(res => res.json()),
+  // 'travel/hotel': () => fetch('/data/oral/travel/hotel.json').then(res => res.json()),
+  // 'travel/direction': () => fetch('/data/oral/travel/direction.json').then(res => res.json()),
 
-  // 'medical/registration': () => loadJson('/data/oral/medical/registration.json'),
-  // 'medical/symptoms': () => loadJson('/data/oral/medical/symptoms.json'),
+  // 'medical/registration': () => fetch('/data/oral/medical/registration.json').then(res => res.json()),
+  // 'medical/symptoms': () => fetch('/data/oral/medical/symptoms.json').then(res => res.json()),
 };
