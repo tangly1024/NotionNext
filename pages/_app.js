@@ -10,7 +10,7 @@ import useAdjustStyle from '@/hooks/useAdjustStyle'
 import { GlobalContextProvider } from '@/lib/global'
 import { getBaseLayoutByTheme } from '@/themes/theme'
 import { useRouter } from 'next/router'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { getQueryParam } from '../lib/utils'
 
 // 各种扩展插件 这个要阻塞引入
@@ -32,6 +32,15 @@ const ClerkProvider = dynamic(() =>
 const MyApp = ({ Component, pageProps }) => {
   // 一些可能出现 bug 的样式，可以统一放入该钩子进行调整
   useAdjustStyle()
+
+  // 注册 Service Worker — 延迟到页面加载完成后
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      const reg = () => navigator.serviceWorker.register('/sw.js').catch(() => {})
+      if (document.readyState === 'complete') reg()
+      else window.addEventListener('load', reg, { once: true })
+    }
+  }, [])
 
   const route = useRouter()
   const theme = useMemo(() => {
