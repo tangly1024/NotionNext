@@ -14,7 +14,7 @@ const CONFIG = {
   PROXIO_HERO_BUTTON_1_URL:
     'https://docs.tangly1024.com/article/vercel-deploy-notion-next', // 英雄区按钮
   PROXIO_HERO_BUTTON_2_TEXT: '在Github上关注', // 英雄区按钮
-  PROXIO_HERO_BUTTON_2_URL: 'https://github.com/tangly1024/NotionNext', // 英雄区按钮
+  PROXIO_HERO_BUTTON_2_URL: 'https://github.com/ashlandy79/AshBlog', // 英雄区按钮
   PROXIO_HERO_BUTTON_2_ICON: '/images/starter/github-mark.svg', // 英雄区按钮2的图标，不需要则留空
 
   // 英雄区配图，如需隐藏，改为空值即可 ''
@@ -224,18 +224,18 @@ const CONFIG = {
     {
       name: '开发者',
       menus: [
-        { title: 'Github', href: 'https://github.com/tangly1024/NotionNext' },
+        { title: 'Github', href: 'https://github.com/ashlandy79/AshBlog' },
         {
           title: '开发帮助',
           href: 'https://docs.tangly1024.com/article/how-to-develop-with-notion-next'
         },
         {
           title: '功能反馈',
-          href: 'https://github.com/tangly1024/NotionNext/issues/new/choose'
+          href: 'https://github.com/ashlandy79/AshBlog/issues/new/choose'
         },
         {
           title: '技术讨论',
-          href: 'https://github.com/tangly1024/NotionNext/discussions'
+          href: 'https://github.com/ashlandy79/AshBlog/discussions'
         },
         {
           title: '关于作者',
@@ -272,7 +272,7 @@ const CONFIG = {
   PROXIO_CTA_BUTTON_TEXT: '联系我',
 
   PROXIO_POST_REDIRECT_ENABLE: true, // 默認開啟重定向
-  PROXIO_POST_REDIRECT_URL: 'https://blog.tangly1024.com', // 重定向域名
+  PROXIO_POST_REDIRECT_URL: 'https://github.com/ashlandy79/AshBlog', // 重定向域名
   PROXIO_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_PROXIO_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
 }
 export default CONFIG
