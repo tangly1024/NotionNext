@@ -5,12 +5,13 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import CONFIG from '../config'
 import NotByAI from '@/components/NotByAI'
+import { formatDateFmt } from '@/lib/utils/formatDate'
 
 /**
  * 版权声明
  * @returns
  */
-export default function PostCopyright() {
+export default function PostCopyright({ post }) {
   const router = useRouter()
   const [path, setPath] = useState(siteConfig('LINK') + router.asPath)
   useEffect(() => {
@@ -28,8 +29,9 @@ export default function PostCopyright() {
       <ul className='overflow-x-auto whitespace-nowrap text-sm dark:bg-gray-900 bg-gray-100 p-5 leading-8 border-l-2 border-indigo-500'>
         <li>
           <strong className='mr-2'>{locale.COMMON.AUTHOR}:</strong>
-          <SmartLink href={'/about'} className='hover:underline'>
-            {siteConfig('AUTHOR')}
+          <SmartLink href={'/'} >
+            {/* {siteConfig('AUTHOR')} */}
+            {post?.writer && <span>{post.writer}</span>}
           </SmartLink>
         </li>
         <li>
