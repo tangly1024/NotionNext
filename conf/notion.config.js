@@ -19,7 +19,7 @@ module.exports = {
     type_menu: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_MENU || 'Menu', // 当type文章类型与此值相同时，为菜单。
     type_sub_menu:
       process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_SUB_MENU || 'SubMenu', // 当type文章类型与此值相同时，为子菜单。
-    title: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TITLE || 'title', // 文章标题
+    title: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TITLE || 'Name', // 文章标题
     status: process.env.NEXT_PUBLIC_NOTION_PROPERTY_STATUS || 'status',
     status_publish:
       process.env.NEXT_PUBLIC_NOTION_PROPERTY_STATUS_PUBLISH || 'Published', // 当status状态值与此相同时为发布，可以为中文
