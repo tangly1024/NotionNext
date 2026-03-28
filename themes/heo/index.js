@@ -390,20 +390,20 @@ const Layout404 = props => {
             <div className='error-content flex flex-col md:flex-row w-full mt-12 h-[30rem] md:h-96 justify-center items-center bg-white dark:bg-[#1B1C20] border dark:border-gray-800 rounded-3xl'>
               {/* 左侧动图 */}
               <LazyImage
-                className='error-img h-60 md:h-full p-4'
+                className='error-img h-60 pl-10 md:h-full p-4'
                 src={
-                  'https://bu.dusays.com/2023/03/03/6401a7906aa4a.gif'
+                  '/404.jpg'
                 }></LazyImage>
 
               {/* 右侧文字 */}
               <div className='error-info flex-1 flex flex-col justify-center items-center space-y-4'>
-                <h1 className='error-title font-extrabold md:text-9xl text-7xl dark:text-white'>
+                <h1 className='error-title font-extrabold text-indigo-600 md:text-9xl text-7xl dark:text-white'>
                   404
                 </h1>
-                <div className='dark:text-white'>请尝试站内搜索寻找文章</div>
+                <div className='text-sm dark:text-white'>抱歉，页面好像迷路到外太空了。<br />请尝试重新输入地址，或者回到首页吧！</div>
                 <SmartLink href='/'>
                   <button className='bg-blue-500 py-2 px-4 text-white shadow rounded-lg hover:bg-blue-600 hover:shadow-md duration-200 transition-all'>
-                    回到主页
+                    回到首页
                   </button>
                 </SmartLink>
               </div>
