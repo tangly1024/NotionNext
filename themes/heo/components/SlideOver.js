@@ -80,7 +80,7 @@ export default function SlideOver(props) {
                       leave='ease-in-out duration-500'
                       leaveFrom='opacity-100'
                       leaveTo='opacity-0'>
-                      <div className='absolute right-4 top-4 z-10'>
+                      <div className='mb-6 flex justify-end px-5 sm:px-6'>
                         <button
                           type='button'
                           className='w-10 h-10 rounded-2xl bg-[#f5f0e8] dark:bg-gray-800/90 dark:backdrop-blur-sm border-none dark:border dark:border-gray-600/50 flex items-center justify-center text-gray-500 dark:text-gray-300 transition-all duration-200 shadow-[4px_4px_10px_rgba(0,0,0,0.08),-4px_-4px_10px_rgba(255,255,255,0.9),inset_2px_2px_4px_rgba(255,255,255,0.7),inset_-1px_-1px_3px_rgba(0,0,0,0.04)] dark:shadow-lg outline-none'
@@ -90,7 +90,7 @@ export default function SlideOver(props) {
                         </button>
                       </div>
                     </Transition.Child>
-                    <div className='relative mt-12 flex-1 flex-col space-y-5 px-5 sm:px-6 dark:text-white '>
+                    <div className='relative flex-1 flex-col space-y-5 px-5 sm:px-6 dark:text-white '>
                       <section className='flex flex-col'>
                         {/* 切换深色模式 */}
                         <DarkModeBlockButton />
