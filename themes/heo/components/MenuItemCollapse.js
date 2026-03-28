@@ -58,12 +58,12 @@ export const MenuItemCollapse = ({ link }) => {
       {/* 折叠子菜单 */}
       {hasSubMenu && (
         <Collapse isOpen={isOpen} className='rounded-[1.45rem]'>
-          <div className='mt-2 rounded-[1.45rem] bg-[#f5f0e8] p-2 shadow-[inset_3px_3px_7px_rgba(255,255,255,0.65),inset_-3px_-3px_7px_rgba(0,0,0,0.05)] dark:bg-transparent dark:p-0 dark:shadow-none'>
+          <div className='mt-2 rounded-[1.45rem] bg-[#f5f0e8] p-2 shadow-[inset_3px_3px_7px_rgba(255,255,255,0.65),inset_-3px_-3px_7px_rgba(0,0,0,0.05)] dark:bg-hexo-black-gray dark:text-gray-200 dark:shadow-none'>
             {link.subMenus.map((sLink, index) => {
               return (
                 <div
                   key={index}
-                  className='mb-1 last:mb-0 rounded-[1.05rem] bg-transparent px-3 py-3 pr-6 text-left tracking-widest transition-all duration-200 hover:bg-[rgba(255,255,255,0.38)] dark:bg-hexo-black-gray dark:text-gray-200 dark:hover:bg-gray-900'>
+                  className='mb-1 last:mb-0 rounded-[1.05rem] bg-transparent px-3 py-3 pr-6 text-left tracking-widest transition-all duration-200 hover:bg-[rgba(255,255,255,0.38)] dark:hover:bg-blue-500/10'>
                   <SmartLink href={sLink.href} target={link?.target}>
                     <span className='ml-4 whitespace-nowrap text-sm'>
                       {link?.icon && (<i className={sLink.icon + ' mr-2 opacity-80'} />)}{' '}
