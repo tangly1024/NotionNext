@@ -1993,13 +1993,13 @@ svg + .notion-page-title-text {
 .notion-quote {
   display: block;
   border-radius: 5px;
-  border-color: var(--notion-blue);
-  border-left-color: var(--notion-blue);
-  background-color: var(--notion-blue_background_co);
+  border-color: #df9283;
+  border-left-color: #df9283;
+  background-color: #f7f7f7;
   width: 100%;
   white-space: pre-wrap;
   word-break: break-word;
-  border-left: 10px solid;
+  border-left: 10px solid #df9283 !important;
   padding: 0.2em 0.9em;
   margin: 6px 0;
   font-size: 1em;
