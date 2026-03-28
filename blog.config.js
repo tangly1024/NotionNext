@@ -47,7 +47,7 @@ const BLOG = {
 
   // 自定义外部脚本，外部样式
   CUSTOM_EXTERNAL_JS: ['https://cdn.jsdmirror.com/npm/pace-js@latest/pace.min.js','https://cdn.jsdmirror.com/npm/instant.page@5.2.0/instantpage.min.js','https://019d13d4-e720-7b82-b896-ed149dfd85cb.spst2.com/ustat.js'], 
-  CUSTOM_EXTERNAL_CSS: ['https://cdn.jsdmirror.com/gh/88lin/picx-images-hosting@master/blog/custom.css'], 
+  CUSTOM_EXTERNAL_CSS: ['https://cdn.jsdmirror.com/gh/88lin/picx-images-hosting@master/blog/css/custom.css'], 
 
   // 自定义菜单
   CUSTOM_MENU: process.env.NEXT_PUBLIC_CUSTOM_MENU || true, // 支持Menu类型的菜单，替代了3.12版本前的Page类型
