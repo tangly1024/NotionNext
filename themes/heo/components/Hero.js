@@ -392,7 +392,7 @@ function TodayCard({ cRef, siteInfo }) {
         </div>
 
         {/* 封面图 */}
-        <LazyImage
+        <img
           src={siteInfo?.pageCover}
           alt='茉灵智库 - 资源与技术教程分享封面图'
           id='today-card-cover'
