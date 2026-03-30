@@ -317,10 +317,29 @@ const nextConfig = {
         splitChunks: {
           chunks: 'all',
           cacheGroups: {
+            notionx: {
+              test: /[\\/]node_modules[\\/]react-notion-x/,
+              name: 'notionx',
+              chunks: 'all',
+              priority: 20,
+            },
+            headlessui: {
+              test: /[\\/]node_modules[\\/]@headlessui/,
+              name: 'headlessui',
+              chunks: 'all',
+              priority: 20,
+            },
+            clerk: {
+              test: /[\\/]node_modules[\\/]@clerk/,
+              name: 'clerk',
+              chunks: 'all',
+              priority: 20,
+            },
             vendor: {
               test: /[\\/]node_modules[\\/]/,
               name: 'vendors',
               chunks: 'all',
+              priority: 10,
             },
             common: {
               name: 'common',
