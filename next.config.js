@@ -206,6 +206,30 @@ const nextConfig = {
     : () => {
         return [
           {
+            source: '/_next/static/:path*',
+            headers: [
+              { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
+            ]
+          },
+          {
+            source: '/fonts/:path*',
+            headers: [
+              { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
+            ]
+          },
+          {
+            source: '/css/:path*',
+            headers: [
+              { key: 'Cache-Control', value: 'public, max-age=604800' }
+            ]
+          },
+          {
+            source: '/js/:path*',
+            headers: [
+              { key: 'Cache-Control', value: 'public, max-age=604800' }
+            ]
+          },
+          {
             source: '/:path*{/}?',
             headers: [
               // 为了博客兼容性，不做过多安全限制
