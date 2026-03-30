@@ -203,6 +203,7 @@ const autoScrollToHash = () => {
  * @returns
  */
 const mapPageUrl = id => {
+  if (typeof id !== 'string' || !id) return '/'
   // return 'https://www.notion.so/' + id.replace(/-/g, '')
   return '/' + id.replace(/-/g, '')
 }
