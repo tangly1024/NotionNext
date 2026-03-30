@@ -1,16 +1,16 @@
-import Card from './Card'
-import CategoryGroup from './CategoryGroup'
-import LatestPostsGroup from './LatestPostsGroup'
-import TagGroups from './TagGroups'
-import Catalog from './Catalog'
-import { InfoCard } from './InfoCard'
-import { AnalyticsCard } from './AnalyticsCard'
-import CONFIG from '../config'
-import dynamic from 'next/dynamic'
-import Announcement from './Announcement'
-import { useGlobal } from '@/lib/global'
 import Live2D from '@/components/Live2D'
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
+import dynamic from 'next/dynamic'
+import CONFIG from '../config'
+import { AnalyticsCard } from './AnalyticsCard'
+import Announcement from './Announcement'
+import Card from './Card'
+import Catalog from './Catalog'
+import CategoryGroup from './CategoryGroup'
+import { InfoCard } from './InfoCard'
+import LatestPostsGroup from './LatestPostsGroup'
+import TagGroups from './TagGroups'
 
 const HexoRecentComments = dynamic(() => import('./HexoRecentComments'))
 const FaceBookPage = dynamic(
@@ -33,8 +33,17 @@ const FaceBookPage = dynamic(
  */
 export default function SideRight(props) {
   const {
-    post, currentCategory, categories, latestPosts, tags,
-    currentTag, showCategory, showTag, rightAreaSlot, notice, className
+    post,
+    currentCategory,
+    categories,
+    latestPosts,
+    tags,
+    currentTag,
+    showCategory,
+    showTag,
+    rightAreaSlot,
+    notice,
+    className
   } = props
 
   const { locale } = useGlobal()
@@ -45,44 +54,54 @@ export default function SideRight(props) {
   }
 
   return (
-    <div id='sideRight' className={className}>
-      <InfoCard {...props} />
-      {siteConfig('HEXO_WIDGET_ANALYTICS', null, CONFIG) && <AnalyticsCard {...props} />}
+    <div
+      id='sideRight'
+      className={` lg:w-80 lg:pt-8 ${post ? 'lg:pt-0' : 'lg:pt-4'}`}>
+      <div className='sticky top-8 space-y-4'>
+        {post && post.toc && post.toc.length > 1 && (
+          <Card>
+            <Catalog toc={post.toc} />
+          </Card>
+        )}
 
-      {showCategory && (
-        <Card>
-          <div className='ml-2 mb-1 '>
-            <i className='fas fa-th' /> {locale.COMMON.CATEGORY}
-          </div>
-          <CategoryGroup
-            currentCategory={currentCategory}
-            categories={categories}
-          />
-        </Card>
-      )}
-      {showTag && (
-        <Card>
-          <TagGroups tags={tags} currentTag={currentTag} />
-        </Card>
-      )}
-      {siteConfig('HEXO_WIDGET_LATEST_POSTS', null, CONFIG) && latestPosts && latestPosts.length > 0 && <Card>
-        <LatestPostsGroup {...props} />
-      </Card>}
+        <InfoCard {...props} />
+        {siteConfig('HEXO_WIDGET_ANALYTICS', null, CONFIG) && (
+          <AnalyticsCard {...props} />
+        )}
 
-      <Announcement post={notice}/>
+        {showCategory && (
+          <Card>
+            <div className='ml-2 mb-1 '>
+              <i className='fas fa-th' /> {locale.COMMON.CATEGORY}
+            </div>
+            <CategoryGroup
+              currentCategory={currentCategory}
+              categories={categories}
+            />
+          </Card>
+        )}
+        {showTag && (
+          <Card>
+            <TagGroups tags={tags} currentTag={currentTag} />
+          </Card>
+        )}
+        {siteConfig('HEXO_WIDGET_LATEST_POSTS', null, CONFIG) &&
+          latestPosts &&
+          latestPosts.length > 0 && (
+            <Card>
+              <LatestPostsGroup {...props} />
+            </Card>
+          )}
 
-      {siteConfig('COMMENT_WALINE_SERVER_URL') && siteConfig('COMMENT_WALINE_RECENT') && <HexoRecentComments/>}
+        <Announcement post={notice} />
 
-      <div className='sticky top-20'>
-        {post && post.toc && post.toc.length > 1 && <Card>
-          <Catalog toc={post.toc} />
-        </Card>}
+        {siteConfig('COMMENT_WALINE_SERVER_URL') &&
+          siteConfig('COMMENT_WALINE_RECENT') && <HexoRecentComments />}
 
         {rightAreaSlot}
-        <FaceBookPage/>
+        <FaceBookPage />
         <Live2D />
       </div>
-
     </div>
   )
 }

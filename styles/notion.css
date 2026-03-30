@@ -1,5 +1,5 @@
 :root {
-  --fg-color: rgb(0, 0, 0);
+  --fg-color: rgb(0, 0, 0) !important;
   --fg-color-0: rgba(55, 53, 47, 0.09);
   --fg-color-1: rgba(55, 53, 47, 0.16);
   --fg-color-2: rgba(55, 53, 47, 0.4);
@@ -403,7 +403,8 @@ summary > .notion-h {
 .notion-h1 {
   font-size: 1.575em;
   margin-top: 1.08em;
-  @apply border-b w-full;
+  @apply w-full;
+  /* @apply border-b w-full; */
 }
 .notion-h2 {
   @apply w-full;
@@ -554,7 +555,8 @@ summary > .notion-h {
   width: 100%;
   margin: 6px 0;
   padding: 0;
-  border-bottom-width: 1px;
+  border-top: 1px solid #e5e7eb !important;
+  /* border-bottom-width: 1px; */
 }
 
 .notion-link {
@@ -954,6 +956,12 @@ code[class*='language-'] {
   white-space: pre-wrap;
   word-break: break-word;
   overflow: hidden;
+}
+
+.notion-callout-text .notion-text{
+  padding: 0px 0px !important;
+  margin: 0px 0px !important;
+  line-height: normal !important;
 }
 
 .notion-toggle {
@@ -1451,7 +1459,6 @@ code[class*='language-'] {
 
 .notion-collection-card-property .notion-page-title-text {
   border-bottom: 0 none;
-  @apply dark:text-gray-200;
 }
 
 .notion-collection-card-property
@@ -1469,6 +1476,7 @@ code[class*='language-'] {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 500;
+  @apply dark:text-gray-200;
 }
 
 .notion-collection-row {
@@ -1664,9 +1672,8 @@ code[class*='language-'] {
 }
 
 /* NOTION CSS OVERRIDE */
-
 .notion {
-  @apply dark:text-gray-300;
+  @apply dark:text-gray-100;
   overflow-wrap: break-word;
 }
 .notion,
@@ -1681,8 +1688,8 @@ code[class*='language-'] {
   color: inherit;
 }
 
-svg.notion-page-icon {
-  /* @apply hidden;*/
+.notion-callout svg.notion-page-icon {
+  @apply hidden;
 }
 
 svg + .notion-page-title-text {
@@ -1796,8 +1803,7 @@ svg + .notion-page-title-text {
   display: inline-block;
   width: 14px;
   height: 14px;
-  /* fill: var(--fg-color); */
-  fill: rgba(55, 53, 47);
+  fill: var(--fg-color);
   margin-right: 6px;
   @apply dark:fill-gray-200;
 }
@@ -2021,6 +2027,10 @@ code.language-mermaid {
   display: none;
 }
 
+.mermaid .invisible{
+  visibility: inherit;
+}
+
 .code-toolbar {
   @apply w-full shadow-md pb-0;
 }
@@ -2057,11 +2067,11 @@ code.language-mermaid {
 .notion-simple-table-row {
 }
 
-/* 表格头 */
-.notion-simple-table tr:first-child td {
+/* 表格头 新版notion不用 */
+/* .notion-simple-table tr:first-child td {
   background-color: #f5f6f8;
   @apply text-center font-bold dark:bg-gray-800 !important;
-}
+} */
 
 .notion-simple-table td {
   border: 1px solid var(#eee) !important;
@@ -2071,4 +2081,9 @@ code.language-mermaid {
 figure.notion-asset-wrapper.notion-asset-wrapper-video > div {
   height: 100% !important;
   width: 100% !important;
+}
+
+/* 画廊左右边线不展示Bug */
+.notion-gallery {
+  padding: 0 16px;
 }

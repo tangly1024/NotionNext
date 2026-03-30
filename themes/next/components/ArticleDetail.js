@@ -7,14 +7,14 @@ import WWAds from '@/components/WWAds'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { formatDateFmt } from '@/lib/utils/formatDate'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import CONFIG from '../config'
 import ArticleCopyright from './ArticleCopyright'
 import BlogAround from './BlogAround'
 import RecommendPosts from './RecommendPosts'
 import TagItem from './TagItem'
-import WordCount from './WordCount'
+import WordCount from '@/components/WordCount'
 
 /**
  *
@@ -35,9 +35,7 @@ export default function ArticleDetail(props) {
   }
 
   return (
-    <div
-      id='article-wrapper'
-      className='shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full '>
+    <div className='shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full '>
       <div
         itemScope
         itemType='https://schema.org/Movie'
@@ -71,7 +69,7 @@ export default function ArticleDetail(props) {
               <div className='flex flex-wrap justify-center'>
                 {post?.type !== 'Page' && (
                   <>
-                    <Link
+                    <SmartLink
                       href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                       passHref
                       legacyBehavior>
@@ -79,7 +77,7 @@ export default function ArticleDetail(props) {
                         <i className='far fa-calendar mr-1' />{' '}
                         {post?.publishDay}
                       </div>
-                    </Link>
+                    </SmartLink>
                     <span className='mr-2'>
                       {' '}
                       | <i className='far fa-calendar-check mr-2' />
@@ -94,13 +92,13 @@ export default function ArticleDetail(props) {
                 )}
               </div>
 
-              <WordCount />
+              <WordCount wordCount={post.wordCount} readTime={post.readTime} />
             </section>
           </header>
         )}
 
         {/* Notion内容主体 */}
-        <article className='mx-auto'>
+        <article id='article-wrapper' className='mx-auto'>
           <WWAds className='w-full' orientation='horizontal' />
           {post && <NotionPage post={post} />}
           <WWAds className='w-full' orientation='horizontal' />
@@ -129,12 +127,12 @@ export default function ArticleDetail(props) {
               {post.category && (
                 <>
                   <div className='cursor-pointer my-auto text-md mr-2 hover:text-black dark:hover:text-white border-b dark:text-gray-500 border-dashed'>
-                    <Link href={`/category/${post.category}`} legacyBehavior>
+                    <SmartLink href={`/category/${post.category}`} legacyBehavior>
                       <a>
                         <i className='mr-1 far fa-folder-open' />{' '}
                         {post.category}
                       </a>
-                    </Link>
+                    </SmartLink>
                   </div>
                 </>
               )}

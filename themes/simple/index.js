@@ -6,7 +6,7 @@ import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef } from 'react'
 import BlogPostBar from './components/BlogPostBar'
@@ -224,35 +224,37 @@ const LayoutSlug = props => {
     <>
       {lock && <ArticleLock validPassword={validPassword} />}
 
-      <div
-        id='article-wrapper'
-        className={`px-2  ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
-        {/* 文章信息 */}
-        <ArticleInfo post={post} />
+      {!lock && post && (
+        <div className={`px-2  ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
+          {/* 文章信息 */}
+          <ArticleInfo post={post} />
 
-        {/* 广告嵌入 */}
-        {/* <AdSlot type={'in-article'} /> */}
-        <WWAds orientation='horizontal' className='w-full' />
+          {/* 广告嵌入 */}
+          {/* <AdSlot type={'in-article'} /> */}
+          <WWAds orientation='horizontal' className='w-full' />
 
-        {/* Notion文章主体 */}
-        {!lock && <NotionPage post={post} />}
+          <div id='article-wrapper'>
+            {/* Notion文章主体 */}
+            {!lock && <NotionPage post={post} />}
+          </div>
 
-        {/* 分享 */}
-        <ShareBar post={post} />
+          {/* 分享 */}
+          <ShareBar post={post} />
 
-        {/* 广告嵌入 */}
-        <AdSlot type={'in-article'} />
+          {/* 广告嵌入 */}
+          <AdSlot type={'in-article'} />
 
-        {post?.type === 'Post' && (
-          <>
-            <ArticleAround prev={prev} next={next} />
-            <RecommendPosts recommendPosts={recommendPosts} />
-          </>
-        )}
+          {post?.type === 'Post' && (
+            <>
+              <ArticleAround prev={prev} next={next} />
+              <RecommendPosts recommendPosts={recommendPosts} />
+            </>
+          )}
 
-        {/* 评论区 */}
-        <Comment frontMatter={post} />
-      </div>
+          {/* 评论区 */}
+          <Comment frontMatter={post} />
+        </div>
+      )}
     </>
   )
 }
@@ -265,13 +267,14 @@ const LayoutSlug = props => {
 const Layout404 = props => {
   const { post } = props
   const router = useRouter()
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector('#article-wrapper #notion-article')
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -279,7 +282,7 @@ const Layout404 = props => {
             }
           }
         },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+        waiting404
       )
     }
   }, [post])
@@ -298,7 +301,7 @@ const LayoutCategoryIndex = props => {
       <div id='category-list' className='duration-200 flex flex-wrap'>
         {categoryOptions?.map(category => {
           return (
-            <Link
+            <SmartLink
               key={category.name}
               href={`/category/${category.name}`}
               passHref
@@ -310,7 +313,7 @@ const LayoutCategoryIndex = props => {
                 <i className='mr-4 fas fa-folder' />
                 {category.name}({category.count})
               </div>
-            </Link>
+            </SmartLink>
           )
         })}
       </div>
@@ -331,7 +334,7 @@ const LayoutTagIndex = props => {
         {tagOptions.map(tag => {
           return (
             <div key={tag.name} className='p-2'>
-              <Link
+              <SmartLink
                 key={tag}
                 href={`/tag/${encodeURIComponent(tag.name)}`}
                 passHref
@@ -340,7 +343,7 @@ const LayoutTagIndex = props => {
                   <i className='mr-1 fas fa-tag' />{' '}
                   {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}
                 </div>
-              </Link>
+              </SmartLink>
             </div>
           )
         })}

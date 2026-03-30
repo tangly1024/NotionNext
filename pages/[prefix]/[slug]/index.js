@@ -1,10 +1,8 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData, getPost, getPostBlocks } from '@/lib/db/getSiteData'
-import { uploadDataToAlgolia } from '@/lib/plugins/algolia'
-import { checkSlugHasOneSlash, getRecommendPost } from '@/lib/utils/post'
-import { idToUuid } from 'notion-utils'
+import { fetchGlobalAllData, resolvePostProps } from '@/lib/db/SiteDataApi'
 import Slug from '..'
+import { checkSlugHasOneSlash } from '@/lib/utils/post'
 
 /**
  * 根据notion的slug访问页面
@@ -25,7 +23,7 @@ export async function getStaticPaths() {
   }
 
   const from = 'slug-paths'
-  const { allPages } = await getGlobalData({ from })
+  const { allPages } = await fetchGlobalAllData({ from })
 
   // 根据slug中的 / 分割成prefix和slug两个字段 ; 例如 article/test
   // 最终用户可以通过  [domain]/[prefix]/[slug] 路径访问，即这里的 [domain]/article/test
@@ -46,80 +44,21 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { prefix, slug }, locale }) {
-  const fullSlug = prefix + '/' + slug
-  const from = `slug-props-${fullSlug}`
-  const props = await getGlobalData({ from, locale })
-
-  // 在列表内查找文章
-  props.post = props?.allPages?.find(p => {
-    return (
-      p.type.indexOf('Menu') < 0 &&
-      (p.slug === slug || p.slug === fullSlug || p.id === idToUuid(fullSlug))
-    )
+  const props = await resolvePostProps({
+    prefix,
+    slug,
+    locale,
   })
 
-  // 处理非列表内文章的内信息
-  if (!props?.post) {
-    const pageId = slug.slice(-1)[0]
-    if (pageId.length >= 32) {
-      const post = await getPost(pageId)
-      props.post = post
-    }
-  }
-
-  // 无法获取文章
-  if (!props?.post) {
-    props.post = null
-    return {
-      props,
-      revalidate: process.env.EXPORT
-        ? undefined
-        : siteConfig(
-            'NEXT_REVALIDATE_SECOND',
-            BLOG.NEXT_REVALIDATE_SECOND,
-            props.NOTION_CONFIG
-          )
-    }
-  }
-
-  // 文章内容加载
-  if (!props?.post?.blockMap) {
-    props.post.blockMap = await getPostBlocks(props.post.id, from)
-  }
-  // 生成全文索引 && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
-  if (BLOG.ALGOLIA_APP_ID) {
-    uploadDataToAlgolia(props?.post)
-  }
-
-  // 推荐关联文章处理
-  const allPosts = props.allPages?.filter(
-    page => page.type === 'Post' && page.status === 'Published'
-  )
-  if (allPosts && allPosts.length > 0) {
-    const index = allPosts.indexOf(props.post)
-    props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
-    props.next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
-    props.recommendPosts = getRecommendPost(
-      props.post,
-      allPosts,
-      siteConfig('POST_RECOMMEND_COUNT')
-    )
-  } else {
-    props.prev = null
-    props.next = null
-    props.recommendPosts = []
-  }
-
-  delete props.allPages
   return {
     props,
     revalidate: process.env.EXPORT
       ? undefined
       : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
-        )
+        'NEXT_REVALIDATE_SECOND',
+        BLOG.NEXT_REVALIDATE_SECOND,
+        props.NOTION_CONFIG
+      ),
   }
 }
 

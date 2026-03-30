@@ -8,16 +8,10 @@ import { useEffect } from 'react'
  * https://michalsnik.github.io/aos/
  */
 export default function AOSAnimation() {
-  const initAOS = async () => {
+  const initAOS = () => {
     Promise.all([
-      loadExternalResource(
-        'https://cdn.bootcdn.net/ajax/libs/aos/2.3.4/aos.js',
-        'js'
-      ),
-      loadExternalResource(
-        'https://cdn.bootcdn.net/ajax/libs/aos/2.3.4/aos.css',
-        'css'
-      )
+      loadExternalResource('/js/aos.js', 'js'),
+      loadExternalResource('/css/aos.css', 'css')
     ]).then(() => {
       if (window.AOS) {
         window.AOS.init()

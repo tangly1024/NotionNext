@@ -28,7 +28,7 @@ const SideAreaLeft = props => {
       id='left'
       className={
         (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'ml-4' : 'mr-4') +
-        ' hidden lg:block flex-col w-60 z-20 relative'
+        ' hidden lg:block flex-col w-60 relative z-30'
       }>
       <section className='w-60'>
         {/* 菜单 */}

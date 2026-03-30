@@ -22,7 +22,7 @@ function createRibbon() {
       a = window.innerWidth,
       l = window.innerHeight,
       d = e.s
-    i.id = id
+    i.id = '__next'
     let r, s
     const u = Math
     let h = 0
@@ -80,7 +80,7 @@ function createRibbon() {
 
 function destroyRibbon() {
   const ribbon = document.getElementById(idRibbon)
-  if (ribbon && ribbon.parentNode) {
+  if (ribbon && ribbon.parentNode && ribbon.parentNode.contains(ribbon)) {
     ribbon.parentNode.removeChild(ribbon)
   }
 }
