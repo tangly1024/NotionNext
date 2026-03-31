@@ -310,7 +310,7 @@ const nextConfig = {
     )
 
     // 性能优化配置
-    if (!dev) {
+    if (!dev && !isServer) {
       // 生产环境优化
       config.optimization = {
         ...config.optimization,
