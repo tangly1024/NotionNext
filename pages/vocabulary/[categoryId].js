@@ -1,5 +1,3 @@
-'use client';
-
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { vocabCategories } from '@/data/vocabData';
@@ -22,24 +20,19 @@ const IconLock = ({ size = 24 }) => (
 
 const getCover = (id, originalCover) => {
   if (originalCover && !originalCover.includes('pixabay.com/zh/images/download')) return originalCover;
-  return `https://picsum.photos/seed/${id}/300/300`; // 稍微调大了分辨率以保证清晰度
+  return `https://picsum.photos/seed/${id}/300/300`;
 };
 
-const pick = (v) => (Array.isArray(v) ? v[0] : v);
-
-export default function CategoryPage() {
+// 页面组件：直接接收 getStaticProps 传来的 categoryData
+export default function CategoryPage({ categoryData }) {
   const router = useRouter();
-  const categoryId = pick(router.query.categoryId);
   
-  if (!router.isReady) return null;
-
-  const categoryData = vocabCategories.find((c) => c.id === categoryId);
-
+  // 防御性判断
   if (!categoryData) {
     return <div style={{ padding: 40, textAlign: 'center', color: '#64748b' }}>未找到该分类</div>;
   }
 
-  const subItems = categoryData.items || [];
+  const subItems = categoryData.items ||[];
 
   return (
     <main style={{ minHeight: '100vh', backgroundColor: '#F8FAFC', paddingBottom: 80, fontFamily: 'sans-serif' }}>
@@ -75,11 +68,11 @@ export default function CategoryPage() {
           </div>
         </div>
 
-        {/* 🌟 核心：一排三个的网格布局 (图片背景+悬浮文字) 🌟 */}
+        {/* 🌟 核心：一排三个的网格布局 */}
         <div style={{ 
           display: 'grid', 
-          gridTemplateColumns: 'repeat(3, 1fr)', // 强制分为3列
-          gap: 12 // 卡片间距
+          gridTemplateColumns: 'repeat(3, 1fr)', 
+          gap: 12 
         }}>
           {subItems.map((sub) => {
             const isLocked = sub.locked;
@@ -95,12 +88,12 @@ export default function CategoryPage() {
                 <div style={{
                   position: 'relative',
                   width: '100%',
-                  aspectRatio: '3 / 4', // 保证正方形比例
+                  aspectRatio: '3 / 4',
                   borderRadius: 18,
                   overflow: 'hidden',
                   backgroundColor: '#E2E8F0',
                   boxShadow: '0 6px 16px rgba(15,23,42,0.08)',
-                  opacity: isLocked ? 0.65 : 1, // 锁定时轻微透明
+                  opacity: isLocked ? 0.65 : 1,
                   transition: 'transform 0.15s ease, box-shadow 0.15s ease',
                   cursor: isLocked ? 'not-allowed' : 'pointer'
                 }}
@@ -110,7 +103,6 @@ export default function CategoryPage() {
                 onTouchEnd={(e) => e.currentTarget.style.transform = 'scale(1)'}
                 >
                   
-                  {/* 底层背景图片 */}
                   <img 
                     src={getCover(sub.id, sub.cover)} 
                     alt={sub.title}
@@ -124,14 +116,12 @@ export default function CategoryPage() {
                     onError={(e) => { e.currentTarget.src = getCover(sub.id + 'fb', null); }}
                   />
 
-                  {/* 底部渐变遮罩 (保证白色文字清晰可见) */}
                   <div style={{ 
                     position: 'absolute', 
                     inset: 0, 
                     background: 'linear-gradient(to top, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0.3) 50%, transparent 100%)' 
                   }} />
                   
-                  {/* 如果是锁定状态，在正中间显示锁 */}
                   {isLocked && (
                     <div style={{ 
                       position: 'absolute', 
@@ -146,7 +136,6 @@ export default function CategoryPage() {
                     </div>
                   )}
 
-                  {/* 悬浮在底部的文字信息 */}
                   <div style={{
                     position: 'absolute',
                     left: 0,
@@ -158,7 +147,6 @@ export default function CategoryPage() {
                     alignItems: 'center',
                     textAlign: 'center'
                   }}>
-                    {/* 标题 */}
                     <h3 style={{ 
                       fontSize: 14, 
                       fontWeight: 800, 
@@ -175,7 +163,6 @@ export default function CategoryPage() {
                       {sub.title}
                     </h3>
                     
-                    {/* 副标题 */}
                     {sub.subtitle && (
                       <p style={{ 
                         fontSize: 10, 
@@ -196,8 +183,43 @@ export default function CategoryPage() {
             );
           })}
         </div>
-
       </div>
     </main>
   );
 }
+
+// ==========================================
+// 针对 Cloudflare 静态部署必加的两个方法
+// ==========================================
+
+export async function getStaticPaths() {
+  // 遍历所有分类，生成对应的路由路径
+  // 例如生成：[{ params: { categoryId: 'health' } }, { params: { categoryId: 'hsk' } }]
+  const paths = vocabCategories.map((cat) => ({
+    params: { categoryId: cat.id },
+  }));
+
+  return {
+    paths,
+    // fallback 为 false 意味着如果用户访问了不存在的分类ID，直接返回 404 页面
+    fallback: false, 
+  };
+}
+
+export async function getStaticProps({ params }) {
+  // 这里的 params 包含了上面 getStaticPaths 生成的 categoryId
+  const categoryId = params.categoryId;
+  const categoryData = vocabCategories.find((c) => c.id === categoryId);
+
+  // 防御性判断，如果没找到则重定向到 404
+  if (!categoryData) {
+    return { notFound: true };
+  }
+
+  // 将数据作为 props 传递给页面组件
+  return {
+    props: {
+      categoryData,
+    },
+  };
+                        }
