@@ -40,7 +40,7 @@ const SEO = props => {
     })
   }, [])
 
-  // SEO关键词 
+  // SEO关键词
   const KEYWORDS = siteConfig('KEYWORDS')
   let keywords = meta?.tags || KEYWORDS
   if (post?.tags && post?.tags?.length > 0) {
@@ -219,9 +219,6 @@ const SEO = props => {
       <link rel='dns-prefetch' href='//www.googletagmanager.com' />
       <link rel='preconnect' href='https://cdn.jsdmirror.com' crossOrigin='anonymous' />
       <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />
-
-      {/* 预加载关键资源 */}
-      <link rel='preload' href='/fonts/inter-var.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
 
       {children}
     </Head>

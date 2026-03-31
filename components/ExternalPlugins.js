@@ -3,7 +3,7 @@ import { convertInnerUrl } from '@/lib/db/notion/convertInnerUrl'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect } from 'react'
 import { GlobalStyle } from './GlobalStyle'
 import { initGoogleAdsense } from './GoogleAdsense'
 
@@ -13,6 +13,8 @@ import WebWhiz from './Webwhiz'
 import { useGlobal } from '@/lib/global'
 import IconFont from './IconFont'
 
+const useIsomorphicLayoutEffect = isBrowser ? useLayoutEffect : useEffect
+
 /**
  * 各种插件脚本
  * @param {*} props
@@ -21,7 +23,7 @@ import IconFont from './IconFont'
 const ExternalPlugin = props => {
   // 读取自Notion的配置
   const { NOTION_CONFIG } = props
-  const { lang } = useGlobal()
+  const { lang, theme } = useGlobal()
   const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN', null, NOTION_CONFIG)
   const THEME_SWITCH = siteConfig('THEME_SWITCH', null, NOTION_CONFIG)
   const DEBUG = siteConfig('DEBUG', null, NOTION_CONFIG)
@@ -126,13 +128,18 @@ const ExternalPlugin = props => {
     NOTION_CONFIG
   )
 
+  const HEO_ENABLE_AOS = siteConfig('HEO_ENABLE_AOS', false)
   const ENABLE_ICON_FONT = siteConfig('ENABLE_ICON_FONT', false)
 
   const UMAMI_HOST = siteConfig('UMAMI_HOST', null, NOTION_CONFIG)
   const UMAMI_ID = siteConfig('UMAMI_ID', null, NOTION_CONFIG)
 
-  // 自定义样式css和js引入
-  if (isBrowser) {
+  useIsomorphicLayoutEffect(() => {
+    if (DISABLE_PLUGIN || !isBrowser) {
+      return
+    }
+
+    // 自定义样式css和js引入
     // 初始化AOS动画
     // 静态导入本地自定义样式
     // loadExternalResource('/css/custom.css', 'css')
@@ -160,7 +167,13 @@ const ExternalPlugin = props => {
         loadExternalResource(url, 'css')
       }
     }
-  }
+  }, [
+    DISABLE_PLUGIN,
+    IMG_SHADOW,
+    ANIMATE_CSS_URL,
+    CUSTOM_EXTERNAL_JS,
+    CUSTOM_EXTERNAL_CSS
+  ])
 
   const router = useRouter()
   const routePath = (router.asPath || '').split('?')[0].split('#')[0]
@@ -227,7 +240,7 @@ const ExternalPlugin = props => {
       {TIANLI_KEY && <TianliGPT />}
       {/* <VConsole /> */}
       {ENABLE_NPROGRSS && <LoadingProgress />}
-      <AosAnimation />
+      {(String(theme || '').toLowerCase() !== 'heo' || HEO_ENABLE_AOS) && <AosAnimation />}
       {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && <LA51 />}
       {COZE_BOT_ID && <Coze />}
 
