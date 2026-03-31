@@ -82,13 +82,13 @@ const WalineComponent = (props) => {
         reaction: true,
         dark: 'html.dark',
         emoji: [
-          '//cdn.jsdmirror.com/npm/sticker-heo@2022.7.5/Sticker-100',
-          '//cdn.jsdmirror.com/npm/@waline/emojis@1.4.0/qq',
-          '//cdn.jsdmirror.com/npm/@waline/emojis@1.4.0/bmoji',
-          '//npm.elemecdn.com/@waline/emojis@1.4.0/bilibili',
-          '//npm.elemecdn.com/@waline/emojis@1.4.0/weibo',
-          '//npm.elemecdn.com/@waline/emojis@1.4.0/tieba',
-          '//cdn.jsdmirror.com/npm/@waline/emojis@1.4.0/tw-food'
+          'https://cdn.jsdmirror.com/npm/sticker-heo@2022.7.5/Sticker-100',
+          'https://cdn.jsdmirror.com/npm/@waline/emojis@1.4.0/qq',
+          'https://cdn.jsdmirror.com/npm/@waline/emojis@1.4.0/bmoji',
+          'https://cdn.jsdmirror.com/npm/@waline/emojis@1.4.0/bilibili',
+          'https://cdn.jsdmirror.com/npm/@waline/emojis@1.4.0/weibo',
+          'https://cdn.jsdmirror.com/npm/@waline/emojis@1.4.0/tieba',
+          'https://cdn.jsdmirror.com/npm/@waline/emojis@1.4.0/tw-food'
         ]
       })
     }
