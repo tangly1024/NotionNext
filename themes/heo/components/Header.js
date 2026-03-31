@@ -1,5 +1,4 @@
 import { siteConfig } from '@/lib/config'
-import { isBrowser } from '@/lib/utils'
 import throttle from 'lodash.throttle'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -32,71 +31,49 @@ const Header = props => {
   /**
    * 根据滚动条，切换导航栏样式
    */
+  const prevScrollYRef = useRef(0)
   const scrollTrigger = useCallback(
     throttle(() => {
       const scrollS = window.scrollY
-      // 导航栏设置 白色背景
+
+      // 导航栏样式切换
       if (scrollS <= 1) {
         setFixedNav(false)
         setBgWhite(false)
         setTextWhite(false)
 
-        // 文章详情页特殊处理
         if (document?.querySelector('#post-bg')) {
           setFixedNav(true)
           setTextWhite(true)
         }
       } else {
-        // 向下滚动后的导航样式
         setFixedNav(true)
         setTextWhite(false)
         setBgWhite(true)
       }
-    }, 100)
+
+      // 滚动方向判断 -> 切换菜单/标题
+      if (scrollS > prevScrollYRef.current) {
+        setActiveIndex(1)
+      } else {
+        setActiveIndex(0)
+      }
+      prevScrollYRef.current = scrollS
+    }, 100),
+    []
   )
+
   useEffect(() => {
     scrollTrigger()
-  }, [router])
+  }, [router.asPath, scrollTrigger])
 
-  // 监听滚动
   useEffect(() => {
-    window.addEventListener('scroll', scrollTrigger)
+    window.addEventListener('scroll', scrollTrigger, { passive: true })
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
+      scrollTrigger.cancel()
     }
-  }, [])
-
-  // 导航栏根据滚动轮播菜单内容
-  useEffect(() => {
-    let prevScrollY = 0
-    let ticking = false
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const currentScrollY = window.scrollY
-          if (currentScrollY > prevScrollY) {
-            setActiveIndex(1) // 向下滚动时设置activeIndex为1
-          } else {
-            setActiveIndex(0) // 向上滚动时设置activeIndex为0
-          }
-          prevScrollY = currentScrollY
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-
-    if (isBrowser) {
-      window.addEventListener('scroll', handleScroll)
-    }
-
-    return () => {
-      if (isBrowser) {
-        window.removeEventListener('scroll', handleScroll)
-      }
-    }
-  }, [])
+  }, [scrollTrigger])
 
   return (
     <>

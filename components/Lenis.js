@@ -11,6 +11,25 @@ const Lenis = () => {
   const isAbortedRef = useRef(false) // 防止组件卸载后继续初始化
 
   useEffect(() => {
+    // 仅桌面端启用 Lenis
+    const isDesktop = window.matchMedia(
+      '(min-width: 1024px) and (pointer: fine) and (hover: hover)'
+    ).matches
+    if (!isDesktop) return
+
+    const allowMotion = window.matchMedia(
+      '(prefers-reduced-motion: no-preference)'
+    ).matches
+    if (!allowMotion) return
+
+    const uaPlatform =
+      navigator.userAgentData?.platform || navigator.platform || ''
+    const ua = navigator.userAgent || ''
+    const isAppleLike =
+      /mac/i.test(uaPlatform) ||
+      /Mac OS X|iPad|iPhone|iPod/i.test(ua) ||
+      (/MacIntel/i.test(uaPlatform) && navigator.maxTouchPoints > 1)
+
     isAbortedRef.current = false
     // 异步加载
     async function loadLenis() {
@@ -35,15 +54,16 @@ const Lenis = () => {
         }
 
         // 创建 Lenis 实例
+        const wheelMultiplier = isAppleLike ? 0.85 : 1
         const lenis = new LenisLib({
-          duration: 1.1,
+          duration: isAppleLike ? 0.85 : 1.1,
           easing: t => 1 - Math.pow(1 - t, 3),
           direction: 'vertical', // vertical, horizontal
           gestureDirection: 'vertical', // vertical, horizontal, both
           smooth: true,
-          mouseMultiplier: 1,
-          smoothTouch: false,
-          touchMultiplier: 2,
+          smoothWheel: true,
+          wheelMultiplier,
+          mouseMultiplier: wheelMultiplier,
           infinite: false
         })
 

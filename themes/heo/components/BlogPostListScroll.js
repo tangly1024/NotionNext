@@ -1,7 +1,7 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { getListByPage } from '@/lib/utils'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
 import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
@@ -23,6 +23,7 @@ const BlogPostListScroll = ({
   const [page, updatePage] = useState(1)
   const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
   const postsToShow = getListByPage(posts, page, POSTS_PER_PAGE)
+  const targetRef = useRef(null)
 
   let hasMore = false
   if (posts) {
@@ -30,35 +31,38 @@ const BlogPostListScroll = ({
     hasMore = page * POSTS_PER_PAGE < totalCount
   }
 
-  const handleGetMore = () => {
-    if (!hasMore) return
-    updatePage(page + 1)
-  }
+  const hasMoreRef = useRef(hasMore)
+  hasMoreRef.current = hasMore
+  const rafPendingRef = useRef(false)
+
+  const handleGetMore = useCallback(() => {
+    if (!hasMoreRef.current) return
+    updatePage(prev => prev + 1)
+  }, [])
 
   // 监听滚动自动分页加载
-  const scrollTrigger = () => {
-    requestAnimationFrame(() => {
-      const scrollS = window.scrollY + window.outerHeight
-      const clientHeight = targetRef
-        ? targetRef.current
+  useEffect(() => {
+    const scrollTrigger = () => {
+      if (rafPendingRef.current) return
+      rafPendingRef.current = true
+      requestAnimationFrame(() => {
+        rafPendingRef.current = false
+        const scrollS = window.scrollY + window.innerHeight
+        const clientHeight = targetRef.current
           ? targetRef.current.clientHeight
           : 0
-        : 0
-      if (scrollS > clientHeight + 100) {
-        handleGetMore()
-      }
-    })
-  }
+        if (scrollS > clientHeight + 100) {
+          handleGetMore()
+        }
+      })
+    }
 
-  // 监听滚动
-  useEffect(() => {
-    window.addEventListener('scroll', scrollTrigger)
+    window.addEventListener('scroll', scrollTrigger, { passive: true })
     return () => {
+      rafPendingRef.current = false
       window.removeEventListener('scroll', scrollTrigger)
     }
-  })
-
-  const targetRef = useRef(null)
+  }, [handleGetMore])
   const POST_TWO_COLS = siteConfig('HEO_HOME_POST_TWO_COLS', true, CONFIG)
   if (!postsToShow || postsToShow.length === 0) {
     return <BlogPostListEmpty currentSearch={currentSearch} />

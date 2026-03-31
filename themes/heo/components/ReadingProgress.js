@@ -1,5 +1,5 @@
 import { ArrowSmallUp } from '@/components/HeroIcons'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 /**
  * 回顶按钮
@@ -7,22 +7,22 @@ import { useEffect, useState } from 'react'
  */
 export default function ReadingProgress() {
   const [scrollPercentage, setScrollPercentage] = useState(0)
-
-  function handleScroll() {
-    const scrollHeight = document.documentElement.scrollHeight
-    const clientHeight = document.documentElement.clientHeight
-    const scrollY = window.scrollY || window.pageYOffset
-
-    const percent = Math.floor((scrollY / (scrollHeight - clientHeight - 20)) * 100)
-    setScrollPercentage(percent)
-  }
+  const lastPercentRef = useRef(0)
 
   // 监听滚动事件
   useEffect(() => {
     let requestId
 
     function updateScrollPercentage() {
-      handleScroll()
+      const scrollHeight = document.documentElement.scrollHeight
+      const clientHeight = document.documentElement.clientHeight
+      const scrollY = window.scrollY || window.pageYOffset
+      const percent = Math.floor((scrollY / (scrollHeight - clientHeight - 20)) * 100)
+
+      if (percent !== lastPercentRef.current) {
+        lastPercentRef.current = percent
+        setScrollPercentage(percent)
+      }
       requestId = null
     }
 
@@ -33,7 +33,7 @@ export default function ReadingProgress() {
       requestId = requestAnimationFrame(updateScrollPercentage)
     }
 
-    window.addEventListener('scroll', handleAnimationFrame)
+    window.addEventListener('scroll', handleAnimationFrame, { passive: true })
     return () => {
       window.removeEventListener('scroll', handleAnimationFrame)
       if (requestId) {
