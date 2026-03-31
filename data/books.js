@@ -15,10 +15,10 @@ export const BOOKS_DATA = [
   },
   { 
     id: 'b3', 
-    title: 'HSK 1级 标准教程', 
-    subTitle: 'HSK 1 စံသင်ရိုး', 
+    title: '新HSK 2级 标准教程', 
+    subTitle: 'HSK 2 စံသင်ရိုး', 
     cover: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&q=80', 
-    pdfUrl: 'https://audio.886.best/chinese-vocab-audio/hsk1.pdf' 
+    pdfUrl: 'https://audio.886.best/chinese-vocab-audio/%E4%B9%A6%E7%B1%8D/NewHSK2%20.pdf' 
   },
   { 
     id: 'b4', 
