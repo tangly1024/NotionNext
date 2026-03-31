@@ -51,6 +51,14 @@ const Header = props => {
         setTextWhite(false)
         setBgWhite(true)
       }
+
+      // 滚动方向判断，切换菜单/标题
+      if (scrollS > prevScrollYRef.current) {
+        setActiveIndex(1)
+      } else if (scrollS < prevScrollYRef.current) {
+        setActiveIndex(0)
+      }
+      prevScrollYRef.current = scrollS
     }, 100),
     []
   )
@@ -67,31 +75,6 @@ const Header = props => {
       scrollTrigger.cancel()
     }
   }, [scrollTrigger])
-
-  useEffect(() => {
-    let ticking = false
-
-    const handleScrollDirection = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrollS = window.scrollY
-          if (scrollS > prevScrollYRef.current) {
-            setActiveIndex(1)
-          } else {
-            setActiveIndex(0)
-          }
-          prevScrollYRef.current = scrollS
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-
-    window.addEventListener('scroll', handleScrollDirection, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', handleScrollDirection)
-    }
-  }, [])
 
   return (
     <>
