@@ -20,7 +20,7 @@ const useIsomorphicLayoutEffect = isBrowser ? useLayoutEffect : useEffect
  * @param {*} props
  * @returns
  */
-const ExternalPlugin = props => {
+const ExternalPluginEnabled = props => {
   // 读取自Notion的配置
   const { NOTION_CONFIG } = props
   const { lang, theme } = useGlobal()
@@ -543,5 +543,17 @@ const LA51 = dynamic(() => import('@/components/LA51'), {
 const TianliGPT = dynamic(() => import('@/components/TianliGPT'), {
   ssr: false
 })
+
+const ExternalPlugin = props => {
+  const DISABLE_PLUGIN = siteConfig(
+    'DISABLE_PLUGIN',
+    null,
+    props?.NOTION_CONFIG
+  )
+  if (DISABLE_PLUGIN) {
+    return null
+  }
+  return <ExternalPluginEnabled {...props} />
+}
 
 export default ExternalPlugin

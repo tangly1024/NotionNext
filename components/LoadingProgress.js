@@ -1,6 +1,6 @@
 import { loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 /**
  * 加载进度条
@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react'
  */
 export default function LoadingProgress() {
   const router = useRouter()
-  const [NProgress, setNProgress] = useState(null)
   // 加载进度条
   useEffect(() => {
     loadExternalResource(
@@ -16,9 +15,8 @@ export default function LoadingProgress() {
       'js'
     ).then(() => {
       if (window.NProgress) {
-        setNProgress(window.NProgress)
         // 调速
-        window.NProgress.settings.minimun = 0.1
+        window.NProgress.settings.minimum = 0.1
         loadExternalResource(
           'https://cdnjs.snrat.com/ajax/libs/nprogress/0.2.0/nprogress.min.css',
           'css'
@@ -27,11 +25,11 @@ export default function LoadingProgress() {
     })
 
     const handleStart = url => {
-      NProgress?.start()
+      window.NProgress?.start()
     }
 
     const handleStop = () => {
-      NProgress?.done()
+      window.NProgress?.done()
     }
 
     router.events.on('routeChangeStart', handleStart)
@@ -42,5 +40,5 @@ export default function LoadingProgress() {
       router.events.off('routeChangeComplete', handleStop)
       router.events.off('routeChangeError', handleStop)
     }
-  }, [router])
+  }, [router.events])
 }
