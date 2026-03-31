@@ -17,7 +17,8 @@ export default function ReadingProgress() {
       const scrollHeight = document.documentElement.scrollHeight
       const clientHeight = document.documentElement.clientHeight
       const scrollY = window.scrollY || window.pageYOffset
-      const percent = Math.floor((scrollY / (scrollHeight - clientHeight - 20)) * 100)
+      const denominator = Math.max(1, scrollHeight - clientHeight - 20)
+      const percent = Math.min(100, Math.max(0, Math.floor((scrollY / denominator) * 100)))
 
       if (percent !== lastPercentRef.current) {
         lastPercentRef.current = percent
@@ -33,6 +34,7 @@ export default function ReadingProgress() {
       requestId = requestAnimationFrame(updateScrollPercentage)
     }
 
+    handleAnimationFrame()
     window.addEventListener('scroll', handleAnimationFrame, { passive: true })
     return () => {
       window.removeEventListener('scroll', handleAnimationFrame)

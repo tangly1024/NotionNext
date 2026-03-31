@@ -34,6 +34,7 @@ const BlogPostListScroll = ({
   const hasMoreRef = useRef(hasMore)
   hasMoreRef.current = hasMore
   const rafPendingRef = useRef(false)
+  const rafIdRef = useRef(null)
 
   const handleGetMore = useCallback(() => {
     if (!hasMoreRef.current) return
@@ -45,21 +46,27 @@ const BlogPostListScroll = ({
     const scrollTrigger = () => {
       if (rafPendingRef.current) return
       rafPendingRef.current = true
-      requestAnimationFrame(() => {
+      rafIdRef.current = requestAnimationFrame(() => {
         rafPendingRef.current = false
+        rafIdRef.current = null
         const scrollS = window.scrollY + window.innerHeight
         const clientHeight = targetRef.current
-          ? targetRef.current.clientHeight
+          ? window.scrollY + targetRef.current.getBoundingClientRect().bottom
           : 0
-        if (scrollS > clientHeight + 100) {
+        if (scrollS > clientHeight - 100) {
           handleGetMore()
         }
       })
     }
 
     window.addEventListener('scroll', scrollTrigger, { passive: true })
+    scrollTrigger()
     return () => {
       rafPendingRef.current = false
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current)
+        rafIdRef.current = null
+      }
       window.removeEventListener('scroll', scrollTrigger)
     }
   }, [handleGetMore])
