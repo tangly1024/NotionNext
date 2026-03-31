@@ -8,33 +8,30 @@ import { loadExternalResource } from '@/lib/utils'
 const Lenis = () => {
   const lenisRef = useRef(null) // 用于存储 Lenis 实例
   const rafIdRef = useRef(null) // 用于存储 requestAnimationFrame ID
-  const isAbortedRef = useRef(false) // 防止组件卸载后继续初始化
+  const isDisposedRef = useRef(false) // 防止组件卸载后继续初始化
 
   useEffect(() => {
     // 仅桌面端启用 Lenis
-    const isDesktop = window.matchMedia(
+    const isDesktopLike = window.matchMedia(
       '(min-width: 1024px) and (pointer: fine) and (hover: hover)'
     ).matches
-    if (!isDesktop) return
+    if (!isDesktopLike) return
 
     const allowMotion = window.matchMedia(
       '(prefers-reduced-motion: no-preference)'
     ).matches
     if (!allowMotion) return
 
-    const uaPlatform =
-      navigator.userAgentData?.platform || navigator.platform || ''
-    const ua = navigator.userAgent || ''
-    const isAppleLike =
-      /mac/i.test(uaPlatform) ||
-      /Mac OS X|iPad|iPhone|iPod/i.test(ua) ||
-      (/MacIntel/i.test(uaPlatform) && navigator.maxTouchPoints > 1)
+    isDisposedRef.current = false
+    const lenisScriptUrl = '/js/lenis.js'
 
-    isAbortedRef.current = false
     // 异步加载
     async function loadLenis() {
       try {
-        await loadExternalResource('/js/lenis.js', 'js')
+        if (!window.Lenis) {
+          await loadExternalResource(lenisScriptUrl, 'js')
+        }
+        if (isDisposedRef.current) return
 
         // console.log('Lenis', window.Lenis)
         if (!window.Lenis) {
@@ -42,30 +39,24 @@ const Lenis = () => {
           return
         }
         const LenisLib = window.Lenis
-        if (isAbortedRef.current) return
-
-        // 等待 DOM 完全加载
-        if (document.readyState === 'loading') {
-          await new Promise(resolve => {
-            const done = () => resolve()
-            window.addEventListener('DOMContentLoaded', done, { once: true })
-          })
-          if (isAbortedRef.current) return
-        }
+        if (isDisposedRef.current) return
 
         // 创建 Lenis 实例
-        const wheelMultiplier = isAppleLike ? 0.85 : 1
         const lenis = new LenisLib({
-          duration: isAppleLike ? 0.85 : 1.1,
+          duration: 1.1,
           easing: t => 1 - Math.pow(1 - t, 3),
           direction: 'vertical', // vertical, horizontal
           gestureDirection: 'vertical', // vertical, horizontal, both
           smooth: true,
           smoothWheel: true,
-          wheelMultiplier,
-          mouseMultiplier: wheelMultiplier,
+          smoothTouch: false,
+          mouseMultiplier: 1,
           infinite: false
         })
+        if (isDisposedRef.current) {
+          lenis.destroy()
+          return
+        }
 
         // 存储实例到 ref
         lenisRef.current = lenis
@@ -77,7 +68,7 @@ const Lenis = () => {
 
         // 动画帧循环
         const raf = (time) => {
-          if (isAbortedRef.current || !lenisRef.current) return
+          if (isDisposedRef.current || !lenisRef.current) return
           lenisRef.current.raf(time)
           rafIdRef.current = requestAnimationFrame(raf)
         }
@@ -92,8 +83,8 @@ const Lenis = () => {
 
     return () => {
       // 在组件卸载时清理资源
-      isAbortedRef.current = true
-      if (rafIdRef.current) {
+      isDisposedRef.current = true
+      if (rafIdRef.current !== null) {
         cancelAnimationFrame(rafIdRef.current)
         rafIdRef.current = null
       }
