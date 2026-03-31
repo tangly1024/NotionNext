@@ -103,7 +103,6 @@ const ExternalPlugin = props => {
     NOTION_CONFIG
   )
   const TIANLI_KEY = siteConfig('TianliGPT_KEY', null, NOTION_CONFIG)
-  const GLOBAL_JS = siteConfig('GLOBAL_JS', '', NOTION_CONFIG)
   const CLARITY_ID = siteConfig('CLARITY_ID', null, NOTION_CONFIG)
   const IMG_SHADOW = siteConfig('IMG_SHADOW', null, NOTION_CONFIG)
   const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL', null, NOTION_CONFIG)
@@ -164,28 +163,36 @@ const ExternalPlugin = props => {
   }
 
   const router = useRouter()
+  const routePath = (router.asPath || '').split('?')[0].split('#')[0]
   useEffect(() => {
-    // 异步渲染谷歌广告
-    if (ADSENSE_GOOGLE_ID) {
-      setTimeout(() => {
-        initGoogleAdsense(ADSENSE_GOOGLE_ID)
-      }, 3000)
+    if (DISABLE_PLUGIN || !ADSENSE_GOOGLE_ID) {
+      return
     }
 
-    setTimeout(() => {
+    // 异步渲染谷歌广告
+    const adsTimer = setTimeout(() => {
+      initGoogleAdsense(ADSENSE_GOOGLE_ID)
+    }, 3000)
+
+    return () => {
+      clearTimeout(adsTimer)
+    }
+  }, [DISABLE_PLUGIN, ADSENSE_GOOGLE_ID])
+
+  useEffect(() => {
+    if (DISABLE_PLUGIN || !isBrowser) {
+      return
+    }
+
+    const urlTimer = setTimeout(() => {
       // 映射url
       convertInnerUrl({ allPages: props?.allNavPages, lang: lang })
     }, 500)
-  }, [router])
 
-  useEffect(() => {
-    // 执行注入脚本
-    // eslint-disable-next-line no-eval
-    if (GLOBAL_JS && GLOBAL_JS.trim() !== '') {
-      // console.log('Inject JS:', GLOBAL_JS);
+    return () => {
+      clearTimeout(urlTimer)
     }
-    eval(GLOBAL_JS)
-  })
+  }, [DISABLE_PLUGIN, routePath, props?.allNavPages, lang])
 
   if (DISABLE_PLUGIN) {
     return null
