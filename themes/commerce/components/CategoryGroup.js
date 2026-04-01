@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 const CategoryGroup = ({ currentCategory, categories }) => {
   if (!categories) {
@@ -9,7 +9,7 @@ const CategoryGroup = ({ currentCategory, categories }) => {
       {categories.map(category => {
         const selected = currentCategory === category.name
         return (
-          <Link
+          <SmartLink
             key={category.name}
             href={`/category/${category.name}`}
             passHref
@@ -20,7 +20,7 @@ const CategoryGroup = ({ currentCategory, categories }) => {
 
             <div> <i className={`mr-2 fas ${selected ? 'fa-folder-open' : 'fa-folder'}`} />{category.name}({category.count})</div>
 
-          </Link>
+          </SmartLink>
         );
       })}
     </div>

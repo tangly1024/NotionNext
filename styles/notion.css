@@ -2067,11 +2067,11 @@ code.language-mermaid {
 .notion-simple-table-row {
 }
 
-/* 表格头 */
-.notion-simple-table tr:first-child td {
+/* 表格头 新版notion不用 */
+/* .notion-simple-table tr:first-child td {
   background-color: #f5f6f8;
   @apply text-center font-bold dark:bg-gray-800 !important;
-}
+} */
 
 .notion-simple-table td {
   border: 1px solid var(#eee) !important;
