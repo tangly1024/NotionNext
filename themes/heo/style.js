@@ -321,7 +321,7 @@ const Style = () => {
       .hover\:bg-indigo-600:hover {
         background-color: #ff6817;
       }
-      .group:hover .group-hover\:bg-indigo-600 {
+      .group:hover .md\:group-hover\:bg-indigo-600 {
         background-color: #ff6817;
       }
       .bg-indigo-600 {
