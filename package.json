@@ -2,6 +2,7 @@
   "name": "notion-next",
   "version": "4.9.4",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
+  "packageManager": "yarn@1.22.19",
   "license": "MIT",
   "engines": {
     "node": ">=20"
