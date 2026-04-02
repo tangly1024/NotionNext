@@ -133,17 +133,17 @@ module.exports = {
       cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951168101799354.jpg'
     },
     {
-      name: 'カイネ/予感',
-      artist: 'MONACA / 西村隆文 / 帆足圭吾',
-      url: 'http://music.163.com/song/media/outer/url?id=.mp3',
-      cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951168101799354.jpg'
-    },
-    {
       name: 'イニシエノウタ/デボル',
       artist: 'MONACA / 西村隆文 / 瀬尾祥太郎',  
       url: 'http://music.163.com/song/media/outer/url?id=2002647650.mp3',
       cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951168101799354.jpg'
     },
+    
+    
+    
+    
+    
+    
     {
       name: '最終兵器',
       artist: 'MONACA / 西村隆文 / 帆足圭吾',
