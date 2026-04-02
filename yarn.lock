@@ -2137,7 +2137,7 @@ commander@^7.2.0:
 
 commander@^8.3.0:
   version "8.3.0"
-  resolved "https://registry.npmmirror.com/commander/-/commander-8.3.0.tgz"
+  resolved "https://registry.npmjs.org/commander/-/commander-8.3.0.tgz"
   integrity sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==
 
 concat-map@0.0.1:
@@ -4522,10 +4522,17 @@ jsonp@^0.2.1:
     object.assign "^4.1.4"
     object.values "^1.1.6"
 
-katex@^0.16.21, katex@>=0.9:
+katex@>=0.9:
   version "0.16.22"
   resolved "https://registry.npmmirror.com/katex/-/katex-0.16.22.tgz"
   integrity sha512-XCHRdUw4lf3SKBaJe4EvgqIuWwkPSo9XoeO8GjQW94Bp7TWv9hNhzZjZ+OH9yf1UmLygb7DIT5GSFQiyt16zYg==
+  dependencies:
+    commander "^8.3.0"
+
+katex@0.16.21:
+  version "0.16.21"
+  resolved "https://registry.npmjs.org/katex/-/katex-0.16.21.tgz"
+  integrity sha512-XvqR7FgOHtWupfMiigNzmh+MgUVmDGU2kXZm899ZkPfcuoPuFxyHmXsgATDpFZDAXCI8tvinaVcDo8PIIJSo4A==
   dependencies:
     commander "^8.3.0"
 
@@ -4988,30 +4995,30 @@ normalize-url@^8.0.1:
   resolved "https://registry.npmmirror.com/normalize-url/-/normalize-url-8.0.1.tgz"
   integrity sha512-IO9QvjUMWxPQQhs60oOu10CRkWCiZzSUkzbXGGV9pviYl1fXYcvkzQ5jV9z8Y6un8ARoVRl4EtC6v6jNqbaJ/w==
 
-notion-client@7.7.1:
-  version "7.7.1"
-  resolved "https://registry.npmjs.org/notion-client/-/notion-client-7.7.1.tgz"
-  integrity sha512-xBz/+Lr7V40TpVpvMYb3Xw9lcxHhN+zvCc0JtNhVICTV5jnuMwIjQkSpaT8+gqlhBif+6DYEnMZptBrONWBPyQ==
+notion-client@7.10.0:
+  version "7.10.0"
+  resolved "https://registry.npmjs.org/notion-client/-/notion-client-7.10.0.tgz"
+  integrity sha512-Rb4/nR4vIRwIExvKiVhZKJEpGoE0IRFlHMKbs0tcZcecZaUVRzVAu7PHuaHC5ivSds26z497dxXYF3mnMrMt7g==
   dependencies:
-    notion-types "7.7.1"
-    notion-utils "7.7.1"
+    notion-types "7.10.0"
+    notion-utils "7.10.0"
     ofetch "^1.4.1"
     p-map "^7.0.3"
 
-notion-types@7.7.1:
-  version "7.7.1"
-  resolved "https://registry.npmjs.org/notion-types/-/notion-types-7.7.1.tgz"
-  integrity sha512-565D6k9rjRomec063p17iZe93ixhcomoDXy7K/Eq7t5826MUiU+g3IJiykoiDbBgx+cxn/4JHaHZIux+DYv74g==
+notion-types@7.10.0:
+  version "7.10.0"
+  resolved "https://registry.npmjs.org/notion-types/-/notion-types-7.10.0.tgz"
+  integrity sha512-t57RdnGnup7NcMGJkrlshe3gXaFYOj565NL1Q1l/MrZZ/K2xbHO06PtBXDEFTFYjvxQagU0NzKzaSNKocU9e4Q==
 
-notion-utils@7.7.1:
-  version "7.7.1"
-  resolved "https://registry.npmjs.org/notion-utils/-/notion-utils-7.7.1.tgz"
-  integrity sha512-NZuG45RBUtBIh9djHylehsmdyFpByvY+bND8Xh9ihIFs8T9QVBwGq4l7sNfDJv0Pl9cmXven5jkUDYs9bAJOFA==
+notion-utils@7.10.0:
+  version "7.10.0"
+  resolved "https://registry.npmjs.org/notion-utils/-/notion-utils-7.10.0.tgz"
+  integrity sha512-Z/L+xOzVWM5wBHOqLu3PwCzA/11yzVExMpR8FUcwHbS60DDULSgZgipXQBzKOlbQMnB+04BOkSGDNan+AxfxmA==
   dependencies:
     is-url-superb "^6.1.0"
     memoize "^10.1.0"
     normalize-url "^8.0.1"
-    notion-types "7.7.1"
+    notion-types "7.10.0"
     p-queue "^8.1.0"
 
 npm-run-path@^4.0.1:
@@ -5621,16 +5628,16 @@ react-modal@^3.16.3:
     react-lifecycles-compat "^3.0.0"
     warning "^4.0.3"
 
-react-notion-x@7.7.1:
-  version "7.7.1"
-  resolved "https://registry.npmjs.org/react-notion-x/-/react-notion-x-7.7.1.tgz"
-  integrity sha512-M3xJaivcO6TnU2tEhoQEiFW2Uc5RcHzUqx3fJb8rlFbYD3QI2xOKY4XKVIuz9bN1BBftYVGjCacU50XELcUD5g==
+react-notion-x@7.10.0:
+  version "7.10.0"
+  resolved "https://registry.npmjs.org/react-notion-x/-/react-notion-x-7.10.0.tgz"
+  integrity sha512-i5FZKruMoRESnx5Lqq1kTp8a/eseErQ3Ph93dKCoCeRRN9hnPGCxUdnu/wsBp5h2BHMqswRujDiclqZvoQE2IA==
   dependencies:
     "@fisch0920/medium-zoom" "^1.0.7"
     "@matejmazur/react-katex" "^3.1.3"
-    katex "^0.16.21"
-    notion-types "7.7.1"
-    notion-utils "7.7.1"
+    katex "0.16.21"
+    notion-types "7.10.0"
+    notion-utils "7.10.0"
     prismjs "^1.30.0"
     react-fast-compare "^3.2.0"
     react-hotkeys-hook "^4.5.1"
