@@ -5,6 +5,7 @@ import CONFIG from './config'
 /**
  * 这里的css样式只对当前主题生效
  * 主题客制化css
+ * 修复版：解决 ID 为 theme-next 导致的样式失效问题 + 修复透明图片黑底
  * @returns
  */
 const Style = () => {
@@ -17,16 +18,49 @@ const Style = () => {
         --theme-color: ${themeColor};
       }
 
-      // 底色
-      #theme-hexo body {
-        background-color: #f5f5f5;
-      }
-      .dark #theme-hexo body {
-        background-color: black;
+      /* ================================== */
+      /* 1. 核心修复：针对透明图片去黑底 */
+      /* ================================== */
+      
+      /* 使用 :has() 选择器精准定位包含 appstore.png 的卡片 
+         支持 theme-next 和 theme-hexo 两种 ID
+      */
+      html:not(.dark) #theme-next div:has(> img[src*="appstore.png"]),
+      html:not(.dark) #theme-hexo div:has(> img[src*="appstore.png"]) {
+        background-color: transparent !important; /* 强制背景透明 */
+        background-image: none !important;        /* 移除任何背景图 */
+        box-shadow: none !important;              /* 移除阴影 */
       }
 
-      /*  菜单下划线动画 */
-      #theme-hexo .menu-link {
+      /* 隐藏该卡片上的黑色渐变遮罩 */
+      html:not(.dark) #theme-next div:has(> img[src*="appstore.png"])::before,
+      html:not(.dark) #theme-hexo div:has(> img[src*="appstore.png"])::before {
+        display: none !important;
+        background: none !important;
+      }
+
+      /* 强制卡片内的文字变黑 */
+      html:not(.dark) #theme-next div:has(> img[src*="appstore.png"]) *,
+      html:not(.dark) #theme-hexo div:has(> img[src*="appstore.png"]) * {
+        color: #000 !important;
+        text-shadow: none !important;
+      }
+
+
+      /* ================================== */
+      /* 2. 全局背景与通用样式 (已修正 ID) */
+      /* ================================== */
+      
+      /* 兼容 theme-next 和 theme-hexo */
+      #theme-next body, #theme-hexo body {
+        background-color: #f5f5f5;
+      }
+      .dark #theme-next body, .dark #theme-hexo body {
+        background-color: #121212; 
+      }
+
+      /* 菜单下划线动画 */
+      #theme-next .menu-link, #theme-hexo .menu-link {
         text-decoration: none;
         background-image: linear-gradient(
           var(--theme-color),
@@ -38,195 +72,100 @@ const Style = () => {
         transition: background-size 100ms ease-in-out;
       }
 
-      #theme-hexo .menu-link:hover {
+      #theme-next .menu-link:hover, #theme-hexo .menu-link:hover {
         background-size: 100% 2px;
         color: var(--theme-color);
       }
 
-      /* 文章列表中标题行悬浮时的文字颜色 */
-      #theme-hexo h2:hover .menu-link {
-        color: var(--theme-color) !important;
-      }
-      .dark #theme-hexo h2:hover .menu-link {
+      /* ================================== */
+      /* 3. 各种组件颜色覆盖 (已修正 ID) */
+      /* ================================== */
+
+      /* 标题悬浮 */
+      #theme-next h2:hover .menu-link, #theme-hexo h2:hover .menu-link {
         color: var(--theme-color) !important;
       }
 
-      /* 下拉菜单悬浮背景色 */
-      #theme-hexo li[class*='hover:bg-indigo-500']:hover {
+      /* 下拉菜单 */
+      #theme-next li[class*='hover:bg-indigo-500']:hover, #theme-hexo li[class*='hover:bg-indigo-500']:hover {
         background-color: var(--theme-color) !important;
       }
 
-      /* tag标签悬浮背景色 */
-      #theme-hexo a[class*='hover:bg-indigo-400']:hover {
+      /* Tag */
+      #theme-next a[class*='hover:bg-indigo-400']:hover, #theme-hexo a[class*='hover:bg-indigo-400']:hover {
         background-color: var(--theme-color) !important;
       }
 
-      /* 社交按钮悬浮颜色 */
-      #theme-hexo i[class*='hover:text-indigo-600']:hover {
+      /* 社交图标 */
+      #theme-next i[class*='hover:text-indigo-600']:hover, #theme-hexo i[class*='hover:text-indigo-600']:hover {
         color: var(--theme-color) !important;
       }
-      .dark #theme-hexo i[class*='dark:hover:text-indigo-400']:hover {
-        color: var(--theme-color) !important;
-      }
-
-      /* MenuGroup 悬浮颜色 */
-      #theme-hexo #nav div[class*='hover:text-indigo-600']:hover {
-        color: var(--theme-color) !important;
-      }
-      .dark #theme-hexo #nav div[class*='dark:hover:text-indigo-400']:hover {
+      .dark #theme-next i[class*='dark:hover:text-indigo-400']:hover, .dark #theme-hexo i[class*='dark:hover:text-indigo-400']:hover {
         color: var(--theme-color) !important;
       }
 
-      /* 最新发布文章悬浮颜色 */
-      #theme-hexo div[class*='hover:text-indigo-600']:hover,
-      #theme-hexo div[class*='hover:text-indigo-400']:hover {
+      /* 导航文字 */
+      #theme-next #nav div[class*='hover:text-indigo-600']:hover, #theme-hexo #nav div[class*='hover:text-indigo-600']:hover {
         color: var(--theme-color) !important;
       }
 
-      /* 分页组件颜色 */
-      #theme-hexo .text-indigo-400 {
-        color: var(--theme-color) !important;
+      /* 搜索高亮 */
+      #theme-next div[class*='hover:bg-indigo-400']:hover, #theme-hexo div[class*='hover:bg-indigo-400']:hover {
+        background-color: var(--theme-color) !important;
       }
-      #theme-hexo .border-indigo-400 {
+
+      /* 进度条 */
+      #theme-next .bg-indigo-600, #theme-hexo .bg-indigo-600 {
+        background-color: var(--theme-color) !important;
+      }
+
+      /* 目录高亮 */
+      #theme-next .border-indigo-800, #theme-hexo .border-indigo-800 {
         border-color: var(--theme-color) !important;
       }
-      #theme-hexo a[class*='hover:bg-indigo-400']:hover {
-        background-color: var(--theme-color) !important;
-        color: white !important;
-      }
-      /* 移动设备下，搜索组件中选中分类的高亮背景色 */
-      #theme-hexo div[class*='hover:bg-indigo-400']:hover {
-        background-color: var(--theme-color) !important;
-      }
-      #theme-hexo .hover\:bg-indigo-400:hover {
-        background-color: var(--theme-color) !important;
-      }
-      #theme-hexo .bg-indigo-400 {
-        background-color: var(--theme-color) !important;
-      }
-      #theme-hexo a[class*='hover:bg-indigo-600']:hover {
-        background-color: var(--theme-color) !important;
-        color: white !important;
-      }
-
-      /* 右下角悬浮按钮背景色 */
-      #theme-hexo .bg-indigo-500 {
-        background-color: var(--theme-color) !important;
-      }
-      .dark #theme-hexo .dark\:bg-indigo-500 {
-        background-color: var(--theme-color) !important;
-      }
-
-      // 移动设备菜单栏选中背景色
-      #theme-hexo div[class*='hover:bg-indigo-500']:hover {
-        background-color: var(--theme-color) !important;
-      }
-
-      /* 文章浏览进度条颜色 */
-      #theme-hexo .bg-indigo-600 {
-        background-color: var(--theme-color) !important;
-      }
-      /* 当前浏览位置标题高亮颜色 */
-      #theme-hexo .border-indigo-800 {
-        border-color: var(--theme-color) !important;
-      }
-      #theme-hexo .text-indigo-800 {
+      #theme-next .text-indigo-800, #theme-hexo .text-indigo-800 {
         color: var(--theme-color) !important;
       }
-      .dark #theme-hexo .dark\:text-indigo-400 {
-        color: var(--theme-color) !important;
-      }
-      .dark #theme-hexo .dark\:border-indigo-400 {
-        border-color: var(--theme-color) !important;
-      }
-      .dark #theme-hexo .dark\:border-white {
-        border-color: var(--theme-color) !important;
-      }
-      /* 目录项悬浮时的字体颜色 */
-      #theme-hexo a[class*='hover:text-indigo-800']:hover {
-        color: var(--theme-color) !important;
-      }
-      /* 深色模式下目录项的默认文字颜色和边框线颜色 */
-      .dark #theme-hexo .catalog-item {
+      
+      /* 深色模式下的目录 */
+      .dark #theme-next .catalog-item, .dark #theme-hexo .catalog-item {
         color: white !important;
         border-color: white !important;
       }
-      .dark #theme-hexo .catalog-item:hover {
+      .dark #theme-next .catalog-item:hover, .dark #theme-hexo .catalog-item:hover {
         color: var(--theme-color) !important;
       }
-      /* 深色模式下当前高亮标题的边框线颜色 */
-      .dark #theme-hexo .catalog-item.font-bold {
+      .dark #theme-next .catalog-item.font-bold, .dark #theme-hexo .catalog-item.font-bold {
         border-color: var(--theme-color) !important;
       }
 
-      /* 文章底部版权声明组件左侧边框线颜色 */
-      #theme-hexo .border-indigo-500 {
-        border-color: var(--theme-color) !important;
-      }
-
-      /* 归档页面文章列表项悬浮时左侧边框线颜色 */
-      #theme-hexo li[class*='hover:border-indigo-500']:hover {
-        border-color: var(--theme-color) !important;
-      }
-
-      /* 自定义右键菜单悬浮高亮颜色 */
-      #theme-hexo .hover\:bg-blue-600:hover {
+      /* 右键菜单 */
+      #theme-next .hover\:bg-blue-600:hover, #theme-hexo .hover\:bg-blue-600:hover {
         background-color: var(--theme-color) !important;
       }
-      .dark #theme-hexo li[class*='dark:hover:border-indigo-300']:hover {
-        border-color: var(--theme-color) !important;
-      }
-      /* 深色模式下，归档页面文章列表项默认状态左侧边框线颜色 */
-      .dark #theme-hexo li[class*='dark:border-indigo-400'] {
-        border-color: var(--theme-color) !important;
-      }
-      /* 深色模式下，归档页面文章标题悬浮时的文字颜色 */
-      .dark #theme-hexo a[class*='dark:hover:text-indigo-300']:hover {
-        color: var(--theme-color) !important;
-      }
 
-      /* 设置了从上到下的渐变黑色 */
-      #theme-hexo .header-cover::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          to bottom,
-          rgba(0, 0, 0, 0.5) 0%,
-          rgba(0, 0, 0, 0.2) 10%,
-          rgba(0, 0, 0, 0) 25%,
-          rgba(0, 0, 0, 0.2) 75%,
-          rgba(0, 0, 0, 0.5) 100%
-        );
-      }
-
-      /* Custem */
+      /* 隐藏 footer (保留你之前的设置) */
       .tk-footer {
         opacity: 0;
       }
 
-      // 选中字体颜色
+      /* 选中颜色 */
       ::selection {
         background: color-mix(in srgb, var(--theme-color) 30%, transparent);
       }
 
-      // 自定义滚动条
+      /* 滚动条 */
       ::-webkit-scrollbar {
-        width: 5px;
-        height: 5px;
+        width: 8px;
+        height: 8px;
       }
-
       ::-webkit-scrollbar-track {
         background: transparent;
       }
-
       ::-webkit-scrollbar-thumb {
         background-color: var(--theme-color);
+        border-radius: 4px;
       }
-
       * {
         scrollbar-width: thin;
         scrollbar-color: var(--theme-color) transparent;
