@@ -51,8 +51,8 @@ export const vocabCategories = [
     ],
   },
   {
-    id: 'new hsk',
-    title: 'new HSK',
+    id: 'New hsk',
+    title: 'New HSK',
     description: '新HSK词汇',
     cover: 'https://images.pexels.com/photos/4769486/pexels-photo-4769486.jpeg',
     items: [
