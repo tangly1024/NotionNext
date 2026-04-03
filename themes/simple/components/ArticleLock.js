@@ -29,24 +29,26 @@ export default function ArticleLock (props) {
   }, [])
 
   return <div id='container' className='w-full flex justify-center items-center h-96 '>
-        <div className='text-center space-y-3'>
-            <div className='font-bold'>{locale.COMMON.ARTICLE_LOCK_TIPS}</div>
-            <div className='flex mx-4'>
-                <input id="password" type='password'
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        submitPassword()
-                      }
-                    }}
-                    ref={passwordInputRef} // 绑定ref到passwordInputRef变量
-                    className='outline-none w-full text-sm pl-5 rounded-l transition focus:shadow-lg font-light leading-10 text-black dark:bg-gray-500 bg-gray-50'
-                ></input>
-                <div onClick={submitPassword} className="px-3 whitespace-nowrap cursor-pointer items-center justify-center py-2 rounded-r duration-300 bg-gray-300" >
-                    <i className={'duration-200 cursor-pointer fas fa-key dark:text-black'} >&nbsp;{locale.COMMON.SUBMIT}</i>
-                </div>
-            </div>
-            <div id='tips'>
-            </div>
+    <div className='text-center space-y-3'>
+      <div className='font-bold'>{locale.COMMON.ARTICLE_LOCK_TIPS}</div>
+      <a href="https://m.weibo.cn/u/7959325397" target="_blank" rel="noreferrer">点击此处跳转微博</a>
+      <div className='flex mx-4'>
+        <input id="password" type='password'
+               onKeyDown={(e) => {
+                 if (e.key === 'Enter') {
+                   submitPassword()
+                 }
+               }}
+               ref={passwordInputRef} // 绑定ref到passwordInputRef变量
+               className='outline-none w-full text-sm pl-5 rounded-l transition focus:shadow-lg font-light leading-10 text-black dark:bg-gray-500 bg-gray-50'
+        ></input>
+        <div onClick={submitPassword}
+             className="px-3 whitespace-nowrap cursor-pointer items-center justify-center py-2 rounded-r duration-300 bg-gray-300">
+          <i className={'duration-200 cursor-pointer fas fa-key dark:text-black'}>&nbsp;{locale.COMMON.SUBMIT}</i>
         </div>
+      </div>
+      <div id='tips'>
+      </div>
     </div>
+  </div>
 }

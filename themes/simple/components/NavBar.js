@@ -49,7 +49,7 @@ export default function NavBar(props) {
               type='search'
               name='s'
               autoComplete='off'
-              placeholder='Type then hit enter to search...'
+              placeholder='输入后按回车键搜索...'
             />
           )}
           {!showSearchInput && <MenuList {...props} />}

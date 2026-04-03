@@ -86,7 +86,7 @@ export const MenuList = ({ customNav, customMenu }) => {
           <i
             className={`${isOpen && 'rotate-90'} transition-all duration-200 fa fa-bars mr-3`}
           />
-          <span>{!isOpen ? 'MENU' : 'CLOSE'}</span>
+          <span>{!isOpen ? '菜单' : '关闭'}</span>
         </div>
 
         <Collapse
