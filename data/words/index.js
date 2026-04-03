@@ -26,4 +26,11 @@ export const wordDataMap = {
         if (!res.ok) throw new Error('加载失败：/data/words/hsk/hsk1.json');
         return res.json();
       }),
+  // 新HSK
+  'New hsk/hsk3': () =>
+    fetch('/data/words/New hsk/hsk3.json')
+      .then((res) => {
+        if (!res.ok) throw new Error('加载失败：/data/words/New hsk/hsk3.json');
+        return res.json();
+      }),
 };
