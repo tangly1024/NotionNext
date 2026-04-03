@@ -47,17 +47,7 @@ export const vocabCategories = [
     description: 'HSK词汇',
     cover: 'https://images.pexels.com/photos/4769486/pexels-photo-4769486.jpeg',
     items: [
-      { id: 'hsk1', title: 'HSK1 ', subtitle: '基础高频', cover: 'https://images.pexels.com/photos/261651/pexels-photo-261651.jpeg', locked: false },
+      { id: 'hsk1', title: 'HSK1 常用', subtitle: '基础高频', cover: 'https://images.pexels.com/photos/261651/pexels-photo-261651.jpeg', locked: false },
     ],
   },
-  {
-    id: 'new hsk',
-    title: 'new HSK',
-    description: '新HSK词汇',
-    cover: 'https://images.pexels.com/photos/4769486/pexels-photo-4769486.jpeg',
-    items: [
-      { id: 'hsk1', title: 'New HSK1 ', subtitle: '基础高频', cover: 'https://images.pexels.com/photos/19071689/pexels-photo-19071689.jpeg', locked: false },
-    ],
-  },
-  
 ];
