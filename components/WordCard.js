@@ -75,8 +75,10 @@ const TTS_VOICES = [
 
 let sounds = null;
 let _howlInstance = null;
+let spellSequenceId = 0; // 全局序列号，用于打断逐字发音
 
 const stopAllAudio = () => {
+    spellSequenceId++; // 取消任何正在进行的逐字发音序列
     if (_howlInstance) {
         _howlInstance.stop();
         _howlInstance.unload();
@@ -137,6 +139,7 @@ const playTTS = async (text, voice, rate, onEndCallback, e) => {
 
         _howlInstance.play();
     } catch (error) {
+        console.warn("API TTS失败，回退到系统TTS:", error);
         if (typeof window !== 'undefined' && window.speechSynthesis) {
              const u = new SpeechSynthesisUtterance(text);
              u.lang = voice.includes('my') ? 'my-MM' : 'zh-CN';
@@ -202,12 +205,12 @@ const useCardSettings = () => {
 };
 
 // =================================================================================
-// 🔥 核心发音与录音对比组件 (重新设计 UI)
+// 🔥 核心发音与录音对比组件
 // =================================================================================
 const PronunciationComparison = ({ correctWord, pinyinText, settings, onClose }) => {
-    const [status, setStatus] = useState('idle'); // idle, recording, review
+    const [status, setStatus] = useState('idle'); 
     const [userAudioUrl, setUserAudioUrl] = useState(null); 
-    const [isPlayingType, setIsPlayingType] = useState(null); // 'standard' | 'user' | null
+    const [isPlayingType, setIsPlayingType] = useState(null); 
     
     const mediaRecorderRef = useRef(null); 
     const streamRef = useRef(null); 
@@ -321,7 +324,6 @@ const PronunciationComparison = ({ correctWord, pinyinText, settings, onClose })
                         {status === 'review' && (
                             <div style={styles.reviewContainer}>
                                 <div style={styles.reviewRow}>
-                                    {/* 标准发音卡片 */}
                                     <div style={{...styles.reviewCard, border: isPlayingType === 'standard' ? '2px solid #3b82f6' : '1px solid #e5e7eb'}} onClick={playStandard}>
                                         <div style={{...styles.iconCircle, background: isPlayingType === 'standard' ? '#3b82f6' : '#f3f4f6', color: isPlayingType === 'standard' ? '#fff' : '#6b7280'}}>
                                             <FaVolumeUp size={20} />
@@ -329,7 +331,6 @@ const PronunciationComparison = ({ correctWord, pinyinText, settings, onClose })
                                         <span style={styles.reviewCardText}>标准发音</span>
                                     </div>
                                     
-                                    {/* 用户发音卡片 */}
                                     <div style={{...styles.reviewCard, border: isPlayingType === 'user' ? '2px solid #10b981' : '1px solid #e5e7eb'}} onClick={playUser}>
                                         <div style={{...styles.iconCircle, background: isPlayingType === 'user' ? '#10b981' : '#f3f4f6', color: isPlayingType === 'user' ? '#fff' : '#6b7280'}}>
                                             <FaPlayCircle size={20} />
@@ -507,6 +508,36 @@ const WordCard = ({ words = [], isOpen, onClose, progressKey = 'default', level 
 
   const handleOpenRecorder = useCallback((e) => { if(e && e.stopPropagation) e.stopPropagation(); stopAllAudio(); setIsRecordingOpen(true); }, []);
 
+  // 🔥 新增：正确的逐字发音(拼读)逻辑，防止和TTS冲突
+  const handleSpellRead = async (e) => {
+      if (e && e.stopPropagation) e.stopPropagation();
+      stopAllAudio();
+      
+      const currentId = ++spellSequenceId; // 获取当前序列号
+      if (!currentCard || !currentCard.chinese) return;
+      
+      const chars = currentCard.chinese.split('');
+      
+      // 逐个字朗读
+      if (chars.length > 1) {
+          for (let i = 0; i < chars.length; i++) {
+              if (spellSequenceId !== currentId) return; // 如果被其他操作打断，立刻退出
+              
+              await new Promise(resolve => {
+                  playTTS(chars[i], settings.voiceChinese, settings.speechRateChinese, resolve);
+              });
+              
+              // 字与字之间稍微停顿
+              await new Promise(r => setTimeout(r, 400));
+          }
+      }
+      
+      // 最后再完整连读一遍单词
+      if (spellSequenceId === currentId) {
+          playR2Audio(currentCard, null, settings, level);
+      }
+  };
+
   const handleKnow = () => {
     stopAllAudio();
     if (!currentCard) return;
@@ -539,7 +570,7 @@ const WordCard = ({ words = [], isOpen, onClose, progressKey = 'default', level 
         {writerChar && <HanziModal word={writerChar} onClose={() => setWriterChar(null)} />}
         {isSettingsOpen && <SettingsPanel settings={settings} setSettings={setSettings} onClose={() => setIsSettingsOpen(false)} />}
         
-        {/* ✅ 新版跟读对比界面 */}
+        {/* 跟读对比界面 */}
         {isRecordingOpen && currentCard && (
             <PronunciationComparison 
                 correctWord={currentCard.chinese} 
@@ -615,7 +646,10 @@ const WordCard = ({ words = [], isOpen, onClose, progressKey = 'default', level 
                 </button>
                 <button style={styles.rightIconButton} onClick={() => setIsSettingsOpen(true)} title="ဆက်တင်များ"><FaCog size={18} /></button>
                 
-                {/* ✅ 移除了拼读按钮，只保留跟读 */}
+                {/* 🔥 拼读（逐字发音）按钮恢复，并修复了调用逻辑 */}
+                <button style={styles.rightIconButton} onClick={handleSpellRead} title="逐字拼读"><FaVolumeUp size={18} color={'#4b5563'} /></button>
+                
+                {/* 录音跟读 */}
                 <button style={styles.rightIconButton} onClick={handleOpenRecorder} title="အသံထွက်လေ့ကျင့်ရန်"><FaMicrophone size={18} color={'#4b5563'} /></button>
                 
                 {currentCard.chinese && currentCard.chinese.length > 0 && currentCard.chinese.length <= 5 && !currentCard.chinese.includes(' ') && ( <button style={styles.rightIconButton} onClick={() => setWriterChar(currentCard.chinese)} title="ရေးနည်း"><FaPenFancy size={18} /></button>)}
@@ -640,13 +674,18 @@ const WordCard = ({ words = [], isOpen, onClose, progressKey = 'default', level 
   return null;
 };
 
-// ✅ 新增了精美的录音对比 UI 样式
+// =================================================================
+// 样式定义区 (修复了拼音字体问题)
+// =================================================================
 const styles = {
     fullScreen: { position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', touchAction: 'none', backgroundColor: '#f0f4f8' },
     gestureArea: { position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 1 },
     animatedCardShell: { position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', padding: '60px 15px 130px 15px' },
     cardContainer: { width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: 'transparent', borderRadius: '24px', overflowY: 'auto', overflowX: 'hidden', padding: '40px 10px' },
-    pinyin: { fontFamily: 'Roboto, "Segoe UI", Arial, sans-serif', fontSize: '1.4rem', color: '#d97706', textShadow: 'none', marginBottom: '0.8rem', letterSpacing: '0.05em', fontWeight: 'bold' },
+    
+    // 🔥 修复了拼音声调偏移：替换了不支持第一声调(Macron)的Roboto字体，使用了原生标准无衬线字体Arial/Helvetica
+    pinyin: { fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '1.4rem', color: '#d97706', textShadow: 'none', marginBottom: '0.8rem', letterSpacing: '0.05em', fontWeight: 'bold', lineHeight: '1.2' },
+    
     textWordChinese: { fontSize: '2.4rem', fontWeight: 'bold', color: '#1f2937', lineHeight: 1.2, wordBreak: 'break-word', textShadow: 'none' },
     revealedContent: { marginTop: '0.8rem', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' },
     definitionBox: { cursor: 'pointer', textAlign: 'center' },
@@ -655,7 +694,10 @@ const styles = {
     explanationText: { fontFamily: '"Padauk", "Myanmar Text", sans-serif', lineHeight: 1.4, fontWeight: '500' },
     mnemonicBox: { color: '#6b7280', display: 'inline-block', textAlign: 'center', fontSize: '1.0rem', textShadow: 'none', background: 'transparent', padding: '2px 0', maxWidth: '100%' },
     exampleBox: { color: '#374151', width: '100%', maxWidth: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', textShadow: 'none', cursor: 'pointer', background: 'transparent', padding: '5px 0', borderRadius: '0', boxShadow: 'none', borderBottom: '1px dashed #e5e7eb' },
-    examplePinyin: { fontFamily: 'Roboto, "Segoe UI", Arial, sans-serif', fontSize: '0.95rem', color: '#d97706', marginBottom: '0.2rem', opacity: 0.9, letterSpacing: '0.03em', fontWeight: 500 },
+    
+    // 🔥 例句拼音同理修复
+    examplePinyin: { fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '0.95rem', color: '#d97706', marginBottom: '0.2rem', opacity: 0.9, letterSpacing: '0.03em', fontWeight: 500, lineHeight: '1.2' },
+    
     exampleText: { fontSize: '1.2rem', lineHeight: 1.4 },
     rightControls: { position: 'fixed', bottom: '40%', right: '10px', zIndex: 101, display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center', transform: 'translateY(50%)' },
     rightIconButton: { background: 'white', border: '1px solid #e5e7eb', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', borderRadius: '50%', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', transition: 'transform 0.2s', color: '#4b5563' },
@@ -667,14 +709,14 @@ const styles = {
     knowButton: { background: '#10b981', color: 'white' },
     completionContainer: { textAlign: 'center', color: '#374151', textShadow: 'none', zIndex: 5, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' },
     
-    // --- 新版录音跟读弹窗样式 ---
+    // --- 录音跟读弹窗样式 ---
     comparisonOverlay: { position: 'fixed', inset: 0, background: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10000, padding: '20px' },
     comparisonPanel: { width: '100%', maxWidth: '380px', background: 'white', borderRadius: '24px', display: 'flex', flexDirection: 'column', overflow: 'hidden', animation: 'fadeIn 0.3s ease-out', boxShadow: '0 20px 40px rgba(0,0,0,0.2)' },
     recordHeader: { padding: '16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8fafc', borderBottom: '1px solid #e2e8f0' },
     closeButtonSimple: { background: 'white', border: '1px solid #e2e8f0', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#64748b', fontSize: '1rem', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' },
     recordContent: { padding: '30px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px', minHeight: '280px' },
     recordWordDisplay: { textAlign: 'center', width: '100%' },
-    compPinyin: { fontSize: '1.2rem', color: '#8b5cf6', fontWeight: 'bold', letterSpacing: '2px', marginBottom: '8px' },
+    compPinyin: { fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '1.2rem', color: '#8b5cf6', fontWeight: 'bold', letterSpacing: '2px', marginBottom: '8px' },
     compChinese: { fontSize: '3rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.1 },
     actionArea: { width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1 },
     idleStateContainer: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' },
@@ -699,7 +741,6 @@ const styles = {
     settingControl: { display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' },
     settingButton: { background: '#f3f4f6', color: '#4b5563', border: 'none', padding: '10px 14px', borderRadius: 14, cursor: 'pointer', fontWeight: 600, display: 'flex', gap: 8, alignItems: 'center', flex: 1, justifyContent: 'center', minWidth: '100px' },
     settingSelect: { width: '100%', padding: '8px', borderRadius: '5px', border: '1px solid #ccc' },
-    settingSlider: { flex: 1 },
     jumpModalOverlay: { position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(5px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10002 },
     jumpModalContent: { background: 'white', padding: '25px', borderRadius: '15px', textAlign: 'center', boxShadow: '0 10px 30px rgba(0,0,0,0.2)' },
     jumpModalTitle: { marginTop: 0, marginBottom: '15px', color: '#333' },
@@ -707,7 +748,6 @@ const styles = {
     jumpModalButton: { width: '100%', padding: '12px', borderRadius: '10px', border: 'none', background: '#4299e1', color: 'white', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer' },
 };
 
-// 注入动画 CSS
 if (typeof document !== 'undefined') {
     const style = document.createElement('style');
     style.innerHTML = `
