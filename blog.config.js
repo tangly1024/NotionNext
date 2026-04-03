@@ -2,6 +2,8 @@
 
 const BLOG = {
   API_BASE_URL: process.env.API_BASE_URL || 'https://www.notion.so/api/v3', // API默认请求地址,可以配置成自己的地址例如：https://[xxxxx].notion.site/api/v3
+  NOTION_SYNC_RECORD_ENDPOINT_MODE:
+    process.env.NOTION_SYNC_RECORD_ENDPOINT_MODE || 'auto', // syncRecordValues 接口兼容模式：auto/main/legacy
   // Important page_id！！！Duplicate Template from  https://tanghh.notion.site/02ab3b8678004aa69e9e415905ef32a5
   NOTION_PAGE_ID:
     process.env.NOTION_PAGE_ID ||
