@@ -84,8 +84,8 @@ function generateLocalesSitemap(link, allPages, locale) {
           : post.slug
         return {
           loc: `${link}${locale}/${slugWithoutLeadingSlash}`,
-          lastmod: new Date(post?.publishDay).toISOString().split('T')[0],
-          changefreq: 'daily',
+          lastmod: new Date(post?.lastEditedDay || post?.publishDay).toISOString().split('T')[0],
+          changefreq: 'weekly',
           priority: '0.7'
         }
       }) ?? []
