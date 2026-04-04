@@ -1,5 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import { convertInnerUrl } from '@/lib/db/notion/convertInnerUrl'
+import { convertInnerUrl } from '@/lib/notion/convertInnerUrl'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
