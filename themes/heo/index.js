@@ -155,8 +155,13 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
+  const { category, tag } = props
+  const pageHeading = category || tag
   return (
     <div id='post-outer-wrapper' className='px-5  md:px-0'>
+      {pageHeading && (
+        <h1 className='text-2xl font-bold dark:text-gray-100 mb-4 mt-8'>{pageHeading}</h1>
+      )}
       {/* 文章分类条 */}
       <CategoryBar {...props} />
       {siteConfig('POST_LIST_STYLE') === 'page' ? (

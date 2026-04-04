@@ -3,6 +3,7 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { extractLangId, extractLangPrefix } from '@/lib/utils/pageId'
+import { isValidSitemapSlug } from '@/lib/utils/sitemapHelper'
 import { getServerSideSitemap } from 'next-sitemap'
 
 export const getServerSideProps = async ctx => {
@@ -67,18 +68,6 @@ function generateLocalesSitemap(link, allPages, locale) {
       priority: '0.7'
     },
     {
-      loc: `${link}${locale}/rss/feed.xml`,
-      lastmod: dateNow,
-      changefreq: 'daily',
-      priority: '0.7'
-    },
-    {
-      loc: `${link}${locale}/search`,
-      lastmod: dateNow,
-      changefreq: 'daily',
-      priority: '0.7'
-    },
-    {
       loc: `${link}${locale}/tag`,
       lastmod: dateNow,
       changefreq: 'daily',
@@ -88,8 +77,7 @@ function generateLocalesSitemap(link, allPages, locale) {
   const postFields =
     allPages
       ?.filter(p => p.status === BLOG.NOTION_PROPERTY_NAME.status_publish)
-      // 过滤掉外部链接(http)和锚点链接(#)
-      ?.filter(p => p.slug && !p.slug.startsWith('http') && !p.slug.startsWith('#'))
+      ?.filter(p => isValidSitemapSlug(p.slug))
       ?.map(post => {
         const slugWithoutLeadingSlash = post?.slug.startsWith('/')
           ? post?.slug?.slice(1)

@@ -20,7 +20,9 @@ const Search = props => {
   if (keyword) {
     filteredPosts = posts.filter(post => {
       const tagContent = post?.tags ? post?.tags.join(' ') : ''
-      const categoryContent = post.category ? post.category.join(' ') : ''
+      const categoryContent = post.category
+        ? (Array.isArray(post.category) ? post.category.join(' ') : post.category)
+        : ''
       const searchContent =
         post.title + post.summary + tagContent + categoryContent
       return searchContent.toLowerCase().includes(keyword.toLowerCase())
