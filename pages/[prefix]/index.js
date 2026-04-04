@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import useNotification from '@/components/Notification'
-import OpenWrite from '@/components/OpenWrite'
+import TechGrow from '@/components/TechGrow'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData, resolvePostProps } from '@/lib/db/SiteDataApi'
 import { useGlobal } from '@/lib/global'
@@ -90,7 +90,7 @@ const Slug = props => {
       {/* 解锁密码提示框 */}
       {post?.password && post?.password !== '' && !lock && <Notification />}
       {/* 导流工具 */}
-      <OpenWrite />
+      <TechGrow />
     </>
   )
 }
