@@ -9,7 +9,7 @@ import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 
 export const BlogItem = props => {
-  const { post } = props
+  const { post, index } = props
   const { NOTION_CONFIG } = useGlobal()
   const showPageCover = siteConfig('SIMPLE_POST_COVER_ENABLE', false, CONFIG)
   const showPreview =
@@ -28,6 +28,7 @@ export const BlogItem = props => {
             <div className='overflow-hidden mr-2 w-56 h-full'>
               <SmartLink href={post.href} passHref legacyBehavior>
                 <LazyImage
+                  priority={index === 0}
                   src={post?.pageCoverThumbnail}
                   className='w-56 h-full object-cover object-center group-hover:scale-110 duration-500'
                 />

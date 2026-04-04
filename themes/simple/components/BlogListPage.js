@@ -43,7 +43,7 @@ export default function BlogListPage(props) {
               <AdSlot type='in-article' />
             )}
             {SIMPLE_POST_AD_ENABLE && index + 1 === 4 && <AdSlot type='flow' />}
-            <BlogItem post={p} />
+            <BlogItem post={p} index={index} />
           </div>
         ))}
       </div>

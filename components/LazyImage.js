@@ -65,8 +65,9 @@ export default function LazyImage({
   }
 
   useEffect(() => {
-    const adjustedImageSrc =
-      adjustImgSize(src, maxWidth) || defaultPlaceholderSrc
+    const screenWidth = (typeof window !== 'undefined' && window?.innerWidth) || maxWidth
+    const mobileWidth = screenWidth < 640 ? Math.min(screenWidth, 400) : maxWidth
+    const adjustedImageSrc = adjustImgSize(src, mobileWidth) || defaultPlaceholderSrc
 
     // 如果是优先级图片，直接加载
     if (priority) {
@@ -114,10 +115,6 @@ export default function LazyImage({
           }
         })
       },
-      {
-        rootMargin: siteConfig('LAZY_LOAD_THRESHOLD', '200px'),
-        threshold: 0.1
-      }
     )
 
     if (imageRef.current) {
