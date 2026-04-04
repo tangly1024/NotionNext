@@ -1,0 +1,15 @@
+{
+  "id": "medical",
+  "title": "医疗口语",
+  "units": [
+    {
+      "id": "med-u1",
+      "title": "医院挂号",
+      "description": "学习如何挂号与描述基础症状",
+      "lessons": [
+        { "id": "med-l1", "title": "哪里不舒服" },
+        { "id": "med-l2", "title": "拿药与付款" }
+      ]
+    }
+  ]
+}

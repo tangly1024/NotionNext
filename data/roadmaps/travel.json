@@ -1,0 +1,15 @@
+{
+  "id": "travel",
+  "title": "旅游口语",
+  "units": [
+    {
+      "id": "travel-u1",
+      "title": "机场与航班",
+      "description": "学习登机、托运、过海关等表达",
+      "lessons": [
+        { "id": "travel-l1", "title": "办理登机" },
+        { "id": "travel-l2", "title": "过安检" }
+      ]
+    }
+  ]
+}

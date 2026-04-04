@@ -1,0 +1,15 @@
+{
+  "id": "transport",
+  "title": "交通出行",
+  "units": [
+    {
+      "id": "trans-u1",
+      "title": "第一单元：乘坐出租车",
+      "description": "学习如何告诉司机目的地",
+      "lessons": [
+        { "id": "trans-l1", "title": "询问目的地" },
+        { "id": "trans-l2", "title": "支付车费" }
+      ]
+    }
+  ]
+}

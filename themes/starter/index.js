@@ -1,553 +1,426 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable @next/next/no-img-element */
-
-'use client'
-import Loading from '@/components/Loading'
-import NotionPage from '@/components/NotionPage'
-import { siteConfig } from '@/lib/config'
-import { isBrowser } from '@/lib/utils'
+import React, { useState, useRef } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import { About } from './components/About'
-import { BackToTopButton } from './components/BackToTopButton'
-import { Blog } from './components/Blog'
-import { Brand } from './components/Brand'
-import { Contact } from './components/Contact'
-import { FAQ } from './components/FAQ'
-import { Features } from './components/Features'
-import { Footer } from './components/Footer'
-import { Header } from './components/Header'
-import { Hero } from './components/Hero'
-import { Pricing } from './components/Pricing'
-import { Team } from './components/Team'
-import { Testimonials } from './components/Testimonials'
-import CONFIG from './config'
-import { Style } from './style'
-// import { MadeWithButton } from './components/MadeWithButton'
-import Comment from '@/components/Comment'
-import replaceSearchResult from '@/components/Mark'
-import ShareBar from '@/components/ShareBar'
-import DashboardBody from '@/components/ui/dashboard/DashboardBody'
-import DashboardHeader from '@/components/ui/dashboard/DashboardHeader'
-import { useGlobal } from '@/lib/global'
-import { loadWowJS } from '@/lib/plugins/wow'
-import { SignIn, SignUp } from '@clerk/nextjs'
-import SmartLink from '@/components/SmartLink'
-import { ArticleLock } from './components/ArticleLock'
-import { Banner } from './components/Banner'
-import { CTA } from './components/CTA'
-import SearchInput from './components/SearchInput'
-import { SignInForm } from './components/SignInForm'
-import { SignUpForm } from './components/SignUpForm'
-import { SVG404 } from './components/svg/SVG404'
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  Mic2,
+  Music4,
+  Layers,
+  BookText,
+  Lightbulb,
+  Globe,
+  Library,
+  Star,
+  Volume2,
+  ChevronRight,
+  Menu,
+  X,
+  MessageCircle,
+  Globe2,
+  Users,
+  Compass,
+  BookOpen,
+  Sparkles
+} from 'lucide-react'
+import dynamic from 'next/dynamic'
 
-/**
- * 布局框架
- * Landing-2 主题用作产品落地页展示
- * 结合Stripe或者lemonsqueezy插件可以成为saas支付订阅
- * https://play-tailwind.tailgrids.com/
- * @param {*} props
- * @returns
- */
-const LayoutBase = props => {
-    const { children } = props
-    // 极简模式，会隐藏掉页头页脚等组件，便于嵌入网页等功能 
-    const { isLiteMode } = useGlobal()
-    const router = useRouter()
+// 动态组件
+const BookLibrary = dynamic(() => import('@/components/BookLibrary'), {
+  ssr: false
+})
 
-    // 加载wow动画
-    useEffect(() => {
-        loadWowJS()
-    }, [])
+// ==============================
+// 配置数据
+// ==============================
+const PINYIN_NAV = [
+  {
+    zh: '声母',
+    mm: 'ဗျည်း',
+    icon: Mic2,
+    href: '/pinyin/initials',
+    color: 'text-blue-600',
+    bg: 'bg-blue-100/80'
+  },
+  {
+    zh: '韵母',
+    mm: 'သရ',
+    icon: Music4,
+    href: '/pinyin/finals',
+    color: 'text-emerald-600',
+    bg: 'bg-emerald-100/80'
+  },
+  {
+    zh: '整体',
+    mm: 'အသံတွဲ',
+    icon: Layers,
+    href: '/pinyin/syllables',
+    color: 'text-purple-600',
+    bg: 'bg-purple-100/80'
+  },
+  {
+    zh: '声调',
+    mm: 'အသံ',
+    icon: BookText,
+    href: '/pinyin/tones',
+    color: 'text-amber-600',
+    bg: 'bg-amber-100/80'
+  }
+]
 
-    // 特殊简化布局，如果识别到路由中有 ?lite=true，则给网页添加一些自定义的css样式，例如背景改成黑色
-    useEffect(() => {
-        const isLiteMode = router.query.lite === 'true'
-        console.log(router.query.lite, isLiteMode)
-        if (isLiteMode) {
-            document.body.style.backgroundColor = 'black'
-            document.body.style.color = 'white'
-        }
-    }, [])
+const CORE_TOOLS = [
+  {
+    zh: 'AI 翻译',
+    mm: 'AI ဘာသာပြန်',
+    icon: Globe,
+    href: '/ai-translate',
+    bg: 'bg-indigo-50',
+    iconColor: 'text-indigo-600'
+  },
+  {
+    zh: '免费书籍',
+    mm: 'စာကြည့်တိုက်',
+    icon: Library,
+    action: 'open-library',
+    bg: 'bg-cyan-50',
+    iconColor: 'text-cyan-600'
+  },
+  {
+    zh: '单词收藏',
+    mm: 'မှတ်ထားသော စာလုံး',
+    icon: Star,
+    href: '/words',
+    bg: 'bg-slate-50',
+    iconColor: 'text-slate-600'
+  },
+  {
+    zh: '口语收藏',
+    mm: 'မှတ်ထားသော စကားပြော',
+    icon: Volume2,
+    href: '/oral?filter=favorites',
+    bg: 'bg-slate-50',
+    iconColor: 'text-slate-600'
+  }
+]
 
-    return (
-        <div
-            id='theme-starter'
-            className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:bg-[#212b36] scroll-smooth`}>
-            <Style />
+const LEARNING_COURSES = [
+  {
+    title: 'AI 练口语',
+    sub: '智能跟读 / 即时反馈',
+    img: '/images/cards/ai-speaking.jpg',
+    href: '/oral/ai',
+    color: 'from-fuchsia-600/85'
+  },
+  {
+    title: '日常词汇',
+    sub: '高频生活场景词汇',
+    img: '/images/cards/daily-vocab.jpg',
+    href: '/vocabulary',
+    color: 'from-sky-600/85'
+  },
+  {
+    title: '口语短句',
+    sub: '场景表达 / 一键朗读',
+    img: '/images/cards/oral-cover.jpg',
+    href: '/oral',
+    color: 'from-emerald-600/85'
+  },
+  {
+    title: 'HSK 系统课程',
+    sub: '等级学习 / 真题练习',
+    img: '/images/cards/hsk-course.jpg',
+    href: '/course/hsk1',
+    color: 'from-amber-600/85'
+  }
+]
 
-            {/* 页头 */}
-            {isLiteMode ? <></> : <Header {...props} />}
-
-            <div id='main-wrapper' className='grow'>
-                {children}
-            </div>
-
-            {/* 页脚 */}
-            
-            {isLiteMode ? <></> : <Footer {...props} />}
-
-            {/* 悬浮按钮 */}
-            {isLiteMode ? <></> : <BackToTopButton />}
-
-            {/* <MadeWithButton/> */}
-        </div>
-    )
-}
-
-/**
- * 首页布局
- * @param {*} props
- * @returns
- */
-const LayoutIndex = props => {
-  const count = siteConfig('STARTER_BLOG_COUNT', 3, CONFIG)
-  const { locale } = useGlobal()
-  const posts = props?.allNavPages ? props.allNavPages.slice(0, count) : []
-  return (
-    <>
-      {/* 英雄区 */}
-      {siteConfig('STARTER_HERO_ENABLE', true, CONFIG) && <Hero {...props} />}
-      {/* 合作伙伴 */}
-      {siteConfig('STARTER_BRANDS_ENABLE', true, CONFIG) && <Brand />}
-      {/* 产品特性 */}
-      {siteConfig('STARTER_FEATURE_ENABLE', true, CONFIG) && <Features />}
-      {/* 关于 */}
-      {siteConfig('STARTER_ABOUT_ENABLE', true, CONFIG) && <About />}
-      {/* 价格 */}
-      {siteConfig('STARTER_PRICING_ENABLE', true, CONFIG) && <Pricing />}
-      {/* 评价展示 */}
-      {siteConfig('STARTER_TESTIMONIALS_ENABLE', true, CONFIG) && (
-        <Testimonials />
-      )}
-      {/* 常见问题 */}
-      {siteConfig('STARTER_FAQ_ENABLE', true, CONFIG) && <FAQ />}
-      {/* 团队介绍 */}
-      {siteConfig('STARTER_TEAM_ENABLE', true, CONFIG) && <Team />}
-      {/* 博文列表 */}
-      {siteConfig('STARTER_BLOG_ENABLE', true, CONFIG) && (
-        <>
-          <Blog posts={posts} />
-          <div className='container mx-auto flex justify-end mb-4'>
-            <SmartLink className='text-lg underline' href={'/archive'}>
-              <span>{locale.COMMON.MORE}</span>
-              <i className='ml-2 fas fa-arrow-right' />
-            </SmartLink>
-          </div>
-        </>
-      )}
-      {/* 联系方式 */}
-      {siteConfig('STARTER_CONTACT_ENABLE', true, CONFIG) && <Contact />}
-
-      {/* 行动呼吁 */}
-      {siteConfig('STARTER_CTA_ENABLE', true, CONFIG) && <CTA />}
-    </>
-  )
-}
-
-/**
- * 文章详情页布局
- * @param {*} props
- * @returns
- */
-const LayoutSlug = props => {
-  const { post, lock, validPassword } = props
-
-  // 如果 是 /article/[slug] 的文章路径则視情況进行重定向到另一个域名
+// ==============================
+// 页面
+// ==============================
+export default function LayoutLearningHome() {
   const router = useRouter()
-  if (
-    !post &&
-    siteConfig('STARTER_POST_REDIRECT_ENABLE') &&
-    isBrowser &&
-    router.route === '/[prefix]/[slug]'
-  ) {
-    const redirectUrl =
-      siteConfig('STARTER_POST_REDIRECT_URL') +
-      router.asPath.replace('?theme=landing', '')
-    router.push(redirectUrl)
-    return (
-      <div id='theme-starter'>
-        <Loading />
-      </div>
-    )
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [isLibraryOpen, setIsLibraryOpen] = useState(false)
+
+  // 手势控制
+  const touchStartPos = useRef({ x: 0, y: 0 })
+  const isEdgeSwipe = useRef(false)
+
+  const onTouchStart = (e) => {
+    const x = e.touches[0].clientX
+    const y = e.touches[0].clientY
+    touchStartPos.current = { x, y }
+    isEdgeSwipe.current = x < 25
+  }
+
+  const onTouchEnd = (e) => {
+    if (!isEdgeSwipe.current) return
+
+    const deltaX = e.changedTouches[0].clientX - touchStartPos.current.x
+    const deltaY = Math.abs(e.changedTouches[0].clientY - touchStartPos.current.y)
+
+    if (deltaX > 85 && deltaY < 50) {
+      if (isLibraryOpen) {
+        setIsLibraryOpen(false)
+      } else if (isDrawerOpen) {
+        setIsDrawerOpen(false)
+      } else {
+        router.back()
+      }
+    }
+
+    isEdgeSwipe.current = false
   }
 
   return (
-    <>
-      <Banner title={post?.title} description={post?.summary} />
-      <div className='container grow'>
-        <div className='flex flex-wrap justify-center -mx-4'>
-          <div id='container-inner' className='w-full p-4'>
-            {lock && <ArticleLock validPassword={validPassword} />}
-
-            {!lock && post && (
-              <div id='article-wrapper' className='mx-auto'>
-                <NotionPage {...props} />
-                <Comment frontMatter={post} />
-                <ShareBar post={post} />
-              </div>
-            )}
-          </div>
-        </div>
+    <main
+      className="relative min-h-screen w-full overflow-x-hidden text-slate-900"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
+      {/* 固定背景图，不跟页面滚动 */}
+      <div className="fixed inset-0 -z-30">
+        <img
+          src="/images/home-bg.jpg"
+          alt=""
+          aria-hidden="true"
+          className="h-full w-full object-cover"
+        />
       </div>
-    </>
-  )
-}
 
-/**
- * 仪表盘
- * @param {*} props
- * @returns
- */
-const LayoutDashboard = props => {
-  const { post } = props
+      {/* 固定磨砂层 */}
+      <div className="fixed inset-0 -z-20 bg-white/30 backdrop-blur-md" />
 
-  return (
-    <>
-      <div className='container grow'>
-        <div className='flex flex-wrap justify-center -mx-4'>
-          <div id='container-inner' className='w-full p-4'>
-            {post && (
-              <div id='article-wrapper' className='mx-auto'>
-                <NotionPage {...props} />
+      {/* 固定柔光渐变层 */}
+      <div className="fixed inset-0 -z-10 bg-gradient-to-b from-white/10 via-white/5 to-white/60" />
+
+      {/* 侧边栏 */}
+      <AnimatePresence>
+        {isDrawerOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsDrawerOpen(false)}
+              className="fixed inset-0 z-[60] bg-black/30 backdrop-blur-sm"
+            />
+
+            <motion.aside
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 240 }}
+              className="fixed inset-y-0 left-0 z-[70] flex w-72 flex-col bg-white/95 shadow-2xl"
+            >
+              <div className="flex items-center justify-between border-b border-slate-100 p-6">
+                <div>
+                  <h2 className="text-xl font-black text-slate-900">学习中心</h2>
+                  <p className="text-xs text-slate-500">Learning Center</p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsDrawerOpen(false)}
+                  className="rounded-full bg-slate-100 p-2"
+                >
+                  <X size={20} className="text-slate-600" />
+                </button>
               </div>
-            )}
+
+              <nav className="space-y-2 p-4">
+                <button className="w-full rounded-xl p-4 text-left font-bold text-slate-800 transition-colors hover:bg-slate-100">
+                  首页
+                </button>
+                <button className="w-full rounded-xl p-4 text-left font-bold text-slate-800 transition-colors hover:bg-slate-100">
+                  HSK 课程
+                </button>
+                <button className="w-full rounded-xl p-4 text-left font-bold text-slate-800 transition-colors hover:bg-slate-100">
+                  AI 翻译
+                </button>
+                <button className="w-full rounded-xl p-4 text-left font-bold text-slate-800 transition-colors hover:bg-slate-100">
+                  系统设置
+                </button>
+              </nav>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* 主内容 */}
+      <div className="relative z-10 mx-auto max-w-md px-4 pb-36 pt-6">
+        {/* Header */}
+        <header className="mb-8 flex items-center gap-4">
+          <button
+            type="button"
+            onClick={() => setIsDrawerOpen(true)}
+            className="rounded-2xl border border-white bg-white/80 p-2.5 shadow-sm"
+          >
+            <Menu size={24} className="text-slate-800" />
+          </button>
+
+          <div>
+            <h1 className="text-xl font-black text-slate-900">中缅文学习</h1>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
+              Chinese - Myanmar Hub
+            </p>
           </div>
-        </div>
-      </div>
-      {/* 仪表盘 */}
-      <DashboardHeader />
-      <DashboardBody />
-    </>
-  )
-}
+        </header>
 
-/**
- * 搜索
- * @param {*} props
- * @returns
- */
-const LayoutSearch = props => {
-  const { keyword } = props
-  const router = useRouter()
-  const currentSearch = keyword || router?.query?.s
+        {/* 拼音网格 */}
+        <section className="mb-6 grid grid-cols-4 gap-3">
+          {PINYIN_NAV.map((item, idx) => (
+            <Link href={item.href} key={idx}>
+              <motion.div
+                whileTap={{ scale: 0.95 }}
+                className="flex flex-col items-center rounded-2xl border border-white bg-white/70 p-3 shadow-sm backdrop-blur-sm"
+              >
+                <div className={`${item.bg} mb-2 rounded-full p-2`}>
+                  <item.icon size={18} className={item.color} />
+                </div>
+                <span className="text-xs font-black text-slate-800">{item.zh}</span>
+                <span className="mt-0.5 text-[9px] font-medium text-slate-400">
+                  {item.mm}
+                </span>
+              </motion.div>
+            </Link>
+          ))}
+        </section>
 
-  useEffect(() => {
-    if (isBrowser) {
-      replaceSearchResult({
-        doms: document.getElementById('posts-wrapper'),
-        search: keyword,
-        target: {
-          element: 'span',
-          className: 'text-red-500 border-b border-dashed'
-        }
-      })
-    }
-  }, [])
-  return (
-    <>
-      <section className='max-w-7xl mx-auto bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]'>
-        <SearchInput {...props} />
-        {currentSearch && <Blog {...props} />}
-      </section>
-    </>
-  )
-}
-
-/**
- * 文章归档
- * @param {*} props
- * @returns
- */
-const LayoutArchive = props => (
-  <>
-    {/* 博文列表 */}
-    <Blog {...props} />
-  </>
-)
-
-/**
- * 404页面
- * @param {*} props
- * @returns
- */
-const Layout404 = props => {
-  return (
-    <>
-      {/* <!-- ====== 404 Section Start --> */}
-      <section className='bg-white py-20 dark:bg-dark-2 lg:py-[110px]'>
-        <div className='container mx-auto'>
-          <div className='flex flex-wrap items-center -mx-4'>
-            <div className='w-full px-4 md:w-5/12 lg:w-6/12'>
-              <div className='text-center'>
-                <img
-                  src='/images/starter/404.svg'
-                  alt='image'
-                  className='max-w-full mx-auto'
-                />
+        {/* 发音技巧 */}
+        <Link href="/pinyin/tips">
+          <motion.div
+            whileTap={{ scale: 0.98 }}
+            className="mb-6 flex items-center justify-between rounded-2xl border border-white bg-white/70 p-4 shadow-sm backdrop-blur-sm"
+          >
+            <div className="flex items-center gap-4">
+              <div className="rounded-xl bg-orange-100 p-2 text-orange-600">
+                <Lightbulb size={20} />
               </div>
-            </div>
-            <div className='w-full px-4 md:w-7/12 lg:w-6/12 xl:w-5/12'>
               <div>
-                <div className='mb-8'>
-                  <SVG404 />
+                <p className="text-sm font-black text-slate-800">发音技巧 (Tips)</p>
+                <p className="text-[10px] text-slate-400">အသံထွက်နည်းလမ်းများ</p>
+              </div>
+            </div>
+
+            <ChevronRight size={18} className="text-slate-300" />
+          </motion.div>
+        </Link>
+
+        {/* 核心工具 */}
+        <section className="mb-8 grid grid-cols-2 gap-3">
+          {CORE_TOOLS.map((tool, idx) => {
+            const content = (
+              <div className="flex items-center gap-3">
+                <div className={`rounded-xl p-2 ${tool.bg} ${tool.iconColor}`}>
+                  <tool.icon size={20} />
                 </div>
-                <h3 className='mb-5 text-2xl font-semibold text-dark dark:text-white'>
-                  {siteConfig('STARTER_404_TITLE')}
-                </h3>
-                <p className='mb-8 text-base text-body-color dark:text-dark-6'>
-                  {siteConfig('STARTER_404_TEXT')}
-                </p>
-                <SmartLink
-                  href='/'
-                  className='py-3 text-base font-medium text-white transition rounded-md bg-dark px-7 hover:bg-primary'>
-                  {siteConfig('STARTER_404_BACK')}
-                </SmartLink>
+                <div className="overflow-hidden text-left">
+                  <p className="truncate text-[13px] font-black text-slate-800">
+                    {tool.zh}
+                  </p>
+                  <p className="truncate text-[9px] text-slate-400">{tool.mm}</p>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* <!-- ====== 404 Section End --> */}
-    </>
-  )
-}
+            )
 
-/**
- * 翻页博客列表
- */
-const LayoutPostList = props => {
-  const { posts, category, tag } = props
-  const slotTitle = category || tag
+            const cardStyle =
+              'w-full rounded-2xl border border-white bg-white/70 p-3.5 shadow-sm backdrop-blur-sm'
 
-  return (
-    <>
-      {/* <!-- ====== Blog Section Start --> */}
-      <section className='bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]'>
-        <div className='container mx-auto'>
-          {/* 区块标题文字 */}
-          <div className='-mx-4 flex flex-wrap justify-center'>
-            <div className='w-full px-4'>
-              <div className='mx-auto mb-[60px] max-w-[485px] text-center'>
-                {slotTitle && (
-                  <h2 className='mb-4 text-3xl font-bold text-dark dark:text-white sm:text-4xl md:text-[40px] md:leading-[1.2]'>
-                    {slotTitle}
-                  </h2>
-                )}
-
-                {!slotTitle && (
-                  <>
-                    <span className='mb-2 block text-lg font-semibold text-primary'>
-                      {siteConfig('STARTER_BLOG_TITLE')}
-                    </span>
-                    <h2 className='mb-4 text-3xl font-bold text-dark dark:text-white sm:text-4xl md:text-[40px] md:leading-[1.2]'>
-                      {siteConfig('STARTER_BLOG_TEXT_1')}
-                    </h2>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: siteConfig('STARTER_BLOG_TEXT_2')
-                      }}
-                      className='text-base text-body-color dark:text-dark-6'></p>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-          {/* 博客列表 此处优先展示3片文章 */}
-          <div className='-mx-4 flex flex-wrap'>
-            {posts?.map((item, index) => {
+            if (tool.action === 'open-library') {
               return (
-                <div key={index} className='w-full px-4 md:w-1/2 lg:w-1/3'>
-                  <div
-                    className='wow fadeInUp group mb-10'
-                    data-wow-delay='.1s'>
-                    <div className='mb-8 overflow-hidden rounded-[5px]'>
-                      <SmartLink href={item?.href} className='block'>
-                        <img
-                          src={item.pageCoverThumbnail}
-                          alt={item.title}
-                          className='w-full transition group-hover:rotate-6 group-hover:scale-125'
-                        />
-                      </SmartLink>
-                    </div>
-                    <div>
-                      <span className='mb-6 inline-block rounded-[5px] bg-primary px-4 py-0.5 text-center text-xs font-medium leading-loose text-white'>
-                        {item.publishDay}
-                      </span>
-                      <h3>
-                        <SmartLink
-                          href={item?.href}
-                          className='mb-4 inline-block text-xl font-semibold text-dark hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl'>
-                          {item.title}
-                        </SmartLink>
-                      </h3>
-                      <p className='max-w-[370px] text-base text-body-color dark:text-dark-6'>
-                        {item.summary}
-                      </p>
-                    </div>
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setIsLibraryOpen(true)}
+                  className={cardStyle}
+                >
+                  {content}
+                </button>
+              )
+            }
+
+            return (
+              <Link href={tool.href} key={idx} className={cardStyle}>
+                {content}
+              </Link>
+            )
+          })}
+        </section>
+
+        {/* 课程列表 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-2 px-1">
+            <BookOpen size={14} className="text-slate-400" />
+            <h2 className="text-[11px] font-black uppercase tracking-widest text-slate-400">
+              Learning Courses
+            </h2>
+          </div>
+
+          {LEARNING_COURSES.map((course, idx) => (
+            <Link href={course.href} key={idx}>
+              <motion.div
+                whileTap={{ scale: 0.97 }}
+                className="relative h-36 w-full overflow-hidden rounded-3xl shadow-md"
+              >
+                <img
+                  src={course.img}
+                  alt={course.title}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+
+                <div className={`absolute inset-0 bg-gradient-to-r ${course.color} to-transparent`} />
+
+                <div className="absolute inset-y-0 left-0 flex flex-col justify-center px-6">
+                  <h3 className="text-xl font-black text-white">{course.title}</h3>
+                  <p className="text-xs font-medium text-white/85">{course.sub}</p>
+
+                  <div className="mt-3 flex w-fit items-center gap-1 rounded-md bg-white/20 px-2 py-0.5 text-[10px] font-bold text-white backdrop-blur-sm">
+                    立即学习 <ChevronRight size={10} />
                   </div>
                 </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-      {/* <!-- ====== Blog Section End --> */}
-    </>
-  )
-}
-/**
- * 分类列表
- * @param {*} props
- * @returns
- */
-const LayoutCategoryIndex = props => {
-  const { categoryOptions } = props
-  const { locale } = useGlobal()
-  return (
-    <section className='bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]'>
-      <div className='container mx-auto  min-h-96'>
-        <span className='mb-2 text-lg font-semibold text-primary flex justify-center items-center '>
-          {locale.COMMON.CATEGORY}
-        </span>
-        <div
-          id='category-list'
-          className='duration-200 flex flex-wrap justify-center items-center '>
-          {categoryOptions?.map(category => {
-            return (
-              <SmartLink
-                key={category.name}
-                href={`/category/${category.name}`}
-                passHref
-                legacyBehavior>
-                <h2
-                  className={
-                    'hover:text-black text-2xl font-semibold text-dark sm:text-4xl md:text-[40px] md:leading-[1.2] dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'
-                  }>
-                  <i className='mr-4 fas fa-folder' />
-                  {category.name}({category.count})
-                </h2>
-              </SmartLink>
-            )
-          })}
-        </div>
-      </div>
-    </section>
-  )
-}
 
-/**
- * 标签列表
- * @param {*} props
- * @returns
- */
-const LayoutTagIndex = props => {
-  const { tagOptions } = props
-  const { locale } = useGlobal()
-  return (
-    <section className='bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]'>
-      <div className='container mx-auto  min-h-96'>
-        <span className='mb-2 text-lg font-semibold text-primary flex justify-center items-center '>
-          {locale.COMMON.TAGS}
-        </span>
-        <div
-          id='tags-list'
-          className='duration-200 flex flex-wrap justify-center items-center'>
-          {tagOptions.map(tag => {
-            return (
-              <div key={tag.name} className='p-2'>
-                <SmartLink
-                  key={tag}
-                  href={`/tag/${encodeURIComponent(tag.name)}`}
-                  passHref
-                  className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200  mr-2 py-1 px-2 text-md whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}>
-                  <div className='font-light dark:text-gray-400'>
-                    <i className='mr-1 fas fa-tag' />{' '}
-                    {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}
+                {/* AI 练口语加小标识 */}
+                {course.title === 'AI 练口语' && (
+                  <div className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1 text-[10px] font-black text-white backdrop-blur-sm">
+                    <Sparkles size={10} />
+                    NEW
                   </div>
-                </SmartLink>
-              </div>
-            )
-          })}
-        </div>
+                )}
+              </motion.div>
+            </Link>
+          ))}
+        </section>
       </div>
-    </section>
+
+      {/* 底部导航 */}
+      <nav className="fixed bottom-0 left-0 right-0 z-[50] flex items-center justify-around border-t border-slate-100 bg-white px-4 pb-[calc(env(safe-area-inset-bottom)+10px)] pt-3 shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
+        <FooterItem icon={MessageCircle} label="消息" />
+        <FooterItem icon={Globe2} label="社区" />
+        <FooterItem icon={Users} label="语伴" />
+        <FooterItem icon={Compass} label="动态" />
+        <FooterItem icon={BookOpen} label="学习" active />
+      </nav>
+
+      {/* 书库弹窗 */}
+      <BookLibrary
+        isOpen={isLibraryOpen}
+        onClose={() => setIsLibraryOpen(false)}
+      />
+    </main>
   )
 }
-/**
- * 登录页面
- * @param {*} props
- * @returns
- */
-const LayoutSignIn = props => {
-  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-  const title = siteConfig('STARTER_SIGNIN', '登录')
-  const description = siteConfig(
-    'STARTER_SIGNIN_DESCRITION',
-    '这里是演示页面，NotionNext目前不提供会员登录功能'
-  )
+
+function FooterItem({ icon: Icon, label, active = false }) {
   return (
-    <>
-      <div className='grow mt-20'>
-        <Banner title={title} description={description} />
-        {/* clerk预置表单 */}
-        {enableClerk && (
-          <div className='flex justify-center py-6'>
-            <SignIn />
-          </div>
-        )}
-
-        {/* 自定义登录表单 */}
-        {!enableClerk && <SignInForm />}
+    <div
+      className={`flex flex-col items-center gap-1 ${
+        active ? 'text-indigo-600' : 'text-slate-400'
+      }`}
+    >
+      <div className={active ? 'rounded-xl bg-indigo-50 p-1.5' : ''}>
+        <Icon size={22} strokeWidth={active ? 2.5 : 2} />
       </div>
-    </>
+      <span className="text-[10px] font-bold">{label}</span>
+    </div>
   )
-}
-
-/**
- * 注册页面
- * @param {*} props
- * @returns
- */
-const LayoutSignUp = props => {
-  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-
-  const title = siteConfig('STARTER_SIGNIN', '注册')
-  const description = siteConfig(
-    'STARTER_SIGNIN_DESCRITION',
-    '这里是演示页面，NotionNext目前不提供会员注册功能'
-  )
-  return (
-    <>
-      <div className='grow mt-20'>
-        <Banner title={title} description={description} />
-
-        {/* clerk预置表单 */}
-        {enableClerk && (
-          <div className='flex justify-center py-6'>
-            <SignUp />
-          </div>
-        )}
-
-        {/* 自定义登录表单 */}
-        {!enableClerk && <SignUpForm />}
-      </div>
-    </>
-  )
-}
-
-export {
-  Layout404,
-  LayoutArchive,
-  LayoutBase,
-  LayoutCategoryIndex,
-  LayoutDashboard,
-  LayoutIndex,
-  LayoutPostList,
-  LayoutSearch,
-  LayoutSignIn,
-  LayoutSignUp,
-  LayoutSlug,
-  LayoutTagIndex,
-  CONFIG as THEME_CONFIG
-}
+              }

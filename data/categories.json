@@ -1,0 +1,23 @@
+[
+  {
+    "id": "greetings",
+    "title": "日常口语",
+    "subtitle": "打招呼、介绍、感谢、寒暄",
+    "unitCount": 3,
+    "bgImage": "https://images.pexels.com/photos/720598/pexels-photo-720598.jpeg"
+  },
+  {
+    "id": "travel",
+    "title": "旅游口语",
+    "subtitle": "机场、酒店、问路、出行",
+    "unitCount": 4,
+    "bgImage": "https://images.pexels.com/photos/3652766/pexels-photo-3652766.jpeg"
+  },
+  {
+    "id": "medical",
+    "title": "医疗口语",
+    "subtitle": "挂号、就诊、描述症状",
+    "unitCount": 2,
+    "bgImage": "https://images.pexels.com/photos/6129240/pexels-photo-6129240.jpeg"
+  }
+]

@@ -1,0 +1,2982 @@
+[
+  {
+    "idq": 1,
+    "hsk_level": 1,
+    "chinese": "爱",
+    "burmese": "ချစ်သည်။",
+    "mnemonic": "အိုက်",
+    "explanation": "လူတစ်ဦး (သို့) အရာတစ်ခုကို နှစ်သက်မြတ်နိုးခြင်း။",
+    "example": "我爱你。",
+    "example2": "妈妈很爱我。"
+  },
+  {
+    "idq": 2,
+    "hsk_level": 1,
+    "chinese": "吧",
+    "burmese": "ပါ (အကြံပြုခြင်း)။",
+    "mnemonic": "ပါ",
+    "explanation": "အကြံပြုချက် သို့မဟုတ် သဘောတူညီမှုကို ပြသသော စကားလုံး။",
+    "example": "我们走吧。",
+    "example2": "你吃饭了吧？"
+  },
+  {
+    "idq": 3,
+    "hsk_level": 1,
+    "chinese": "八",
+    "burmese": "ရှစ် (၈)။",
+    "mnemonic": "ပါး",
+    "explanation": "ကိန်းဂဏန်း (၈)။",
+    "example": "他有八个苹果。",
+    "example2": "现在是八点。"
+  },
+  {
+    "idq": 4,
+    "hsk_level": 1,
+    "chinese": "爸爸",
+    "burmese": "အဖေ။",
+    "mnemonic": "ပါ့ပါ",
+    "explanation": "မိမိ၏ဖခင်ကို ခေါ်သောစကား။",
+    "example": "我爸爸是医生。",
+    "example2": "爸爸在喝茶。"
+  },
+  {
+    "idq": 5,
+    "hsk_level": 1,
+    "chinese": "百",
+    "burmese": "ရာ (၁၀၀)။",
+    "mnemonic": "ပိုင်",
+    "explanation": "ကိန်းဂဏန်း (၁၀၀)။",
+    "example": "一百块钱。",
+    "example2": "这里有一百个人。"
+  },
+  {
+    "idq": 6,
+    "hsk_level": 1,
+    "chinese": "白天",
+    "burmese": "နေ့ခင်း၊ နေ့လယ်။",
+    "mnemonic": "ပိုင်ထျန်း",
+    "explanation": "နေထွက်ချိန်မှ နေဝင်ချိန်အထိ အချိန်ကာလ။",
+    "example": "白天我很忙。",
+    "example2": "他白天不在家。"
+  },
+  {
+    "idq": 7,
+    "hsk_level": 1,
+    "chinese": "半",
+    "burmese": "တစ်ဝက်။",
+    "mnemonic": "ပန့်",
+    "explanation": "တစ်စုံတစ်ခု၏ တစ်ဝက်။",
+    "example": "一半给你。",
+    "example2": "现在是一点半。"
+  },
+  {
+    "idq": 8,
+    "hsk_level": 1,
+    "chinese": "包子",
+    "burmese": "ပေါက်စီ။",
+    "mnemonic": "ပေါင်းဇစ်",
+    "explanation": "အစာသွတ်ထားသော တရုတ်မုန့်။",
+    "example": "我吃包子。",
+    "example2": "这个包子很好吃。"
+  },
+  {
+    "idq": 9,
+    "hsk_level": 1,
+    "chinese": "杯子",
+    "burmese": "ခွက်။",
+    "mnemonic": "ပေးဇစ်",
+    "explanation": "ရေ သို့မဟုတ် အရည်သောက်ရန် သုံးသောခွက်။",
+    "example": "我的杯子在哪儿？",
+    "example2": "这是一个杯子。"
+  },
+  {
+    "idq": 10,
+    "hsk_level": 1,
+    "chinese": "本",
+    "burmese": "အုပ် (စာအုပ်ရေတွက်ရာတွင်သုံးသည်)။",
+    "mnemonic": "ပန်",
+    "explanation": "စာအုပ်များကို ရေတွက်ရာတွင်သုံးသော နာမ်စား။",
+    "example": "一本书。",
+    "example2": "我有三本字典。"
+  },
+  {
+    "idq": 11,
+    "hsk_level": 1,
+    "chinese": "边",
+    "burmese": "ဘေး၊ ဘက်။",
+    "mnemonic": "ပြန်း",
+    "explanation": "အရာဝတ္ထုတစ်ခု၏ ဘေး သို့မဟုတ် မျက်နှာပြင်။",
+    "example": "在左边。",
+    "example2": "水在桌子边。"
+  },
+  {
+    "idq": 12,
+    "hsk_level": 1,
+    "chinese": "病",
+    "burmese": "ဖျားနာသည်။",
+    "mnemonic": "ပင့်",
+    "explanation": "ကျန်းမာရေးမကောင်းဖြစ်ခြင်း။",
+    "example": "他病了。",
+    "example2": "我今天生病了。"
+  },
+  {
+    "idq": 13,
+    "hsk_level": 1,
+    "chinese": "不",
+    "burmese": "မဟုတ်၊ မလုပ်။",
+    "mnemonic": "ပု",
+    "explanation": "ငြင်းပယ်ခြင်းကို ပြသောစကားလုံး။",
+    "example": "我不去。",
+    "example2": "这不是我的。"
+  },
+  {
+    "idq": 14,
+    "hsk_level": 1,
+    "chinese": "不客气",
+    "burmese": "ရပါတယ်၊ အားမနာပါနဲ့။",
+    "mnemonic": "ပုခဲချိ",
+    "explanation": "ကျေးဇူးတင်စကားကို တုံ့ပြန်ရာတွင်သုံးသည်။",
+    "example": "谢谢你！——不客气。",
+    "example2": "大家都不客气。"
+  },
+  {
+    "idq": 15,
+    "hsk_level": 1,
+    "chinese": "不要",
+    "burmese": "မလိုချင်ဘူး၊ မလုပ်ပါနဲ့။",
+    "mnemonic": "ပုယောက်",
+    "explanation": "ငြင်းပယ်ခြင်း သို့မဟုတ် တားမြစ်ခြင်း။",
+    "example": "我不要这个。",
+    "example2": "不要说话。"
+  },
+  {
+    "idq": 16,
+    "hsk_level": 1,
+    "chinese": "菜",
+    "burmese": "ဟင်းလျာ၊ ဟင်းသီးဟင်းရွက်။",
+    "mnemonic": "ချိုက်",
+    "explanation": "စားသုံးရန် ချက်ပြုတ်ထားသော ဟင်းလျာများ။",
+    "example": "我喜欢吃中国菜。",
+    "example2": "你去买菜吧。"
+  },
+  {
+    "idq": 17,
+    "hsk_level": 1,
+    "chinese": "茶",
+    "burmese": "လက်ဖက်ရည်။",
+    "mnemonic": "ချာ",
+    "explanation": "သောက်သုံးရန် လက်ဖက်ရည်။",
+    "example": "请喝茶。",
+    "example2": "这是好茶。"
+  },
+  {
+    "idq": 18,
+    "hsk_level": 1,
+    "chinese": "唱",
+    "burmese": "သီဆိုသည်။",
+    "mnemonic": "ချန်",
+    "explanation": "သီချင်းဆိုခြင်း။",
+    "example": "她喜欢唱歌。",
+    "example2": "我们去唱歌吧。"
+  },
+  {
+    "idq": 19,
+    "hsk_level": 1,
+    "chinese": "超市",
+    "burmese": "စူပါမားကတ်။",
+    "mnemonic": "ချောင်းရှစ်",
+    "explanation": "ကုန်ပစ္စည်းမျိုးစုံရောင်းချသော ဈေးကြီး။",
+    "example": "我去超市买东西。",
+    "example2": "这家超市很大。"
+  },
+  {
+    "idq": 20,
+    "hsk_level": 1,
+    "chinese": "车",
+    "burmese": "ကား။",
+    "mnemonic": "ချား",
+    "explanation": "သွားလာရန် အသုံးပြုသောယာဉ်။",
+    "example": "我没有车。",
+    "example2": "他在车上。"
+  },
+  {
+    "idq": 21,
+    "hsk_level": 1,
+    "chinese": "吃",
+    "burmese": "စားသည်။",
+    "mnemonic": "ချစ်(ရ်)",
+    "explanation": "အစာစားခြင်း။",
+    "example": "我吃饭了。",
+    "example2": "你想吃什么？"
+  },
+  {
+    "idq": 22,
+    "hsk_level": 1,
+    "chinese": "穿",
+    "burmese": "ဝတ်ဆင်သည်။",
+    "mnemonic": "ချွမ်း",
+    "explanation": "အဝတ်အစားဝတ်ခြင်း။",
+    "example": "她穿新衣服。",
+    "example2": "今天穿什么？"
+  },
+  {
+    "idq": 23,
+    "hsk_level": 1,
+    "chinese": "出租车",
+    "burmese": "အငှားကား၊ တက္ကစီ။",
+    "mnemonic": "ချူးဇူးချား",
+    "explanation": "အခကြေးငွေပေး၍ စီးရသောကား။",
+    "example": "我们坐出租车去。",
+    "example2": "叫一辆出租车。"
+  },
+  {
+    "idq": 24,
+    "hsk_level": 1,
+    "chinese": "大",
+    "burmese": "ကြီးသော။",
+    "mnemonic": "တ",
+    "explanation": "အရွယ်အစားကြီးမားခြင်း။",
+    "example": "这个苹果很大。",
+    "example2": "我的学校不大。"
+  },
+  {
+    "idq": 25,
+    "hsk_level": 1,
+    "chinese": "打电话",
+    "burmese": "ဖုန်းခေါ်သည်။",
+    "mnemonic": "တာတျန့်ဟွ",
+    "explanation": "ဖုန်းဖြင့်ဆက်သွယ်ခြင်း။",
+    "example": "我在打电话。",
+    "example2": "给他打个电话。"
+  },
+  {
+    "idq": 26,
+    "hsk_level": 1,
+    "chinese": "大家",
+    "burmese": "အားလုံး၊ လူတိုင်း။",
+    "mnemonic": "တာကျား",
+    "explanation": "အဖွဲ့အစည်းတွင်းရှိ လူအားလုံးကို ရည်ညွှန်းသည်။",
+    "example": "大家好！",
+    "example2": "大家都在看书。"
+  },
+  {
+    "idq": 27,
+    "hsk_level": 1,
+    "chinese": "到",
+    "burmese": "ရောက်သည်။",
+    "mnemonic": "တောက်",
+    "explanation": "တစ်နေရာသို့ ရောက်ရှိခြင်း။",
+    "example": "我到家了。",
+    "example2": "火车到了。"
+  },
+  {
+    "idq": 28,
+    "hsk_level": 1,
+    "chinese": "大学",
+    "burmese": "တက္ကသိုလ်။",
+    "mnemonic": "တရွှဲ",
+    "explanation": "အဆင့်မြင့်ပညာသင်ကြားရေးကျောင်း။",
+    "example": "他在上大学。",
+    "example2": "这是北京大学。"
+  },
+  {
+    "idq": 29,
+    "hsk_level": 1,
+    "chinese": "大学生",
+    "burmese": "တက္ကသိုလ်ကျောင်းသား။",
+    "mnemonic": "တရွှဲရှန်း",
+    "explanation": "တက္ကသိုလ်တွင် ပညာသင်ကြားနေသူ။",
+    "example": "我是大学生。",
+    "example2": "哥哥是大学生。"
+  },
+  {
+    "idq": 30,
+    "hsk_level": 1,
+    "chinese": "的",
+    "burmese": "၏ (ပိုင်ဆိုင်မှုပြပစ္စည်း)။",
+    "mnemonic": "တ",
+    "explanation": "ပိုင်ဆိုင်ခြင်း သို့မဟုတ် အထူးပြုခြင်းကို ပြသောစကားလုံး။",
+    "example": "这是我的书。",
+    "example2": "漂亮的女孩子。"
+  },
+  {
+    "idq": 31,
+    "hsk_level": 1,
+    "chinese": "第",
+    "burmese": "အကြိမ်၊ အမှတ် (စဉ်)။",
+    "mnemonic": "တိ",
+    "explanation": "အစီအစဉ်ပြစကားလုံး။",
+    "example": "第一名。",
+    "example2": "这是我的第一次。"
+  },
+  {
+    "idq": 32,
+    "hsk_level": 1,
+    "chinese": "店",
+    "burmese": "ဆိုင်။",
+    "mnemonic": "တျန့်",
+    "explanation": "ကုန်ပစ္စည်းရောင်းချသောနေရာ။",
+    "example": "这家店很大。",
+    "example2": "饭店在那里。"
+  },
+  {
+    "idq": 33,
+    "hsk_level": 1,
+    "chinese": "点",
+    "burmese": "နာရီ (အချိန်)၊ နည်းနည်း။",
+    "mnemonic": "တျန်",
+    "explanation": "အချိန်ကိုပြသရန် သို့မဟုတ် အနည်းငယ်ကိုပြသရန် သုံးသည်။",
+    "example": "现在是三点。",
+    "example2": "我吃了一点儿。"
+  },
+  {
+    "idq": 34,
+    "hsk_level": 1,
+    "chinese": "电话",
+    "burmese": "တယ်လီဖုန်း။",
+    "mnemonic": "တျန့်ဟွ",
+    "explanation": "ဆက်သွယ်ရေး ကိရိယာ။",
+    "example": "这是我的电话。",
+    "example2": "他在听电话。"
+  },
+  {
+    "idq": 35,
+    "hsk_level": 1,
+    "chinese": "电脑",
+    "burmese": "ကွန်ပျူတာ။",
+    "mnemonic": "တျန့်နောင်",
+    "explanation": "ကွန်ပျူတာစက်။",
+    "example": "我买了一台电脑。",
+    "example2": "你的电脑在哪里？"
+  },
+  {
+    "idq": 36,
+    "hsk_level": 1,
+    "chinese": "电视",
+    "burmese": "ရုပ်မြင်သံကြား၊ တီဗွီ။",
+    "mnemonic": "တျန့်ရှစ်",
+    "explanation": "ရုပ်သံဖမ်းစက်။",
+    "example": "妈妈在看电视。",
+    "example2": "我们家没有电视。"
+  },
+  {
+    "idq": 37,
+    "hsk_level": 1,
+    "chinese": "电影",
+    "burmese": "ရုပ်ရှင်။",
+    "mnemonic": "တျန့်ယင်",
+    "explanation": "ရုပ်ရှင်ဇာတ်ကား။",
+    "example": "我喜欢看电影。",
+    "example2": "这是一部好电影。"
+  },
+  {
+    "idq": 38,
+    "hsk_level": 1,
+    "chinese": "电影院",
+    "burmese": "ရုပ်ရှင်ရုံ။",
+    "mnemonic": "တျန့်ယင်ယွမ်",
+    "explanation": "ရုပ်ရှင်ပြသသောနေရာ။",
+    "example": "我们去电影院。",
+    "example2": "他在电影院。"
+  },
+  {
+    "idq": 39,
+    "hsk_level": 1,
+    "chinese": "弟弟",
+    "burmese": "ညီ၊ မောင်။",
+    "mnemonic": "တိတိ",
+    "explanation": "မိမိထက် ငယ်သော ယောက်ျားလေးမောင်နှမ။",
+    "example": "我有两个弟弟。",
+    "example2": "弟弟在哭。"
+  },
+  {
+    "idq": 40,
+    "hsk_level": 1,
+    "chinese": "东西",
+    "burmese": "ပစ္စည်း။",
+    "mnemonic": "တုန်းရှိ",
+    "explanation": "အရာဝတ္ထုများကို ယေဘုယျခေါ်ဆိုခြင်း။",
+    "example": "我买了很多东西。",
+    "example2": "这是什么东西？"
+  },
+  {
+    "idq": 41,
+    "hsk_level": 1,
+    "chinese": "都",
+    "burmese": "အားလုံး။",
+    "mnemonic": "တိုး",
+    "explanation": "အရာအားလုံးပါဝင်ကြောင်း ပြသခြင်း။",
+    "example": "我们都爱中国。",
+    "example2": "他们都来了。"
+  },
+  {
+    "idq": 42,
+    "hsk_level": 1,
+    "chinese": "读",
+    "burmese": "ဖတ်သည်။",
+    "mnemonic": "တူ",
+    "explanation": "စာဖတ်ခြင်း။",
+    "example": "请读这句话。",
+    "example2": "他在读书。"
+  },
+  {
+    "idq": 43,
+    "hsk_level": 1,
+    "chinese": "对",
+    "burmese": "မှန်သည်၊ အပေါ် (to)။",
+    "mnemonic": "တွေ့",
+    "explanation": "မှန်ကန်ခြင်း၊ သို့မဟုတ် တစ်စုံတစ်ဦးအပေါ်။",
+    "example": "你说得对。",
+    "example2": "他对我很好。"
+  },
+  {
+    "idq": 44,
+    "hsk_level": 1,
+    "chinese": "对不起",
+    "burmese": "တောင်းပန်ပါတယ်။",
+    "mnemonic": "တွေ့ပုချိ",
+    "explanation": "အမှားလုပ်မိ၍ တောင်းပန်သောစကား။",
+    "example": "对不起，我迟到了。",
+    "example2": "没关系，对不起。"
+  },
+  {
+    "idq": 45,
+    "hsk_level": 1,
+    "chinese": "多",
+    "burmese": "များသော။",
+    "mnemonic": "တွော",
+    "explanation": "အရေအတွက်များပြားခြင်း။",
+    "example": "这里人很多。",
+    "example2": "你有很多钱。"
+  },
+  {
+    "idq": 46,
+    "hsk_level": 1,
+    "chinese": "多少",
+    "burmese": "ဘယ်လောက်လဲ။",
+    "mnemonic": "တွောရှောင်",
+    "explanation": "အရေအတွက် သို့မဟုတ် ဈေးနှုန်းမေးရန်သုံးသည်။",
+    "example": "多少钱？",
+    "example2": "你们学校有多少老师？"
+  },
+  {
+    "idq": 47,
+    "hsk_level": 1,
+    "chinese": "读书",
+    "burmese": "စာဖတ်သည်၊ ကျောင်းတက်သည်။",
+    "mnemonic": "တူရှူး",
+    "explanation": "စာအုပ်ဖတ်ခြင်း သို့မဟုတ် ပညာသင်ကြားခြင်း။",
+    "example": "我喜欢读书。",
+    "example2": "他在中国读书。"
+  },
+  {
+    "idq": 48,
+    "hsk_level": 1,
+    "chinese": "二",
+    "burmese": "နှစ် (၂)။",
+    "mnemonic": "အာ့",
+    "explanation": "ကိန်းဂဏန်း (၂)။",
+    "example": "我有两本书。(Note: used as numeral, like 第二)",
+    "example2": "星期二。"
+  },
+  {
+    "idq": 49,
+    "hsk_level": 1,
+    "chinese": "儿子",
+    "burmese": "သား။",
+    "mnemonic": "အာ့ဇစ်",
+    "explanation": "မိမိ၏ သားယောက်ျားလေး။",
+    "example": "我的儿子三岁。",
+    "example2": "那是她儿子。"
+  },
+  {
+    "idq": 50,
+    "hsk_level": 1,
+    "chinese": "饭",
+    "burmese": "ထမင်း။",
+    "mnemonic": "ဖန့်",
+    "explanation": "စားစရာ ထမင်း။",
+    "example": "我们去吃饭吧。",
+    "example2": "我想吃米饭。"
+  },
+  {
+    "idq": 51,
+    "hsk_level": 1,
+    "chinese": "饭店",
+    "burmese": "စားသောက်ဆိုင်၊ ဟိုတယ်",
+    "mnemonic": "ဖန့်တျန့်",
+    "explanation": "အစားအစာ ရောင်းချသောဆိုင် သို့မဟုတ် တည်းခိုရန်နေရာ။",
+    "example": "我们去饭店吃饭。",
+    "example2": "他在饭店工作。"
+  },
+  {
+    "idq": 52,
+    "hsk_level": 1,
+    "chinese": "房间",
+    "burmese": "အခန်း။",
+    "mnemonic": "ဖန်ကျန်း",
+    "explanation": "အိမ်အတွင်းရှိ အခန်း။",
+    "example": "我的房间很干净。",
+    "example2": "他在房间里。"
+  },
+  {
+    "idq": 53,
+    "hsk_level": 1,
+    "chinese": "非常",
+    "burmese": "အလွန်၊ အရမ်း။",
+    "mnemonic": "ဖေးချန်",
+    "explanation": "အလွန်အမင်း ဖြစ်ကြောင်းပြသသည်။",
+    "example": "我非常高兴。",
+    "example2": "这里非常热。"
+  },
+  {
+    "idq": 54,
+    "hsk_level": 1,
+    "chinese": "飞机",
+    "burmese": "လေယာဉ်ပျံ။",
+    "mnemonic": "ဖေးဂျီး",
+    "explanation": "ဝေဟင်သွားယာဉ်။",
+    "example": "我坐飞机去中国。",
+    "example2": "飞机很大。"
+  },
+  {
+    "idq": 55,
+    "hsk_level": 1,
+    "chinese": "分",
+    "burmese": "မိနစ်၊ တစ်ပြား (ငွေ)။",
+    "mnemonic": "ဖန်း",
+    "explanation": "အချိန် (မိနစ်) သို့မဟုတ် ငွေကြေးယူနစ်။",
+    "example": "八点十分。",
+    "example2": "一块两毛五分。"
+  },
+  {
+    "idq": 56,
+    "hsk_level": 1,
+    "chinese": "分钟",
+    "burmese": "မိနစ်။",
+    "mnemonic": "ဖန်းကျုံး",
+    "explanation": "အချိန်မိနစ်ကာလ။",
+    "example": "请等十分钟。",
+    "example2": "我走了十分钟。"
+  },
+  {
+    "idq": 57,
+    "hsk_level": 1,
+    "chinese": "高兴",
+    "burmese": "ဝမ်းသာသည်၊ ပျော်ရွှင်သည်။",
+    "mnemonic": "ကောင်းရှင်း",
+    "explanation": "ပျော်ရွှင်သော စိတ်ခံစားမှု။",
+    "example": "认识你我很高兴。",
+    "example2": "今天他很高兴。"
+  },
+  {
+    "idq": 58,
+    "hsk_level": 1,
+    "chinese": "个",
+    "burmese": "ခု၊ ယောက် (ရေတွက်သံ)။",
+    "mnemonic": "က",
+    "explanation": "ယေဘုယျသုံး ရေတွက်နာမ်စား။",
+    "example": "一个人。",
+    "example2": "两个苹果。"
+  },
+  {
+    "idq": 59,
+    "hsk_level": 1,
+    "chinese": "歌",
+    "burmese": "သီချင်း။",
+    "mnemonic": "ကော",
+    "explanation": "သီဆိုရန် တေးသီချင်း။",
+    "example": "这首歌很好听。",
+    "example2": "她喜欢唱歌。"
+  },
+  {
+    "idq": 60,
+    "hsk_level": 1,
+    "chinese": "哥哥",
+    "burmese": "အစ်ကို။",
+    "mnemonic": "ကောက",
+    "explanation": "မိမိထက်ကြီးသော ယောက်ျားလေးမောင်နှမ။",
+    "example": "我有一个哥哥。",
+    "example2": "哥哥在大学读书。"
+  },
+  {
+    "idq": 61,
+    "hsk_level": 1,
+    "chinese": "给",
+    "burmese": "ပေးသည်။",
+    "mnemonic": "ဂေ",
+    "explanation": "တစ်စုံတစ်ခုကို တစ်ဦးဦးအား ပေးအပ်ခြင်း။",
+    "example": "请给我一杯水。",
+    "example2": "他给我一本书。"
+  },
+  {
+    "idq": 62,
+    "hsk_level": 1,
+    "chinese": "公司",
+    "burmese": "ကုမ္ပဏီ။",
+    "mnemonic": "ကုန်းဆစ်",
+    "explanation": "စီးပွားရေးလုပ်ငန်း လုပ်ကိုင်သော နေရာ။",
+    "example": "他在公司工作。",
+    "example2": "这家公司很大。"
+  },
+  {
+    "idq": 63,
+    "hsk_level": 1,
+    "chinese": "工作",
+    "burmese": "အလုပ်လုပ်သည်၊ အလုပ်။",
+    "mnemonic": "ကုန်းဇွတ်",
+    "explanation": "အသက်မွေးဝမ်းကျောင်းအတွက် အလုပ်လုပ်ခြင်း။",
+    "example": "我很喜欢我的工作。",
+    "example2": "他每天工作。"
+  },
+  {
+    "idq": 64,
+    "hsk_level": 1,
+    "chinese": "狗",
+    "burmese": "ခွေး။",
+    "mnemonic": "ဂို",
+    "explanation": "အိမ်မွေးတိရစ္ဆာန် ခွေး။",
+    "example": "我不喜欢狗。",
+    "example2": "这只小狗很可爱。"
+  },
+  {
+    "idq": 65,
+    "hsk_level": 1,
+    "chinese": "贵",
+    "burmese": "ဈေးကြီးသော။",
+    "mnemonic": "ကွေ့",
+    "explanation": "တန်ဖိုးမြင့်မားခြင်း။",
+    "example": "这个太贵了。",
+    "example2": "苹果很贵。"
+  },
+  {
+    "idq": 66,
+    "hsk_level": 1,
+    "chinese": "国",
+    "burmese": "နိုင်ငံ။",
+    "mnemonic": "ကွော",
+    "explanation": "တိုင်းပြည်၊ နိုင်ငံ။",
+    "example": "中国很大。",
+    "example2": "你去过什么国家？"
+  },
+  {
+    "idq": 67,
+    "hsk_level": 1,
+    "chinese": "还",
+    "burmese": "သေး၊ လည်း။",
+    "mnemonic": "ဟိုင်",
+    "explanation": "ဆက်လက်ဖြစ်ပေါ်နေဆဲ သို့မဟုတ် ထပ်မံဖြည့်စွက်ခြင်း။",
+    "example": "他还想吃。",
+    "example2": "我还有一个妹妹。"
+  },
+  {
+    "idq": 68,
+    "hsk_level": 1,
+    "chinese": "孩子",
+    "burmese": "ကလေး။",
+    "mnemonic": "ဟိုင်ဇစ်",
+    "explanation": "အရွယ်မရောက်သေးသူ သို့မဟုတ် သားသမီး။",
+    "example": "她有两个孩子。",
+    "example2": "孩子在玩。"
+  },
+  {
+    "idq": 69,
+    "hsk_level": 1,
+    "chinese": "汉语",
+    "burmese": "တရုတ်ဘာသာစကား။",
+    "mnemonic": "ဟန့်ယွီ",
+    "explanation": "တရုတ်လူမျိုးတို့၏ ဘာသာစကား။",
+    "example": "我学习汉语。",
+    "example2": "汉语不难。"
+  },
+  {
+    "idq": 70,
+    "hsk_level": 1,
+    "chinese": "汉字",
+    "burmese": "တရုတ်စာလုံး။",
+    "mnemonic": "ဟန့်ဇစ်",
+    "explanation": "တရုတ်စာ အရေးအသား။",
+    "example": "这个汉字怎么读？",
+    "example2": "我不认识汉字。"
+  },
+  {
+    "idq": 71,
+    "hsk_level": 1,
+    "chinese": "号",
+    "burmese": "ရက်၊ နံပါတ်။",
+    "mnemonic": "ဟောက်",
+    "explanation": "ရက်စွဲ သို့မဟုတ် အမှတ်စဉ်။",
+    "example": "今天是一号。",
+    "example2": "你的电话号码是多少？"
+  },
+  {
+    "idq": 72,
+    "hsk_level": 1,
+    "chinese": "好",
+    "burmese": "ကောင်းသော၊ ကောင်းပြီ။",
+    "mnemonic": "ဟောင်",
+    "explanation": "အရည်အသွေး ကောင်းမွန်ခြင်း။",
+    "example": "今天天气很好。",
+    "example2": "你好！"
+  },
+  {
+    "idq": 73,
+    "hsk_level": 1,
+    "chinese": "好吃",
+    "burmese": "အရသာရှိသော (စား၍ကောင်းသော)။",
+    "mnemonic": "ဟောင်ချစ်",
+    "explanation": "စားစရာ အရသာကောင်းမွန်ခြင်း။",
+    "example": "中国菜很好吃。",
+    "example2": "这个苹果很好吃。"
+  },
+  {
+    "idq": 74,
+    "hsk_level": 1,
+    "chinese": "好看",
+    "burmese": "လှပသော၊ ကြည့်ကောင်းသော။",
+    "mnemonic": "ဟောင်ခန့်",
+    "explanation": "အမြင်လှပခြင်း။",
+    "example": "这部电影很好看。",
+    "example2": "她的衣服很好看。"
+  },
+  {
+    "idq": 75,
+    "hsk_level": 1,
+    "chinese": "好听",
+    "burmese": "နားထောင်လို့ကောင်းသော။",
+    "mnemonic": "ဟောင်ထင်း",
+    "explanation": "အသံသာယာခြင်း။",
+    "example": "这首歌很好听。",
+    "example2": "你的名字很好听。"
+  },
+  {
+    "idq": 76,
+    "hsk_level": 1,
+    "chinese": "好玩儿",
+    "burmese": "ပျော်စရာကောင်းသော။",
+    "mnemonic": "ဟောင်ဝါး",
+    "explanation": "ဆော့ကစားရန် ပျော်ရွှင်ဖွယ်ကောင်းခြင်း။",
+    "example": "这个游戏很好玩儿。",
+    "example2": "北京很好玩儿。"
+  },
+  {
+    "idq": 77,
+    "hsk_level": 1,
+    "chinese": "和",
+    "burmese": "နှင့်။",
+    "mnemonic": "ဟယ်",
+    "explanation": "အရာနှစ်ခု သို့မဟုတ် လူနှစ်ဦးကို ဆက်သွယ်ပေးသောစကား။",
+    "example": "我和你。",
+    "example2": "水和茶。"
+  },
+  {
+    "idq": 78,
+    "hsk_level": 1,
+    "chinese": "喝",
+    "burmese": "သောက်သည်။",
+    "mnemonic": "ဟော",
+    "explanation": "အရည်တစ်ခုခုကို သောက်ခြင်း။",
+    "example": "我喝水。",
+    "example2": "请喝茶。"
+  },
+  {
+    "idq": 79,
+    "hsk_level": 1,
+    "chinese": "很",
+    "burmese": "အလွန်၊ အရမ်း။",
+    "mnemonic": "ဟန်",
+    "explanation": "နာမဝိသေသနကို အထူးပြုသောစကားလုံး။",
+    "example": "我很好。",
+    "example2": "今天很冷。"
+  },
+  {
+    "idq": 80,
+    "hsk_level": 1,
+    "chinese": "后",
+    "burmese": "နောက်။",
+    "mnemonic": "ဟို့",
+    "explanation": "အချိန် သို့မဟုတ် နေရာ၏ အနောက်ဘက်။",
+    "example": "五分钟后。",
+    "example2": "他在我后边。"
+  },
+  {
+    "idq": 81,
+    "hsk_level": 1,
+    "chinese": "回",
+    "burmese": "ပြန်သည်။",
+    "mnemonic": "ဟွေ့",
+    "explanation": "မူလနေရာသို့ ပြန်လည်ရောက်ရှိခြင်း။",
+    "example": "我回家了。",
+    "example2": "他什么时候回来？"
+  },
+  {
+    "idq": 82,
+    "hsk_level": 1,
+    "chinese": "会",
+    "burmese": "တတ်သည်၊ နိုင်သည်၊ ဖြစ်လိမ့်မည်။",
+    "mnemonic": "ဟွေ့",
+    "explanation": "စွမ်းရည် သို့မဟုတ် အနာဂတ်တွင်ဖြစ်မည့်အရာ။",
+    "example": "我会说汉语。",
+    "example2": "明天会下雨。"
+  },
+  {
+    "idq": 83,
+    "hsk_level": 1,
+    "chinese": "火车",
+    "burmese": "ရထား။",
+    "mnemonic": "ဟွာချား",
+    "explanation": "သံလမ်းပေါ်ပြေးသောယာဉ်။",
+    "example": "我坐火车去。",
+    "example2": "火车在哪儿？"
+  },
+  {
+    "idq": 84,
+    "hsk_level": 1,
+    "chinese": "几",
+    "burmese": "ဘယ်လောက်၊ အနည်းငယ် (ဆယ်ဂဏန်းအောက်)။",
+    "mnemonic": "ဂျီ",
+    "explanation": "အရေအတွက် အနည်းငယ်ကို မေးမြန်းရာတွင်သုံးသည်။",
+    "example": "几点了？",
+    "example2": "你有几本书？"
+  },
+  {
+    "idq": 85,
+    "hsk_level": 1,
+    "chinese": "家",
+    "burmese": "အိမ်၊ မိသားစု။",
+    "mnemonic": "ကျား",
+    "explanation": "မိမိနေထိုင်ရာအိမ် သို့မဟုတ် မိသားစု။",
+    "example": "我在家。",
+    "example2": "他家很大。"
+  },
+  {
+    "idq": 86,
+    "hsk_level": 1,
+    "chinese": "见",
+    "burmese": "တွေ့သည်။",
+    "mnemonic": "ကျန့်",
+    "explanation": "လူတစ်ဦးတစ်ယောက်နှင့် တွေ့ဆုံခြင်း။",
+    "example": "明天见。",
+    "example2": "我想见你。"
+  },
+  {
+    "idq": 87,
+    "hsk_level": 1,
+    "chinese": "件",
+    "burmese": "ထည် (အဝတ်အစားရေတွက်သံ)။",
+    "mnemonic": "ကျန့်",
+    "explanation": "အဝတ်အစား သို့မဟုတ် ကိစ္စရပ်များကို ရေတွက်ရာတွင်သုံးသည်။",
+    "example": "一件衣服。",
+    "example2": "一件事。"
+  },
+  {
+    "idq": 88,
+    "hsk_level": 1,
+    "chinese": "叫",
+    "burmese": "ခေါ်သည်၊ အမည်ရသည်။",
+    "mnemonic": "ကျောက်",
+    "explanation": "အမည်နာမ ခေါ်ဆိုခြင်း သို့မဟုတ် အသံပြုခြင်း။",
+    "example": "我叫玛丽。",
+    "example2": "有人叫你。"
+  },
+  {
+    "idq": 89,
+    "hsk_level": 1,
+    "chinese": "饺子",
+    "burmese": "ဖက်ထုပ်၊ တရုတ်ဖက်ထုပ်။",
+    "mnemonic": "ကျောက်ဇစ်",
+    "explanation": "အသားနှင့်ဟင်းသီးဟင်းရွက်သွတ်ထားသော အစားအစာ။",
+    "example": "我爱吃饺子。",
+    "example2": "妈妈做饺子。"
+  },
+  {
+    "idq": 90,
+    "hsk_level": 1,
+    "chinese": "家人",
+    "burmese": "မိသားစုဝင်။",
+    "mnemonic": "ကျားရန်",
+    "explanation": "မိမိအိမ်မှ မိသားစုဝင်များ။",
+    "example": "我爱我的家人。",
+    "example2": "他的家人在中国。"
+  },
+  {
+    "idq": 91,
+    "hsk_level": 1,
+    "chinese": "鸡蛋",
+    "burmese": "ကြက်ဥ။",
+    "mnemonic": "ဂျီးတန့်",
+    "explanation": "ကြက်မှရသောဥ။",
+    "example": "我吃鸡蛋。",
+    "example2": "这是一个鸡蛋。"
+  },
+  {
+    "idq": 92,
+    "hsk_level": 1,
+    "chinese": "姐姐",
+    "burmese": "အစ်မ။",
+    "mnemonic": "ကျဲကျဲ",
+    "explanation": "မိမိထက်ကြီးသော မိန်းကလေးမောင်နှမ။",
+    "example": "我没有姐姐。",
+    "example2": "姐姐很漂亮。"
+  },
+  {
+    "idq": 93,
+    "hsk_level": 1,
+    "chinese": "今年",
+    "burmese": "ဒီနှစ်။",
+    "mnemonic": "ဂျင်းနျန်",
+    "explanation": "ယခုလက်ရှိနှစ်။",
+    "example": "今年我很忙。",
+    "example2": "他今年十八岁。"
+  },
+  {
+    "idq": 94,
+    "hsk_level": 1,
+    "chinese": "今天",
+    "burmese": "ဒီနေ့။",
+    "mnemonic": "ဂျင်းထျန်း",
+    "explanation": "ယခုလက်ရှိနေ့။",
+    "example": "今天星期几？",
+    "example2": "今天很热。"
+  },
+  {
+    "idq": 95,
+    "hsk_level": 1,
+    "chinese": "九",
+    "burmese": "ကိုး (၉)။",
+    "mnemonic": "ဂျို",
+    "explanation": "ကိန်းဂဏန်း (၉)။",
+    "example": "今天九号。",
+    "example2": "我有九本书。"
+  },
+  {
+    "idq": 96,
+    "hsk_level": 1,
+    "chinese": "觉得",
+    "burmese": "ထင်သည်၊ ခံစားရသည်။",
+    "mnemonic": "ကျွဲတ",
+    "explanation": "ကိုယ့်အမြင် သို့မဟုတ် ခံစားချက်။",
+    "example": "我觉得很冷。",
+    "example2": "你觉得呢？"
+  },
+  {
+    "idq": 97,
+    "hsk_level": 1,
+    "chinese": "开",
+    "burmese": "ဖွင့်သည်၊ မောင်းသည်။",
+    "mnemonic": "ခိုင်း",
+    "explanation": "တံခါးဖွင့်ခြင်း သို့မဟုတ် ကားမောင်းခြင်း။",
+    "example": "请开门。",
+    "example2": "他开出租车。"
+  },
+  {
+    "idq": 98,
+    "hsk_level": 1,
+    "chinese": "开车",
+    "burmese": "ကားမောင်းသည်။",
+    "mnemonic": "ခိုင်းချား",
+    "explanation": "ယာဉ်တစ်စီးကို မောင်းနှင်ခြင်း။",
+    "example": "我会开车。",
+    "example2": "开车要小心。"
+  },
+  {
+    "idq": 99,
+    "hsk_level": 1,
+    "chinese": "看",
+    "burmese": "ကြည့်သည်၊ ဖတ်သည်။",
+    "mnemonic": "ခန့်",
+    "explanation": "မျက်စိဖြင့်မြင်ခြင်း သို့မဟုတ် စာဖတ်ခြင်း။",
+    "example": "我看电影。",
+    "example2": "他在看书。"
+  },
+  {
+    "idq": 100,
+    "hsk_level": 1,
+    "chinese": "看病",
+    "burmese": "ဆေးခန်းပြသည်၊ ဆရာဝန်ပြသည်။",
+    "mnemonic": "ခန့်ပင့်",
+    "explanation": "နေမကောင်း၍ ဆေးကုသမှုခံယူခြင်း။",
+    "example": "我要去看病。",
+    "example2": "他在医院看病。"
+  },
+  {
+    "idq": 101,
+    "hsk_level": 1,
+    "chinese": "看见",
+    "burmese": "မြင်သည်။",
+    "mnemonic": "ခန့်ကျန့်",
+    "explanation": "တစ်စုံတစ်ခုကို မျက်စိဖြင့် တွေ့မြင်ခြင်း။",
+    "example": "我看见他了。",
+    "example2": "你看见我的书了吗？"
+  },
+  {
+    "idq": 102,
+    "hsk_level": 1,
+    "chinese": "课",
+    "burmese": "သင်ခန်းစာ၊ အတန်း။",
+    "mnemonic": "ခဲ",
+    "explanation": "ကျောင်းတွင်သင်ယူသော သင်ခန်းစာ။",
+    "example": "今天有汉语课。",
+    "example2": "我们在上课。"
+  },
+  {
+    "idq": 103,
+    "hsk_level": 1,
+    "chinese": "可以",
+    "burmese": "ရတယ်၊ နိုင်တယ်။",
+    "mnemonic": "ခယ်ရီ",
+    "explanation": "ခွင့်ပြုချက် သို့မဟုတ် ဖြစ်နိုင်စွမ်း။",
+    "example": "我可以坐这儿吗？",
+    "example2": "你可以去。"
+  },
+  {
+    "idq": 104,
+    "hsk_level": 1,
+    "chinese": "口",
+    "burmese": "ပါးစပ်၊ ယောက် (မိသားစုဝင်ရေတွက်သံ)။",
+    "mnemonic": "ခို",
+    "explanation": "ပါးစပ် သို့မဟုတ် အိမ်ထောင်စုဝင်အရေအတွက်။",
+    "example": "你家有几口人？",
+    "example2": "他喝了一口水。"
+  },
+  {
+    "idq": 105,
+    "hsk_level": 1,
+    "chinese": "块",
+    "burmese": "တုံး (ပိုက်ဆံ သို့မဟုတ် အပိုင်းအစရေတွက်သံ)။",
+    "mnemonic": "ခွိုက်",
+    "explanation": "ငွေကြေး သို့မဟုတ် အတုံးအခဲရေတွက်သံ။",
+    "example": "五块钱。",
+    "example2": "一块蛋糕。"
+  },
+  {
+    "idq": 106,
+    "hsk_level": 1,
+    "chinese": "来",
+    "burmese": "လာသည်။",
+    "mnemonic": "လိုင်",
+    "explanation": "မိမိရှိရာသို့ ရောက်လာခြင်း။",
+    "example": "他明天来。",
+    "example2": "请来这里。"
+  },
+  {
+    "idq": 107,
+    "hsk_level": 1,
+    "chinese": "老师",
+    "burmese": "ဆရာ၊ ဆရာမ။",
+    "mnemonic": "လောင်ရှီး",
+    "explanation": "ပညာသင်ကြားပေးသူ။",
+    "example": "这是我们的老师。",
+    "example2": "老师好！"
+  },
+  {
+    "idq": 108,
+    "hsk_level": 1,
+    "chinese": "了",
+    "burmese": "ပြီ (အတိတ်ပြပစ္စည်း)။",
+    "mnemonic": "လ",
+    "explanation": "လုပ်ဆောင်ချက် ပြီးမြောက်ကြောင်း ပြသခြင်း။",
+    "example": "我吃了。",
+    "example2": "下雨了。"
+  },
+  {
+    "idq": 109,
+    "hsk_level": 1,
+    "chinese": "冷",
+    "burmese": "အေးသော။",
+    "mnemonic": "လန်",
+    "explanation": "အပူချိန်ကျဆင်းခြင်း။",
+    "example": "今天很冷。",
+    "example2": "我觉得冷。"
+  },
+  {
+    "idq": 110,
+    "hsk_level": 1,
+    "chinese": "里",
+    "burmese": "ထဲ၊ အတွင်း။",
+    "mnemonic": "လီ",
+    "explanation": "အရာတစ်ခုခု၏ အတွင်းပိုင်း။",
+    "example": "杯子里有水。",
+    "example2": "他在学校里。"
+  },
+  {
+    "idq": 111,
+    "hsk_level": 1,
+    "chinese": "两",
+    "burmese": "နှစ် (၂) ခု။",
+    "mnemonic": "လျန်",
+    "explanation": "အရေအတွက် ၂ ခုကို ရေတွက်ရာတွင်သုံးသည်။",
+    "example": "两个人。",
+    "example2": "两本书。"
+  },
+  {
+    "idq": 112,
+    "hsk_level": 1,
+    "chinese": "零",
+    "burmese": "သုည (၀)။",
+    "mnemonic": "လင်",
+    "explanation": "ကိန်းဂဏန်း (၀)။",
+    "example": "零度。",
+    "example2": "一零一号房间。"
+  },
+  {
+    "idq": 113,
+    "hsk_level": 1,
+    "chinese": "六",
+    "burmese": "ခြောက် (၆)။",
+    "mnemonic": "လျို့",
+    "explanation": "ကိန်းဂဏန်း (၆)။",
+    "example": "六个人。",
+    "example2": "六点十分。"
+  },
+  {
+    "idq": 114,
+    "hsk_level": 1,
+    "chinese": "吗",
+    "burmese": "လား။",
+    "mnemonic": "မာ",
+    "explanation": "မေးခွန်းမေးရာတွင် သုံးသောစကားလုံး။",
+    "example": "你好吗？",
+    "example2": "你是学生吗？"
+  },
+  {
+    "idq": 115,
+    "hsk_level": 1,
+    "chinese": "卖",
+    "burmese": "ရောင်းသည်။",
+    "mnemonic": "မိုက်",
+    "explanation": "ကုန်ပစ္စည်းရောင်းချခြင်း။",
+    "example": "他卖水果。",
+    "example2": "这个怎么卖？"
+  },
+  {
+    "idq": 116,
+    "hsk_level": 1,
+    "chinese": "买",
+    "burmese": "ဝယ်သည်။",
+    "mnemonic": "မိုင်",
+    "explanation": "ကုန်ပစ္စည်းဝယ်ယူခြင်း။",
+    "example": "我要买书。",
+    "example2": "他买了车。"
+  },
+  {
+    "idq": 117,
+    "hsk_level": 1,
+    "chinese": "妈妈",
+    "burmese": "အမေ။",
+    "mnemonic": "မားမာ",
+    "explanation": "မိမိ၏မိခင်။",
+    "example": "妈妈去医院了。",
+    "example2": "我爱妈妈。"
+  },
+  {
+    "idq": 118,
+    "hsk_level": 1,
+    "chinese": "忙",
+    "burmese": "အလုပ်များသော။",
+    "mnemonic": "မန်",
+    "explanation": "အားလပ်ချိန်မရှိခြင်း။",
+    "example": "我今天很忙。",
+    "example2": "你忙吗？"
+  },
+  {
+    "idq": 119,
+    "hsk_level": 1,
+    "chinese": "猫",
+    "burmese": "ကြောင်။",
+    "mnemonic": "မောင်း",
+    "explanation": "အိမ်မွေးတိရစ္ဆာန် ကြောင်။",
+    "example": "这只猫很小。",
+    "example2": "我喜欢猫。"
+  },
+  {
+    "idq": 120,
+    "hsk_level": 1,
+    "chinese": "没关系",
+    "burmese": "ကိစ္စမရှိပါဘူး။",
+    "mnemonic": "မေးကွမ်းရှိ",
+    "explanation": "တောင်းပန်ခြင်းကို ခွင့်လွှတ်ကြောင်း ပြန်လည်ဖြေကြားခြင်း။",
+    "example": "对不起。——没关系。",
+    "example2": "没关系，我能做。"
+  },
+  {
+    "idq": 121,
+    "hsk_level": 1,
+    "chinese": "妹妹",
+    "burmese": "ညီမ။",
+    "mnemonic": "မေ့မေ့",
+    "explanation": "မိမိထက်ငယ်သော မိန်းကလေးမောင်နှမ။",
+    "example": "我的妹妹很可爱。",
+    "example2": "妹妹去学校了。"
+  },
+  {
+    "idq": 122,
+    "hsk_level": 1,
+    "chinese": "没事",
+    "burmese": "ကိစ္စမရှိဘူး၊ အဆင်ပြေတယ်။",
+    "mnemonic": "မေးရှစ်",
+    "explanation": "ပြဿနာမရှိကြောင်း ဖော်ပြခြင်း။",
+    "example": "你没事吧？",
+    "example2": "没事，不用谢。"
+  },
+  {
+    "idq": 123,
+    "hsk_level": 1,
+    "chinese": "没有",
+    "burmese": "မရှိဘူး။",
+    "mnemonic": "မေးရို",
+    "explanation": "တစ်စုံတစ်ခုကို မပိုင်ဆိုင်ကြောင်း ပြသခြင်း။",
+    "example": "我没有钱。",
+    "example2": "他没有来。"
+  },
+  {
+    "idq": 124,
+    "hsk_level": 1,
+    "chinese": "们",
+    "burmese": "တို့၊ များ (အများကိန်း)။",
+    "mnemonic": "မန်",
+    "explanation": "လူနာမ်စားများကို အများကိန်းဖြစ်စေရန် သုံးသည်။",
+    "example": "我们是朋友。",
+    "example2": "他们很好。"
+  },
+  {
+    "idq": 125,
+    "hsk_level": 1,
+    "chinese": "面包",
+    "burmese": "ပေါင်မုန့်။",
+    "mnemonic": "မျန့်ပေါင်း",
+    "explanation": "ဂျုံဖြင့်ပြုလုပ်ထားသော မုန့်။",
+    "example": "我吃面包。",
+    "example2": "买一块面包。"
+  },
+  {
+    "idq": 126,
+    "hsk_level": 1,
+    "chinese": "面条儿",
+    "burmese": "ခေါက်ဆွဲ။",
+    "mnemonic": "မျန့်ထျောက်(ရ်)",
+    "explanation": "ဂျုံဖြင့်ပြုလုပ်ထားသော ခေါက်ဆွဲ။",
+    "example": "我想吃面条儿。",
+    "example2": "面条儿很好吃。"
+  },
+  {
+    "idq": 127,
+    "hsk_level": 1,
+    "chinese": "米饭",
+    "burmese": "ထမင်း။",
+    "mnemonic": "မီဖန့်",
+    "explanation": "ချက်ပြုတ်ထားသော ထမင်းဖြူ။",
+    "example": "我不吃米饭。",
+    "example2": "他吃了两碗米饭。"
+  },
+  {
+    "idq": 128,
+    "hsk_level": 1,
+    "chinese": "明年",
+    "burmese": "နောက်နှစ်။",
+    "mnemonic": "မင်နျန်",
+    "explanation": "လာမည့်နှစ်။",
+    "example": "明年我去中国。",
+    "example2": "他明年毕业。"
+  },
+  {
+    "idq": 129,
+    "hsk_level": 1,
+    "chinese": "明天",
+    "burmese": "မနက်ဖြန်။",
+    "mnemonic": "မင်ထျန်း",
+    "explanation": "လာမည့်နေ့။",
+    "example": "明天见。",
+    "example2": "明天不下雨。"
+  },
+  {
+    "idq": 130,
+    "hsk_level": 1,
+    "chinese": "名字",
+    "burmese": "နာမည်။",
+    "mnemonic": "မင်ဇစ်",
+    "explanation": "လူ သို့မဟုတ် အရာဝတ္ထု၏အမည်။",
+    "example": "你叫什么名字？",
+    "example2": "他的名字很好听。"
+  },
+  {
+    "idq": 131,
+    "hsk_level": 1,
+    "chinese": "那",
+    "burmese": "ထို၊ အဲဒီ။",
+    "mnemonic": "န",
+    "explanation": "အဝေးရှိအရာကို ညွှန်ပြခြင်း။",
+    "example": "那是我的书。",
+    "example2": "那个人是谁？"
+  },
+  {
+    "idq": 132,
+    "hsk_level": 1,
+    "chinese": "哪",
+    "burmese": "ဘယ်။",
+    "mnemonic": "နာ",
+    "explanation": "ရွေးချယ်ရန် မေးမြန်းခြင်း။",
+    "example": "你是哪国人？",
+    "example2": "哪本书是你的？"
+  },
+  {
+    "idq": 133,
+    "hsk_level": 1,
+    "chinese": "那边",
+    "burmese": "ဟိုဘက်။",
+    "mnemonic": "နပြန်း",
+    "explanation": "အဝေးရှိ နေရာဘက်။",
+    "example": "他在那边。",
+    "example2": "看那边。"
+  },
+  {
+    "idq": 134,
+    "hsk_level": 1,
+    "chinese": "那个",
+    "burmese": "ဟိုဟာ၊ အဲဒါ။",
+    "mnemonic": "နက",
+    "explanation": "အဝေးရှိ အရာတစ်ခု။",
+    "example": "我要那个。",
+    "example2": "那个杯子不贵。"
+  },
+  {
+    "idq": 135,
+    "hsk_level": 1,
+    "chinese": "哪个",
+    "burmese": "ဘယ်ဟာလဲ။",
+    "mnemonic": "နာက",
+    "explanation": "ရွေးချယ်ရန်မေးသောစကား။",
+    "example": "你喜欢哪个？",
+    "example2": "哪个是你的？"
+  },
+  {
+    "idq": 136,
+    "hsk_level": 1,
+    "chinese": "那里",
+    "burmese": "ဟိုနေရာ။",
+    "mnemonic": "နလီ",
+    "explanation": "အဝေးရှိနေရာ။",
+    "example": "我在那里工作。",
+    "example2": "那里很冷。"
+  },
+  {
+    "idq": 137,
+    "hsk_level": 1,
+    "chinese": "哪里",
+    "burmese": "ဘယ်နေရာလဲ။",
+    "mnemonic": "နာလီ",
+    "explanation": "နေရာကိုမေးမြန်းခြင်း။",
+    "example": "你要去哪里？",
+    "example2": "哪里可以买书？"
+  },
+  {
+    "idq": 138,
+    "hsk_level": 1,
+    "chinese": "男",
+    "burmese": "ယောက်ျားလေး။",
+    "mnemonic": "နန်",
+    "explanation": "အမျိုးသား။",
+    "example": "男孩子。",
+    "example2": "那个男人是谁？"
+  },
+  {
+    "idq": 139,
+    "hsk_level": 1,
+    "chinese": "男朋友",
+    "burmese": "ရည်းစား (ကောင်လေး)။",
+    "mnemonic": "နန်ဖန်ယို",
+    "explanation": "မိန်းကလေးတစ်ဦး၏ ချစ်သူ။",
+    "example": "这是我男朋友。",
+    "example2": "她没有男朋友。"
+  },
+  {
+    "idq": 140,
+    "hsk_level": 1,
+    "chinese": "那儿",
+    "burmese": "ဟိုနေရာ။",
+    "mnemonic": "န(ရ်)",
+    "explanation": "အဝေးရှိနေရာ (မြောက်ပိုင်းလေသံ)။",
+    "example": "他在那儿。",
+    "example2": "那儿没有人。"
+  },
+  {
+    "idq": 141,
+    "hsk_level": 1,
+    "chinese": "哪儿",
+    "burmese": "ဘယ်နေရာလဲ။",
+    "mnemonic": "နာ(ရ်)",
+    "explanation": "နေရာမေးမြန်းခြင်း (မြောက်ပိုင်းလေသံ)။",
+    "example": "你去哪儿？",
+    "example2": "我的衣服在哪儿？"
+  },
+  {
+    "idq": 142,
+    "hsk_level": 1,
+    "chinese": "那些",
+    "burmese": "ထိုအရာများ၊ အဲဒါတွေ။",
+    "mnemonic": "နရှဲ့",
+    "explanation": "အဝေးရှိ အရာများ။",
+    "example": "那些书是我的。",
+    "example2": "那些人是谁？"
+  },
+  {
+    "idq": 143,
+    "hsk_level": 1,
+    "chinese": "哪些",
+    "burmese": "ဘယ်အရာတွေလဲ။",
+    "mnemonic": "နာရှဲ့",
+    "explanation": "အရာများစွာထဲမှ ရွေးချယ်မေးမြန်းခြင်း။",
+    "example": "你买哪些？",
+    "example2": "哪些是好吃的？"
+  },
+  {
+    "idq": 144,
+    "hsk_level": 1,
+    "chinese": "呢",
+    "burmese": "ကော၊ လဲ။",
+    "mnemonic": "န",
+    "explanation": "ပြန်လည်မေးခွန်းထုတ်ရန် သုံးသောစကားလုံး။",
+    "example": "我很好，你呢？",
+    "example2": "我的书呢？"
+  },
+  {
+    "idq": 145,
+    "hsk_level": 1,
+    "chinese": "能",
+    "burmese": "နိုင်သည်၊ စွမ်းဆောင်နိုင်သည်။",
+    "mnemonic": "နန်",
+    "explanation": "ပြုလုပ်နိုင်စွမ်း သို့မဟုတ် ခွင့်ပြုချက်။",
+    "example": "你能来吗？",
+    "example2": "我不能说。"
+  },
+  {
+    "idq": 146,
+    "hsk_level": 1,
+    "chinese": "你",
+    "burmese": "မင်း၊ နင်။",
+    "mnemonic": "နီ",
+    "explanation": "ဒုတိယပုဂ္ဂိုလ် နာမ်စား။",
+    "example": "你是学生。",
+    "example2": "我认识你。"
+  },
+  {
+    "idq": 147,
+    "hsk_level": 1,
+    "chinese": "你好",
+    "burmese": "မင်္ဂလာပါ။",
+    "mnemonic": "နီဟောင်",
+    "explanation": "နှုတ်ဆက်စကား။",
+    "example": "老师，你好！",
+    "example2": "你好，认识你很高兴。"
+  },
+  {
+    "idq": 148,
+    "hsk_level": 1,
+    "chinese": "年",
+    "burmese": "နှစ်။",
+    "mnemonic": "နျန်",
+    "explanation": "အချိန်ကာလ (နှစ်)။",
+    "example": "一年有十二个月。",
+    "example2": "他来中国三年了。"
+  },
+  {
+    "idq": 149,
+    "hsk_level": 1,
+    "chinese": "你们",
+    "burmese": "မင်းတို့၊ နင်တို့။",
+    "mnemonic": "နီမန်",
+    "explanation": "ဒုတိယပုဂ္ဂိုလ် အများကိန်း။",
+    "example": "你们去哪儿？",
+    "example2": "你们好！"
+  },
+  {
+    "idq": 150,
+    "hsk_level": 1,
+    "chinese": "您",
+    "burmese": "လူကြီးမင်း၊ ခင်ဗျား (ယဉ်ကျေးသော)။",
+    "mnemonic": "နင်",
+    "explanation": "ယဉ်ကျေးစွာသုံးသော ဒုတိယပုဂ္ဂိုလ်။",
+    "example": "您好！",
+    "example2": "请问您找谁？"
+  },
+  {
+    "idq": 151,
+    "hsk_level": 1,
+    "chinese": "牛奶",
+    "burmese": "နွားနို့။",
+    "mnemonic": "နျိုးနိုင်",
+    "explanation": "နွားမှရသောနို့။",
+    "example": "我早上喝牛奶。",
+    "example2": "热牛奶。"
+  },
+  {
+    "idq": 152,
+    "hsk_level": 1,
+    "chinese": "女",
+    "burmese": "မိန်းကလေး။",
+    "mnemonic": "နွီ",
+    "explanation": "အမျိုးသမီး။",
+    "example": "女孩子。",
+    "example2": "她是女医生。"
+  },
+  {
+    "idq": 153,
+    "hsk_level": 1,
+    "chinese": "女儿",
+    "burmese": "သမီး။",
+    "mnemonic": "နွီအာ့",
+    "explanation": "မိမိ၏ သမီးမိန်းကလေး။",
+    "example": "这是我的女儿。",
+    "example2": "女儿很漂亮。"
+  },
+  {
+    "idq": 154,
+    "hsk_level": 1,
+    "chinese": "女朋友",
+    "burmese": "ရည်းစား (ကောင်မလေး)။",
+    "mnemonic": "နွီဖန်ယို",
+    "explanation": "ယောက်ျားလေးတစ်ဦး၏ ချစ်သူ။",
+    "example": "他有女朋友。",
+    "example2": "他的女朋友是中国人。"
+  },
+  {
+    "idq": 155,
+    "hsk_level": 1,
+    "chinese": "女士",
+    "burmese": "အမျိုးသမီး (ယဉ်ကျေးသောခေါ်ဝေါ်မှု)။",
+    "mnemonic": "နွီရှစ်",
+    "explanation": "အမျိုးသမီးများကို လေးစားစွာခေါ်ခြင်း။",
+    "example": "女士们，先生们。",
+    "example2": "王女士你好。"
+  },
+  {
+    "idq": 156,
+    "hsk_level": 1,
+    "chinese": "朋友",
+    "burmese": "သူငယ်ချင်း။",
+    "mnemonic": "ဖန်ယို",
+    "explanation": "မိတ်ဆွေ၊ အပေါင်းအသင်း။",
+    "example": "他是我朋友。",
+    "example2": "我有很多朋友。"
+  },
+  {
+    "idq": 157,
+    "hsk_level": 1,
+    "chinese": "便宜",
+    "burmese": "ဈေးပေါသော။",
+    "mnemonic": "ဖျန်ရီ",
+    "explanation": "တန်ဖိုးနည်းခြင်း။",
+    "example": "这个很便宜。",
+    "example2": "便宜一点儿吧。"
+  },
+  {
+    "idq": 158,
+    "hsk_level": 1,
+    "chinese": "漂亮",
+    "burmese": "လှပသော။",
+    "mnemonic": "ဖျောက်လျန်",
+    "explanation": "အမြင်လှပခြင်း။",
+    "example": "你的衣服很漂亮。",
+    "example2": "她是个漂亮的女孩。"
+  },
+  {
+    "idq": 159,
+    "hsk_level": 1,
+    "chinese": "苹果",
+    "burmese": "ပန်းသီး။",
+    "mnemonic": "ဖင်ကွော",
+    "explanation": "အသီးအနှံတစ်မျိုး။",
+    "example": "我爱吃苹果。",
+    "example2": "苹果多少钱一斤？"
+  },
+  {
+    "idq": 160,
+    "hsk_level": 1,
+    "chinese": "七",
+    "burmese": "ခုနစ် (၇)။",
+    "mnemonic": "ချီး",
+    "explanation": "ကိန်းဂဏန်း (၇)။",
+    "example": "七本书。",
+    "example2": "今天七号。"
+  },
+  {
+    "idq": 161,
+    "hsk_level": 1,
+    "chinese": "前",
+    "burmese": "ရှေ့၊ အရင်။",
+    "mnemonic": "ချန်",
+    "explanation": "အချိန် သို့မဟုတ် နေရာ၏ ရှေ့ဘက်။",
+    "example": "前天我没去。",
+    "example2": "前面那个人是我朋友。"
+  },
+  {
+    "idq": 162,
+    "hsk_level": 1,
+    "chinese": "钱",
+    "burmese": "ပိုက်ဆံ။",
+    "mnemonic": "ချန်",
+    "explanation": "ငွေကြေး။",
+    "example": "多少钱？",
+    "example2": "我没钱。"
+  },
+  {
+    "idq": 163,
+    "hsk_level": 1,
+    "chinese": "手",
+    "burmese": "လက်။",
+    "mnemonic": "ရှို",
+    "explanation": "ခန္ဓာကိုယ်အစိတ်အပိုင်း လက်။",
+    "example": "洗手。",
+    "example2": "我的手很冷。"
+  },
+  {
+    "idq": 164,
+    "hsk_level": 1,
+    "chinese": "起床",
+    "burmese": "အိပ်ရာထသည်။",
+    "mnemonic": "ချီချွမ်",
+    "explanation": "အိပ်ရာမှ နိုးထခြင်း။",
+    "example": "我早上七点起床。",
+    "example2": "他还没起床。"
+  },
+  {
+    "idq": 165,
+    "hsk_level": 1,
+    "chinese": "请",
+    "burmese": "ကျေးဇူးပြု၍၊ ဖိတ်ကြားသည်။",
+    "mnemonic": "ချင်",
+    "explanation": "ယဉ်ကျေးစွာ တောင်းဆိုခြင်း သို့မဟုတ် ဖိတ်ခေါ်ခြင်း။",
+    "example": "请坐。",
+    "example2": "我请你吃饭。"
+  },
+  {
+    "idq": 166,
+    "hsk_level": 1,
+    "chinese": "请问",
+    "burmese": "တောင်းပန်ပါတယ် (မေးခွန်းမမေးမီသုံးသည်)။",
+    "mnemonic": "ချင်ဝင့်",
+    "explanation": "သူတစ်ပါးကို မေးခွန်းမမေးမီ ယဉ်ကျေးစွာသုံးသောစကား။",
+    "example": "请问，车站在哪儿？",
+    "example2": "请问您是哪位？"
+  },
+  {
+    "idq": 167,
+    "hsk_level": 1,
+    "chinese": "去",
+    "burmese": "သွားသည်။",
+    "mnemonic": "ချွိ",
+    "explanation": "တစ်နေရာသို့ သွားရောက်ခြင်း။",
+    "example": "我去学校。",
+    "example2": "你去哪儿？"
+  },
+  {
+    "idq": 168,
+    "hsk_level": 1,
+    "chinese": "去年",
+    "burmese": "မနှစ်က။",
+    "mnemonic": "ချွိနျန်",
+    "explanation": "လွန်ခဲ့သောနှစ်။",
+    "example": "去年我在中国。",
+    "example2": "他去年毕业了。"
+  },
+  {
+    "idq": 169,
+    "hsk_level": 1,
+    "chinese": "热",
+    "burmese": "ပူသော။",
+    "mnemonic": "ရဲ",
+    "explanation": "အပူချိန်မြင့်မားခြင်း။",
+    "example": "今天天气很热。",
+    "example2": "我想喝热水。"
+  },
+  {
+    "idq": 170,
+    "hsk_level": 1,
+    "chinese": "人",
+    "burmese": "လူ။",
+    "mnemonic": "ရန်",
+    "explanation": "လူသား။",
+    "example": "那个人是谁？",
+    "example2": "我是中国人。"
+  },
+  {
+    "idq": 171,
+    "hsk_level": 1,
+    "chinese": "认识",
+    "burmese": "သိကျွမ်းသည်။",
+    "mnemonic": "ရန့်ရှစ်",
+    "explanation": "တစ်ဦးတစ်ယောက်ကို သိရှိခြင်း။",
+    "example": "很高兴认识你。",
+    "example2": "我不认识他。"
+  },
+  {
+    "idq": 172,
+    "hsk_level": 1,
+    "chinese": "日",
+    "burmese": "ရက်၊ နေ။",
+    "mnemonic": "ရစ်",
+    "explanation": "ရက်စွဲ သို့မဟုတ် နေမင်း။",
+    "example": "十月一日。",
+    "example2": "星期日。"
+  },
+  {
+    "idq": 173,
+    "hsk_level": 1,
+    "chinese": "三",
+    "burmese": "သုံး (၃)။",
+    "mnemonic": "ဆန်း",
+    "explanation": "ကိန်းဂဏန်း (၃)။",
+    "example": "三个人。",
+    "example2": "三点钟。"
+  },
+  {
+    "idq": 174,
+    "hsk_level": 1,
+    "chinese": "上",
+    "burmese": "အပေါ်၊ တက်သည်။",
+    "mnemonic": "ရှန့်",
+    "explanation": "အပေါ်ဘက် သို့မဟုတ် တက်ရောက်ခြင်း။",
+    "example": "书在桌子上。",
+    "example2": "我们上车吧。"
+  },
+  {
+    "idq": 175,
+    "hsk_level": 1,
+    "chinese": "上班",
+    "burmese": "အလုပ်ဆင်းသည်။",
+    "mnemonic": "ရှန့်ပန်း",
+    "explanation": "အလုပ်သွားလုပ်ခြင်း။",
+    "example": "我明天上班。",
+    "example2": "他去上班了。"
+  },
+  {
+    "idq": 176,
+    "hsk_level": 1,
+    "chinese": "商店",
+    "burmese": "ဈေးဆိုင်။",
+    "mnemonic": "ရှန်းတျန့်",
+    "explanation": "ကုန်ပစ္စည်းများရောင်းချသောဆိုင်။",
+    "example": "我去商店买东西。",
+    "example2": "这家商店的东西很好。"
+  },
+  {
+    "idq": 177,
+    "hsk_level": 1,
+    "chinese": "上课",
+    "burmese": "အတန်းတက်သည်။",
+    "mnemonic": "ရှန့်ခဲ",
+    "explanation": "စာသင်ခန်းသို့ တက်ရောက်ခြင်း။",
+    "example": "我们八点上课。",
+    "example2": "老师在上课。"
+  },
+  {
+    "idq": 178,
+    "hsk_level": 1,
+    "chinese": "上午",
+    "burmese": "မနက်ပိုင်း။",
+    "mnemonic": "ရှန့်ဝူ",
+    "explanation": "နံနက်အချိန်ပိုင်း။",
+    "example": "我上午有课。",
+    "example2": "今天上午下雨了。"
+  },
+  {
+    "idq": 179,
+    "hsk_level": 1,
+    "chinese": "上学",
+    "burmese": "ကျောင်းတက်သည်။",
+    "mnemonic": "ရှန့်ရွှဲ",
+    "explanation": "ကျောင်းသို့သွားခြင်း။",
+    "example": "儿子去上学了。",
+    "example2": "明天不上学。"
+  },
+  {
+    "idq": 180,
+    "hsk_level": 1,
+    "chinese": "少",
+    "burmese": "နည်းသော။",
+    "mnemonic": "ရှောင်",
+    "explanation": "အရေအတွက်နည်းပါးခြင်း။",
+    "example": "今天人很少。",
+    "example2": "不能太少。"
+  },
+  {
+    "idq": 181,
+    "hsk_level": 1,
+    "chinese": "谁",
+    "burmese": "ဘယ်သူလဲ။",
+    "mnemonic": "ရွှေ",
+    "explanation": "လူပုဂ္ဂိုလ်ကို မေးမြန်းခြင်း။",
+    "example": "你是谁？",
+    "example2": "谁在说话？"
+  },
+  {
+    "idq": 182,
+    "hsk_level": 1,
+    "chinese": "生病",
+    "burmese": "ဖျားနာသည်။",
+    "mnemonic": "ရှန်းပင့်",
+    "explanation": "ကျန်းမာရေးမကောင်းဖြစ်ခြင်း။",
+    "example": "他生病了。",
+    "example2": "我没生病。"
+  },
+  {
+    "idq": 183,
+    "hsk_level": 1,
+    "chinese": "什么",
+    "burmese": "ဘာလဲ။",
+    "mnemonic": "ရှန်မ",
+    "explanation": "အရာဝတ္ထု သို့မဟုတ် ကိစ္စရပ်ကို မေးမြန်းခြင်း။",
+    "example": "这是什么？",
+    "example2": "你做什么工作？"
+  },
+  {
+    "idq": 184,
+    "hsk_level": 1,
+    "chinese": "十",
+    "burmese": "ဆယ် (၁၀)။",
+    "mnemonic": "ရှစ်",
+    "explanation": "ကိန်းဂဏန်း (၁၀)။",
+    "example": "十个人。",
+    "example2": "十一月。"
+  },
+  {
+    "idq": 185,
+    "hsk_level": 1,
+    "chinese": "事",
+    "burmese": "ကိစ္စ၊ အလုပ်။",
+    "mnemonic": "ရှစ်",
+    "explanation": "ဖြစ်ရပ် သို့မဟုတ် ကိစ္စ။",
+    "example": "你有什么事？",
+    "example2": "我没事。"
+  },
+  {
+    "idq": 186,
+    "hsk_level": 1,
+    "chinese": "是",
+    "burmese": "ဖြစ်သည်၊ ဟုတ်သည်။",
+    "mnemonic": "ရှစ်",
+    "explanation": "အမှန်ဖြစ်ကြောင်း သို့မဟုတ် အတည်ပြုကြောင်းပြသခြင်း။",
+    "example": "我是学生。",
+    "example2": "是的，我去过。"
+  },
+  {
+    "idq": 187,
+    "hsk_level": 1,
+    "chinese": "时候",
+    "burmese": "အချိန် (အခါ)။",
+    "mnemonic": "ရှစ်ဟို့",
+    "explanation": "အချိန်ကာလကို ဖော်ပြသည်။",
+    "example": "你什么时候来？",
+    "example2": "小时候我很喜欢哭。"
+  },
+  {
+    "idq": 188,
+    "hsk_level": 1,
+    "chinese": "时间",
+    "burmese": "အချိန်။",
+    "mnemonic": "ရှစ်ကျန်း",
+    "explanation": "အချိန်ကာလ။",
+    "example": "我没有时间。",
+    "example2": "时间不早了。"
+  },
+  {
+    "idq": 189,
+    "hsk_level": 1,
+    "chinese": "手机",
+    "burmese": "လက်ကိုင်ဖုန်း။",
+    "mnemonic": "ရှိုဂျီး",
+    "explanation": "သယ်ဆောင်ရလွယ်သော ဆက်သွယ်ရေးကိရိယာ။",
+    "example": "那是我的手机。",
+    "example2": "手机在哪儿？"
+  },
+  {
+    "idq": 190,
+    "hsk_level": 1,
+    "chinese": "书",
+    "burmese": "စာအုပ်။",
+    "mnemonic": "ရှူး",
+    "explanation": "ဖတ်ရန်စာအုပ်။",
+    "example": "我看书。",
+    "example2": "这是一本好书。"
+  },
+  {
+    "idq": 191,
+    "hsk_level": 1,
+    "chinese": "书店",
+    "burmese": "စာအုပ်ဆိုင်။",
+    "mnemonic": "ရှူးတျန့်",
+    "explanation": "စာအုပ်ရောင်းချသောဆိုင်။",
+    "example": "我去书店买书。",
+    "example2": "这家书店很大。"
+  },
+  {
+    "idq": 192,
+    "hsk_level": 1,
+    "chinese": "睡",
+    "burmese": "အိပ်သည်။",
+    "mnemonic": "ရွှေ့",
+    "explanation": "အိပ်စက်ခြင်း။",
+    "example": "我要睡了。",
+    "example2": "早点睡吧。"
+  },
+  {
+    "idq": 193,
+    "hsk_level": 1,
+    "chinese": "水",
+    "burmese": "ရေ။",
+    "mnemonic": "ရွှေ",
+    "explanation": "သောက်သုံးရန် ရေ။",
+    "example": "我要喝水。",
+    "example2": "杯子里有水。"
+  },
+  {
+    "idq": 194,
+    "hsk_level": 1,
+    "chinese": "水果",
+    "burmese": "သစ်သီး။",
+    "mnemonic": "ရွှေကွော",
+    "explanation": "အပင်မှရသော အသီးအနှံများ။",
+    "example": "多吃水果对身体好。",
+    "example2": "你爱吃什么水果？"
+  },
+  {
+    "idq": 195,
+    "hsk_level": 1,
+    "chinese": "睡觉",
+    "burmese": "အိပ်သည်။",
+    "mnemonic": "ရွှေ့ကျောက်",
+    "explanation": "အိပ်စက်အနားယူခြင်း။",
+    "example": "他在睡觉。",
+    "example2": "我晚上十点睡觉。"
+  },
+  {
+    "idq": 196,
+    "hsk_level": 1,
+    "chinese": "说",
+    "burmese": "ပြောသည်။",
+    "mnemonic": "ရွှော",
+    "explanation": "စကားပြောဆိုခြင်း။",
+    "example": "你会说汉语吗？",
+    "example2": "他说什么？"
+  },
+  {
+    "idq": 197,
+    "hsk_level": 1,
+    "chinese": "说话",
+    "burmese": "စကားပြောသည်။",
+    "mnemonic": "ရွှောဟွ",
+    "explanation": "စကားပြောဆို ဆက်သွယ်ခြင်း။",
+    "example": "他们在说话。",
+    "example2": "请不要说话。"
+  },
+  {
+    "idq": 198,
+    "hsk_level": 1,
+    "chinese": "四",
+    "burmese": "လေး (၄)။",
+    "mnemonic": "ဆစ်",
+    "explanation": "ကိန်းဂဏန်း (၄)။",
+    "example": "四个人。",
+    "example2": "今天星期四。"
+  },
+  {
+    "idq": 199,
+    "hsk_level": 1,
+    "chinese": "岁",
+    "burmese": "နှစ် (အသက်)။",
+    "mnemonic": "ဆွေ့",
+    "explanation": "အသက်အရွယ်ကို ဖော်ပြရာတွင်သုံးသည်။",
+    "example": "他今年二十岁。",
+    "example2": "你几岁了？"
+  },
+  {
+    "idq": 200,
+    "hsk_level": 1,
+    "chinese": "他",
+    "burmese": "သူ (ယောက်ျားလေး)။",
+    "mnemonic": "ထာ",
+    "explanation": "တတိယပုဂ္ဂိုလ် ယောက်ျားလေး။",
+    "example": "他是我的老师。",
+    "example2": "我不认识他。"
+  },
+  {
+    "idq": 201,
+    "hsk_level": 1,
+    "chinese": "它",
+    "burmese": "၎င်း (တိရစ္ဆာန်၊ အရာဝတ္ထု)။",
+    "mnemonic": "ထာ",
+    "explanation": "တတိယပုဂ္ဂိုလ် (တိရစ္ဆာန် သို့မဟုတ် အရာဝတ္ထု)။",
+    "example": "这是一只猫，它很可爱。",
+    "example2": "它在吃东西。"
+  },
+  {
+    "idq": 202,
+    "hsk_level": 1,
+    "chinese": "她",
+    "burmese": "သူမ (မိန်းကလေး)။",
+    "mnemonic": "ထာ",
+    "explanation": "တတိယပုဂ္ဂိုလ် မိန်းကလေး။",
+    "example": "她很漂亮。",
+    "example2": "那是她妈妈。"
+  },
+  {
+    "idq": 203,
+    "hsk_level": 1,
+    "chinese": "太",
+    "burmese": "အရမ်း။",
+    "mnemonic": "ထိုက်",
+    "explanation": "အလွန်အမင်း ဖြစ်ကြောင်းဖော်ပြသည်။",
+    "example": "今天太热了。",
+    "example2": "这个太贵了。"
+  },
+  {
+    "idq": 204,
+    "hsk_level": 1,
+    "chinese": "他们",
+    "burmese": "သူတို့ (ယောက်ျားလေးများ/ရောနှော)။",
+    "mnemonic": "ထာမန်",
+    "explanation": "တတိယပုဂ္ဂိုလ် အများကိန်း။",
+    "example": "他们是医生。",
+    "example2": "我喜欢他们。"
+  },
+  {
+    "idq": 205,
+    "hsk_level": 1,
+    "chinese": "它们",
+    "burmese": "၎င်းတို့ (တိရစ္ဆာန်များ/အရာဝတ္ထုများ)။",
+    "mnemonic": "ထာမန်",
+    "explanation": "တိရစ္ဆာန် သို့မဟုတ် အရာဝတ္ထု အများကိန်း။",
+    "example": "它们在喝水。",
+    "example2": "这些书，它们是新的。"
+  },
+  {
+    "idq": 206,
+    "hsk_level": 1,
+    "chinese": "她们",
+    "burmese": "သူမတို့ (မိန်းကလေးများသီးသန့်)။",
+    "mnemonic": "ထာမန်",
+    "explanation": "အမျိုးသမီးများချည်း ပါဝင်သော အများကိန်း။",
+    "example": "她们都是老师。",
+    "example2": "你看她们！"
+  },
+  {
+    "idq": 207,
+    "hsk_level": 1,
+    "chinese": "天气",
+    "burmese": "ရာသီဥတု။",
+    "mnemonic": "ထျန်းချိ",
+    "explanation": "မိုးလေဝသ အခြေအနေ။",
+    "example": "今天天气很好。",
+    "example2": "明天天气怎么样？"
+  },
+  {
+    "idq": 208,
+    "hsk_level": 1,
+    "chinese": "听",
+    "burmese": "နားထောင်သည်။",
+    "mnemonic": "ထင်း",
+    "explanation": "နားဖြင့် အသံကိုဖမ်းယူခြင်း။",
+    "example": "听我说。",
+    "example2": "他喜欢听音乐。"
+  },
+  {
+    "idq": 209,
+    "hsk_level": 1,
+    "chinese": "听见",
+    "burmese": "ကြားရသည်။",
+    "mnemonic": "ထင်းကျန့်",
+    "explanation": "အသံကို ကြားသိခြင်း။",
+    "example": "我听见你说话了。",
+    "example2": "你听见了吗？"
+  },
+  {
+    "idq": 210,
+    "hsk_level": 1,
+    "chinese": "同学",
+    "burmese": "အတန်းဖော်။",
+    "mnemonic": "ထုန်းရွှဲ",
+    "explanation": "ကျောင်းတွင် အတူတက်သော သူငယ်ချင်း။",
+    "example": "他是我的同学。",
+    "example2": "同学们好！"
+  },
+  {
+    "idq": 211,
+    "hsk_level": 1,
+    "chinese": "外",
+    "burmese": "အပြင်။",
+    "mnemonic": "ဝိုက်",
+    "explanation": "အပြင်ဘက်ပိုင်း။",
+    "example": "外地人。",
+    "example2": "外面。"
+  },
+  {
+    "idq": 212,
+    "hsk_level": 1,
+    "chinese": "外边",
+    "burmese": "အပြင်ဘက်။",
+    "mnemonic": "ဝိုက်ပြန်း",
+    "explanation": "အဆောက်အဦး သို့မဟုတ် အရာတစ်ခု၏ အပြင်ဘက်။",
+    "example": "外边下雨了。",
+    "example2": "他在外边等我。"
+  },
+  {
+    "idq": 213,
+    "hsk_level": 1,
+    "chinese": "玩",
+    "burmese": "ဆော့ကစားသည်။",
+    "mnemonic": "ဝမ်",
+    "explanation": "ပျော်ရွှင်စွာ အချိန်ဖြုန်းခြင်း။",
+    "example": "孩子在玩水。",
+    "example2": "去玩儿吧。"
+  },
+  {
+    "idq": 214,
+    "hsk_level": 1,
+    "chinese": "晚",
+    "burmese": "နောက်ကျသော၊ ည။",
+    "mnemonic": "ဝမ်",
+    "explanation": "အချိန်နှောင်းခြင်း သို့မဟုတ် ညအချိန်။",
+    "example": "我来晚了。",
+    "example2": "太晚了。"
+  },
+  {
+    "idq": 215,
+    "hsk_level": 1,
+    "chinese": "晚饭",
+    "burmese": "ညစာ။",
+    "mnemonic": "ဝမ်ဖန့်",
+    "explanation": "ညအချိန်တွင် စားသောအစားအစာ။",
+    "example": "我还没吃晚饭。",
+    "example2": "晚饭吃什么？"
+  },
+  {
+    "idq": 216,
+    "hsk_level": 1,
+    "chinese": "晚上",
+    "burmese": "ညပိုင်း။",
+    "mnemonic": "ဝမ်ရှန့်",
+    "explanation": "နေဝင်ပြီးနောက်ပိုင်း အချိန်။",
+    "example": "晚上好！",
+    "example2": "晚上我不在家。"
+  },
+  {
+    "idq": 217,
+    "hsk_level": 1,
+    "chinese": "喂",
+    "burmese": "ဟလို (ဖုန်းပြောရာတွင်သုံးသည်)။",
+    "mnemonic": "ဝေး",
+    "explanation": "ဖုန်းကိုင်ရာတွင် အစချီသောစကားလုံး။",
+    "example": "喂，请问您找谁？",
+    "example2": "喂，是玛丽吗？"
+  },
+  {
+    "idq": 218,
+    "hsk_level": 1,
+    "chinese": "问",
+    "burmese": "မေးမြန်းသည်။",
+    "mnemonic": "ဝင့်",
+    "explanation": "အဖြေသိလို၍ မေးမြန်းခြင်း။",
+    "example": "我可以问一个问题吗？",
+    "example2": "你去问他吧。"
+  },
+  {
+    "idq": 219,
+    "hsk_level": 1,
+    "chinese": "问题",
+    "burmese": "မေးခွန်း၊ ပြဿနာ။",
+    "mnemonic": "ဝင့်ထီ",
+    "explanation": "မေးမြန်းသောအရာ သို့မဟုတ် ဖြေရှင်းရမည့်ကိစ္စ။",
+    "example": "没问题。",
+    "example2": "我有一个问题。"
+  },
+  {
+    "idq": 220,
+    "hsk_level": 1,
+    "chinese": "我",
+    "burmese": "ငါ၊ ကျွန်တော်၊ ကျွန်မ။",
+    "mnemonic": "ဝေါ",
+    "explanation": "ပထမပုဂ္ဂိုလ် နာမ်စား။",
+    "example": "我爱中国。",
+    "example2": "这是我的手机。"
+  },
+  {
+    "idq": 221,
+    "hsk_level": 1,
+    "chinese": "我们",
+    "burmese": "ငါတို့၊ ကျွန်တော်တို့။",
+    "mnemonic": "ဝေါမန်",
+    "explanation": "ပထမပုဂ္ဂိုလ် အများကိန်း။",
+    "example": "我们去学校。",
+    "example2": "我们是朋友。"
+  },
+  {
+    "idq": 222,
+    "hsk_level": 1,
+    "chinese": "五",
+    "burmese": "ငါး (၅)။",
+    "mnemonic": "ဝူ",
+    "explanation": "ကိန်းဂဏန်း (၅)။",
+    "example": "五个人。",
+    "example2": "五本书。"
+  },
+  {
+    "idq": 223,
+    "hsk_level": 1,
+    "chinese": "午饭",
+    "burmese": "နေ့လယ်စာ။",
+    "mnemonic": "ဝူဖန့်",
+    "explanation": "နေ့လယ်အချိန်တွင်စားသော အစားအစာ။",
+    "example": "吃午饭了。",
+    "example2": "午饭吃菜。"
+  },
+  {
+    "idq": 224,
+    "hsk_level": 1,
+    "chinese": "下",
+    "burmese": "အောက်၊ ဆင်းသည်၊ ရွာသည် (မိုး)။",
+    "mnemonic": "ရှ",
+    "explanation": "အောက်ဘက် သို့မဟုတ် လာမည့်အရာ။",
+    "example": "下雨了。",
+    "example2": "下个月。"
+  },
+  {
+    "idq": 225,
+    "hsk_level": 1,
+    "chinese": "下雨",
+    "burmese": "မိုးရွာသည်။",
+    "mnemonic": "ရှယွီ",
+    "explanation": "မိုးကျခြင်း။",
+    "example": "今天会下雨。",
+    "example2": "外边在下雨。"
+  },
+  {
+    "idq": 226,
+    "hsk_level": 1,
+    "chinese": "下班",
+    "burmese": "အလုပ်ဆင်းသည် (အလုပ်ပြီးသည်)။",
+    "mnemonic": "ရှပန်း",
+    "explanation": "အလုပ်လုပ်ချိန် ပြီးဆုံးခြင်း။",
+    "example": "我五点下班。",
+    "example2": "下班后去玩。"
+  },
+  {
+    "idq": 227,
+    "hsk_level": 1,
+    "chinese": "下课",
+    "burmese": "ကျောင်းဆင်းသည် (အတန်းပြီးသည်)။",
+    "mnemonic": "ရှခဲ",
+    "explanation": "စာသင်ချိန် ပြီးဆုံးခြင်း။",
+    "example": "下课了。",
+    "example2": "我们十点下课。"
+  },
+  {
+    "idq": 228,
+    "hsk_level": 1,
+    "chinese": "想",
+    "burmese": "စဉ်းစားသည်၊ လွမ်းသည်၊ ချင်သည် (လိုချင်သည်)။",
+    "mnemonic": "ရှန်",
+    "explanation": "ဆန္ဒရှိခြင်း၊ စဉ်းစားခြင်း သို့မဟုတ် သတိရခြင်း။",
+    "example": "我想去中国。",
+    "example2": "我想妈妈。"
+  },
+  {
+    "idq": 229,
+    "hsk_level": 1,
+    "chinese": "先生",
+    "burmese": "လူကြီးမင်း (ယောကျ်ား)၊ ခင်ပွန်း။",
+    "mnemonic": "ရှန်းရှန်း",
+    "explanation": "အမျိုးသားများကို ယဉ်ကျေးစွာခေါ်ခြင်း သို့မဟုတ် ခင်ပွန်း။",
+    "example": "王先生你好。",
+    "example2": "这是我先生。"
+  },
+  {
+    "idq": 230,
+    "hsk_level": 1,
+    "chinese": "现在",
+    "burmese": "အခု။",
+    "mnemonic": "ရှန့်ဇိုက်",
+    "explanation": "ယခုလက်ရှိအချိန်။",
+    "example": "现在几点了？",
+    "example2": "我现在回家。"
+  },
+  {
+    "idq": 231,
+    "hsk_level": 1,
+    "chinese": "小",
+    "burmese": "သေးသော။",
+    "mnemonic": "ရှောင်",
+    "explanation": "အရွယ်အစားသေးငယ်ခြင်း။",
+    "example": "这个苹果太小了。",
+    "example2": "她手很小。"
+  },
+  {
+    "idq": 232,
+    "hsk_level": 1,
+    "chinese": "小朋友",
+    "burmese": "ကလေး။",
+    "mnemonic": "ရှောင်ဖန်ယို",
+    "explanation": "ကလေးငယ်များကို ချစ်စနိုးခေါ်ခြင်း။",
+    "example": "小朋友，你几岁了？",
+    "example2": "他们在和小朋友玩。"
+  },
+  {
+    "idq": 233,
+    "hsk_level": 1,
+    "chinese": "小时",
+    "burmese": "နာရီ (အချိန်ကြာချိန်)။",
+    "mnemonic": "ရှောင်ရှစ်",
+    "explanation": "မိနစ် ၆၀ ပါဝင်သော အချိန်ကာလ။",
+    "example": "一个小时。",
+    "example2": "我等了三个小时。"
+  },
+  {
+    "idq": 234,
+    "hsk_level": 1,
+    "chinese": "小学",
+    "burmese": "မူလတန်းကျောင်း။",
+    "mnemonic": "ရှောင်ရွှဲ",
+    "explanation": "အခြေခံပညာကျောင်း။",
+    "example": "他在上小学。",
+    "example2": "小学在哪儿？"
+  },
+  {
+    "idq": 235,
+    "hsk_level": 1,
+    "chinese": "小学生",
+    "burmese": "မူလတန်းကျောင်းသား။",
+    "mnemonic": "ရှောင်ရွှဲရှန်း",
+    "explanation": "မူလတန်းကျောင်းတွင် တက်နေသော ကလေး။",
+    "example": "我弟弟是小学生。",
+    "example2": "小学生有很多。"
+  },
+  {
+    "idq": 236,
+    "hsk_level": 1,
+    "chinese": "下午",
+    "burmese": "မွန်းလွဲပိုင်း၊ ညနေပိုင်း။",
+    "mnemonic": "ရှဝူ",
+    "explanation": "နေ့လယ် ၁၂ နာရီမှ နေဝင်ချိန်အထိ အချိန်။",
+    "example": "下午我们去超市。",
+    "example2": "下午好！"
+  },
+  {
+    "idq": 237,
+    "hsk_level": 1,
+    "chinese": "写",
+    "burmese": "ရေးသည်။",
+    "mnemonic": "ရှဲ့",
+    "explanation": "စာ သို့မဟုတ် စာလုံးရေးသားခြင်း။",
+    "example": "写汉字。",
+    "example2": "他在写名字。"
+  },
+  {
+    "idq": 238,
+    "hsk_level": 1,
+    "chinese": "些",
+    "burmese": "အချို့။",
+    "mnemonic": "ရှဲ့",
+    "explanation": "မတိကျသော အရေအတွက်အနည်းငယ်။",
+    "example": "这些苹果很好吃。",
+    "example2": "我买了一些书。"
+  },
+  {
+    "idq": 239,
+    "hsk_level": 1,
+    "chinese": "谢谢",
+    "burmese": "ကျေးဇူးတင်ပါတယ်။",
+    "mnemonic": "ရှဲ့ရှဲ့",
+    "explanation": "ကျေးဇူးတင်ကြောင်း ဖော်ပြခြင်း။",
+    "example": "谢谢你！",
+    "example2": "谢谢大家。"
+  },
+  {
+    "idq": 240,
+    "hsk_level": 1,
+    "chinese": "喜欢",
+    "burmese": "ကြိုက်သည်၊ နှစ်သက်သည်။",
+    "mnemonic": "ရှီဟွမ်း",
+    "explanation": "တစ်စုံတစ်ခုကို သဘောကျခြင်း။",
+    "example": "我喜欢你。",
+    "example2": "他喜欢吃中国菜。"
+  },
+  {
+    "idq": 241,
+    "hsk_level": 1,
+    "chinese": "新",
+    "burmese": "အသစ်။",
+    "mnemonic": "ရှင်း",
+    "explanation": "အဟောင်းမဟုတ်သော အရာ။",
+    "example": "这是一件新衣服。",
+    "example2": "新年快乐！"
+  },
+  {
+    "idq": 242,
+    "hsk_level": 1,
+    "chinese": "星期",
+    "burmese": "ရက်သတ္တပတ်၊ အပတ်။",
+    "mnemonic": "ရှင်းချီး",
+    "explanation": "၇ ရက်ပါဝင်သော အချိန်ကာလ။",
+    "example": "今天星期一。",
+    "example2": "下个星期见。"
+  },
+  {
+    "idq": 243,
+    "hsk_level": 1,
+    "chinese": "星期日",
+    "burmese": "တနင်္ဂနွေနေ့။",
+    "mnemonic": "ရှင်းချီးရစ်",
+    "explanation": "ရက်သတ္တပတ်၏ နောက်ဆုံးနေ့ (တနင်္ဂနွေ)။",
+    "example": "明天是星期日。",
+    "example2": "星期日我休息。"
+  },
+  {
+    "idq": 244,
+    "hsk_level": 1,
+    "chinese": "星期天",
+    "burmese": "တနင်္ဂနွေနေ့။",
+    "mnemonic": "ရှင်းချီးထျန်း",
+    "explanation": "ရက်သတ္တပတ်၏ နောက်ဆုံးနေ့ (တနင်္ဂနွေ)။",
+    "example": "今天星期天。",
+    "example2": "星期天不下雨。"
+  },
+  {
+    "idq": 245,
+    "hsk_level": 1,
+    "chinese": "休息",
+    "burmese": "အနားယူသည်။",
+    "mnemonic": "ရှိုးရှိ",
+    "explanation": "အလုပ်နား၍ အနားယူခြင်း။",
+    "example": "我想休息一下。",
+    "example2": "今天是休息日。"
+  },
+  {
+    "idq": 246,
+    "hsk_level": 1,
+    "chinese": "学",
+    "burmese": "လေ့လာသည်၊ သင်ယူသည်။",
+    "mnemonic": "ရွှဲ",
+    "explanation": "ပညာရပ်တစ်ခုခုကို သင်ယူခြင်း။",
+    "example": "学汉语。",
+    "example2": "你在学什么？"
+  },
+  {
+    "idq": 247,
+    "hsk_level": 1,
+    "chinese": "雪",
+    "burmese": "နှင်း။",
+    "mnemonic": "ရွှယ်",
+    "explanation": "ကောင်းကင်မှကျသော နှင်းပွင့်။",
+    "example": "下雪了。",
+    "example2": "雪很大。"
+  },
+  {
+    "idq": 248,
+    "hsk_level": 1,
+    "chinese": "学生",
+    "burmese": "ကျောင်းသား၊ ကျောင်းသူ။",
+    "mnemonic": "ရွှဲရှန်း",
+    "explanation": "ပညာသင်ကြားနေသူ။",
+    "example": "他是我的学生。",
+    "example2": "我是学生。"
+  },
+  {
+    "idq": 249,
+    "hsk_level": 1,
+    "chinese": "学习",
+    "burmese": "လေ့လာသင်ယူသည်။",
+    "mnemonic": "ရွှဲရှီ",
+    "explanation": "ပညာ သို့မဟုတ် အတတ်ပညာ သင်ယူခြင်း။",
+    "example": "我学习汉语。",
+    "example2": "他每天都学习。"
+  },
+  {
+    "idq": 250,
+    "hsk_level": 1,
+    "chinese": "学校",
+    "burmese": "ကျောင်း။",
+    "mnemonic": "ရွှဲရှောက်",
+    "explanation": "ပညာသင်ကြားပေးသောနေရာ။",
+    "example": "我去学校。",
+    "example2": "我们的学校很大。"
+  },
+  {
+    "idq": 251,
+    "hsk_level": 1,
+    "chinese": "要",
+    "burmese": "လိုချင်သည်၊ လိုအပ်သည်၊ မည် (will)။",
+    "mnemonic": "ယောက်",
+    "explanation": "ဆန္ဒရှိခြင်း သို့မဟုတ် အနာဂတ်တွင် ပြုလုပ်မည်ဖြစ်ခြင်း။",
+    "example": "我要吃饭。",
+    "example2": "你要买什么？"
+  },
+  {
+    "idq": 252,
+    "hsk_level": 1,
+    "chinese": "也",
+    "burmese": "လည်း၊ လည်းပဲ။",
+    "mnemonic": "ယယ်",
+    "explanation": "တူညီကြောင်းပြသော စကားလုံး။",
+    "example": "我也去。",
+    "example2": "我也喜欢中国菜。"
+  },
+  {
+    "idq": 253,
+    "hsk_level": 1,
+    "chinese": "一",
+    "burmese": "တစ် (၁)။",
+    "mnemonic": "ယီး",
+    "explanation": "ကိန်းဂဏန်း (၁)။",
+    "example": "一个人。",
+    "example2": "一本书。"
+  },
+  {
+    "idq": 254,
+    "hsk_level": 1,
+    "chinese": "一半",
+    "burmese": "တစ်ဝက်။",
+    "mnemonic": "ယီးပန့်",
+    "explanation": "တစ်စုံတစ်ခု၏ ထက်ဝက်။",
+    "example": "我吃一半。",
+    "example2": "分你一半。"
+  },
+  {
+    "idq": 255,
+    "hsk_level": 1,
+    "chinese": "一点儿",
+    "burmese": "နည်းနည်းလေး။",
+    "mnemonic": "ယီးတျန်(ရ်)",
+    "explanation": "အနည်းငယ်မျှ။",
+    "example": "我会说一点儿汉语。",
+    "example2": "我吃了一点儿饭。"
+  },
+  {
+    "idq": 256,
+    "hsk_level": 1,
+    "chinese": "衣服",
+    "burmese": "အဝတ်အစား။",
+    "mnemonic": "ယီးဖု",
+    "explanation": "ခန္ဓာကိုယ်တွင် ဝတ်ဆင်သောအရာ။",
+    "example": "我买新衣服了。",
+    "example2": "这件衣服很漂亮。"
+  },
+  {
+    "idq": 257,
+    "hsk_level": 1,
+    "chinese": "医生",
+    "burmese": "ဆရာဝန်။",
+    "mnemonic": "ယီးရှန်း",
+    "explanation": "ဆေးကုသပေးသော ပညာရှင်။",
+    "example": "他是医生。",
+    "example2": "我爸爸是医生。"
+  },
+  {
+    "idq": 258,
+    "hsk_level": 1,
+    "chinese": "一下",
+    "burmese": "ခဏလေး၊ တစ်ချက်။",
+    "mnemonic": "ယီးရှ",
+    "explanation": "အချိန်တိုအတွင်း သို့မဟုတ် အလွယ်တကူ လုပ်ဆောင်ခြင်း။",
+    "example": "等一下。",
+    "example2": "请看一下。"
+  },
+  {
+    "idq": 259,
+    "hsk_level": 1,
+    "chinese": "一些",
+    "burmese": "အချို့။",
+    "mnemonic": "ယီးရှဲ့",
+    "explanation": "မတိကျသော အရေအတွက်အနည်းငယ်။",
+    "example": "买一些苹果。",
+    "example2": "有一些人没来。"
+  },
+  {
+    "idq": 260,
+    "hsk_level": 1,
+    "chinese": "医院",
+    "burmese": "ဆေးရုံ။",
+    "mnemonic": "ယီးယွမ်",
+    "explanation": "လူနာများအား ဆေးကုသပေးသောနေရာ။",
+    "example": "他在医院工作。",
+    "example2": "我们去医院看病。"
+  },
+  {
+    "idq": 261,
+    "hsk_level": 1,
+    "chinese": "椅子",
+    "burmese": "ထိုင်ခုံ။",
+    "mnemonic": "ယီဇစ်",
+    "explanation": "ထိုင်ရန်အသုံးပြုသော ပရိဘောဂ။",
+    "example": "椅子上有一本书。",
+    "example2": "请坐在椅子上。"
+  },
+  {
+    "idq": 262,
+    "hsk_level": 1,
+    "chinese": "有",
+    "burmese": "ရှိသည်။",
+    "mnemonic": "ရို",
+    "explanation": "ပိုင်ဆိုင်ခြင်း သို့မဟုတ် တည်ရှိခြင်း။",
+    "example": "我有一个苹果。",
+    "example2": "他有钱。"
+  },
+  {
+    "idq": 263,
+    "hsk_level": 1,
+    "chinese": "有的",
+    "burmese": "တချို့က။",
+    "mnemonic": "ရိုတ",
+    "explanation": "အုပ်စုတစ်စုထဲမှ အချို့ကို ရည်ညွှန်းသည်။",
+    "example": "有的人喜欢，有的人不喜欢。",
+    "example2": "有的书是我的。"
+  },
+  {
+    "idq": 264,
+    "hsk_level": 1,
+    "chinese": "有些",
+    "burmese": "တချို့။",
+    "mnemonic": "ရိုရှဲ့",
+    "explanation": "အချို့သော အရေအတွက်။",
+    "example": "有些人没来。",
+    "example2": "我有些累了。"
+  },
+  {
+    "idq": 265,
+    "hsk_level": 1,
+    "chinese": "有一点儿",
+    "burmese": "နည်းနည်း (ဖြစ်သည်)။",
+    "mnemonic": "ရိုယီးတျန်(ရ်)",
+    "explanation": "အခြေအနေ တစ်စုံတစ်ခု အနည်းငယ်ဖြစ်ပေါ်ခြင်း (များသောအားဖြင့် အပျက်သဘော)။",
+    "example": "今天有一点儿冷。",
+    "example2": "我有一点儿累。"
+  },
+  {
+    "idq": 266,
+    "hsk_level": 1,
+    "chinese": "雨",
+    "burmese": "မိုး။",
+    "mnemonic": "ယွီ",
+    "explanation": "မိုးရေ။",
+    "example": "下雨了。",
+    "example2": "今天的雨很大。"
+  },
+  {
+    "idq": 267,
+    "hsk_level": 1,
+    "chinese": "元",
+    "burmese": "ယွမ် (တရုတ်ငွေကြေး)။",
+    "mnemonic": "ယွမ်",
+    "explanation": "တရုတ်နိုင်ငံသုံး ငွေကြေးယူနစ်။",
+    "example": "十元钱。",
+    "example2": "这本书二十元。"
+  },
+  {
+    "idq": 268,
+    "hsk_level": 1,
+    "chinese": "月",
+    "burmese": "လ။",
+    "mnemonic": "ယွဲ့",
+    "explanation": "ပြက္ခဒိန်လာ လ။",
+    "example": "八月。",
+    "example2": "一个月有三十天。"
+  },
+  {
+    "idq": 269,
+    "hsk_level": 1,
+    "chinese": "再",
+    "burmese": "နောက်ထပ်၊ ထပ်မံ၍။",
+    "mnemonic": "ဇိုက်",
+    "explanation": "တစ်ဖန် ထပ်မံလုပ်ဆောင်ခြင်း။",
+    "example": "再说一次。",
+    "example2": "再喝一杯。"
+  },
+  {
+    "idq": 270,
+    "hsk_level": 1,
+    "chinese": "在",
+    "burmese": "၌၊ တွင်၊ နေသည်။",
+    "mnemonic": "ဇိုက်",
+    "explanation": "နေရာကို ညွှန်ပြခြင်း သို့မဟုတ် လက်ရှိလုပ်ဆောင်နေခြင်း။",
+    "example": "我在家。",
+    "example2": "他在吃饭。"
+  },
+  {
+    "idq": 271,
+    "hsk_level": 1,
+    "chinese": "再见",
+    "burmese": "တာ့တာ၊ နောက်မှတွေ့မယ်။",
+    "mnemonic": "ဇိုက်ကျန့်",
+    "explanation": "နှုတ်ဆက်၍ လမ်းခွဲသောအခါသုံးသည်။",
+    "example": "老师，再见！",
+    "example2": "明天再见。"
+  },
+  {
+    "idq": 272,
+    "hsk_level": 1,
+    "chinese": "早",
+    "burmese": "စောသော၊ မနက်ခင်း။",
+    "mnemonic": "ဇောင်",
+    "explanation": "အချိန်စောခြင်း သို့မဟုတ် နံနက်။",
+    "example": "太早了。",
+    "example2": "老师早！"
+  },
+  {
+    "idq": 273,
+    "hsk_level": 1,
+    "chinese": "早饭",
+    "burmese": "မနက်စာ။",
+    "mnemonic": "ဇောင်ဖန့်",
+    "explanation": "နံနက်အချိန်တွင်စားသော အစားအစာ။",
+    "example": "我吃早饭了。",
+    "example2": "早饭吃什么？"
+  },
+  {
+    "idq": 274,
+    "hsk_level": 1,
+    "chinese": "早上",
+    "burmese": "မနက်ပိုင်း။",
+    "mnemonic": "ဇောင်ရှန့်",
+    "explanation": "နံနက်ခင်းအချိန်။",
+    "example": "早上好！",
+    "example2": "他早上不在家。"
+  },
+  {
+    "idq": 275,
+    "hsk_level": 1,
+    "chinese": "怎么",
+    "burmese": "ဘယ်လို။",
+    "mnemonic": "ဇန်မ",
+    "explanation": "လုပ်ဆောင်ပုံ နည်းလမ်းကို မေးမြန်းခြင်း။",
+    "example": "这个字怎么读？",
+    "example2": "你怎么去？"
+  },
+  {
+    "idq": 276,
+    "hsk_level": 1,
+    "chinese": "怎么样",
+    "burmese": "ဘယ်လိုလဲ၊ အခြေအနေဘယ်လိုလဲ။",
+    "mnemonic": "ဇန်မယန်း",
+    "explanation": "အခြေအနေ သို့မဟုတ် သဘောထားကို မေးမြန်းခြင်း။",
+    "example": "天气怎么样？",
+    "example2": "你最近怎么样？"
+  },
+  {
+    "idq": 277,
+    "hsk_level": 1,
+    "chinese": "找",
+    "burmese": "ရှာသည်။",
+    "mnemonic": "ကျောင်",
+    "explanation": "လူ သို့မဟုတ် ပစ္စည်းကို ရှာဖွေခြင်း။",
+    "example": "你在找什么？",
+    "example2": "我找我的书。"
+  },
+  {
+    "idq": 278,
+    "hsk_level": 1,
+    "chinese": "这",
+    "burmese": "ဤ၊ ဒီ။",
+    "mnemonic": "ကျဲ",
+    "explanation": "အနီးရှိအရာကို ညွှန်ပြခြင်း။",
+    "example": "这是我的。",
+    "example2": "这个人是谁？"
+  },
+  {
+    "idq": 279,
+    "hsk_level": 1,
+    "chinese": "这边",
+    "burmese": "ဒီဘက်။",
+    "mnemonic": "ကျဲပြန်း",
+    "explanation": "အနီးရှိ နေရာဘက်။",
+    "example": "请来这边。",
+    "example2": "这边没有人。"
+  },
+  {
+    "idq": 280,
+    "hsk_level": 1,
+    "chinese": "这个",
+    "burmese": "ဒီဟာ။",
+    "mnemonic": "ကျဲက",
+    "explanation": "အနီးရှိ အရာတစ်ခု။",
+    "example": "这个多少钱？",
+    "example2": "我不喜欢这个。"
+  },
+  {
+    "idq": 281,
+    "hsk_level": 1,
+    "chinese": "这里",
+    "burmese": "ဒီနေရာ။",
+    "mnemonic": "ကျဲလီ",
+    "explanation": "အနီးရှိနေရာ။",
+    "example": "这里很漂亮。",
+    "example2": "我在这里等你。"
+  },
+  {
+    "idq": 282,
+    "hsk_level": 1,
+    "chinese": "正在",
+    "burmese": "နေဆဲ (လုပ်ဆောင်နေဆဲ)။",
+    "mnemonic": "ကျန့်ဇိုက်",
+    "explanation": "တစ်စုံတစ်ခုကို လက်ရှိလုပ်ဆောင်နေဆဲဖြစ်ကြောင်း ပြသသည်။",
+    "example": "他在正在看电视。",
+    "example2": "外面正在下雨。"
+  },
+  {
+    "idq": 283,
+    "hsk_level": 1,
+    "chinese": "这儿",
+    "burmese": "ဒီနေရာ။",
+    "mnemonic": "ကျဲ(ရ်)",
+    "explanation": "အနီးရှိနေရာ (မြောက်ပိုင်းလေသံ)။",
+    "example": "请坐这儿。",
+    "example2": "这儿很大。"
+  },
+  {
+    "idq": 284,
+    "hsk_level": 1,
+    "chinese": "这些",
+    "burmese": "ဒီအရာများ၊ ဒါတွေ။",
+    "mnemonic": "ကျဲရှဲ့",
+    "explanation": "အနီးရှိ အရာများ။",
+    "example": "这些是我的书。",
+    "example2": "这些衣服很漂亮。"
+  },
+  {
+    "idq": 285,
+    "hsk_level": 1,
+    "chinese": "只",
+    "burmese": "ကောင် (တိရစ္ဆာန်ရေတွက်သံ)။",
+    "mnemonic": "ကျီး",
+    "explanation": "တိရစ္ဆာန်များကို ရေတွက်ရာတွင်သုံးသည်။",
+    "example": "一只猫。",
+    "example2": "两只小狗。"
+  },
+  {
+    "idq": 286,
+    "hsk_level": 1,
+    "chinese": "知道",
+    "burmese": "သိသည်။",
+    "mnemonic": "ကျီးတောက်",
+    "explanation": "အကြောင်းအရာတစ်ခုကို နားလည်သိရှိခြင်း။",
+    "example": "我不知道。",
+    "example2": "你知道他的名字吗？"
+  },
+  {
+    "idq": 287,
+    "hsk_level": 1,
+    "chinese": "中国",
+    "burmese": "တရုတ်နိုင်ငံ။",
+    "mnemonic": "ကျုန်းကွော",
+    "explanation": "တရုတ်ပြည်။",
+    "example": "他是中国人。",
+    "example2": "我想去中国。"
+  },
+  {
+    "idq": 288,
+    "hsk_level": 1,
+    "chinese": "中文",
+    "burmese": "တရုတ်ဘာသာစကား။",
+    "mnemonic": "ကျုန်းဝမ်",
+    "explanation": "တရုတ်စာ သို့မဟုတ် စကား။",
+    "example": "我会说中文。",
+    "example2": "这是中文书。"
+  },
+  {
+    "idq": 289,
+    "hsk_level": 1,
+    "chinese": "中午",
+    "burmese": "မွန်းတည့်၊ နေ့လယ်။",
+    "mnemonic": "ကျုန်းဝူ",
+    "explanation": "နေ့လယ် ၁၂ နာရီ ဝန်းကျင်။",
+    "example": "中午我睡觉。",
+    "example2": "中午一起吃饭吧。"
+  },
+  {
+    "idq": 290,
+    "hsk_level": 1,
+    "chinese": "中学",
+    "burmese": "အလယ်တန်း သို့မဟုတ် အထက်တန်းကျောင်း။",
+    "mnemonic": "ကျုန်းရွှဲ",
+    "explanation": "အခြေခံပညာ အလယ်တန်းနှင့် အထက်တန်းကျောင်း။",
+    "example": "他在上中学。",
+    "example2": "我们是中学同学。"
+  },
+  {
+    "idq": 291,
+    "hsk_level": 1,
+    "chinese": "中学生",
+    "burmese": "အလယ်တန်း သို့မဟုတ် အထက်တန်းကျောင်းသား။",
+    "mnemonic": "ကျုန်းရွှဲရှန်း",
+    "explanation": "အလယ်တန်း သို့မဟုတ် အထက်တန်းကျောင်းတွင် တက်နေသော ကျောင်းသား။",
+    "example": "我哥哥是中学生。",
+    "example2": "中学生很忙。"
+  },
+  {
+    "idq": 292,
+    "hsk_level": 1,
+    "chinese": "住",
+    "burmese": "နေထိုင်သည်။",
+    "mnemonic": "ကျု",
+    "explanation": "တစ်နေရာရာတွင် အခြေချနေထိုင်ခြင်း။",
+    "example": "你住在哪里？",
+    "example2": "我住在中国。"
+  },
+  {
+    "idq": 293,
+    "hsk_level": 1,
+    "chinese": "桌子",
+    "burmese": "စားပွဲခုံ။",
+    "mnemonic": "ကျောဇစ်",
+    "explanation": "အရာဝတ္ထုများတင်ရန် အသုံးပြုသောပရိဘောဂ။",
+    "example": "桌子上有一杯水。",
+    "example2": "这是一张新桌子。"
+  },
+  {
+    "idq": 294,
+    "hsk_level": 1,
+    "chinese": "字",
+    "burmese": "စာလုံး။",
+    "mnemonic": "ဇစ်",
+    "explanation": "ရေးသားထားသော အက္ခရာ။",
+    "example": "我不会写这个字。",
+    "example2": "你的字很漂亮。"
+  },
+  {
+    "idq": 295,
+    "hsk_level": 1,
+    "chinese": "坐",
+    "burmese": "ထိုင်သည်၊ စီးသည်။",
+    "mnemonic": "ဇွတ်",
+    "explanation": "ထိုင်ခုံတွင်ထိုင်ခြင်း သို့မဟုတ် ယာဉ်စီးခြင်း။",
+    "example": "请坐。",
+    "example2": "我坐火车去北京。"
+  },
+  {
+    "idq": 296,
+    "hsk_level": 1,
+    "chinese": "做",
+    "burmese": "လုပ်သည်။",
+    "mnemonic": "ဇွတ်",
+    "explanation": "အလုပ်တစ်ခုခုကို ပြုလုပ်ခြင်း။",
+    "example": "你在做什么？",
+    "example2": "他做衣服。"
+  },
+  {
+    "idq": 297,
+    "hsk_level": 1,
+    "chinese": "做饭",
+    "burmese": "ထမင်းဟင်းချက်သည်။",
+    "mnemonic": "ဇွတ်ဖန့်",
+    "explanation": "အစားအသောက် ချက်ပြုတ်ခြင်း။",
+    "example": "妈妈在做饭。",
+    "example2": "我会做饭。"
+  },
+  {
+    "idq": 298,
+    "hsk_level": 1,
+    "chinese": "昨天",
+    "burmese": "မနေ့က။",
+    "mnemonic": "ဇွောထျန်း",
+    "explanation": "လွန်ခဲ့သောနေ့။",
+    "example": "昨天我去了超市。",
+    "example2": "昨天天气很好。"
+  }
+]
