@@ -383,7 +383,8 @@ const getSEOMeta = (props, router, locale) => {
   const { post, siteInfo, tag, category, page } = props
   const keyword = router?.query?.s
 
-  const SITE_NAME = siteConfig('TITLE')
+  // SEO title 后缀使用短品牌名，与 Notion TITLE（可能是长标题）解耦
+  const SITE_NAME = siteConfig('SEO_BRAND') || siteConfig('TITLE') || siteInfo?.title
   switch (router.route) {
     case '/':
       return {
@@ -396,7 +397,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/archive':
       return {
         title: `${locale.NAV.ARCHIVE} | ${SITE_NAME}`,
-        description: `${siteInfo?.title}的文章归档，按时间浏览所有已发布文章`,
+        description: `${SITE_NAME}的文章归档，按时间浏览所有已发布文章`,
         image: `${siteInfo?.pageCover}`,
         slug: 'archive',
         type: 'website'
@@ -404,7 +405,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/page/[page]':
       return {
         title: `${page} | Page | ${SITE_NAME}`,
-        description: `${siteInfo?.title}第${page}页文章列表`,
+        description: `${SITE_NAME}第${page}页文章列表`,
         image: `${siteInfo?.pageCover}`,
         slug: 'page/' + page,
         type: 'website'
@@ -412,7 +413,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/category/[category]':
       return {
         title: `${category} | ${locale.COMMON.CATEGORY} | ${SITE_NAME}`,
-        description: `「${category}」分类下的所有文章 - ${siteInfo?.title}`,
+        description: `「${category}」分类下的所有文章 - ${SITE_NAME}`,
         slug: 'category/' + category,
         image: `${siteInfo?.pageCover}`,
         type: 'website',
@@ -421,7 +422,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/category/[category]/page/[page]':
       return {
         title: `${category} | ${locale.COMMON.CATEGORY} | ${SITE_NAME}`,
-        description: `「${category}」分类第${page}页 - ${siteInfo?.title}`,
+        description: `「${category}」分类第${page}页 - ${SITE_NAME}`,
         slug: `category/${category}/page/${page}`,
         image: `${siteInfo?.pageCover}`,
         type: 'website',
@@ -430,7 +431,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/tag/[tag]':
       return {
         title: `${tag} | ${locale.COMMON.TAGS} | ${SITE_NAME}`,
-        description: `标签「${tag}」下的相关文章 - ${siteInfo?.title}`,
+        description: `标签「${tag}」下的相关文章 - ${SITE_NAME}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'tag/' + tag,
         type: 'website',
@@ -439,7 +440,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/tag/[tag]/page/[page]':
       return {
         title: `${tag} | ${locale.COMMON.TAGS} | ${SITE_NAME}`,
-        description: `标签「${tag}」第${page}页 - ${siteInfo?.title}`,
+        description: `标签「${tag}」第${page}页 - ${SITE_NAME}`,
         image: `${siteInfo?.pageCover}`,
         slug: `tag/${tag}/page/${page}`,
         type: 'website',
@@ -448,7 +449,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/search':
       return {
         title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${SITE_NAME}`,
-        description: `在${siteInfo?.title}中搜索内容`,
+        description: `在${SITE_NAME}中搜索内容`,
         image: `${siteInfo?.pageCover}`,
         slug: 'search',
         type: 'website'
@@ -457,20 +458,20 @@ const getSEOMeta = (props, router, locale) => {
     case '/search/[keyword]/page/[page]':
       return {
         title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${SITE_NAME}`,
-        description: keyword ? `搜索「${keyword}」的结果 - ${siteInfo?.title}` : `在${siteInfo?.title}中搜索内容`,
+        description: keyword ? `搜索「${keyword}」的结果 - ${SITE_NAME}` : `在${SITE_NAME}中搜索内容`,
         image: `${siteInfo?.pageCover}`,
         slug: 'search/' + (keyword || ''),
         type: 'website'
       }
     case '/404':
       return {
-        title: `${siteInfo?.title} | ${locale.NAV.PAGE_NOT_FOUND}`,
+        title: `${SITE_NAME} | ${locale.NAV.PAGE_NOT_FOUND}`,
         image: `${siteInfo?.pageCover}`
       }
     case '/tag':
       return {
         title: `${locale.COMMON.TAGS} | ${SITE_NAME}`,
-        description: `${siteInfo?.title}的所有文章标签`,
+        description: `${SITE_NAME}的所有文章标签`,
         image: `${siteInfo?.pageCover}`,
         slug: 'tag',
         type: 'website',
@@ -479,7 +480,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/category':
       return {
         title: `${locale.COMMON.CATEGORY} | ${SITE_NAME}`,
-        description: `${siteInfo?.title}的所有文章分类`,
+        description: `${SITE_NAME}的所有文章分类`,
         image: `${siteInfo?.pageCover}`,
         slug: 'category',
         type: 'website',
@@ -489,7 +490,7 @@ const getSEOMeta = (props, router, locale) => {
       return {
         title: post
           ? `${post?.title} | ${SITE_NAME}`
-          : `${siteInfo?.title} | loading`,
+          : `${SITE_NAME} | loading`,
         postTitle: post?.title,
         description: post?.summary,
         type: post?.type,
