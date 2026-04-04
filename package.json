@@ -71,6 +71,7 @@
     "react-hotkeys-hook": "^4.6.2",
     "react-notion-x": "7.10.0",
     "react-share": "^5.2.2",
+    "@supabase/supabase-js": "^2.57.4",
     "react-tweet-embed": "~2.0.0"
   },
   "devDependencies": {
