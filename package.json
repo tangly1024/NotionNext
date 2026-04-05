@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "4.9.4",
+  "version": "4.9.4.1",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "engines": {
@@ -54,6 +54,7 @@
     "@headlessui/react": "^1.7.19",
     "@next/bundle-analyzer": "^12.3.7",
     "@vercel/analytics": "^1.5.0",
+    "@vercel/functions": "^3.4.3",
     "algoliasearch": "^4.25.2",
     "axios": "^1.7.2",
     "critters": "^0.0.23",
@@ -65,6 +66,7 @@
     "next": "^14.2.30",
     "notion-client": "7.10.0",
     "notion-utils": "7.10.0",
+    "p-limit": "^7.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-facebook": "^8.1.4",
