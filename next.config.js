@@ -324,6 +324,8 @@ const nextConfig = {
     return config
   },
   experimental: {
+    cpus: 2,
+    staticPageGenerationTimeout: 300,
     scrollRestoration: true,
     // 性能优化实验性功能
     optimizePackageImports: ['@heroicons/react', 'lodash']
