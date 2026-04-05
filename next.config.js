@@ -80,16 +80,18 @@ function scanSubdirectories(directory) {
  * @type {import('next').NextConfig}
  */
 
+function getOutput() {
+  if (process.env.EXPORT) return 'export'
+  if (process.env.NEXT_BUILD_STANDALONE === 'true') return 'standalone'
+  return undefined
+}
+
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true
   },
-  output: process.env.EXPORT
-    ? 'export'
-    : process.env.NEXT_BUILD_STANDALONE === 'true'
-      ? 'standalone'
-      : undefined,
-  staticPageGenerationTimeout: 120,
+  output: getOutput(),
+  staticPageGenerationTimeout: 300,
 
   // 性能优化配置
   compress: true,
@@ -324,8 +326,7 @@ const nextConfig = {
     return config
   },
   experimental: {
-    cpus: 2,
-    staticPageGenerationTimeout: 300,
+    cpus: 1,
     scrollRestoration: true,
     // 性能优化实验性功能
     optimizePackageImports: ['@heroicons/react', 'lodash']
