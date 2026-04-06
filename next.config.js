@@ -2,7 +2,8 @@ const { THEME } = require('./blog.config')
 const fs = require('node:fs')
 const path = require('node:path')
 const BLOG = require('./blog.config')
-const { extractLangPrefix, isExport } = require('./lib/utils/pageId')
+const { extractLangPrefix } = require('./lib/utils/pageId')
+const { isExport } = require('./lib/utils/buildMode')
 
 // 打包时是否分析代码
 const withBundleAnalyzer = require('@next/bundle-analyzer')({

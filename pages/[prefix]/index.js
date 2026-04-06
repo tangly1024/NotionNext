@@ -10,9 +10,10 @@ import { checkSlugHasNoSlash } from '@/lib/utils/post'
 import { DynamicLayout } from '@/themes/theme'
 import md5 from 'js-md5'
 import { useRouter } from 'next/router'
+import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
-import { isExport } from '@/lib/utils/pageId'
-import { prefetchAllBlockMaps } from '@/lib/build/prefetch'
+import { isExport } from '@/lib/utils/buildMode'
+import { getPriorityPages, prefetchAllBlockMaps } from '@/lib/build/prefetch'
 
 /**
  * 根据notion的slug访问页面
@@ -96,25 +97,44 @@ const Slug = props => {
   )
 }
 
+Slug.propTypes = {
+  post: PropTypes.shape({
+    id: PropTypes.string,
+    slug: PropTypes.string,
+    password: PropTypes.string,
+    content: PropTypes.array,
+    toc: PropTypes.array,
+    blockMap: PropTypes.shape({
+      block: PropTypes.object
+    })
+  }),
+  NOTION_CONFIG: PropTypes.object
+}
+
 export async function getStaticPaths() {
-
-  // ISR 模式：不预生成，按需渲染
-  if (!isExport()) {
-    return { paths: [], fallback: 'blocking' }
-  }
-
   const from = 'slug-paths'
   const { allPages } = await fetchGlobalAllData({ from })
-  const paths = allPages
-    ?.filter(row => checkSlugHasNoSlash(row))
-    .map(row => ({ params: { prefix: row.slug } }))
 
-  // 静态导出时预加载所有block
-  await prefetchAllBlockMaps(allPages)
+  // Export 模式：全量预生成
+  if (isExport()) {
+    await prefetchAllBlockMaps(allPages)
+    return {
+      paths: allPages
+        ?.filter(row => checkSlugHasNoSlash(row))
+        .map(row => ({ params: { prefix: row.slug } })),
+      fallback: false
+    }
+  }
+
+  // ISR 模式：预生成最新10篇，其余按需渲染
+  const tops = getPriorityPages(allPages)
+  await prefetchAllBlockMaps(tops)
 
   return {
-    paths: paths,
-    fallback: true
+    paths: tops
+      .filter(row => checkSlugHasNoSlash(row))
+      .map(row => ({ params: { prefix: row.slug } })),
+    fallback: 'blocking'
   }
 }
 
