@@ -3,6 +3,7 @@ import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData, resolvePostProps } from '@/lib/db/SiteDataApi'
 import Slug from '..'
 import { checkSlugHasOneSlash } from '@/lib/utils/post'
+import { isExport } from '@/lib/utils/pageId'
 
 /**
  * 根据notion的slug访问页面
@@ -15,11 +16,10 @@ const PrefixSlug = props => {
 }
 
 export async function getStaticPaths() {
-  if (!BLOG.isProd) {
-    return {
-      paths: [],
-      fallback: true
-    }
+
+  // ISR 模式：不预生成，按需渲染
+  if (!isExport()) {
+    return { paths: [], fallback: 'blocking' }
   }
 
   const from = 'slug-paths'
@@ -52,13 +52,14 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
 
   return {
     props,
-    revalidate: process.env.EXPORT
+    revalidate: isExport()
       ? undefined
       : siteConfig(
         'NEXT_REVALIDATE_SECOND',
         BLOG.NEXT_REVALIDATE_SECOND,
         props.NOTION_CONFIG
       ),
+    notFound: !props.post
   }
 }
 

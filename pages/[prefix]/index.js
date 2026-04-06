@@ -11,6 +11,8 @@ import { DynamicLayout } from '@/themes/theme'
 import md5 from 'js-md5'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { isExport } from '@/lib/utils/pageId'
+import { prefetchAllBlockMaps } from '@/lib/build/prefetch'
 
 /**
  * 根据notion的slug访问页面
@@ -95,11 +97,10 @@ const Slug = props => {
 }
 
 export async function getStaticPaths() {
-  if (!BLOG.isProd) {
-    return {
-      paths: [],
-      fallback: true
-    }
+
+  // ISR 模式：不预生成，按需渲染
+  if (!isExport()) {
+    return { paths: [], fallback: 'blocking' }
   }
 
   const from = 'slug-paths'
@@ -107,6 +108,10 @@ export async function getStaticPaths() {
   const paths = allPages
     ?.filter(row => checkSlugHasNoSlash(row))
     .map(row => ({ params: { prefix: row.slug } }))
+
+  // 静态导出时预加载所有block
+  await prefetchAllBlockMaps(allPages)
+
   return {
     paths: paths,
     fallback: true
@@ -118,15 +123,17 @@ export async function getStaticProps({ params: { prefix }, locale }) {
     prefix,
     locale,
   })
+
   return {
     props,
-    revalidate: process.env.EXPORT
+    revalidate: isExport()
       ? undefined
       : siteConfig(
         'NEXT_REVALIDATE_SECOND',
         BLOG.NEXT_REVALIDATE_SECOND,
         props.NOTION_CONFIG
-      )
+      ),
+    notFound: !props.post
   }
 }
 
