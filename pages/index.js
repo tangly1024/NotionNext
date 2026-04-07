@@ -55,7 +55,8 @@ export async function getStaticProps(req) {
    //   post.blockMap = await getPostBlocks(post.id, 'slug', POST_PREVIEW_LINES)
   //  }
  // }
-  if (siteConfig('POST_LIST_PREVIEW', false, props?.NOTION_CONFIG)) {
+ // 预览文章内容
+if (false) {
   for (const i in props.posts) {
     const post = props.posts[i]
     if (post.password && post.password !== '') continue
