@@ -4,7 +4,7 @@
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "engines": {
-    "node": ">=20"
+    "node": "20.x"
   },
   "repository": {
     "type": "git",
