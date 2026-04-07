@@ -44,12 +44,37 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { prefix, slug }, locale }) {
+  
+  // 拦截静态资源、特殊文件、明显不是文章 slug 的请求
+  if (
+    !prefix ||
+    !slug ||
+    prefix.startsWith('_next') ||
+    prefix === 'fonts' ||
+    prefix === 'images' ||
+    prefix === 'img' ||
+    prefix === 'css' ||
+    prefix === 'js' ||
+    slug.includes('.') ||
+    slug === 'favicon.ico' ||
+    slug === 'robots.txt' ||
+    slug === 'sitemap.xml'
+  ) {
+    return { notFound: true }
+  }
+
+  
   const props = await resolvePostProps({
     prefix,
     slug,
     locale,
   })
 
+  if (!props || !props.post) {
+     return { notFound: true }
+  }
+
+  
   return {
     props,
     revalidate: process.env.EXPORT
