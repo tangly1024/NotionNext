@@ -46,15 +46,36 @@ export async function getStaticProps(req) {
   }
 
   // 预览文章内容
+  //if (siteConfig('POST_LIST_PREVIEW', false, props?.NOTION_CONFIG)) {
+  //  for (const i in props.posts) {
+  //    const post = props.posts[i]
+  //    if (post.password && post.password !== '') {
+  //      continue
+ //     }
+   //   post.blockMap = await getPostBlocks(post.id, 'slug', POST_PREVIEW_LINES)
+  //  }
+ // }
   if (siteConfig('POST_LIST_PREVIEW', false, props?.NOTION_CONFIG)) {
-    for (const i in props.posts) {
-      const post = props.posts[i]
-      if (post.password && post.password !== '') {
-        continue
-      }
+  for (const i in props.posts) {
+    const post = props.posts[i]
+    if (post.password && post.password !== '') continue
+    if (!post?.id || typeof post.id !== 'string') {
+      console.error('Invalid post id:', { title: post?.title, id: post?.id })
+      continue
+    }
+
+    try {
       post.blockMap = await getPostBlocks(post.id, 'slug', POST_PREVIEW_LINES)
+    } catch (err) {
+      console.error('Failed preview block load:', {
+        title: post?.title,
+        id: post?.id,
+        error: err?.message
+      })
+      post.blockMap = null
     }
   }
+}
 
   // 生成robotTxt
   generateRobotsTxt(props)
