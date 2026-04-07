@@ -4,7 +4,7 @@ import { fetchGlobalAllData, resolvePostProps } from '@/lib/db/SiteDataApi'
 import { checkSlugHasMorThanTwoSlash } from '@/lib/utils/post'
 import Slug from '..'
 import { isExport } from '@/lib/utils/buildMode'
-import { getPriorityPages, prefetchAllBlockMaps } from '@/lib/build/prefetch'
+import { _waitUntilDone, getPriorityPages, prefetchAllBlockMaps } from '@/lib/build/prefetch'
 
 /**
  * 根据notion的slug访问页面
@@ -21,9 +21,11 @@ export async function getStaticPaths() {
   const from = 'slug-paths'
   const { allPages } = await fetchGlobalAllData({ from })
 
+  await _waitUntilDone()
+
+
   // Export 模式：全量预生成
   if (isExport()) {
-    await prefetchAllBlockMaps(allPages)
     return {
       paths: allPages
         ?.filter(row => checkSlugHasMorThanTwoSlash(row))
@@ -38,10 +40,8 @@ export async function getStaticPaths() {
     }
   }
 
-  // ISR 模式：预生成最新10篇（仅三段以上路径格式）
+  // ISR 模式：预生成最新10篇（仅两段路径格式）
   const tops = getPriorityPages(allPages)
-
-  await prefetchAllBlockMaps(tops)
 
   return {
     paths: tops

@@ -278,7 +278,18 @@ const nextConfig = {
 
     if (!isServer) {
       console.log('[默认主题]', path.resolve(__dirname, 'themes', THEME))
+
+      // 这些 Node.js 原生模块在浏览器端替换为空模块
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        dns: false,
+        net: false,
+        tls: false,
+        fs: false,
+        path: false,
+      }
     }
+
     config.resolve.alias['@theme-components'] = path.resolve(
       __dirname,
       'themes',
