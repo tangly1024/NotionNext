@@ -7,7 +7,7 @@ const CONFIG = {
   PHOTO_MENU_TAG: true, // 显示标签
   PHOTO_MENU_ARCHIVE: true, // 显示归档
   PHOTO_MENU_SEARCH: true, // 显示搜索
-  PHOTO_HOME_BACKGROUND: false, // 首页是否显示背景图, 默认关闭
+  PHOTO_HOME_BACKGROUND: true, // 首页是否显示背景图, 默认关闭
 
   PHOTO_ARTICLE_RECOMMEND: true, // 推荐关联内容在文章底部
   PHOTO_VIDEO_COMBINE: true, // 聚合视频，开启后一篇文章内的多个含caption的视频会被合并到文章开头，并展示分集按钮

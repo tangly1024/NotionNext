@@ -12,7 +12,7 @@ const SocialButton = () => {
   const CONTACT_GITHUB = siteConfig('CONTACT_GITHUB')
   const CONTACT_TWITTER = siteConfig('CONTACT_TWITTER')
   const CONTACT_TELEGRAM = siteConfig('CONTACT_TELEGRAM')
-
+  const CONTACT_WHATSAPP = siteConfig('CONTACT_WHATSAPP')
   const CONTACT_LINKEDIN = siteConfig('CONTACT_LINKEDIN')
   const CONTACT_WEIBO = siteConfig('CONTACT_WEIBO')
   const CONTACT_INSTAGRAM = siteConfig('CONTACT_INSTAGRAM')
@@ -39,140 +39,63 @@ const SocialButton = () => {
   return (
     <div className='w-full justify-center flex-wrap flex'>
       <div className='space-x-3 text-xl flex items-center text-gray-600 dark:text-gray-300 '>
+        
+        {/* GitHub */}
         {CONTACT_GITHUB && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'github'}
-            href={CONTACT_GITHUB}>
+          <a target='_blank' rel='noreferrer' title={'github'} href={CONTACT_GITHUB}>
             <i className='transform hover:scale-125 duration-150 fab fa-github dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}
+       {/* X (Twitter) - 使用兼容性更好的类名 */}
         {CONTACT_TWITTER && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'twitter'}
-            href={CONTACT_TWITTER}>
+          <a target='_blank' rel='noreferrer' title={'X'} href={CONTACT_TWITTER}>
             <i className='transform hover:scale-125 duration-150 fab fa-twitter dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}
+
+        {/* Telegram */}
         {CONTACT_TELEGRAM && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            href={CONTACT_TELEGRAM}
-            title={'telegram'}>
+          <a target='_blank' rel='noreferrer' href={CONTACT_TELEGRAM} title={'telegram'}>
             <i className='transform hover:scale-125 duration-150 fab fa-telegram dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}
+
+        {/* WhatsApp - 你的新联系方式 */}
+        {CONTACT_WHATSAPP && (
+          <a target='_blank' rel='noreferrer' href={CONTACT_WHATSAPP} title={'whatsapp'}>
+            <i className='transform hover:scale-125 duration-150 fab fa-whatsapp dark:hover:text-indigo-400 hover:text-indigo-600' />
+          </a>
+        )}
+
+        {/* LinkedIn */}
         {CONTACT_LINKEDIN && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            href={CONTACT_LINKEDIN}
-            title={'linkIn'}>
+          <a target='_blank' rel='noreferrer' href={CONTACT_LINKEDIN} title={'linkIn'}>
             <i className='transform hover:scale-125 duration-150 fab fa-linkedin dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}
-        {CONTACT_WEIBO && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'weibo'}
-            href={CONTACT_WEIBO}>
-            <i className='transform hover:scale-125 duration-150 fab fa-weibo dark:hover:text-indigo-400 hover:text-indigo-600' />
-          </a>
-        )}
-        {CONTACT_INSTAGRAM && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'instagram'}
-            href={CONTACT_INSTAGRAM}>
-            <i className='transform hover:scale-125 duration-150 fab fa-instagram dark:hover:text-indigo-400 hover:text-indigo-600' />
-          </a>
-        )}
+
+        {/* Email */}
         {CONTACT_EMAIL && (
-          <a
-            onClick={e => handleEmailClick(e, emailIcon, CONTACT_EMAIL)}
-            title='email'
-            className='cursor-pointer'
-            ref={emailIcon}>
+          <a onClick={e => handleEmailClick(e, emailIcon, CONTACT_EMAIL)} title='email' className='cursor-pointer' ref={emailIcon}>
             <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}
+
+        {/* RSS */}
         {ENABLE_RSS && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'RSS'}
-            href={'/rss/feed.xml'}>
+          <a target='_blank' rel='noreferrer' title={'RSS'} href={'/rss/feed.xml'}>
             <i className='transform hover:scale-125 duration-150 fas fa-rss dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}
-        {CONTACT_BILIBILI && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'bilibili'}
-            href={CONTACT_BILIBILI}>
-            <i className='transform hover:scale-125 duration-150 dark:hover:text-indigo-400 hover:text-indigo-600 fab fa-bilibili' />
-          </a>
-        )}
-        {CONTACT_YOUTUBE && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'youtube'}
-            href={CONTACT_YOUTUBE}>
-            <i className='transform hover:scale-125 duration-150 fab fa-youtube dark:hover:text-indigo-400 hover:text-indigo-600' />
-          </a>
-        )}
-        {CONTACT_XIAOHONGSHU && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'小红书'}
-            href={CONTACT_XIAOHONGSHU}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              className='transform hover:scale-125 duration-150 w-6'
-              src='/svg/xiaohongshu.svg'
-              alt='小红书'
-            />
-          </a>
-        )}
-        {CONTACT_ZHISHIXINGQIU && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'知识星球'}
-            href={CONTACT_ZHISHIXINGQIU}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              className='transform hover:scale-125 duration-150 w-6'
-              src='/svg/zhishixingqiu.svg'
-              alt='知识星球'
-            />{' '}
-          </a>
-        )}
+
+        {/* 微信公众号 - 悬停自动弹出二维码 */}
         {CONTACT_WEHCHAT_PUBLIC && (
-          <button
-            onMouseEnter={openPopover}
-            onMouseLeave={closePopover}
-            aria-label={'微信公众号'}>
+          <button onMouseEnter={openPopover} onMouseLeave={closePopover} aria-label={'微信公众号'}>
             <div id='wechat-button'>
               <i className='transform scale-105 hover:scale-125 duration-150 fab fa-weixin  dark:hover:text-indigo-400 hover:text-indigo-600' />
             </div>
-            {/* 二维码弹框 */}
             <div className='absolute'>
-              <div
-                id='pop'
-                className={
-                  (qrCodeShow ? 'opacity-100 ' : ' invisible opacity-0') +
-                  ' z-40 absolute bottom-10 -left-10 bg-white shadow-xl transition-all duration-200 text-center'
-                }>
+              <div id='pop' className={(qrCodeShow ? 'opacity-100 ' : ' invisible opacity-0') + ' z-40 absolute bottom-10 -left-10 bg-white shadow-xl transition-all duration-200 text-center'}>
                 <div className='p-2 mt-1 w-28 h-28'>
                   {qrCodeShow && <QrCode value={CONTACT_WEHCHAT_PUBLIC} />}
                 </div>
@@ -180,6 +103,7 @@ const SocialButton = () => {
             </div>
           </button>
         )}
+
       </div>
     </div>
   )
