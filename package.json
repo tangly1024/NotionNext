@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "4.9.3",
+  "version": "4.9.4.2",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "engines": {
@@ -45,7 +45,8 @@
     "test:ci": "jest --ci --coverage --watchAll=false",
     "health-check": "node scripts/health-check.js",
     "validate": "npm run health-check",
-    "final-validation": "node scripts/final-validation.js"
+    "final-validation": "node scripts/final-validation.js",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@clerk/localizations": "^3.17.1",
@@ -53,6 +54,7 @@
     "@headlessui/react": "^1.7.19",
     "@next/bundle-analyzer": "^12.3.7",
     "@vercel/analytics": "^1.5.0",
+    "@vercel/functions": "^3.4.3",
     "algoliasearch": "^4.25.2",
     "axios": "^1.7.2",
     "critters": "^0.0.23",
@@ -62,17 +64,21 @@
     "lodash.throttle": "^4.1.1",
     "memory-cache": "^0.2.0",
     "next": "^14.2.30",
-    "notion-client": "7.7.1",
-    "notion-utils": "7.7.1",
+    "notion-client": "7.10.0",
+    "notion-utils": "7.10.0",
+    "p-limit": "^7.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-facebook": "^8.1.4",
     "react-hotkeys-hook": "^4.6.2",
-    "react-notion-x": "7.7.1",
+    "react-notion-x": "7.10.0",
     "react-share": "^5.2.2",
     "react-tweet-embed": "~2.0.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.1",
     "@types/node": "22.15.3",
     "@types/react": "18.3.10",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
@@ -88,18 +94,16 @@
     "eslint-plugin-prettier": "^5.5.1",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.2",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-junit": "^16.0.0",
     "next-sitemap": "^1.9.12",
+    "patch-package": "^8.0.1",
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
     "tailwindcss": "^3.4.17",
     "typescript": "5.6.2",
-    "webpack-bundle-analyzer": "^4.5.0",
-    "@testing-library/jest-dom": "^6.1.4",
-    "@testing-library/react": "^14.1.2",
-    "@testing-library/user-event": "^14.5.1",
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "jest-junit": "^16.0.0"
+    "webpack-bundle-analyzer": "^4.5.0"
   },
   "resolutions": {
     "axios": ">=0.21.1"
