@@ -1,16 +1,13 @@
-import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import CopyRightDate from '@/components/CopyRightDate'
 import PoweredBy from '@/components/PoweredBy'
 import { siteConfig } from '@/lib/config'
 import SocialButton from './SocialButton'
 
 /**
- * 页脚
+ * 页脚 (无备案纯净版)
  * @returns
  */
 const Footer = () => {
-  const BEI_AN = siteConfig('BEI_AN')
-  const BEI_AN_LINK = siteConfig('BEI_AN_LINK')
   const BIO = siteConfig('BIO')
   const AUTHOR = siteConfig('AUTHOR')
 
@@ -52,26 +49,9 @@ const Footer = () => {
             <PoweredBy />
           </div>
 
-          {/* 右侧：备案与统计信息 */}
-          <div className='flex flex-col items-center lg:items-end gap-2'>
-            {/* 备案信息 */}
-            <div className='flex flex-wrap items-center justify-center gap-3'>
-              {BEI_AN && (
-                <a
-                  href={BEI_AN_LINK || 'https://beian.miit.gov.cn/'}
-                  target='_blank'
-                  rel='noreferrer'
-                  className='flex items-center gap-1 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300'
-                >
-                  <i className='fas fa-shield-alt text-xs opacity-70' />
-                  <span>{BEI_AN}</span>
-                </a>
-              )}
-              <BeiAnGongAn />
-            </div>
-
-            {/* 访问量统计 (Busuanzi) */}
-            <div className='flex items-center gap-4 text-xs opacity-80'>
+          {/* 右侧：访问量统计 (Busuanzi) */}
+          <div className='flex flex-col items-center lg:items-end'>
+            <div className='flex items-center gap-4 opacity-80'>
               <span className='hidden busuanzi_container_site_pv flex items-center gap-1.5'>
                 <i className='fas fa-eye' />
                 <span className='busuanzi_value_site_pv'>--</span>
