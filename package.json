@@ -52,6 +52,7 @@
     "@clerk/localizations": "^3.17.1",
     "@clerk/nextjs": "^5.7.5",
     "@headlessui/react": "^1.7.19",
+    "@netlify/blobs": "^10.7.4",
     "@next/bundle-analyzer": "^12.3.7",
     "@vercel/analytics": "^1.5.0",
     "@vercel/functions": "^3.4.3",
