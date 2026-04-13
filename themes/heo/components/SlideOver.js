@@ -69,49 +69,46 @@ export default function SlideOver(props) {
                 leaveFrom='translate-x-0'
                 leaveTo='translate-x-full'>
                 <Dialog.Panel className='pointer-events-auto relative w-96 max-w-md'>
+                  <Transition.Child
+                    as={Fragment}
+                    enter='ease-in-out duration-500'
+                    enterFrom='opacity-0'
+                    enterTo='opacity-100'
+                    leave='ease-in-out duration-500'
+                    leaveFrom='opacity-100'
+                    leaveTo='opacity-0'>
+                    <div className='absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4'>
+                      <button
+                        type='button'
+                        className='rounded-md text-gray-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-white'
+                        onClick={() => setOpen(false)}>
+                        <span className='sr-only'>Close panel</span>
+                        <i className='fa-solid fa-xmark px-2'></i>
+                      </button>
+                    </div>
+                  </Transition.Child>
                   {/* 内容 */}
-                  <div className='flex h-full flex-col overflow-y-scroll bg-[#f0ebe3] dark:bg-[#17191d]/95 dark:backdrop-blur-xl py-2 shadow-2xl rounded-l-[2rem]'>
-                    {/* 关闭按钮 - 右上角 */}
-                    <Transition.Child
-                      as={Fragment}
-                      enter='ease-in-out duration-500'
-                      enterFrom='opacity-0'
-                      enterTo='opacity-100'
-                      leave='ease-in-out duration-500'
-                      leaveFrom='opacity-100'
-                      leaveTo='opacity-0'>
-                      <div className='mb-2 flex justify-end px-5 sm:px-6'>
-                        <button
-                          type='button'
-                          className='w-10 h-10 rounded-2xl bg-[#f5f0e8] dark:bg-gray-800/90 dark:backdrop-blur-sm border-none dark:border dark:border-gray-600/50 flex items-center justify-center text-gray-500 dark:text-gray-300 transition-all duration-200 shadow-[4px_4px_10px_rgba(0,0,0,0.08),-4px_-4px_10px_rgba(255,255,255,0.9),inset_2px_2px_4px_rgba(255,255,255,0.7),inset_-1px_-1px_3px_rgba(0,0,0,0.04)] dark:shadow-lg outline-none'
-                          onClick={() => setOpen(false)}>
-                          <span className='sr-only'>Close panel</span>
-                          <i className='fa-solid fa-xmark text-base'></i>
-                        </button>
-                      </div>
-                    </Transition.Child>
-                    <div className='relative flex-1 flex-col space-y-3 px-5 sm:px-6 dark:text-white '>
-                      <section className='flex flex-col'>
+                  <div className='flex h-full flex-col overflow-y-scroll bg-white dark:bg-[#18171d] py-6 shadow-xl'>
+                    <div className='relative mt-6 flex-1 flex-col space-y-3 px-4 sm:px-6 dark:text-white '>
+                      <section className='space-y-2 flex flex-col'>
                         {/* 切换深色模式 */}
                         <DarkModeBlockButton />
                       </section>
 
-                      <section className='space-y-3 flex flex-col'>
-                        <div className='text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider'>{locale.COMMON.BLOG}</div>
+                      <section className='space-y-2 flex flex-col'>
+                        <div>{locale.COMMON.BLOG}</div>
                         {/* 导航按钮 */}
-                        <div className='gap-3 grid grid-cols-2'>
-                          <Button title={'主页'} url={'/'} icon='fa-solid fa-house' />
-                          <Button title={'关于'} url={'/about'} icon='fa-solid fa-user' />
+                        <div className='gap-2 grid grid-cols-2'>
+                          <Button title={'主页'} url={'/'} />
+                          <Button title={'关于'} url={'/about'} />
                         </div>
                         {/* 用户自定义菜单 */}
                         <MenuListSide {...props} />
                       </section>
 
-                      <section className='space-y-3 flex flex-col'>
-                        <div className='text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider'>{locale.COMMON.TAGS}</div>
-                        <div className='bg-[#f5f0e8] dark:bg-white/5 dark:backdrop-blur-sm p-4 rounded-[1.45rem] border-none dark:border dark:border-gray-700/30 shadow-[4px_4px_10px_rgba(0,0,0,0.06),-4px_-4px_10px_rgba(255,255,255,0.9),inset_2px_2px_4px_rgba(255,255,255,0.7),inset_-1px_-1px_3px_rgba(0,0,0,0.03)] dark:shadow-none'>
-                          <TagGroups tags={tagOptions} />
-                        </div>
+                      <section className='space-y-2 flex flex-col'>
+                        <div>{locale.COMMON.TAGS}</div>
+                        <TagGroups tags={tagOptions} />
                       </section>
                     </div>
                   </div>
@@ -139,10 +136,10 @@ function DarkModeBlockButton() {
     <button
       onClick={handleChangeDarkMode}
       className={
-        'group duration-200 flex justify-between items-center px-4 py-3 bg-[#ffe0b2] dark:bg-[#ff953e] border-none dark:border dark:border-gray-600 rounded-[1.45rem] transition-all shadow-[4px_4px_10px_rgba(0,0,0,0.08),-4px_-4px_10px_rgba(255,255,255,0.9),inset_2px_2px_4px_rgba(255,255,255,0.6),inset_-1px_-1px_3px_rgba(0,0,0,0.04)] dark:shadow-none dark:hover:bg-blue-500 dark:hover:border-blue-500 dark:hover:text-white'
+        'group duration-200 hover:text-white hover:shadow-md hover:bg-blue-600 flex justify-between items-center px-2 py-2 border dark:border-gray-600 bg-white dark:bg-[#ff953e]  rounded-lg'
       }>
-      <DarkModeButton cRef={darkModeRef} className='dark:group-hover:text-white' />{' '}
-      <span className='font-medium'>{isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE}</span>
+      <DarkModeButton cRef={darkModeRef} className='group-hover:text-white' />{' '}
+      {isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE}
     </button>
   )
 }
@@ -150,15 +147,14 @@ function DarkModeBlockButton() {
 /**
  * 一个简单的按钮
  */
-function Button({ title, url, icon }) {
+function Button({ title, url }) {
   return (
     <SmartLink
       href={url}
       className={
-        'duration-200 flex cursor-pointer items-center justify-center gap-2 px-4 py-3 bg-[#d6e6f2] dark:bg-[#1e1e1e] border-none dark:border dark:border-gray-600 rounded-[1.45rem] transition-all shadow-[4px_4px_10px_rgba(0,0,0,0.08),-4px_-4px_10px_rgba(255,255,255,0.9),inset_2px_2px_4px_rgba(255,255,255,0.6),inset_-1px_-1px_3px_rgba(0,0,0,0.04)] dark:shadow-none dark:hover:text-white dark:hover:shadow-xl dark:hover:bg-blue-600'
+        'duration-200 hover:text-white hover:shadow-md flex cursor-pointer justify-between items-center px-2 py-2 border dark:border-gray-600 bg-white hover:bg-blue-600 dark:bg-[#1e1e1e] rounded-lg'
       }>
-      {icon && <i className={`${icon} text-base`}></i>}
-      <span className='text-sm font-medium'>{title}</span>
+      {title}
     </SmartLink>
   )
 }
