@@ -13,7 +13,7 @@ const Footer = () => {
       {/* 颜色过度区 */}
       <div
         id='color-transition'
-        className='h-32 bg-gradient-to-b from-[#f7f9fe] to-white  dark:bg-[#1a191d] dark:from-inherit dark:to-inherit'
+        className='h-15 bg-gradient-to-b from-[#f7f9fe] to-white  dark:bg-[#1a191d] dark:from-inherit dark:to-inherit'
       />
 
       {/* 底部页面信息 */}
