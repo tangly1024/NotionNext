@@ -9,7 +9,7 @@ const Style = () => {
     <style jsx global>{`
       // 底色
       body {
-        background-color: #B0E0E6;
+        background-color: #B0C4DE;
       }
       .dark body {
         background-color: black;
@@ -44,12 +44,12 @@ const Style = () => {
       }
 
       ::-webkit-scrollbar-thumb {
-        background-color: #B0E0E6;
+        background-color: #B0C4DE;
       }
 
       * {
         scrollbar-width: thin;
-        scrollbar-color: #B0E0E6 transparent;
+        scrollbar-color: #B0C4DE transparent;
       }
     `}</style>
   )
