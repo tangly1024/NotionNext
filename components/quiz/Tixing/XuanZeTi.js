@@ -1,4 +1,11 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   FaVolumeUp,
   FaCheck,
@@ -6,7 +13,7 @@ import {
   FaArrowRight,
   FaSpinner,
   FaRobot,
-  FaCog
+  FaCog,
 } from 'react-icons/fa';
 import { pinyin } from 'pinyin-pro';
 import InteractiveAIExplanationPanel from '../../ai/InteractiveAIExplanationPanel';
@@ -15,286 +22,17 @@ import {
   getSavedInteractiveAISettings,
   saveInteractivePrefs,
   saveInteractiveAISettings,
-  speedLabelToRate
+  speedLabelToRate,
 } from '../../interactiveQuiz/interactiveSettings';
-
-const idb = {
-  db: null,
-  async init() {
-    if (typeof window === 'undefined' || this.db) return;
-    return new Promise((resolve) => {
-      const request = indexedDB.open('LessonCacheDB', 1);
-      request.onupgradeneeded = (e) => {
-        const db = e.target.result;
-        if (!db.objectStoreNames.contains('tts_audio')) {
-          db.createObjectStore('tts_audio');
-        }
-      };
-      request.onsuccess = (e) => {
-        this.db = e.target.result;
-        resolve();
-      };
-      request.onerror = () => resolve();
-    });
-  },
-  async get(key) {
-    await this.init();
-    if (!this.db) return null;
-    return new Promise((resolve) => {
-      const tx = this.db.transaction('tts_audio', 'readonly');
-      const req = tx.objectStore('tts_audio').get(key);
-      req.onsuccess = () => resolve(req.result || null);
-      req.onerror = () => resolve(null);
-    });
-  },
-  async set(key, blob) {
-    await this.init();
-    if (!this.db) return;
-    try {
-      const tx = this.db.transaction('tts_audio', 'readwrite');
-      tx.objectStore('tts_audio').put(blob, key);
-    } catch (_) {}
-  }
-};
-
-function vibrate(pattern) {
-  if (typeof navigator !== 'undefined' && navigator.vibrate) {
-    navigator.vibrate(pattern);
-  }
-}
-
-function playBeep(type = 'tap') {
-  if (typeof window === 'undefined') return;
-
-  try {
-    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContextClass) return;
-
-    const ctx = new AudioContextClass();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    let frequency = 520;
-    let duration = 0.06;
-    let volume = 0.03;
-
-    if (type === 'correct') {
-      frequency = 760;
-      duration = 0.1;
-      volume = 0.045;
-    } else if (type === 'wrong') {
-      frequency = 220;
-      duration = 0.12;
-      volume = 0.05;
-    }
-
-    osc.type = 'sine';
-    osc.frequency.value = frequency;
-    gain.gain.value = volume;
-
-    osc.start();
-    osc.stop(ctx.currentTime + duration);
-
-    osc.onended = () => {
-      try {
-        ctx.close();
-      } catch (_) {}
-    };
-  } catch (_) {}
-}
 
 const TTS_VOICES = {
   zh: 'zh-CN-XiaoxiaoMultilingualNeural',
   my: 'my-MM-ThihaNeural',
-  en: 'en-US-JennyNeural'
+  en: 'en-US-JennyNeural',
 };
 
-const isChineseChar = (ch = '') => /[\u4e00-\u9fff]/.test(ch);
-const isMyanmarChar = (ch = '') => /[\u1000-\u109F]/.test(ch);
-const isLatinOrDigit = (ch = '') => /[a-zA-Z0-9]/.test(ch);
-const isWhitespace = (ch = '') => /\s/.test(ch);
-const containsChinese = (text = '') => /[\u4e00-\u9fff]/.test(text);
-
-const isPunctuationOrSymbol = (ch = '') =>
-  !isChineseChar(ch) && !isMyanmarChar(ch) && !isLatinOrDigit(ch) && !isWhitespace(ch);
-
-const detectWholeTextType = (text = '') => {
-  const hasZh = /[\u4e00-\u9fff]/.test(text);
-  const hasMy = /[\u1000-\u109F]/.test(text);
-  const hasLatin = /[a-zA-Z0-9]/.test(text);
-  const count = [hasZh, hasMy, hasLatin].filter(Boolean).length;
-
-  if (count <= 1) {
-    if (hasZh) return 'zh';
-    if (hasMy) return 'my';
-    if (hasLatin) return 'en';
-  }
-  return 'mixed';
-};
-
-function splitMixedText(text = '') {
-  const wholeType = detectWholeTextType(text);
-  if (wholeType !== 'mixed') return [{ text: text.trim(), lang: wholeType || 'zh' }];
-
-  const chars = Array.from(text);
-  const segments = [];
-  let currentText = '';
-  let currentLang = null;
-
-  const pushCurrent = () => {
-    const t = currentText.trim();
-    if (t) segments.push({ text: t, lang: currentLang || 'zh' });
-    currentText = '';
-    currentLang = null;
-  };
-
-  for (const ch of chars) {
-    let lang = null;
-
-    if (isChineseChar(ch)) lang = 'zh';
-    else if (isMyanmarChar(ch)) lang = 'my';
-    else if (isLatinOrDigit(ch)) lang = 'en';
-    else if (isWhitespace(ch) || isPunctuationOrSymbol(ch)) {
-      currentText += ch;
-      continue;
-    }
-
-    if (!currentLang) {
-      currentLang = lang;
-      currentText += ch;
-      continue;
-    }
-
-    if (lang === currentLang) {
-      currentText += ch;
-    } else {
-      pushCurrent();
-      currentLang = lang;
-      currentText = ch;
-    }
-  }
-
-  pushCurrent();
-
-  if (!segments.length && text.trim()) return [{ text: text.trim(), lang: 'zh' }];
-  return segments;
-}
-
-async function getTTSBlob(text, voice, rate = 0, apiUrl = 'https://t.leftsite.cn/tts') {
-  const cacheKey = `${apiUrl}-${voice}-${rate}-${text}`;
-  let blob = await idb.get(cacheKey);
-
-  if (!blob) {
-    const res = await fetch(`${apiUrl}?t=${encodeURIComponent(text)}&v=${voice}&r=${rate}`);
-    if (!res.ok) throw new Error('TTS Failed');
-    blob = await res.blob();
-    await idb.set(cacheKey, blob);
-  }
-
-  return blob;
-}
-
-const audioController = {
-  currentAudio: null,
-  latestRequestId: 0,
-  activeUrls: [],
-
-  stop() {
-    this.latestRequestId++;
-
-    if (this.currentAudio) {
-      try {
-        this.currentAudio.pause();
-        this.currentAudio.currentTime = 0;
-      } catch (_) {}
-      this.currentAudio.onended = null;
-      this.currentAudio.onerror = null;
-      this.currentAudio = null;
-    }
-
-    this.activeUrls.forEach((url) => {
-      try {
-        URL.revokeObjectURL(url);
-      } catch (_) {}
-    });
-    this.activeUrls = [];
-  },
-
-  async playMixed(text, { rate = 0, aiSettings = null } = {}, onStart, onEnd) {
-    this.stop();
-
-    const raw = String(text || '').trim();
-    if (!raw) {
-      onEnd?.();
-      return;
-    }
-
-    const reqId = this.latestRequestId;
-    onStart?.();
-
-    try {
-      const segments = splitMixedText(raw);
-      const audios = [];
-
-      for (const seg of segments) {
-        if (reqId !== this.latestRequestId) return;
-
-        const segText = String(seg.text || '').trim();
-        if (!segText) continue;
-
-        const voice =
-          seg.lang === 'my'
-            ? (aiSettings?.myVoice || TTS_VOICES.my)
-            : seg.lang === 'en'
-            ? TTS_VOICES.en
-            : (aiSettings?.zhVoice || TTS_VOICES.zh);
-
-        const blob = await getTTSBlob(
-          segText,
-          voice,
-          rate,
-          aiSettings?.ttsApiUrl || 'https://t.leftsite.cn/tts'
-        );
-
-        if (reqId !== this.latestRequestId) return;
-
-        const url = URL.createObjectURL(blob);
-        this.activeUrls.push(url);
-        audios.push(new Audio(url));
-      }
-
-      if (reqId !== this.latestRequestId) return;
-
-      if (!audios.length) {
-        onEnd?.();
-        return;
-      }
-
-      const playNext = (index) => {
-        if (reqId !== this.latestRequestId) return;
-
-        if (index >= audios.length) {
-          if (reqId === this.latestRequestId) onEnd?.();
-          return;
-        }
-
-        const audio = audios[index];
-        this.currentAudio = audio;
-        audio.onended = () => playNext(index + 1);
-        audio.onerror = () => playNext(index + 1);
-        audio.play().catch(() => playNext(index + 1));
-      };
-
-      playNext(0);
-    } catch (e) {
-      console.warn('[TTS Error]:', e);
-      if (reqId === this.latestRequestId) onEnd?.();
-    }
-  }
-};
+const TEACHER_IMAGE_URL =
+  'https://audio.886.best/chinese-vocab-audio/%E5%9B%BE%E7%89%87/1765952194374.png';
 
 const cssStyles = `
 .xzt-container {
@@ -861,14 +599,340 @@ const cssStyles = `
 }
 `;
 
+const indexedBlobCache = {
+  db: null,
+  initPromise: null,
+
+  async init() {
+    if (typeof window === 'undefined') return null;
+    if (this.db) return this.db;
+    if (this.initPromise) return this.initPromise;
+
+    this.initPromise = new Promise((resolve) => {
+      const request = indexedDB.open('LessonCacheDB', 1);
+
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        if (!db.objectStoreNames.contains('tts_audio')) {
+          db.createObjectStore('tts_audio');
+        }
+      };
+
+      request.onsuccess = (event) => {
+        this.db = event.target.result;
+        resolve(this.db);
+      };
+
+      request.onerror = () => resolve(null);
+    });
+
+    return this.initPromise;
+  },
+
+  async get(key) {
+    const db = await this.init();
+    if (!db) return null;
+
+    return new Promise((resolve) => {
+      const tx = db.transaction('tts_audio', 'readonly');
+      const req = tx.objectStore('tts_audio').get(key);
+      req.onsuccess = () => resolve(req.result || null);
+      req.onerror = () => resolve(null);
+    });
+  },
+
+  async set(key, blob) {
+    const db = await this.init();
+    if (!db) return;
+
+    try {
+      const tx = db.transaction('tts_audio', 'readwrite');
+      tx.objectStore('tts_audio').put(blob, key);
+    } catch (_) {}
+  },
+};
+
+function vibrate(pattern) {
+  if (typeof navigator !== 'undefined' && navigator.vibrate) {
+    navigator.vibrate(pattern);
+  }
+}
+
+function playBeep(type = 'tap') {
+  if (typeof window === 'undefined') return;
+
+  try {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+
+    const ctx = new AudioContextClass();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    let frequency = 520;
+    let duration = 0.06;
+    let volume = 0.03;
+
+    if (type === 'correct') {
+      frequency = 760;
+      duration = 0.1;
+      volume = 0.045;
+    } else if (type === 'wrong') {
+      frequency = 220;
+      duration = 0.12;
+      volume = 0.05;
+    }
+
+    osc.type = 'sine';
+    osc.frequency.value = frequency;
+    gain.gain.value = volume;
+
+    osc.start();
+    osc.stop(ctx.currentTime + duration);
+
+    osc.onended = () => {
+      try {
+        ctx.close();
+      } catch (_) {}
+    };
+  } catch (_) {}
+}
+
+const isChineseChar = (char = '') => /[\u4e00-\u9fff]/.test(char);
+const isMyanmarChar = (char = '') => /[\u1000-\u109F]/.test(char);
+const isLatinOrDigit = (char = '') => /[a-zA-Z0-9]/.test(char);
+const isWhitespace = (char = '') => /\s/.test(char);
+const containsChinese = (text = '') => /[\u4e00-\u9fff]/.test(text);
+
+const isPunctuationOrSymbol = (char = '') =>
+  !isChineseChar(char) &&
+  !isMyanmarChar(char) &&
+  !isLatinOrDigit(char) &&
+  !isWhitespace(char);
+
+function detectWholeTextType(text = '') {
+  const hasZh = /[\u4e00-\u9fff]/.test(text);
+  const hasMy = /[\u1000-\u109F]/.test(text);
+  const hasLatin = /[a-zA-Z0-9]/.test(text);
+  const count = [hasZh, hasMy, hasLatin].filter(Boolean).length;
+
+  if (count <= 1) {
+    if (hasZh) return 'zh';
+    if (hasMy) return 'my';
+    if (hasLatin) return 'en';
+  }
+
+  return 'mixed';
+}
+
+function splitMixedText(text = '') {
+  const wholeType = detectWholeTextType(text);
+  if (wholeType !== 'mixed') {
+    return [{ text: String(text).trim(), lang: wholeType || 'zh' }];
+  }
+
+  const segments = [];
+  let currentText = '';
+  let currentLang = null;
+
+  const pushCurrent = () => {
+    const trimmed = currentText.trim();
+    if (trimmed) {
+      segments.push({ text: trimmed, lang: currentLang || 'zh' });
+    }
+    currentText = '';
+    currentLang = null;
+  };
+
+  for (const char of Array.from(text)) {
+    let lang = null;
+
+    if (isChineseChar(char)) lang = 'zh';
+    else if (isMyanmarChar(char)) lang = 'my';
+    else if (isLatinOrDigit(char)) lang = 'en';
+    else if (isWhitespace(char) || isPunctuationOrSymbol(char)) {
+      currentText += char;
+      continue;
+    }
+
+    if (!currentLang) {
+      currentLang = lang;
+      currentText += char;
+      continue;
+    }
+
+    if (lang === currentLang) {
+      currentText += char;
+    } else {
+      pushCurrent();
+      currentLang = lang;
+      currentText = char;
+    }
+  }
+
+  pushCurrent();
+
+  return segments.length ? segments : [{ text: String(text).trim(), lang: 'zh' }];
+}
+
+async function getTTSBlob(text, voice, rate = 0, apiUrl = 'https://t.leftsite.cn/tts') {
+  const cacheKey = `${apiUrl}-${voice}-${rate}-${text}`;
+  let blob = await indexedBlobCache.get(cacheKey);
+
+  if (!blob) {
+    const response = await fetch(
+      `${apiUrl}?t=${encodeURIComponent(text)}&v=${encodeURIComponent(voice)}&r=${rate}`
+    );
+    if (!response.ok) {
+      throw new Error('TTS request failed');
+    }
+
+    blob = await response.blob();
+    await indexedBlobCache.set(cacheKey, blob);
+  }
+
+  return blob;
+}
+
+class AudioPlaybackController {
+  constructor() {
+    this.currentAudio = null;
+    this.latestRequestId = 0;
+    this.activeUrls = [];
+  }
+
+  stop() {
+    this.latestRequestId += 1;
+
+    if (this.currentAudio) {
+      try {
+        this.currentAudio.pause();
+        this.currentAudio.currentTime = 0;
+      } catch (_) {}
+
+      this.currentAudio.onended = null;
+      this.currentAudio.onerror = null;
+      this.currentAudio = null;
+    }
+
+    this.activeUrls.forEach((url) => {
+      try {
+        URL.revokeObjectURL(url);
+      } catch (_) {}
+    });
+
+    this.activeUrls = [];
+  }
+
+  async playMixed(text, { rate = 0, aiSettings = null } = {}, onStart, onEnd) {
+    this.stop();
+
+    const raw = String(text || '').trim();
+    if (!raw) {
+      onEnd?.();
+      return;
+    }
+
+    const requestId = this.latestRequestId;
+    onStart?.();
+
+    try {
+      const segments = splitMixedText(raw);
+      const audios = [];
+
+      for (const segment of segments) {
+        if (requestId !== this.latestRequestId) return;
+
+        const segmentText = String(segment.text || '').trim();
+        if (!segmentText) continue;
+
+        const voice =
+          segment.lang === 'my'
+            ? aiSettings?.myVoice || TTS_VOICES.my
+            : segment.lang === 'en'
+            ? TTS_VOICES.en
+            : aiSettings?.zhVoice || TTS_VOICES.zh;
+
+        const blob = await getTTSBlob(
+          segmentText,
+          voice,
+          rate,
+          aiSettings?.ttsApiUrl || 'https://t.leftsite.cn/tts'
+        );
+
+        if (requestId !== this.latestRequestId) return;
+
+        const url = URL.createObjectURL(blob);
+        this.activeUrls.push(url);
+        audios.push(new Audio(url));
+      }
+
+      if (requestId !== this.latestRequestId) return;
+
+      if (!audios.length) {
+        onEnd?.();
+        return;
+      }
+
+      const playNext = (index) => {
+        if (requestId !== this.latestRequestId) return;
+
+        if (index >= audios.length) {
+          if (requestId === this.latestRequestId) {
+            this.currentAudio = null;
+            onEnd?.();
+          }
+          return;
+        }
+
+        const audio = audios[index];
+        this.currentAudio = audio;
+        audio.onended = () => playNext(index + 1);
+        audio.onerror = () => playNext(index + 1);
+        audio.play().catch(() => playNext(index + 1));
+      };
+
+      playNext(0);
+    } catch (error) {
+      console.warn('[TTS Error]', error);
+      if (requestId === this.latestRequestId) {
+        this.currentAudio = null;
+        onEnd?.();
+      }
+    }
+  }
+}
+
 function getPinyinArraySafe(text = '') {
   const cleaned = String(text).replace(/[^\u4e00-\u9fff]/g, '');
   if (!cleaned) return [];
+
   try {
     return pinyin(cleaned, { type: 'array', toneType: 'symbol' });
   } catch (_) {
     return [];
   }
+}
+
+const pinyinCache = new Map();
+
+function getCachedPinyin(text = '') {
+  const key = String(text || '');
+  if (!key) return '';
+  if (pinyinCache.has(key)) return pinyinCache.get(key);
+
+  let value = '';
+  try {
+    value = pinyin(key.replace(/[^\u4e00-\u9fff]/g, ''), { toneType: 'symbol' });
+  } catch (_) {
+    value = '';
+  }
+
+  pinyinCache.set(key, value);
+  return value;
 }
 
 function renderTextWithOptionalPinyin(text, showPinyin, textClass = 'zh-char', pyClass = 'zh-py') {
@@ -877,13 +941,12 @@ function renderTextWithOptionalPinyin(text, showPinyin, textClass = 'zh-char', p
   const parts =
     String(text).match(/([\u4e00-\u9fff]+|[\u1000-\u109F]+|[^\u4e00-\u9fff\u1000-\u109F]+)/g) || [];
 
-  return parts.map((part, i) => {
+  return parts.map((part, partIndex) => {
     if (/[\u4e00-\u9fff]/.test(part)) {
-      const py = getPinyinArraySafe(part);
-      const chars = part.split('');
-      return chars.map((char, j) => (
-        <div key={`${i}-${j}`} className="zh-seg">
-          {showPinyin ? <span className={pyClass}>{py[j] || ''}</span> : null}
+      const pinyinList = getPinyinArraySafe(part);
+      return part.split('').map((char, charIndex) => (
+        <div key={`${partIndex}-${charIndex}`} className="zh-seg">
+          {showPinyin ? <span className={pyClass}>{pinyinList[charIndex] || ''}</span> : null}
           <span className={textClass}>{char}</span>
         </div>
       ));
@@ -891,28 +954,102 @@ function renderTextWithOptionalPinyin(text, showPinyin, textClass = 'zh-char', p
 
     if (/[\u1000-\u109F]/.test(part)) {
       return (
-        <span key={i} className="my-seg">
+        <span key={partIndex} className="my-seg">
           {part}
         </span>
       );
     }
 
     return (
-      <span key={i} className="inline-seg">
+      <span key={partIndex} className="inline-seg">
         {part}
       </span>
     );
   });
 }
 
-function SettingsPanel({ prefs, setPrefs, onClose }) {
+function useTimeoutManager() {
+  const timeoutsRef = useRef(new Set());
+
+  const clearAll = useCallback(() => {
+    timeoutsRef.current.forEach((timer) => clearTimeout(timer));
+    timeoutsRef.current.clear();
+  }, []);
+
+  const add = useCallback((fn, ms) => {
+    const timer = setTimeout(() => {
+      timeoutsRef.current.delete(timer);
+      fn();
+    }, ms);
+
+    timeoutsRef.current.add(timer);
+    return timer;
+  }, []);
+
+  useEffect(() => clearAll, [clearAll]);
+
+  return { addTimeout: add, clearTimeouts: clearAll };
+}
+
+function useOverlayHistory() {
+  const stackRef = useRef([]);
+
+  const open = useCallback((type, setter) => {
+    setter(true);
+
+    if (typeof window === 'undefined') return;
+    if (stackRef.current[stackRef.current.length - 1] === type) return;
+
+    stackRef.current.push(type);
+    window.history.pushState({ __xztOverlay: type }, '');
+  }, []);
+
+  const close = useCallback((type, setter) => {
+    setter(false);
+    stackRef.current = stackRef.current.filter((item) => item !== type);
+  }, []);
+
+  const closeTop = useCallback((map) => {
+    const top = stackRef.current[stackRef.current.length - 1];
+    if (!top) return false;
+
+    const closer = map[top];
+    if (closer) {
+      closer();
+      return true;
+    }
+
+    return false;
+  }, []);
+
+  const reset = useCallback(() => {
+    stackRef.current = [];
+  }, []);
+
+  return {
+    overlayStackRef: stackRef,
+    openOverlay: open,
+    closeOverlay: close,
+    closeTopOverlay: closeTop,
+    resetOverlayStack: reset,
+  };
+}
+
+const SettingsPanel = memo(function SettingsPanel({ prefs, onPrefsChange, onClose }) {
+  const updatePref = useCallback(
+    (key, value) => {
+      onPrefsChange((prev) => ({ ...prev, [key]: value }));
+    },
+    [onPrefsChange]
+  );
+
   return (
     <div className="panel-modal">
       <div className="modal-backdrop" onClick={onClose} />
       <div className="panel-card relative">
         <div className="panel-header">
           <span className="panel-title">学习设置</span>
-          <button className="panel-close-btn" onClick={onClose}>
+          <button className="panel-close-btn" onClick={onClose} type="button">
             <FaTimes />
           </button>
         </div>
@@ -925,7 +1062,7 @@ function SettingsPanel({ prefs, setPrefs, onClose }) {
           <span className="setting-label">题干拼音</span>
           <div
             className="switch"
-            onClick={() => setPrefs((s) => ({ ...s, showQuestionPinyin: !s.showQuestionPinyin }))}
+            onClick={() => updatePref('showQuestionPinyin', !prefs.showQuestionPinyin)}
             style={{ background: prefs.showQuestionPinyin ? '#58cc02' : '#cbd5e1' }}
           >
             <div
@@ -939,7 +1076,7 @@ function SettingsPanel({ prefs, setPrefs, onClose }) {
           <span className="setting-label">选项拼音</span>
           <div
             className="switch"
-            onClick={() => setPrefs((s) => ({ ...s, showOptionPinyin: !s.showOptionPinyin }))}
+            onClick={() => updatePref('showOptionPinyin', !prefs.showOptionPinyin)}
             style={{ background: prefs.showOptionPinyin ? '#58cc02' : '#cbd5e1' }}
           >
             <div
@@ -953,7 +1090,7 @@ function SettingsPanel({ prefs, setPrefs, onClose }) {
           <span className="setting-label">自动朗读</span>
           <div
             className="switch"
-            onClick={() => setPrefs((s) => ({ ...s, autoPlay: !s.autoPlay }))}
+            onClick={() => updatePref('autoPlay', !prefs.autoPlay)}
             style={{ background: prefs.autoPlay ? '#58cc02' : '#cbd5e1' }}
           >
             <div className="switch-dot" style={{ left: prefs.autoPlay ? '22px' : '4px' }} />
@@ -964,16 +1101,18 @@ function SettingsPanel({ prefs, setPrefs, onClose }) {
           <div className="setting-label" style={{ marginBottom: 8 }}>
             题目语速
           </div>
+
           <div className="speed-group">
             {[
               { key: 'slow', label: '慢' },
               { key: 'normal', label: '正常' },
-              { key: 'fast', label: '快' }
+              { key: 'fast', label: '快' },
             ].map((item) => (
               <button
                 key={item.key}
                 className={`speed-btn ${prefs.ttsSpeed === item.key ? 'active' : ''}`}
-                onClick={() => setPrefs((s) => ({ ...s, ttsSpeed: item.key }))}
+                onClick={() => updatePref('ttsSpeed', item.key)}
+                type="button"
               >
                 {item.label}
               </button>
@@ -983,39 +1122,105 @@ function SettingsPanel({ prefs, setPrefs, onClose }) {
       </div>
     </div>
   );
-}
+});
+
+const OptionCard = memo(function OptionCard({
+  option,
+  isSubmitted,
+  isSelected,
+  isCorrectAnswer,
+  isSpeaking,
+  isBouncing,
+  showPinyin,
+  onToggle,
+}) {
+  const optionId = String(option.id);
+  const hasImage = Boolean(option.img || option.imageUrl);
+
+  const className = useMemo(() => {
+    let cls = 'option-card';
+    if (hasImage) cls += ' has-image-layout';
+    if (isBouncing) cls += ' bounce-in';
+
+    if (isSubmitted) {
+      cls += ' locked';
+      if (isCorrectAnswer) cls += ' correct';
+      else if (isSelected) cls += ' wrong';
+    } else if (isSpeaking) {
+      cls += ' playing';
+    } else if (isSelected) {
+      cls += ' selected';
+    }
+
+    return cls;
+  }, [hasImage, isBouncing, isCorrectAnswer, isSelected, isSpeaking, isSubmitted]);
+
+  const optionPinyin = useMemo(() => {
+    if (!showPinyin || !containsChinese(option.text)) return '';
+    return getCachedPinyin(option.text);
+  }, [option.text, showPinyin]);
+
+  return (
+    <button className={className} onClick={() => onToggle(optionId)} type="button">
+      {isSpeaking ? (
+        <FaSpinner className="absolute top-3 right-3 text-blue-500 animate-spin" />
+      ) : null}
+
+      {hasImage ? (
+        <img
+          src={option.img || option.imageUrl}
+          alt="option"
+          className="h-24 w-full object-cover rounded-xl mb-2"
+          onError={(event) => {
+            event.currentTarget.style.display = 'none';
+          }}
+        />
+      ) : null}
+
+      <div className="option-text-wrap">
+        {optionPinyin ? <div className="option-py">{optionPinyin}</div> : null}
+        <span className="option-text">{option.text}</span>
+      </div>
+    </button>
+  );
+});
 
 export default function XuanZeTi({
   data: rawData,
   onCorrect,
   onWrong,
   onNext,
-  onOverlayChange
+  onOverlayChange,
 }) {
   const data = rawData?.content || rawData || {};
   const question = data.question || {};
   const questionText = typeof question === 'string' ? question : question.text || '';
   const questionImg = data.imageUrl || '';
-  const options = data.options || [];
+  const options = Array.isArray(data.options) ? data.options : [];
 
   const correctAnswers = useMemo(() => {
     const raw = data.correctAnswer || [];
     return (Array.isArray(raw) ? raw : [raw]).map(String);
   }, [data.correctAnswer]);
 
-  const hasOptionImages = useMemo(
-    () => options.some((opt) => opt.img || opt.imageUrl),
-    [options]
-  );
+  const optionShuffleKey = useMemo(() => {
+    const optionIds = options.map((opt) => String(opt.id)).join('|');
+    return `${data?.id || questionText}__${optionIds}`;
+  }, [data?.id, options, questionText]);
 
   const shuffledOptions = useMemo(() => {
-    const opts = [...options];
-    for (let i = opts.length - 1; i > 0; i--) {
+    const nextOptions = [...options];
+    for (let i = nextOptions.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
-      [opts[i], opts[j]] = [opts[j], opts[i]];
+      [nextOptions[i], nextOptions[j]] = [nextOptions[j], nextOptions[i]];
     }
-    return opts;
-  }, [data?.id, options]);
+    return nextOptions;
+  }, [optionShuffleKey]);
+
+  const hasOptionImages = useMemo(
+    () => shuffledOptions.some((opt) => opt.img || opt.imageUrl),
+    [shuffledOptions]
+  );
 
   const [selectedIds, setSelectedIds] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -1028,14 +1233,26 @@ export default function XuanZeTi({
   const [questionImgVisible, setQuestionImgVisible] = useState(Boolean(questionImg));
   const [showAIExplanation, setShowAIExplanation] = useState(false);
 
-  const hasOverlayOpen = showAIExplanation || showSettings;
-
   const [prefs, setPrefs] = useState(() => getSavedInteractivePrefs());
   const [aiSettings, setAISettings] = useState(() => getSavedInteractiveAISettings());
 
-  const mountedRef = useRef(true);
-  const timersRef = useRef([]);
-  const overlayStackRef = useRef([]);
+  const audioControllerRef = useRef(new AudioPlaybackController());
+  const mountedRef = useRef(false);
+
+  const { addTimeout, clearTimeouts } = useTimeoutManager();
+  const { openOverlay, closeOverlay, closeTopOverlay, resetOverlayStack } = useOverlayHistory();
+
+  const hasOverlayOpen = showAIExplanation || showSettings;
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+      audioControllerRef.current.stop();
+      clearTimeouts();
+      resetOverlayStack();
+    };
+  }, [clearTimeouts, resetOverlayStack]);
 
   useEffect(() => {
     onOverlayChange?.(hasOverlayOpen);
@@ -1043,74 +1260,6 @@ export default function XuanZeTi({
       onOverlayChange?.(false);
     };
   }, [hasOverlayOpen, onOverlayChange]);
-
-  const clearTimers = () => {
-    timersRef.current.forEach(clearTimeout);
-    timersRef.current = [];
-  };
-
-  const addTimer = (fn, ms) => {
-    const t = setTimeout(fn, ms);
-    timersRef.current.push(t);
-    return t;
-  };
-
-  const closeOverlayByType = useCallback((type) => {
-    if (type === 'ai-explanation') setShowAIExplanation(false);
-    if (type === 'settings') setShowSettings(false);
-  }, []);
-
-  const closeTopOverlay = useCallback(() => {
-    const top = overlayStackRef.current[overlayStackRef.current.length - 1];
-    if (!top) return false;
-    closeOverlayByType(top);
-    return true;
-  }, [closeOverlayByType]);
-
-  const openOverlay = useCallback((type, setter) => {
-    if (typeof window === 'undefined') {
-      setter(true);
-      return;
-    }
-
-    const alreadyTop = overlayStackRef.current[overlayStackRef.current.length - 1] === type;
-    setter(true);
-
-    if (!alreadyTop) {
-      overlayStackRef.current.push(type);
-      window.history.pushState({ __xztOverlay: type }, '');
-    }
-  }, []);
-
-  const syncOverlayStack = useCallback((type, visible) => {
-    if (visible) return;
-    overlayStackRef.current = overlayStackRef.current.filter((t) => t !== type);
-  }, []);
-
-  useEffect(() => {
-    const onPopState = () => {
-      closeTopOverlay();
-    };
-
-    window.addEventListener('popstate', onPopState);
-    return () => window.removeEventListener('popstate', onPopState);
-  }, [closeTopOverlay]);
-
-  useEffect(() => {
-    syncOverlayStack('settings', showSettings);
-  }, [showSettings, syncOverlayStack]);
-
-  useEffect(() => {
-    syncOverlayStack('ai-explanation', showAIExplanation);
-  }, [showAIExplanation, syncOverlayStack]);
-
-  useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-      overlayStackRef.current = [];
-    };
-  }, []);
 
   useEffect(() => {
     saveInteractivePrefs(prefs);
@@ -1124,42 +1273,91 @@ export default function XuanZeTi({
     setQuestionImgVisible(Boolean(questionImg));
   }, [questionImg]);
 
-  const currentRate = speedLabelToRate(prefs.ttsSpeed);
+  const currentRate = useMemo(() => speedLabelToRate(prefs.ttsSpeed), [prefs.ttsSpeed]);
 
-  const hasMyanmar = /[\u1000-\u109F]/.test(questionText);
+  const hasMyanmar = useMemo(() => /[\u1000-\u109F]/.test(questionText), [questionText]);
   const questionLength = String(questionText || '').trim().length;
   const isLongQuestion = questionLength > 24;
   const isVeryLongQuestion = questionLength > 40;
   const shouldHideQuestionPinyin = hasMyanmar || isLongQuestion;
 
-  const questionTextClass = [
-    'bubble-text',
-    hasMyanmar ? 'is-myanmar' : '',
-    isLongQuestion ? 'is-long' : '',
-    isVeryLongQuestion ? 'is-very-long' : ''
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const questionTextClass = useMemo(
+    () =>
+      [
+        'bubble-text',
+        hasMyanmar ? 'is-myanmar' : '',
+        isLongQuestion ? 'is-long' : '',
+        isVeryLongQuestion ? 'is-very-long' : '',
+      ]
+        .filter(Boolean)
+        .join(' '),
+    [hasMyanmar, isLongQuestion, isVeryLongQuestion]
+  );
+
+  const stopAllAudio = useCallback(() => {
+    audioControllerRef.current.stop();
+    setIsQuestionPlaying(false);
+    setSpeakingOptionId(null);
+  }, []);
+
+  const feedbackTap = useCallback(() => {
+    if (aiSettings.vibration) vibrate(15);
+    if (aiSettings.soundFx) playBeep('tap');
+  }, [aiSettings.soundFx, aiSettings.vibration]);
+
+  const feedbackCorrect = useCallback(() => {
+    if (aiSettings.vibration) vibrate([30, 40, 30]);
+    if (aiSettings.soundFx) playBeep('correct');
+  }, [aiSettings.soundFx, aiSettings.vibration]);
+
+  const feedbackWrong = useCallback(() => {
+    if (aiSettings.vibration) vibrate([40, 40, 40]);
+    if (aiSettings.soundFx) playBeep('wrong');
+  }, [aiSettings.soundFx, aiSettings.vibration]);
+
+  const playQuestion = useCallback(() => {
+    if (!questionText) return;
+
+    setSpeakingOptionId(null);
+    audioControllerRef.current.playMixed(
+      questionText,
+      { rate: currentRate, aiSettings },
+      () => mountedRef.current && setIsQuestionPlaying(true),
+      () => mountedRef.current && setIsQuestionPlaying(false)
+    );
+  }, [aiSettings, currentRate, questionText]);
+
+  const playOptionText = useCallback(
+    (optionId, optionText) => {
+      if (!optionText) return;
+
+      setIsQuestionPlaying(false);
+      audioControllerRef.current.playMixed(
+        optionText,
+        { rate: currentRate, aiSettings },
+        () => mountedRef.current && setSpeakingOptionId(optionId),
+        () => mountedRef.current && setSpeakingOptionId(null)
+      );
+    },
+    [aiSettings, currentRate]
+  );
 
   useEffect(() => {
-    clearTimers();
-    audioController.stop();
+    clearTimeouts();
+    stopAllAudio();
 
     setSelectedIds([]);
     setIsSubmitted(false);
     setIsRight(false);
     setShowResultSheet(false);
-    setIsQuestionPlaying(false);
-    setSpeakingOptionId(null);
     setShowSettings(false);
     setCardPopId(null);
     setShowAIExplanation(false);
-
-    overlayStackRef.current = [];
+    resetOverlayStack();
 
     if (questionText && prefs.autoPlay) {
-      addTimer(() => {
-        audioController.playMixed(
+      addTimeout(() => {
+        audioControllerRef.current.playMixed(
           questionText,
           { rate: currentRate, aiSettings },
           () => mountedRef.current && setIsQuestionPlaying(true),
@@ -1167,78 +1365,77 @@ export default function XuanZeTi({
         );
       }, 260);
     }
+  }, [
+    addTimeout,
+    aiSettings,
+    clearTimeouts,
+    currentRate,
+    optionShuffleKey,
+    prefs.autoPlay,
+    questionText,
+    resetOverlayStack,
+    stopAllAudio,
+  ]);
 
-    return () => {
-      clearTimers();
-      audioController.stop();
+  const closeSettings = useCallback(() => {
+    closeOverlay('settings', setShowSettings);
+  }, [closeOverlay]);
+
+  const closeAIExplanation = useCallback(() => {
+    closeOverlay('ai-explanation', setShowAIExplanation);
+  }, [closeOverlay]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+
+    const onPopState = () => {
+      closeTopOverlay({
+        'settings': closeSettings,
+        'ai-explanation': closeAIExplanation,
+      });
     };
-  }, [data?.id, questionText, prefs.autoPlay, currentRate]);
 
-  const updateAISettings = (patch) => {
-    setAISettings((prev) => ({ ...prev, ...patch }));
-  };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, [closeAIExplanation, closeSettings, closeTopOverlay]);
 
-  const feedbackTap = () => {
-    if (aiSettings.vibration) vibrate(15);
-    if (aiSettings.soundFx) playBeep('tap');
-  };
+  const toggleOption = useCallback(
+    (optionId) => {
+      if (isSubmitted) return;
 
-  const feedbackCorrect = () => {
-    if (aiSettings.vibration) vibrate([30, 40, 30]);
-    if (aiSettings.soundFx) playBeep('correct');
-  };
+      feedbackTap();
 
-  const feedbackWrong = () => {
-    if (aiSettings.vibration) vibrate([40, 40, 40]);
-    if (aiSettings.soundFx) playBeep('wrong');
-  };
-
-  const playQuestion = () => {
-    if (!questionText) return;
-    setSpeakingOptionId(null);
-    audioController.playMixed(
-      questionText,
-      { rate: currentRate, aiSettings },
-      () => mountedRef.current && setIsQuestionPlaying(true),
-      () => mountedRef.current && setIsQuestionPlaying(false)
-    );
-  };
-
-  const toggleOption = (id) => {
-    if (isSubmitted) return;
-
-    feedbackTap();
-
-    const sid = String(id);
-
-    if (correctAnswers.length === 1) {
-      setSelectedIds([sid]);
-    } else {
-      setSelectedIds((prev) =>
-        prev.includes(sid) ? prev.filter((i) => i !== sid) : [...prev, sid]
-      );
-    }
-
-    setCardPopId(sid);
-    addTimer(() => {
-      if (mountedRef.current) {
-        setCardPopId((prev) => (prev === sid ? null : prev));
+      if (correctAnswers.length === 1) {
+        setSelectedIds([optionId]);
+      } else {
+        setSelectedIds((prev) =>
+          prev.includes(optionId) ? prev.filter((item) => item !== optionId) : [...prev, optionId]
+        );
       }
-    }, 180);
 
-    const opt = shuffledOptions.find((o) => String(o.id) === sid);
-    if (opt?.text) {
-      setIsQuestionPlaying(false);
-      audioController.playMixed(
-        opt.text,
-        { rate: currentRate, aiSettings },
-        () => mountedRef.current && setSpeakingOptionId(sid),
-        () => mountedRef.current && setSpeakingOptionId(null)
-      );
-    }
-  };
+      setCardPopId(optionId);
+      addTimeout(() => {
+        if (mountedRef.current) {
+          setCardPopId((prev) => (prev === optionId ? null : prev));
+        }
+      }, 180);
 
-  const handleSubmit = () => {
+      const option = shuffledOptions.find((item) => String(item.id) === optionId);
+      if (option?.text) {
+        playOptionText(optionId, option.text);
+      }
+    },
+    [
+      addTimeout,
+      correctAnswers.length,
+      feedbackTap,
+      isSubmitted,
+      playOptionText,
+      shuffledOptions,
+    ]
+  );
+
+  const handleSubmit = useCallback(() => {
     if (!selectedIds.length || isSubmitted) return;
 
     const correct =
@@ -1247,9 +1444,7 @@ export default function XuanZeTi({
 
     setIsRight(correct);
     setIsSubmitted(true);
-    audioController.stop();
-    setIsQuestionPlaying(false);
-    setSpeakingOptionId(null);
+    stopAllAudio();
 
     if (correct) {
       feedbackCorrect();
@@ -1260,20 +1455,51 @@ export default function XuanZeTi({
     }
 
     setShowResultSheet(true);
-  };
+  }, [
+    correctAnswers,
+    feedbackCorrect,
+    feedbackWrong,
+    isSubmitted,
+    onCorrect,
+    onWrong,
+    selectedIds,
+    stopAllAudio,
+  ]);
 
-  const handleOpenSettings = () => {
+  const handleOpenSettings = useCallback(() => {
     if (showAIExplanation) return;
     openOverlay('settings', setShowSettings);
-  };
+  }, [openOverlay, showAIExplanation]);
 
-  const handleAI = () => {
-    audioController.stop();
-    setIsQuestionPlaying(false);
-    setSpeakingOptionId(null);
+  const handleOpenAIExplanation = useCallback(() => {
+    stopAllAudio();
     setShowSettings(false);
     openOverlay('ai-explanation', setShowAIExplanation);
-  };
+  }, [openOverlay, stopAllAudio]);
+
+  const updateAISettings = useCallback((patch) => {
+    setAISettings((prev) => ({ ...prev, ...patch }));
+  }, []);
+
+  const explanationPayload = useMemo(
+    () => ({
+      questionType: 'choice',
+      questionText,
+      questionImage: questionImg || '',
+      options: shuffledOptions.map((option) => ({
+        id: String(option.id),
+        text: option.text,
+        imageUrl: option.img || option.imageUrl || '',
+      })),
+      selectedIds: selectedIds.map(String),
+      correctAnswers: correctAnswers.map(String),
+      isRight,
+      extraContext: {
+        multiSelect: correctAnswers.length > 1,
+      },
+    }),
+    [correctAnswers, isRight, questionImg, questionText, selectedIds, shuffledOptions]
+  );
 
   return (
     <div className={`xzt-container ${hasOverlayOpen ? 'ai-open' : ''}`}>
@@ -1285,7 +1511,7 @@ export default function XuanZeTi({
             <div className="top-left-text">请选择正确答案</div>
 
             <div className="top-actions">
-              <button className="settings-btn" onClick={handleOpenSettings}>
+              <button className="settings-btn" onClick={handleOpenSettings} type="button">
                 <FaCog size={18} />
               </button>
             </div>
@@ -1293,11 +1519,11 @@ export default function XuanZeTi({
 
           <div className="scene-wrapper">
             <img
-              src="https://audio.886.best/chinese-vocab-audio/%E5%9B%BE%E7%89%87/1765952194374.png"
+              src={TEACHER_IMAGE_URL}
               className="teacher-img"
               alt="Teacher"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
+              onError={(event) => {
+                event.currentTarget.style.display = 'none';
               }}
             />
 
@@ -1305,7 +1531,7 @@ export default function XuanZeTi({
               <div className="bubble-container">
                 <div className="bubble-tail" />
 
-                {questionText && (
+                {questionText ? (
                   <button
                     className={`bubble-audio-btn ${isQuestionPlaying ? 'playing' : ''}`}
                     onClick={playQuestion}
@@ -1318,7 +1544,7 @@ export default function XuanZeTi({
                       <FaVolumeUp size={12} />
                     )}
                   </button>
-                )}
+                ) : null}
 
                 <div className={questionTextClass}>
                   {renderTextWithOptionalPinyin(
@@ -1345,66 +1571,38 @@ export default function XuanZeTi({
 
       <div className="xzt-scroll-area">
         <div className={`options-grid ${hasOptionImages ? 'has-images' : ''}`}>
-          {shuffledOptions.map((opt) => {
-            const sid = String(opt.id);
-            const isSel = selectedIds.includes(sid);
-            const isCorrectAns = correctAnswers.includes(sid);
-
-            let cls = 'option-card';
-            if (opt.img || opt.imageUrl) cls += ' has-image-layout';
-            if (cardPopId === sid) cls += ' bounce-in';
-
-            if (isSubmitted) {
-              cls += ' locked';
-              if (isCorrectAns) cls += ' correct';
-              else if (isSel) cls += ' wrong';
-            } else {
-              if (speakingOptionId === sid) cls += ' playing';
-              else if (isSel) cls += ' selected';
-            }
-
-            const showPy = prefs.showOptionPinyin && containsChinese(opt.text);
+          {shuffledOptions.map((option) => {
+            const optionId = String(option.id);
 
             return (
-              <div key={sid} className={cls} onClick={() => toggleOption(sid)}>
-                {speakingOptionId === sid && (
-                  <FaSpinner className="absolute top-3 right-3 text-blue-500 animate-spin" />
-                )}
-
-                {(opt.img || opt.imageUrl) && (
-                  <img
-                    src={opt.img || opt.imageUrl}
-                    alt="opt"
-                    className="h-24 w-full object-cover rounded-xl mb-2"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
-                )}
-
-                <div className="option-text-wrap">
-                  {showPy ? (
-                    <div className="option-py">
-                      {pinyin(String(opt.text).replace(/[^\u4e00-\u9fff]/g, ''), {
-                        toneType: 'symbol'
-                      })}
-                    </div>
-                  ) : null}
-                  <span className="option-text">{opt.text}</span>
-                </div>
-              </div>
+              <OptionCard
+                key={optionId}
+                option={option}
+                isSubmitted={isSubmitted}
+                isSelected={selectedIds.includes(optionId)}
+                isCorrectAnswer={correctAnswers.includes(optionId)}
+                isSpeaking={speakingOptionId === optionId}
+                isBouncing={cardPopId === optionId}
+                showPinyin={prefs.showOptionPinyin}
+                onToggle={toggleOption}
+              />
             );
           })}
         </div>
       </div>
 
-      {!isSubmitted && (
+      {!isSubmitted ? (
         <div className="submit-bar">
-          <button className="submit-btn" disabled={!selectedIds.length} onClick={handleSubmit}>
+          <button
+            className="submit-btn"
+            disabled={!selectedIds.length}
+            onClick={handleSubmit}
+            type="button"
+          >
             检查答案
           </button>
         </div>
-      )}
+      ) : null}
 
       <div
         className={`result-sheet ${showResultSheet ? 'show' : ''} ${
@@ -1420,53 +1618,35 @@ export default function XuanZeTi({
           {isRight ? '太棒了，继续前进。' : '你已经很接近正确答案了。'}
         </div>
 
-        {!isRight && (
-          <button className="ai-btn" onClick={handleAI}>
+        {!isRight ? (
+          <button className="ai-btn" onClick={handleOpenAIExplanation} type="button">
             <FaRobot /> AI 语音讲题老师
           </button>
-        )}
+        ) : null}
 
         <button
           className={`next-btn ${isRight ? 'btn-correct' : 'btn-wrong'}`}
           onClick={() => {
-            audioController.stop();
+            stopAllAudio();
             onNext?.();
           }}
+          type="button"
         >
           继续 <FaArrowRight />
         </button>
       </div>
 
-      {showSettings && (
-        <SettingsPanel
-          prefs={prefs}
-          setPrefs={setPrefs}
-          onClose={() => setShowSettings(false)}
-        />
-      )}
+      {showSettings ? (
+        <SettingsPanel prefs={prefs} onPrefsChange={setPrefs} onClose={closeSettings} />
+      ) : null}
 
       <InteractiveAIExplanationPanel
         open={showAIExplanation}
-        onClose={() => setShowAIExplanation(false)}
+        onClose={closeAIExplanation}
         settings={aiSettings}
         updateSettings={updateAISettings}
         title="AI 讲题老师"
-        initialPayload={{
-          questionType: 'choice',
-          questionText,
-          questionImage: questionImg || '',
-          options: shuffledOptions.map((opt) => ({
-            id: String(opt.id),
-            text: opt.text,
-            imageUrl: opt.img || opt.imageUrl || ''
-          })),
-          selectedIds: selectedIds.map(String),
-          correctAnswers: correctAnswers.map(String),
-          isRight,
-          extraContext: {
-            multiSelect: correctAnswers.length > 1
-          }
-        }}
+        initialPayload={explanationPayload}
       />
     </div>
   );
