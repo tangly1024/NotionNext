@@ -23,6 +23,7 @@ module.exports = {
     process.env.NEXT_PUBLIC_COMMENT_TWIKOO_CDN_URL ||
     'https://cdn.jsdelivr.net/npm/twikoo@1.7.7/dist/twikoo.all.min.js', // twikoo客户端cdn
 
+  COMMENT_TWIKOO_LANG: 'zh-CN',
   // utterance
   COMMENT_UTTERRANCES_REPO:
     process.env.NEXT_PUBLIC_COMMENT_UTTERRANCES_REPO || 'yipengx/test-comment', // 你的代码仓库名， 例如我是 'tangly1024/NotionNext'； 更多文档参考 https://utteranc.es/
