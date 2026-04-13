@@ -1,7 +1,7 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { getListByPage } from '@/lib/utils'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
 import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
@@ -23,6 +23,7 @@ const BlogPostListScroll = ({
   const [page, updatePage] = useState(1)
   const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
   const postsToShow = getListByPage(posts, page, POSTS_PER_PAGE)
+  const targetRef = useRef(null)
 
   let hasMore = false
   if (posts) {
@@ -30,35 +31,45 @@ const BlogPostListScroll = ({
     hasMore = page * POSTS_PER_PAGE < totalCount
   }
 
-  const handleGetMore = () => {
-    if (!hasMore) return
-    updatePage(page + 1)
-  }
+  const hasMoreRef = useRef(hasMore)
+  hasMoreRef.current = hasMore
+  const rafPendingRef = useRef(false)
+  const rafIdRef = useRef(null)
+
+  const handleGetMore = useCallback(() => {
+    if (!hasMoreRef.current) return
+    updatePage(prev => prev + 1)
+  }, [])
 
   // 监听滚动自动分页加载
-  const scrollTrigger = () => {
-    requestAnimationFrame(() => {
-      const scrollS = window.scrollY + window.outerHeight
-      const clientHeight = targetRef
-        ? targetRef.current
-          ? targetRef.current.clientHeight
-          : 0
-        : 0
-      if (scrollS > clientHeight + 100) {
-        handleGetMore()
-      }
-    })
-  }
-
-  // 监听滚动
   useEffect(() => {
-    window.addEventListener('scroll', scrollTrigger)
+    const scrollTrigger = () => {
+      if (rafPendingRef.current) return
+      rafPendingRef.current = true
+      rafIdRef.current = requestAnimationFrame(() => {
+        rafPendingRef.current = false
+        rafIdRef.current = null
+        const scrollS = window.scrollY + window.innerHeight
+        const clientHeight = targetRef.current
+          ? window.scrollY + targetRef.current.getBoundingClientRect().bottom
+          : 0
+        if (scrollS > clientHeight - 100) {
+          handleGetMore()
+        }
+      })
+    }
+
+    window.addEventListener('scroll', scrollTrigger, { passive: true })
+    scrollTrigger()
     return () => {
+      rafPendingRef.current = false
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current)
+        rafIdRef.current = null
+      }
       window.removeEventListener('scroll', scrollTrigger)
     }
-  })
-
-  const targetRef = useRef(null)
+  }, [handleGetMore])
   const POST_TWO_COLS = siteConfig('HEO_HOME_POST_TWO_COLS', true, CONFIG)
   if (!postsToShow || postsToShow.length === 0) {
     return <BlogPostListEmpty currentSearch={currentSearch} />
@@ -67,7 +78,7 @@ const BlogPostListScroll = ({
       <div id='container' ref={targetRef} className='w-full'>
         {/* 文章列表 */}
         <div
-          className={`${POST_TWO_COLS && '2xl:grid 2xl:grid-cols-2'} grid-cols-1 gap-5`}>
+          className={`${POST_TWO_COLS && 'xl:grid xl:grid-cols-2'} grid-cols-1 gap-5`}>
           {' '}
           {postsToShow.map(post => (
             <BlogPostCard

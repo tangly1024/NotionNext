@@ -32,8 +32,8 @@ export default function CategoryBar(props) {
   return (
     <div
       id='category-bar'
-      className={`wow fadeInUp flex flex-nowrap justify-between items-center h-12 mb-4 space-x-2 w-full lg:bg-white dark:lg:bg-[#1e1e1e]  
-            ${border ? 'lg:border lg:hover:border dark:lg:border-gray-800 hover:border-indigo-600 dark:hover:border-yellow-600 ' : ''}  py-2 lg:px-2 rounded-xl transition-colors duration-200`}>
+      className={`wow fadeInUp flex flex-nowrap justify-between items-center h-12 mb-4 space-x-2 w-full bg-white dark:bg-[#1e1e1e]  
+            ${border ? 'border hover:border dark:border-gray-700 hover:border-indigo-600 dark:hover:border-indigo-500 ' : ''}  py-2.5 lg:px-4 rounded-3xl transition-all duration-300`}>
       <div
         id='category-bar-items'
         ref={categoryBarItemsRef}
@@ -47,7 +47,7 @@ export default function CategoryBar(props) {
       <div id='category-bar-next' className='flex items-center justify-center'>
         <div
           id='right'
-          className='cursor-pointer mx-2 dark:text-gray-300 dark:hover:text-yellow-600 hover:text-indigo-600'
+          className='cursor-pointer mx-2 dark:text-gray-300 dark:hover:text-indigo-400 hover:text-indigo-600'
           onClick={handleToggleScroll}>
           {scrollRight ? (
             <ChevronDoubleLeft className={'w-5 h-5'} />
@@ -57,7 +57,7 @@ export default function CategoryBar(props) {
         </div>
         <SmartLink
           href='/category'
-          className='whitespace-nowrap font-bold text-gray-900 dark:text-white transition-colors duration-200 hover:text-indigo-600 dark:hover:text-yellow-600'>
+          className='whitespace-nowrap font-bold text-gray-900 dark:text-white transition-colors duration-200 hover:text-indigo-600 dark:hover:text-indigo-400 mr-3'>
           {locale.MENU.CATEGORY}
         </SmartLink>
       </div>
@@ -76,7 +76,7 @@ const MenuItem = ({ href, name }) => {
   const selected = category === name
   return (
     <div
-      className={`whitespace-nowrap mr-2 duration-200 transition-all font-bold px-2 py-0.5 rounded-md text-gray-900 dark:text-white hover:text-white hover:bg-indigo-600 dark:hover:bg-yellow-600 ${selected ? 'text-white bg-indigo-600 dark:bg-yellow-600' : ''}`}>
+      className={`whitespace-nowrap mr-2 duration-200 transition-all font-bold px-3 py-1 rounded-full text-gray-900 dark:text-white hover:text-white hover:bg-indigo-600 dark:hover:bg-indigo-500 ${selected ? 'text-white bg-indigo-600 dark:bg-indigo-500' : ''}`}>
       <SmartLink href={href}>{name}</SmartLink>
     </div>
   )

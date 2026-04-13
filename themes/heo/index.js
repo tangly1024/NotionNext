@@ -1,11 +1,3 @@
-/**
- *   HEO 主题说明
- *  > 主题设计者 [张洪](https://zhheo.com/)
- *  > 主题开发者 [tangly1024](https://github.com/tangly1024)
- *  1. 开启方式 在blog.config.js 将主题配置为 `HEO`
- *  2. 更多说明参考此[文档](https://docs.tangly1024.com/article/notionnext-heo)
- */
-
 import Comment from '@/components/Comment'
 import { AdSlot } from '@/components/GoogleAdsense'
 import { HashTag } from '@/components/HeroIcons'
@@ -18,11 +10,10 @@ import WWAds from '@/components/WWAds'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
-import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import BlogPostArchive from './components/BlogPostArchive'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
@@ -43,7 +34,8 @@ import SideRight from './components/SideRight'
 import CONFIG from './config'
 import { Style } from './style'
 import AISummary from '@/components/AISummary'
-import ArticleExpirationNotice from '@/components/ArticleExpirationNotice'
+import AISummar from './components/AISummar'
+import Lenis from '@/components/Lenis'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -58,7 +50,7 @@ const LayoutBase = props => {
   const { fullWidth, isDarkMode } = useGlobal()
   const router = useRouter()
 
-  const headerSlot = (
+  const headerSlot = useMemo(() => (
     <header>
       {/* 顶部导航 */}
       <Header {...props} />
@@ -72,13 +64,15 @@ const LayoutBase = props => {
       ) : null}
       {fullWidth ? null : <PostHeader {...props} isDarkMode={isDarkMode} />}
     </header>
-  )
+  ), [props, router.route, fullWidth, isDarkMode])
 
   // 右侧栏 用户信息+标签列表
-  const slotRight =
-    router.route === '/404' || fullWidth ? null : <SideRight {...props} />
+  const slotRight = useMemo(() => {
+    if (router.route === '/404' || fullWidth) return null
+    return <SideRight {...props} />
+  }, [router.route, fullWidth, props])
 
-  const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
+  const maxWidth = fullWidth ? 'max-w-[96rem]' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
 
   const HEO_HERO_BODY_REVERSE = siteConfig(
     'HEO_HERO_BODY_REVERSE',
@@ -86,6 +80,7 @@ const LayoutBase = props => {
     CONFIG
   )
   const HEO_LOADING_COVER = siteConfig('HEO_LOADING_COVER', true, CONFIG)
+  const HEO_LENIS_ENABLE = siteConfig('HEO_LENIS_ENABLE', true, CONFIG)
 
   // 加载wow动画
   useEffect(() => {
@@ -95,7 +90,7 @@ const LayoutBase = props => {
   return (
     <div
       id='theme-heo'
-      className={`${siteConfig('FONT_STYLE')} bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
+      className={`${siteConfig('FONT_STYLE')} bg-[#f7f9fe] dark:bg-[#17191d] h-full min-h-screen flex flex-col scroll-smooth`}>
       <Style />
 
       {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
@@ -125,6 +120,9 @@ const LayoutBase = props => {
 
       {/* 页脚 */}
       <Footer />
+
+      {/* 滚动阻尼动画 */}
+      {HEO_LENIS_ENABLE && <Lenis />}
 
       {HEO_LOADING_COVER && <LoadingCover />}
     </div>
@@ -157,8 +155,13 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
+  const { category, tag } = props
+  const pageHeading = category || tag
   return (
     <div id='post-outer-wrapper' className='px-5  md:px-0'>
+      {pageHeading && (
+        <h1 className='text-2xl font-bold dark:text-gray-100 mb-4 mt-8'>{pageHeading}</h1>
+      )}
       {/* 文章分类条 */}
       <CategoryBar {...props} />
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
@@ -182,8 +185,8 @@ const LayoutSearch = props => {
 
   useEffect(() => {
     // 高亮搜索结果
-    if (currentSearch) {
-      setTimeout(() => {
+    if (!currentSearch || typeof window === 'undefined') return
+      const timer = setTimeout(() => {
         replaceSearchResult({
           doms: document.getElementsByClassName('replace'),
           search: currentSearch,
@@ -193,8 +196,8 @@ const LayoutSearch = props => {
           }
         })
       }, 100)
-    }
-  }, [])
+      return () => clearTimeout(timer)
+  }, [currentSearch])
   return (
     <div currentSearch={currentSearch}>
       <div id='post-outer-wrapper' className='px-5  md:px-0'>
@@ -220,21 +223,20 @@ const LayoutSearch = props => {
  * @returns
  */
 const LayoutArchive = props => {
-  const { archivePosts } = props
-
+  const { archivePosts, siteInfo } = props
   // 归档页顶部显示条，如果是默认归档则不显示。分类详情页显示分类列表，标签详情页显示当前标签
-
   return (
-    <div className='p-5 rounded-xl border dark:border-gray-600 max-w-6xl w-full bg-white dark:bg-[#1e1e1e]'>
+    <div className='p-2 md:p-5 rounded-3xl border dark:border-gray-600 max-w-6xl w-full bg-white dark:bg-[#1e1e1e]'>
       {/* 文章分类条 */}
       <CategoryBar {...props} border={false} />
 
-      <div className='px-3'>
+      <div className='p-2 md:p-6'>
         {Object.keys(archivePosts).map(archiveTitle => (
           <BlogPostArchive
             key={archiveTitle}
             posts={archivePosts[archiveTitle]}
             archiveTitle={archiveTitle}
+            siteInfo={siteInfo}
           />
         ))}
       </div>
@@ -250,6 +252,67 @@ const LayoutArchive = props => {
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const { locale, fullWidth } = useGlobal()
+
+  useEffect(() => {
+  if (post && !lock) {
+    let isMounted = true;
+    let debounceTimer;
+    let observer;
+
+    const handleLinks = () => {
+      if (!isMounted) return;
+      
+      const containers = document.querySelectorAll(
+        "#notion-article, .notion-page-content, #article-wrapper"
+      );
+
+      containers.forEach(container => {
+        container.querySelectorAll("a").forEach(link => {
+          const href = link.getAttribute("href");
+          if (link.hostname && link.hostname !== window.location.hostname && !href?.startsWith('#')) {
+            // 避免重复设置
+            if (link.target !== "_blank" || !link.rel?.includes("noopener")) {
+              link.target = "_blank";
+              link.rel = "noopener noreferrer external";
+            }
+          }
+        });
+      });
+    };
+
+    const timer = setTimeout(() => {
+      if (!isMounted) return;
+      handleLinks();
+
+      const containers = document.querySelectorAll(
+        "#notion-article, .notion-page-content, #article-wrapper"
+      );
+
+      if (containers.length > 0) {
+        observer = new MutationObserver(() => {
+          clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(handleLinks, 100);
+        });
+
+        // 为所有容器添加监听
+        containers.forEach(container => {
+          observer.observe(container, {
+            subtree: true,
+            childList: true,
+            attributes: true
+          });
+        });
+      }
+    }, 300);
+
+    return () => {
+      isMounted = false;
+      clearTimeout(timer);
+      clearTimeout(debounceTimer);
+      if (observer) observer.disconnect();
+    };
+  }
+}, [post, lock]);
 
   const [hasCode, setHasCode] = useState(false)
 
@@ -268,32 +331,10 @@ const LayoutSlug = props => {
     siteConfig('COMMENT_GITALK_CLIENT_ID') ||
     siteConfig('COMMENT_WEBMENTION_ENABLE')
 
-  const router = useRouter()
-  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
-  useEffect(() => {
-    // 404
-    if (!post) {
-      setTimeout(
-        () => {
-          if (isBrowser) {
-            const article = document.querySelector(
-              '#article-wrapper #notion-article'
-            )
-            if (!article) {
-              router.push('/404').then(() => {
-                console.warn('找不到页面', router.asPath)
-              })
-            }
-          }
-        },
-        waiting404
-      )
-    }
-  }, [post])
   return (
     <>
       <div
-        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''}  bg-white dark:bg-[#18171d] dark:border-gray-600 lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 `}>
+        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''}  bg-[#fff] dark:bg-[#17191d] dark:border-gray-600 lg:hover:shadow lg:border rounded-3xl lg:px-2 lg:py-4 `}>
         {/* 文章锁 */}
         {lock && <PostLock validPassword={validPassword} />}
 
@@ -308,24 +349,33 @@ const LayoutSlug = props => {
               <section
                 className='wow fadeInUp p-5 justify-center mx-auto'
                 data-wow-delay='.2s'>
-                <ArticleExpirationNotice post={post} />
-                <AISummary aiSummary={post.aiSummary} />
+                <AISummary aiSummary={post.aiSummary}/>
                 <WWAds orientation='horizontal' className='w-full' />
+                {post && <AISummar post={post} />}
                 {post && <NotionPage post={post} />}
                 <WWAds orientation='horizontal' className='w-full' />
               </section>
 
-              {/* 上一篇\下一篇文章 */}
-              <PostAdjacent {...props} />
-
-              {/* 分享 */}
-              <ShareBar post={post} />
               {post?.type === 'Post' && (
-                <div className='px-5'>
-                  {/* 版权 */}
-                  <PostCopyright {...props} />
-                  {/* 文章推荐 */}
-                  <PostRecommend {...props} />
+                <div className='heo-post-footer px-5 pb-1'>
+                  <div className='heo-post-footer__inner space-y-6'>
+                    
+                    {/* 分享 */}
+                    <div className='heo-post-footer__share'>
+                      <ShareBar post={post} />
+                    </div>
+
+                    {/* 版权 */}
+                    <PostCopyright {...props} />
+
+                    {/* 上一篇\下一篇文章 */}
+                    <PostAdjacent {...props} />
+
+                    <div className='heo-post-footer__divider h-px bg-gradient-to-r from-transparent via-slate-200/80 to-transparent dark:via-slate-700/70' />
+
+                    {/* 文章推荐 */}
+                    <PostRecommend {...props} />
+                  </div>
                 </div>
               )}
             </article>
@@ -442,7 +492,7 @@ const LayoutCategoryIndex = props => {
               legacyBehavior>
               <div
                 className={
-                  'group mr-5 mb-5 flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'
+                  'group mr-5 mb-5 flex flex-nowrap items-center border bg-white text-2xl rounded-3xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'
                 }>
                 <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
                 {category.name}
@@ -484,7 +534,7 @@ const LayoutTagIndex = props => {
               legacyBehavior>
               <div
                 className={
-                  'group flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'
+                  'group flex flex-nowrap items-center border bg-white text-2xl rounded-3xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'
                 }>
                 <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
                 {tag.name}
@@ -511,4 +561,4 @@ export {
   LayoutSlug,
   LayoutTagIndex,
   CONFIG as THEME_CONFIG
-}
+  }
