@@ -1,23 +1,27 @@
-// pages/sitemap.xml.js
-import { getGlobalData } from '@/lib/db/getSiteData'
 import axios from 'axios'
-import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import Slug from '../[prefix]'
 
-/**
- * 根据notion的slug访问页面
- * 解析二级目录 /article/about
- * @param {*} props
- * @returns
- */
 const UI = props => {
   const { redirect_pathname, redirect_query } = props
-  const router = useRouter()
   useEffect(() => {
-    router?.push({ pathname: redirect_pathname, query: redirect_query })
+    window.location.replace(
+      `${redirect_pathname}?${new URLSearchParams(redirect_query).toString()}`
+    )
   }, [])
-  return <Slug {...props} />
+
+  return (
+    <main className='min-h-screen bg-white px-6 py-20 text-neutral-900 dark:bg-[#18171d] dark:text-white'>
+      <div className='mx-auto max-w-xl rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm dark:border-neutral-800 dark:bg-[#1f1d24]'>
+        <div className='mb-3 text-sm uppercase tracking-[0.24em] text-neutral-500'>
+          Auth Redirect
+        </div>
+        <h1 className='mb-4 text-3xl font-bold'>授权处理中</h1>
+        <p className='text-sm leading-7 text-neutral-600 dark:text-neutral-300'>
+          正在跳转到授权结果页面，请稍候。
+        </p>
+      </div>
+    </main>
+  )
 }
 
 /**
@@ -26,9 +30,7 @@ const UI = props => {
  * @returns
  */
 export const getServerSideProps = async ctx => {
-  const from = `auth`
-  const props = await getGlobalData({ from })
-  delete props.allPages
+  const props = {}
   const code = ctx.query.code
 
   let params = null

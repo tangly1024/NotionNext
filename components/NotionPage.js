@@ -1,7 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import { compressImage, mapImgUrl } from '@/lib/notion/mapImage'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
-import mediumZoom from '@fisch0920/medium-zoom'
 import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
@@ -14,20 +13,14 @@ import { NotionRenderer } from 'react-notion-x'
  * @returns
  */
 const NotionPage = ({ post, className }) => {
+  const hasRenderableBlocks = Boolean(post?.blockMap?.block)
+
   // 是否关闭数据库和画册的点击跳转
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK')
   const SPOILER_TEXT_TAG = siteConfig('SPOILER_TEXT_TAG')
 
-  const zoom =
-    isBrowser &&
-    mediumZoom({
-      //   container: '.notion-viewport',
-      background: 'rgba(0, 0, 0, 0.2)',
-      margin: getMediumZoomMargin()
-    })
-
-  const zoomRef = useRef(zoom ? zoom.clone() : null)
+  const zoomRef = useRef(null)
   const IMAGE_ZOOM_IN_WIDTH = siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)
   // 页面首次打开时执行的勾子
   useEffect(() => {
@@ -37,15 +30,31 @@ const NotionPage = ({ post, className }) => {
 
   // 页面文章发生变化时会执行的勾子
   useEffect(() => {
-    // 相册视图点击禁止跳转，只能放大查看图片
-    if (POST_DISABLE_GALLERY_CLICK) {
-      // 针对页面中的gallery视图，点击后是放大图片还是跳转到gallery的内部页面
-      processGalleryImg(zoomRef?.current)
+    if (!hasRenderableBlocks) {
+      return
     }
 
     // 页内数据库点击禁止跳转，只能查看
     if (POST_DISABLE_DATABASE_CLICK) {
       processDisableDatabaseUrl()
+    }
+
+    let cancelled = false
+
+    // 相册视图点击禁止跳转，只能放大查看图片
+    if (POST_DISABLE_GALLERY_CLICK) {
+      import('@fisch0920/medium-zoom').then(({ default: mediumZoom }) => {
+        if (cancelled) {
+          return
+        }
+
+        zoomRef.current = mediumZoom({
+          background: 'rgba(0, 0, 0, 0.2)',
+          margin: getMediumZoomMargin()
+        })
+
+        processGalleryImg(zoomRef.current)
+      })
     }
 
     /**
@@ -81,11 +90,25 @@ const NotionPage = ({ post, className }) => {
     })
 
     return () => {
+      cancelled = true
+      zoomRef.current?.detach?.()
+      zoomRef.current?.close?.()
+      zoomRef.current = null
       observer.disconnect()
     }
-  }, [post])
+  }, [
+    post,
+    hasRenderableBlocks,
+    POST_DISABLE_DATABASE_CLICK,
+    POST_DISABLE_GALLERY_CLICK,
+    IMAGE_ZOOM_IN_WIDTH
+  ])
 
   useEffect(() => {
+    if (!hasRenderableBlocks) {
+      return
+    }
+
     // Spoiler文本功能
     if (SPOILER_TEXT_TAG) {
       import('lodash.escaperegexp').then(escapeRegExp => {
@@ -114,7 +137,11 @@ const NotionPage = ({ post, className }) => {
 
     // 清理定时器，防止组件卸载时执行
     return () => clearTimeout(timer)
-  }, [post])
+  }, [post, hasRenderableBlocks, SPOILER_TEXT_TAG])
+
+  if (!hasRenderableBlocks) {
+    return null
+  }
 
   return (
     <div
@@ -273,7 +300,7 @@ const TweetEmbed = dynamic(() => import('react-tweet-embed'), {
  */
 const AdEmbed = dynamic(
   () => import('@/components/GoogleAdsense').then(m => m.AdEmbed),
-  { ssr: true }
+  { ssr: false }
 )
 
 const Collection = dynamic(

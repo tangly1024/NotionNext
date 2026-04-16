@@ -19,7 +19,7 @@ const DashboardItemAffliate = dynamic(() => import('./DashboardItemAffliate'))
 export default function DashboardBody() {
   const { asPath } = useRouter()
   // 提取不包含查询参数的路径部分
-  const basePath = asPath.split('?')[0]
+  const basePath = String(asPath || '').split('?')[0]
   return (
     <div className='flex flex-col md:flex-row w-full container gap-x-4 min-h-96 mx-auto mb-12 justify-center'>
       <div className='side-tabs w-full md:w-72'>

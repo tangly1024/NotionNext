@@ -5,6 +5,7 @@ import WordCount from '@/components/WordCount'
 import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import SmartLink from '@/components/SmartLink'
+import { getPostEnhancement, getEnhancedPostTitle } from '@/lib/seo/postEnhancements'
 import WavesArea from './WavesArea'
 
 /**
@@ -16,6 +17,9 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
   if (!post) {
     return <></>
   }
+  const enhancement = getPostEnhancement(post)
+  const displayTitle = getEnhancedPostTitle(post)
+  const displaySummary = enhancement?.heroSummary || post?.summary
   // 文章头图
   const headerImage = post?.pageCover ? post.pageCover : siteInfo?.pageCover
   const ANALYTICS_BUSUANZI_ENABLE = siteConfig('ANALYTICS_BUSUANZI_ENABLE')
@@ -93,12 +97,18 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           </div>
 
           {/* 文章Title */}
-          <div className='max-w-5xl font-bold text-3xl lg:text-5xl md:leading-snug shadow-text-md flex  justify-center md:justify-start text-white'>
+          <h1 className='max-w-5xl font-bold text-3xl lg:text-5xl md:leading-snug shadow-text-md flex justify-center md:justify-start text-white'>
             {siteConfig('POST_TITLE_ICON') && (
               <NotionIcon icon={post.pageIcon} />
             )}
-            {post.title}
-          </div>
+            {displayTitle}
+          </h1>
+
+          {displaySummary && (
+            <p className='max-w-3xl text-sm md:text-base lg:text-lg leading-7 text-white/90 shadow-text-md text-center md:text-left'>
+              {displaySummary}
+            </p>
+          )}
 
           {/* 标题底部补充信息 */}
           <section className='flex-wrap dark:text-gray-200 text-opacity-70 shadow-text-md flex text-sm  justify-center md:justify-start mt-4 text-white font-light leading-8'>

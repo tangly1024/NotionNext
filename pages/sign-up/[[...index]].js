@@ -1,48 +1,45 @@
-import BLOG from '@/blog.config'
-import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/db/getSiteData'
-import { DynamicLayout } from '@/themes/theme'
+import dynamic from 'next/dynamic'
 
-/**
- * 注册
- * @param {*} props
- * @returns
- */
-const SignUp = props => {
-  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} layoutName='LayoutSignUp' {...props} />
+const ClerkSignUp = dynamic(
+  () => import('@clerk/nextjs').then(mod => mod.SignUp),
+  { ssr: false }
+)
+
+function SignUpFallback() {
+  return (
+    <div className='rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm dark:border-neutral-800 dark:bg-[#1f1d24]'>
+      <div className='mb-3 text-sm uppercase tracking-[0.24em] text-neutral-500'>
+        Sign Up
+      </div>
+      <h1 className='mb-4 text-3xl font-bold text-neutral-900 dark:text-white'>
+        注册
+      </h1>
+      <p className='text-sm leading-7 text-neutral-600 dark:text-neutral-300'>
+        当前环境未配置 Clerk，注册入口暂不可用。
+      </p>
+    </div>
+  )
 }
 
-export async function getStaticProps(req) {
-  const { locale } = req
+export default function SignUpPage() {
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
-  const from = 'SignIn'
-  const props = await getGlobalData({ from, locale })
-
-  delete props.allPages
-  return {
-    props,
-    revalidate: process.env.EXPORT
-      ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
-        )
-  }
+  return (
+    <main className='min-h-screen bg-[#f7f9fe] px-6 py-20 dark:bg-[#18171d]'>
+      <div className='mx-auto max-w-5xl'>
+        {enableClerk ? (
+          <div className='flex justify-center'>
+            <ClerkSignUp
+              routing='path'
+              path='/sign-up'
+              signInUrl='/sign-in'
+              fallbackRedirectUrl='/dashboard'
+            />
+          </div>
+        ) : (
+          <SignUpFallback />
+        )}
+      </div>
+    </main>
+  )
 }
-
-/**
- * catch-all route for clerk
- * @returns
- */
-export function getStaticPaths() {
-  return {
-    paths: [
-      { params: { index: [] } }, // 使 /sign-up 路径可访问
-      { params: { index: ['sign-up'] } } // 明确 sign-up 生成路径
-    ],
-    fallback: 'blocking' // 使用 'blocking' 模式让未生成的路径也能正确响应
-  }
-}
-export default SignUp

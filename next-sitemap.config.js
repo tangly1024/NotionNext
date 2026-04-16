@@ -8,7 +8,22 @@ module.exports = {
   changefreq: 'daily',
   priority: 0.7,
   generateRobotsTxt: true,
-  sitemapSize: 7000
+  sitemapSize: 7000,
+  robotsTxtOptions: {
+    policies: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: [
+          '/search',
+          '/search/*',
+          '/tag/*/page/*',
+          '/category/*/page/*',
+          '/page/*'
+        ]
+      }
+    ]
+  }
   // ...other options
   // https://github.com/iamvishnusankar/next-sitemap#configuration-options
 }

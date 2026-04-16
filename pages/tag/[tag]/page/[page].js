@@ -1,6 +1,8 @@
 import BLOG from '@/blog.config'
+import { ISR_LIST_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
+import { compactPostForCard, compactPostForLatest } from '@/lib/utils/compactPost'
 import { DynamicLayout } from '@/themes/theme'
 
 const Tag = props => {
@@ -23,45 +25,20 @@ export async function getStaticProps({ params: { tag, page }, locale }) {
     POSTS_PER_PAGE * (page - 1),
     POSTS_PER_PAGE * page
   )
+  props.posts = props.posts.map(post => compactPostForCard(post))
+  props.latestPosts = props.latestPosts?.map(post => compactPostForLatest(post))
+  props.allNavPages = []
 
   props.tag = tag
   props.page = page
   delete props.allPages
-  return {
-    props,
-    revalidate: process.env.EXPORT
-      ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
-        )
-  }
+  return buildStaticPropsResult(props, ISR_LIST_REVALIDATE)
 }
 
-export async function getStaticPaths() {
-  const from = 'tag-page-static-path'
-  const { tagOptions, allPages, NOTION_CONFIG } = await getGlobalData({ from })
-  const paths = []
-  tagOptions?.forEach(tag => {
-    // 过滤状态类型
-    const tagPosts = allPages
-      ?.filter(page => page.type === 'Post' && page.status === 'Published')
-      .filter(post => post && post?.tags && post?.tags.includes(tag.name))
-    // 处理文章页数
-    const postCount = tagPosts.length
-    const totalPages = Math.ceil(
-      postCount / siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
-    )
-    if (totalPages > 1) {
-      for (let i = 1; i <= totalPages; i++) {
-        paths.push({ params: { tag: tag.name, page: '' + i } })
-      }
-    }
-  })
+export function getStaticPaths() {
   return {
-    paths: paths,
-    fallback: true
+    paths: [],
+    fallback: 'blocking'
   }
 }
 

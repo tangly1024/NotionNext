@@ -1,6 +1,25 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
+const DYNAMIC_CONTENT_ROUTES = [
+  '/article/',
+  '/category/',
+  '/tag/',
+  '/page/',
+  '/search/'
+]
+
+const stripLocalePrefix = path => {
+  if (!path) {
+    return '/'
+  }
+
+  return path.replace(/^\/[a-z]{2}(?:-[A-Za-z]{2})?(?=\/|$)/, '') || '/'
+}
+
+const isDynamicContentPath = path =>
+  DYNAMIC_CONTENT_ROUTES.some(route => path === route.slice(0, -1) || path.startsWith(route))
+
 /**
  * 语言切换按钮
  * 支持多语言切换，显示下拉菜单
@@ -42,14 +61,16 @@ const LanguageSwitcher = () => {
   // 切换语言
   const handleLanguageChange = (newLocale) => {
     // 构建新的路径
-    let newPath = asPath
+    const normalizedPath = stripLocalePrefix(asPath)
+    let newPath = normalizedPath
 
-    // 如果当前路径已经包含 locale 前缀，则替换
-    if (locale && locale !== 'zh-CN') {
-      newPath = asPath.replace(`/${locale}`, `/${newLocale}`)
-    } else if (newLocale !== 'zh-CN') {
-      // 如果要切换到非默认语言，添加 locale 前缀
-      newPath = `/${newLocale}${asPath}`
+    if (newLocale !== 'zh-CN') {
+      // 中文内容切英文时，不再盲目拼接动态路径，避免产生无对应内容的 /en-US/... URL
+      if (locale === 'zh-CN' && isDynamicContentPath(normalizedPath)) {
+        newPath = `/${newLocale}`
+      } else {
+        newPath = normalizedPath === '/' ? `/${newLocale}` : `/${newLocale}${normalizedPath}`
+      }
     }
 
     // 使用 router.push 进行导航

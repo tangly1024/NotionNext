@@ -1,8 +1,10 @@
 import BLOG from '@/blog.config'
+import { ISR_LIST_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
+import { compactPostForCard, compactPostForLatest } from '@/lib/utils/compactPost'
 import { DynamicLayout } from '@/themes/theme'
-import { englishToChineseCategory, chineseToEnglishCategory } from '@/lib/utils/categoryMapper'
+import { englishToChineseCategory } from '@/lib/utils/categoryMapper'
 
 /**
  * 分类页
@@ -40,31 +42,21 @@ export async function getStaticProps({ params: { category }, locale }) {
       siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
     )
   }
+  props.posts = props.posts?.map(post => compactPostForCard(post))
+  props.latestPosts = props.latestPosts?.map(post => compactPostForLatest(post))
+  props.allNavPages = []
 
   delete props.allPages
 
   // 传递实际的中文分类名称用于显示
   props = { ...props, category: actualCategory }
 
-  return {
-    props,
-    revalidate: process.env.EXPORT
-      ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
-        )
-  }
+  return buildStaticPropsResult(props, ISR_LIST_REVALIDATE)
 }
 
-export async function getStaticPaths() {
-  const from = 'category-paths'
-  const { categoryOptions } = await getGlobalData({ from })
+export function getStaticPaths() {
   return {
-    paths: Object.keys(categoryOptions).map(category => ({
-      params: { category: chineseToEnglishCategory(categoryOptions[category]?.name) }
-    })),
-    fallback: true
+    paths: [],
+    fallback: 'blocking'
   }
 }

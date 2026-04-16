@@ -15,7 +15,6 @@ import { getQueryParam } from '../lib/utils'
 
 // 各种扩展插件 这个要阻塞引入
 import BLOG from '@/blog.config'
-import ExternalPlugins from '@/components/ExternalPlugins'
 import SEO from '@/components/SEO'
 import { zhCN } from '@clerk/localizations'
 import dynamic from 'next/dynamic'
@@ -23,6 +22,9 @@ import dynamic from 'next/dynamic'
 const ClerkProvider = dynamic(() =>
   import('@clerk/nextjs').then(m => m.ClerkProvider)
 )
+const ExternalPlugins = dynamic(() => import('@/components/ExternalPlugins'), {
+  ssr: false
+})
 
 /**
  * App挂载DOM 入口文件

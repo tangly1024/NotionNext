@@ -36,7 +36,7 @@ export default function ArticleExpirationNotice({
     '这篇文章发布于 %%DAYS%% 天前，内容可能已过时，请谨慎参考。'
   )
   const articleExpirationMessageParts =
-    articleExpirationMessage.split('%%DAYS%%')
+    String(articleExpirationMessage || '').split('%%DAYS%%')
 
   // 直接返回 JSX 内容
   return (

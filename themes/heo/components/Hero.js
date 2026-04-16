@@ -5,6 +5,7 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { getLocaleConfig } from '@/lib/locale-config'
 import SmartLink from '@/components/SmartLink'
+import { trackCtaClick } from '@/lib/plugins/tracking'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
 import CONFIG from '../config'
@@ -73,6 +74,10 @@ function Banner(props) {
   function handleClickBanner() {
     const randomIndex = Math.floor(Math.random() * allNavPages.length)
     const randomPost = allNavPages[randomIndex]
+    trackCtaClick({
+      location: 'heo_hero_banner',
+      label: randomPost?.slug || 'random_post'
+    })
     router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`)
   }
 
@@ -193,6 +198,11 @@ function GroupMenu() {
     <div className='h-[165px] select-none xl:h-20 flex flex-col justify-between xl:space-y-0 xl:flex-row w-28 lg:w-48 xl:w-full xl:flex-nowrap xl:space-x-3'>
       <SmartLink
         href={url_1}
+        onClick={() =>
+          trackCtaClick({
+            location: 'heo_hero_category',
+            label: title_1 || url_1
+          })}
         className='group relative overflow-hidden bg-gradient-to-r from-blue-500 to-blue-400 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in'>
         <div className='font-bold lg:text-lg  pl-5 relative -mt-2'>
           {title_1}
@@ -204,6 +214,11 @@ function GroupMenu() {
       </SmartLink>
       <SmartLink
         href={url_2}
+        onClick={() =>
+          trackCtaClick({
+            location: 'heo_hero_category',
+            label: title_2 || url_2
+          })}
         className='group relative overflow-hidden bg-gradient-to-r from-red-500 to-yellow-500 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in'>
         <div className='font-bold lg:text-lg pl-5 relative -mt-2'>
           {title_2}
@@ -216,6 +231,11 @@ function GroupMenu() {
       {/* 第三个标签在小屏上不显示 */}
       <SmartLink
         href={url_3}
+        onClick={() =>
+          trackCtaClick({
+            location: 'heo_hero_category',
+            label: title_3 || url_3
+          })}
         className='group relative overflow-hidden bg-gradient-to-r from-teal-300 to-cyan-300 hidden h-20 xl:flex justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in'>
         <div className='font-bold text-lg pl-5 relative -mt-2'>
           {title_3}
@@ -254,7 +274,14 @@ function TopGroup(props) {
         className='w-full flex space-x-3 xl:space-x-0 xl:grid xl:grid-cols-3 xl:gap-3 xl:h-[342px]'>
         {topPosts?.map((p, index) => {
           return (
-            <SmartLink href={`${siteConfig('SUB_PATH', '')}/${p?.slug}`} key={index}>
+            <SmartLink
+              href={`${siteConfig('SUB_PATH', '')}/${p?.slug}`}
+              key={index}
+              onClick={() =>
+                trackCtaClick({
+                  location: 'heo_top_post',
+                  label: p?.slug || p?.title
+                })}>
               <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl'>
                 <LazyImage
                   priority={index === 0}
@@ -360,6 +387,10 @@ function TodayCard({ cRef, siteInfo }) {
    */
   function handleClickShowMore(e) {
     e.stopPropagation()
+    trackCtaClick({
+      location: 'heo_today_card',
+      label: 'show_more'
+    })
     setIsCoverUp(false)
   }
 
@@ -368,6 +399,10 @@ function TodayCard({ cRef, siteInfo }) {
    * @param {*} e
    */
   function handleCardClick(e) {
+    trackCtaClick({
+      location: 'heo_today_card',
+      label: link
+    })
     router.push(link)
   }
 

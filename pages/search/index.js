@@ -1,6 +1,8 @@
 import BLOG from '@/blog.config'
+import { ISR_SEARCH_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
+import { compactPostForLatest } from '@/lib/utils/compactPost'
 import { DynamicLayout } from '@/themes/theme'
 import { useRouter } from 'next/router'
 
@@ -43,20 +45,12 @@ export async function getStaticProps({ locale }) {
     from: 'search-props',
     locale
   })
-  const { allPages } = props
-  props.posts = allPages?.filter(
-    page => page.type === 'Post' && page.status === 'Published'
-  )
-  return {
-    props,
-    revalidate: process.env.EXPORT
-      ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
-        )
-  }
+  props.posts = []
+  props.postCount = 0
+  props.latestPosts = props.latestPosts?.map(post => compactPostForLatest(post))
+  props.allNavPages = []
+  delete props.allPages
+  return buildStaticPropsResult(props, ISR_SEARCH_REVALIDATE)
 }
 
 export default Search

@@ -1,6 +1,8 @@
 import BLOG from '@/blog.config'
+import { ISR_LIST_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
+import { compactPostForCard, compactPostForLatest } from '@/lib/utils/compactPost'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -34,44 +36,19 @@ export async function getStaticProps({ params: { tag }, locale }) {
       siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
     )
   }
+  props.posts = props.posts?.map(post => compactPostForCard(post))
+  props.latestPosts = props.latestPosts?.map(post => compactPostForLatest(post))
+  props.allNavPages = []
 
   props.tag = tag
   delete props.allPages
-  return {
-    props,
-    revalidate: process.env.EXPORT
-      ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
-        )
-  }
+  return buildStaticPropsResult(props, ISR_LIST_REVALIDATE)
 }
 
-/**
- * 获取所有的标签
- * @returns
- * @param tags
- */
-function getTagNames(tags) {
-  const tagNames = []
-  tags.forEach(tag => {
-    tagNames.push(tag.name)
-  })
-  return tagNames
-}
-
-export async function getStaticPaths() {
-  const from = 'tag-static-path'
-  const { tagOptions } = await getGlobalData({ from })
-  const tagNames = getTagNames(tagOptions)
-
+export function getStaticPaths() {
   return {
-    paths: Object.keys(tagNames).map(index => ({
-      params: { tag: tagNames[index] }
-    })),
-    fallback: true
+    paths: [],
+    fallback: 'blocking'
   }
 }
 

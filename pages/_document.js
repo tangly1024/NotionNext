@@ -40,8 +40,11 @@ class MyDocument extends Document {
     // 检测语言，支持 /en 路径
     const detectLangFromRequest = (ctx) => {
       const path = ctx.req?.url || ctx.asPath || ''
+      if (path.startsWith('/en-US')) {
+        return 'en-US'
+      }
       if (path.startsWith('/en')) {
-        return 'en'
+        return 'en-US'
       }
       return ctx.locale || BLOG.LANG || 'zh-CN'
     }
@@ -59,9 +62,6 @@ class MyDocument extends Document {
     return (
       <Html lang={lang || BLOG.LANG}>
         <Head>
-          {/* X-Robots-Tag 备用方案 */}
-          <meta name="robots" content="follow, index" />
-          
           {/* Google AdSense 代码 */}
           <script 
             async 

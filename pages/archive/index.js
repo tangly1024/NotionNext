@@ -1,6 +1,8 @@
 import BLOG from '@/blog.config'
+import { ISR_LIST_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
+import { compactPostForArchive, compactPostForLatest } from '@/lib/utils/compactPost'
 import { isBrowser } from '@/lib/utils'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import { DynamicLayout } from '@/themes/theme'
@@ -35,7 +37,7 @@ export async function getStaticProps({ locale }) {
   // 处理分页
   props.posts = props.allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
-  )
+  ).map(post => compactPostForArchive(post))
   delete props.allPages
 
   const postsSortByDate = Object.create(props.posts)
@@ -56,18 +58,11 @@ export async function getStaticProps({ locale }) {
   })
 
   props.archivePosts = archivePosts
+  props.latestPosts = props.latestPosts?.map(post => compactPostForLatest(post))
+  props.allNavPages = []
   delete props.allPages
 
-  return {
-    props,
-    revalidate: process.env.EXPORT
-      ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
-        )
-  }
+  return buildStaticPropsResult(props, ISR_LIST_REVALIDATE)
 }
 
 export default ArchiveIndex

@@ -68,7 +68,10 @@ const ShareButtons = ({ post }) => {
   const body =
     post?.title + ' | ' + title + ' ' + shareUrl + ' ' + post?.summary
 
-  const services = siteConfig('POSTS_SHARE_SERVICES').split(',')
+  const services = String(siteConfig('POSTS_SHARE_SERVICES', '') || '')
+    .split(',')
+    .map(service => service.trim())
+    .filter(Boolean)
   const titleWithSiteInfo = title + ' | ' + siteConfig('TITLE')
   const { locale } = useGlobal()
   const [qrCodeShow, setQrCodeShow] = useState(false)

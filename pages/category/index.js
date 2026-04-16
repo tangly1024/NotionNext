@@ -1,6 +1,8 @@
 import BLOG from '@/blog.config'
+import { ISR_LIST_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
+import { compactPostForLatest } from '@/lib/utils/compactPost'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -17,15 +19,8 @@ export default function Category(props) {
 
 export async function getStaticProps({ locale }) {
   const props = await getGlobalData({ from: 'category-index-props', locale })
+  props.latestPosts = props.latestPosts?.map(post => compactPostForLatest(post))
+  props.allNavPages = []
   delete props.allPages
-  return {
-    props,
-    revalidate: process.env.EXPORT
-      ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
-        )
-  }
+  return buildStaticPropsResult(props, ISR_LIST_REVALIDATE)
 }

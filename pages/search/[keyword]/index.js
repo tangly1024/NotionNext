@@ -2,6 +2,7 @@ import BLOG from '@/blog.config'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
+import { compactPostForCard, compactPostForLatest } from '@/lib/utils/compactPost'
 import { DynamicLayout } from '@/themes/theme'
 import { getPageContentText } from '@/lib/notion/getPageContentText'
 
@@ -10,12 +11,10 @@ const Index = props => {
   return <DynamicLayout theme={theme} layoutName='LayoutSearch' {...props} />
 }
 
-/**
- * 服务端搜索
- * @param {*} param0
- * @returns
- */
-export async function getStaticProps({ params: { keyword }, locale }) {
+export async function getServerSideProps({ params: { keyword }, locale, res }) {
+  res.setHeader('X-Robots-Tag', 'noindex, follow')
+  res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
+
   const props = await getGlobalData({
     from: 'search-props',
     locale
@@ -39,24 +38,12 @@ export async function getStaticProps({ params: { keyword }, locale }) {
   } else if (POST_LIST_STYLE) {
     props.posts = props.posts?.slice(0, POSTS_PER_PAGE)
   }
+  props.posts = props.posts.map(post => compactPostForCard(post))
   props.keyword = keyword
-  return {
-    props,
-    revalidate: process.env.EXPORT
-      ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
-        )
-  }
-}
-
-export function getStaticPaths() {
-  return {
-    paths: [{ params: { keyword: 'NotionNext' } }],
-    fallback: true
-  }
+  props.latestPosts = props.latestPosts?.map(post => compactPostForLatest(post))
+  props.allNavPages = []
+  delete props.allPages
+  return { props }
 }
 
 /**

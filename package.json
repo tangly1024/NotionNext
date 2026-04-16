@@ -44,6 +44,7 @@
     "test:coverage": "jest --coverage",
     "test:ci": "jest --ci --coverage --watchAll=false",
     "health-check": "node scripts/health-check.js",
+    "seo:sitemap-audit": "node scripts/seo-sitemap-audit.js",
     "validate": "npm run health-check",
     "final-validation": "node scripts/final-validation.js"
   },
@@ -72,7 +73,8 @@
     "react-hotkeys-hook": "^4.6.2",
     "react-notion-x": "7.7.1",
     "react-share": "^5.2.2",
-    "react-tweet-embed": "~2.0.0"
+    "react-tweet-embed": "~2.0.0",
+    "resend": "^6.12.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.4",

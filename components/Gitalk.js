@@ -14,7 +14,10 @@ const Gitalk = ({ frontMatter }) => {
   const clientSecret = siteConfig('COMMENT_GITALK_CLIENT_SECRET')
   const repo = siteConfig('COMMENT_GITALK_REPO')
   const owner = siteConfig('COMMENT_GITALK_OWNER')
-  const admin = siteConfig('COMMENT_GITALK_ADMIN').split(',')
+  const admin = String(siteConfig('COMMENT_GITALK_ADMIN', '') || '')
+    .split(',')
+    .map(item => item.trim())
+    .filter(Boolean)
   const distractionFreeMode = siteConfig('COMMENT_GITALK_DISTRACTION_FREE_MODE')
 
   const loadGitalk = async() => {

@@ -2,11 +2,12 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { generateRobotsTxt } from '@/lib/robots.txt'
-import { generateRss } from '@/lib/rss'
 import { generateSitemapXml } from '@/lib/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
-import { generateRedirectJson } from '@/lib/redirect'
+import { generateRedirectJson, generateSlugIndexJson } from '@/lib/redirect'
 import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
+import { ISR_HOME_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
+import { compactPostForLatest, compactPostForNav } from '@/lib/utils/compactPost'
 
 /**
  * 首页布局
@@ -63,31 +64,21 @@ export async function getStaticProps(req) {
 
   // 生成robotTxt
   generateRobotsTxt(props)
-  // 生成Feed订阅
-  generateRss(props)
   // 生成
   generateSitemapXml(props)
   // 检查数据是否需要从algolia删除
   checkDataFromAlgolia(props)
-  if (siteConfig('UUID_REDIRECT', false, props?.NOTION_CONFIG)) {
-    // 生成重定向 JSON
-    generateRedirectJson(props)
-  }
+  // 始终生成 UUID -> slug 映射，供 middleware 在旧链接场景下前置重定向。
+  generateRedirectJson(props)
+  generateSlugIndexJson({ allPages: props.allPages || [], locale })
 
   // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
+  props.latestPosts = props.latestPosts?.map(post => compactPostForLatest(post))
+  props.allNavPages = props.allNavPages?.map(post => compactPostForNav(post))
 
   delete props.allPages
 
-  return {
-    props,
-    revalidate: process.env.EXPORT
-      ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
-        )
-  }
+  return buildStaticPropsResult(props, ISR_HOME_REVALIDATE)
 }
 
 export default Index

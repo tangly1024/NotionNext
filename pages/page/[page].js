@@ -1,6 +1,8 @@
 import BLOG from '@/blog.config'
+import { ISR_LIST_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
+import { compactPostForCard, compactPostForLatest } from '@/lib/utils/compactPost'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -13,18 +15,10 @@ const Page = props => {
   return <DynamicLayout theme={theme} layoutName='LayoutPostList' {...props} />
 }
 
-export async function getStaticPaths({ locale }) {
-  const from = 'page-paths'
-  const { postCount, NOTION_CONFIG } = await getGlobalData({ from, locale })
-  const totalPages = Math.ceil(
-    postCount / siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
-  )
+export function getStaticPaths() {
   return {
-    // remove first page, we 're not gonna handle that.
-    paths: Array.from({ length: totalPages - 1 }, (_, i) => ({
-      params: { page: '' + (i + 2) }
-    })),
-    fallback: true
+    paths: [],
+    fallback: 'blocking'
   }
 }
 
@@ -65,17 +59,14 @@ export async function getStaticProps({ params: { page }, locale }) {
     }
   }
 
+  props.posts = props.posts.map(post =>
+    post?.blockMap ? post : compactPostForCard(post)
+  )
+  props.latestPosts = props.latestPosts?.map(post => compactPostForLatest(post))
+  props.allNavPages = []
+
   delete props.allPages
-  return {
-    props,
-    revalidate: process.env.EXPORT
-      ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
-        )
-  }
+  return buildStaticPropsResult(props, ISR_LIST_REVALIDATE)
 }
 
 export default Page

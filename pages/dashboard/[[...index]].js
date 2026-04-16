@@ -1,89 +1,56 @@
-import BLOG from '@/blog.config'
-import { siteConfig } from '@/lib/config'
-import { getGlobalData, getPost, getPostBlocks } from '@/lib/db/getSiteData'
-import { DynamicLayout } from '@/themes/theme'
+import dynamic from 'next/dynamic'
+import DashboardBody from '@/components/ui/dashboard/DashboardBody'
+import DashboardHeader from '@/components/ui/dashboard/DashboardHeader'
 
-/**
- * 根据notion的slug访问页面
- * 只解析一级目录例如 /about
- * @param {*} props
- * @returns
- */
-const Dashboard = props => {
-  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} layoutName='LayoutDashboard' {...props} />
+const SignedIn = dynamic(
+  () => import('@clerk/nextjs').then(mod => mod.SignedIn),
+  { ssr: false }
+)
+const SignedOut = dynamic(
+  () => import('@clerk/nextjs').then(mod => mod.SignedOut),
+  { ssr: false }
+)
+const RedirectToSignIn = dynamic(
+  () => import('@clerk/nextjs').then(mod => mod.RedirectToSignIn),
+  { ssr: false }
+)
+
+function DashboardFallback() {
+  return (
+    <div className='rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm dark:border-neutral-800 dark:bg-[#1f1d24]'>
+      <div className='mb-3 text-sm uppercase tracking-[0.24em] text-neutral-500'>
+        Dashboard
+      </div>
+      <h1 className='mb-4 text-3xl font-bold text-neutral-900 dark:text-white'>
+        仪表盘
+      </h1>
+      <p className='text-sm leading-7 text-neutral-600 dark:text-neutral-300'>
+        当前环境未配置 Clerk，仪表盘入口暂不可用。
+      </p>
+    </div>
+  )
 }
 
-export async function getStaticProps({ locale }) {
-  const prefix = 'dashboard'
-  let fullSlug = 'dashboard'
-  const from = `slug-props-${fullSlug}`
-  const props = await getGlobalData({ from, locale })
-  if (siteConfig('PSEUDO_STATIC', false, props.NOTION_CONFIG)) {
-    if (!fullSlug.endsWith('.html')) {
-      fullSlug += '.html'
-    }
-  }
+export default function DashboardPage() {
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
-  // 在列表内查找文章
-  props.post = props?.allPages?.find(p => {
-    return p.type.indexOf('Menu') < 0 && p.slug === fullSlug
-  })
-
-  // 处理非列表内文章的内信息
-  if (!props?.post) {
-    const pageId = prefix
-    if (pageId.length >= 32) {
-      const post = await getPost(pageId)
-      props.post = post
-    }
-  }
-  // 无法获取文章
-  if (!props?.post) {
-    props.post = null
-    return {
-      props,
-      revalidate: process.env.EXPORT
-        ? undefined
-        : siteConfig(
-            'NEXT_REVALIDATE_SECOND',
-            BLOG.NEXT_REVALIDATE_SECOND,
-            props.NOTION_CONFIG
-          )
-    }
-  }
-
-  // 文章内容加载
-  if (!props?.post?.blockMap) {
-    props.post.blockMap = await getPostBlocks(props.post.id, from)
-  }
-
-  delete props.allPages
-  return {
-    props,
-    revalidate: process.env.EXPORT
-      ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
-        )
-  }
+  return (
+    <main className='min-h-screen bg-[#f7f9fe] px-6 py-12 dark:bg-[#18171d]'>
+      <div className='mx-auto max-w-6xl'>
+        {enableClerk ? (
+          <>
+            <SignedIn>
+              <DashboardHeader />
+              <DashboardBody />
+            </SignedIn>
+            <SignedOut>
+              <RedirectToSignIn />
+            </SignedOut>
+          </>
+        ) : (
+          <DashboardFallback />
+        )}
+      </div>
+    </main>
+  )
 }
-
-export const getStaticPaths = () => {
-  return {
-    paths: [
-      { params: { index: [] } }, // 对应首页路径
-      { params: { index: ['membership'] } },
-      { params: { index: ['balance'] } },
-      { params: { index: ['user-profile'] } },
-      { params: { index: ['user-profile', 'security'] } }, // 嵌套路由，按结构传递
-      { params: { index: ['order'] } },
-      { params: { index: ['affiliate'] } }
-    ],
-    fallback: 'blocking' // 或者 true，阻塞式渲染
-  }
-}
-
-export default Dashboard

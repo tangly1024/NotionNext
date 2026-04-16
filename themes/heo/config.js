@@ -76,7 +76,9 @@ const CONFIG = {
     'zh-CN': [
       '你好！我是 Charlii博士',
       '🤖 专注 AIGC 与 AI创作应用',
-      '📚 分享效率提升与实用技能',
+      '🦾 提供 OpenClaw Agent 全流程服务',
+      '📲 支持X/TikTok/小红书/抖音多平台运营',
+      '🎬 视频·图文·博客内容自动化',
       '🚀 聚焦AI科创与落地实践',
       '🌍 探索出海与全球化经验',
       '💡 让AI成为生产力伙伴',
@@ -85,7 +87,9 @@ const CONFIG = {
     'en-US': [
       'Hello! I\'m Dr. Charlii',
       '🤖 Focused on AIGC & AI Creative Applications',
-      '📚 Sharing Productivity & Practical Skills',
+      '🦾 Full OpenClaw Agent & Skill Services',
+      '📲 X, TikTok, Reddit, RedBook & More',
+      '🎬 Video, Blog & Social Content Automation',
       '🚀 Exploring AI Innovation & Implementation',
       '🌍 Global Expansion & Cross-border Experience',
       '💡 Making AI Your Productivity Partner',
@@ -110,63 +114,63 @@ const CONFIG = {
   HEO_INFO_CARD_TEXT3: '了解更多',
 
 
-  // 用户技能图标
+  // 社交平台 & AI工具图标
   HEO_GROUP_ICONS: [
     {
-      title_1: 'AfterEffect',
-      img_1: '/images/heo/20239df3f66615b532ce571eac6d14ff21cf072602.webp',
-      color_1: '#989bf8',
-      title_2: 'Sketch',
-      img_2: '/images/heo/2023e0ded7b724a39f12d59c3dc8fbdc7cbe074202.webp',
-      color_2: '#ffffff'
+      title_1: 'X (Twitter)',
+      img_1: 'https://cdn.simpleicons.org/x/ffffff',
+      color_1: '#000000',
+      title_2: 'TikTok',
+      img_2: 'https://cdn.simpleicons.org/tiktok/ffffff',
+      color_2: '#010101'
     },
     {
-      title_1: 'Docker',
-      img_1: '/images/heo/20231108a540b2862d26f8850172e4ea58ed075102.webp',
-      color_1: '#57b6e6',
-      title_2: 'Photoshop',
-      img_2: '/images/heo/2023e4058a91608ea41751c4f102b131f267075902.webp',
-      color_2: '#4082c3'
+      title_1: 'Reddit',
+      img_1: 'https://cdn.simpleicons.org/reddit/ffffff',
+      color_1: '#FF4500',
+      title_2: 'Instagram',
+      img_2: 'https://cdn.simpleicons.org/instagram/ffffff',
+      color_2: '#C13584'
     },
     {
-      title_1: 'FinalCutPro',
-      img_1: '/images/heo/20233e777652412247dd57fd9b48cf997c01070702.webp',
-      color_1: '#ffffff',
-      title_2: 'Python',
-      img_2: '/images/heo/20235c0731cd4c0c95fc136a8db961fdf963071502.webp',
-      color_2: '#ffffff'
+      title_1: 'YouTube',
+      img_1: 'https://cdn.simpleicons.org/youtube/ffffff',
+      color_1: '#FF0000',
+      title_2: '小红书',
+      img_2: 'https://cdn.simpleicons.org/xiaohongshu/ffffff',
+      color_2: '#FF2442'
     },
     {
-      title_1: 'Swift',
-      img_1: '/images/heo/202328bbee0b314297917b327df4a704db5c072402.webp',
-      color_1: '#eb6840',
-      title_2: 'Principle',
-      img_2: '/images/heo/2023f76570d2770c8e84801f7e107cd911b5073202.webp',
-      color_2: '#8f55ba'
+      title_1: '抖音',
+      img_1: 'https://cdn.simpleicons.org/tiktok/ffffff',
+      color_1: '#69C9D0',
+      title_2: '视频号',
+      img_2: 'https://cdn.simpleicons.org/wechat/ffffff',
+      color_2: '#07C160'
     },
     {
-      title_1: 'illustrator',
-      img_1: '/images/heo/20237359d71b45ab77829cee5972e36f8c30073902.webp',
-      color_1: '#f29e39',
-      title_2: 'CSS3',
-      img_2: '/images/heo/20237c548846044a20dad68a13c0f0e1502f074602.webp',
-      color_2: '#2c51db'
+      title_1: 'LinkedIn',
+      img_1: 'https://cdn.simpleicons.org/linkedin/ffffff',
+      color_1: '#0A66C2',
+      title_2: 'Facebook',
+      img_2: 'https://cdn.simpleicons.org/facebook/ffffff',
+      color_2: '#1877F2'
     },
     {
-      title_1: 'JS',
-      img_1: '/images/heo/2023786e7fc488f453d5fb2be760c96185c0075502.webp',
-      color_1: '#f7cb4f',
-      title_2: 'HTML',
-      img_2: '/images/heo/202372b4d760fd8a497d442140c295655426070302.webp',
-      color_2: '#e9572b'
+      title_1: 'OpenAI',
+      img_1: 'https://cdn.simpleicons.org/openai/ffffff',
+      color_1: '#412991',
+      title_2: 'Claude',
+      img_2: 'https://cdn.simpleicons.org/anthropic/ffffff',
+      color_2: '#D97757'
     },
     {
-      title_1: 'Git',
-      img_1: '/images/heo/2023ffa5707c4e25b6beb3e6a3d286ede4c6071102.webp',
-      color_1: '#df5b40',
-      title_2: 'Rhino',
-      img_2: '/images/heo/20231ca53fa0b09a3ff1df89acd7515e9516173302.webp',
-      color_2: '#1f1f1f'
+      title_1: 'Notion',
+      img_1: 'https://cdn.simpleicons.org/notion/ffffff',
+      color_1: '#000000',
+      title_2: 'Pinterest',
+      img_2: 'https://cdn.simpleicons.org/pinterest/ffffff',
+      color_2: '#BD081C'
     }
   ],
 

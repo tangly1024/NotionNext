@@ -1,6 +1,5 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -13,11 +12,19 @@ const NoFound = props => {
   return <DynamicLayout theme={theme} layoutName='Layout404' {...props} />
 }
 
-export async function getStaticProps(req) {
-  const { locale } = req
-
-  const props = (await getGlobalData({ from: '404', locale })) || {}
-  return { props }
+export function getStaticProps() {
+  return {
+    props: {
+      siteInfo: {
+        title: 'AI博士Charlii',
+        description: '分享AIGC与实用技能',
+        pageCover: '/bg_image.jpg'
+      },
+      latestPosts: [],
+      allNavPages: [],
+      NOTION_CONFIG: {}
+    }
+  }
 }
 
 export default NoFound
