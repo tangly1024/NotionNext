@@ -277,6 +277,26 @@ const generateStructuredData = (meta, siteInfo, url, image, author) => {
     }
   }
 
+  // 如果是分类或标签页面，添加集合页面结构化数据
+  if (meta?.type === 'Category' || meta?.type === 'Tag') {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: meta.title,
+      description: meta.description,
+      url: url,
+      image: image,
+      publisher: {
+        '@type': 'Organization',
+        name: siteInfo?.title,
+        logo: {
+          '@type': 'ImageObject',
+          url: siteInfo?.icon
+        }
+      }
+    }
+  }
+
   return baseData
 }
 
