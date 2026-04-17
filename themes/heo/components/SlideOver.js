@@ -1,7 +1,7 @@
 import DarkModeButton from '@/components/DarkModeButton'
 import { useGlobal } from '@/lib/global'
 import { Dialog, Transition } from '@headlessui/react'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import {
   Fragment,
@@ -149,12 +149,12 @@ function DarkModeBlockButton() {
  */
 function Button({ title, url }) {
   return (
-    <Link
+    <SmartLink
       href={url}
       className={
         'duration-200 hover:text-white hover:shadow-md flex cursor-pointer justify-between items-center px-2 py-2 border dark:border-gray-600 bg-white hover:bg-blue-600 dark:bg-[#1e1e1e] rounded-lg'
       }>
       {title}
-    </Link>
+    </SmartLink>
   )
 }

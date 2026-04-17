@@ -4,7 +4,6 @@
 import { siteConfig } from '@/lib/config'
 import { loadExternalResource } from '@/lib/utils'
 import { useEffect } from 'react'
-import CONFIG from '../config'
 import { SVGLeftArrow } from './svg/SVGLeftArrow'
 import { SVGRightArrow } from './svg/SVGRightArrow'
 
@@ -60,11 +59,7 @@ export const Testimonials = () => {
   }, [])
   // 用户评分
   const ratings = [1, 2, 3, 4, 5]
-  const STARTER_TESTIMONIALS_ITEMS = siteConfig(
-    'STARTER_TESTIMONIALS_ITEMS',
-    [],
-    CONFIG
-  )
+  const STARTER_TESTIMONIALS_ITEMS = siteConfig('STARTER_TESTIMONIALS_ITEMS')
   return (
     <>
       {/* <!-- ====== Testimonial Section Start --> */}
@@ -76,13 +71,13 @@ export const Testimonials = () => {
             <div className='w-full px-4'>
               <div className='mx-auto mb-[60px] max-w-[485px] text-center'>
                 <span className='mb-2 block text-lg font-semibold text-primary'>
-                  {siteConfig('STARTER_TESTIMONIALS_TITLE', null, CONFIG)}
+                  {siteConfig('STARTER_TESTIMONIALS_TITLE')}
                 </span>
                 <h2 className='mb-3 text-3xl font-bold leading-[1.2] text-dark dark:text-white sm:text-4xl md:text-[40px]'>
-                  {siteConfig('STARTER_TESTIMONIALS_TEXT_1', null, CONFIG)}
+                  {siteConfig('STARTER_TESTIMONIALS_TEXT_1')}
                 </h2>
                 <p className='text-base text-body-color dark:text-dark-6'>
-                  {siteConfig('STARTER_TESTIMONIALS_TEXT_2', null, CONFIG)}
+                  {siteConfig('STARTER_TESTIMONIALS_TEXT_2')}
                 </p>
               </div>
             </div>
@@ -92,7 +87,7 @@ export const Testimonials = () => {
             <div className='swiper testimonial-carousel common-carousel p-5'>
               <div className='swiper-wrapper'>
                 {/* 用户评价卡牌 */}
-                {STARTER_TESTIMONIALS_ITEMS.map((item, index) => {
+                {STARTER_TESTIMONIALS_ITEMS?.map((item, index) => {
                   return (
                     <div key={index} className='swiper-slide'>
                       <div className='rounded-xl bg-white px-4 py-[30px] shadow-testimonial dark:bg-dark sm:px-[30px]'>
@@ -101,11 +96,7 @@ export const Testimonials = () => {
                             <img
                               key={index}
                               alt='star icon' // 为每个图片设置唯一的 key 属性
-                              src={siteConfig(
-                                'STARTER_TESTIMONIALS_STAR_ICON',
-                                null,
-                                CONFIG
-                              )}
+                              src={siteConfig('STARTER_TESTIMONIALS_STAR_ICON')}
                             />
                           ))}
                         </div>

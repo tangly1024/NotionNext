@@ -2,7 +2,7 @@ import { siteConfig } from '@/lib/config'
 import LazyImage from '@/components/LazyImage'
 import { useGlobal } from '@/lib/global'
 // import Image from 'next/image'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 
 /**
@@ -33,7 +33,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
           const headerImage = post?.pageCoverThumbnail ? post.pageCoverThumbnail : siteInfo?.pageCover
 
           return (
-            (<Link
+            (<SmartLink
                     key={post.id}
                     title={post.title}
                     href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
@@ -56,7 +56,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
                         </div>
                     </div>
 
-                </Link>)
+                </SmartLink>)
           )
         })}
     </>

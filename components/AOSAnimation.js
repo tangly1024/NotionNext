@@ -8,7 +8,7 @@ import { useEffect } from 'react'
  * https://michalsnik.github.io/aos/
  */
 export default function AOSAnimation() {
-  const initAOS = async () => {
+  const initAOS = () => {
     Promise.all([
       loadExternalResource('/js/aos.js', 'js'),
       loadExternalResource('/css/aos.css', 'css')
