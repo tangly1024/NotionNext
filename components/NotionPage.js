@@ -1,5 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import { compressImage, mapImgUrl } from '@/lib/notion/mapImage'
+import { compressImage, mapImgUrl } from '@/lib/db/notion/mapImage'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import mediumZoom from '@fisch0920/medium-zoom'
 import 'katex/dist/katex.min.css'
@@ -98,7 +98,26 @@ const NotionPage = ({ post, className }) => {
         })
       })
     }
+
+    // 查找所有具有 'notion-collection-page-properties' 类的元素,删除notion自带的页面properties
+    const timer = setTimeout(() => {
+      // 查找所有具有 'notion-collection-page-properties' 类的元素
+      const elements = document.querySelectorAll(
+        '.notion-collection-page-properties'
+      )
+
+      // 遍历这些元素并将其从 DOM 中移除
+      elements?.forEach(element => {
+        element?.remove()
+      })
+    }, 1000) // 1000 毫秒 = 1 秒
+
+    // 清理定时器，防止组件卸载时执行
+    return () => clearTimeout(timer)
   }, [post])
+
+  // const cleanBlockMap = cleanBlocksWithWarn(post?.blockMap);
+  // console.log('NotionPage render with post:', post);
 
   return (
     <div
@@ -123,6 +142,7 @@ const NotionPage = ({ post, className }) => {
     </div>
   )
 }
+
 
 /**
  * 页面的数据库链接禁止跳转，只能查看
@@ -212,7 +232,7 @@ function getMediumZoomMargin() {
 // 代码
 const Code = dynamic(
   () =>
-    import('react-notion-x/build/third-party/code').then(async m => {
+    import('react-notion-x/build/third-party/code').then(m => {
       return m.Code
     }),
   { ssr: false }

@@ -12,7 +12,7 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
 import { SignIn, SignUp } from '@clerk/nextjs'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import ArticleInfo from './components/ArticleInfo'
@@ -101,13 +101,29 @@ const LayoutBase = props => {
  */
 const LayoutIndex = props => {
   const { posts } = props
-  // 最新文章 从第4个元素开始截取出4个
-  const newPosts = posts.slice(3, 7)
+
+   // ===== 1. Hero区域 =====
+  const heroTopPosts = posts.slice(0, 1)
+  const heroSubPosts = posts.slice(
+    heroTopPosts.length,
+    heroTopPosts.length + siteConfig('MAGZINE_HERO_SUB_POST_COUNT', 2, CONFIG)
+  )
+
+  // ===== 2. 剩余文章 =====
+  const remainingPosts = posts.slice(
+    heroTopPosts.length + heroSubPosts.length
+  )
+
+  // ===== 3. 最新文章 =====
+  const newPosts = remainingPosts.slice(0, siteConfig('MAGZINE_LATEST_POST_COUNT', 4, CONFIG))
 
   return (
     <div className='pt-10 md:pt-18'>
       {/* 首屏宣传区块 */}
-      <Hero posts={posts} />
+     <Hero
+        topPosts={heroTopPosts}
+        subPosts={heroSubPosts}
+      />
 
       {/* 最新文章区块 */}
       <PostSimpleListHorizontal
@@ -415,7 +431,7 @@ const LayoutCategoryIndex = props => {
         <div id='category-list' className='duration-200 flex flex-wrap'>
           {categoryOptions?.map(category => {
             return (
-              <Link
+              <SmartLink
                 key={category.name}
                 href={`/category/${category.name}`}
                 passHref
@@ -427,7 +443,7 @@ const LayoutCategoryIndex = props => {
                   {/* <i className='mr-4 fas fa-folder' /> */}
                   {category.name}({category.count})
                 </div>
-              </Link>
+              </SmartLink>
             )
           })}
         </div>

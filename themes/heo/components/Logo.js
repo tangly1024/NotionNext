@@ -1,12 +1,12 @@
 import { Home } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 const Logo = props => {
   const { siteInfo } = props
   return (
-    <Link href='/' passHref legacyBehavior>
+    <SmartLink href='/' passHref legacyBehavior>
       <div className='flex flex-nowrap items-center cursor-pointer font-extrabold'>
         <LazyImage
           src={siteInfo?.icon}
@@ -24,7 +24,7 @@ const Logo = props => {
           </div>
         </div>
       </div>
-    </Link>
+    </SmartLink>
   )
 }
 export default Logo

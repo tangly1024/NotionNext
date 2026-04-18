@@ -2,16 +2,18 @@ import BLOG from '@/blog.config'
 import useNotification from '@/components/Notification'
 import OpenWrite from '@/components/OpenWrite'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData, getPost } from '@/lib/db/getSiteData'
+import { fetchGlobalAllData, resolvePostProps } from '@/lib/db/SiteDataApi'
 import { useGlobal } from '@/lib/global'
-import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
-import { getPasswordQuery } from '@/lib/password'
-import { checkSlugHasNoSlash, processPostData } from '@/lib/utils/post'
+import { getPageTableOfContents } from '@/lib/db/notion/getPageTableOfContents'
+import { getPasswordQuery } from '@/lib/utils/password'
+import { checkSlugHasNoSlash } from '@/lib/utils/post'
 import { DynamicLayout } from '@/themes/theme'
 import md5 from 'js-md5'
 import { useRouter } from 'next/router'
-import { idToUuid } from 'notion-utils'
+import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
+import { isExport } from '@/lib/utils/buildMode'
+import { getPriorityPages, prefetchAllBlockMaps } from '@/lib/build/prefetch'
 
 /**
  * 根据notion的slug访问页面
@@ -95,66 +97,63 @@ const Slug = props => {
   )
 }
 
+Slug.propTypes = {
+  post: PropTypes.shape({
+    id: PropTypes.string,
+    slug: PropTypes.string,
+    password: PropTypes.string,
+    content: PropTypes.array,
+    toc: PropTypes.array,
+    blockMap: PropTypes.shape({
+      block: PropTypes.object
+    })
+  }),
+  NOTION_CONFIG: PropTypes.object
+}
+
 export async function getStaticPaths() {
-  if (!BLOG.isProd) {
+  const from = 'slug-paths'
+  const { allPages } = await fetchGlobalAllData({ from })
+
+  // Export 模式：全量预生成
+  if (isExport()) {
+    await prefetchAllBlockMaps(allPages)
     return {
-      paths: [],
-      fallback: true
+      paths: allPages
+        ?.filter(row => checkSlugHasNoSlash(row))
+        .map(row => ({ params: { prefix: row.slug } })),
+      fallback: false
     }
   }
 
-  const from = 'slug-paths'
-  const { allPages } = await getGlobalData({ from })
-  const paths = allPages
-    ?.filter(row => checkSlugHasNoSlash(row))
-    .map(row => ({ params: { prefix: row.slug } }))
+  // ISR 模式：预生成最新10篇，其余按需渲染
+  const tops = getPriorityPages(allPages)
+  await prefetchAllBlockMaps(tops)
+
   return {
-    paths: paths,
-    fallback: true
+    paths: tops
+      .filter(row => checkSlugHasNoSlash(row))
+      .map(row => ({ params: { prefix: row.slug } })),
+    fallback: 'blocking'
   }
 }
 
 export async function getStaticProps({ params: { prefix }, locale }) {
-  let fullSlug = prefix
-  const from = `slug-props-${fullSlug}`
-  const props = await getGlobalData({ from, locale })
-  if (siteConfig('PSEUDO_STATIC', false, props.NOTION_CONFIG)) {
-    if (!fullSlug.endsWith('.html')) {
-      fullSlug += '.html'
-    }
-  }
-
-  // 在列表内查找文章
-  props.post = props?.allPages?.find(p => {
-    return (
-      p.type.indexOf('Menu') < 0 &&
-      (p.slug === prefix || p.id === idToUuid(prefix))
-    )
+  const props = await resolvePostProps({
+    prefix,
+    locale,
   })
 
-  // 处理非列表内文章的内信息
-  if (!props?.post) {
-    const pageId = prefix
-    if (pageId.length >= 32) {
-      const post = await getPost(pageId)
-      props.post = post
-    }
-  }
-  if (!props?.post) {
-    // 无法获取文章
-    props.post = null
-  } else {
-    await processPostData(props, from)
-  }
   return {
     props,
-    revalidate: process.env.EXPORT
+    revalidate: isExport()
       ? undefined
       : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
-        )
+        'NEXT_REVALIDATE_SECOND',
+        BLOG.NEXT_REVALIDATE_SECOND,
+        props.NOTION_CONFIG
+      ),
+    notFound: !props.post
   }
 }
 
