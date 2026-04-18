@@ -1,9 +1,10 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData, resolvePostProps } from '@/lib/db/SiteDataApi'
-import { checkSlugHasMorThanTwoSlash, processPostData } from '@/lib/utils/post'
-import { idToUuid } from 'notion-utils'
+import { checkSlugHasMorThanTwoSlash } from '@/lib/utils/post'
 import Slug from '..'
+import { isExport } from '@/lib/utils/buildMode'
+import { getPriorityPages, prefetchAllBlockMaps } from '@/lib/build/prefetch'
 
 /**
  * 根据notion的slug访问页面
@@ -15,32 +16,44 @@ const PrefixSlug = props => {
   return <Slug {...props} />
 }
 
-/**
- * 编译渲染页面路径
- * @returns
- */
+
 export async function getStaticPaths() {
-  if (!BLOG.isProd) {
+  const from = 'slug-paths'
+  const { allPages } = await fetchGlobalAllData({ from })
+
+  // Export 模式：全量预生成
+  if (isExport()) {
+    await prefetchAllBlockMaps(allPages)
     return {
-      paths: [],
-      fallback: true
+      paths: allPages
+        ?.filter(row => checkSlugHasMorThanTwoSlash(row))
+        .map(row => ({
+          params: {
+            prefix: row.slug.split('/')[0],
+            slug: row.slug.split('/')[1],
+            suffix: row.slug.split('/').slice(2)
+          }
+        })),
+      fallback: false
     }
   }
 
-  const from = 'slug-paths'
-  const { allPages } = await fetchGlobalAllData({ from })
-  const paths = allPages
-    ?.filter(row => checkSlugHasMorThanTwoSlash(row))
-    .map(row => ({
-      params: {
-        prefix: row.slug.split('/')[0],
-        slug: row.slug.split('/')[1],
-        suffix: row.slug.split('/').slice(2)
-      }
-    }))
+  // ISR 模式：预生成最新10篇（仅三段以上路径格式）
+  const tops = getPriorityPages(allPages)
+
+  await prefetchAllBlockMaps(tops)
+
   return {
-    paths: paths,
-    fallback: true
+    paths: tops
+      .filter(p => checkSlugHasMorThanTwoSlash(p))
+      .map(row => ({
+        params: {
+          prefix: row.slug.split('/')[0],
+          slug: row.slug.split('/')[1],
+          suffix: row.slug.split('/').slice(2)
+        }
+      })),
+    fallback: 'blocking'
   }
 }
 
@@ -53,6 +66,7 @@ export async function getStaticProps({
   params: { prefix, slug, suffix },
   locale
 }) {
+
   const props = await resolvePostProps({
     prefix,
     slug,
@@ -62,13 +76,14 @@ export async function getStaticProps({
 
   return {
     props,
-    revalidate: process.env.EXPORT
+    revalidate: isExport()
       ? undefined
       : siteConfig(
         'NEXT_REVALIDATE_SECOND',
         BLOG.NEXT_REVALIDATE_SECOND,
         props.NOTION_CONFIG
-      )
+      ),
+    notFound: !props.post
   }
 }
 
