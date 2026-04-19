@@ -51,7 +51,8 @@ export function getStaticProps() {
       siteInfo: {
         title: '服务条款 | AI博士Charlii',
         description: 'CharliiAI 网站服务条款与使用说明。',
-        pageCover: '/bg_image.jpg'
+        pageCover: '/bg_image.jpg',
+        link: 'https://www.charliiai.com/terms-of-service'
       },
       NOTION_CONFIG: {}
     }

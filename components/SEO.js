@@ -165,6 +165,19 @@ const toIsoDate = value => {
   return date.toISOString()
 }
 
+const getPathnameFromSiteLink = siteLink => {
+  if (typeof siteLink !== 'string' || !siteLink.trim()) {
+    return ''
+  }
+
+  try {
+    const parsedUrl = new URL(siteLink)
+    return normalizePath(parsedUrl.pathname)
+  } catch (error) {
+    return normalizePath(siteLink)
+  }
+}
+
 /**
  * 页面的Head头，有用于SEO
  * @param {*} param0
@@ -437,6 +450,7 @@ const getSEOMeta = (props, router, locale, localeCode) => {
   const { post, siteInfo, tag, category, page } = props
   const keyword = router?.query?.s
   const isEnglish = localeCode?.startsWith('en')
+  const siteInfoPath = getPathnameFromSiteLink(siteInfo?.link)
 
   const TITLE = siteConfig('TITLE')
   switch (router.route) {
@@ -614,10 +628,10 @@ const getSEOMeta = (props, router, locale, localeCode) => {
       return {
         title: post
           ? `${getEnhancedPostTitle(post)} | ${siteInfo?.title}`
-          : `${siteInfo?.title} | loading`,
-        description: getEnhancedPostDescription(post),
+          : siteInfo?.title || TITLE,
+        description: getEnhancedPostDescription(post) || siteInfo?.description || TITLE,
         type: post?.type,
-        slug: post?.slug,
+        slug: post?.slug || (siteInfoPath !== '/' ? siteInfoPath : ''),
         image: post?.pageCoverThumbnail || `${siteInfo?.pageCover}`,
         publishDate: post?.publishDate,
         publishDay: post?.publishDay,

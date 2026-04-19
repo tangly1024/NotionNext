@@ -47,7 +47,8 @@ export function getStaticProps() {
       siteInfo: {
         title: '隐私政策 | AI博士Charlii',
         description: 'CharliiAI 网站隐私政策与数据使用说明。',
-        pageCover: '/bg_image.jpg'
+        pageCover: '/bg_image.jpg',
+        link: 'https://www.charliiai.com/privacy-policy'
       },
       NOTION_CONFIG: {}
     }

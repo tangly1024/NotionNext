@@ -41,6 +41,20 @@ const Footer = () => {
             </a>
             {BIO && <span className='mx-1'> | {BIO}</span>}
           </div>
+          <div className='flex flex-wrap justify-center gap-x-3 lg:justify-start'>
+            <a className='hover:underline' href='/about'>
+              About
+            </a>
+            <a className='hover:underline' href='/contact'>
+              Contact
+            </a>
+            <a className='hover:underline' href='/privacy-policy'>
+              Privacy
+            </a>
+            <a className='hover:underline' href='/terms-of-service'>
+              Terms
+            </a>
+          </div>
         </div>
 
         <div id='footer-bottom-right'>

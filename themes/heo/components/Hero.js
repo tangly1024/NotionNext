@@ -95,14 +95,14 @@ function Banner(props) {
       <div
         id='banner-title'
         className='z-10 flex flex-col absolute top-10 left-10'>
-        <div className='text-4xl font-bold mb-3  dark:text-white'>
+        <h1 className='text-4xl font-bold mb-3 dark:text-white'>
           {title1}
           <br />
           {title2}
-        </div>
-        <div className='text-xs text-gray-600  dark:text-gray-200'>
+        </h1>
+        <p className='text-xs text-gray-600 dark:text-gray-200'>
           {title3}
-        </div>
+        </p>
       </div>
 
       {/* 斜向滚动的图标 */}
