@@ -21,6 +21,10 @@ const LEGACY_ROUTE_REDIRECTS = {
   '干货分享/zotero-arxiv-daily': 'article/zotero-arxiv-daily'
 }
 
+const DEFAULT_LOCALE_CANONICAL_REDIRECTS = {
+  'article/agent': '/en-US/article/Agent'
+}
+
 const getCanonicalDestination = (locale, slug) => {
   const normalizedSlug = `/${slug.replace(/^\/+/, '')}`
   const localePrefix =
@@ -96,6 +100,20 @@ export function getStaticPaths() {
 
 export async function getStaticProps({ params: { prefix, slug }, locale }) {
   const fullSlug = prefix + '/' + slug
+  const normalizedFullSlug = normalizeSlugValue(fullSlug)
+  const defaultLocaleCanonicalRedirect =
+    (!locale || locale === 'zh-CN') &&
+    DEFAULT_LOCALE_CANONICAL_REDIRECTS[normalizedFullSlug]
+
+  if (defaultLocaleCanonicalRedirect) {
+    return {
+      redirect: {
+        destination: defaultLocaleCanonicalRedirect,
+        permanent: true
+      }
+    }
+  }
+
   const legacyDestination = LEGACY_ROUTE_REDIRECTS[normalizeSlugValue(fullSlug)]
 
   if (legacyDestination) {
@@ -109,7 +127,6 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
 
   const from = `slug-props-${fullSlug}`
   const props = readSiteContext(locale) || (await getGlobalData({ from, locale }))
-  const normalizedFullSlug = normalizeSlugValue(fullSlug)
   const normalizedSlug = normalizeSlugValue(slug)
   const normalizedPageId = normalizePageId(slug)
   const isUuidLike = /^[0-9a-f]{32}$/i.test(normalizedPageId)
