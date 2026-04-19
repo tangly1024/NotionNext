@@ -1,8 +1,11 @@
 import BLOG from '@/blog.config'
 import { ISR_CONTENT_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
 import { getGlobalData, getPost } from '@/lib/db/getSiteData'
+import { readSiteContext } from '@/lib/routes/siteContext'
 import { processPostData } from '@/lib/utils/post'
 import Slug from '..'
+import fs from 'fs'
+import path from 'path'
 
 const LOCALE_PREFIX_REGEX = /^\/[a-z]{2}(?:-[A-Za-z]{2})?(?=\/|$)/i
 
@@ -13,6 +16,10 @@ const normalizeSlugValue = value =>
 
 const normalizePageId = value =>
   typeof value === 'string' ? value.replace(/-/g, '').trim().toLowerCase() : ''
+
+const LEGACY_ROUTE_REDIRECTS = {
+  '干货分享/zotero-arxiv-daily': 'article/zotero-arxiv-daily'
+}
 
 const getCanonicalDestination = (locale, slug) => {
   const normalizedSlug = `/${slug.replace(/^\/+/, '')}`
@@ -31,6 +38,21 @@ const getCurrentRoutePath = (locale, slug) => {
 
 const getLocalized404Path = locale =>
   locale && locale !== 'zh-CN' ? `/${locale}/404` : '/404'
+
+const readSlugLookup = locale => {
+  try {
+    const localeKey = locale || 'zh-CN'
+    const filePath = path.join(process.cwd(), 'public', `slug-lookup.${localeKey}.json`)
+    if (!fs.existsSync(filePath)) {
+      return null
+    }
+
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'))
+  } catch (error) {
+    console.warn('读取 slug lookup 失败', error)
+    return null
+  }
+}
 
 const getDefaultLocaleRedirect = ({ fullSlug, slug, locale }) => {
   if (!locale || locale === 'zh-CN') {
@@ -74,12 +96,24 @@ export function getStaticPaths() {
 
 export async function getStaticProps({ params: { prefix, slug }, locale }) {
   const fullSlug = prefix + '/' + slug
+  const legacyDestination = LEGACY_ROUTE_REDIRECTS[normalizeSlugValue(fullSlug)]
+
+  if (legacyDestination) {
+    return {
+      redirect: {
+        destination: getCanonicalDestination(locale, legacyDestination),
+        permanent: true
+      }
+    }
+  }
+
   const from = `slug-props-${fullSlug}`
-  const props = await getGlobalData({ from, locale })
+  const props = readSiteContext(locale) || (await getGlobalData({ from, locale }))
   const normalizedFullSlug = normalizeSlugValue(fullSlug)
   const normalizedSlug = normalizeSlugValue(slug)
   const normalizedPageId = normalizePageId(slug)
   const isUuidLike = /^[0-9a-f]{32}$/i.test(normalizedPageId)
+  const slugLookup = readSlugLookup(locale) || {}
   const slugCandidates = new Set(
     [slug, fullSlug]
       .filter(Boolean)
@@ -131,6 +165,16 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
 
   // 处理非列表内文章的内信息
   if (!props?.post) {
+    const fallbackPageId = slugLookup[normalizedFullSlug] || slugLookup[normalizedSlug]
+    if (fallbackPageId) {
+      const post = await getPost(fallbackPageId)
+      if (post) {
+        props.post = post
+      }
+    }
+  }
+
+  if (!props?.post) {
     const pageId = slug
     if (pageId.length >= 32) {
       const post = await getPost(pageId)
@@ -139,6 +183,22 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
   }
 
   if (!props?.post) {
+    if (!props?.allPages) {
+      const globalProps = await getGlobalData({ from, locale })
+      Object.assign(props, globalProps)
+      props.post = props?.allPages?.find(p => {
+        const normalizedPostSlug = normalizeSlugValue(p?.slug)
+        const normalizedPostId = normalizePageId(p?.id)
+
+        return (
+          slugCandidates.has(normalizedPostSlug) ||
+          normalizedPostSlug === normalizedSlug ||
+          normalizedPostSlug === normalizedFullSlug ||
+          (isUuidLike && normalizedPostId === normalizedPageId)
+        )
+      })
+    }
+
     const defaultLocaleRedirect = getDefaultLocaleRedirect({
       fullSlug,
       slug,
@@ -154,6 +214,11 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
         permanent: false
       }
     }
+  }
+
+  if (!props?.allPages) {
+    const globalProps = await getGlobalData({ from, locale })
+    Object.assign(props, globalProps)
   }
 
   await processPostData(props, from)

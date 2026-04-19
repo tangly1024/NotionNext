@@ -4,10 +4,98 @@ import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { generateRobotsTxt } from '@/lib/robots.txt'
 import { generateSitemapXml } from '@/lib/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
-import { generateRedirectJson, generateSlugIndexJson } from '@/lib/redirect'
+import {
+  generateRedirectJson,
+  generateSlugIndexJson,
+  generateSlugLookupJson
+} from '@/lib/redirect'
+import { generateSiteContextJson } from '@/lib/routes/siteContext'
 import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
 import { ISR_HOME_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
 import { compactPostForLatest, compactPostForNav } from '@/lib/utils/compactPost'
+
+const HOME_PATH_REDIRECTS = new Map([
+  ['/aboutme', '/about'],
+  ['aboutme', '/about']
+])
+
+const HOME_BLOCKED_PATHS = new Set([
+  '/article/openai-sora-shutdown-10yi-lesson',
+  'article/openai-sora-shutdown-10yi-lesson'
+])
+
+function normalizeHomePath(value) {
+  if (typeof value !== 'string') {
+    return value
+  }
+
+  const trimmed = value.trim()
+  return HOME_PATH_REDIRECTS.get(trimmed) || trimmed
+}
+
+function isBlockedHomePath(value) {
+  if (typeof value !== 'string') {
+    return false
+  }
+
+  return HOME_BLOCKED_PATHS.has(value.trim())
+}
+
+function sanitizeHomeMenu(items) {
+  if (!Array.isArray(items)) {
+    return []
+  }
+
+  return items
+    .map(item => {
+      if (!item) {
+        return null
+      }
+
+      const next = { ...item }
+
+      if (typeof next.href === 'string') {
+        next.href = normalizeHomePath(next.href)
+      }
+
+      if (typeof next.slug === 'string') {
+        next.slug = normalizeHomePath(next.slug)
+      }
+
+      if (Array.isArray(next.subMenus)) {
+        next.subMenus = sanitizeHomeMenu(next.subMenus)
+      }
+
+      return next
+    })
+    .filter(item => item && !isBlockedHomePath(item.href || item.slug))
+}
+
+function sanitizeHomePosts(items) {
+  if (!Array.isArray(items)) {
+    return []
+  }
+
+  return items
+    .map(item => {
+      if (!item) {
+        return null
+      }
+
+      const next = { ...item }
+
+      if (typeof next.href === 'string') {
+        next.href = normalizeHomePath(next.href)
+      }
+
+      if (typeof next.slug === 'string') {
+        next.slug = normalizeHomePath(next.slug)
+      }
+
+      return next
+    })
+    .filter(item => item && !isBlockedHomePath(item.href || item.slug))
+}
 
 /**
  * 首页布局
@@ -71,10 +159,18 @@ export async function getStaticProps(req) {
   // 始终生成 UUID -> slug 映射，供 middleware 在旧链接场景下前置重定向。
   generateRedirectJson(props)
   generateSlugIndexJson({ allPages: props.allPages || [], locale })
+  generateSlugLookupJson({ allPages: props.allPages || [], locale })
+  generateSiteContextJson({ props, locale })
 
   // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
-  props.latestPosts = props.latestPosts?.map(post => compactPostForLatest(post))
-  props.allNavPages = props.allNavPages?.map(post => compactPostForNav(post))
+  props.posts = sanitizeHomePosts(props.posts)
+  props.latestPosts = sanitizeHomePosts(
+    props.latestPosts?.map(post => compactPostForLatest(post))
+  )
+  props.allNavPages = sanitizeHomePosts(
+    props.allNavPages?.map(post => compactPostForNav(post))
+  )
+  props.customMenu = sanitizeHomeMenu(props.customMenu)
 
   delete props.allPages
 
