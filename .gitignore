@@ -30,6 +30,7 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 .env
+.env.vercel.production
 
 # vercel
 .vercel
@@ -45,6 +46,10 @@ yarn-error.log*
 /public/robots.txt
 /public/sitemap.xml
 /public/rss/*
+/public/redirect.json
+/public/site-context.*.json
+/public/slug-index.*.json
+/public/slug-lookup.*.json
 /sitemap.xml
 
 # yarn
@@ -52,3 +57,5 @@ package-lock.json
 # yarn.lock
 
 .notion-api-lock
+test-results/
+*.tsbuildinfo
