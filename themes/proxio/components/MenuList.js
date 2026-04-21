@@ -13,6 +13,7 @@ export const MenuList = props => {
   const { locale } = useGlobal()
 
   const [showMenu, setShowMenu] = useState(false) // 控制菜单展开/收起状态
+  const [openSubMenuIdx, setOpenSubMenuIdx] = useState(null) // 控制哪个子菜单处于展开状态
   const router = useRouter()
 
   let links = [
@@ -57,6 +58,7 @@ export const MenuList = props => {
 
   useEffect(() => {
     setShowMenu(false)
+    setOpenSubMenuIdx(null)
   }, [router])
 
   if (!links || links.length === 0) {
@@ -84,7 +86,12 @@ export const MenuList = props => {
         }`}>
         <ul className='blcok lg:flex 2xl:ml-20'>
           {links?.map((link, index) => (
-            <MenuItem key={index} link={link} />
+            <MenuItem 
+              key={index} 
+              link={link} 
+              isOpen={openSubMenuIdx === index}
+              toggleOpen={() => setOpenSubMenuIdx(openSubMenuIdx === index ? null : index)}
+            />
           ))}
         </ul>
       </nav>
