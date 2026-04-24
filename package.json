@@ -20,6 +20,9 @@
     "export": "next build && next-sitemap --config next-sitemap.config.js && next export",
     "bundle-report": "ANALYZE=true yarn build"
   },
+  "engines": {
+    "node": "24.x"
+  },
   "dependencies": {
     "@giscus/react": "^2.2.6",
     "@headlessui/react": "^1.7.15",
