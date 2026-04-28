@@ -9,7 +9,7 @@ const CONFIG = {
 
   MAGZINE_HOME_TITLE: '立即开创您的在线业务。完全免费。',
   MAGZINE_HOME_DESCRIPTION:
-    '借助NotionNext，获得助您开创、经营和扩展业务所需的全部工具和帮助。',
+    '借助CharliiAI，获得助您开创、经营和扩展业务所需的全部工具和帮助。',
   MAGZINE_HOME_TIPS: 'AI时代来临，这是属于超级个体的狂欢盛宴！',
 
   // 首页底部推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
@@ -34,7 +34,7 @@ const CONFIG = {
   MAGZINE_SOCIAL_CARD_TITLE_1: '交流频道',
   MAGZINE_SOCIAL_CARD_TITLE_2: '加入社群讨论分享',
   MAGZINE_SOCIAL_CARD_TITLE_3: '点击加入社群',
-  MAGZINE_SOCIAL_CARD_URL: 'https://docs.tangly1024.com/article/chat-community',
+  MAGZINE_SOCIAL_CARD_URL: 'https://www.charliiai.com/article/chat-community',
 
   // 页脚菜单
   MAGZINE_FOOTER_LINKS: [
@@ -42,34 +42,34 @@ const CONFIG = {
       name: '友情链接',
       menus: [
         {
-          title: 'Tangly的学习笔记',
-          href: 'https://blog.tangly1024.com'
+          title: 'CharliiAI 首页',
+          href: 'https://www.charliiai.com'
         },
         {
-          title: 'NotionNext',
-          href: 'https://www.tangly1024.com'
+          title: 'CharliiAI',
+          href: 'https://www.charliiai.com'
         }
       ]
     },
     {
       name: '开发者',
       menus: [
-        { title: 'Github', href: 'https://github.com/tangly1024/NotionNext' },
+        { title: 'Github', href: 'https://github.com/kenchikuliu' },
         {
           title: '开发帮助',
-          href: 'https://docs.tangly1024.com/article/how-to-develop-with-notion-next'
+          href: 'https://www.charliiai.com/about'
         },
         {
           title: '功能反馈',
-          href: 'https://github.com/tangly1024/NotionNext/issues/new/choose'
+          href: 'https://www.charliiai.com/contact'
         },
         {
           title: '技术讨论',
-          href: 'https://github.com/tangly1024/NotionNext/discussions'
+          href: 'https://www.charliiai.com/contact'
         },
         {
           title: '关于作者',
-          href: 'https://blog.tangly1024.com/about'
+          href: 'https://www.charliiai.com/about'
         }
       ]
     },
@@ -78,28 +78,28 @@ const CONFIG = {
       menus: [
         {
           title: '站长社群',
-          href: 'https://docs.tangly1024.com/article/chat-community'
+          href: 'https://www.charliiai.com/contact'
         },
         {
           title: '咨询与定制',
-          href: 'https://docs.tangly1024.com/article/my-service'
+          href: 'https://www.charliiai.com/contact'
         },
         {
           title: '升级手册',
-          href: 'https://docs.tangly1024.com/article/my-service'
+          href: 'https://www.charliiai.com/about'
         },
         {
           title: '安装教程',
-          href: 'https://docs.tangly1024.com/article/how-to-update'
+          href: 'https://www.charliiai.com/about'
         },
-        { title: 'SEO推广', href: 'https://seo.tangly1024.com/' }
+        { title: 'SEO推广', href: 'https://www.charliiai.com' }
       ]
     },
     {
       name: '解决方案',
       menus: [
-        { title: '建站工具', href: 'https://www.tangly1024.com/' },
-        { title: 'NotionNext', href: 'https://docs.tangly1024.com/about' }
+        { title: '建站工具', href: 'https://www.charliiai.com' },
+        { title: 'CharliiAI', href: 'https://www.charliiai.com/about' }
       ]
     }
   ],

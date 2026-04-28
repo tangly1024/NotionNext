@@ -4,7 +4,7 @@ const CONFIG = {
 
   COMMERCE_TEXT_CENTER_TITLE: 'Product Center', // 中间产品区块标题
   COMMERCE_TEXT_CENTER_DESCRIPTION:
-    'The vision of NotionNext is to help you effortlessly and seamlessly build your own website, amplifying the value of your brand.', // 中间产品区块文字描述
+    'The vision of CharliiAI is to help you effortlessly and seamlessly build your own website, amplifying the value of your brand.', // 中间产品区块文字描述
   COMMERCE_TEXT_CENTER_CATEGORY_TITLE: 'Product Categories', // 左侧产品分类标题
   COMMERCE_TEXT_FOOTER_TITLE: 'Contact US', // COMMERCE主题页脚文案标题；按Shift+Enter键可以换行
   COMMERCE_TEXT_FOOTER_MENU_1: 'Product Center', // COMMERCE主题页脚左侧菜单标题1

@@ -1,18 +1,18 @@
 const CONFIG = {
 
   LANDING_HEADER_BUTTON_1_TITLE: 'Github开源',
-  LANDING_HEADER_BUTTON_1_URL: 'https://github.com/tangly1024/NotionNext',
+  LANDING_HEADER_BUTTON_1_URL: 'https://github.com/kenchikuliu',
 
   LANDING_HEADER_BUTTON_2_TITLE: '作者博客',
-  LANDING_HEADER_BUTTON_2_URL: 'https://blog.tangly1024.com/',
+  LANDING_HEADER_BUTTON_2_URL: 'https://www.charliiai.com',
 
   // 首页大图英雄板块
-  LANDING_HERO_TITLE_1: 'NotionNext',
+  LANDING_HERO_TITLE_1: 'CharliiAI',
   LANDING_HERO_P_1: '快速搭建独立站、轻松放大品牌价值！',
   LANDING_HERO_BUTTON_1_TEXT: '开始体验',
-  LANDING_HERO_BUTTON_1_LINK: 'https://docs.tangly1024.com/article/vercel-deploy-notion-next',
+  LANDING_HERO_BUTTON_1_LINK: '/about',
   LANDING_HERO_BUTTON_2_TEXT: '了解更多',
-  LANDING_HERO_BUTTON_2_LINK: 'https://docs.tangly1024.com/about',
+  LANDING_HERO_BUTTON_2_LINK: 'https://www.charliiai.com/about',
   LANDING_HERO_VIDEO_IMAGE: '/images/home.png',
   //   HERO_VIDEO_URL: '/videos/video.mp4',
   LANDING_HERO_VIDEO_IFRAME: '//player.bilibili.com/player.html?aid=913088616&bvid=BV1fM4y1L7Qi&cid=1187218697&page=1&&high_quality=1',
@@ -44,7 +44,7 @@ const CONFIG = {
   LANDING_FEATURES_BLOCK_5_TITLE: '写作表达是核心技能',
   LANDING_FEATURES_BLOCK_5_P: '比起只阅读输入，更重要的是反思和输出',
   LANDING_FEATURES_BLOCK_6_TITLE: '开始写博客吧',
-  LANDING_FEATURES_BLOCK_6_P: 'NotionNext，助您轻松开始写作',
+  LANDING_FEATURES_BLOCK_6_P: 'CharliiAI，助您轻松开始写作',
 
   // 感言
   LANDING_TESTIMONIALS_HEADER: '已搭建超7000个网站、总浏览量突破100,000,000+',
@@ -58,29 +58,29 @@ const CONFIG = {
   LANDING_TESTIMONIALS_WORD: '“ 感谢大佬的方法。之前尝试过Super、Potion等国外的第三方平台，实现效果一般，个性化程度远不如这个方法，已经用起来了！ “',
 
   LANDING_POST_REDIRECT_ENABLE: process.env.NEXT_PUBLIC_POST_REDIRECT_ENABLE || false, // 是否开启文章地址重定向 ； 用于迁移旧网站域名
-  LANDING_POST_REDIRECT_URL: process.env.NEXT_PUBLIC_POST_REDIRECT_URL || 'https://blog.tangly1024.com', // 重定向网站地址
+  LANDING_POST_REDIRECT_URL: process.env.NEXT_PUBLIC_POST_REDIRECT_URL || 'https://www.charliiai.com', // 重定向网站地址
 
   LANDING_PRICING_TITLE: '价格表',
-  LANDING_PRICING_P: 'NotionNext开源免费，此处仅演示订阅付费功能！请勿购买！',
+  LANDING_PRICING_P: 'CharliiAI开源免费，此处仅演示订阅付费功能！请勿购买！',
 
   LANDING_PRICING_1_TITLE: '个人版',
   LANDING_PRICING_1_PRICE: '免费',
   LANDING_PRICING_1_CONTENT: '项目源代码,部署教程,不定时技术答疑',
   LANDING_PRICING_1_BUTTON: '开始体验',
-  LANDING_PRICING_1_URL: 'https://docs.tangly1024.com/about',
+  LANDING_PRICING_1_URL: 'https://www.charliiai.com/about',
 
   LANDING_PRICING_2_TITLE: '捐赠版',
   LANDING_PRICING_2_PRICE: '$9.9/月',
   LANDING_PRICING_2_CONTENT: '项目源代码,部署教程,长期技术答疑,代码升级合并,内部社群',
   LANDING_PRICING_2_BUTTON: '立即购买',
-  LANDING_PRICING_2_URL: 'https://tangly1024.lemonsqueezy.com/checkout/buy/0adb9153-0799-4f51-91aa-1f06391ea4e0',
+  LANDING_PRICING_2_URL: '/contact',
 
   LANDING_PRICING_3_TITLE: '企业版',
   LANDING_PRICING_3_PRICE: '$59/月',
   LANDING_PRICING_3_CONTENT: '项目源代码,部署教程,VIP技术咨询,代码升级合并,内部社群,定制功能开发,SEO优化',
   LANDING_PRICING_3_BUTTON: '立即购买',
-  LANDING_PRICING_3_URL: 'https://tangly1024.lemonsqueezy.com/checkout/buy/df924d66-09dc-42a4-a632-a6b0c5cc4f28',
+  LANDING_PRICING_3_URL: '/contact',
 
-  LANDING_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_LANDING_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
+  LANDING_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_LANDING_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 /contact
 }
 export default CONFIG

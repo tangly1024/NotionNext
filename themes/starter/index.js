@@ -484,7 +484,7 @@ const LayoutSignIn = props => {
   const title = siteConfig('STARTER_SIGNIN', '登录')
   const description = siteConfig(
     'STARTER_SIGNIN_DESCRITION',
-    '这里是演示页面，NotionNext目前不提供会员登录功能'
+    '这里是演示页面，CharliiAI 目前不提供会员登录功能'
   )
   return (
     <>
@@ -515,7 +515,7 @@ const LayoutSignUp = props => {
   const title = siteConfig('STARTER_SIGNIN', '注册')
   const description = siteConfig(
     'STARTER_SIGNIN_DESCRITION',
-    '这里是演示页面，NotionNext目前不提供会员注册功能'
+    '这里是演示页面，CharliiAI 目前不提供会员注册功能'
   )
   return (
     <>
