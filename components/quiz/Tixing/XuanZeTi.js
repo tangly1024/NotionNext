@@ -14,7 +14,6 @@ import {
   FaSpinner,
   FaRobot,
   FaCog,
-  FaExternalLinkAlt,
 } from 'react-icons/fa';
 import { pinyin } from 'pinyin-pro';
 import {
@@ -1463,11 +1462,10 @@ export default function XuanZeTi({
     openOverlay('settings', setShowSettings);
   }, [openOverlay]);
 
-  // ✨ 新增：打开 DeepSeek 网页讲解
+  // ====================== 核心改动：跳转 DeepSeek 并带参数 ======================
   const handleOpenDeepSeekWeb = useCallback(() => {
     stopAllAudio();
 
-    // 构造详细题目描述
     const wrongText = shuffledOptions.find(o => selectedIds.includes(String(o.id)))?.text || '';
     const correctText = shuffledOptions.find(o => correctAnswers.includes(String(o.id)))?.text || '';
     const prompt = [
@@ -1478,7 +1476,8 @@ export default function XuanZeTi({
       '请以严厉但温柔的私教口吻，分析错误原因，对比正确选项与错误选项的区别，并提示记忆要点。',
     ].join('\n');
 
-    window.open(`https://chat.deepseek.com/?q=${encodeURIComponent(prompt)}`, '_blank');
+    // 打开 DeepSeek，附带 auto_prompt 参数，由油猴脚本自动填入并发送
+    window.open(`https://chat.deepseek.com/?auto_prompt=${encodeURIComponent(prompt)}`, '_blank');
   }, [stopAllAudio, questionText, shuffledOptions, selectedIds, correctAnswers]);
 
   return (
@@ -1600,9 +1599,7 @@ export default function XuanZeTi({
 
         {!isRight ? (
           <button className="ai-btn" onClick={handleOpenDeepSeekWeb} type="button">
-            <FaRobot style={{ marginRight: 6 }} />
-            <FaExternalLinkAlt size={12} style={{ marginRight: 4 }} />
-            打开 DeepSeek 网页讲解
+            <FaRobot /> AI 自动提问到 DeepSeek
           </button>
         ) : null}
 
