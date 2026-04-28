@@ -1,13 +1,56 @@
 import { ISR_LIST_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import StaticContentPage from '@/components/StaticContentPage'
+import { useRouter } from 'next/router'
 
 const PromptPage = () => {
+  const { locale } = useRouter()
+  const isEnglish = locale === 'en-US'
+
   return (
     <StaticContentPage
-      title='AI提示词'
-      updatedAt='最后更新于 2026 年 4 月 28 日。'
-      sections={[
+      title={isEnglish ? 'AI Prompting' : 'AI提示词'}
+      updatedAt={
+        isEnglish
+          ? 'Last updated on April 28, 2026.'
+          : '最后更新于 2026 年 4 月 28 日。'
+      }
+      sections={
+        isEnglish
+          ? [
+              {
+                paragraphs: [
+                  'This page focuses on how prompts work in real use, not on collecting magic phrases. A strong prompt gives the model a clear task, clear boundaries, a usable output format, and a way to judge quality.',
+                  'Instead of hoarding templates, it is more useful to know when to add context, when to split a task into steps, and when the right answer is changing the workflow rather than stacking more words into the prompt.'
+                ]
+              },
+              {
+                heading: 'Common prompting scenarios',
+                items: [
+                  'Writing, rewriting, summarizing, and structured output',
+                  'Research support, document Q&A, and note organization',
+                  'Classification, extraction, and formatting inside automation flows',
+                  'Role framing and process control in multi-step tasks'
+                ]
+              },
+              {
+                heading: 'What matters most when writing prompts',
+                items: [
+                  'State the goal first, then add the input context',
+                  'Be explicit about output shape, especially for JSON, tables, and step lists',
+                  'If quality is unstable, narrow the scope before adding more instructions',
+                  'If a prompt stays fragile after repeated edits, the workflow usually needs to change'
+                ]
+              },
+              {
+                heading: 'Where to go next',
+                paragraphs: [
+                  'If you want to place prompts inside real workflows, continue to /cases and /tools.',
+                  'If you want the underlying concepts first, /basicai is the better next stop.'
+                ]
+              }
+            ]
+          : [
         {
           paragraphs: [
             '这个页面聚焦提示词的实际使用，而不是把它当成“万能咒语”。好的提示词本质上是在帮模型理解任务、边界、输出格式和判断标准。',
@@ -39,7 +82,8 @@ const PromptPage = () => {
             '如果你更想理解底层原理，接着看 /basicai 会更有效。'
           ]
         }
-      ]}
+            ]
+      }
     />
   )
 }
@@ -49,10 +93,13 @@ export async function getStaticProps({ locale }) {
 
   props.siteInfo = {
     ...props.siteInfo,
-    title: 'AI提示词 | AI博士Charlii',
-    description: '整理 AI 提示词的常见场景、编写原则与如何接入真实工作流。',
+    title: locale === 'en-US' ? 'AI Prompting | CharliiAI' : 'AI提示词 | AI博士Charlii',
+    description:
+      locale === 'en-US'
+        ? 'Practical notes on AI prompting, prompt design, and fitting prompts into real workflows.'
+        : '整理 AI 提示词的常见场景、编写原则与如何接入真实工作流。',
     pageCover: '/bg_image.jpg',
-    link: 'https://www.charliiai.com/prompt'
+    link: `https://www.charliiai.com${locale === 'en-US' ? '/en-US' : ''}/prompt`
   }
 
   return buildStaticPropsResult(props, ISR_LIST_REVALIDATE)

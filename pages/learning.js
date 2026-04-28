@@ -1,13 +1,56 @@
 import { ISR_LIST_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import StaticContentPage from '@/components/StaticContentPage'
+import { useRouter } from 'next/router'
 
 const LearningPage = () => {
+  const { locale } = useRouter()
+  const isEnglish = locale === 'en-US'
+
   return (
     <StaticContentPage
-      title='AI课程学习'
-      updatedAt='最后更新于 2026 年 4 月 28 日。'
-      sections={[
+      title={isEnglish ? 'AI Learning Paths' : 'AI课程学习'}
+      updatedAt={
+        isEnglish
+          ? 'Last updated on April 28, 2026.'
+          : '最后更新于 2026 年 4 月 28 日。'
+      }
+      sections={
+        isEnglish
+          ? [
+              {
+                paragraphs: [
+                  'This page is meant to organize AI learning paths, not just dump course links. The goal is to help you decide what to learn first, why it matters, and how far you actually need to go.',
+                  'Whether you work in content, product, engineering, or research-heavy roles, you can start with the path that matches the outcome you want.'
+                ]
+              },
+              {
+                heading: 'Common learning goals',
+                items: [
+                  'Build a working mental model of core AI concepts',
+                  'Learn how to plug AI tools into real workflows',
+                  'Track papers and research trends with better judgment',
+                  'Build a base for content, automation, or product work'
+                ]
+              },
+              {
+                heading: 'A practical learning order',
+                items: [
+                  'Start with the basics: models, prompts, retrieval, agents, and automation',
+                  'Then use common tools until the tradeoffs feel concrete',
+                  'Move into papers, case studies, and deeper topic tracks',
+                  'Only after that choose a more specific path in development, research, or commercialization'
+                ]
+              },
+              {
+                heading: 'Where to go next',
+                paragraphs: [
+                  'If you need foundations, go to /basicai first. If you want practical implementation examples, /cases is the better next step.',
+                  'If you are searching for specific articles, use /search or browse by /tag.'
+                ]
+              }
+            ]
+          : [
         {
           paragraphs: [
             '这个页面用于整理 AI 学习路径，而不是单纯堆课程链接。核心目标是帮你判断“先学什么、为什么学、学到什么程度够用”。',
@@ -39,7 +82,8 @@ const LearningPage = () => {
             '需要查找具体文章时，可以直接用 /search 或按 /tag 浏览。'
           ]
         }
-      ]}
+            ]
+      }
     />
   )
 }
@@ -49,10 +93,13 @@ export async function getStaticProps({ locale }) {
 
   props.siteInfo = {
     ...props.siteInfo,
-    title: 'AI课程学习 | AI博士Charlii',
-    description: '整理 AI 学习目标、进阶顺序与适合不同角色的内容路径。',
+    title: locale === 'en-US' ? 'AI Learning Paths | CharliiAI' : 'AI课程学习 | AI博士Charlii',
+    description:
+      locale === 'en-US'
+        ? 'AI learning paths, sequencing advice, and practical study directions for different roles.'
+        : '整理 AI 学习目标、进阶顺序与适合不同角色的内容路径。',
     pageCover: '/bg_image.jpg',
-    link: 'https://www.charliiai.com/learning'
+    link: `https://www.charliiai.com${locale === 'en-US' ? '/en-US' : ''}/learning`
   }
 
   return buildStaticPropsResult(props, ISR_LIST_REVALIDATE)

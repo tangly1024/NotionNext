@@ -1,13 +1,55 @@
 import { ISR_LIST_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import StaticContentPage from '@/components/StaticContentPage'
+import { useRouter } from 'next/router'
 
 const PaperPage = () => {
+  const { locale } = useRouter()
+  const isEnglish = locale === 'en-US'
+
   return (
     <StaticContentPage
-      title='AI+论文'
-      updatedAt='最后更新于 2026 年 4 月 28 日。'
-      sections={[
+      title={isEnglish ? 'AI Papers and Research' : 'AI+论文'}
+      updatedAt={
+        isEnglish
+          ? 'Last updated on April 28, 2026.'
+          : '最后更新于 2026 年 4 月 28 日。'
+      }
+      sections={
+        isEnglish
+          ? [
+              {
+                paragraphs: [
+                  'This page is for readers who want to follow AI papers, research reports, and method shifts without drowning in scattered information.',
+                  'If your main question is how research changes products, workflows, and real-world decisions, this section is designed for that.'
+                ]
+              },
+              {
+                heading: 'Common content directions',
+                items: [
+                  'Key papers explained in direct language',
+                  'Research trend tracking across multimodal models, agents, RAG, video generation, voice, and more',
+                  'How research maps to products: what is already usable and what is still experimental',
+                  'Research-reading workflows: filtering, note-taking, and long-term tracking'
+                ]
+              },
+              {
+                heading: 'Who this is for',
+                items: [
+                  'Creators and product operators who want a clearer AI technical map',
+                  'Readers who want to follow papers without a full academic background',
+                  'Operators, founders, and small teams who translate research changes into business decisions'
+                ]
+              },
+              {
+                heading: 'Where to go next',
+                paragraphs: [
+                  'Check /archive for older material, or use /tag and /search to follow papers and tools by topic.',
+                  'If you want foundations first, go to /basicai. If you want structured study direction, go to /learning.'
+                ]
+              }
+            ]
+          : [
         {
           paragraphs: [
             '这个页面面向想系统跟进 AI 论文、研究报告和方法演进的读者。重点是把“论文很多、信息很散”这件事，收束成更容易持续追踪的阅读路径。',
@@ -38,7 +80,8 @@ const PaperPage = () => {
             '如果你更想先补理论基础，可以接着看 /basicai；如果想看学习路径，可以看 /learning。'
           ]
         }
-      ]}
+            ]
+      }
     />
   )
 }
@@ -48,10 +91,13 @@ export async function getStaticProps({ locale }) {
 
   props.siteInfo = {
     ...props.siteInfo,
-    title: 'AI+论文 | AI博士Charlii',
-    description: '围绕 AI 论文、研究趋势与论文到产品落地的连接方式整理内容。',
+    title: locale === 'en-US' ? 'AI Papers and Research | CharliiAI' : 'AI+论文 | AI博士Charlii',
+    description:
+      locale === 'en-US'
+        ? 'Notes on AI papers, research trends, and how research translates into products and workflows.'
+        : '围绕 AI 论文、研究趋势与论文到产品落地的连接方式整理内容。',
     pageCover: '/bg_image.jpg',
-    link: 'https://www.charliiai.com/paper'
+    link: `https://www.charliiai.com${locale === 'en-US' ? '/en-US' : ''}/paper`
   }
 
   return buildStaticPropsResult(props, ISR_LIST_REVALIDATE)

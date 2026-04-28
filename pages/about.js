@@ -1,5 +1,6 @@
 import { ISR_LIST_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
 import { getGlobalData } from '@/lib/db/getSiteData'
+import { useRouter } from 'next/router'
 
 const capabilityCards = [
   {
@@ -112,7 +113,377 @@ const featuredEssays = [
   }
 ]
 
+const englishCapabilityCards = [
+  {
+    title: 'AI workflows',
+    description:
+      'Turn tool evaluation, content production, automation, and growth into workflows that can actually run.'
+  },
+  {
+    title: 'Research to action',
+    description:
+      'Focus less on abstract model talk and more on how methods enter real business, content, and operating systems.'
+  },
+  {
+    title: 'Operator mindset',
+    description:
+      'Practical, efficiency-driven, and outcome-oriented. Fewer vague claims, more reusable judgment.'
+  }
+]
+
+const EnglishAboutPage = () => {
+  return (
+    <main className='pb-20'>
+      <section className='px-5 pt-8 sm:pt-10'>
+        <div className='mx-auto max-w-6xl overflow-hidden rounded-[32px] border border-white/60 bg-white shadow-[0_25px_80px_rgba(15,23,42,0.08)]'>
+          <div className='relative isolate overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.20),_transparent_24%),radial-gradient(circle_at_85%_20%,_rgba(251,191,36,0.16),_transparent_20%),linear-gradient(135deg,_#f8fbff,_#eef5ff_45%,_#f9fafb)] px-6 py-8 sm:px-10 sm:py-12 lg:px-14 lg:py-14'>
+            <div className='absolute right-0 top-0 h-64 w-64 translate-x-1/3 -translate-y-1/4 rounded-full bg-cyan-200/40 blur-3xl' />
+            <div className='absolute bottom-0 left-0 h-56 w-56 -translate-x-1/4 translate-y-1/4 rounded-full bg-amber-200/40 blur-3xl' />
+
+            <div className='relative grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center'>
+              <div>
+                <div className='mb-4 inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-600 backdrop-blur'>
+                  About CharliiAI
+                </div>
+                <h1 className='max-w-3xl text-4xl font-black tracking-tight text-slate-950 sm:text-5xl lg:text-6xl'>
+                  A founder-led AI site focused on tools, workflows, and real output.
+                </h1>
+                <p className='mt-5 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg'>
+                  CharliiAI is less interested in whether a model sounds impressive and more interested in whether it can improve creation, research, operations, and growth in a way that is actually usable.
+                </p>
+
+                <div className='mt-8 flex flex-wrap gap-3'>
+                  <a
+                    href='/contact'
+                    className='inline-flex items-center rounded-2xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800'>
+                    Contact
+                  </a>
+                  <a
+                    href='/tools'
+                    className='inline-flex items-center rounded-2xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950'>
+                    Explore tools
+                  </a>
+                </div>
+
+                <div className='mt-10 grid gap-4 sm:grid-cols-3'>
+                  {englishCapabilityCards.map(card => (
+                    <div
+                      key={card.title}
+                      className='rounded-3xl border border-white/70 bg-white/80 p-5 backdrop-blur'>
+                      <div className='text-sm font-semibold uppercase tracking-[0.18em] text-cyan-700'>
+                        {card.title}
+                      </div>
+                      <p className='mt-3 text-sm leading-7 text-slate-600'>
+                        {card.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className='relative mx-auto w-full max-w-md'>
+                <div className='overflow-hidden rounded-[30px] border border-white/70 bg-slate-950 p-3 shadow-[0_25px_80px_rgba(15,23,42,0.18)]'>
+                  <div className='relative overflow-hidden rounded-[24px] bg-slate-900'>
+                    <img
+                      src='/avatar.png'
+                      alt='Dr. Charlii'
+                      className='h-[420px] w-full object-cover object-center'
+                    />
+                    <div className='absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent p-6 text-white'>
+                      <div className='text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300'>
+                        Dr. Charlii
+                      </div>
+                      <div className='mt-2 text-2xl font-bold'>
+                        Builder, researcher, operator
+                      </div>
+                      <p className='mt-3 text-sm leading-7 text-slate-200'>
+                        Working at the intersection of AI tools, content systems, SEO, and automation with a bias toward clarity and execution.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className='absolute -bottom-6 -left-5 hidden w-56 rounded-[28px] border border-white/70 bg-white p-5 shadow-[0_20px_50px_rgba(15,23,42,0.10)] md:block'>
+                  <div className='text-xs font-semibold uppercase tracking-[0.18em] text-slate-500'>
+                    Focus
+                  </div>
+                  <div className='mt-3 text-2xl font-black text-slate-950'>
+                    AI x Content x Growth
+                  </div>
+                  <p className='mt-2 text-sm leading-6 text-slate-600'>
+                    The goal is not trend chasing. The goal is usable leverage.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className='px-5 pt-8'>
+        <div className='mx-auto grid max-w-6xl gap-6 lg:grid-cols-[0.95fr_1.05fr]'>
+          <div className='rounded-[30px] border border-slate-200 bg-white p-7 shadow-[0_16px_40px_rgba(15,23,42,0.05)]'>
+            <div className='text-sm font-semibold uppercase tracking-[0.18em] text-slate-500'>
+              What this site covers
+            </div>
+            <h2 className='mt-3 text-3xl font-black tracking-tight text-slate-950'>
+              Research, tooling, and operating systems for AI work
+            </h2>
+            <div className='mt-6 space-y-3'>
+              {[
+                'AI tool reviews and selection judgment',
+                'Automation systems and content workflows',
+                'Applied notes on AIGC, agents, and LLM products',
+                'SEO, international growth, and indie site operations'
+              ].map(item => (
+                <div
+                  key={item}
+                  className='rounded-2xl bg-slate-50 px-4 py-4 text-sm font-medium text-slate-700'>
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className='rounded-[30px] border border-slate-200 bg-white p-7 shadow-[0_16px_40px_rgba(15,23,42,0.05)]'>
+            <div className='text-sm font-semibold uppercase tracking-[0.18em] text-slate-500'>
+              Working style
+            </div>
+            <h2 className='mt-3 text-3xl font-black tracking-tight text-slate-950'>
+              How the judgment is built
+            </h2>
+            <div className='mt-6 space-y-5'>
+              {[
+                {
+                  title: 'Start with whether it is worth doing',
+                  text: 'A tool being popular is not enough. The real test is whether it is stable, reusable, and worth the time it costs.'
+                },
+                {
+                  title: 'Translate complexity into usable steps',
+                  text: 'The site tries to break models, APIs, workflows, and business implications into something readers can actually test.'
+                },
+                {
+                  title: 'Keep taste, not just throughput',
+                  text: 'A content site should not feel like a keyword farm. Brand, reading experience, and structure still matter.'
+                }
+              ].map(item => (
+                <div
+                  key={item.title}
+                  className='rounded-[24px] border border-slate-200 p-5'>
+                  <div className='text-lg font-bold text-slate-950'>
+                    {item.title}
+                  </div>
+                  <p className='mt-2 text-sm leading-7 text-slate-600'>
+                    {item.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className='px-5 pt-8'>
+        <div className='mx-auto grid max-w-6xl gap-6 lg:grid-cols-[0.9fr_1.1fr]'>
+          <div className='overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.05)]'>
+            <div className='grid gap-0 md:grid-cols-[0.95fr_1.05fr]'>
+              <div className='p-7 sm:p-8'>
+                <div className='text-sm font-semibold uppercase tracking-[0.18em] text-slate-500'>
+                  Founder profile
+                </div>
+                <h2 className='mt-3 text-3xl font-black tracking-tight text-slate-950'>
+                  More operator than commentator
+                </h2>
+                <p className='mt-4 text-base leading-8 text-slate-600'>
+                  This is not a traditional media path and not a pure engineering blog either. It sits closer to the intersection of content, traffic, tools, and automation.
+                </p>
+                <div className='mt-6 grid gap-3'>
+                  {[
+                    'Long-term focus on AI tools, SEO, content growth, and independent web systems',
+                    'Opinionated, execution-heavy output instead of simple aggregation',
+                    'Strong attention to both usability and visual identity',
+                    'Useful for readers who care about AI, content, and growth together'
+                  ].map(item => (
+                    <div
+                      key={item}
+                      className='rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700'>
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className='relative min-h-[320px] bg-slate-100'>
+                <img
+                  src='/images/testimonial.jpg'
+                  alt='Founder atmosphere'
+                  className='h-full w-full object-cover object-center'
+                />
+                <div className='absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent' />
+                <div className='absolute bottom-0 left-0 right-0 p-6 text-white'>
+                  <div className='text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300'>
+                    Perspective
+                  </div>
+                  <div className='mt-2 text-2xl font-bold'>
+                    AI should compound output, not create noise.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className='rounded-[30px] border border-slate-200 bg-white p-7 shadow-[0_16px_40px_rgba(15,23,42,0.05)] sm:p-8'>
+            <div className='text-sm font-semibold uppercase tracking-[0.18em] text-slate-500'>
+              Timeline
+            </div>
+            <h2 className='mt-3 text-3xl font-black tracking-tight text-slate-950'>
+              How CharliiAI content gets made
+            </h2>
+            <div className='mt-8 space-y-6'>
+              {[
+                {
+                  phase: '01',
+                  title: 'Research and synthesis',
+                  text: 'Filter tools, models, APIs, and workflows until the signal becomes readable and useful.'
+                },
+                {
+                  phase: '02',
+                  title: 'Operator-style validation',
+                  text: 'Stress-test the idea through SEO, production, automation, and site operations to see if it survives real use.'
+                },
+                {
+                  phase: '03',
+                  title: 'Ship usable content',
+                  text: 'Turn the result into pages, frameworks, guides, and reusable judgment instead of vague summaries.'
+                }
+              ].map(item => (
+                <div
+                  key={item.phase}
+                  className='grid gap-4 rounded-[26px] border border-slate-200 p-5 sm:grid-cols-[72px_1fr]'>
+                  <div className='flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-950 text-lg font-black text-white'>
+                    {item.phase}
+                  </div>
+                  <div>
+                    <div className='text-lg font-bold text-slate-950'>
+                      {item.title}
+                    </div>
+                    <p className='mt-2 text-sm leading-7 text-slate-600'>
+                      {item.text}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className='px-5 pt-8'>
+        <div className='mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1.05fr_0.95fr]'>
+          <div className='rounded-[30px] border border-slate-200 bg-slate-950 p-7 text-white shadow-[0_16px_40px_rgba(15,23,42,0.10)] sm:p-8'>
+            <div className='text-sm font-semibold uppercase tracking-[0.18em] text-cyan-300'>
+              Contact
+            </div>
+            <h2 className='mt-3 text-3xl font-black tracking-tight'>
+              Partnerships, consulting, or editorial inquiries
+            </h2>
+            <p className='mt-4 text-base leading-8 text-slate-300'>
+              Email is the primary contact channel, especially for international readers, brands, and media. X is available for lightweight outreach.
+            </p>
+
+            <div className='mt-8 space-y-4 rounded-[24px] border border-white/10 bg-white/5 p-5'>
+              <div>
+                <div className='text-xs font-semibold uppercase tracking-[0.18em] text-slate-400'>
+                  Primary email
+                </div>
+                <a
+                  href='mailto:charliiai2024@gmail.com'
+                  className='mt-2 inline-block text-lg font-semibold text-white hover:text-cyan-300'>
+                  charliiai2024@gmail.com
+                </a>
+              </div>
+              <div>
+                <div className='text-xs font-semibold uppercase tracking-[0.18em] text-slate-400'>
+                  X
+                </div>
+                <a
+                  href='https://x.com/charliiai'
+                  target='_blank'
+                  rel='noreferrer'
+                  className='mt-2 inline-block text-lg font-semibold text-white hover:text-cyan-300'>
+                  x.com/charliiai
+                </a>
+              </div>
+              <div>
+                <div className='text-xs font-semibold uppercase tracking-[0.18em] text-slate-400'>
+                  WeChat
+                </div>
+                <div className='mt-2 text-lg font-semibold text-white'>
+                  Charliiai2024
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className='overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.05)]'>
+            <img
+              src='/images/home.png'
+              alt='CharliiAI workspace'
+              className='h-64 w-full object-cover object-center sm:h-80'
+            />
+            <div className='p-7'>
+              <div className='text-sm font-semibold uppercase tracking-[0.18em] text-slate-500'>
+                First entry points
+              </div>
+              <h2 className='mt-3 text-3xl font-black tracking-tight text-slate-950'>
+                Start here if this is your first visit
+              </h2>
+              <div className='mt-8 grid gap-4'>
+                {[
+                  {
+                    href: '/tools',
+                    title: 'Tool directory',
+                    description: 'Browse the tools, products, and practical resources covered on the site.'
+                  },
+                  {
+                    href: '/archive',
+                    title: 'Archive',
+                    description: 'See the broader editorial output and how the judgment framework stays consistent.'
+                  },
+                  {
+                    href: '/contact',
+                    title: 'Contact',
+                    description: 'Reach out for partnerships, consulting, media, or custom collaboration.'
+                  }
+                ].map(item => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className='group rounded-[24px] border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white'>
+                    <div className='text-xl font-bold text-slate-950 transition group-hover:text-cyan-700'>
+                      {item.title}
+                    </div>
+                    <p className='mt-3 text-sm leading-7 text-slate-600'>
+                      {item.description}
+                    </p>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  )
+}
+
 const AboutPage = () => {
+  const { locale } = useRouter()
+
+  if (locale === 'en-US') {
+    return <EnglishAboutPage />
+  }
+
   return (
     <main className='pb-20'>
       <section className='px-5 pt-8 sm:pt-10'>
@@ -550,9 +921,11 @@ export async function getStaticProps({ locale }) {
     ...props.siteInfo,
     title: 'About | CharliiAI',
     description:
-      'About CharliiAI, its content focus, editorial perspective, and contact information.',
+      locale === 'en-US'
+        ? 'About CharliiAI, its founder perspective, AI workflow focus, and primary contact information.'
+        : 'About CharliiAI, its content focus, editorial perspective, and contact information.',
     pageCover: '/images/home.png',
-    link: 'https://www.charliiai.com/about'
+    link: `https://www.charliiai.com${locale === 'en-US' ? '/en-US' : ''}/about`
   }
 
   return buildStaticPropsResult(props, ISR_LIST_REVALIDATE)
