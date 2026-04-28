@@ -101,13 +101,29 @@ const LayoutBase = props => {
  */
 const LayoutIndex = props => {
   const { posts } = props
-  // 最新文章 从第4个元素开始截取出4个
-  const newPosts = posts.slice(3, 7)
+
+   // ===== 1. Hero区域 =====
+  const heroTopPosts = posts.slice(0, 1)
+  const heroSubPosts = posts.slice(
+    heroTopPosts.length,
+    heroTopPosts.length + siteConfig('MAGZINE_HERO_SUB_POST_COUNT', 2, CONFIG)
+  )
+
+  // ===== 2. 剩余文章 =====
+  const remainingPosts = posts.slice(
+    heroTopPosts.length + heroSubPosts.length
+  )
+
+  // ===== 3. 最新文章 =====
+  const newPosts = remainingPosts.slice(0, siteConfig('MAGZINE_LATEST_POST_COUNT', 4, CONFIG))
 
   return (
     <div className='pt-10 md:pt-18'>
       {/* 首屏宣传区块 */}
-      <Hero posts={posts} />
+     <Hero
+        topPosts={heroTopPosts}
+        subPosts={heroSubPosts}
+      />
 
       {/* 最新文章区块 */}
       <PostSimpleListHorizontal
