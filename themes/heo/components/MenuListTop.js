@@ -10,17 +10,8 @@ export const MenuListTop = props => {
   const fixedLinks = [
     {
       id: 'learn',
-      icon: 'fas fa-graduation-cap',
       name: lang === 'zh-CN' ? '学习中心' : 'Learn',
       href: 'https://learn.charliiai.com/',
-      target: '_blank',
-      show: true
-    },
-    {
-      id: 'imgly',
-      icon: 'fas fa-images',
-      name: 'Imgly',
-      href: 'https://imgly.charliiai.com/#/',
       target: '_blank',
       show: true
     }
@@ -29,21 +20,18 @@ export const MenuListTop = props => {
   let links = [
     {
       id: 1,
-      icon: 'fa-solid fa-house',
       name: locale.NAV.INDEX,
       href: '/',
       show: siteConfig('HEO_MENU_INDEX', null, CONFIG)
     },
     {
       id: 2,
-      icon: 'fas fa-search',
       name: locale.NAV.SEARCH,
       href: '/search',
       show: siteConfig('HEO_MENU_SEARCH', null, CONFIG)
     },
     {
       id: 3,
-      icon: 'fas fa-archive',
       name: locale.NAV.ARCHIVE,
       href: '/archive',
       show: siteConfig('HEO_MENU_ARCHIVE', null, CONFIG)
