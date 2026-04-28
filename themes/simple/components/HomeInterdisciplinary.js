@@ -208,7 +208,7 @@ export default function HomeInterdisciplinary(props) {
   const leftPng = siteConfig('SIMPLE_HOME_LEFT_PNG', null, CONFIG)
   const bottomPng = siteConfig('SIMPLE_HOME_BOTTOM_PNG', null, CONFIG)
   const mapFontSize = Number(siteConfig('SIMPLE_HOME_MAP_FONT_SIZE', null, CONFIG)) || 18
-  const titleFontSize = Number(siteConfig('SIMPLE_HOME_TITLE_FONT_SIZE', null, CONFIG)) || 56
+  const titleFontSize = Number(siteConfig('SIMPLE_HOME_TITLE_FONT_SIZE', null, CONFIG)) || 24
   const bodyFontSize = Number(siteConfig('SIMPLE_HOME_BODY_FONT_SIZE', null, CONFIG)) || 24
   const bioFontSize = Number(siteConfig('SIMPLE_HOME_BIO_FONT_SIZE', null, CONFIG)) || 20
   const preferredSubmenuParent = siteConfig(
