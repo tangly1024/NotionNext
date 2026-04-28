@@ -28,6 +28,8 @@ const HOME_BLOCKED_PATHS = new Set([
   'article/openai-sora-shutdown-10yi-lesson'
 ])
 
+const HOME_PLACEHOLDER_MENU_PATHS = new Set(['#', '/#'])
+
 function normalizeHomePath(value) {
   if (typeof value !== 'string') {
     return value
@@ -68,6 +70,18 @@ function sanitizeHomeMenu(items) {
 
       if (Array.isArray(next.subMenus)) {
         next.subMenus = sanitizeHomeMenu(next.subMenus)
+      }
+
+      const href = typeof next.href === 'string' ? next.href.trim() : ''
+      const hasSubMenus = Array.isArray(next.subMenus) && next.subMenus.length > 0
+      const isInternalLink = href.startsWith('/') && !href.startsWith('//')
+
+      if (hasSubMenus && HOME_PLACEHOLDER_MENU_PATHS.has(href)) {
+        delete next.href
+      }
+
+      if (isInternalLink || (hasSubMenus && !href)) {
+        next.target = '_self'
       }
 
       return next
