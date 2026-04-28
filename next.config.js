@@ -144,6 +144,11 @@ const nextConfig = {
             permanent: true
           },
           {
+            source: '/links',
+            destination: '/tools',
+            permanent: true
+          },
+          {
             source: '/aboutme',
             destination: '/about',
             permanent: true

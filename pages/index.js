@@ -15,11 +15,15 @@ import { ISR_HOME_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalid
 import { compactPostForLatest, compactPostForNav } from '@/lib/utils/compactPost'
 
 const HOME_PATH_REDIRECTS = new Map([
+  ['/links', '/tools'],
+  ['links', '/tools'],
   ['/aboutme', '/about'],
   ['aboutme', '/about']
 ])
 
 const HOME_BLOCKED_PATHS = new Set([
+  '/links',
+  'links',
   '/article/openai-sora-shutdown-10yi-lesson',
   'article/openai-sora-shutdown-10yi-lesson'
 ])
