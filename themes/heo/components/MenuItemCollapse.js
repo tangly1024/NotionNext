@@ -2,6 +2,11 @@ import Collapse from '@/components/Collapse'
 import SmartLink from '@/components/SmartLink'
 import { useState } from 'react'
 
+const isBlockedMenuHref = href => {
+  if (!href || typeof href !== 'string') return false
+  return /(^https?:\/\/)?(api\.)?xlearn\.(space|shop)/i.test(href)
+}
+
 /**
  * 折叠菜单
  * @param {*} param0
@@ -9,7 +14,8 @@ import { useState } from 'react'
  */
 export const MenuItemCollapse = ({ link }) => {
   const [show, changeShow] = useState(false)
-  const hasSubMenu = link?.subMenus?.length > 0
+  const visibleSubMenus = (link?.subMenus || []).filter(sLink => !isBlockedMenuHref(sLink?.href))
+  const hasSubMenu = visibleSubMenus.length > 0
 
   const [isOpen, changeIsOpen] = useState(false)
 
@@ -21,7 +27,7 @@ export const MenuItemCollapse = ({ link }) => {
     changeIsOpen(!isOpen)
   }
 
-  if (!link || !link.show) {
+  if (!link || !link.show || isBlockedMenuHref(link?.href)) {
     return null
   }
 
@@ -52,7 +58,7 @@ export const MenuItemCollapse = ({ link }) => {
       {/* 折叠子菜单 */}
       {hasSubMenu && (
         <Collapse isOpen={isOpen} className='rounded-xl'>
-          {link.subMenus.map((sLink, index) => {
+          {visibleSubMenus.map((sLink, index) => {
             return (
               <div
                 key={index}

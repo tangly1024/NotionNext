@@ -1,11 +1,17 @@
 import SmartLink from '@/components/SmartLink'
 import { useState } from 'react'
 
+const isBlockedMenuHref = href => {
+  if (!href || typeof href !== 'string') return false
+  return /(^https?:\/\/)?(api\.)?xlearn\.(space|shop)/i.test(href)
+}
+
 export const MenuItemDrop = ({ link }) => {
   const [show, changeShow] = useState(false)
-  const hasSubMenu = link?.subMenus?.length > 0
+  const visibleSubMenus = (link?.subMenus || []).filter(sLink => !isBlockedMenuHref(sLink?.href))
+  const hasSubMenu = visibleSubMenus.length > 0
 
-  if (!link || !link.show) {
+  if (!link || !link.show || isBlockedMenuHref(link?.href)) {
     return null
   }
 
@@ -39,7 +45,7 @@ export const MenuItemDrop = ({ link }) => {
         <ul
           style={{ backdropFilter: 'blur(3px)' }}
           className={`${show ? 'visible opacity-100 top-14 pointer-events-auto' : 'invisible opacity-0 top-20 pointer-events-none'} drop-shadow-md overflow-hidden rounded-xl bg-white dark:bg-[#1e1e1e] transition-all duration-300 z-20 absolute`}>
-          {link.subMenus.map((sLink, index) => {
+          {visibleSubMenus.map((sLink, index) => {
             return (
               <li
                 key={index}
