@@ -322,69 +322,69 @@ export default function HomeInterdisciplinary(props) {
     layerServiceImage ||
     layerUxImage ||
     layerIxdImage
+  const shouldRenderMapLabels = !hasLayerMode && !frameImage && !leftPng
 
   return (
     <section className='relative left-1/2 right-1/2 w-screen -translate-x-1/2 bg-[#FAFAFA] border-t border-[#edf0f3] mb-10'>
       <div className='mx-auto max-w-[1700px] px-0 md:px-0 py-10 md:py-16'>
         <div className='grid grid-cols-1 lg:grid-cols-[58%_42%] gap-8 lg:gap-12 items-start'>
-          <div className='relative h-[620px] md:h-[760px]'>
-            <div className='absolute left-1/2 top-0 w-[92%] -translate-x-1/2 aspect-[587/494]'>
+          <div className='relative w-full max-w-[760px] aspect-[587/494] mx-auto'>
             {hasLayerMode ? (
               <>
                 {layerMainImage && (
                   <LazyImage
                     src={layerMainImage}
                     alt='discipline-main-layer'
-                    className='absolute left-[6%] top-[6%] w-[88%] h-[64%] object-fill'
+                    className='absolute left-[6%] top-[6%] w-[88%] h-[64%] object-contain'
                   />
                 )}
                 {layerGroundImage && (
                   <LazyImage
                     src={layerGroundImage}
                     alt='discipline-ground-layer'
-                    className='absolute left-[25%] top-[70%] w-[56%] h-[24%] object-fill'
+                    className='absolute left-[25%] top-[70%] w-[56%] h-[24%] object-contain'
                   />
                 )}
                 {layerArchitectureImage && (
                   <LazyImage
                     src={layerArchitectureImage}
                     alt='discipline-architecture-layer'
-                    className='absolute left-[32.81%] top-[0%] w-[25.39%] h-[58.66%] object-fill'
+                    className='absolute left-[32.81%] top-[0%] w-[25.39%] h-[58.66%] object-contain'
                   />
                 )}
                 {layerVisualImage && (
                   <LazyImage
                     src={layerVisualImage}
                     alt='discipline-visual-layer'
-                    className='absolute left-[2.75%] top-[24.27%] w-[45.82%] h-[44.13%] object-fill'
+                    className='absolute left-[2.75%] top-[24.27%] w-[45.82%] h-[44.13%] object-contain'
                   />
                 )}
                 {layerHciImage && (
                   <LazyImage
                     src={layerHciImage}
                     alt='discipline-hci-layer'
-                    className='absolute left-[54.92%] top-[29.74%] w-[45.08%] h-[34.46%] object-fill'
+                    className='absolute left-[54.92%] top-[29.74%] w-[45.08%] h-[34.46%] object-contain'
                   />
                 )}
                 {layerServiceImage && (
                   <LazyImage
                     src={layerServiceImage}
                     alt='discipline-service-layer'
-                    className='absolute left-[6%] top-[54%] w-[56%] h-[35%] object-fill'
+                    className='absolute left-[6%] top-[54%] w-[56%] h-[35%] object-contain'
                   />
                 )}
                 {layerUxImage && (
                   <LazyImage
                     src={layerUxImage}
                     alt='discipline-ux-layer'
-                    className='absolute left-[28%] top-[50%] w-[30%] h-[30%] object-fill'
+                    className='absolute left-[28%] top-[50%] w-[30%] h-[30%] object-contain'
                   />
                 )}
                 {layerIxdImage && (
                   <LazyImage
                     src={layerIxdImage}
                     alt='discipline-ixd-layer'
-                    className='absolute left-[36%] top-[47%] w-[28%] h-[28%] object-fill'
+                    className='absolute left-[36%] top-[47%] w-[28%] h-[28%] object-contain'
                   />
                 )}
               </>
@@ -392,13 +392,13 @@ export default function HomeInterdisciplinary(props) {
               <LazyImage
                 src={frameImage}
                 alt='discipline-frame'
-                className='absolute inset-0 w-full h-full object-fill'
+                className='absolute inset-0 w-full h-full object-contain'
               />
             ) : leftPng ? (
               <LazyImage
                 src={leftPng}
                 alt='discipline-map'
-                className='absolute inset-0 w-full h-full object-fill'
+                className='absolute inset-0 w-full h-full object-contain'
               />
             ) : (
               <svg
@@ -472,7 +472,7 @@ export default function HomeInterdisciplinary(props) {
                     href={item.node.href}
                     className={`absolute flex items-center justify-center text-center hover:brightness-95 transition-all duration-200 ${item.className || ''}`}
                     style={style}>
-                    {resolveLabelPosition(item) ? null : (
+                    {resolveLabelPosition(item) || !shouldRenderMapLabels ? null : (
                       <span
                         className='leading-none text-black/85 whitespace-nowrap'
                         style={{ fontSize: `${mapFontSize}px` }}>
@@ -484,7 +484,7 @@ export default function HomeInterdisciplinary(props) {
               }
             )}
 
-            {activeClickableItems.map((item, index) => {
+            {shouldRenderMapLabels && activeClickableItems.map((item, index) => {
               const position = resolveLabelPosition(item)
               if (!position) return null
 
@@ -503,14 +503,13 @@ export default function HomeInterdisciplinary(props) {
               )
             })}
 
-            {!frameImage && !hasLayerMode && (
+            {!frameImage && !hasLayerMode && !leftPng && (
               <div
                 className='absolute left-[46%] top-[57%] text-black/70'
                 style={{ fontSize: `${Math.max(18, mapFontSize - 2)}px` }}>
                 {centerLabel}
               </div>
             )}
-            </div>
           </div>
 
           <div className='pt-8 md:pt-20 pr-2 md:pr-10 space-y-8 md:space-y-12'>
