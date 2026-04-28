@@ -1,101 +1,262 @@
 import { ISR_LIST_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
 import { getGlobalData } from '@/lib/db/getSiteData'
 
+const capabilityCards = [
+  {
+    title: 'AI workflows',
+    description:
+      '把工具评测、内容生产、自动化执行和增长动作串成真正能落地的工作流。'
+  },
+  {
+    title: 'Research to action',
+    description:
+      '不只讲模型和概念，更关心一套方法怎么进入真实业务、创作和运营场景。'
+  },
+  {
+    title: 'Operator mindset',
+    description:
+      '偏实战、偏效率、偏结果导向，少空话，多给清晰判断和可复用方案。'
+  }
+]
+
+const focusAreas = [
+  'AI 工具评测与选型判断',
+  '自动化工作流与内容生产提效',
+  'AIGC、Agent、LLM 实战案例',
+  '出海增长、SEO 与独立站运营'
+]
+
+const workPrinciples = [
+  {
+    title: '先判断是否值得做',
+    text:
+      '很多 AI 产品看起来很热闹，但未必值得团队投入。CharliiAI 更关注工具是否稳定、是否可复用、是否真的节省时间。'
+  },
+  {
+    title: '把复杂内容翻译成可执行步骤',
+    text:
+      '文章会尽量把模型、接口、工作流和商业场景拆开讲清楚，让读者可以直接照着验证，而不是停留在概念层。'
+  },
+  {
+    title: '保留审美，不做流水线信息站',
+    text:
+      '内容站不应该只是关键词堆叠。CharliiAI 也会重视结构、阅读体验、品牌感和页面叙事。'
+  }
+]
+
 const AboutPage = () => {
   return (
-    <main className='max-w-4xl mx-auto px-6 py-16 text-gray-800 dark:text-gray-100'>
-      <article className='prose prose-lg max-w-none dark:prose-invert'>
-        <h1>About CharliiAI</h1>
-        <p>Last updated: April 17, 2026.</p>
-        <p>
-          CharliiAI is an independent website focused on AI tools, research
-          workflows, AIGC, and practical guides for builders, researchers, and
-          creators.
-        </p>
-        <p>
-          The site is built to help readers understand how new AI products work
-          in practice, how they compare to alternatives, and how they can be
-          applied in real workflows without hype or unnecessary complexity.
-        </p>
+    <main className='pb-20'>
+      <section className='px-5 pt-8 sm:pt-10'>
+        <div className='mx-auto max-w-6xl overflow-hidden rounded-[32px] border border-white/60 bg-white shadow-[0_25px_80px_rgba(15,23,42,0.08)]'>
+          <div className='relative isolate overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.20),_transparent_24%),radial-gradient(circle_at_85%_20%,_rgba(251,191,36,0.16),_transparent_20%),linear-gradient(135deg,_#f8fbff,_#eef5ff_45%,_#f9fafb)] px-6 py-8 sm:px-10 sm:py-12 lg:px-14 lg:py-14'>
+            <div className='absolute right-0 top-0 h-64 w-64 translate-x-1/3 -translate-y-1/4 rounded-full bg-cyan-200/40 blur-3xl' />
+            <div className='absolute bottom-0 left-0 h-56 w-56 -translate-x-1/4 translate-y-1/4 rounded-full bg-amber-200/40 blur-3xl' />
 
-        <h2>Mission</h2>
-        <p>
-          CharliiAI publishes practical, readable content that turns fast-moving
-          AI updates into usable knowledge. The focus is not only on what a
-          tool claims to do, but on whether it is useful, repeatable, and worth
-          adopting.
-        </p>
+            <div className='relative grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center'>
+              <div>
+                <div className='mb-4 inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-600 backdrop-blur'>
+                  About CharliiAI
+                </div>
+                <h1 className='max-w-3xl text-4xl font-black tracking-tight text-slate-950 sm:text-5xl lg:text-6xl'>
+                  一个把 AI 工具、自动化和内容增长讲明白的网站。
+                </h1>
+                <p className='mt-5 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg'>
+                  CharliiAI
+                  关注的不只是“这个模型厉不厉害”，而是它能不能真正进入创作、研究、运营和增长场景，帮你省时间、提质量、拿结果。
+                </p>
 
-        <h2>What this site publishes</h2>
-        <p>
-          The site covers AI product analysis, hands-on tool tutorials,
-          research-oriented workflows, and selected industry observations. The
-          goal is to make new AI tools and methods easier to evaluate and use.
-        </p>
-        <ul>
-          <li>AI tool reviews and comparisons</li>
-          <li>Workflow guides for research, writing, automation, and content</li>
-          <li>Notes on AI commercialization, growth, and product strategy</li>
-          <li>Selected commentary on AIGC and applied AI trends</li>
-        </ul>
+                <div className='mt-8 flex flex-wrap gap-3'>
+                  <a
+                    href='/contact'
+                    className='inline-flex items-center rounded-2xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800'>
+                    联系合作
+                  </a>
+                  <a
+                    href='/tools'
+                    className='inline-flex items-center rounded-2xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950'>
+                    查看工具导航
+                  </a>
+                </div>
 
-        <h2>Who runs it</h2>
-        <p>
-          The site is operated under the CharliiAI brand by Dr. Charlii. Some
-          pages may include external links, product references, or advertising
-          integrations that help support ongoing publishing.
-        </p>
-        <p>
-          CharliiAI is an editorial website rather than a community forum or
-          user-generated content platform. Articles are written, curated, or
-          updated by the site operator.
-        </p>
+                <div className='mt-10 grid gap-4 sm:grid-cols-3'>
+                  {capabilityCards.map(card => (
+                    <div
+                      key={card.title}
+                      className='rounded-3xl border border-white/70 bg-white/80 p-5 backdrop-blur'>
+                      <div className='text-sm font-semibold uppercase tracking-[0.18em] text-cyan-700'>
+                        {card.title}
+                      </div>
+                      <p className='mt-3 text-sm leading-7 text-slate-600'>
+                        {card.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-        <h2>How content is prepared</h2>
-        <p>
-          Content may be based on direct product testing, public documentation,
-          industry research, experiment notes, or hands-on workflow use cases.
-          Articles can be updated when tools, pricing, interfaces, or policies
-          change.
-        </p>
-        <p>
-          When an article includes fast-changing product details, readers should
-          verify important claims on the official product site before making a
-          purchase or business decision.
-        </p>
+              <div className='relative mx-auto w-full max-w-md'>
+                <div className='overflow-hidden rounded-[30px] border border-white/70 bg-slate-950 p-3 shadow-[0_25px_80px_rgba(15,23,42,0.18)]'>
+                  <div className='relative overflow-hidden rounded-[24px] bg-slate-900'>
+                    <img
+                      src='/avatar.png'
+                      alt='Dr. Charlii'
+                      className='h-[420px] w-full object-cover object-center'
+                    />
+                    <div className='absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent p-6 text-white'>
+                      <div className='text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300'>
+                        Dr. Charlii
+                      </div>
+                      <div className='mt-2 text-2xl font-bold'>
+                        Builder, researcher, operator
+                      </div>
+                      <p className='mt-3 text-sm leading-7 text-slate-200'>
+                        以内容、SEO、自动化和 AI
+                        工具系统为主线，持续做高密度、可执行、可验证的实践型输出。
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
-        <h2>Editorial note</h2>
-        <p>
-          Content is created for informational and educational purposes. When a
-          page contains sponsored content, affiliate links, or advertising, it
-          should be treated as commercial content in addition to editorial
-          commentary.
-        </p>
-        <p>
-          CharliiAI aims to distinguish clearly between editorial content,
-          sponsored mentions, affiliate relationships, and advertising whenever
-          relevant.
-        </p>
+                <div className='absolute -bottom-6 -left-5 hidden w-56 rounded-[28px] border border-white/70 bg-white p-5 shadow-[0_20px_50px_rgba(15,23,42,0.10)] md:block'>
+                  <div className='text-xs font-semibold uppercase tracking-[0.18em] text-slate-500'>
+                    Focus
+                  </div>
+                  <div className='mt-3 text-2xl font-black text-slate-950'>
+                    AI x Content x Growth
+                  </div>
+                  <p className='mt-2 text-sm leading-6 text-slate-600'>
+                    不是为了追热点，而是为了把 AI 真正接进生产流程。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <h2>Privacy and terms</h2>
-        <p>
-          Site use is also governed by the{' '}
-          <a href='/privacy-policy'>Privacy Policy</a> and{' '}
-          <a href='/terms-of-service'>Terms of Service</a>. Those pages explain
-          how site data is handled and the general conditions of access and use.
-        </p>
+      <section className='px-5 pt-8'>
+        <div className='mx-auto grid max-w-6xl gap-6 lg:grid-cols-[0.95fr_1.05fr]'>
+          <div className='rounded-[30px] border border-slate-200 bg-white p-7 shadow-[0_16px_40px_rgba(15,23,42,0.05)]'>
+            <div className='text-sm font-semibold uppercase tracking-[0.18em] text-slate-500'>
+              What this site covers
+            </div>
+            <h2 className='mt-3 text-3xl font-black tracking-tight text-slate-950'>
+              CharliiAI 主要在写什么
+            </h2>
+            <p className='mt-4 text-base leading-8 text-slate-600'>
+              这里不是传统资讯站，也不是单纯的教程仓库。内容更偏向“研究后的判断”和“实践后的总结”。
+            </p>
+            <div className='mt-6 space-y-3'>
+              {focusAreas.map(item => (
+                <div
+                  key={item}
+                  className='rounded-2xl bg-slate-50 px-4 py-4 text-sm font-medium text-slate-700'>
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
 
-        <h2>Contact</h2>
-        <p>
-          For business inquiries, partnerships, or feedback, visit the contact
-          page or email{' '}
-          <a href='mailto:mail@charliiai.com'>mail@charliiai.com</a>.
-        </p>
-        <p>
-          For direct contact details and expected response scope, see the{' '}
-          <a href='/contact'>Contact page</a>.
-        </p>
-      </article>
+          <div className='rounded-[30px] border border-slate-200 bg-white p-7 shadow-[0_16px_40px_rgba(15,23,42,0.05)]'>
+            <div className='text-sm font-semibold uppercase tracking-[0.18em] text-slate-500'>
+              Working style
+            </div>
+            <h2 className='mt-3 text-3xl font-black tracking-tight text-slate-950'>
+              我会怎么写、怎么判断
+            </h2>
+            <div className='mt-6 space-y-5'>
+              {workPrinciples.map(item => (
+                <div
+                  key={item.title}
+                  className='rounded-[24px] border border-slate-200 p-5'>
+                  <div className='text-lg font-bold text-slate-950'>
+                    {item.title}
+                  </div>
+                  <p className='mt-2 text-sm leading-7 text-slate-600'>
+                    {item.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className='px-5 pt-8'>
+        <div className='mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1.1fr_0.9fr]'>
+          <div className='overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.05)]'>
+            <img
+              src='/images/home.png'
+              alt='CharliiAI workspace'
+              className='h-64 w-full object-cover object-center sm:h-80'
+            />
+            <div className='p-7'>
+              <div className='text-sm font-semibold uppercase tracking-[0.18em] text-slate-500'>
+                Editorial note
+              </div>
+              <h2 className='mt-3 text-3xl font-black tracking-tight text-slate-950'>
+                这个网站如何保持更新
+              </h2>
+              <p className='mt-4 text-base leading-8 text-slate-600'>
+                内容会来自真实试用、官方文档、工作流实验、SEO
+                观察和产品研究。涉及价格、政策、模型能力或接口变动的页面，会随着信息变化持续修订。
+              </p>
+              <p className='mt-4 text-base leading-8 text-slate-600'>
+                如果文章中出现外部链接、广告、合作或联盟关系，也会尽量明确区分，让读者知道哪些内容是纯编辑判断，哪些是商业合作场景。
+              </p>
+            </div>
+          </div>
+
+          <div className='rounded-[30px] border border-slate-200 bg-slate-950 p-7 text-white shadow-[0_16px_40px_rgba(15,23,42,0.10)]'>
+            <div className='text-sm font-semibold uppercase tracking-[0.18em] text-cyan-300'>
+              Contact
+            </div>
+            <h2 className='mt-3 text-3xl font-black tracking-tight'>
+              想聊合作、咨询或内容需求？
+            </h2>
+            <p className='mt-4 text-base leading-8 text-slate-300'>
+              可以直接去联系页，也可以邮件联系。适合聊的内容包括 AI
+              工作流、内容增长、SEO、出海站点、自动化系统和合作项目。
+            </p>
+
+            <div className='mt-8 space-y-4 rounded-[24px] border border-white/10 bg-white/5 p-5'>
+              <div>
+                <div className='text-xs font-semibold uppercase tracking-[0.18em] text-slate-400'>
+                  Email
+                </div>
+                <a
+                  href='mailto:mail@charliiai.com'
+                  className='mt-2 inline-block text-lg font-semibold text-white hover:text-cyan-300'>
+                  mail@charliiai.com
+                </a>
+              </div>
+              <div>
+                <div className='text-xs font-semibold uppercase tracking-[0.18em] text-slate-400'>
+                  Links
+                </div>
+                <div className='mt-2 flex flex-wrap gap-3'>
+                  <a
+                    href='/contact'
+                    className='rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300'>
+                    Open contact page
+                  </a>
+                  <a
+                    href='/privacy-policy'
+                    className='rounded-2xl border border-white/15 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/30'>
+                    Privacy policy
+                  </a>
+                  <a
+                    href='/terms-of-service'
+                    className='rounded-2xl border border-white/15 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/30'>
+                    Terms of service
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   )
 }
@@ -107,8 +268,8 @@ export async function getStaticProps({ locale }) {
     ...props.siteInfo,
     title: 'About | CharliiAI',
     description:
-      'About CharliiAI, its content focus, editorial scope, and operator information.',
-    pageCover: '/bg_image.jpg',
+      'About CharliiAI, its content focus, editorial perspective, and contact information.',
+    pageCover: '/images/home.png',
     link: 'https://www.charliiai.com/about'
   }
 
