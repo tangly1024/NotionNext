@@ -243,9 +243,9 @@ export default function HomeInterdisciplinary(props) {
   }
 
   const defaultHotspots = [
-    { label: 'Architecture', match: 'architecture', left: 39, top: 6, width: 20, height: 48 },
-    { label: 'Visual Design', match: 'visual', left: 10, top: 37, width: 37, height: 25 },
-    { label: 'HCI', match: 'hci', left: 58, top: 43, width: 36, height: 23 },
+    { label: 'Architecture', match: 'architecture', left: 32.81, top: 0, width: 25.39, height: 58.66, textLeft: 19.03, textTop: 43.1 },
+    { label: 'Visual Design', match: 'visual', left: 2.75, top: 24.27, width: 45.82, height: 44.13, textLeft: 27.46, textTop: 53.96 },
+    { label: 'HCI', match: 'hci', left: 54.92, top: 29.74, width: 45.08, height: 34.46, textLeft: 20.25, textTop: 56.01 },
     { label: 'IxD', match: 'ixd', left: 38, top: 37, width: 28, height: 30 },
     { label: 'UX', match: 'ux', left: 41, top: 67, width: 10, height: 8 },
     { label: 'Service Design', match: 'service', left: 14, top: 78, width: 26, height: 8 }
@@ -259,19 +259,19 @@ export default function HomeInterdisciplinary(props) {
       label: 'Architecture',
       node: visualNodes.architecture,
       className:
-        'left-[39%] top-[6%] w-[20%] h-[48%] rounded-[50%]'
+        'left-[32.81%] top-[0%] w-[25.39%] h-[58.66%] rounded-[50%]'
     },
     {
       label: 'Visual Design',
       node: visualNodes.visualDesign,
       className:
-        'left-[10%] top-[37%] w-[37%] h-[25%] rounded-[50%]'
+        'left-[2.75%] top-[24.27%] w-[45.82%] h-[44.13%] rounded-[50%]'
     },
     {
       label: 'HCI',
       node: visualNodes.hci,
       className:
-        'left-[58%] top-[43%] w-[36%] h-[23%] rounded-[50%]'
+        'left-[54.92%] top-[29.74%] w-[45.08%] h-[34.46%] rounded-[50%]'
     },
     {
       label: 'IxD',
@@ -291,6 +291,28 @@ export default function HomeInterdisciplinary(props) {
       return { ...spot, node, index }
     })
     .filter(Boolean)
+  const activeClickableItems = hotspotNodes.length ? hotspotNodes : clickableGroups
+  const resolveLabelPosition = item => {
+    if (item?.labelLeft !== undefined && item?.labelTop !== undefined) {
+      return { left: item.labelLeft, top: item.labelTop }
+    }
+
+    if (
+      item?.textLeft !== undefined &&
+      item?.textTop !== undefined &&
+      item?.left !== undefined &&
+      item?.top !== undefined &&
+      item?.width !== undefined &&
+      item?.height !== undefined
+    ) {
+      return {
+        left: item.left + (item.width * item.textLeft) / 100,
+        top: item.top + (item.height * item.textTop) / 100
+      }
+    }
+
+    return null
+  }
   const hasLayerMode =
     layerMainImage ||
     layerGroundImage ||
@@ -306,62 +328,63 @@ export default function HomeInterdisciplinary(props) {
       <div className='mx-auto max-w-[1700px] px-0 md:px-0 py-10 md:py-16'>
         <div className='grid grid-cols-1 lg:grid-cols-[58%_42%] gap-8 lg:gap-12 items-start'>
           <div className='relative h-[620px] md:h-[760px]'>
+            <div className='absolute left-1/2 top-0 w-[92%] -translate-x-1/2 aspect-[587/494]'>
             {hasLayerMode ? (
               <>
                 {layerMainImage && (
                   <LazyImage
                     src={layerMainImage}
                     alt='discipline-main-layer'
-                    className='absolute left-[6%] top-[6%] w-[88%] h-[64%] object-contain'
+                    className='absolute left-[6%] top-[6%] w-[88%] h-[64%] object-fill'
                   />
                 )}
                 {layerGroundImage && (
                   <LazyImage
                     src={layerGroundImage}
                     alt='discipline-ground-layer'
-                    className='absolute left-[25%] top-[70%] w-[56%] h-[24%] object-contain'
+                    className='absolute left-[25%] top-[70%] w-[56%] h-[24%] object-fill'
                   />
                 )}
                 {layerArchitectureImage && (
                   <LazyImage
                     src={layerArchitectureImage}
                     alt='discipline-architecture-layer'
-                    className='absolute left-[38%] top-[8%] w-[20%] h-[48%] object-contain'
+                    className='absolute left-[32.81%] top-[0%] w-[25.39%] h-[58.66%] object-fill'
                   />
                 )}
                 {layerVisualImage && (
                   <LazyImage
                     src={layerVisualImage}
                     alt='discipline-visual-layer'
-                    className='absolute left-[10%] top-[37%] w-[37%] h-[25%] object-contain'
+                    className='absolute left-[2.75%] top-[24.27%] w-[45.82%] h-[44.13%] object-fill'
                   />
                 )}
                 {layerHciImage && (
                   <LazyImage
                     src={layerHciImage}
                     alt='discipline-hci-layer'
-                    className='absolute left-[58%] top-[43%] w-[36%] h-[23%] object-contain'
+                    className='absolute left-[54.92%] top-[29.74%] w-[45.08%] h-[34.46%] object-fill'
                   />
                 )}
                 {layerServiceImage && (
                   <LazyImage
                     src={layerServiceImage}
                     alt='discipline-service-layer'
-                    className='absolute left-[6%] top-[54%] w-[56%] h-[35%] object-contain'
+                    className='absolute left-[6%] top-[54%] w-[56%] h-[35%] object-fill'
                   />
                 )}
                 {layerUxImage && (
                   <LazyImage
                     src={layerUxImage}
                     alt='discipline-ux-layer'
-                    className='absolute left-[28%] top-[50%] w-[30%] h-[30%] object-contain'
+                    className='absolute left-[28%] top-[50%] w-[30%] h-[30%] object-fill'
                   />
                 )}
                 {layerIxdImage && (
                   <LazyImage
                     src={layerIxdImage}
                     alt='discipline-ixd-layer'
-                    className='absolute left-[36%] top-[47%] w-[28%] h-[28%] object-contain'
+                    className='absolute left-[36%] top-[47%] w-[28%] h-[28%] object-fill'
                   />
                 )}
               </>
@@ -369,13 +392,13 @@ export default function HomeInterdisciplinary(props) {
               <LazyImage
                 src={frameImage}
                 alt='discipline-frame'
-                className='absolute inset-0 w-full h-full object-contain'
+                className='absolute inset-0 w-full h-full object-fill'
               />
             ) : leftPng ? (
               <LazyImage
                 src={leftPng}
                 alt='discipline-map'
-                className='absolute inset-0 w-full h-full object-contain'
+                className='absolute inset-0 w-full h-full object-fill'
               />
             ) : (
               <svg
@@ -432,7 +455,7 @@ export default function HomeInterdisciplinary(props) {
               </svg>
             )}
 
-            {(hotspotNodes.length ? hotspotNodes : clickableGroups).map(
+            {activeClickableItems.map(
               (item, index) => {
                 const style = item.left !== undefined
                   ? {
@@ -449,15 +472,36 @@ export default function HomeInterdisciplinary(props) {
                     href={item.node.href}
                     className={`absolute flex items-center justify-center text-center hover:brightness-95 transition-all duration-200 ${item.className || ''}`}
                     style={style}>
-                    <span
-                      className='leading-none text-black/85 whitespace-nowrap'
-                      style={{ fontSize: `${mapFontSize}px` }}>
-                      {item.label}
-                    </span>
+                    {resolveLabelPosition(item) ? null : (
+                      <span
+                        className='leading-none text-black/85 whitespace-nowrap'
+                        style={{ fontSize: `${mapFontSize}px` }}>
+                        {item.label}
+                      </span>
+                    )}
                   </SmartLink>
                 )
               }
             )}
+
+            {activeClickableItems.map((item, index) => {
+              const position = resolveLabelPosition(item)
+              if (!position) return null
+
+              return (
+                <SmartLink
+                  key={`label-${item.node.name}-${item.index ?? index}`}
+                  href={item.node.href}
+                  className='absolute leading-none text-black/85 whitespace-nowrap hover:brightness-95 transition-all duration-200'
+                  style={{
+                    left: `${position.left}%`,
+                    top: `${position.top}%`,
+                    fontSize: `${mapFontSize}px`
+                  }}>
+                  {item.label}
+                </SmartLink>
+              )
+            })}
 
             {!frameImage && !hasLayerMode && (
               <div
@@ -466,6 +510,7 @@ export default function HomeInterdisciplinary(props) {
                 {centerLabel}
               </div>
             )}
+            </div>
           </div>
 
           <div className='pt-8 md:pt-20 pr-2 md:pr-10 space-y-8 md:space-y-12'>
