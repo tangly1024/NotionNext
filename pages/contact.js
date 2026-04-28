@@ -1,3 +1,6 @@
+import { ISR_LIST_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
+import { getGlobalData } from '@/lib/db/getSiteData'
+
 const ContactPage = () => {
   return (
     <main className='max-w-4xl mx-auto px-6 py-16 text-gray-800 dark:text-gray-100'>
@@ -31,19 +34,19 @@ const ContactPage = () => {
   )
 }
 
-export function getStaticProps() {
-  return {
-    props: {
-      siteInfo: {
-        title: 'Contact | CharliiAI',
-        description:
-          'Contact CharliiAI for partnerships, questions, feedback, and site support.',
-        pageCover: '/bg_image.jpg',
-        link: 'https://www.charliiai.com/contact'
-      },
-      NOTION_CONFIG: {}
-    }
+export async function getStaticProps({ locale }) {
+  const props = await getGlobalData({ from: 'contact-page', locale })
+
+  props.siteInfo = {
+    ...props.siteInfo,
+    title: 'Contact | CharliiAI',
+    description:
+      'Contact CharliiAI for partnerships, questions, feedback, and site support.',
+    pageCover: '/bg_image.jpg',
+    link: 'https://www.charliiai.com/contact'
   }
+
+  return buildStaticPropsResult(props, ISR_LIST_REVALIDATE)
 }
 
 export default ContactPage

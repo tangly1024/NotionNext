@@ -1,3 +1,6 @@
+import { ISR_LIST_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
+import { getGlobalData } from '@/lib/db/getSiteData'
+
 const AboutPage = () => {
   return (
     <main className='max-w-4xl mx-auto px-6 py-16 text-gray-800 dark:text-gray-100'>
@@ -97,19 +100,19 @@ const AboutPage = () => {
   )
 }
 
-export function getStaticProps() {
-  return {
-    props: {
-      siteInfo: {
-        title: 'About | CharliiAI',
-        description:
-          'About CharliiAI, its content focus, editorial scope, and operator information.',
-        pageCover: '/bg_image.jpg',
-        link: 'https://www.charliiai.com/about'
-      },
-      NOTION_CONFIG: {}
-    }
+export async function getStaticProps({ locale }) {
+  const props = await getGlobalData({ from: 'about-page', locale })
+
+  props.siteInfo = {
+    ...props.siteInfo,
+    title: 'About | CharliiAI',
+    description:
+      'About CharliiAI, its content focus, editorial scope, and operator information.',
+    pageCover: '/bg_image.jpg',
+    link: 'https://www.charliiai.com/about'
   }
+
+  return buildStaticPropsResult(props, ISR_LIST_REVALIDATE)
 }
 
 export default AboutPage

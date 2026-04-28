@@ -1,3 +1,6 @@
+import { ISR_LIST_REVALIDATE, buildStaticPropsResult } from '@/lib/cache/revalidate'
+import { getGlobalData } from '@/lib/db/getSiteData'
+
 const LegalPage = () => {
   return (
     <main className='max-w-4xl mx-auto px-6 py-16 text-gray-800 dark:text-gray-100'>
@@ -41,18 +44,18 @@ const LegalPage = () => {
   )
 }
 
-export function getStaticProps() {
-  return {
-    props: {
-      siteInfo: {
-        title: '隐私政策 | AI博士Charlii',
-        description: 'CharliiAI 网站隐私政策与数据使用说明。',
-        pageCover: '/bg_image.jpg',
-        link: 'https://www.charliiai.com/privacy-policy'
-      },
-      NOTION_CONFIG: {}
-    }
+export async function getStaticProps({ locale }) {
+  const props = await getGlobalData({ from: 'privacy-policy-page', locale })
+
+  props.siteInfo = {
+    ...props.siteInfo,
+    title: '隐私政策 | AI博士Charlii',
+    description: 'CharliiAI 网站隐私政策与数据使用说明。',
+    pageCover: '/bg_image.jpg',
+    link: 'https://www.charliiai.com/privacy-policy'
   }
+
+  return buildStaticPropsResult(props, ISR_LIST_REVALIDATE)
 }
 
 export default LegalPage
