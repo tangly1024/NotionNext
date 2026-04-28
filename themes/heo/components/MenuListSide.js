@@ -6,15 +6,6 @@ import { MenuItemCollapse } from './MenuItemCollapse'
 export const MenuListSide = props => {
   const { customNav, customMenu } = props
   const { locale } = useGlobal()
-  const lang = siteConfig('LANG', null, CONFIG)
-  const fixedLinks = [
-    {
-      name: lang === 'zh-CN' ? '学习中心' : 'Learn',
-      href: 'https://learn.charliiai.com/',
-      target: '_blank',
-      show: true
-    }
-  ]
 
   let links = [
     {
@@ -47,8 +38,6 @@ export const MenuListSide = props => {
   if (siteConfig('CUSTOM_MENU')) {
     links = customMenu
   }
-
-  links = (links || []).concat(fixedLinks)
 
   if (!links || links.length === 0) {
     return null

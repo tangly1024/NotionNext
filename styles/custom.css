@@ -215,6 +215,77 @@ hr.notion-hr {
   border-left-color: #9ca3af !important;
 }
 
+/* 通用书签/工具卡片 */
+.notion-bookmark,
+.notion-collection-card {
+  border-radius: 24px !important;
+  border: 1px solid rgba(148, 163, 184, 0.22) !important;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.9)) !important;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08) !important;
+  overflow: hidden !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+
+.notion-bookmark:hover,
+.notion-collection-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(59, 130, 246, 0.35) !important;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12) !important;
+}
+
+.notion-bookmark > div:first-child,
+.notion-collection-card-body {
+  padding: 1.1rem 1.2rem 1.2rem !important;
+}
+
+.notion-bookmark-title,
+.notion-collection-card-property .notion-page-title-text {
+  font-size: 1rem !important;
+  line-height: 1.45 !important;
+  font-weight: 700 !important;
+}
+
+.notion-bookmark-description,
+.notion-collection-card-property {
+  color: #64748b !important;
+}
+
+.notion-bookmark-link {
+  margin-top: 0.75rem !important;
+}
+
+.notion-bookmark-link > div {
+  color: #475569 !important;
+}
+
+.notion-bookmark-image,
+.notion-collection-card-cover {
+  min-height: 180px !important;
+}
+
+.notion-bookmark-image img,
+.notion-collection-card-cover img {
+  border-radius: 0 !important;
+}
+
+.dark .notion-bookmark,
+.dark .notion-collection-card {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  background: linear-gradient(135deg, rgba(17, 24, 39, 0.96), rgba(23, 29, 39, 0.94)) !important;
+  box-shadow: 0 24px 60px rgba(2, 6, 23, 0.28) !important;
+}
+
+.dark .notion-bookmark:hover,
+.dark .notion-collection-card:hover {
+  border-color: rgba(250, 204, 21, 0.35) !important;
+}
+
+.dark .notion-bookmark-description,
+.dark .notion-collection-card-property,
+.dark .notion-bookmark-link > div {
+  color: #94a3b8 !important;
+}
+
 /* Toggle 样式 */
 .notion-toggle {
   margin: 1rem 0 !important;
