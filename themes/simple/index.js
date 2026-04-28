@@ -54,6 +54,10 @@ const BlogListPage = dynamic(() => import('./components/BlogListPage'), {
 const RecommendPosts = dynamic(() => import('./components/RecommendPosts'), {
   ssr: false
 })
+const HomeInterdisciplinary = dynamic(
+  () => import('./components/HomeInterdisciplinary'),
+  { ssr: false }
+)
 
 // 主题全局状态
 const ThemeGlobalSimple = createContext()
@@ -81,9 +85,15 @@ const LayoutBase = props => {
     null,
     CONFIG
   )
+  const hideRightSidebarOnHome = siteConfig(
+    'SIMPLE_HIDE_RIGHT_SIDEBAR_ON_HOME',
+    null,
+    CONFIG
+  )
   const isHomePage = router.pathname === '/'
   const shouldShowRightSidebar =
     !fullWidth &&
+    !(hideRightSidebarOnHome && isHomePage) &&
     (!onlyShowRightSidebarOnHome || isHomePage) &&
     !(hideRightSidebarOnPages && post?.type === 'Page')
 
@@ -162,7 +172,7 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
-  return <LayoutPostList {...props} />
+  return <HomeInterdisciplinary {...props} />
 }
 /**
  * 博客列表
