@@ -39,11 +39,11 @@ function SiteInfo({ title }) {
         </span>
         <br />
         <span className='text-xs font-serif'>
-          Powered by
+          Visit
           <a
-            href='https://github.com/tangly1024/NotionNext'
+            href={siteConfig('LINK')}
             className='underline'>
-            NotionNext {siteConfig('VERSION')}
+            {siteConfig('AUTHOR')}
           </a>
         </span>
         <br />

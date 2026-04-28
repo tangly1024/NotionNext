@@ -1,4 +1,4 @@
-// 注: process.env.XX是Vercel的环境变量，配置方式见：https://docs.tangly1024.com/article/how-to-config-notion-next#c4768010ae7d44609b744e79e2f9959a
+// 注: process.env.XX 是部署环境变量，可在托管平台后台配置。
 
 const BLOG = {
   API_BASE_URL: process.env.API_BASE_URL || 'https://www.notion.so/api/v3', // API默认请求地址,可以配置成自己的地址例如：https://[xxxxx].notion.site/api/v3
@@ -15,7 +15,7 @@ const BLOG = {
   APPEARANCE: process.env.NEXT_PUBLIC_APPEARANCE || 'light', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
   APPEARANCE_DARK_TIME: process.env.NEXT_PUBLIC_APPEARANCE_DARK_TIME || [18, 6], // 夜间模式起至时间，false时关闭根据时间自动切换夜间模式
 
-  AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || 'Dr. Charlii', // 您的昵称 例如 tangly1024
+  AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || 'Dr. Charlii', // 站点作者名称
   BIO: process.env.NEXT_PUBLIC_BIO || 'AI Researcher & Content Creator', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.charliiai.com', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'AI, AIGC, Technology, Blog', // 网站关键词 英文逗号隔开

@@ -202,11 +202,11 @@ const Footer = props => {
 
             {/* 技术支持 */}
             <div className='text-xs text-light-500 dark:text-gray-700'>
-              Powered by{' '}
+              Visit{' '}
               <a
-                href='https://github.com/tangly1024/NotionNext'
+                href={siteConfig('LINK')}
                 className='dark:text-gray-300'>
-                NotionNext {siteConfig('VERSION')}
+                {siteConfig('AUTHOR')}
               </a>
               .
             </div>

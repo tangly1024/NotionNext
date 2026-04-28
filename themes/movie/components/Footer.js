@@ -34,11 +34,11 @@ export const Footer = props => {
           )}
           <BeiAnGongAn />
           <span className='dark:text-gray-200 no-underline ml-4'>
-            Powered by
+            Visit
             <a
-              href='https://github.com/tangly1024/NotionNext'
+              href={siteConfig('LINK')}
               className=' hover:underline'>
-              NotionNext {siteConfig('VERSION')}
+              {siteConfig('AUTHOR')}
             </a>
           </span>
         </div>

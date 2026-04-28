@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 /**
  * Giscus评论 @see https://giscus.app/zh-CN
- * Contribute by @txs https://github.com/txs/NotionNext/commit/1bf7179d0af21fb433e4c7773504f244998678cb
+ * Giscus comment integration
  * @returns {JSX.Element}
  * @constructor
  */

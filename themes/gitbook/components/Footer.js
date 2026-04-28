@@ -50,11 +50,11 @@ const Footer = ({ siteInfo }) => {
         <span className='px-1 busuanzi_value_site_uv'> </span>{' '}
       </span>
       <div className='text-xs font-serif'>
-        Powered By{' '}
+        Visit{' '}
         <a
-          href='https://github.com/tangly1024/NotionNext'
+          href={siteConfig('LINK')}
           className='underline text-gray-500 dark:text-gray-300'>
-          NotionNext {siteConfig('VERSION')}
+          {siteConfig('AUTHOR')}
         </a>
       </div>
       {/* SEO title */}

@@ -1,19 +1,19 @@
 {
-  "name": "notion-next",
+  "name": "charliiai-site",
   "version": "4.9.2",
-  "homepage": "https://github.com/tangly1024/NotionNext.git",
+  "homepage": "https://www.charliiai.com",
   "license": "MIT",
   "engines": {
     "node": ">=20"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tangly1024/NotionNext.git"
+    "url": "https://github.com/kenchikuliu/NotionNext.git"
   },
   "author": {
-    "name": "tangly",
-    "email": "mail@tangly1024.com",
-    "url": "http://tangly1024.com"
+    "name": "Dr. Charlii",
+    "email": "mail@charliiai.com",
+    "url": "https://www.charliiai.com"
   },
   "scripts": {
     "dev": "next dev",

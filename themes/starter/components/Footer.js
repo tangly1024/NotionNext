@@ -132,13 +132,13 @@ export const Footer = props => {
               <div className='w-full px-4 md:w-1/3 lg:w-1/2'>
                 <div className='my-1 flex justify-center md:justify-end'>
                   <p className='text-base text-gray-7'>
-                    Designed and Developed by
+                    Visit
                     <a
-                      href='https://github.com/tangly1024/NotionNext'
+                      href={siteConfig('LINK')}
                       rel='nofollow noopner noreferrer'
                       target='_blank'
                       className='px-1 text-gray-1 hover:underline'>
-                      NotionNext {siteConfig('VERSION')}
+                      {siteConfig('AUTHOR')}
                     </a>
                   </p>
                 </div>
