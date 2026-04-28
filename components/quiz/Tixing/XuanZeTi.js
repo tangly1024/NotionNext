@@ -14,9 +14,9 @@ import {
   FaSpinner,
   FaRobot,
   FaCog,
+  FaExternalLinkAlt,
 } from 'react-icons/fa';
 import { pinyin } from 'pinyin-pro';
-import InteractiveAIExplanationPanel from '../../ai/InteractiveAIExplanationPanel';
 import {
   getSavedInteractivePrefs,
   getSavedInteractiveAISettings,
@@ -45,8 +45,8 @@ const cssStyles = `
   position:relative;
   overflow:hidden;
 }
-.xzt-container.ai-open .result-sheet,
-.xzt-container.ai-open .submit-bar {
+.xzt-container.settings-open .result-sheet,
+.xzt-container.settings-open .submit-bar {
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
@@ -1231,7 +1231,6 @@ export default function XuanZeTi({
   const [showSettings, setShowSettings] = useState(false);
   const [cardPopId, setCardPopId] = useState(null);
   const [questionImgVisible, setQuestionImgVisible] = useState(Boolean(questionImg));
-  const [showAIExplanation, setShowAIExplanation] = useState(false);
 
   const [prefs, setPrefs] = useState(() => getSavedInteractivePrefs());
   const [aiSettings, setAISettings] = useState(() => getSavedInteractiveAISettings());
@@ -1242,7 +1241,7 @@ export default function XuanZeTi({
   const { addTimeout, clearTimeouts } = useTimeoutManager();
   const { openOverlay, closeOverlay, closeTopOverlay, resetOverlayStack } = useOverlayHistory();
 
-  const hasOverlayOpen = showAIExplanation || showSettings;
+  const hasOverlayOpen = showSettings;
 
   useEffect(() => {
     mountedRef.current = true;
@@ -1352,7 +1351,6 @@ export default function XuanZeTi({
     setShowResultSheet(false);
     setShowSettings(false);
     setCardPopId(null);
-    setShowAIExplanation(false);
     resetOverlayStack();
 
     if (questionText && prefs.autoPlay) {
@@ -1381,23 +1379,18 @@ export default function XuanZeTi({
     closeOverlay('settings', setShowSettings);
   }, [closeOverlay]);
 
-  const closeAIExplanation = useCallback(() => {
-    closeOverlay('ai-explanation', setShowAIExplanation);
-  }, [closeOverlay]);
-
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
 
     const onPopState = () => {
       closeTopOverlay({
         'settings': closeSettings,
-        'ai-explanation': closeAIExplanation,
       });
     };
 
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
-  }, [closeAIExplanation, closeSettings, closeTopOverlay]);
+  }, [closeSettings, closeTopOverlay]);
 
   const toggleOption = useCallback(
     (optionId) => {
@@ -1467,42 +1460,29 @@ export default function XuanZeTi({
   ]);
 
   const handleOpenSettings = useCallback(() => {
-    if (showAIExplanation) return;
     openOverlay('settings', setShowSettings);
-  }, [openOverlay, showAIExplanation]);
+  }, [openOverlay]);
 
-  const handleOpenAIExplanation = useCallback(() => {
+  // ✨ 新增：打开 DeepSeek 网页讲解
+  const handleOpenDeepSeekWeb = useCallback(() => {
     stopAllAudio();
-    setShowSettings(false);
-    openOverlay('ai-explanation', setShowAIExplanation);
-  }, [openOverlay, stopAllAudio]);
 
-  const updateAISettings = useCallback((patch) => {
-    setAISettings((prev) => ({ ...prev, ...patch }));
-  }, []);
+    // 构造详细题目描述
+    const wrongText = shuffledOptions.find(o => selectedIds.includes(String(o.id)))?.text || '';
+    const correctText = shuffledOptions.find(o => correctAnswers.includes(String(o.id)))?.text || '';
+    const prompt = [
+      '我正在学习语言，这道选择题我答错了，请你用中文详细讲解语法点和词汇用法：',
+      `【题目】${questionText}`,
+      `【我的选择】${wrongText}`,
+      `【正确答案】${correctText}`,
+      '请以严厉但温柔的私教口吻，分析错误原因，对比正确选项与错误选项的区别，并提示记忆要点。',
+    ].join('\n');
 
-  const explanationPayload = useMemo(
-    () => ({
-      questionType: 'choice',
-      questionText,
-      questionImage: questionImg || '',
-      options: shuffledOptions.map((option) => ({
-        id: String(option.id),
-        text: option.text,
-        imageUrl: option.img || option.imageUrl || '',
-      })),
-      selectedIds: selectedIds.map(String),
-      correctAnswers: correctAnswers.map(String),
-      isRight,
-      extraContext: {
-        multiSelect: correctAnswers.length > 1,
-      },
-    }),
-    [correctAnswers, isRight, questionImg, questionText, selectedIds, shuffledOptions]
-  );
+    window.open(`https://chat.deepseek.com/?q=${encodeURIComponent(prompt)}`, '_blank');
+  }, [stopAllAudio, questionText, shuffledOptions, selectedIds, correctAnswers]);
 
   return (
-    <div className={`xzt-container ${hasOverlayOpen ? 'ai-open' : ''}`}>
+    <div className={`xzt-container ${hasOverlayOpen ? 'settings-open' : ''}`}>
       <style dangerouslySetInnerHTML={{ __html: cssStyles }} />
 
       <div className="xzt-header">
@@ -1619,8 +1599,10 @@ export default function XuanZeTi({
         </div>
 
         {!isRight ? (
-          <button className="ai-btn" onClick={handleOpenAIExplanation} type="button">
-            <FaRobot /> AI 语音讲题老师
+          <button className="ai-btn" onClick={handleOpenDeepSeekWeb} type="button">
+            <FaRobot style={{ marginRight: 6 }} />
+            <FaExternalLinkAlt size={12} style={{ marginRight: 4 }} />
+            打开 DeepSeek 网页讲解
           </button>
         ) : null}
 
@@ -1639,15 +1621,6 @@ export default function XuanZeTi({
       {showSettings ? (
         <SettingsPanel prefs={prefs} onPrefsChange={setPrefs} onClose={closeSettings} />
       ) : null}
-
-      <InteractiveAIExplanationPanel
-        open={showAIExplanation}
-        onClose={closeAIExplanation}
-        settings={aiSettings}
-        updateSettings={updateAISettings}
-        title="AI 讲题老师"
-        initialPayload={explanationPayload}
-      />
     </div>
   );
 }
