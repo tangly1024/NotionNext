@@ -1,6 +1,7 @@
 import { ChevronDoubleLeft, ChevronDoubleRight } from '@/components/HeroIcons'
 import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
+import { chineseToEnglishCategory } from '@/lib/utils/categoryMapper'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
 
@@ -40,7 +41,11 @@ export default function CategoryBar(props) {
         className='scroll-smooth max-w-4xl rounded-lg scroll-hidden flex justify-start flex-nowrap items-center overflow-x-scroll'>
         <MenuItem href='/' name={locale.NAV.INDEX} />
         {categoryOptions?.map((c, index) => (
-          <MenuItem key={index} href={`/category/${c.name}`} name={c.name} />
+          <MenuItem
+            key={index}
+            href={`/category/${chineseToEnglishCategory(c.name)}`}
+            name={c.name}
+          />
         ))}
       </div>
 

@@ -1,4 +1,5 @@
 import { useGlobal } from '@/lib/global'
+import { chineseToEnglishCategory } from '@/lib/utils/categoryMapper'
 import SmartLink from '@/components/SmartLink'
 import { useEffect, useRef } from 'react'
 import Card from './Card'
@@ -32,7 +33,7 @@ export default function SearchNav(props) {
                   return (
                       <SmartLink
                           key={category.name}
-                          href={`/category/${category.name}`}
+                          href={`/category/${chineseToEnglishCategory(category.name)}`}
                           passHref
                           legacyBehavior>
                           <div

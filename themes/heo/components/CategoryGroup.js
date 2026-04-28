@@ -16,11 +16,11 @@ const CategoryGroup = ({ currentCategory, categories }) => {
             href={`/category/${categorySlug}`}
             passHref
             className={(selected
-              ? 'hover:text-white dark:hover:text-white bg-indigo-600 text-white '
-              : 'dark:text-gray-400 text-gray-500 hover:text-white dark:hover:text-white hover:bg-indigo-600') +
-              '  text-sm w-full items-center duration-300 px-2  cursor-pointer py-1 font-light'}>
+              ? 'hover:text-white dark:hover:text-black bg-indigo-600 text-white dark:bg-yellow-600 dark:text-black '
+              : 'dark:text-gray-400 text-gray-500 hover:text-white dark:hover:text-black hover:bg-indigo-600 dark:hover:bg-yellow-600') +
+              ' text-sm w-full items-center duration-300 px-3 cursor-pointer py-2 font-medium rounded-xl'}>
 
-            <div> <i className={`mr-2 fas ${selected ? 'fa-folder-open' : 'fa-folder'}`} />{category.name}({category.count})</div>
+            <div>{category.name}({category.count})</div>
 
           </SmartLink>
         )

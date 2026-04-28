@@ -1,6 +1,6 @@
 import SmartLink from '@/components/SmartLink'
-import { HashTag } from '@/components/HeroIcons'
 import { useGlobal } from '@/lib/global'
+import { chineseToEnglishCategory } from '@/lib/utils/categoryMapper'
 
 const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
@@ -8,27 +8,37 @@ const LayoutCategoryIndex = props => {
 
   return (
     <div id='category-outer-wrapper' className='mt-8 px-5 md:px-0'>
-      <div className='text-4xl font-extrabold dark:text-gray-200 mb-5'>
-        {locale.COMMON.CATEGORY}
-      </div>
-      <div
-        id='category-list'
-        className='duration-200 flex flex-wrap m-10 justify-center'>
+      <div className='overflow-hidden rounded-[30px] border border-slate-200 bg-white px-6 py-8 shadow-[0_16px_40px_rgba(15,23,42,0.05)] dark:border-gray-800 dark:bg-[#1e1e1e] sm:px-8'>
+        <div className='text-xs font-semibold uppercase tracking-[0.22em] text-slate-500 dark:text-gray-400'>
+          Library
+        </div>
+        <div className='mt-3 text-4xl font-black tracking-tight text-slate-950 dark:text-gray-100'>
+          {locale.COMMON.CATEGORY}
+        </div>
+        <div className='mt-3 max-w-2xl text-sm leading-7 text-slate-600 dark:text-gray-400 sm:text-base'>
+          {locale.locale === 'en-US'
+            ? 'Browse topic clusters instead of scrolling a flat archive.'
+            : '按主题浏览内容，比在归档里盲翻更快。'}
+        </div>
+
+        <div
+          id='category-list'
+          className='mt-8 flex flex-wrap gap-3'>
         {categoryOptions?.map(category => (
           <SmartLink
             key={category.name}
-            href={`/category/${category.name}`}
+            href={`/category/${chineseToEnglishCategory(category.name)}`}
             passHref
             legacyBehavior>
-            <div className='group mr-5 mb-5 flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'>
-              <HashTag className='w-5 h-5 stroke-gray-500 stroke-2' />
-              {category.name}
-              <div className='bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600 '>
+            <div className='group flex cursor-pointer flex-nowrap items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-base font-semibold text-slate-800 transition-all duration-150 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-950 hover:text-white dark:border-gray-700 dark:bg-[#161616] dark:text-gray-200 dark:hover:border-yellow-600 dark:hover:bg-yellow-600 dark:hover:text-black'>
+              <span>{category.name}</span>
+              <div className='rounded-full bg-white px-2.5 py-1 text-xs font-bold text-slate-500 group-hover:text-slate-950 dark:bg-[#2a2a2a] dark:text-gray-300 dark:group-hover:bg-black/10 dark:group-hover:text-black'>
                 {category.count}
               </div>
             </div>
           </SmartLink>
         ))}
+        </div>
       </div>
     </div>
   )
