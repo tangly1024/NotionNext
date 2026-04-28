@@ -72,6 +72,46 @@ const founderSignals = [
   '适合需要 AI + 内容 + 增长交叉视角的人'
 ]
 
+const founderManifesto = [
+  '工具只有进入真实流程，才算真正有价值。',
+  '内容不是为了填关键词，而是为了建立判断力。',
+  '增长不该和审美对立，品牌感本身也是效率的一部分。',
+  'AI 最有价值的地方，不是替代人，而是放大人的产出密度。'
+]
+
+const featuredTopics = [
+  {
+    title: 'AI tooling',
+    text: '模型、Agent、工作流产品、效率工具和实战型选型判断。'
+  },
+  {
+    title: 'Content systems',
+    text: '从选题、写作、分发到搜索流量，把内容做成稳定运转的系统。'
+  },
+  {
+    title: 'Growth and SEO',
+    text: '独立站、搜索意图、页面结构和长期增长，而不是只看短期爆发。'
+  }
+]
+
+const featuredEssays = [
+  {
+    href: '/article/agent',
+    title: 'AI Agent 方向内容',
+    description: '如果你关心 Agent、工作流和自动化系统，这是最核心的一条线。'
+  },
+  {
+    href: '/tools',
+    title: 'Tools 导航',
+    description: '集中看当前站内覆盖的 AI 工具、产品入口和相关资源。'
+  },
+  {
+    href: '/archive',
+    title: 'All essays',
+    description: '从文章归档里看完整输出，更能看清 CharliiAI 的判断框架。'
+  }
+]
+
 const AboutPage = () => {
   return (
     <main className='pb-20'>
@@ -291,6 +331,57 @@ const AboutPage = () => {
       </section>
 
       <section className='px-5 pt-8'>
+        <div className='mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1.05fr_0.95fr]'>
+          <div className='rounded-[30px] border border-slate-200 bg-slate-950 p-7 text-white shadow-[0_16px_40px_rgba(15,23,42,0.10)] sm:p-8'>
+            <div className='text-sm font-semibold uppercase tracking-[0.18em] text-cyan-300'>
+              Manifesto
+            </div>
+            <h2 className='mt-3 text-3xl font-black tracking-tight'>
+              CharliiAI 更接近一种内容方法，而不只是一个站。
+            </h2>
+            <div className='mt-8 grid gap-3'>
+              {founderManifesto.map(item => (
+                <div
+                  key={item}
+                  className='rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm leading-7 text-slate-200'>
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className='overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.05)]'>
+            <div className='grid gap-0 sm:grid-cols-2'>
+              <img
+                src='/images/hero-image.png'
+                alt='Workspace visual'
+                className='h-64 w-full object-cover object-center sm:h-full'
+              />
+              <div className='bg-[linear-gradient(135deg,_#f8fafc,_#eef5ff)] p-7 sm:p-8'>
+                <div className='text-sm font-semibold uppercase tracking-[0.18em] text-slate-500'>
+                  Featured topics
+                </div>
+                <div className='mt-6 space-y-4'>
+                  {featuredTopics.map(item => (
+                    <div
+                      key={item.title}
+                      className='rounded-[22px] border border-slate-200 bg-white/80 p-4'>
+                      <div className='text-sm font-semibold uppercase tracking-[0.18em] text-cyan-700'>
+                        {item.title}
+                      </div>
+                      <div className='mt-2 text-sm leading-7 text-slate-600'>
+                        {item.text}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className='px-5 pt-8'>
         <div className='mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1.1fr_0.9fr]'>
           <div className='overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.05)]'>
             <img
@@ -409,6 +500,42 @@ const AboutPage = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className='px-5 pt-8'>
+        <div className='mx-auto max-w-6xl rounded-[30px] border border-slate-200 bg-white p-7 shadow-[0_16px_40px_rgba(15,23,42,0.05)] sm:p-8'>
+          <div className='flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between'>
+            <div>
+              <div className='text-sm font-semibold uppercase tracking-[0.18em] text-slate-500'>
+                Selected entry points
+              </div>
+              <h2 className='mt-3 text-3xl font-black tracking-tight text-slate-950'>
+                如果你第一次来到这里，建议从这些入口开始
+              </h2>
+            </div>
+            <a
+              href='/archive'
+              className='inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950'>
+              Browse all posts
+            </a>
+          </div>
+
+          <div className='mt-8 grid gap-4 lg:grid-cols-3'>
+            {featuredEssays.map(item => (
+              <a
+                key={item.href}
+                href={item.href}
+                className='group rounded-[24px] border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white'>
+                <div className='text-xl font-bold text-slate-950 transition group-hover:text-cyan-700'>
+                  {item.title}
+                </div>
+                <p className='mt-3 text-sm leading-7 text-slate-600'>
+                  {item.description}
+                </p>
+              </a>
+            ))}
           </div>
         </div>
       </section>
