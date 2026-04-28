@@ -44,6 +44,34 @@ const workPrinciples = [
   }
 ]
 
+const founderTimeline = [
+  {
+    phase: '01',
+    title: 'Research and synthesis',
+    text:
+      '先从 AI 工具、模型、接口和工作流里做筛选，把信息噪音压缩成可读、可判断的结构。'
+  },
+  {
+    phase: '02',
+    title: 'Operator-style validation',
+    text:
+      '再从 SEO、内容生产、自动化和站点经营的角度验证，判断这套东西能不能真正进入生产环境。'
+  },
+  {
+    phase: '03',
+    title: 'Ship as usable content',
+    text:
+      '最后把结果写成可以直接转用的页面、清单、模板和方法，而不是只给概念或新闻摘要。'
+  }
+]
+
+const founderSignals = [
+  '长期关注 AI 工具、SEO、内容增长和独立站系统',
+  '输出偏“实战判断”，不是单纯的信息搬运',
+  '重视品牌感、页面体验和可执行性并存',
+  '适合需要 AI + 内容 + 增长交叉视角的人'
+]
+
 const AboutPage = () => {
   return (
     <main className='pb-20'>
@@ -184,6 +212,85 @@ const AboutPage = () => {
       </section>
 
       <section className='px-5 pt-8'>
+        <div className='mx-auto grid max-w-6xl gap-6 lg:grid-cols-[0.9fr_1.1fr]'>
+          <div className='overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.05)]'>
+            <div className='grid gap-0 md:grid-cols-[0.95fr_1.05fr]'>
+              <div className='p-7 sm:p-8'>
+                <div className='text-sm font-semibold uppercase tracking-[0.18em] text-slate-500'>
+                  Founder profile
+                </div>
+                <h2 className='mt-3 text-3xl font-black tracking-tight text-slate-950'>
+                  更像研究者，也更像操盘手
+                </h2>
+                <p className='mt-4 text-base leading-8 text-slate-600'>
+                  Dr. Charlii
+                  这条线，不是传统媒体编辑路径，也不是单纯技术博客路径，而是站在“内容、流量、工具、自动化”交叉口去看问题。
+                </p>
+                <p className='mt-4 text-base leading-8 text-slate-600'>
+                  所以这里的文章往往会同时回答几个问题：这个东西是什么、值不值得用、适合谁、怎么接进真实业务、以及它能不能帮你放大产出。
+                </p>
+
+                <div className='mt-6 grid gap-3'>
+                  {founderSignals.map(item => (
+                    <div
+                      key={item}
+                      className='rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700'>
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className='relative min-h-[320px] bg-slate-100'>
+                <img
+                  src='/images/testimonial.jpg'
+                  alt='Founder atmosphere'
+                  className='h-full w-full object-cover object-center'
+                />
+                <div className='absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent' />
+                <div className='absolute bottom-0 left-0 right-0 p-6 text-white'>
+                  <div className='text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300'>
+                    Perspective
+                  </div>
+                  <div className='mt-2 text-2xl font-bold'>
+                    AI should compound output, not create noise.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className='rounded-[30px] border border-slate-200 bg-white p-7 shadow-[0_16px_40px_rgba(15,23,42,0.05)] sm:p-8'>
+            <div className='text-sm font-semibold uppercase tracking-[0.18em] text-slate-500'>
+              Timeline
+            </div>
+            <h2 className='mt-3 text-3xl font-black tracking-tight text-slate-950'>
+              CharliiAI 的内容是怎么长出来的
+            </h2>
+            <div className='mt-8 space-y-6'>
+              {founderTimeline.map(item => (
+                <div
+                  key={item.phase}
+                  className='grid gap-4 rounded-[26px] border border-slate-200 p-5 sm:grid-cols-[72px_1fr]'>
+                  <div className='flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-950 text-lg font-black text-white'>
+                    {item.phase}
+                  </div>
+                  <div>
+                    <div className='text-lg font-bold text-slate-950'>
+                      {item.title}
+                    </div>
+                    <p className='mt-2 text-sm leading-7 text-slate-600'>
+                      {item.text}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className='px-5 pt-8'>
         <div className='mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1.1fr_0.9fr]'>
           <div className='overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.05)]'>
             <img
@@ -205,6 +312,25 @@ const AboutPage = () => {
               <p className='mt-4 text-base leading-8 text-slate-600'>
                 如果文章中出现外部链接、广告、合作或联盟关系，也会尽量明确区分，让读者知道哪些内容是纯编辑判断，哪些是商业合作场景。
               </p>
+
+              <div className='mt-7 grid gap-3 sm:grid-cols-2'>
+                <div className='rounded-2xl bg-slate-50 p-4'>
+                  <div className='text-xs font-semibold uppercase tracking-[0.18em] text-slate-500'>
+                    Output style
+                  </div>
+                  <div className='mt-2 text-sm leading-7 text-slate-700'>
+                    长文、工具拆解、工作流方案、搜索型选题和判断型内容并行。
+                  </div>
+                </div>
+                <div className='rounded-2xl bg-slate-50 p-4'>
+                  <div className='text-xs font-semibold uppercase tracking-[0.18em] text-slate-500'>
+                    Audience
+                  </div>
+                  <div className='mt-2 text-sm leading-7 text-slate-700'>
+                    更适合独立开发者、操盘手、内容团队、研究型创作者和想做 AI 增长的人。
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -216,20 +342,49 @@ const AboutPage = () => {
               想聊合作、咨询或内容需求？
             </h2>
             <p className='mt-4 text-base leading-8 text-slate-300'>
-              可以直接去联系页，也可以邮件联系。适合聊的内容包括 AI
+              对外联系以邮箱为主，这对海外读者和品牌团队也更直接。适合聊的内容包括 AI
               工作流、内容增长、SEO、出海站点、自动化系统和合作项目。
             </p>
 
             <div className='mt-8 space-y-4 rounded-[24px] border border-white/10 bg-white/5 p-5'>
               <div>
                 <div className='text-xs font-semibold uppercase tracking-[0.18em] text-slate-400'>
-                  Email
+                  Primary email
                 </div>
                 <a
-                  href='mailto:mail@charliiai.com'
+                  href='mailto:charliiai2024@gmail.com'
                   className='mt-2 inline-block text-lg font-semibold text-white hover:text-cyan-300'>
-                  mail@charliiai.com
+                  charliiai2024@gmail.com
                 </a>
+                <p className='mt-2 text-sm leading-6 text-slate-400'>
+                  Best for partnerships, media, consulting, and international inquiries.
+                </p>
+              </div>
+              <div>
+                <div className='text-xs font-semibold uppercase tracking-[0.18em] text-slate-400'>
+                  Social
+                </div>
+                <a
+                  href='https://x.com/charliiai'
+                  target='_blank'
+                  rel='noreferrer'
+                  className='mt-2 inline-block text-lg font-semibold text-white hover:text-cyan-300'>
+                  x.com/charliiai
+                </a>
+                <p className='mt-2 text-sm leading-6 text-slate-400'>
+                  Prefer email first. X works well for public updates and lightweight outreach.
+                </p>
+              </div>
+              <div>
+                <div className='text-xs font-semibold uppercase tracking-[0.18em] text-slate-400'>
+                  WeChat
+                </div>
+                <div className='mt-2 text-lg font-semibold text-white'>
+                  Charliiai2024
+                </div>
+                <p className='mt-2 text-sm leading-6 text-slate-400'>
+                  Useful for Chinese-speaking contacts, but not the primary channel for global visitors.
+                </p>
               </div>
               <div>
                 <div className='text-xs font-semibold uppercase tracking-[0.18em] text-slate-400'>
