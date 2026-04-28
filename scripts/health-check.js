@@ -343,7 +343,7 @@ function generateHealthReport(results) {
  * 主函数
  */
 async function main() {
-  log('🏥 NotionNext 项目健康检查', 'magenta')
+  log('🏥 CharliiAI 项目健康检查', 'magenta')
   log('=' .repeat(50), 'cyan')
   
   const results = []

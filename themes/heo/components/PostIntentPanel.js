@@ -34,6 +34,23 @@ export default function PostIntentPanel({ post }) {
           ))}
         </div>
       )}
+
+      {enhancement.faqItems?.length > 0 && (
+        <div className='mt-5 space-y-3'>
+          {enhancement.faqItems.map(item => (
+            <div
+              key={item.question}
+              className='rounded-xl border border-slate-200 bg-white p-4 dark:border-gray-700 dark:bg-[#18171d]'>
+              <div className='mb-1 text-sm font-semibold text-slate-900 dark:text-white'>
+                {item.question}
+              </div>
+              <div className='text-sm leading-6 text-slate-600 dark:text-slate-400'>
+                {item.answer}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   )
 }

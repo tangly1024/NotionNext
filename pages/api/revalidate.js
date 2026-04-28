@@ -1,7 +1,8 @@
 import BLOG from '@/blog.config'
 import { chineseToEnglishCategory } from '@/lib/utils/categoryMapper'
 
-const DEFAULT_REVALIDATE_GROUPS = ['home', 'archive', 'categoryIndex', 'tagIndex']
+const DEFAULT_REVALIDATE_GROUPS = []
+const MAX_REVALIDATE_PATHS = 8
 
 function getLocales() {
   const locales = [BLOG.LANG]
@@ -106,6 +107,34 @@ function buildAffectedPaths(payload) {
   return Array.from(affected)
 }
 
+function normalizeInclude(include) {
+  if (!include) {
+    return DEFAULT_REVALIDATE_GROUPS
+  }
+
+  if (Array.isArray(include)) {
+    return include.filter(Boolean)
+  }
+
+  if (typeof include === 'string') {
+    return include
+      .split(',')
+      .map(item => item.trim())
+      .filter(Boolean)
+  }
+
+  return DEFAULT_REVALIDATE_GROUPS
+}
+
+function getRequestMeta(req) {
+  return {
+    method: req.method,
+    userAgent: req.headers['user-agent'] || '',
+    forwardedFor: req.headers['x-forwarded-for'] || '',
+    vercelId: req.headers['x-vercel-id'] || ''
+  }
+}
+
 export default async function handler(req, res) {
   if (!['POST', 'GET'].includes(req.method)) {
     res.setHeader('Allow', 'GET, POST')
@@ -129,16 +158,54 @@ export default async function handler(req, res) {
   }
 
   const payload = req.method === 'GET' ? req.query : req.body || {}
-  const paths = buildAffectedPaths(payload)
+  const include = normalizeInclude(payload.include)
+  const dryRun = ['1', 'true', 'yes'].includes(
+    String(payload.dryRun || req.query?.dryRun || '').toLowerCase()
+  )
+  const paths = buildAffectedPaths({ ...payload, include })
+  const requestMeta = getRequestMeta(req)
 
   if (paths.length === 0) {
     return res.status(400).json({
       revalidated: false,
-      message: 'No paths resolved for revalidation'
+      message: 'No paths resolved for revalidation',
+      include,
+      requestMeta
+    })
+  }
+
+  if (paths.length > MAX_REVALIDATE_PATHS) {
+    return res.status(400).json({
+      revalidated: false,
+      message: `Refusing to revalidate ${paths.length} paths in one request`,
+      include,
+      pathCount: paths.length,
+      maxPaths: MAX_REVALIDATE_PATHS,
+      paths,
+      requestMeta
     })
   }
 
   const results = []
+
+  console.info('[revalidate] request accepted', {
+    include,
+    dryRun,
+    pathCount: paths.length,
+    paths,
+    requestMeta
+  })
+
+  if (dryRun) {
+    return res.status(200).json({
+      revalidated: false,
+      dryRun: true,
+      include,
+      pathCount: paths.length,
+      paths,
+      requestMeta
+    })
+  }
 
   for (const path of paths) {
     try {

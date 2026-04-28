@@ -1,7 +1,7 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { generateLocaleDict } from '@/lib/lang'
-import { getEnhancedPostDescription, getEnhancedPostTitle } from '@/lib/seo/postEnhancements'
+import { getEnhancedPostDescription, getEnhancedPostTitle, getPostEnhancement } from '@/lib/seo/postEnhancements'
 import { loadExternalResource } from '@/lib/utils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -178,6 +178,75 @@ const getPathnameFromSiteLink = siteLink => {
   }
 }
 
+const normalizeCategoryValue = category => {
+  if (Array.isArray(category)) {
+    return category.find(Boolean) || ''
+  }
+
+  return typeof category === 'string' ? category : ''
+}
+
+const buildBreadcrumbJsonLd = ({ siteRootUrl, canonicalPath, title, localeCode }) => {
+  if (!canonicalPath || canonicalPath === '/404') {
+    return null
+  }
+
+  const normalizedPath = normalizePath(canonicalPath)
+  const segments = normalizedPath.split('/').filter(Boolean)
+  const localePrefix = getLocalePrefix(localeCode)
+  const homePath = localePrefix || '/'
+  const items = [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: joinSiteUrl(siteRootUrl, homePath)
+    }
+  ]
+
+  if (!segments.length) {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: items
+    }
+  }
+
+  let currentPath = ''
+  segments.forEach((segment, index) => {
+    currentPath += `/${segment}`
+    const isLast = index === segments.length - 1
+    let name = decodeURIComponent(segment)
+
+    if (index === 0) {
+      if (segment === 'article') {
+        name = 'Articles'
+      } else if (segment === 'category') {
+        name = 'Categories'
+      } else if (segment === 'tag') {
+        name = 'Tags'
+      } else if (segment.toLowerCase() === 'en-us') {
+        name = 'English'
+      } else if (segment.toLowerCase() === 'zh-cn') {
+        name = 'Chinese'
+      }
+    }
+
+    items.push({
+      '@type': 'ListItem',
+      position: items.length + 1,
+      name: isLast ? title : name,
+      item: joinSiteUrl(siteRootUrl, currentPath)
+    })
+  })
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items
+  }
+}
+
 /**
  * 页面的Head头，有用于SEO
  * @param {*} param0
@@ -200,6 +269,7 @@ const SEO = props => {
     globalState?.lang === currentLocaleCode
       ? globalState?.locale
       : generateLocaleDict(currentLocaleCode)
+  const enhancement = getPostEnhancement(post)
   const meta = getSEOMeta(props, router, currentLocale, currentLocaleCode)
   const webFontUrl = siteConfig('FONT_URL')
 
@@ -259,7 +329,8 @@ const SEO = props => {
   const TITLE = siteConfig('TITLE')
   const title = meta?.title || TITLE
   const description = meta?.description || `${siteInfo?.description}`
-  const type = meta?.type || 'website'
+  const isArticle = meta?.type === 'Post'
+  const ogType = isArticle ? 'article' : (meta?.type || 'website')
   const lang = currentLocaleCode.replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
   const category = meta?.category || KEYWORDS // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
   const favicon = siteConfig('BLOG_FAVICON')
@@ -351,6 +422,27 @@ const SEO = props => {
       'query-input': 'required name=search_term_string'
     }
   }
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd({
+    siteRootUrl,
+    canonicalPath,
+    title,
+    localeCode: currentLocaleCode
+  })
+  const faqJsonLd =
+    enhancement?.faqItems?.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: enhancement.faqItems.map(item => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: item.answer
+            }
+          }))
+        }
+      : null
   return (
     <Head>
       <link rel='icon' href={BLOG_FAVICON} />
@@ -383,7 +475,7 @@ const SEO = props => {
       <link rel='canonical' href={canonicalUrl} />
       <meta property='og:image' content={absoluteImage} />
       <meta property='og:site_name' content={siteTitle} />
-      <meta property='og:type' content={type} />
+      <meta property='og:type' content={ogType} />
       {/* Twitter Card 标签 */}
       <meta name='twitter:card' content='summary_large_image' />
       <meta name='twitter:site' content='@charlilai' />
@@ -410,7 +502,7 @@ const SEO = props => {
       {ANALYTICS_BUSUANZI_ENABLE && (
         <meta name='referrer' content='no-referrer-when-downgrade' />
       )}
-      {meta?.type === 'Post' && (
+      {isArticle && (
         <>
           <meta
             property='article:published_time'
@@ -435,6 +527,18 @@ const SEO = props => {
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
+      {breadcrumbJsonLd && (
+        <script
+          type='application/ld+json'
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        />
+      )}
+      {faqJsonLd && (
+        <script
+          type='application/ld+json'
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
 
       {children}
     </Head>
@@ -636,7 +740,7 @@ const getSEOMeta = (props, router, locale, localeCode) => {
         publishDate: post?.publishDate,
         publishDay: post?.publishDay,
         lastEditedDate: post?.lastEditedDate,
-        category: post?.category?.[0],
+        category: normalizeCategoryValue(post?.category),
         tags: post?.tags
       }
   }

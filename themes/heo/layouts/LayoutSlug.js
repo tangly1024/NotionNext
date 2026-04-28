@@ -25,10 +25,7 @@ const PostAdjacent = dynamic(() => import('../components/PostAdjacent'), {
 const PostCopyright = dynamic(() => import('../components/PostCopyright'), {
   ssr: false
 })
-const PostIntentPanel = dynamic(
-  () => import('../components/PostIntentPanel'),
-  { ssr: false }
-)
+const PostIntentPanel = dynamic(() => import('../components/PostIntentPanel'))
 const PostRecommend = dynamic(() => import('../components/PostRecommend'), {
   ssr: false
 })
@@ -86,7 +83,7 @@ const LayoutSlug = props => {
             <article
               id='article-wrapper'
               itemScope
-              itemType='https://schema.org/Movie'>
+              itemType='https://schema.org/Article'>
               <section
                 className='wow fadeInUp p-5 justify-center mx-auto'
                 data-wow-delay='.2s'>

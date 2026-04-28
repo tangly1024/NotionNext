@@ -46,6 +46,48 @@ const CONFIG = {
   },
   HEO_HERO_TITLE_LINK: 'https://www.charliiai.com',
 
+  HEO_HOME_CTA_ENABLE: true,
+  HEO_HOME_CTA_EYEBROW: {
+    'zh-CN': 'EMAIL CTA',
+    'en-US': 'EMAIL CTA'
+  },
+  HEO_HOME_CTA_TITLE: {
+    'zh-CN': '获取新的 AI 实战内容与自动化案例',
+    'en-US': 'Get new AI workflows and automation case studies'
+  },
+  HEO_HOME_CTA_DESCRIPTION: {
+    'zh-CN': '留下邮箱，我会把新的教程、工具拆解和可落地的工作流更新发给你。这个入口更适合咨询、合作线索和订阅型读者。',
+    'en-US': 'Leave your email to receive new tutorials, tool breakdowns, and practical automation workflows. This CTA is tuned for leads, collaborations, and newsletter readers.'
+  },
+  HEO_HOME_CTA_PLACEHOLDER: {
+    'zh-CN': '输入你的邮箱地址',
+    'en-US': 'Enter your email address'
+  },
+  HEO_HOME_CTA_BUTTON_TEXT: {
+    'zh-CN': '订阅更新',
+    'en-US': 'Subscribe'
+  },
+  HEO_HOME_CTA_SUCCESS: {
+    'zh-CN': '订阅成功，后续更新会发到你的邮箱。',
+    'en-US': 'Subscribed. Future updates will be sent to your inbox.'
+  },
+  HEO_HOME_CTA_ERROR: {
+    'zh-CN': '订阅失败，请稍后重试或直接从联系页联系我。',
+    'en-US': 'Subscription failed. Try again later or reach out from the contact page.'
+  },
+  HEO_HOME_CTA_NOTE: {
+    'zh-CN': '不发垃圾邮件。你也可以直接从联系页发合作需求。',
+    'en-US': 'No spam. You can also send a collaboration request from the contact page.'
+  },
+  HEO_HOME_CTA_SECONDARY_TEXT: {
+    'zh-CN': '查看联系页',
+    'en-US': 'Open contact page'
+  },
+  HEO_HOME_CTA_SECONDARY_URL: {
+    'zh-CN': '/contact',
+    'en-US': '/contact'
+  },
+
   // 英雄区遮罩文字（核心SEO关键词）
   HEO_HERO_COVER_TITLE: {
     'zh-CN': 'AIGC · 效率 · 科创 · 落地 · AI创作',

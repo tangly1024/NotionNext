@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Deployment-oriented sitemap audit for charliiai / NotionNext.
+ * Deployment-oriented sitemap audit for CharliiAI.
  *
  * What it checks:
  * 1. Fetch live sitemap.xml

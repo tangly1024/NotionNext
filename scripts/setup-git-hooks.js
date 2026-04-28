@@ -27,7 +27,7 @@ function log(message, color = 'reset') {
  */
 function createPreCommitHook() {
   const hookContent = `#!/bin/sh
-# Pre-commit hook for NotionNext
+# Pre-commit hook for CharliiAI
 
 echo "🔍 Running pre-commit checks..."
 
@@ -52,7 +52,7 @@ exit 0
  */
 function createPrePushHook() {
   const hookContent = `#!/bin/sh
-# Pre-push hook for NotionNext
+# Pre-push hook for CharliiAI
 
 echo "🚀 Running pre-push checks..."
 
@@ -81,7 +81,7 @@ exit 0
  */
 function createCommitMsgHook() {
   const hookContent = `#!/bin/sh
-# Commit message hook for NotionNext
+# Commit message hook for CharliiAI
 
 commit_regex='^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\\(.+\\))?: .{1,50}'
 

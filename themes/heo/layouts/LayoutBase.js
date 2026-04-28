@@ -11,6 +11,7 @@ import CONFIG from '../config'
 import { Style } from '../style'
 
 const Hero = dynamic(() => import('../components/Hero'))
+const HomeCta = dynamic(() => import('../components/HomeCta'))
 const LoadingCover = dynamic(() => import('@/components/LoadingCover'))
 const Footer = dynamic(() => import('../components/Footer'))
 const SideRight = dynamic(() => import('../components/SideRight'), {
@@ -29,6 +30,7 @@ const LayoutBase = props => {
         <>
           <NoticeBar />
           <Hero {...props} />
+          <HomeCta />
         </>
       ) : null}
       {fullWidth ? null : <PostHeader {...props} isDarkMode={isDarkMode} />}

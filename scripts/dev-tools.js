@@ -345,7 +345,7 @@ function main() {
       generateDocs()
       break
     default:
-      log('🛠️  NotionNext 开发工具', 'magenta')
+      log('🛠️  CharliiAI 开发工具', 'magenta')
       log('\n可用命令:', 'cyan')
       log('  init              - 初始化开发环境', 'cyan')
       log('  clean             - 清理项目文件', 'cyan')

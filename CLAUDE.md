@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-NotionNext is a static blog system built with Next.js and Notion API, deployed on Vercel. It's designed for Notion users and content creators who want to create beautiful, customizable blogs using Notion as their CMS.
+CharliiAI is a content and tooling site built with Next.js and the Notion API, deployed on Vercel. It is designed for teams and creators who want a customizable publishing workflow backed by Notion.
 
 **Requirements**: Node.js >=20 (specified in package.json engines)
 
-**Project Directory**: The actual project code is in the `NotionNext/` subdirectory
+**Project Directory**: The project code lives in the current repository root.
 
 ## Development Commands
 
@@ -155,6 +155,14 @@ Configuration is split into focused modules:
 - Multi-layer caching: memory → file → Redis
 - Configurable cache invalidation via `NEXT_REVALIDATE_SECOND`
 - Smart cache management for Notion data
+
+### Vercel ISR Guardrails
+- Treat `ISR Writes` as a deployment review item, not only a billing issue.
+- Avoid broad default invalidation in API routes. `pages/api/revalidate.js` must only refresh explicitly requested paths.
+- Never ship `revalidate = 1/5/10/30` for SEO pages unless there is a measured business need.
+- Be extra careful with dynamic routes such as `/[slug]`, `/blog/[slug]`, `/[...slug]`, and locale-expanded variants because each path can generate separate ISR writes.
+- Before deployment, inspect any use of `res.revalidate()`, `revalidatePath()`, `revalidateTag()`, and route-level `revalidate` values.
+- Prefer `dryRun` support and request logging for revalidation endpoints so path fan-out is visible before cache writes happen.
 
 ## Configuration System
 
@@ -349,7 +357,7 @@ ENABLE_CACHE: false
 ## Project File Structure Reference
 
 ```
-NotionNext/
+CharliiAI/
 ├── blog.config.js          # Main configuration (imports all conf/*.config.js)
 ├── next.config.js          # Next.js configuration with theme aliasing
 ├── package.json            # Dependencies and npm scripts

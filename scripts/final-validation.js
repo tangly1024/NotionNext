@@ -315,7 +315,7 @@ function generateFinalReport(taskResults) {
  * 主函数
  */
 function main() {
-  log('🔍 NotionNext 项目最终验证', 'magenta')
+  log('🔍 CharliiAI 项目最终验证', 'magenta')
   log('验证所有优化任务的完成情况', 'cyan')
   log('=' .repeat(60), 'cyan')
   
