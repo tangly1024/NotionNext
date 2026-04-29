@@ -1,19 +1,36 @@
 import SmartLink from '@/components/SmartLink'
 import { siteConfig } from '@/lib/config'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import CONFIG from '../config'
 
-const getArchiveHref = publishDay => {
-  if (!publishDay) return '/archive'
+const getCurrentSearchQuery = router => {
+  const queryString = router?.asPath?.split('?')[1]?.split('#')[0] || ''
+  const params = new URLSearchParams(queryString)
+  const query = {}
+  params.forEach((value, key) => {
+    query[key] = value
+  })
+  return query
+}
+
+const getArchiveHref = (publishDay, router) => {
+  const query = getCurrentSearchQuery(router)
+  if (!publishDay) return { pathname: '/archive', query }
   const str = String(publishDay)
   const matched = str.match(/^(\d{4})[-/.](\d{1,2})/)
-  if (!matched) return '/archive'
+  if (!matched) return { pathname: '/archive', query }
   const year = matched[1]
   const month = matched[2].padStart(2, '0')
-  return `/archive#archive-${year}-${month}`
+  return {
+    pathname: '/archive',
+    query,
+    hash: `archive-${year}-${month}`
+  }
 }
 
 const PostCard = ({ post }) => {
+  const router = useRouter()
   const coverSrc =
     post.pageCoverThumbnail ||
     (siteConfig('FUWARI_POST_LIST_COVER_DEFAULT', true, CONFIG) &&
@@ -37,7 +54,7 @@ const PostCard = ({ post }) => {
             </SmartLink>
           </h2>
           <div className='fuwari-meta-row mb-2.5'>
-            <SmartLink href={getArchiveHref(post.publishDay)} className='fuwari-meta-item'>
+            <SmartLink href={getArchiveHref(post.publishDay, router)} className='fuwari-meta-item'>
               <i className='far fa-calendar-alt fuwari-meta-icon' />
               <span className='fuwari-meta-text'>{post.publishDay}</span>
             </SmartLink>
