@@ -1,6 +1,34 @@
 import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
 
+const normalizeSubMenus = subMenus =>
+  (Array.isArray(subMenus) ? subMenus : [])
+    .map((item, index) => {
+      if (!item) return null
+      return {
+        id: item.id || `sub-${index}`,
+        name: item.name || item.title || item.label || '',
+        href: item.href || item.url || '',
+        target: item.target
+      }
+    })
+    .filter(item => item && item.name && item.href)
+
+const normalizeMenu = links =>
+  (Array.isArray(links) ? links : [])
+    .map((link, index) => {
+      if (!link) return null
+      const subMenus = normalizeSubMenus(link.subMenus || link.children)
+      return {
+        ...link,
+        id: link.id || `menu-${index}`,
+        name: link.name || link.title || link.label || '',
+        href: link.href || link.url || '',
+        subMenus
+      }
+    })
+    .filter(link => link && link.show !== false && (link.href || link.subMenus?.length))
+
 export function getFuwariMenuLinks({ locale, customNav, customMenu }) {
   let links = [
     {
@@ -44,6 +72,6 @@ export function getFuwariMenuLinks({ locale, customNav, customMenu }) {
     links = customMenu
   }
 
-  return links.filter(link => link && link.show !== false && link.href)
+  return normalizeMenu(links)
 }
 
