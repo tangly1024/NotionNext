@@ -42,6 +42,9 @@ const preBuild = (function () {
     return
   }
   // 删除 public/sitemap.xml 文件 ； 否则会和/pages/sitemap.xml.js 冲突。
+  if (process.env.NEXT_PRIVATE_BUILD_WORKER) {
+    return
+  }
   const sitemapPath = path.resolve(__dirname, 'public', 'sitemap.xml')
   if (fs.existsSync(sitemapPath)) {
     fs.unlinkSync(sitemapPath)
@@ -53,6 +56,28 @@ const preBuild = (function () {
     fs.unlinkSync(sitemap2Path)
     console.log('Deleted existing sitemap.xml from root directory')
   }
+
+  const notionCacheRoot = path.resolve(__dirname, '.next', 'cache', 'notion')
+  const prefetchDir = path.join(notionCacheRoot, 'sessions')
+  const sessionFile = path.join(notionCacheRoot, 'build-session.json')
+  const sessionId = `${process.env.npm_lifecycle_event}-${Date.now()}-${process.pid}`
+
+  fs.rmSync(prefetchDir, { recursive: true, force: true })
+  fs.mkdirSync(notionCacheRoot, { recursive: true })
+  fs.writeFileSync(
+    sessionFile,
+    JSON.stringify(
+      {
+        sessionId,
+        createdAt: new Date().toISOString(),
+        lifecycle: process.env.npm_lifecycle_event,
+        pid: process.pid
+      },
+      null,
+      2
+    )
+  )
+  console.log('Prepared Notion build session', sessionId)
 })()
 
 /**
@@ -278,6 +303,14 @@ const nextConfig = {
 
     if (!isServer) {
       console.log('[默认主题]', path.resolve(__dirname, 'themes', THEME))
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        dns: false,
+        path: false
+      }
     }
     config.resolve.alias['@theme-components'] = path.resolve(
       __dirname,

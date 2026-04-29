@@ -128,7 +128,6 @@ export async function getStaticPaths() {
 
   // ISR 模式：预生成最新10篇，其余按需渲染
   const tops = getPriorityPages(allPages)
-  await prefetchAllBlockMaps(tops)
 
   return {
     paths: tops
