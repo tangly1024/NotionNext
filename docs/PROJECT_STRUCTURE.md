@@ -1,5 +1,7 @@
 # 目录与模块说明
 
+[English](./PROJECT_STRUCTURE.en.md)
+
 ## 顶层目录（常用）
 
 - `pages/`：Next.js 路由入口（SSG/ISR 的 `getStaticProps/getStaticPaths`）
