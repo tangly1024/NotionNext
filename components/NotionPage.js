@@ -123,8 +123,7 @@ const NotionPage = ({ post, className }) => {
   return (
     <div
       id='notion-article'
-      className={`mx-auto overflow-hidden ${className || ''}`}
-    >
+      className={`mx-auto overflow-hidden ${className || ''}`}>
       <NotionRenderer
         recordMap={post?.blockMap}
         mapPageUrl={mapPageUrl}
@@ -145,6 +144,7 @@ const NotionPage = ({ post, className }) => {
     </div>
   )
 }
+
 
 /**
  * 页面的数据库链接禁止跳转，只能查看

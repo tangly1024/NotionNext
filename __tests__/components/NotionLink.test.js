@@ -13,6 +13,16 @@ describe('NotionLink', () => {
     expect(link).toHaveAttribute('rel', 'noopener noreferrer')
   })
 
+  it('keeps same-origin absolute links in current tab', () => {
+    expect(
+      shouldOpenNotionLinkInNewTab(
+        'https://blog.example.com/article/abc',
+        undefined,
+        'https://blog.example.com'
+      )
+    ).toBe(false)
+  })
+
   it('preserves existing rel tokens when forcing a new tab', () => {
     render(
       <NotionLink href='https://example.com' rel='nofollow sponsored'>
@@ -27,7 +37,7 @@ describe('NotionLink', () => {
     expect(link).toHaveAttribute('rel', expect.stringContaining('noreferrer'))
   })
 
-  it('keeps mailto links in the current tab by default', () => {
+  it('keeps mailto links in current tab by default', () => {
     render(<NotionLink href='mailto:test@example.com'>Mail</NotionLink>)
 
     const link = screen.getByRole('link', { name: 'Mail' })
@@ -50,17 +60,36 @@ describe('NotionLink', () => {
 })
 
 describe('shouldOpenNotionLinkInNewTab', () => {
-  it('returns true for explicit blank targets and http links', () => {
+  it('returns true for explicit blank targets and cross-origin http links', () => {
     expect(
       shouldOpenNotionLinkInNewTab('mailto:test@example.com', '_blank')
     ).toBe(true)
-    expect(shouldOpenNotionLinkInNewTab('https://example.com')).toBe(true)
-    expect(shouldOpenNotionLinkInNewTab('http://example.com')).toBe(true)
+    expect(
+      shouldOpenNotionLinkInNewTab(
+        'https://external.example.com',
+        undefined,
+        'https://blog.example.com'
+      )
+    ).toBe(true)
+    expect(
+      shouldOpenNotionLinkInNewTab(
+        'http://external.example.com',
+        undefined,
+        'https://blog.example.com'
+      )
+    ).toBe(true)
   })
 
-  it('returns false for non-http links without an explicit target', () => {
+  it('returns false for non-http links and same-origin http links', () => {
     expect(shouldOpenNotionLinkInNewTab('/posts/demo')).toBe(false)
     expect(shouldOpenNotionLinkInNewTab('#section-1')).toBe(false)
     expect(shouldOpenNotionLinkInNewTab('mailto:test@example.com')).toBe(false)
+    expect(
+      shouldOpenNotionLinkInNewTab(
+        'https://blog.example.com/abc',
+        undefined,
+        'https://blog.example.com'
+      )
+    ).toBe(false)
   })
 })

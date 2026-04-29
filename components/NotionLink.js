@@ -13,12 +13,35 @@ const mergeRelValues = (...values) => {
   return rel.size > 0 ? Array.from(rel).join(' ') : undefined
 }
 
-export const shouldOpenNotionLinkInNewTab = (href, target) => {
+const isExternalHttpLink = (href, siteOrigin) => {
+  if (typeof href !== 'string' || !EXTERNAL_HTTP_LINK.test(href)) {
+    return false
+  }
+
+  if (!siteOrigin) {
+    return true
+  }
+
+  try {
+    const hrefUrl = new URL(href)
+    return hrefUrl.origin !== siteOrigin
+  } catch {
+    return true
+  }
+}
+
+export const shouldOpenNotionLinkInNewTab = (href, target, siteOrigin) => {
   if (target === '_blank') {
     return true
   }
 
-  return typeof href === 'string' && EXTERNAL_HTTP_LINK.test(href)
+  const fallbackOrigin =
+    siteOrigin ||
+    (typeof window !== 'undefined' && window.location
+      ? window.location.origin
+      : null)
+
+  return isExternalHttpLink(href, fallbackOrigin)
 }
 
 const NotionLink = ({ href, target, rel, ...props }) => {
