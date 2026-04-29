@@ -427,6 +427,25 @@ const Style = () => {
       right: max(1rem, calc((100vw - 72rem) / 2 - 2.8rem));
       bottom: 1.15rem;
     }
+    #theme-fuwari .fuwari-toc-mobile {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+    }
+    #theme-fuwari .fuwari-toc-mask {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, .32);
+      backdrop-filter: blur(1.5px);
+    }
+    #theme-fuwari .fuwari-toc-panel {
+      position: absolute;
+      right: .8rem;
+      bottom: 4.35rem;
+      width: min(21rem, calc(100vw - 1.6rem));
+      max-height: 58vh;
+      overflow: hidden;
+    }
     @media (max-width: 1280px) {
       #theme-fuwari .fuwari-float-wrap {
         right: 1.05rem;
