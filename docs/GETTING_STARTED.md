@@ -1,5 +1,7 @@
 # 快速上手（新开发者）
 
+[English](./GETTING_STARTED.en.md)
+
 ## 1. 环境要求
 
 - Node.js >= 20
