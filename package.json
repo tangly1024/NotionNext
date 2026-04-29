@@ -106,7 +106,8 @@
     "webpack-bundle-analyzer": "^4.5.0"
   },
   "resolutions": {
-    "axios": ">=0.21.1"
+    "axios": ">=0.21.1",
+    "form-data": "^4.0.4"
   },
   "bugs": {
     "url": "https://github.com/tangly/NotionNext/issues",
