@@ -5,19 +5,22 @@
  *   TECH_GROW_BLOG_ID / TECH_GROW_NAME / TECH_GROW_QRCODE / TECH_GROW_KEYWORD
  */
 module.exports = {
-  // 必填
+  // 必填 TechGrow后台生成的博客ID
   TECH_GROW_BLOG_ID:
     process.env.NEXT_PUBLIC_TECH_GROW_BLOG_ID ||
     process.env.TECH_GROW_BLOG_ID ||
     '',
+  // 必填 公众号名称
   TECH_GROW_NAME:
     process.env.NEXT_PUBLIC_TECH_GROW_NAME ||
     process.env.TECH_GROW_NAME ||
     '',
+  // 必填 公众号二维码
   TECH_GROW_QRCODE:
     process.env.NEXT_PUBLIC_TECH_GROW_QRCODE ||
     process.env.TECH_GROW_QRCODE ||
     '',
+  // 必填 公众号回复关键词
   TECH_GROW_KEYWORD:
     process.env.NEXT_PUBLIC_TECH_GROW_KEYWORD ||
     process.env.TECH_GROW_KEYWORD ||
