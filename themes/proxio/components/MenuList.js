@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { MenuItem } from './MenuItem'
 
 /**
@@ -13,7 +13,10 @@ export const MenuList = props => {
   const { locale } = useGlobal()
 
   const [showMenu, setShowMenu] = useState(false) // 控制菜单展开/收起状态
+  const [openSubMenuIdx, setOpenSubMenuIdx] = useState(null) // 控制哪个子菜单处于展开状态
   const router = useRouter()
+  const menuRef = useRef(null) // 监听点击外部区域
+
 
   let links = [
     {
@@ -57,14 +60,28 @@ export const MenuList = props => {
 
   useEffect(() => {
     setShowMenu(false)
+    setOpenSubMenuIdx(null)
   }, [router])
+
+  // 监听点击外部区域，收起子菜单
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpenSubMenuIdx(null)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   if (!links || links.length === 0) {
     return null
   }
 
   return (
-    <div>
+    <div ref={menuRef}>
       {/* 移动端菜单切换按钮 */}
       <button
         id='navbarToggler'
@@ -84,7 +101,12 @@ export const MenuList = props => {
         }`}>
         <ul className='blcok lg:flex 2xl:ml-20'>
           {links?.map((link, index) => (
-            <MenuItem key={index} link={link} />
+            <MenuItem 
+              key={index} 
+              link={link} 
+              isOpen={openSubMenuIdx === index}
+              toggleOpen={() => setOpenSubMenuIdx(openSubMenuIdx === index ? null : index)}
+            />
           ))}
         </ul>
       </nav>
