@@ -2,7 +2,11 @@ import LazyImage from '@/components/LazyImage'
 import SmartLink from '@/components/SmartLink'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
+import { useRouter } from 'next/router'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CONFIG from '../config'
+
+const HIT_ALPHA_THRESHOLD = 8
 
 function normalizeMenuNodes(links = []) {
   const nodes = []
@@ -110,6 +114,75 @@ function findNodeByKeyword(nodes = [], keyword = '') {
   )
 }
 
+function getDisciplineHref(node, label) {
+  return node?.href || `/search/${encodeURIComponent(label)}`
+}
+
+function getDisciplineLayerStyle(rect) {
+  return {
+    left: `${rect.left}%`,
+    top: `${rect.top}%`,
+    width: `${rect.width}%`,
+    height: `${rect.height}%`
+  }
+}
+
+function loadAlphaMask(src) {
+  return new Promise((resolve, reject) => {
+    const img = new window.Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => {
+      const canvas = document.createElement('canvas')
+      canvas.width = img.naturalWidth
+      canvas.height = img.naturalHeight
+      const context = canvas.getContext('2d', { willReadFrequently: true })
+      context.drawImage(img, 0, 0)
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height)
+      resolve({
+        width: canvas.width,
+        height: canvas.height,
+        data: imageData.data
+      })
+    }
+    img.onerror = reject
+    img.src = src
+  })
+}
+
+function DisciplineImageLayer({
+  active,
+  href,
+  label,
+  src,
+  alt,
+  className,
+  imageClassName,
+  style
+}) {
+  if (!src) return null
+
+  const image = (
+    <LazyImage
+      priority={true}
+      src={src}
+      alt={alt}
+      className={`${imageClassName} pointer-events-none transition-transform duration-200 ease-out ${active ? 'scale-[1.035]' : 'scale-100'} group-focus-visible:scale-[1.035]`}
+    />
+  )
+
+  return (
+    <SmartLink
+      href={href}
+      title={label}
+      aria-label={label}
+      style={style}
+      className={`${className} group pointer-events-none transition-[filter] duration-200 ease-out ${active ? 'z-30 brightness-105' : ''} focus-visible:z-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}>
+      {image}
+      <span className='sr-only'>{label}</span>
+    </SmartLink>
+  )
+}
+
 function parseHotspots(rawValue = '') {
   if (!rawValue) return []
   try {
@@ -130,14 +203,19 @@ function parseHotspots(rawValue = '') {
 }
 
 export default function HomeInterdisciplinary(props) {
+  const router = useRouter()
   const { locale } = useGlobal()
   const { customMenu, customNav } = props
+  const disciplineMapRef = useRef(null)
+  const disciplineMasksRef = useRef({})
+  const [activeDisciplineId, setActiveDisciplineId] = useState(null)
   const defaultIntroHtml = `
-    <p>你好，我叫成亮。是一名泛设计学科的学生。</p>
-    <p>本科期间，我因为“社区营造”的课题初步接触了以用户为中心的设计（UCD），因缘我开始广泛学习服务设计，用户体验设计（UX）等学科。</p>
-    <p>我在不同的设计对象和语境里关注用户需求、系统思维，并正在硕士研究生阶段延续这一方向上的探索。</p>
-    <p>重绘自 © <a href="https://www.instagram.com/envis.precisely/" target="_blank" rel="noreferrer">envis precisely</a>，这是我已经尝试过的学科，他们间的交叉是设计学的魅力所在。</p>
+    <p>你好，我叫成亮。是一名泛设计学科的学生</p>
+    <p>本科期间，我因为“社区营造”的课题初步接触了以用户为中心的设计（UCD），因缘我开始广泛学习服务设计，用户体验设计（UX）等学科</p>
+    <p>我在不同的设计对象和语境里关注用户需求、系统思维，并正在硕士研究生阶段延续这一方向上的探索</p>
   `
+  const defaultCreditHtml =
+    '重绘自©️envis precisely，这是我已经尝试过的学科，他们间的交叉是设计学的魅力所在'
 
   const fallbackLinks = [
     {
@@ -178,10 +256,10 @@ export default function HomeInterdisciplinary(props) {
     null,
     CONFIG
   )
-  const introTitle =
-    siteConfig('SIMPLE_HOME_TITLE_TEXT', null, CONFIG) || siteConfig('AUTHOR')
   const introBody =
     siteConfig('SIMPLE_HOME_INTRO_HTML', null, CONFIG) || defaultIntroHtml
+  const creditHtml =
+    siteConfig('SIMPLE_HOME_CREDIT_HTML', null, CONFIG) || defaultCreditHtml
   const signatureText = siteConfig('SIMPLE_HOME_SIGNATURE_TEXT', null, CONFIG)
   const frameImage = siteConfig('SIMPLE_HOME_FRAME_IMAGE', null, CONFIG)
   const layerMainImage = siteConfig('SIMPLE_HOME_LAYER_MAIN_IMAGE', null, CONFIG)
@@ -207,8 +285,12 @@ export default function HomeInterdisciplinary(props) {
   const hotspotsConfigRaw = siteConfig('SIMPLE_HOME_HOTSPOTS', null, CONFIG)
   const leftPng = siteConfig('SIMPLE_HOME_LEFT_PNG', null, CONFIG)
   const bottomPng = siteConfig('SIMPLE_HOME_BOTTOM_PNG', null, CONFIG)
+  const creditLogoImage = siteConfig(
+    'SIMPLE_HOME_CREDIT_LOGO_IMAGE',
+    null,
+    CONFIG
+  )
   const mapFontSize = Number(siteConfig('SIMPLE_HOME_MAP_FONT_SIZE', null, CONFIG)) || 18
-  const titleFontSize = Number(siteConfig('SIMPLE_HOME_TITLE_FONT_SIZE', null, CONFIG)) || 24
   const bodyFontSize = Number(siteConfig('SIMPLE_HOME_BODY_FONT_SIZE', null, CONFIG)) || 24
   const bioFontSize = Number(siteConfig('SIMPLE_HOME_BIO_FONT_SIZE', null, CONFIG)) || 20
   const preferredSubmenuParent = siteConfig(
@@ -242,13 +324,107 @@ export default function HomeInterdisciplinary(props) {
       null
   }
 
+  const disciplineLayers = useMemo(
+    () =>
+      [
+        {
+          id: 'service',
+          label: 'Service Design',
+          node: visualNodes.service,
+          src: layerServiceImage,
+          alt: 'discipline-service-layer',
+          rect: { left: -14.26, top: -12.28, width: 112.59, height: 126.42 }
+        },
+        {
+          id: 'ux',
+          label: 'UX',
+          node: visualNodes.ux,
+          src: layerUxImage,
+          alt: 'discipline-ux-layer',
+          rect: { left: 17.55, top: 19.36, width: 58.25, height: 69.38 }
+        },
+        {
+          id: 'ixd',
+          label: 'IxD',
+          node: visualNodes.ixd,
+          src: layerIxdImage,
+          alt: 'discipline-ixd-layer',
+          rect: { left: 29.42, top: 30.9, width: 43.44, height: 51.58 }
+        },
+        {
+          id: 'architecture',
+          label: 'Architecture',
+          node: visualNodes.architecture,
+          src: layerArchitectureImage,
+          alt: 'discipline-architecture-layer',
+          rect: { left: 32.81, top: 0, width: 25.55, height: 58.66 }
+        },
+        {
+          id: 'visual-design',
+          label: 'Visual Design',
+          node: visualNodes.visualDesign,
+          src: layerVisualImage,
+          alt: 'discipline-visual-layer',
+          rect: { left: 2.75, top: 24.27, width: 45.82, height: 44.3 }
+        },
+        {
+          id: 'hci',
+          label: 'HCI',
+          node: visualNodes.hci,
+          src: layerHciImage,
+          alt: 'discipline-hci-layer',
+          rect: { left: 54.92, top: 29.74, width: 45.14, height: 34.59 }
+        }
+      ].map(layer => ({
+        ...layer,
+        href: getDisciplineHref(layer.node, layer.label)
+      })),
+    [
+      layerArchitectureImage,
+      layerHciImage,
+      layerIxdImage,
+      layerServiceImage,
+      layerUxImage,
+      layerVisualImage,
+      visualNodes.architecture,
+      visualNodes.hci,
+      visualNodes.ixd,
+      visualNodes.service,
+      visualNodes.ux,
+      visualNodes.visualDesign
+    ]
+  )
+  const hitTestLayers = useMemo(
+    () => disciplineLayers.filter(layer => layer.src).slice().reverse(),
+    [disciplineLayers]
+  )
+  const disciplineMaskLayers = useMemo(
+    () =>
+      [
+        { id: 'service', src: layerServiceImage },
+        { id: 'ux', src: layerUxImage },
+        { id: 'ixd', src: layerIxdImage },
+        { id: 'architecture', src: layerArchitectureImage },
+        { id: 'visual-design', src: layerVisualImage },
+        { id: 'hci', src: layerHciImage }
+      ].filter(layer => layer.src),
+    [
+      layerArchitectureImage,
+      layerHciImage,
+      layerIxdImage,
+      layerServiceImage,
+      layerUxImage,
+      layerVisualImage
+    ]
+  )
+
   const defaultHotspots = [
-    { label: 'Architecture', match: 'architecture', left: 32.81, top: 0, width: 25.39, height: 58.66, textLeft: 19.03, textTop: 43.1 },
-    { label: 'Visual Design', match: 'visual', left: 2.75, top: 24.27, width: 45.82, height: 44.13, textLeft: 27.46, textTop: 53.96 },
-    { label: 'HCI', match: 'hci', left: 54.92, top: 29.74, width: 45.08, height: 34.46, textLeft: 20.25, textTop: 56.01 },
-    { label: 'IxD', match: 'ixd', left: 38, top: 37, width: 28, height: 30 },
-    { label: 'UX', match: 'ux', left: 41, top: 67, width: 10, height: 8 },
-    { label: 'Service Design', match: 'service', left: 14, top: 78, width: 26, height: 8 }
+    { label: 'Service Design', match: 'service', left: -14.26, top: -12.28, width: 112.59, height: 126.42 },
+    { label: 'UX', match: 'ux', left: 17.55, top: 19.36, width: 58.25, height: 69.38 },
+    { label: 'IxD', match: 'ixd', left: 29.42, top: 30.9, width: 43.44, height: 51.58 },
+    { label: 'Architecture', match: 'architecture', left: 32.81, top: 0, width: 25.55, height: 58.66, textLeft: 18.92, textTop: 43.1 },
+    { label: 'Visual Design', match: 'visual', left: 2.75, top: 24.27, width: 45.82, height: 44.3, textLeft: 27.46, textTop: 53.96 },
+    { label: 'HCI', match: 'hci', left: 54.92, top: 29.74, width: 45.14, height: 34.59, textLeft: 20.25, textTop: 56.01 }
   ]
   const hotspots = parseHotspots(hotspotsConfigRaw).length
     ? parseHotspots(hotspotsConfigRaw)
@@ -323,212 +499,295 @@ export default function HomeInterdisciplinary(props) {
     layerUxImage ||
     layerIxdImage
   const shouldRenderMapLabels = !hasLayerMode && !frameImage && !leftPng
+  const shouldRenderClickableOverlays = !hasLayerMode
+  const activeDiscipline = disciplineLayers.find(
+    layer => layer.id === activeDisciplineId
+  )
+  const activeDisciplineHref = activeDiscipline?.href
+
+  useEffect(() => {
+    if (!hasLayerMode || typeof window === 'undefined') return
+    let cancelled = false
+
+    Promise.all(
+      disciplineMaskLayers
+        .map(layer =>
+          loadAlphaMask(layer.src)
+            .then(mask => [layer.id, mask])
+            .catch(() => [layer.id, null])
+        )
+    ).then(entries => {
+      if (cancelled) return
+      disciplineMasksRef.current = entries.reduce((masks, [id, mask]) => {
+        masks[id] = mask
+        return masks
+      }, {})
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [disciplineMaskLayers, hasLayerMode])
+
+  const findDisciplineAtPoint = useCallback(
+    (clientX, clientY) => {
+      if (!disciplineMapRef.current) return null
+      const mapRect = disciplineMapRef.current.getBoundingClientRect()
+      const xPercent = ((clientX - mapRect.left) / mapRect.width) * 100
+      const yPercent = ((clientY - mapRect.top) / mapRect.height) * 100
+
+      for (const layer of hitTestLayers) {
+        const { left, top, width, height } = layer.rect
+        if (
+          xPercent < left ||
+          xPercent > left + width ||
+          yPercent < top ||
+          yPercent > top + height
+        ) {
+          continue
+        }
+
+        const hasMask = Object.prototype.hasOwnProperty.call(
+          disciplineMasksRef.current,
+          layer.id
+        )
+        if (!hasMask) continue
+
+        const mask = disciplineMasksRef.current[layer.id]
+        if (!mask) return layer
+
+        const localX = (xPercent - left) / width
+        const localY = (yPercent - top) / height
+        const pixelX = Math.min(
+          mask.width - 1,
+          Math.max(0, Math.floor(localX * mask.width))
+        )
+        const pixelY = Math.min(
+          mask.height - 1,
+          Math.max(0, Math.floor(localY * mask.height))
+        )
+        const alpha = mask.data[(pixelY * mask.width + pixelX) * 4 + 3]
+        if (alpha > HIT_ALPHA_THRESHOLD) return layer
+      }
+
+      return null
+    },
+    [hitTestLayers]
+  )
+
+  const handleDisciplineMouseMove = useCallback(
+    event => {
+      if (!hasLayerMode) return
+      const layer = findDisciplineAtPoint(event.clientX, event.clientY)
+      const nextId = layer?.id || null
+      setActiveDisciplineId(current => (current === nextId ? current : nextId))
+    },
+    [findDisciplineAtPoint, hasLayerMode]
+  )
+
+  const handleDisciplineClick = useCallback(
+    event => {
+      if (!hasLayerMode) return
+      const layer = findDisciplineAtPoint(event.clientX, event.clientY)
+      if (!layer?.href) return
+
+      event.preventDefault()
+      if (/^https?:\/\//.test(layer.href)) {
+        window.open(layer.href, '_blank', 'noopener,noreferrer')
+        return
+      }
+      router.push(layer.href)
+    },
+    [findDisciplineAtPoint, hasLayerMode, router]
+  )
 
   return (
-    <section className='relative left-1/2 right-1/2 w-screen -translate-x-1/2 bg-[#FAFAFA] border-t border-[#edf0f3] mb-10'>
-      <div className='mx-auto max-w-[1700px] px-0 md:px-0 py-10 md:py-16'>
-        <div className='grid grid-cols-1 lg:grid-cols-[58%_42%] gap-8 lg:gap-12 items-start'>
-          <div className='relative w-full max-w-[760px] aspect-[587/494] mx-auto'>
-            {hasLayerMode ? (
-              <>
-                {layerMainImage && (
-                  <LazyImage
-                    src={layerMainImage}
-                    alt='discipline-main-layer'
-                    className='absolute left-[6%] top-[6%] w-[88%] h-[64%] object-contain'
-                  />
-                )}
-                {layerGroundImage && (
-                  <LazyImage
-                    src={layerGroundImage}
-                    alt='discipline-ground-layer'
-                    className='absolute left-[25%] top-[70%] w-[56%] h-[24%] object-contain'
-                  />
-                )}
-                {layerArchitectureImage && (
-                  <LazyImage
-                    src={layerArchitectureImage}
-                    alt='discipline-architecture-layer'
-                    className='absolute left-[32.81%] top-[0%] w-[25.39%] h-[58.66%] object-contain'
-                  />
-                )}
-                {layerVisualImage && (
-                  <LazyImage
-                    src={layerVisualImage}
-                    alt='discipline-visual-layer'
-                    className='absolute left-[2.75%] top-[24.27%] w-[45.82%] h-[44.13%] object-contain'
-                  />
-                )}
-                {layerHciImage && (
-                  <LazyImage
-                    src={layerHciImage}
-                    alt='discipline-hci-layer'
-                    className='absolute left-[54.92%] top-[29.74%] w-[45.08%] h-[34.46%] object-contain'
-                  />
-                )}
-                {layerServiceImage && (
-                  <LazyImage
-                    src={layerServiceImage}
-                    alt='discipline-service-layer'
-                    className='absolute left-[6%] top-[54%] w-[56%] h-[35%] object-contain'
-                  />
-                )}
-                {layerUxImage && (
-                  <LazyImage
-                    src={layerUxImage}
-                    alt='discipline-ux-layer'
-                    className='absolute left-[28%] top-[50%] w-[30%] h-[30%] object-contain'
-                  />
-                )}
-                {layerIxdImage && (
-                  <LazyImage
-                    src={layerIxdImage}
-                    alt='discipline-ixd-layer'
-                    className='absolute left-[36%] top-[47%] w-[28%] h-[28%] object-contain'
-                  />
-                )}
-              </>
-            ) : frameImage ? (
-              <LazyImage
-                src={frameImage}
-                alt='discipline-frame'
-                className='absolute inset-0 w-full h-full object-contain'
-              />
-            ) : leftPng ? (
-              <LazyImage
-                src={leftPng}
-                alt='discipline-map'
-                className='absolute inset-0 w-full h-full object-contain'
-              />
-            ) : (
-              <svg
-                className='absolute inset-0 w-full h-full'
-                viewBox='0 0 1000 760'
-                preserveAspectRatio='xMidYMid meet'>
-                <ellipse
-                  cx='300'
-                  cy='470'
-                  rx='310'
-                  ry='190'
-                  fill='#d9d9d9'
-                  fillOpacity='0.38'
-                  transform='rotate(-28 300 470)'
+    <section className='relative left-1/2 right-1/2 w-screen -translate-x-1/2 bg-[#FAFAFA] mb-0 overflow-hidden'>
+      <div className='mx-auto max-w-[1140px] px-6 xl:px-0 py-8 md:py-5'>
+        <div className='grid grid-cols-1 xl:grid-cols-[minmax(0,560px)_minmax(320px,431px)] gap-10 xl:gap-[68px] items-start'>
+          <div
+            className={`relative w-full max-w-[560px] aspect-[670.8/625] mx-auto xl:mx-0 overflow-visible ${activeDisciplineHref ? 'cursor-pointer' : ''}`}
+            onMouseMove={handleDisciplineMouseMove}
+            onMouseLeave={() => setActiveDisciplineId(null)}
+            onClick={handleDisciplineClick}>
+            <div
+              ref={disciplineMapRef}
+              className='absolute left-[12.48%] top-[9.71%] w-[87.52%] h-[79.1%]'>
+              {hasLayerMode ? (
+                <>
+                  {layerMainImage && (
+                    <LazyImage
+                      src={layerMainImage}
+                      alt='discipline-main-layer'
+                      className='absolute left-[6%] top-[6%] w-[88%] h-[64%] object-contain'
+                    />
+                  )}
+                  {layerGroundImage && (
+                    <LazyImage
+                      src={layerGroundImage}
+                      alt='discipline-ground-layer'
+                      className='absolute left-[25%] top-[70%] w-[56%] h-[24%] object-contain'
+                    />
+                  )}
+                  {disciplineLayers.map(layer => (
+                    <DisciplineImageLayer
+                      key={layer.id}
+                      active={activeDisciplineId === layer.id}
+                      href={layer.href}
+                      label={layer.label}
+                      src={layer.src}
+                      alt={layer.alt}
+                      style={getDisciplineLayerStyle(layer.rect)}
+                      className='absolute'
+                      imageClassName='absolute inset-0 w-full h-full max-w-none object-cover'
+                    />
+                  ))}
+                </>
+              ) : frameImage ? (
+                <LazyImage
+                  src={frameImage}
+                  alt='discipline-frame'
+                  className='absolute inset-0 w-full h-full object-contain'
                 />
-                <circle
-                  cx='470'
-                  cy='430'
-                  r='220'
-                  fill='#cfd3d9'
-                  fillOpacity='0.60'
+              ) : leftPng ? (
+                <LazyImage
+                  src={leftPng}
+                  alt='discipline-map'
+                  className='absolute inset-0 w-full h-full object-contain'
                 />
-                <circle
-                  cx='510'
-                  cy='470'
-                  r='145'
-                  fill='#e8e0da'
-                  fillOpacity='0.92'
-                />
-                <ellipse
-                  cx='470'
-                  cy='255'
-                  rx='105'
-                  ry='205'
-                  fill='#d8a88f'
-                  fillOpacity='0.88'
-                />
-                <ellipse
-                  cx='275'
-                  cy='410'
-                  rx='190'
-                  ry='118'
-                  fill='#ddc8bc'
-                  fillOpacity='0.90'
-                />
-                <ellipse
-                  cx='740'
-                  cy='430'
-                  rx='190'
-                  ry='100'
-                  fill='#dfa07f'
-                  fillOpacity='0.88'
-                />
-              </svg>
-            )}
+              ) : (
+                <svg
+                  className='absolute inset-0 w-full h-full'
+                  viewBox='0 0 1000 760'
+                  preserveAspectRatio='xMidYMid meet'>
+                  <ellipse
+                    cx='300'
+                    cy='470'
+                    rx='310'
+                    ry='190'
+                    fill='#d9d9d9'
+                    fillOpacity='0.38'
+                    transform='rotate(-28 300 470)'
+                  />
+                  <circle
+                    cx='470'
+                    cy='430'
+                    r='220'
+                    fill='#cfd3d9'
+                    fillOpacity='0.60'
+                  />
+                  <circle
+                    cx='510'
+                    cy='470'
+                    r='145'
+                    fill='#e8e0da'
+                    fillOpacity='0.92'
+                  />
+                  <ellipse
+                    cx='470'
+                    cy='255'
+                    rx='105'
+                    ry='205'
+                    fill='#d8a88f'
+                    fillOpacity='0.88'
+                  />
+                  <ellipse
+                    cx='275'
+                    cy='410'
+                    rx='190'
+                    ry='118'
+                    fill='#ddc8bc'
+                    fillOpacity='0.90'
+                  />
+                  <ellipse
+                    cx='740'
+                    cy='430'
+                    rx='190'
+                    ry='100'
+                    fill='#dfa07f'
+                    fillOpacity='0.88'
+                  />
+                </svg>
+              )}
 
-            {activeClickableItems.map(
-              (item, index) => {
-                const style = item.left !== undefined
-                  ? {
-                      left: `${item.left}%`,
-                      top: `${item.top}%`,
-                      width: `${item.width}%`,
-                      height: `${item.height}%`
-                    }
-                  : undefined
+              {shouldRenderClickableOverlays && activeClickableItems.map(
+                (item, index) => {
+                  const style = item.left !== undefined
+                    ? {
+                        left: `${item.left}%`,
+                        top: `${item.top}%`,
+                        width: `${item.width}%`,
+                        height: `${item.height}%`
+                      }
+                    : undefined
+
+                  return (
+                    <SmartLink
+                      key={`${item.node.name}-${item.index ?? index}`}
+                      href={item.node.href}
+                      className={`absolute flex items-center justify-center text-center hover:brightness-95 focus:outline-none focus-visible:outline-none transition-all duration-200 ${item.className || ''}`}
+                      style={style}>
+                      {resolveLabelPosition(item) || !shouldRenderMapLabels ? null : (
+                        <span
+                          className='leading-none text-black/85 whitespace-nowrap'
+                          style={{ fontSize: `${mapFontSize}px` }}>
+                          {item.label}
+                        </span>
+                      )}
+                    </SmartLink>
+                  )
+                }
+              )}
+
+              {shouldRenderMapLabels && activeClickableItems.map((item, index) => {
+                const position = resolveLabelPosition(item)
+                if (!position) return null
 
                 return (
                   <SmartLink
-                    key={`${item.node.name}-${item.index ?? index}`}
+                    key={`label-${item.node.name}-${item.index ?? index}`}
                     href={item.node.href}
-                    className={`absolute flex items-center justify-center text-center hover:brightness-95 transition-all duration-200 ${item.className || ''}`}
-                    style={style}>
-                    {resolveLabelPosition(item) || !shouldRenderMapLabels ? null : (
-                      <span
-                        className='leading-none text-black/85 whitespace-nowrap'
-                        style={{ fontSize: `${mapFontSize}px` }}>
-                        {item.label}
-                      </span>
-                    )}
+                    className='absolute leading-none text-black/85 whitespace-nowrap hover:brightness-95 transition-all duration-200'
+                    style={{
+                      left: `${position.left}%`,
+                      top: `${position.top}%`,
+                      fontSize: `${mapFontSize}px`
+                    }}>
+                    {item.label}
                   </SmartLink>
                 )
-              }
-            )}
+              })}
 
-            {shouldRenderMapLabels && activeClickableItems.map((item, index) => {
-              const position = resolveLabelPosition(item)
-              if (!position) return null
-
-              return (
-                <SmartLink
-                  key={`label-${item.node.name}-${item.index ?? index}`}
-                  href={item.node.href}
-                  className='absolute leading-none text-black/85 whitespace-nowrap hover:brightness-95 transition-all duration-200'
-                  style={{
-                    left: `${position.left}%`,
-                    top: `${position.top}%`,
-                    fontSize: `${mapFontSize}px`
-                  }}>
-                  {item.label}
-                </SmartLink>
-              )
-            })}
-
-            {!frameImage && !hasLayerMode && !leftPng && (
-              <div
-                className='absolute left-[46%] top-[57%] text-black/70'
-                style={{ fontSize: `${Math.max(18, mapFontSize - 2)}px` }}>
-                {centerLabel}
-              </div>
-            )}
+              {!frameImage && !hasLayerMode && !leftPng && (
+                <div
+                  className='absolute left-[46%] top-[57%] text-black/70'
+                  style={{ fontSize: `${Math.max(18, mapFontSize - 2)}px` }}>
+                  {centerLabel}
+                </div>
+              )}
+            </div>
           </div>
 
-          <div className='pt-8 md:pt-20 pr-2 md:pr-10 space-y-8 md:space-y-12'>
-            <h1
-              className='font-normal text-black leading-tight'
-              style={{ fontSize: `${titleFontSize}px` }}>
-              {introTitle}
-            </h1>
+          <div className='pt-2 xl:pt-[49px] pr-0 space-y-9 text-[16px]'>
             <div
-              className='text-black/90 leading-[1.8] space-y-4'
+              className='text-black leading-[1.55] space-y-5'
               style={{ fontSize: `${bodyFontSize}px` }}
               dangerouslySetInnerHTML={{ __html: introBody }}
             />
-            {siteConfig('BIO') && (
-              <p
-                className='text-black/70 leading-[1.7]'
-                style={{ fontSize: `${bioFontSize}px` }}>
-                {siteConfig('BIO')}
-              </p>
+            {creditHtml && (
+              <div
+                className='text-black leading-[1.4]'
+                style={{ fontSize: `${bodyFontSize}px` }}
+                dangerouslySetInnerHTML={{ __html: creditHtml }}
+              />
+            )}
+            {creditLogoImage && (
+              <LazyImage
+                priority={true}
+                src={creditLogoImage}
+                alt='envis precisely'
+                className='w-[173px] h-auto'
+              />
             )}
             {signatureText && (
               <div
@@ -541,8 +800,13 @@ export default function HomeInterdisciplinary(props) {
         </div>
 
         {bottomPng && (
-          <div className='mt-8 md:mt-14'>
-            <LazyImage src={bottomPng} alt='home-bottom-art' className='w-full h-auto' />
+          <div className='mt-10 md:mt-12 pointer-events-none flex justify-center'>
+            <LazyImage
+              priority={true}
+              src={bottomPng}
+              alt='home-bottom-art'
+              className='w-[min(92vw,960px)] h-auto'
+            />
           </div>
         )}
       </div>

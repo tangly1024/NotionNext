@@ -7,7 +7,10 @@ const ASSET_MAP = {
   hci: 'HCI.png',
   service: 'Service Design.png',
   ux: 'UX.png',
-  ixd: 'Ixd.png'
+  ixd: 'Ixd.png',
+  bottom: '底部图.png',
+  envis: 'envis logo.png',
+  cma: 'cma-logo.png'
 }
 
 export default function handler(req, res) {

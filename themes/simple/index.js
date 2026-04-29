@@ -123,7 +123,7 @@ const LayoutBase = props => {
                 shouldShowRightSidebar
                   ? 'max-w-[min(92vw,1600px)] px-4 2xl:px-6'
                   : 'max-w-full'
-              } mx-auto pt-12`
+              } mx-auto ${isHomePage ? 'pt-0' : 'pt-12'}`
           }>
           <div id='container-inner ' className='w-full flex-grow min-h-fit'>
             <Transition

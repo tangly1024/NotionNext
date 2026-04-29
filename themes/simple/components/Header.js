@@ -12,8 +12,8 @@ export default function Header(props) {
   const { siteInfo } = props
 
   return (
-    <header className='text-center justify-between items-center px-6 bg-white h-80 dark:bg-black relative z-10'>
-      <div className='float-none inline-block py-12'>
+    <header className='text-center justify-between items-center px-6 bg-white h-48 md:h-[180px] dark:bg-black relative z-10'>
+      <div className='float-none inline-block py-5'>
         <SmartLink href='/'>
           {/* 可使用一张单图作为logo */}
           <div className='flex space-x-6 justify-center'>
@@ -44,9 +44,6 @@ export default function Header(props) {
 
         <div className='flex justify-center'>
           <SocialButton />
-        </div>
-        <div className='text-xs mt-4 text-gray-500 dark:text-gray-300'>
-          {siteConfig('DESCRIPTION')}
         </div>
       </div>
     </header>
