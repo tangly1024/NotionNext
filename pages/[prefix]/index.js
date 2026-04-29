@@ -92,7 +92,7 @@ const Slug = props => {
       {/* 解锁密码提示框 */}
       {post?.password && post?.password !== '' && !lock && <Notification />}
       {/* 导流工具 */}
-      <TechGrow />
+      <TechGrow lock={lock} />
     </>
   )
 }

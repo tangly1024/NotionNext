@@ -93,7 +93,9 @@ const installReadmoreNetworkProbe = debug => {
 
   const XHR = window.XMLHttpRequest
   if (XHR?.prototype?.open && XHR?.prototype?.send) {
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     const originalOpen = XHR.prototype.open
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     const originalSend = XHR.prototype.send
 
     XHR.prototype.open = function(method, url, ...rest) {
