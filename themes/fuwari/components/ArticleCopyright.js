@@ -39,12 +39,15 @@ const ArticleCopyright = ({ post }) => {
 
   if (!siteConfig('FUWARI_ARTICLE_COPYRIGHT', true, CONFIG) || !post) return null
 
+  const authorName = (siteConfig('AUTHOR') || '').trim() || siteConfig('TITLE')
+  const profileHref = siteConfig('FUWARI_PROFILE_PATH', '/about', CONFIG)
+
   return (
     <section className='mt-6 fuwari-card p-4 text-sm text-[var(--fuwari-muted)] leading-7'>
       <div>
         <span className='font-semibold mr-2'>{locale?.COMMON?.AUTHOR || '作者'}:</span>
-        <SmartLink href='/about' className='fuwari-link'>
-          {siteConfig('AUTHOR') || siteConfig('TITLE')}
+        <SmartLink href={profileHref} className='fuwari-link'>
+          {authorName}
         </SmartLink>
       </div>
       <div className='mt-1'>

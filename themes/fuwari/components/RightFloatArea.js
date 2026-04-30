@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
+import { isCommentServiceConfigured } from '../utils/commentEnabled'
 import Toc from './Toc'
 
 const RightFloatArea = ({ post }) => {
   const [visible, setVisible] = useState(false)
   const [showTocDrawer, setShowTocDrawer] = useState(false)
-  const { isDarkMode, toggleDarkMode } = useGlobal()
+  const { isDarkMode, toggleDarkMode, locale } = useGlobal()
   const hasToc = Boolean(post?.toc && post.toc.length > 1)
 
   useEffect(() => {
@@ -51,9 +52,13 @@ const RightFloatArea = ({ post }) => {
             <i className='fas fa-list-ul' />
           </button>
         )}
-        {post && siteConfig('FUWARI_WIDGET_TO_COMMENT', true, CONFIG) && (
+        {post &&
+          siteConfig('FUWARI_WIDGET_TO_COMMENT', true, CONFIG) &&
+          isCommentServiceConfigured() && (
           <button
+            type='button'
             className='fuwari-float-btn'
+            aria-label={locale?.COMMON?.COMMENTS || 'Comments'}
             onClick={() => document.getElementById('comment')?.scrollIntoView({ behavior: 'smooth' })}>
             <i className='far fa-comment-dots' />
           </button>

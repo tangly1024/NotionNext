@@ -18,7 +18,7 @@ export const MenuList = props => {
   const menuRef = useRef(null) // 监听点击外部区域
 
 
-  let links = [
+  const defaultLinks = [
     {
       icon: 'fas fa-archive',
       name: locale.NAV.ARCHIVE,
@@ -45,13 +45,14 @@ export const MenuList = props => {
     }
   ]
 
-  if (customNav) {
-    links = customNav.concat(links)
-  }
+  const navLinks = Array.isArray(customNav) ? customNav : []
+  const menuLinks = Array.isArray(customMenu) ? customMenu : []
+
+  let links = navLinks.length > 0 ? navLinks.concat(defaultLinks) : defaultLinks
 
   // 如果 开启自定义菜单，则覆盖Page生成的菜单
-  if (siteConfig('CUSTOM_MENU', BLOG.CUSTOM_MENU)) {
-    links = customMenu
+  if (siteConfig('CUSTOM_MENU', BLOG.CUSTOM_MENU) && menuLinks.length > 0) {
+    links = menuLinks
   }
 
   const toggleMenu = () => {

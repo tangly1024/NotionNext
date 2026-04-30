@@ -94,21 +94,23 @@ const CONFIG = {
   // 联系卡片（侧栏，可翻转）
   // ---------------------------------------------------------------------------
   /** 正面标题 */
-  FUWARI_CONTACT_TITLE: '联系我们',
+  FUWARI_CONTACT_TITLE: '社区',
   /** 正面说明文案 */
-  FUWARI_CONTACT_DESCRIPTION: '加入社群，碰撞思维',
+  FUWARI_CONTACT_DESCRIPTION: '欢迎交流与反馈',
+  /** 正面右上角徽标 */
+  FUWARI_CONTACT_FRONT_BADGE: 'Community',
   /** 跳转 URL（外链或站内路径） */
   FUWARI_CONTACT_URL: 'https://docs.tangly1024.com/article/chat-community',
   /** 正面行动文案（如「联系我们 →」） */
-  FUWARI_CONTACT_TEXT: '联系我们',
+  FUWARI_CONTACT_TEXT: '查看',
   /** 是否使用正反面翻转卡片 */
   FUWARI_CONTACT_FLIP_CARD: true,
   /** 背面标题 */
-  FUWARI_CONTACT_BACK_TITLE: '保持联系',
+  FUWARI_CONTACT_BACK_TITLE: '支持内容',
   /** 背面说明 */
-  FUWARI_CONTACT_BACK_DESCRIPTION: '分享你的想法，合作，以及反馈.',
+  FUWARI_CONTACT_BACK_DESCRIPTION: '可提交问题、建议与合作意向。',
   /** 背面行动文案 */
-  FUWARI_CONTACT_BACK_TEXT: '打开联系',
+  FUWARI_CONTACT_BACK_TEXT: '查看',
 
   // ---------------------------------------------------------------------------
   // 全站动效（按需开启，可能影响性能）
@@ -127,7 +129,7 @@ const CONFIG = {
   FUWARI_ARTICLE_SHARE: true,
   /** 文末版权信息块 */
   FUWARI_ARTICLE_COPYRIGHT: true,
-  /** 评论区域 */
+  /** 文末评论区（需在 `blog.config.js` 配置任一种评论服务，如 COMMENT_GISCUS_REPO / COMMENT_TWIKOO_ENV_ID 等，否则不渲染） */
   FUWARI_ARTICLE_COMMENT: true,
   /** 文末上一篇 / 下一篇 */
   FUWARI_ARTICLE_ADJACENT: true
