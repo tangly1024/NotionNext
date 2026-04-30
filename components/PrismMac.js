@@ -65,6 +65,13 @@ const PrismMac = () => {
   return <></>
 }
 
+const getNotionArticle = () => {
+  return (
+    document.querySelector('#article-wrapper #notion-article') ||
+    document.querySelector('#notion-article')
+  )
+}
+
 /**
  * 加载Prism主题样式
  */
@@ -161,6 +168,9 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
  * 将mermaid语言 渲染成图片
  */
 const renderMermaid = mermaidCDN => {
+  const article = getNotionArticle()
+  if (!article) return
+
   const observer = new MutationObserver(mutationsList => {
     for (const m of mutationsList) {
       if (m.target.className === 'notion-code language-mermaid') {
@@ -172,7 +182,7 @@ const renderMermaid = mermaidCDN => {
           m.target.appendChild(mermaidChart)
         }
 
-        const mermaidsSvg = document.querySelectorAll('.mermaid')
+        const mermaidsSvg = article.querySelectorAll('.mermaid')
         if (mermaidsSvg) {
           let needLoad = false
           for (const e of mermaidsSvg) {
@@ -192,16 +202,14 @@ const renderMermaid = mermaidCDN => {
       }
     }
   })
-  if (document.querySelector('#notion-article')) {
-    observer.observe(document.querySelector('#notion-article'), {
-      attributes: true,
-      subtree: true
-    })
-  }
+  observer.observe(article, {
+    attributes: true,
+    subtree: true
+  })
 }
 
 function renderPrismMac(codeLineNumbers) {
-  const container = document?.getElementById('notion-article')
+  const container = getNotionArticle()
 
   // Add line numbers
   if (codeLineNumbers) {
@@ -248,6 +256,9 @@ function renderPrismMac(codeLineNumbers) {
  * 在此手动resize计算
  */
 const fixCodeLineStyle = () => {
+  const article = getNotionArticle()
+  if (!article) return
+
   const observer = new MutationObserver(mutationsList => {
     for (const m of mutationsList) {
       if (m.target.nodeName === 'DETAILS') {
@@ -258,12 +269,12 @@ const fixCodeLineStyle = () => {
       }
     }
   })
-  observer.observe(document.querySelector('#notion-article'), {
+  observer.observe(article, {
     attributes: true,
     subtree: true
   })
   setTimeout(() => {
-    const preCodes = document.querySelectorAll('pre.notion-code')
+    const preCodes = article.querySelectorAll('pre.notion-code')
     for (const preCode of preCodes) {
       Prism.plugins.lineNumbers.resize(preCode)
     }
