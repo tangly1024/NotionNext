@@ -147,7 +147,7 @@ jobs:
                 '',
                 '您的建议已被收录，我们将在评估可行性后决定是否纳入后续版本。',
                 '',
-                '如果您有能力参与实现，欢迎提交 PR！',
+                '如果您有能力参与实现，欢迎提交 PR！具体开发规范请参阅 [贡献指南](https://github.com/tangly1024/NotionNext/blob/main/README.md)。',
                 '',
                 '感谢您对 NotionNext 的支持！ 🙏',
               ].join('\n');
@@ -158,11 +158,21 @@ jobs:
                 '以下是常见部署问题的排查建议，请先自查：',
                 '',
                 '1. 📝 确认 `NOTION_PAGE_ID` 已正确配置并且 Notion 页面已公开分享。',
-                '2. 🔑 确认所有必要的环境变量已在部署平台正确设置。',
+                '2. 🔑 确认所有必要的环境变量（如 `NEXT_PUBLIC_*`）已在部署平台正确设置。',
                 '3. 📦 确认使用的 Node.js 版本 ≥ 18，依赖安装命令为 `npm install --legacy-peer-deps`。',
                 '4. 📖 参阅官方文档：[部署指南](https://github.com/tangly1024/NotionNext#部署)',
                 '',
-                '如果以上步骤均已确认，请补充更详细的错误日志，我们将继续协助排查。 🙏',
+                '如果以上步骤均已确认，请补充更详细的错误日志，我们将继续协助排查。感谢您的耐心！ 🙏',
+              ].join('\n');
+
+              const helpComment = [
+                `👋 @${author} 您好，感谢您使用 NotionNext！`,
+                '',
+                '请详细描述您遇到的问题以及期望的结果，以便社区成员更好地帮助您。',
+                '',
+                '同时也欢迎加入我们的社区交流群获取更快速的帮助：[Telegram 群组](https://t.me/Notionso)',
+                '',
+                '感谢您的使用！ 🙏',
               ].join('\n');
 
               const defaultComment = [
@@ -170,12 +180,15 @@ jobs:
                 '',
                 '我们已收到您的反馈，将尽快处理。如有需要，我们会与您进一步沟通。',
                 '',
-                '欢迎加入我们的社区：[Telegram 群组](https://t.me/Notionso) 🙏',
+                '欢迎加入我们的社区：[Telegram 群组](https://t.me/Notionso)',
+                '',
+                '感谢您对 NotionNext 的支持！ 🙏',
               ].join('\n');
 
               if (labels.includes('bug')) return bugComment;
               if (labels.includes('enhancement')) return enhancementComment;
               if (labels.includes('deployment')) return deploymentComment;
+              if (labels.includes('help wanted')) return helpComment;
               return defaultComment;
             };
 
