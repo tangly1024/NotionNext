@@ -569,9 +569,14 @@ const Style = () => {
     #theme-fuwari #posts-wrapper > article {
       animation: fuwari-enter .28s ease both;
     }
+    /* Readmore 的 modal 使用 fixed 定位；文章主卡若保留 transform/animation 会把它困在卡片内 */
+    #theme-fuwari article.fuwari-card {
+      animation: none !important;
+      transform: none !important;
+    }
     @keyframes fuwari-enter {
       from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
+      to { opacity: 1; transform: none; }
     }
   `}</style>
 }
