@@ -11,24 +11,43 @@ const getTokenFromRequest = req => {
   return String(queryToken || headerToken || '')
 }
 
+const ALLOWED_REVALIDATE_PATHS = ['/', '/archive', '/category', '/tag']
+
+const normalizeRevalidatePath = rawPath => {
+  const path = String(rawPath || '/').trim() || '/'
+  if (ALLOWED_REVALIDATE_PATHS.includes(path)) return path
+  return null
+}
+
 export default async function handler(req, res) {
   if (!['GET', 'POST'].includes(req.method || '')) {
     return res.status(405).json({ ok: false, message: 'Method Not Allowed' })
   }
 
   const expectedToken = process.env.CLAUDE_CONTRIBUTION_TRIGGER_TOKEN || ''
-  if (expectedToken) {
-    const receivedToken = getTokenFromRequest(req)
-    if (!receivedToken || receivedToken !== expectedToken) {
-      return res.status(401).json({ ok: false, message: 'Unauthorized' })
-    }
+  if (!expectedToken) {
+    return res.status(503).json({
+      ok: false,
+      message: 'Contribution refresh is disabled: missing CLAUDE_CONTRIBUTION_TRIGGER_TOKEN'
+    })
+  }
+
+  const receivedToken = getTokenFromRequest(req)
+  if (!receivedToken || receivedToken !== expectedToken) {
+    return res.status(401).json({ ok: false, message: 'Unauthorized' })
+  }
+
+  const shouldRevalidate = String(req.query?.revalidate || '1') !== '0'
+  const requestedPath = (Array.isArray(req.query?.path) ? req.query.path[0] : req.query?.path) || '/'
+  const path = normalizeRevalidatePath(requestedPath)
+  if (!path) {
+    return res.status(400).json({
+      ok: false,
+      message: `Invalid path. Allowed values: ${ALLOWED_REVALIDATE_PATHS.join(', ')}`
+    })
   }
 
   markContributionCacheDirty()
-
-  const shouldRevalidate = String(req.query?.revalidate || '1') !== '0'
-  const path =
-    (Array.isArray(req.query?.path) ? req.query.path[0] : req.query?.path) || '/'
 
   let revalidated = false
   let revalidateError = ''

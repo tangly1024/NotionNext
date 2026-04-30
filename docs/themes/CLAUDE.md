@@ -632,7 +632,7 @@ const SidebarContent = memo(function SidebarContent(props) {
       <div className='mt-auto'><Footer /></div>
     </div>
   )
-}, () => true)  // 始终返回 true → 阻止所有来自父组件的 prop 变化触发重渲染
+}, () => true)  // 始终返回 true -> 阻止所有来自父组件的 prop 变化触发重渲染
 ```
 
 - `React.memo` 的第二个参数 `() => true` 表示"props 始终相等"，阻止父组件 re-render 传播。

@@ -35,7 +35,7 @@ This theme combines the clean reading experience of **Claude Docs** with the ric
     ```bash
     yarn dev
     ```
-    Your blog is now running with the Claude theme!
+    Your blog is now running with the Claude theme.
 
 ---
 
@@ -72,7 +72,7 @@ Your `readme.md` Notion page is rendered directly on the homepage, serving as yo
 -   **Caching**: Rendered HTML is cached to prevent redundant API calls and speed up page loads.
 
 ### Terminal Widget
-A fun, dynamic element in the sidebar that shows:
+A dynamic element in the sidebar that shows:
 -   Last login time (simulated).
 -   Current "user" and "machine" (e.g., `user@Macintosh ~ %`).
 -   Typing effect for the blog title.
@@ -211,8 +211,8 @@ The theme employs a multi-level caching strategy for stability.
 *   Check if Supabase tables exist and keys are correct.
 *   Verify `NOTION_PAGE_ID` allows access to the posts.
 
-**Q: Changes made today aren't showing.**
-*   By design, the heatmap shows data *up to yesterday* to ensure the grid is stable and "complete". Today's dots appear tomorrow.
+**Q: Changes made today are not showing.**
+*   By design, the heatmap shows data *up to yesterday* to ensure the grid is stable and complete. Today's dots appear tomorrow.
 *   You can force a refresh manually if needed via the refresh API.
 
 **Q: The README styling looks different.**
@@ -224,24 +224,23 @@ The theme employs a multi-level caching strategy for stability.
 
 ### Problem
 
-In Next.js Pages Router, every client-side navigation (clicking a link) can re-render or even **remount** `LayoutBase`. This causes the left sidebar (avatar, terminal widget, navigation) to reload on every page transition — a poor user experience.
+In Next.js Pages Router, every client-side navigation can re-render or even remount `LayoutBase`. This causes the left sidebar (avatar, terminal widget, navigation) to reload on every page transition.
 
 ### Three-Layer Solution
 
-The theme employs three layers to ensure the sidebar **only refreshes on browser refresh**, not on link-based navigation:
+The theme uses three layers so the sidebar only refreshes on browser refresh:
 
 #### Layer 1: `pages/_app.js` — Stabilize the Layout Component Reference
 
-> **⚠️ MERGE WARNING: This modification is in the global `pages/_app.js`, NOT inside the claude theme directory. Pay special attention to this file during merges.**
+> **Merge warning:** this modification is in global `pages/_app.js`, not inside the claude theme directory.
 
 The original code had two problems:
-1.  `theme`'s `useMemo` depended on the entire `route` object (`[route]`). Since `useRouter()` returns a new object reference on every route change, `theme` was recalculated unnecessarily.
-2.  `GLayout` was a wrapper component defined inside `MyApp` via `useCallback`, calling `getBaseLayoutByTheme(theme)` on every render.
+1.  `theme` memo depended on the entire `route` object (`[route]`), which changes reference every route change.
+2.  `GLayout` wrapper inside `MyApp` called `getBaseLayoutByTheme(theme)` on each render.
 
 The fix:
 
 ```javascript
-// Depend on specific values, not the entire route object
 const theme = useMemo(() => {
   return (
     getQueryParam(route.asPath, 'theme') ||
@@ -250,107 +249,66 @@ const theme = useMemo(() => {
   )
 }, [route.asPath, pageProps?.NOTION_CONFIG?.THEME])
 
-// Memoize Layout component — stable reference as long as theme doesn't change
 const Layout = useMemo(() => getBaseLayoutByTheme(theme), [theme])
 
-// Use Layout directly, no GLayout wrapper
 <Layout {...pageProps}>
   <SEO {...pageProps} />
   <Component {...pageProps} />
 </Layout>
 ```
 
-This ensures React always sees the same component type at the same tree position, so it **reuses** the `LayoutBase` instance (re-render) instead of destroying and recreating it (remount).
-
 #### Layer 2: `themes/claude/index.js` — Memoized SidebarContent
 
-The desktop sidebar is wrapped in `React.memo(() => true)`:
-
-```javascript
-const SidebarContent = memo(function SidebarContent(props) {
-  return (
-    <div className='flex flex-col justify-between h-full py-6 px-5'>
-      <div><NavBar {...props} /></div>
-      <div className='mt-auto'><Footer /></div>
-    </div>
-  )
-}, () => true)  // Always returns true → blocks all prop-change re-renders
-```
-
--   `React.memo`'s comparator `() => true` tells React "props are always equal", preventing any parent re-render from propagating.
--   `MenuList` inside `NavBar` uses `useRouter()` (React Context), so active menu state still updates correctly — Context changes bypass `React.memo`.
+Desktop sidebar is wrapped with `React.memo(() => true)` to block parent-prop-driven rerenders.
 
 #### Layer 3: `themes/claude/components/NavBar.js` — Module-Level Terminal Session Cache
 
-The terminal login time and tty number are stored in a **JavaScript module-level variable**, outside of React's component lifecycle:
-
-```javascript
-let _cachedTerminalSession = null
-function getOrCreateTerminalSession() {
-  if (!_cachedTerminalSession) {
-    _cachedTerminalSession = {
-      loginTime: formatTerminalLoginTime(new Date()),
-      tty: `ttys00${Math.floor(Math.random() * 10)}`
-    }
-  }
-  return _cachedTerminalSession
-}
-```
-
--   Module-level variables persist across component mount/unmount cycles.
--   Only a full browser refresh (which reloads the JS module) resets this value.
+Terminal login time and tty are stored in module-level variables outside React lifecycle, so they survive remounts and reset only on full refresh.
 
 ### Files Affected
 
 | File | Scope | Change |
 |---|---|---|
-| `pages/_app.js` | **Global** (not inside theme dir) | Removed `GLayout`; memoized `Layout` reference |
+| `pages/_app.js` | Global | Removed `GLayout`; memoized `Layout` reference |
 | `themes/claude/index.js` | Theme | Added `SidebarContent` memo wrapper |
-| `themes/claude/components/NavBar.js` | Theme | Terminal session → module-level cache |
+| `themes/claude/components/NavBar.js` | Theme | Terminal session moved to module cache |
 
 ---
 
 ## 9. Development
 
 ### Project Structure
-*   `themes/claude/components/`: UI components (NavBar, Catalog, etc.).
-*   `themes/claude/style.js`: CSS variables and global styles.
-*   `lib/server/claude/contributionStore.js`: Subabase logic.
-*   `pages/api/claude/`: API endpoints for cache revalidation.
+*   `themes/claude/components/`: UI components (NavBar, Catalog, etc.)
+*   `themes/claude/style.js`: CSS variables and global styles
+*   `lib/server/claude/contributionStore.js`: Supabase logic
+*   `pages/api/claude/`: API endpoints for cache revalidation
 
 ### Commands
-*   `yarn dev`: Run locally.
-*   `yarn build`: Production build (triggers contribution sync).
+*   `yarn dev`: Run locally
+*   `yarn build`: Production build (triggers contribution sync)
 
 ---
 
 ## 10. Additional Global Changes (RSS + Homepage Title)
 
-These changes are outside the `themes/claude` directory but directly affect runtime behavior.
+These changes are outside `themes/claude` but affect runtime behavior.
 
 ### 10.1 Stop RSS content fetching when RSS is disabled
 
 *   File: `pages/index.js`
-*   Change: `generateRss(props)` is no longer unconditional; it now runs only when `ENABLE_RSS=true`.
-*   Result:
-    *   When RSS is disabled, `getPostBlocks(..., 'rss-content')` is not called.
-    *   Server logs such as `from:rss-content` disappear.
+*   Change: `generateRss(props)` now runs only when `ENABLE_RSS=true`.
 
 ### 10.2 Remove subtitle from homepage `<title>`
 
 *   File: `components/SEO.js`
-*   Route: `/` (homepage)
+*   Route: `/`
 *   Change: homepage title changed from `site title | site description` to `site title` only.
-*   Result:
-    *   No fallback subtitle like `这是一个由NotionNext生成的站点` in browser tabs.
-    *   No separator `|` on homepage title.
 
-### 10.3 ⚠️ Merge / Upgrade Notes (Consolidated)
+### 10.3 Merge / Upgrade Notes
 
-When pulling upstream updates, verify all of the following remain intact:
-
-1.  In `pages/_app.js`, `Layout` is still cached with `useMemo(() => getBaseLayoutByTheme(theme), [theme])` (see Section 8, Layer 1).
-2.  In `pages/_app.js`, `theme`'s `useMemo` dependencies are still `[route.asPath, pageProps?.NOTION_CONFIG?.THEME]`, **NOT** `[route]`.
-3.  In `pages/_app.js`, no `useCallback` wrapper component is used to indirectly call `getBaseLayoutByTheme`.
-4.  RSS generation in `pages/index.js` is still gated by `ENABLE_RSS`.
-5.  Homepage title in `components/SEO.js` still uses site title only (no appended description).
+When pulling upstream updates, verify:
+1.  `pages/_app.js` still memoizes `Layout` with `useMemo(() => getBaseLayoutByTheme(theme), [theme])`.
+2.  `theme` memo deps stay as `[route.asPath, pageProps?.NOTION_CONFIG?.THEME]`, not `[route]`.
+3.  No wrapper component reintroduces indirect `getBaseLayoutByTheme` calls.
+4.  `pages/index.js` keeps RSS generation gated by `ENABLE_RSS`.
+5.  `components/SEO.js` keeps homepage title as site title only.

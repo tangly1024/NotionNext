@@ -22,6 +22,12 @@ This docs directory helps contributors and new developers understand the project
 - Prevent personal/local config leaks.
 - Keep PR reviews focused on real logic changes.
 
+## Theme Docs
+
+- [Themes Documentation](./themes/README.en.md)
+- [Claude Theme](./themes/CLAUDE.en.md)
+- [Fuwari Theme](./themes/FUWARI.md)
+
 ## Relationship with Root Docs
 
 - Root `README.md`: project overview and showcase

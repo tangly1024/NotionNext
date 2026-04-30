@@ -55,11 +55,11 @@ export const MenuList = ({ customNav, customMenu }) => {
     }
   ]
 
-  if (customNav) {
+  if (Array.isArray(customNav) && customNav.length > 0) {
     links = links.concat(customNav)
   }
 
-  if (siteConfig('CUSTOM_MENU')) {
+  if (siteConfig('CUSTOM_MENU') && Array.isArray(customMenu) && customMenu.length > 0) {
     links = customMenu
   }
 
