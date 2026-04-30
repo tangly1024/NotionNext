@@ -42,6 +42,7 @@ const BLOG = {
   ...require('./conf/ad.config'), // 广告营收插件
   ...require('./conf/plugin.config'), // 其他第三方插件 algolia全文索引
   ...require('./conf/performance.config'), // 性能优化配置
+  ...require('./conf/top-tag.config'), // 置顶文章全局配置
 
   // 高级用法
   ...require('./conf/layout-map.config'), // 路由与布局映射自定义，例如自定义特定路由的页面布局
@@ -57,6 +58,8 @@ const BLOG = {
 
   // 文章列表相关设置
   CAN_COPY: process.env.NEXT_PUBLIC_CAN_COPY || false, // 是否允许复制页面内容 默认允许，如果设置为false、则全栈禁止复制内容。
+
+  ...require('./conf/techgrow.config'), // 公众号导流插件（TechGrow）
 
   // 侧栏布局 是否反转(左变右,右变左) 已支持主题: hexo next medium fukasawa example
   LAYOUT_SIDEBAR_REVERSE:

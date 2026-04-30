@@ -39,8 +39,6 @@ export async function getStaticPaths() {
   // ISR 模式：预生成最新10篇（仅两段路径格式）
   const tops = getPriorityPages(allPages)
 
-  await prefetchAllBlockMaps(tops)
-
   return {
     paths: tops
       .filter(p => checkSlugHasOneSlash(p))
