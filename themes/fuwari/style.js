@@ -243,13 +243,18 @@ const Style = () => {
       inset: 0;
       background-size: cover;
       background-position: center;
-      transform: scale(1.03);
+      transform: scale(1.01);
       filter: saturate(1.05);
     }
     #theme-fuwari .fuwari-hero-mask {
       position: absolute;
       inset: 0;
-      background: linear-gradient(120deg, rgba(15, 23, 42, 0.66), rgba(15, 23, 42, 0.3));
+      background: linear-gradient(
+        120deg,
+        rgba(15, 23, 42, 0.32) 0%,
+        rgba(15, 23, 42, 0.14) 55%,
+        rgba(15, 23, 42, 0.04) 100%
+      );
       z-index: 1;
     }
     #theme-fuwari .fuwari-hero-btn {
