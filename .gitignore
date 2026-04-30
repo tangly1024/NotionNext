@@ -52,3 +52,4 @@ package-lock.json
 # yarn.lock
 
 .notion-api-lock
+.tmp/
