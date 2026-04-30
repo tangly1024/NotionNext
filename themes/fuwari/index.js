@@ -1,6 +1,5 @@
 'use client'
 
-import Comment from '@/components/Comment'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
@@ -25,6 +24,9 @@ import RightFloatArea from './components/RightFloatArea'
 import SidePanel from './components/SidePanel'
 import CONFIG from './config'
 import { Style } from './style'
+import { isCommentServiceConfigured } from './utils/commentEnabled'
+
+const Comment = dynamic(() => import('@/components/Comment'), { ssr: false })
 
 const AlgoliaSearchModal = dynamic(
   () => import('@/components/AlgoliaSearchModal'),
@@ -109,6 +111,8 @@ const LayoutSlug = props => {
   const locale = getLocale()
   const { post, lock, validPassword, prev, next } = props
   if (!post) return null
+  const showComments =
+    siteConfig('FUWARI_ARTICLE_COMMENT', true, CONFIG) && isCommentServiceConfigured()
   return (
     <>
       {lock ? (
@@ -122,7 +126,15 @@ const LayoutSlug = props => {
           </div>
           <ArticleCopyright post={post} />
           <ArticleAdjacent prev={prev} next={next} />
-          {siteConfig('FUWARI_ARTICLE_COMMENT', true, CONFIG) && <Comment frontMatter={post} />}
+          {showComments && (
+            <section className='mt-8 pt-6 border-t border-[var(--fuwari-border)]' aria-label={locale?.COMMON?.COMMENTS || 'Comments'}>
+              <h2 className='text-base font-semibold mb-4 text-[var(--fuwari-text)] flex items-center gap-2'>
+                <i className='far fa-comments text-[var(--fuwari-muted)]' aria-hidden='true' />
+                {locale?.COMMON?.COMMENTS || 'Comments'}
+              </h2>
+              <Comment frontMatter={post} className='fuwari-comment !mt-0' />
+            </section>
+          )}
         </article>
       )}
     </>

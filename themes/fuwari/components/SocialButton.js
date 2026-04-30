@@ -1,6 +1,9 @@
 import { siteConfig } from '@/lib/config'
+import { handleEmailClick } from '@/lib/plugins/mailEncrypt'
+import { useRef } from 'react'
 
 const SocialButton = () => {
+  const emailIcon = useRef(null)
   const enableRSS = siteConfig('ENABLE_RSS')
   const links = [
     { key: 'CONTACT_TWITTER', icon: 'fab fa-twitter', label: 'Twitter' },
@@ -35,14 +38,20 @@ const SocialButton = () => {
   return (
     <div className='flex items-center justify-center gap-2 flex-wrap'>
       {finalLinks.map(item => {
-        const href = item.isMail ? `mailto:${item.href}` : item.href
+        const href = item.isMail ? undefined : item.href
         return (
           <a
             key={item.key}
             href={href}
+            onClick={
+              item.isMail
+                ? e => handleEmailClick(e, emailIcon, item.href)
+                : undefined
+            }
             target={item.isMail ? undefined : '_blank'}
             rel={item.isMail ? undefined : 'noopener noreferrer'}
             aria-label={item.label}
+            ref={item.isMail ? emailIcon : undefined}
             className='fuwari-social-btn'>
             <i className={item.icon} />
           </a>
