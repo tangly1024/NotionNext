@@ -66,10 +66,29 @@ const PrismMac = () => {
 }
 
 const getNotionArticle = () => {
-  return (
-    document.querySelector('#article-wrapper #notion-article') ||
-    document.querySelector('#notion-article')
+  const inArticleWrapper = document.querySelector('#article-wrapper #notion-article')
+  if (inArticleWrapper) return inArticleWrapper
+
+  const candidates = Array.from(document.querySelectorAll('#notion-article'))
+  if (candidates.length <= 1) return candidates[0] || null
+
+  // 多主题并存时可能有多个 notion-article，优先选择正文内容更完整的节点
+  const score = el => {
+    const codeCount = el.querySelectorAll('pre.notion-code, .code-toolbar').length
+    const blockCount = el.querySelectorAll('.notion, .notion-page, .notion-text').length
+    return codeCount * 10 + blockCount
+  }
+
+  return candidates.sort((a, b) => score(b) - score(a))[0] || null
+}
+
+const getNotionArticles = () => {
+  const inArticleWrapper = Array.from(
+    document.querySelectorAll('#article-wrapper #notion-article')
   )
+  if (inArticleWrapper.length > 0) return inArticleWrapper
+
+  return Array.from(document.querySelectorAll('#notion-article'))
 }
 
 /**
@@ -168,44 +187,76 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
  * 将mermaid语言 渲染成图片
  */
 const renderMermaid = mermaidCDN => {
-  const article = getNotionArticle()
-  if (!article) return
-
-  const observer = new MutationObserver(mutationsList => {
-    for (const m of mutationsList) {
-      if (m.target.className === 'notion-code language-mermaid') {
-        const chart = m.target.querySelector('code').textContent
-        if (chart && !m.target.querySelector('.mermaid')) {
-          const mermaidChart = document.createElement('pre')
-          mermaidChart.className = 'mermaid'
-          mermaidChart.innerHTML = chart
-          m.target.appendChild(mermaidChart)
-        }
-
-        const mermaidsSvg = article.querySelectorAll('.mermaid')
-        if (mermaidsSvg) {
-          let needLoad = false
-          for (const e of mermaidsSvg) {
-            if (e?.firstChild?.nodeName !== 'svg') {
-              needLoad = true
-            }
-          }
-          if (needLoad) {
-            loadExternalResource(mermaidCDN, 'js').then(url => {
-              setTimeout(() => {
-                const mermaid = window.mermaid
-                mermaid?.contentLoaded()
-              }, 100)
-            })
-          }
-        }
+  const processArticle = article => {
+    const mermaidCodeBlocks = article.querySelectorAll(
+      '.notion-code.language-mermaid'
+    )
+    for (const codeBlock of mermaidCodeBlocks) {
+      const chart = codeBlock.querySelector('code')?.textContent
+      if (chart && !codeBlock.querySelector('.mermaid')) {
+        const mermaidChart = document.createElement('pre')
+        mermaidChart.className = 'mermaid'
+        mermaidChart.innerHTML = chart
+        codeBlock.appendChild(mermaidChart)
       }
     }
+
+    const mermaidsSvg = article.querySelectorAll('.mermaid')
+    if (mermaidsSvg.length > 0) {
+      let needLoad = false
+      for (const e of mermaidsSvg) {
+        if (e?.firstChild?.nodeName !== 'svg') {
+          needLoad = true
+          break
+        }
+      }
+      if (needLoad) {
+        loadExternalResource(mermaidCDN, 'js').then(url => {
+          setTimeout(() => {
+            const mermaid = window.mermaid
+            mermaid?.contentLoaded()
+          }, 100)
+        })
+      }
+    }
+  }
+
+  const bindArticleObserver = article => {
+    processArticle(article)
+    const observer = new MutationObserver(() => {
+      processArticle(article)
+    })
+    observer.observe(article, {
+      childList: true,
+      attributes: true,
+      subtree: true
+    })
+  }
+
+  const scanAndBind = () => {
+    const articles = getNotionArticles()
+    for (const article of articles) {
+      if (article.dataset.prismMermaidBound === '1') continue
+      article.dataset.prismMermaidBound = '1'
+      bindArticleObserver(article)
+    }
+  }
+
+  // 立即处理已有内容（主题切换时关键）
+  scanAndBind()
+
+  // 监听后续新增的文章容器
+  if (window.__prismMermaidRootObserver) {
+    window.__prismMermaidRootObserver.disconnect()
+  }
+  const rootObserver = new MutationObserver(() => {
+    scanAndBind()
   })
-  observer.observe(article, {
-    attributes: true,
+  rootObserver.observe(document.body, {
+    childList: true,
     subtree: true
   })
+  window.__prismMermaidRootObserver = rootObserver
 }
 
 function renderPrismMac(codeLineNumbers) {
