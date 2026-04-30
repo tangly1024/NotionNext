@@ -1,5 +1,7 @@
 # 架构总览
 
+[English](./ARCHITECTURE.en.md)
+
 ## 核心链路
 
 NotionNext 的主流程可以简化为：
