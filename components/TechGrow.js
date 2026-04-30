@@ -23,6 +23,9 @@ const getReadmoreWrapper = () =>
   document.getElementById('readmore-wrapper') ||
   document.getElementById('read-more-wrap')
 
+const getReadmoreWrapperIn = root =>
+  root?.querySelector?.('#readmore-wrapper, #read-more-wrap') || null
+
 const normalizePreviewHeight = height => {
   if (height === undefined || height === null || height === '') {
     return null
@@ -208,6 +211,34 @@ const TechGrow = ({ lock } = {}) => {
   // 登录信息
   const { isLoaded, isSignedIn } = useGlobal()
 
+  // fuwari 侧栏公告也会渲染 NotionPage，优先限定在正文区域初始化
+  const getArticleRoot = () => document.getElementById('article-wrapper')
+  const getScopedContentNode = () => {
+    const articleRoot = getArticleRoot()
+    return articleRoot?.querySelector?.(`#${id}`) || document.getElementById(id)
+  }
+  const getScopedReadmoreWrapper = () => {
+    const articleRoot = getArticleRoot()
+    return getReadmoreWrapperIn(articleRoot) || getReadmoreWrapper()
+  }
+
+  const ensureUniqueReadmoreTargetId = () => {
+    const targetId = 'techgrow-readmore-target'
+    const articleRoot = getArticleRoot()
+    const contentNode = getScopedContentNode()
+    if (!articleRoot || !contentNode) return id
+
+    const existed = articleRoot.querySelector(`#${targetId}`)
+    if (existed) return targetId
+
+    const wrapper = document.createElement('div')
+    wrapper.id = targetId
+    wrapper.style.position = 'relative'
+    contentNode.parentElement?.insertBefore(wrapper, contentNode)
+    wrapper.appendChild(contentNode)
+    return targetId
+  }
+
   useEffect(() => {
     installReadmoreNetworkProbe(debug)
     installReadmoreAlertProbe(debug)
@@ -220,7 +251,7 @@ const TechGrow = ({ lock } = {}) => {
       // 这里适当拉长轮询窗口以提升稳定性（避免“解锁后不再触发初始化”）。
       const maxAttempts = 60
       const timer = setInterval(() => {
-        const target = document.getElementById(id)
+        const target = getScopedContentNode()
         if (target && target.childElementCount > 0) {
           clearInterval(timer)
           resolve(true)
@@ -262,7 +293,8 @@ const TechGrow = ({ lock } = {}) => {
           hasBaseUrl: !!baseUrl
         })
       }
-      const target = document.getElementById(id)
+      const targetId = ensureUniqueReadmoreTargetId()
+      const target = document.getElementById(targetId)
       if (target) {
         const position = window.getComputedStyle(target).position
         if (!position || position === 'static') {
@@ -287,7 +319,7 @@ const TechGrow = ({ lock } = {}) => {
         window.btw = btw
         btw.init({
           qrcode,
-          id,
+          id: targetId,
           name,
           btnText,
           keyword,
@@ -305,8 +337,8 @@ const TechGrow = ({ lock } = {}) => {
         })
 
         const fixReadmoreWrapperPosition = () => {
-          const container = document.getElementById(id)
-          const wrapper = getReadmoreWrapper()
+          const container = document.getElementById(targetId)
+          const wrapper = getScopedReadmoreWrapper()
           if (!container || !wrapper) {
             logReadmoreState(debug, id, 'fix-skip-no-wrapper')
             return false
@@ -316,19 +348,32 @@ const TechGrow = ({ lock } = {}) => {
             container.appendChild(wrapper)
           }
 
-          wrapper.style.position = 'absolute'
-          wrapper.style.left = '0'
-          wrapper.style.right = '0'
-          wrapper.style.bottom = '0'
-          wrapper.style.width = '100%'
-          wrapper.style.zIndex = '9999'
           const previewHeight = normalizePreviewHeight(height)
           if (previewHeight) {
+            // 仅在显式配置预览高度时强制底部遮罩定位；
+            // height=auto 时保持插件默认布局，避免遮罩落到全文末尾
+            wrapper.style.position = 'absolute'
+            wrapper.style.left = '0'
+            wrapper.style.right = '0'
+            wrapper.style.bottom = '0'
+            wrapper.style.width = '100%'
+            wrapper.style.zIndex = '9999'
             // 只有在 readmore wrapper 已生成时才裁剪正文，避免误解锁
             container.style.height = previewHeight
             container.style.overflow = 'hidden'
           }
           logReadmoreState(debug, id, 'fix-wrapper-positioned')
+
+          // 在部分主题（如 fuwari）里，祖先层可能创建了新的包含块，
+          // 导致 fixed 的弹窗遮罩看起来只覆盖正文区域，这里提升到 body 统一全屏行为。
+          const modalMask = document.getElementById('readmore-modal-mask')
+          const modalContent = document.getElementById('readmore-modal-content')
+          if (modalMask && modalMask.parentElement !== document.body) {
+            document.body.appendChild(modalMask)
+          }
+          if (modalContent && modalContent.parentElement !== document.body) {
+            document.body.appendChild(modalContent)
+          }
           return true
         }
 
@@ -370,11 +415,11 @@ const TechGrow = ({ lock } = {}) => {
       return
     }
 
-    if (process.env.NODE_ENV === 'development') {
-      // 开发环境免检
-      console.log('开发环境:屏蔽Readmore')
-      return
-    }
+    // if (process.env.NODE_ENV === 'development') {
+    //   // 开发环境免检
+    //   console.log('开发环境:屏蔽Readmore')
+    //   return
+    // }
 
     // 文章密码锁定时，页面内容容器可能暂时为空；
     // 延后到锁状态解除后再尝试初始化，避免初始化失败后“不会再触发”。
@@ -385,7 +430,7 @@ const TechGrow = ({ lock } = {}) => {
     if (isBrowser && blogId && !isSignedIn) {
       toggleTocItems(true) // 禁止目录项的点击
       // 检查是否已加载
-      const readMoreWrap = getReadmoreWrapper()
+      const readMoreWrap = getScopedReadmoreWrapper()
       if (!readMoreWrap) {
         loadReadmore()
       }
