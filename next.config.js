@@ -32,6 +32,17 @@ const locales = (function () {
   return langs
 })()
 
+// next dev 启动时提示：开发环境默认读/写 Notion 缓存（见 conf/dev.config.js 中 ENABLE_CACHE）
+;(function printDevCacheHint() {
+  if (process.env.npm_lifecycle_event !== 'dev') return
+  console.log(
+    '\n[NotionNext] 开发环境默认开启 Notion 数据缓存（ENABLE_CACHE），便于本地调试提速。'
+  )
+  console.log(
+    '若需关闭缓存、每次请求都从 Notion 获取实时数据：请复制仓库根目录的 .env.example 创建 .env.local，并配置 ENABLE_CACHE=false\n'
+  )
+})()
+
 // 编译前执行
 // eslint-disable-next-line no-unused-vars
 const preBuild = (function () {
