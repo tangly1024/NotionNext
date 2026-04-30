@@ -42,7 +42,7 @@ const SocialButton = () => {
           <i className='fas fa-envelope' />
         </a>
       )}
-      {JSON.parse(siteConfig('ENABLE_RSS')) && (
+      {Boolean(siteConfig('ENABLE_RSS')) && (
         <a target='_blank' rel='noreferrer' title='RSS' href='/rss/feed.xml'>
           <i className='fas fa-rss' />
         </a>

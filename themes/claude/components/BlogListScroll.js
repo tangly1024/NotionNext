@@ -1,7 +1,7 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { BlogItem } from './BlogItem'
 
 /**
@@ -14,35 +14,32 @@ export default function BlogListScroll(props) {
   const { locale, NOTION_CONFIG } = useGlobal()
   const [page, updatePage] = useState(1)
   const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
-  let hasMore = false
-  const postsToShow = posts
-    ? Object.assign(posts).slice(0, POSTS_PER_PAGE * page)
-    : []
-
-  if (posts) {
-    const totalCount = posts.length
-    hasMore = page * POSTS_PER_PAGE < totalCount
-  }
-  const handleGetMore = () => {
-    if (!hasMore) return
-    updatePage(page + 1)
-  }
+  const safePosts = Array.isArray(posts) ? posts : []
+  const postsToShow = safePosts.slice(0, POSTS_PER_PAGE * page)
+  const hasMore = page * POSTS_PER_PAGE < safePosts.length
 
   const targetRef = useRef(null)
+  const hasMoreRef = useRef(hasMore)
+
+  useEffect(() => {
+    hasMoreRef.current = hasMore
+  }, [hasMore])
+
+  const handleGetMore = useCallback(() => {
+    if (!hasMoreRef.current) return
+    updatePage(prev => prev + 1)
+  }, [])
 
   // 监听滚动自动分页加载
-  const scrollTrigger = useCallback(
+  const scrollTrigger = useMemo(
     throttle(() => {
-      const scrollS = window.scrollY + window.outerHeight
-      const clientHeight = targetRef
-        ? targetRef.current
-          ? targetRef.current.clientHeight
-          : 0
-        : 0
+      const scrollS = window.scrollY + window.innerHeight
+      const clientHeight = targetRef.current?.clientHeight ?? 0
       if (scrollS > clientHeight + 100) {
         handleGetMore()
       }
-    }, 500)
+    }, 500),
+    [handleGetMore]
   )
 
   useEffect(() => {
@@ -50,8 +47,9 @@ export default function BlogListScroll(props) {
 
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
+      scrollTrigger.cancel?.()
     }
-  })
+  }, [scrollTrigger])
 
   return (
     <div id='posts-wrapper' className='w-full md:pr-8 mb-12' ref={targetRef}>

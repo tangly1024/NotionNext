@@ -20,6 +20,11 @@ const Catalog = ({ post }) => {
   const tRef = useRef(null)
   const clickLockRef = useRef(false)
   const [activeSection, setActiveSection] = useState(null)
+  const activeSectionRef = useRef(activeSection)
+
+  useEffect(() => {
+    activeSectionRef.current = activeSection
+  }, [activeSection])
 
   // 配置
   const showLevel3 = siteConfig('CLAUDE_TOC_SHOW_LEVEL3', true, CONFIG)
@@ -153,7 +158,7 @@ const Catalog = ({ post }) => {
         currentSectionId = sections[0].getAttribute('data-id')
       }
 
-      if (currentSectionId !== activeSection) {
+      if (currentSectionId !== activeSectionRef.current) {
         setActiveSection(currentSectionId)
 
         // 滚动目录使当前项可见
@@ -177,8 +182,9 @@ const Catalog = ({ post }) => {
 
     return () => {
       content?.removeEventListener('scroll', actionSectionScrollSpy)
+      actionSectionScrollSpy.cancel?.()
     }
-  }, [post, filteredToc, tocHierarchy])
+  }, [post, filteredToc, tocHierarchy, scrollBehavior])
 
   // 点击 "On this page" 标题回到顶部
   const handleTitleClick = () => {
