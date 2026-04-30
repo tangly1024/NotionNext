@@ -24,6 +24,7 @@ const Header = ({ locale, customNav, customMenu, searchModal }) => {
   useEffect(() => {
     const onClickOutside = e => {
       if (!showPalette) return
+      if (e.target.closest?.('[data-fuwari-palette-trigger]')) return
       if (panelRef.current && !panelRef.current.contains(e.target)) {
         setShowPalette(false)
       }
@@ -34,7 +35,7 @@ const Header = ({ locale, customNav, customMenu, searchModal }) => {
 
   return (
     <header className='max-w-6xl mx-auto px-4 pt-0 pb-3 sticky top-0 z-40'>
-      <div className='fuwari-card fuwari-navbar px-4 py-2.5 flex items-center justify-between md:grid md:grid-cols-[1fr_auto_1fr]'>
+      <div className='fuwari-card fuwari-navbar relative px-4 py-2.5 flex items-center justify-between md:grid md:grid-cols-[1fr_auto_1fr]'>
         <SmartLink href='/' className='text-[1.35rem] md:text-[1.45rem] font-bold fuwari-title-gradient text-left'>
           {siteConfig('TITLE')}
         </SmartLink>
@@ -46,6 +47,7 @@ const Header = ({ locale, customNav, customMenu, searchModal }) => {
           {!paletteFixed && (
             <button
               type='button'
+              data-fuwari-palette-trigger
               onClick={() => setShowPalette(v => !v)}
               className='fuwari-tool-btn'>
               <i className='fas fa-palette' />
@@ -54,11 +56,6 @@ const Header = ({ locale, customNav, customMenu, searchModal }) => {
           <button type='button' onClick={toggleDarkMode} className='fuwari-tool-btn'>
             {isDarkMode ? '☀' : '☾'}
           </button>
-          {showPalette && !paletteFixed && (
-            <div ref={panelRef} className='fuwari-card absolute right-0 top-12 p-0 w-80 z-50'>
-              <ThemeColorSwitch />
-            </div>
-          )}
         </div>
         <div className='md:hidden flex items-center justify-end gap-2 relative'>
           <button type='button' onClick={handleSearch} className='fuwari-tool-btn'>
@@ -67,6 +64,7 @@ const Header = ({ locale, customNav, customMenu, searchModal }) => {
           {!paletteFixed && (
             <button
               type='button'
+              data-fuwari-palette-trigger
               onClick={() => setShowPalette(v => !v)}
               className='fuwari-tool-btn'>
               <i className='fas fa-palette' />
@@ -76,12 +74,14 @@ const Header = ({ locale, customNav, customMenu, searchModal }) => {
             {isDarkMode ? '☀' : '☾'}
           </button>
           <MobileNav locale={locale} customNav={customNav} customMenu={customMenu} />
-          {showPalette && !paletteFixed && (
-            <div ref={panelRef} className='fuwari-card absolute right-0 top-12 p-0 w-72 z-50'>
-              <ThemeColorSwitch />
-            </div>
-          )}
         </div>
+        {showPalette && !paletteFixed && (
+          <div
+            ref={panelRef}
+            className='fuwari-card absolute right-3 md:right-4 top-12 p-0 w-[min(20rem,calc(100vw-2rem))] md:w-80 z-50'>
+            <ThemeColorSwitch />
+          </div>
+        )}
       </div>
     </header>
   )
