@@ -52,6 +52,7 @@
     "perf:baseline": "node scripts/perf-baseline.js",
     "perf:compare": "node scripts/perf-baseline.js --mode=compare",
     "perf:lighthouse": "lhci autorun",
+    "perf:audit:themes": "node scripts/audit-theme-performance.js",
     "perf:compress-theme-previews": "node scripts/compress-theme-previews.js",
     "postinstall": "patch-package"
   },

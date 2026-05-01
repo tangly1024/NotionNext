@@ -3,7 +3,31 @@ import { siteConfig } from '@/lib/config'
 
 // 过滤 <a> 标签不能识别的 props
 const filterDOMProps = props => {
-  const { passHref, legacyBehavior, ...rest } = props
+  const {
+    passHref,
+    legacyBehavior,
+    placeholderSrc,
+    fallbackSrc,
+    ...rest
+  } = props
+  return rest
+}
+
+// 过滤不应该透传给 next/link 的非链接属性
+const filterLinkProps = props => {
+  const {
+    placeholderSrc,
+    fallbackSrc,
+    src,
+    alt,
+    width,
+    height,
+    loading,
+    decoding,
+    onLoad,
+    onError,
+    ...rest
+  } = props
   return rest
 }
 
@@ -89,7 +113,7 @@ const SmartLink = ({ href, children, ...rest }) => {
       : mergePreservedQueryForObjectHref(href)
 
   return (
-    <Link href={mergedHref} {...rest}>
+    <Link href={mergedHref} {...filterLinkProps(rest)}>
       {children}
     </Link>
   )
