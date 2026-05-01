@@ -20,15 +20,7 @@ const NotionPage = ({ post, className }) => {
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK')
   const SPOILER_TEXT_TAG = siteConfig('SPOILER_TEXT_TAG')
 
-  const zoom =
-    isBrowser &&
-    mediumZoom({
-      //   container: '.notion-viewport',
-      background: 'rgba(0, 0, 0, 0.2)',
-      margin: getMediumZoomMargin()
-    })
-
-  const zoomRef = useRef(zoom ? zoom.clone() : null)
+  const zoomRef = useRef(null)
   const IMAGE_ZOOM_IN_WIDTH = siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)
   // 页面首次打开时执行的勾子
   useEffect(() => {
@@ -40,6 +32,12 @@ const NotionPage = ({ post, className }) => {
   useEffect(() => {
     // 相册视图点击禁止跳转，只能放大查看图片
     if (POST_DISABLE_GALLERY_CLICK) {
+      if (!zoomRef.current && isBrowser) {
+        zoomRef.current = mediumZoom({
+          background: 'rgba(0, 0, 0, 0.2)',
+          margin: getMediumZoomMargin()
+        })
+      }
       // 针对页面中的gallery视图，点击后是放大图片还是跳转到gallery的内部页面
       processGalleryImg(zoomRef?.current)
     }
@@ -52,6 +50,13 @@ const NotionPage = ({ post, className }) => {
     /**
      * 放大查看图片时替换成高清图像
      */
+    const articleRoot =
+      document.getElementById('notion-article') || document.body
+    const hasAnyImage = Boolean(articleRoot.querySelector('img'))
+    if (!hasAnyImage) {
+      return
+    }
+
     const observer = new MutationObserver((mutationsList, observer) => {
       mutationsList.forEach(mutation => {
         if (
@@ -74,8 +79,8 @@ const NotionPage = ({ post, className }) => {
       })
     })
 
-    // 监视页面元素和属性变化
-    observer.observe(document.body, {
+    // 监视正文容器，避免对整个 document.body 做高开销监听
+    observer.observe(articleRoot, {
       attributes: true,
       subtree: true,
       attributeFilter: ['class']
@@ -140,8 +145,16 @@ const NotionPage = ({ post, className }) => {
       />
 
       <AdEmbed />
-      <PrismMac />
+      {hasCodeBlock(post?.blockMap) && <PrismMac />}
     </div>
+  )
+}
+
+const hasCodeBlock = blockMap => {
+  const blocks = blockMap?.block
+  if (!blocks) return false
+  return Object.values(blocks).some(
+    item => item?.value?.type === 'code'
   )
 }
 

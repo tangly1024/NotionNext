@@ -11,7 +11,7 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 
 // mermaid图
 import { loadExternalResource } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useGlobal } from '@/lib/global'
 import { siteConfig } from '@/lib/config'
 
@@ -21,7 +21,7 @@ import { siteConfig } from '@/lib/config'
  * @returns
  */
 const PrismMac = () => {
-  const router = useRouter()
+  const pathname = usePathname()
   const { isDarkMode } = useGlobal()
   const codeMacBar = siteConfig('CODE_MAC_BAR')
   const prismjsAutoLoader = siteConfig('PRISM_JS_AUTO_LOADER')
@@ -39,6 +39,11 @@ const PrismMac = () => {
   const codeCollapseExpandDefault = siteConfig('CODE_COLLAPSE_EXPAND_DEFAULT')
 
   useEffect(() => {
+    const article = getNotionArticle()
+    if (!article) return
+    const hasCodeBlocks = Boolean(article.querySelector('pre.notion-code'))
+    if (!hasCodeBlocks) return
+
     if (codeMacBar) {
       loadExternalResource('/css/prism-mac-style.css', 'css')
     }
@@ -60,7 +65,7 @@ const PrismMac = () => {
       renderMermaid(mermaidCDN)
       renderCollapseCode(codeCollapse, codeCollapseExpandDefault)
     })
-  }, [router, isDarkMode])
+  }, [pathname, isDarkMode])
 
   return <></>
 }
@@ -206,76 +211,38 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
  * 将mermaid语言 渲染成图片
  */
 const renderMermaid = mermaidCDN => {
-  const processArticle = article => {
+  const articles = getNotionArticles()
+  if (!articles || articles.length === 0) return
+
+  let hasMermaidBlocks = false
+
+  for (const article of articles) {
     const mermaidCodeBlocks = article.querySelectorAll(
       '.notion-code.language-mermaid'
     )
     for (const codeBlock of mermaidCodeBlocks) {
       const chart = codeBlock.querySelector('code')?.textContent
-      if (chart && !codeBlock.querySelector('.mermaid')) {
-        const mermaidChart = document.createElement('pre')
+      if (!chart) continue
+      hasMermaidBlocks = true
+      let mermaidChart = codeBlock.querySelector('.mermaid')
+      if (!mermaidChart) {
+        mermaidChart = document.createElement('pre')
         mermaidChart.className = 'mermaid'
-        mermaidChart.innerHTML = chart
+        mermaidChart.textContent = chart
         codeBlock.appendChild(mermaidChart)
       }
     }
-
-    const mermaidsSvg = article.querySelectorAll('.mermaid')
-    if (mermaidsSvg.length > 0) {
-      let needLoad = false
-      for (const e of mermaidsSvg) {
-        if (e?.firstChild?.nodeName !== 'svg') {
-          needLoad = true
-          break
-        }
-      }
-      if (needLoad) {
-        loadExternalResource(mermaidCDN, 'js').then(url => {
-          setTimeout(() => {
-            const mermaid = window.mermaid
-            mermaid?.contentLoaded()
-          }, 100)
-        })
-      }
-    }
   }
 
-  const bindArticleObserver = article => {
-    processArticle(article)
-    const observer = new MutationObserver(() => {
-      processArticle(article)
-    })
-    observer.observe(article, {
-      childList: true,
-      attributes: true,
-      subtree: true
-    })
-  }
+  if (!hasMermaidBlocks) return
 
-  const scanAndBind = () => {
-    const articles = getNotionArticles()
-    for (const article of articles) {
-      if (article.dataset.prismMermaidBound === '1') continue
-      article.dataset.prismMermaidBound = '1'
-      bindArticleObserver(article)
-    }
-  }
-
-  // 立即处理已有内容（主题切换时关键）
-  scanAndBind()
-
-  // 监听后续新增的文章容器
-  if (window.__prismMermaidRootObserver) {
-    window.__prismMermaidRootObserver.disconnect()
-  }
-  const rootObserver = new MutationObserver(() => {
-    scanAndBind()
+  loadExternalResource(mermaidCDN, 'js').then(() => {
+    setTimeout(() => {
+      const mermaid = window.mermaid
+      if (!mermaid) return
+      mermaid?.contentLoaded()
+    }, 60)
   })
-  rootObserver.observe(document.body, {
-    childList: true,
-    subtree: true
-  })
-  window.__prismMermaidRootObserver = rootObserver
 }
 
 function renderPrismMac(codeLineNumbers) {

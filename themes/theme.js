@@ -7,6 +7,27 @@ import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
 
 // 在next.config.js中扫描所有主题
 export const { THEMES = [] } = getConfig()?.publicRuntimeConfig || {}
+const baseLayoutCache = new Map()
+const layoutByThemeCache = new Map()
+let domFixTimer = null
+
+const normalizeThemeName = themeValue => {
+  if (!themeValue || typeof themeValue !== 'string') return BLOG.THEME
+  const firstTheme = themeValue.split(',')[0].trim()
+  if (!firstTheme) return BLOG.THEME
+  return THEMES.includes(firstTheme) ? firstTheme : BLOG.THEME
+}
+
+const scheduleFixThemeDOM = (delay = 120) => {
+  if (!isBrowser) return
+  if (domFixTimer) {
+    clearTimeout(domFixTimer)
+  }
+  domFixTimer = setTimeout(() => {
+    fixThemeDOM()
+    domFixTimer = null
+  }, delay)
+}
 
 /**
  * 获取主题配置
@@ -14,45 +35,55 @@ export const { THEMES = [] } = getConfig()?.publicRuntimeConfig || {}
  * @returns {Promise<object>} 主题配置对象
  */
 export const getThemeConfig = async themeQuery => {
+  const themeName = normalizeThemeName(themeQuery)
+
+  // 处理主题与默认一致时，直接返回默认配置
+  if (!themeName || themeName === BLOG.THEME) {
+    return ThemeComponents?.THEME_CONFIG
+  }
+
   // 如果 themeQuery 存在且不等于默认主题，处理多主题情况
-  if (typeof themeQuery === 'string' && themeQuery.trim()) {
-    // 取 themeQuery 中第一个主题（以逗号为分隔符）
-    const themeName = themeQuery.split(',')[0].trim()
+  try {
+    // 动态导入主题配置
+    const THEME_CONFIG = await import(`@/themes/${themeName}`)
+      .then(m => m.THEME_CONFIG)
+      .catch(err => {
+        console.error(`Failed to load theme ${themeName}:`, err)
+        return null // 主题加载失败时返回 null 或者其他默认值
+      })
 
-    // 如果 themeQuery 不等于当前默认主题，则加载指定主题的配置
-    if (themeName !== BLOG.THEME) {
-      try {
-        // 动态导入主题配置
-        const THEME_CONFIG = await import(`@/themes/${themeName}`)
-          .then(m => m.THEME_CONFIG)
-          .catch(err => {
-            console.error(`Failed to load theme ${themeName}:`, err)
-            return null // 主题加载失败时返回 null 或者其他默认值
-          })
-
-        // 如果主题配置加载成功，返回配置
-        if (THEME_CONFIG) {
-          return THEME_CONFIG
-        } else {
-          // 如果加载失败，返回默认主题配置
-          console.warn(
-            `Loading ${themeName} failed. Falling back to default theme.`
-          )
-          return ThemeComponents?.THEME_CONFIG
-        }
-      } catch (error) {
-        // 如果 import 过程中出现异常，返回默认主题配置
-        console.error(
-          `Error loading theme configuration for ${themeName}:`,
-          error
-        )
-        return ThemeComponents?.THEME_CONFIG
-      }
+    // 如果主题配置加载成功，返回配置
+    if (THEME_CONFIG) {
+      return THEME_CONFIG
+    } else {
+      // 如果加载失败，返回默认主题配置
+      console.warn(
+        `Loading ${themeName} failed. Falling back to default theme.`
+      )
+      return ThemeComponents?.THEME_CONFIG
     }
+  } catch (error) {
+    // 如果 import 过程中出现异常，返回默认主题配置
+    console.error(
+      `Error loading theme configuration for ${themeName}:`,
+      error
+    )
+    return ThemeComponents?.THEME_CONFIG
   }
 
   // 如果没有 themeQuery 或 themeQuery 与默认主题相同，返回默认主题配置
   return ThemeComponents?.THEME_CONFIG
+}
+
+/**
+ * 获取当前主题（query 主题优先，且做合法性校验）
+ */
+const getCurrentTheme = (router, fallbackTheme) => {
+  const queryTheme = getQueryParam(router?.asPath, 'theme')
+  if (queryTheme) {
+    return normalizeThemeName(queryTheme)
+  }
+  return normalizeThemeName(fallbackTheme || BLOG.THEME)
 }
 
 /**
@@ -62,12 +93,18 @@ export const getThemeConfig = async themeQuery => {
  */
 export const getBaseLayoutByTheme = theme => {
   const LayoutBase = ThemeComponents['LayoutBase']
-  const isDefaultTheme = !theme || theme === BLOG.THEME
+  const normalizedTheme = normalizeThemeName(theme)
+  const isDefaultTheme = !normalizedTheme || normalizedTheme === BLOG.THEME
   if (!isDefaultTheme) {
-    return dynamic(
-      () => import(`@/themes/${theme}`).then(m => m['LayoutBase']),
+    if (baseLayoutCache.has(normalizedTheme)) {
+      return baseLayoutCache.get(normalizedTheme)
+    }
+    const DynamicBaseLayout = dynamic(
+      () => import(`@/themes/${normalizedTheme}`).then(m => m['LayoutBase']),
       { ssr: true }
     )
+    baseLayoutCache.set(normalizedTheme, DynamicBaseLayout)
+    return DynamicBaseLayout
   }
 
   return LayoutBase
@@ -95,24 +132,31 @@ export const useLayoutByTheme = ({ layoutName, theme }) => {
     ThemeComponents[layoutName] || ThemeComponents.LayoutSlug
 
   const router = useRouter()
-  const themeQuery = getQueryParam(router?.asPath, 'theme') || theme
+  const themeQuery = getCurrentTheme(router, theme)
   const isDefaultTheme = !themeQuery || themeQuery === BLOG.THEME
 
   // 加载非当前默认主题
   if (!isDefaultTheme) {
-    const loadThemeComponents = componentsSource => {
-      const components =
-        componentsSource[layoutName] || componentsSource.LayoutSlug
-      setTimeout(fixThemeDOM, 500)
-      return components
+    const cacheKey = `${themeQuery}:${layoutName}`
+    if (layoutByThemeCache.has(cacheKey)) {
+      scheduleFixThemeDOM(240)
+      return layoutByThemeCache.get(cacheKey)
     }
-    return dynamic(
-      () => import(`@/themes/${themeQuery}`).then(m => loadThemeComponents(m)),
+    const DynamicLayoutComponent = dynamic(
+      () =>
+        import(`@/themes/${themeQuery}`).then(componentsSource => {
+          return (
+            componentsSource[layoutName] || componentsSource.LayoutSlug
+          )
+        }),
       { ssr: true }
     )
+    layoutByThemeCache.set(cacheKey, DynamicLayoutComponent)
+    scheduleFixThemeDOM(240)
+    return DynamicLayoutComponent
   }
 
-  setTimeout(fixThemeDOM, 100)
+  scheduleFixThemeDOM(80)
   return LayoutComponents
 }
 

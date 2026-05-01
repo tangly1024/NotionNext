@@ -57,6 +57,17 @@ Common commands:
 
 Note: local workflow stays simple (`yarn`), while lockfile consistency is enforced in CI.
 
+## Developer Docs Navigation
+
+To help new contributors get started quickly, the project keeps docs bilingual with clear entry points:
+
+- [文档导航入口（中文）](./docs/README.md)
+- [Docs Navigation (English)](./docs/README.en.md)
+- [主题迁移指南（中文）](./docs/THEME_MIGRATION_GUIDE.zh-CN.md)
+- [Theme Migration Guide (English)](./docs/THEME_MIGRATION_GUIDE.md)
+- [贡献入口（中文）](./CONTRIBUTING.zh-CN.md)
+- [Contribution Guide (English)](./CONTRIBUTING.md)
+
 ## Preview
 
 Live Demo：[https://preview.tangly1024.com/](https://preview.tangly1024.com/) ，Project supports switching between multiple themes. Can't find a theme you like? How about [contributing](/CONTRIBUTING.md) one?~
