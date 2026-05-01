@@ -236,6 +236,31 @@ yarn bundle-report
 yarn analyze
 ```
 
+### 新主题性能准入（必做）
+
+新增或大改主题时，必须在生产模式下执行一次全主题审计，并把结果文件一并提交：
+
+```bash
+# 1) 生产构建与启动
+yarn build
+yarn start
+
+# 2) 另开一个终端执行主题性能审计
+yarn perf:audit:themes
+```
+
+提交前请确认以下文件已更新并纳入 commit：
+
+- `docs/performance/theme-audit-latest.md`
+- `docs/performance/theme-audit-latest.json`
+
+准入门槛（建议值，可逐步收紧）：
+
+- Performance >= 60（新主题目标）
+- SEO >= 90
+- LCP <= 4000ms
+- CLS <= 0.1
+
 ## 环境变量
 
 ### 必需的环境变量

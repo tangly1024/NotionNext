@@ -8,6 +8,7 @@ const root = process.cwd()
 const themesDir = path.join(root, 'themes')
 const reportDir = path.join(root, '.perf', 'theme-audit')
 const rawDir = path.join(reportDir, 'raw')
+const docsPerfDir = path.join(root, 'docs', 'performance')
 const lighthouseBin = path.join(root, 'node_modules', '.bin', 'lighthouse')
 const baseUrl = process.env.THEME_AUDIT_BASE_URL || 'http://localhost:3000'
 const includeThemes = (process.env.THEME_AUDIT_THEMES || '')
@@ -121,6 +122,7 @@ function writeMarkdown(results, reportPath) {
 
 function ensureDirs() {
   fs.mkdirSync(rawDir, { recursive: true })
+  fs.mkdirSync(docsPerfDir, { recursive: true })
 }
 
 async function main() {
@@ -148,7 +150,15 @@ async function main() {
   fs.writeFileSync(summaryPath, JSON.stringify(results, null, 2))
   writeMarkdown(results, markdownPath)
 
-  console.log(`\nTheme audit finished. Results: ${path.relative(root, markdownPath)}`)
+  // 可提交产物：作为主题性能基线与协作规范的一部分
+  const trackedJsonPath = path.join(docsPerfDir, 'theme-audit-latest.json')
+  const trackedMarkdownPath = path.join(docsPerfDir, 'theme-audit-latest.md')
+  fs.writeFileSync(trackedJsonPath, JSON.stringify(results, null, 2))
+  writeMarkdown(results, trackedMarkdownPath)
+
+  console.log(
+    `\nTheme audit finished. Results: ${path.relative(root, trackedMarkdownPath)}`
+  )
 }
 
 main().catch(err => {
