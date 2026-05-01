@@ -4,8 +4,8 @@
 
 ### 环境要求
 
-- Node.js >= 16.0.0
-- npm >= 8.0.0
+- Node.js = 20.20.0（使用 `.nvmrc` 保持一致）
+- Yarn = 1.22.22（使用 `package.json#packageManager` 保持一致）
 - Git
 
 ### 初始化开发环境
@@ -15,12 +15,34 @@
 git clone <repository-url>
 cd NotionNext
 
-# 初始化开发环境
-npm run init-dev
+# 切到统一 Node 版本
+nvm use
 
-# 启动开发服务器
-npm run dev
+# 安装依赖（你的日常习惯）
+yarn
+
+# 启动开发环境
+yarn dev
 ```
+
+### 多人协作依赖管理规则（必读）
+
+```bash
+# 进入项目后先切换到统一 Node 版本
+nvm use
+
+# 日常开发直接使用 yarn 即可
+yarn
+```
+
+约束说明：
+
+- 不要混用 `npm install` / `pnpm install`
+- 仓库只保留 `yarn.lock`，不允许提交 `package-lock.json`
+- 提交依赖变更时必须同时提交 `package.json` 和 `yarn.lock`
+- 如果 PR 修改了 `yarn.lock` 但未修改 `package.json`，需要在 PR 描述里说明原因
+- CI 会自动用 `yarn install --frozen-lockfile` 校验锁文件一致性（严格性放在 CI，不增加本地负担）
+- `.yarnrc.yml` 主要用于 CI/平台回退到 Yarn 4 时的兼容兜底，本地按 Yarn 1 流程即可
 
 ## 开发工具
 
@@ -28,54 +50,54 @@ npm run dev
 
 ```bash
 # 代码格式化
-npm run format
+yarn format
 
 # 代码检查
-npm run lint
+yarn lint
 
 # 类型检查
-npm run type-check
+yarn type-check
 
 # 完整质量检查
-npm run quality
+yarn quality
 
 # 预提交检查
-npm run pre-commit
+yarn pre-commit
 ```
 
 ### 开发辅助工具
 
 ```bash
 # 查看所有开发工具命令
-npm run dev-tools
+yarn dev-tools
 
 # 清理项目文件
-npm run clean
+yarn clean
 
 # 生成组件模板
-npm run dev-tools generate:component MyComponent
+yarn dev-tools generate:component MyComponent
 
 # 分析包大小
-npm run dev-tools analyze
+yarn dev-tools analyze
 
 # 检查依赖更新
-npm run check-updates
+yarn check-updates
 
 # 生成项目文档
-npm run docs
+yarn docs
 ```
 
 ### Git Hooks
 
 ```bash
 # 安装Git钩子
-npm run setup-hooks
+yarn setup-hooks
 
 # 检查钩子状态
-npm run check-hooks
+yarn check-hooks
 
 # 移除Git钩子
-npm run remove-hooks
+yarn remove-hooks
 ```
 
 ## 项目结构
@@ -157,13 +179,13 @@ git checkout -b feature/your-feature-name
 
 ```bash
 # 启动开发服务器
-npm run dev
+yarn dev
 
 # 运行代码质量检查
-npm run quality
+yarn quality
 
 # 运行测试
-npm test
+yarn test
 ```
 
 ### 3. 提交代码
@@ -198,7 +220,7 @@ git push origin feature/your-feature-name
 
 ```bash
 # 启动调试模式
-npm run dev
+yarn dev
 
 # 在浏览器中打开开发者工具
 # 访问 http://localhost:3000
@@ -208,10 +230,10 @@ npm run dev
 
 ```bash
 # 分析包大小
-npm run bundle-report
+yarn bundle-report
 
 # 生成性能报告
-npm run analyze
+yarn analyze
 ```
 
 ## 环境变量
@@ -231,7 +253,7 @@ npm run analyze
 
 ```bash
 # 验证环境变量配置
-npm run quality
+yarn quality
 ```
 
 ## 常见问题
@@ -240,29 +262,29 @@ npm run quality
 
 ```bash
 # 清理缓存
-npm run clean
-rm -rf node_modules package-lock.json
+yarn clean
+rm -rf node_modules
 
 # 重新安装
-npm install
+yarn deps:install
 ```
 
 ### 2. 构建失败
 
 ```bash
 # 检查代码质量
-npm run quality
+yarn quality
 
 # 清理并重新构建
-npm run clean
-npm run build
+yarn clean
+yarn build
 ```
 
 ### 3. 类型错误
 
 ```bash
 # 运行类型检查
-npm run type-check
+yarn type-check
 
 # 查看详细错误信息
 npx tsc --noEmit --pretty
@@ -272,7 +294,7 @@ npx tsc --noEmit --pretty
 
 ```bash
 # 自动修复ESLint错误
-npm run lint:fix
+yarn lint:fix
 
 # 查看所有ESLint规则
 npx eslint --print-config .
@@ -302,6 +324,6 @@ npx eslint --print-config .
 
 ## 获取帮助
 
-- 查看项目文档: `npm run docs`
-- 检查开发工具: `npm run dev-tools`
+- 查看项目文档: `yarn docs`
+- 检查开发工具: `yarn dev-tools`
 - 提交 Issue 或 Pull Request
