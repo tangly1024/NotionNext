@@ -7,12 +7,26 @@ import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
 
 // 在next.config.js中扫描所有主题
 export const { THEMES = [] } = getConfig()?.publicRuntimeConfig || {}
+const baseLayoutCache = new Map()
+const layoutByThemeCache = new Map()
+let domFixTimer = null
 
 const normalizeThemeName = themeValue => {
   if (!themeValue || typeof themeValue !== 'string') return BLOG.THEME
   const firstTheme = themeValue.split(',')[0].trim()
   if (!firstTheme) return BLOG.THEME
   return THEMES.includes(firstTheme) ? firstTheme : BLOG.THEME
+}
+
+const scheduleFixThemeDOM = (delay = 120) => {
+  if (!isBrowser) return
+  if (domFixTimer) {
+    clearTimeout(domFixTimer)
+  }
+  domFixTimer = setTimeout(() => {
+    fixThemeDOM()
+    domFixTimer = null
+  }, delay)
 }
 
 /**
@@ -79,12 +93,18 @@ const getCurrentTheme = (router, fallbackTheme) => {
  */
 export const getBaseLayoutByTheme = theme => {
   const LayoutBase = ThemeComponents['LayoutBase']
-  const isDefaultTheme = !theme || theme === BLOG.THEME
+  const normalizedTheme = normalizeThemeName(theme)
+  const isDefaultTheme = !normalizedTheme || normalizedTheme === BLOG.THEME
   if (!isDefaultTheme) {
-    return dynamic(
-      () => import(`@/themes/${theme}`).then(m => m['LayoutBase']),
+    if (baseLayoutCache.has(normalizedTheme)) {
+      return baseLayoutCache.get(normalizedTheme)
+    }
+    const DynamicBaseLayout = dynamic(
+      () => import(`@/themes/${normalizedTheme}`).then(m => m['LayoutBase']),
       { ssr: true }
     )
+    baseLayoutCache.set(normalizedTheme, DynamicBaseLayout)
+    return DynamicBaseLayout
   }
 
   return LayoutBase
@@ -117,19 +137,26 @@ export const useLayoutByTheme = ({ layoutName, theme }) => {
 
   // 加载非当前默认主题
   if (!isDefaultTheme) {
-    const loadThemeComponents = componentsSource => {
-      const components =
-        componentsSource[layoutName] || componentsSource.LayoutSlug
-      setTimeout(fixThemeDOM, 500)
-      return components
+    const cacheKey = `${themeQuery}:${layoutName}`
+    if (layoutByThemeCache.has(cacheKey)) {
+      scheduleFixThemeDOM(240)
+      return layoutByThemeCache.get(cacheKey)
     }
-    return dynamic(
-      () => import(`@/themes/${themeQuery}`).then(m => loadThemeComponents(m)),
+    const DynamicLayoutComponent = dynamic(
+      () =>
+        import(`@/themes/${themeQuery}`).then(componentsSource => {
+          return (
+            componentsSource[layoutName] || componentsSource.LayoutSlug
+          )
+        }),
       { ssr: true }
     )
+    layoutByThemeCache.set(cacheKey, DynamicLayoutComponent)
+    scheduleFixThemeDOM(240)
+    return DynamicLayoutComponent
   }
 
-  setTimeout(fixThemeDOM, 100)
+  scheduleFixThemeDOM(80)
   return LayoutComponents
 }
 

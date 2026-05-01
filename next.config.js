@@ -35,12 +35,10 @@ const locales = (function () {
 // next dev 启动时提示：开发环境默认读/写 Notion 缓存（见 conf/dev.config.js 中 ENABLE_CACHE）
 ;(function printDevCacheHint() {
   if (process.env.npm_lifecycle_event !== 'dev') return
-  console.log(
-    '\n[NotionNext] 开发环境默认开启 Notion 数据缓存（ENABLE_CACHE），便于本地调试提速。'
-  )
-  console.log(
-    '若需关闭缓存、每次请求都从 Notion 获取实时数据：请复制仓库根目录的 .env.example 创建 .env.local，并配置 ENABLE_CACHE=false\n'
-  )
+  if (globalThis.__NOTIONNEXT_DEV_CACHE_HINT_PRINTED__) return
+  globalThis.__NOTIONNEXT_DEV_CACHE_HINT_PRINTED__ = true
+  console.log('\n[NotionNext] Dev cache is ON (ENABLE_CACHE=true).')
+  console.log('[NotionNext] Need realtime data? Set ENABLE_CACHE=false in .env.local\n')
 })()
 
 // 编译前执行
@@ -158,16 +156,17 @@ const nextConfig = {
     // 图片尺寸优化
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    // 允许next/image加载的图片 域名
-    domains: [
-      'gravatar.com',
-      'www.notion.so',
-      'avatars.githubusercontent.com',
-      'images.unsplash.com',
-      'source.unsplash.com',
-      'p1.qhimg.com',
-      'webmention.io',
-      'ko-fi.com'
+    // NotionNext 站长图源不可控（任意外链），这里放开 http/https 远程图片来源
+    // 说明：这会显著降低“域名白名单漏配导致图片不显示”的概率
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**'
+      },
+      {
+        protocol: 'http',
+        hostname: '**'
+      }
     ],
     // 图片加载器优化
     loader: 'default',
@@ -311,6 +310,10 @@ const nextConfig = {
   webpack: (config, { dev, isServer }) => {
     // 动态主题：添加 resolve.alias 配置，将动态路径映射到实际路径
     config.resolve.alias['@'] = path.resolve(__dirname)
+    config.resolve.alias['lodash.throttle'] = path.resolve(
+      __dirname,
+      'lib/utils/throttle.js'
+    )
 
     if (!isServer) {
       console.log(
@@ -336,43 +339,6 @@ const nextConfig = {
       'themes',
       THEME
     )
-
-    // 性能优化配置
-    if (!dev) {
-      // 生产环境优化
-      config.optimization = {
-        ...config.optimization,
-        splitChunks: {
-          chunks: 'all',
-          cacheGroups: {
-            vendor: {
-              test: /[\\/]node_modules[\\/]/,
-              name: 'vendors',
-              chunks: 'all',
-            },
-            common: {
-              name: 'common',
-              minChunks: 2,
-              chunks: 'all',
-              enforce: true,
-            },
-          },
-        },
-      }
-    }
-
-    // Enable source maps in development mode
-    if (dev || process.env.NODE_ENV_API === 'development') {
-      // config.devtool = 'source-map'
-      config.devtool = 'eval-source-map'
-      // console.log('启动调试 nextjs.config.devtool ', config.devtool)
-    }
-
-    // 优化模块解析
-    config.resolve.modules = [
-      path.resolve(__dirname, 'node_modules'),
-      'node_modules'
-    ]
 
     return config
   }
