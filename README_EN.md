@@ -35,6 +35,28 @@ You can set up your personal website in just a few minutes. Here is the link to 
 A static blog system built with NextJS and Notion API, deployed on Vercel. Designed for Notion and all creators.
 
 
+## 3-Minute Quick Start
+
+```bash
+# 1) Use Node 20 (nvm recommended)
+nvm use || nvm install 20.20.0
+
+# 2) Install Yarn if needed
+npm i -g yarn
+
+# 3) Install dependencies and start dev server
+yarn
+yarn dev
+```
+
+Common commands:
+
+- Local development: `yarn dev`
+- Production build: `yarn build`
+- Static export: `yarn export`
+
+Note: local workflow stays simple (`yarn`), while lockfile consistency is enforced in CI.
+
 ## Preview
 
 Live Demo：[https://preview.tangly1024.com/](https://preview.tangly1024.com/) ，Project supports switching between multiple themes. Can't find a theme you like? How about [contributing](/CONTRIBUTING.md) one?~
