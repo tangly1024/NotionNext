@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
@@ -56,13 +55,14 @@ export const Hero = props => {
                           null,
                           config
                         ) && (
-                          <img
-                            className='mr-4'
+                          <LazyImage
+                            className='mr-4 w-5 h-5'
                             src={siteConfig(
                               'STARTER_HERO_BUTTON_2_ICON',
                               null,
                               config
                             )}
+                            alt='button icon'
                           />
                         )}
                         {siteConfig('STARTER_HERO_BUTTON_2_TEXT', null, config)}
@@ -80,8 +80,7 @@ export const Hero = props => {
                   className='wow fadeInUp relative z-10 mx-auto max-w-[845px]'
                   data-wow-delay='.25s'>
                   <div className='mt-16'>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <LazyImage
                       src={siteConfig(
                         'STARTER_HERO_PREVIEW_IMAGE',
                         null,
@@ -95,10 +94,10 @@ export const Hero = props => {
 
                   {/* 背景图 */}
                   <div className='absolute -left-9 bottom-0 z-[-1]'>
-                    <img src='/images/starter/bg-hero-circle.svg' />
+                    <LazyImage src='/images/starter/bg-hero-circle.svg' alt='bg-circle-left' />
                   </div>
                   <div className='absolute -right-6 -top-6 z-[-1]'>
-                    <img src='/images/starter/bg-hero-circle.svg' />
+                    <LazyImage src='/images/starter/bg-hero-circle.svg' alt='bg-circle-right' />
                   </div>
                 </div>
               </div>
