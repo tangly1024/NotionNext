@@ -42,6 +42,7 @@ yarn
 - 提交依赖变更时必须同时提交 `package.json` 和 `yarn.lock`
 - 如果 PR 修改了 `yarn.lock` 但未修改 `package.json`，需要在 PR 描述里说明原因
 - CI 会自动用 `yarn install --frozen-lockfile` 校验锁文件一致性（严格性放在 CI，不增加本地负担）
+- `.yarnrc.yml` 主要用于 CI/平台回退到 Yarn 4 时的兼容兜底，本地按 Yarn 1 流程即可
 
 ## 开发工具
 
