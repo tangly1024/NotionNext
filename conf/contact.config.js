@@ -9,6 +9,8 @@ module.exports = {
         unescape(encodeURIComponent(process.env.NEXT_PUBLIC_CONTACT_EMAIL))
       )) ||
     '', // 邮箱地址 例如mail@tangly1024.com
+  CONTACT_DOMAIN_MAIL:
+    process.env.NEXT_PUBLIC_CONTACT_DOMAIN_MAIL || 'https://mail.xxgh.ccwu.cc/', // 域名邮箱网页登录地址
   CONTACT_WEIBO: process.env.NEXT_PUBLIC_CONTACT_WEIBO || '', // 你的微博个人主页
   CONTACT_TWITTER: process.env.NEXT_PUBLIC_CONTACT_TWITTER || '', // 你的twitter个人主页
   CONTACT_GITHUB: process.env.NEXT_PUBLIC_CONTACT_GITHUB || '', // 你的github个人主页 例如 https://github.com/tangly1024

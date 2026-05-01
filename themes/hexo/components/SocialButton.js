@@ -17,6 +17,7 @@ const SocialButton = () => {
   const CONTACT_WEIBO = siteConfig('CONTACT_WEIBO')
   const CONTACT_INSTAGRAM = siteConfig('CONTACT_INSTAGRAM')
   const CONTACT_EMAIL = siteConfig('CONTACT_EMAIL')
+  const CONTACT_DOMAIN_MAIL = siteConfig('CONTACT_DOMAIN_MAIL')
   const ENABLE_RSS = siteConfig('ENABLE_RSS')
   const CONTACT_BILIBILI = siteConfig('CONTACT_BILIBILI')
   const CONTACT_YOUTUBE = siteConfig('CONTACT_YOUTUBE')
@@ -100,6 +101,15 @@ const SocialButton = () => {
             className='cursor-pointer'
             ref={emailIcon}>
             <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-indigo-400 hover:text-indigo-600' />
+          </a>
+        )}
+        {CONTACT_DOMAIN_MAIL && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            title='域名邮箱'
+            href={CONTACT_DOMAIN_MAIL}>
+            <i className='transform hover:scale-125 duration-150 fas fa-envelope-open-text dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}
         {ENABLE_RSS && (
