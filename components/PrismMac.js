@@ -109,7 +109,7 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
     return
   }
 
-  const COLLAPSE_MIN_LINES = Number(siteConfig('CODE_COLLAPSE_MIN_LINES', 18))
+  const COLLAPSE_MIN_LINES = Number(siteConfig('CODE_COLLAPSE_MIN_LINES', 20))
   const codeBlocks = document.querySelectorAll('.code-toolbar')
 
   for (const codeBlock of codeBlocks) {
@@ -164,6 +164,7 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
       panelWrapper.classList.toggle('is-expanded', expanded)
       panel.classList.toggle('is-expanded', expanded)
       header.setAttribute('aria-expanded', expanded ? 'true' : 'false')
+      panel.style.maxHeight = expanded ? `${panel.scrollHeight}px` : '0px'
     }
 
     header.addEventListener('click', () => {

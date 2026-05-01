@@ -155,7 +155,7 @@ html.dark .collapse-panel {
 }
 
 .collapse-panel.is-expanded {
-  max-height: 3000px;
+  max-height: none;
 }
 
 /* 6. Prism 代码高亮补丁 (暗底优化) */
