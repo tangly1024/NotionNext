@@ -26,6 +26,22 @@ export async function getStaticProps(req) {
   const { locale } = req
   const from = 'index'
   const props = await fetchGlobalAllData({ from, locale })
+  if (process.env.NODE_ENV === 'development') {
+    const configTheme = BLOG.THEME
+    const notionTheme = props?.NOTION_CONFIG?.THEME || null
+    const finalTheme = siteConfig('THEME', BLOG.THEME, props?.NOTION_CONFIG)
+    const source = notionTheme ? 'notion:config' : 'blog/env:config'
+    console.log(
+      '[ThemeResolver][server-static-props]',
+      JSON.stringify({
+        route: '/',
+        configTheme,
+        notionTheme,
+        finalTheme,
+        source
+      })
+    )
+  }
   const POST_PREVIEW_LINES = siteConfig(
     'POST_PREVIEW_LINES',
     12,

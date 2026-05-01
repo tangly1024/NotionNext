@@ -313,7 +313,15 @@ const nextConfig = {
     config.resolve.alias['@'] = path.resolve(__dirname)
 
     if (!isServer) {
-      console.log('[默认主题]', path.resolve(__dirname, 'themes', THEME))
+      console.log(
+        '[ThemeResolver][webpack-default-only]',
+        JSON.stringify({
+          note: 'This is only webpack default theme alias, not final runtime theme.',
+          envTheme: process.env.NEXT_PUBLIC_THEME || null,
+          configTheme: THEME,
+          resolvedDefaultThemePath: path.resolve(__dirname, 'themes', THEME)
+        })
+      )
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,
