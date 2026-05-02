@@ -1,7 +1,7 @@
 import Badge from '@/components/Badge'
 import NotionIcon from '@/components/NotionIcon'
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 
 const BlogPostCard = ({ post, className }) => {
@@ -10,11 +10,11 @@ const BlogPostCard = ({ post, className }) => {
     decodeURIComponent(router.asPath.split('?')[0]) === post?.href
 
   return (
-    <Link href={post?.href} passHref>
+    <SmartLink href={post?.href} passHref>
       <div
         key={post.id}
         className={`${className} relative py-1.5 cursor-pointer px-1.5 rounded-md hover:bg-gray-50
-                    ${currentSelected ? 'text-green-500 dark:bg-yellow-100 dark:text-yellow-600 font-semibold' : ' dark:hover:bg-yellow-100 dark:hover:text-yellow-600'}`}>
+                    ${currentSelected ? 'text-green-600 bg-green-50/70 dark:bg-black dark:text-green-400 font-semibold' : 'dark:hover:bg-gray-900 dark:hover:text-gray-200'}`}>
         <div className='w-full select-none'>
           {siteConfig('POST_TITLE_ICON') && (
             <NotionIcon icon={post?.pageIcon} />
@@ -26,7 +26,7 @@ const BlogPostCard = ({ post, className }) => {
           <Badge />
         )}
       </div>
-    </Link>
+    </SmartLink>
   )
 }
 

@@ -1,0 +1,48 @@
+{
+	"name": "github-markdown-css",
+	"version": "5.9.0",
+	"description": "The minimal amount of CSS to replicate the GitHub Markdown style",
+	"license": "MIT",
+	"repository": "sindresorhus/github-markdown-css",
+	"funding": "https://github.com/sponsors/sindresorhus",
+	"author": {
+		"name": "Sindre Sorhus",
+		"email": "sindresorhus@gmail.com",
+		"url": "https://sindresorhus.com"
+	},
+	"main": "github-markdown.css",
+	"engines": {
+		"node": ">=10"
+	},
+	"scripts": {
+		"make:light": "github-markdown-css --no-use-fixture --theme light > github-markdown-light.css",
+		"make:dark": "github-markdown-css --no-use-fixture --theme dark > github-markdown-dark.css",
+		"make:dark-dimmed": "github-markdown-css --no-use-fixture --theme dark_dimmed > github-markdown-dark-dimmed.css",
+		"make:dark-high-contrast": "github-markdown-css --no-use-fixture --theme dark_high_contrast > github-markdown-dark-high-contrast.css",
+		"make:dark-colorblind": "github-markdown-css --no-use-fixture --theme dark_colorblind > github-markdown-dark-colorblind.css",
+		"make:light-colorblind": "github-markdown-css --no-use-fixture --theme light_colorblind > github-markdown-light-colorblind.css",
+		"make:auto": "github-markdown-css --no-use-fixture --theme auto > github-markdown.css",
+		"make": "npm run make:light && npm run make:dark && npm run make:dark-dimmed && npm run make:dark-high-contrast && npm run make:dark-colorblind && npm run make:light-colorblind && npm run make:auto"
+	},
+	"files": [
+		"github-markdown.css",
+		"github-markdown-light.css",
+		"github-markdown-dark.css",
+		"github-markdown-dark-dimmed.css",
+		"github-markdown-dark-high-contrast.css",
+		"github-markdown-dark-colorblind.css",
+		"github-markdown-light-colorblind.css"
+	],
+	"keywords": [
+		"browser",
+		"github",
+		"markdown",
+		"md",
+		"css",
+		"style",
+		"stylesheet"
+	],
+	"devDependencies": {
+		"generate-github-markdown-css": "^6.6.0"
+	}
+}

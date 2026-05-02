@@ -1,5 +1,5 @@
 // pages/sitemap.xml.js
-import { getGlobalData } from '@/lib/db/getSiteData'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { useRouter } from 'next/router'
 import Slug from '../[prefix]'
 
@@ -9,7 +9,7 @@ import Slug from '../[prefix]'
  */
 export const getStaticProps = async () => {
   const from = `auth`
-  const props = await getGlobalData({ from })
+  const props = await fetchGlobalAllData({ from })
 
   delete props.allPages
   return {

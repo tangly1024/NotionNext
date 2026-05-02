@@ -1,5 +1,5 @@
 import Collapse from '@/components/Collapse'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
@@ -40,7 +40,7 @@ export const MenuItemCollapse = ({ link }) => {
             : ' text-black dark:text-white ')
         }>
         {!hasSubMenu && (
-          <Link href={link?.href} target={link?.target}>
+          <SmartLink href={link?.href} target={link?.target}>
             <div className='my-auto items-center justify-between flex '>
               {link.icon && (
                 <i className={`${link.icon} w-4 mr-6 text-center`} />
@@ -48,7 +48,7 @@ export const MenuItemCollapse = ({ link }) => {
               <div>{link.name}</div>
             </div>
             {link.slot}
-          </Link>
+          </SmartLink>
         )}
 
         {hasSubMenu && (
@@ -73,12 +73,12 @@ export const MenuItemCollapse = ({ link }) => {
               <div
                 key={index}
                 className='cursor-pointer whitespace-nowrap dark:text-gray-200  w-full font-extralight dark:bg-black text-left px-5 justify-start bg-gray-100  hover:bg-indigo-500 dark:hover:bg-indigo-500 hover:text-white tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
-                <Link href={sLink.href} target={link?.target}>
+                <SmartLink href={sLink.href} target={link?.target}>
                   <span className='text-sm'>
                     <i className={`${sLink.icon} w-4 mr-3 text-center`} />
                     {sLink.title}
                   </span>
-                </Link>
+                </SmartLink>
               </div>
             )
           })}

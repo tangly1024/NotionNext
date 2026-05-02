@@ -3,7 +3,7 @@ import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CategoryItem from './CategoryItem'
 
 /**
@@ -21,7 +21,7 @@ const PostItemCardWide = ({ post, showSummary }) => {
         {siteConfig('MAGZINE_POST_LIST_CATEGORY') && (
           <CategoryItem category={post?.category} />
         )}
-        <Link
+        <SmartLink
           href={post?.href || ''}
           passHref
           className={
@@ -33,7 +33,7 @@ const PostItemCardWide = ({ post, showSummary }) => {
             )}
             {post?.title}
           </h3>
-        </Link>
+        </SmartLink>
 
         {(!showPreview || showSummary) && (
           <main className='line-clamp-2 text-gray-900 dark:text-gray-300 text-sm'>
@@ -46,13 +46,13 @@ const PostItemCardWide = ({ post, showSummary }) => {
             <NotionPage post={post} />
             <div className='pointer-events-none border-t pt-8 border-dashed'>
               <div className='w-full justify-start flex'>
-                <Link
+                <SmartLink
                   href={post?.href || ''}
                   passHref
                   className='hover:bg-opacity-100 hover:scale-105 duration-200 pointer-events-auto transform font-bold text-gray-500 cursor-pointer'>
                   {locale.COMMON.ARTICLE_DETAIL}
                   <i className='ml-1 fas fa-angle-right' />
-                </Link>
+                </SmartLink>
               </div>
             </div>
           </div>
