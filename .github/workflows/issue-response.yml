@@ -1,0 +1,214 @@
+## 自动分析并回复仓库 Issue ##
+
+name: Issue Response Bot
+
+on:
+  issues:
+    types: [opened]
+  schedule:
+    - cron: '0 1 * * *' # 每天国际标准时间 01:00（北京时间 09:00）运行
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  respond-to-new-issue:
+    name: 回复新开的 Issue
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issues' && github.event.action == 'opened'
+    steps:
+      - name: 自动回复新 Issue
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issue = context.payload.issue;
+            const labels = issue.labels.map(l => l.name);
+            const issueNumber = issue.number;
+            const author = issue.user.login;
+
+            const bugComment = [
+              `👋 @${author} 感谢您提交 Bug 反馈！`,
+              '',
+              '我们已收到您的问题报告，将尽快安排排查。',
+              '',
+              '在处理之前，请确认您的 Issue 已提供以下信息（否则我们可能无法重现问题）：',
+              '',
+              '- ✅ **NotionNext 版本号**（例如：4.9.4.2）',
+              '- ✅ **使用的主题**（例如：hexo / heo / next）',
+              '- ✅ **部署方案**（例如：Vercel / Cloudflare Pages / 自托管）',
+              '- ✅ **复现步骤**（清晰的步骤描述）',
+              '- ✅ **期望结果与实际结果**',
+              '',
+              '如果以上信息不完整，请补充后我们会继续跟进。感谢您对 NotionNext 的贡献！ 🙏',
+            ].join('\n');
+
+            const enhancementComment = [
+              `👋 @${author} 感谢您提交新特性建议！`,
+              '',
+              '您的建议已被收录，我们将在评估可行性后决定是否纳入后续版本。',
+              '',
+              '如果您有能力参与实现，欢迎提交 PR！具体开发规范请参阅 [贡献指南](https://github.com/tangly1024/NotionNext/blob/main/README.md)。',
+              '',
+              '感谢您对 NotionNext 的支持！ 🙏',
+            ].join('\n');
+
+            const deploymentComment = [
+              `👋 @${author} 感谢您反馈部署问题！`,
+              '',
+              '以下是常见部署问题的排查建议，请先自查：',
+              '',
+              '1. 📝 确认 `NOTION_PAGE_ID` 已正确配置并且 Notion 页面已公开分享。',
+              '2. 🔑 确认所有必要的环境变量（如 `NEXT_PUBLIC_*`）已在部署平台正确设置。',
+              '3. 📦 确认使用的 Node.js 版本为 20.x（兼容 20/22/24），依赖安装命令为 `yarn`。',
+              '4. 📖 参阅官方文档：[部署指南](https://github.com/tangly1024/NotionNext#部署)',
+              '',
+              '如果以上步骤均已确认，请补充更详细的错误日志，我们将继续协助排查。感谢您的耐心！ 🙏',
+            ].join('\n');
+
+            const helpComment = [
+              `👋 @${author} 您好，感谢您使用 NotionNext！`,
+              '',
+              '请详细描述您遇到的问题以及期望的结果，以便社区成员更好地帮助您。',
+              '',
+              '同时也欢迎加入我们的社区交流群获取更快速的帮助：[Telegram 群组](https://t.me/Notionso)',
+              '',
+              '感谢您的使用！ 🙏',
+            ].join('\n');
+
+            const defaultComment = [
+              `👋 @${author} 感谢您提交 Issue！`,
+              '',
+              '我们已收到您的反馈，将尽快处理。如有需要，我们会与您进一步沟通。',
+              '',
+              '欢迎加入我们的社区：[Telegram 群组](https://t.me/Notionso)',
+              '',
+              '感谢您对 NotionNext 的支持！ 🙏',
+            ].join('\n');
+
+            let comment = defaultComment;
+            if (labels.includes('bug')) {
+              comment = bugComment;
+            } else if (labels.includes('enhancement')) {
+              comment = enhancementComment;
+            } else if (labels.includes('deployment')) {
+              comment = deploymentComment;
+            } else if (labels.includes('help wanted')) {
+              comment = helpComment;
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: comment,
+            });
+
+  daily-triage:
+    name: 每日 Issue 处理
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: 处理未回复的 Issue
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              since: oneDayAgo,
+              per_page: 100,
+            });
+
+            const buildComment = (author, labels) => {
+              const bugComment = [
+                `👋 @${author} 感谢您提交 Bug 反馈！`,
+                '',
+                '我们已收到您的问题报告，将尽快安排排查。',
+                '',
+                '在处理之前，请确认您的 Issue 已提供以下信息（否则我们可能无法重现问题）：',
+                '',
+                '- ✅ **NotionNext 版本号**（例如：4.9.4.2）',
+                '- ✅ **使用的主题**（例如：hexo / heo / next）',
+                '- ✅ **部署方案**（例如：Vercel / Cloudflare Pages / 自托管）',
+                '- ✅ **复现步骤**（清晰的步骤描述）',
+                '- ✅ **期望结果与实际结果**',
+                '',
+                '如果以上信息不完整，请补充后我们会继续跟进。感谢您对 NotionNext 的贡献！ 🙏',
+              ].join('\n');
+
+              const enhancementComment = [
+                `👋 @${author} 感谢您提交新特性建议！`,
+                '',
+                '您的建议已被收录，我们将在评估可行性后决定是否纳入后续版本。',
+                '',
+                '如果您有能力参与实现，欢迎提交 PR！具体开发规范请参阅 [贡献指南](https://github.com/tangly1024/NotionNext/blob/main/README.md)。',
+                '',
+                '感谢您对 NotionNext 的支持！ 🙏',
+              ].join('\n');
+
+              const deploymentComment = [
+                `👋 @${author} 感谢您反馈部署问题！`,
+                '',
+                '以下是常见部署问题的排查建议，请先自查：',
+                '',
+                '1. 📝 确认 `NOTION_PAGE_ID` 已正确配置并且 Notion 页面已公开分享。',
+                '2. 🔑 确认所有必要的环境变量（如 `NEXT_PUBLIC_*`）已在部署平台正确设置。',
+                '3. 📦 确认使用的 Node.js 版本为 20.x（兼容 20/22/24），依赖安装命令为 `yarn`。',
+                '4. 📖 参阅官方文档：[部署指南](https://github.com/tangly1024/NotionNext#部署)',
+                '',
+                '如果以上步骤均已确认，请补充更详细的错误日志，我们将继续协助排查。感谢您的耐心！ 🙏',
+              ].join('\n');
+
+              const helpComment = [
+                `👋 @${author} 您好，感谢您使用 NotionNext！`,
+                '',
+                '请详细描述您遇到的问题以及期望的结果，以便社区成员更好地帮助您。',
+                '',
+                '同时也欢迎加入我们的社区交流群获取更快速的帮助：[Telegram 群组](https://t.me/Notionso)',
+                '',
+                '感谢您的使用！ 🙏',
+              ].join('\n');
+
+              const defaultComment = [
+                `👋 @${author} 感谢您提交 Issue！`,
+                '',
+                '我们已收到您的反馈，将尽快处理。如有需要，我们会与您进一步沟通。',
+                '',
+                '欢迎加入我们的社区：[Telegram 群组](https://t.me/Notionso)',
+                '',
+                '感谢您对 NotionNext 的支持！ 🙏',
+              ].join('\n');
+
+              if (labels.includes('bug')) return bugComment;
+              if (labels.includes('enhancement')) return enhancementComment;
+              if (labels.includes('deployment')) return deploymentComment;
+              if (labels.includes('help wanted')) return helpComment;
+              return defaultComment;
+            };
+
+            let processed = 0;
+            for (const issue of issues) {
+              if (issue.pull_request) continue;
+              if (issue.comments > 0) continue;
+
+              const labels = issue.labels.map(l => l.name);
+              const comment = buildComment(issue.user.login, labels);
+
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: comment,
+              });
+
+              processed++;
+              await new Promise(r => setTimeout(r, 1000));
+            }
+
+            console.log(`每日巡检完成，共处理 ${processed} 个 Issue。`);

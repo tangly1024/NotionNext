@@ -1,0 +1,38 @@
+name: Lockfile Consistency
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  yarn-lockfile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Setup Yarn 1
+        run: |
+          corepack enable
+          corepack prepare yarn@1.22.22 --activate
+          yarn --version
+
+      - name: Enforce Yarn-only lockfile
+        run: |
+          if [ -f package-lock.json ]; then
+            echo "package-lock.json is not allowed. Please use yarn.lock only."
+            exit 1
+          fi
+
+      - name: Install dependencies with frozen lockfile
+        run: yarn install --frozen-lockfile
+
+      - name: Verify yarn.lock unchanged
+        run: git diff --exit-code yarn.lock

@@ -1,57 +1,63 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import {
-  EmailIcon,
-  EmailShareButton,
-  FacebookIcon,
-  FacebookMessengerIcon,
-  FacebookMessengerShareButton,
-  FacebookShareButton,
-  HatenaIcon,
-  HatenaShareButton,
-  InstapaperIcon,
-  InstapaperShareButton,
-  LineIcon,
-  LineShareButton,
-  LinkedinIcon,
-  LinkedinShareButton,
-  LivejournalIcon,
-  LivejournalShareButton,
-  MailruIcon,
-  MailruShareButton,
-  OKIcon,
-  OKShareButton,
-  PinterestIcon,
-  PinterestShareButton,
-  PocketIcon,
-  PocketShareButton,
-  RedditIcon,
-  RedditShareButton,
-  TelegramIcon,
-  TelegramShareButton,
-  TumblrIcon,
-  TumblrShareButton,
-  TwitterIcon,
-  TwitterShareButton,
-  ThreadsIcon,
-  ThreadsShareButton,
-  ViberIcon,
-  ViberShareButton,
-  VKIcon,
-  VKShareButton,
-  WeiboIcon,
-  WeiboShareButton,
-  WhatsappIcon,
-  WhatsappShareButton,
-  WorkplaceIcon,
-  WorkplaceShareButton
-} from 'react-share'
-
 const QrCode = dynamic(() => import('@/components/QrCode'), { ssr: false })
+const BASE_BUTTON_CLASS =
+  'cursor-pointer rounded-full mx-1 w-8 h-8 flex items-center justify-center text-white'
+
+const SHARE_ICON_CLASS = {
+  facebook: 'fab fa-facebook-f',
+  messenger: 'fab fa-facebook-messenger',
+  line: 'fab fa-line',
+  reddit: 'fab fa-reddit-alien',
+  email: 'fas fa-envelope',
+  twitter: 'fab fa-x-twitter',
+  telegram: 'fab fa-telegram-plane',
+  whatsapp: 'fab fa-whatsapp',
+  linkedin: 'fab fa-linkedin-in',
+  pinterest: 'fab fa-pinterest-p',
+  vkshare: 'fab fa-vk',
+  okshare: 'fas fa-share-nodes',
+  tumblr: 'fab fa-tumblr',
+  livejournal: 'fas fa-book-open',
+  mailru: 'fas fa-at',
+  viber: 'fab fa-viber',
+  workplace: 'fas fa-briefcase',
+  weibo: 'fab fa-weibo',
+  pocket: 'fas fa-bookmark',
+  instapaper: 'fas fa-newspaper',
+  hatena: 'fas fa-h',
+  threads: 'fas fa-at'
+}
+
+const SHARE_BG_CLASS = {
+  facebook: 'bg-blue-600',
+  messenger: 'bg-indigo-500',
+  line: 'bg-green-500',
+  reddit: 'bg-orange-500',
+  email: 'bg-gray-600',
+  twitter: 'bg-black',
+  telegram: 'bg-sky-500',
+  whatsapp: 'bg-green-600',
+  linkedin: 'bg-blue-700',
+  pinterest: 'bg-red-600',
+  vkshare: 'bg-blue-700',
+  okshare: 'bg-orange-500',
+  tumblr: 'bg-slate-700',
+  livejournal: 'bg-amber-600',
+  mailru: 'bg-cyan-600',
+  viber: 'bg-purple-600',
+  workplace: 'bg-blue-800',
+  weibo: 'bg-red-500',
+  pocket: 'bg-rose-600',
+  instapaper: 'bg-zinc-700',
+  hatena: 'bg-blue-500',
+  threads: 'bg-zinc-900'
+}
 
 /**
  * @author https://github.com/txs
@@ -86,7 +92,92 @@ const ShareButtons = ({ post }) => {
   const closePopover = () => {
     setQrCodeShow(false)
   }
+  const openRedirectShare = base => {
+    if (!shareUrl || typeof window === 'undefined') return
+    window.open(
+      `${base}${encodeURIComponent(shareUrl)}`,
+      '_blank',
+      'noopener,noreferrer'
+    )
+  }
+  const openShareWindow = url => {
+    if (!url || typeof window === 'undefined') return
+    window.open(url, '_blank', 'noopener,noreferrer,width=760,height=640')
+  }
 
+  const buildShareUrl = service => {
+    const encodedUrl = encodeURIComponent(shareUrl)
+    const encodedTitle = encodeURIComponent(titleWithSiteInfo)
+    const encodedBody = encodeURIComponent(body)
+    const encodedImage = encodeURIComponent(image || '')
+    const encodedHashTags = encodeURIComponent(hashTags)
+    const appId = siteConfig('FACEBOOK_APP_ID') || ''
+
+    switch (service) {
+      case 'facebook':
+        return `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&hashtag=${encodedHashTags}`
+      case 'messenger':
+        return `https://www.facebook.com/dialog/send?app_id=${appId}&link=${encodedUrl}&redirect_uri=${encodedUrl}`
+      case 'line':
+        return `https://social-plugins.line.me/lineit/share?url=${encodedUrl}`
+      case 'reddit':
+        return `https://www.reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}`
+      case 'email':
+        return `mailto:?subject=${encodedTitle}&body=${encodedBody}`
+      case 'twitter':
+        return `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}&hashtags=${encodeURIComponent(tags.join(','))}`
+      case 'telegram':
+        return `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`
+      case 'whatsapp':
+        return `https://api.whatsapp.com/send?text=${encodeURIComponent(`${titleWithSiteInfo} ${shareUrl}`)}`
+      case 'linkedin':
+        return `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`
+      case 'pinterest':
+        return `https://pinterest.com/pin/create/button/?url=${encodedUrl}&media=${encodedImage}&description=${encodedTitle}`
+      case 'vkshare':
+        return `https://vk.com/share.php?url=${encodedUrl}&image=${encodedImage}`
+      case 'okshare':
+        return `https://connect.ok.ru/offer?url=${encodedUrl}&title=${encodedTitle}`
+      case 'tumblr':
+        return `https://www.tumblr.com/widgets/share/tool?canonicalUrl=${encodedUrl}&title=${encodedTitle}&tags=${encodeURIComponent(tags.join(','))}`
+      case 'livejournal':
+        return `https://www.livejournal.com/update.bml?subject=${encodedTitle}&event=${encodedBody}`
+      case 'mailru':
+        return `https://connect.mail.ru/share?share_url=${encodedUrl}&title=${encodedTitle}`
+      case 'viber':
+        return `viber://forward?text=${encodeURIComponent(`${titleWithSiteInfo} ${shareUrl}`)}`
+      case 'workplace':
+        return `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedTitle}`
+      case 'weibo':
+        return `https://service.weibo.com/share/share.php?url=${encodedUrl}&title=${encodedTitle}&pic=${encodedImage}`
+      case 'pocket':
+        return `https://getpocket.com/edit?url=${encodedUrl}&title=${encodedTitle}`
+      case 'instapaper':
+        return `http://www.instapaper.com/edit?url=${encodedUrl}&title=${encodedTitle}`
+      case 'hatena':
+        return `https://b.hatena.ne.jp/add?mode=confirm&url=${encodedUrl}&title=${encodedTitle}`
+      case 'threads':
+        return `https://www.threads.net/intent/post?text=${encodeURIComponent(`${titleWithSiteInfo} ${shareUrl}`)}`
+      default:
+        return null
+    }
+  }
+
+  const renderCommonShareButton = service => {
+    const shareLink = buildShareUrl(service)
+    if (!shareLink) return null
+    const iconClass = SHARE_ICON_CLASS[service] || 'fas fa-share-alt'
+    const bgClass = SHARE_BG_CLASS[service] || 'bg-gray-600'
+    return (
+      <button
+        aria-label={service}
+        key={service}
+        onClick={() => openShareWindow(shareLink)}
+        className={`${BASE_BUTTON_CLASS} ${bgClass}`}>
+        <i className={`${iconClass} text-sm`} />
+      </button>
+    )
+  }
   useEffect(() => {
     setShareUrl(window.location.href)
   }, [])
@@ -96,234 +187,28 @@ const ShareButtons = ({ post }) => {
       {services.map(singleService => {
         switch (singleService) {
           case 'facebook':
-            return (
-              <FacebookShareButton
-                key={singleService}
-                url={shareUrl}
-                hashtag={hashTags}
-                className='mx-1'>
-                <FacebookIcon size={32} round />
-              </FacebookShareButton>
-            )
           case 'messenger':
-            return (
-              <FacebookMessengerShareButton
-                key={singleService}
-                url={shareUrl}
-                appId={siteConfig('FACEBOOK_APP_ID')}
-                className='mx-1'>
-                <FacebookMessengerIcon size={32} round />
-              </FacebookMessengerShareButton>
-            )
           case 'line':
-            return (
-              <LineShareButton
-                key={singleService}
-                url={shareUrl}
-                className='mx-1'>
-                <LineIcon size={32} round />
-              </LineShareButton>
-            )
           case 'reddit':
-            return (
-              <RedditShareButton
-                key={singleService}
-                url={shareUrl}
-                title={titleWithSiteInfo}
-                windowWidth={660}
-                windowHeight={460}
-                className='mx-1'>
-                <RedditIcon size={32} round />
-              </RedditShareButton>
-            )
           case 'email':
-            return (
-              <EmailShareButton
-                key={singleService}
-                url={shareUrl}
-                subject={titleWithSiteInfo}
-                body={body}
-                className='mx-1'>
-                <EmailIcon size={32} round />
-              </EmailShareButton>
-            )
           case 'twitter':
-            return (
-              <TwitterShareButton
-                key={singleService}
-                url={shareUrl}
-                title={titleWithSiteInfo}
-                hashtags={tags}
-                className='mx-1'>
-                <TwitterIcon size={32} round />
-              </TwitterShareButton>
-            )
           case 'telegram':
-            return (
-              <TelegramShareButton
-                key={singleService}
-                url={shareUrl}
-                title={titleWithSiteInfo}
-                className='mx-1'>
-                <TelegramIcon size={32} round />
-              </TelegramShareButton>
-            )
           case 'whatsapp':
-            return (
-              <WhatsappShareButton
-                key={singleService}
-                url={shareUrl}
-                title={titleWithSiteInfo}
-                separator=':: '
-                className='mx-1'>
-                <WhatsappIcon size={32} round />
-              </WhatsappShareButton>
-            )
           case 'linkedin':
-            return (
-              <LinkedinShareButton
-                key={singleService}
-                url={shareUrl}
-                className='mx-1'>
-                <LinkedinIcon size={32} round />
-              </LinkedinShareButton>
-            )
           case 'pinterest':
-            return (
-              <PinterestShareButton
-                key={singleService}
-                url={shareUrl}
-                media={image}
-                className='mx-1'>
-                <PinterestIcon size={32} round />
-              </PinterestShareButton>
-            )
           case 'vkshare':
-            return (
-              <VKShareButton
-                key={singleService}
-                url={shareUrl}
-                image={image}
-                className='mx-1'>
-                <VKIcon size={32} round />
-              </VKShareButton>
-            )
           case 'okshare':
-            return (
-              <OKShareButton
-                key={singleService}
-                url={shareUrl}
-                image={image}
-                className='mx-1'>
-                <OKIcon size={32} round />
-              </OKShareButton>
-            )
           case 'tumblr':
-            return (
-              <TumblrShareButton
-                key={singleService}
-                url={shareUrl}
-                title={titleWithSiteInfo}
-                tags={tags}
-                className='mx-1'>
-                <TumblrIcon size={32} round />
-              </TumblrShareButton>
-            )
           case 'livejournal':
-            return (
-              <LivejournalShareButton
-                key={singleService}
-                url={shareUrl}
-                title={titleWithSiteInfo}
-                description={shareUrl}
-                className='mx-1'>
-                <LivejournalIcon size={32} round />
-              </LivejournalShareButton>
-            )
           case 'mailru':
-            return (
-              <MailruShareButton
-                key={singleService}
-                url={shareUrl}
-                title={titleWithSiteInfo}
-                className='mx-1'>
-                <MailruIcon size={32} round />
-              </MailruShareButton>
-            )
           case 'viber':
-            return (
-              <ViberShareButton
-                key={singleService}
-                url={shareUrl}
-                title={titleWithSiteInfo}
-                className='mx-1'>
-                <ViberIcon size={32} round />
-              </ViberShareButton>
-            )
           case 'workplace':
-            return (
-              <WorkplaceShareButton
-                key={singleService}
-                url={shareUrl}
-                quote={titleWithSiteInfo}
-                hashtag={hashTags}
-                className='mx-1'>
-                <WorkplaceIcon size={32} round />
-              </WorkplaceShareButton>
-            )
           case 'weibo':
-            return (
-              <WeiboShareButton
-                key={singleService}
-                url={shareUrl}
-                title={titleWithSiteInfo}
-                image={image}
-                className='mx-1'>
-                <WeiboIcon size={32} round />
-              </WeiboShareButton>
-            )
           case 'pocket':
-            return (
-              <PocketShareButton
-                key={singleService}
-                url={shareUrl}
-                title={titleWithSiteInfo}
-                className='mx-1'>
-                <PocketIcon size={32} round />
-              </PocketShareButton>
-            )
           case 'instapaper':
-            return (
-              <InstapaperShareButton
-                key={singleService}
-                url={shareUrl}
-                title={titleWithSiteInfo}
-                className='mx-1'>
-                <InstapaperIcon size={32} round />
-              </InstapaperShareButton>
-            )
           case 'hatena':
-            return (
-              <HatenaShareButton
-                key={singleService}
-                url={shareUrl}
-                title={titleWithSiteInfo}
-                windowWidth={660}
-                windowHeight={460}
-                className='mx-1'>
-                <HatenaIcon size={32} round />
-              </HatenaShareButton>
-            )
           case 'threads':
-            return (
-              <ThreadsShareButton
-                key={singleService}
-                url={shareUrl}
-                title={titleWithSiteInfo}
-                className='mx-1'>
-                <ThreadsIcon size={32} round />
-              </ThreadsShareButton>
-            )
+            return renderCommonShareButton(singleService)
           case 'qq':
             return (
               <button
@@ -374,6 +259,47 @@ const ShareButtons = ({ post }) => {
                 className='cursor-pointer bg-yellow-500 text-white rounded-full mx-1'>
                 <div alt={locale.COMMON.URL_COPIED} onClick={copyUrl}>
                   <i className='fas fa-link w-8' />
+                </div>
+              </button>
+            )
+          case 'csdn':
+            return (
+              <button
+                aria-label={singleService}
+                key={singleService}
+                onClick={() => openRedirectShare('https://link.csdn.net/?target=')}
+                className='cursor-pointer rounded-full mx-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500'>
+                <div className='w-8 h-8 rounded-full items-center justify-center'
+                  style={{backgroundColor: '#ff6a00'}}>
+                  <Image
+                    src='/svg/csdn.svg'
+                    alt='CSDN'
+                    width={28}
+                    height={28}
+                    className='w-5 h-5'
+                    loading='lazy'
+                    style={{ transform: 'translateY(3px)' }}
+                  />
+                </div>
+              </button>
+            )
+          case 'juejin':
+            return (
+              <button
+                aria-label={singleService}
+                key={singleService}
+                onClick={() => openRedirectShare('https://link.juejin.cn/?target=')}
+                className='cursor-pointer rounded-full mx-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500'>
+                <div className='w-8 h-8 rounded-full flex items-center justify-center'
+                     style={{ backgroundColor: '#5dade2' }}>
+                  <Image
+                    src='/svg/juejin.svg'
+                    alt='掘金'
+                    width={24}
+                    height={24}
+                    className='w-5 h-5'
+                    loading='lazy'
+                  />
                 </div>
               </button>
             )
