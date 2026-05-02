@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+﻿import { useEffect } from 'react'
 import Prism from 'prismjs'
 // 所有语言的prismjs 使用autoloader引入
 // import 'prismjs/plugins/autoloader/prism-autoloader'
@@ -39,6 +39,9 @@ const PrismMac = () => {
   const codeCollapseExpandDefault = siteConfig('CODE_COLLAPSE_EXPAND_DEFAULT')
 
   useEffect(() => {
+    let isDisposed = false
+    let stopLineNumbers = () => {}
+
     const article = getNotionArticle()
     if (!article) return
     const hasCodeBlocks = Boolean(article.querySelector('pre.notion-code'))
@@ -56,15 +59,37 @@ const PrismMac = () => {
       prismThemePrefixPath
     )
     // 折叠代码
-    loadExternalResource(prismjsAutoLoader, 'js').then(url => {
-      if (window?.Prism?.plugins?.autoloader) {
-        window.Prism.plugins.autoloader.languages_path = prismjsPath
-      }
+    loadExternalResource(prismjsAutoLoader, 'js')
+      .then(() => {
+        if (isDisposed) return
+        try {
+          if (typeof window !== 'undefined' && !window.Prism) {
+            window.Prism = Prism
+          }
+          if (window?.Prism?.plugins?.autoloader) {
+            window.Prism.plugins.autoloader.languages_path = prismjsPath
+          }
 
-      renderPrismMac(codeLineNumbers)
-      renderMermaid(mermaidCDN)
-      renderCollapseCode(codeCollapse, codeCollapseExpandDefault)
-    })
+          const dispose = renderPrismMac(codeLineNumbers)
+          stopLineNumbers = typeof dispose === 'function' ? dispose : () => {}
+          renderMermaid(mermaidCDN)
+          renderCollapseCode(codeCollapse, codeCollapseExpandDefault)
+        } catch (err) {
+          console.warn('[PrismMac] render failed:', err)
+        }
+      })
+      .catch(err => {
+        console.warn('[PrismMac] prism autoloader load failed:', err)
+      })
+
+    return () => {
+      isDisposed = true
+      try {
+        stopLineNumbers()
+      } catch (e) {
+        /* ignore */
+      }
+    }
   }, [pathname, isDarkMode])
 
   return <></>
@@ -144,66 +169,75 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
   const codeBlocks = document.querySelectorAll('.code-toolbar')
 
   for (const codeBlock of codeBlocks) {
-    if (codeBlock.closest('.collapse-wrapper')) {
-      continue
+    try {
+      if (codeBlock.closest('.collapse-wrapper')) {
+        continue
+      }
+
+      const code = codeBlock.querySelector('code')
+      if (!code) {
+        continue
+      }
+
+      const className = code.getAttribute('class') || ''
+      const languageMatch = className.match(/language-([\w-]+)/)
+      const language = languageMatch ? languageMatch[1] : ''
+
+      const text = code.textContent || ''
+      const lineCount = text ? text.split('\n').length : 0
+
+      // 方案 C：仅当代码行数超过阈值时才启用折叠
+      if (lineCount && lineCount < COLLAPSE_MIN_LINES) {
+        continue
+      }
+
+      const parent = codeBlock.parentNode
+      if (!parent || !parent.contains(codeBlock)) {
+        continue
+      }
+
+      const collapseWrapper = document.createElement('div')
+      collapseWrapper.className = 'collapse-wrapper w-full py-2'
+
+      const panelWrapper = document.createElement('div')
+      panelWrapper.className = 'collapse-panel-wrapper'
+
+      const header = document.createElement('button')
+      header.type = 'button'
+      header.className = 'collapse-header'
+
+      const label = language
+        ? `${language.toUpperCase()} · ${lineCount} lines`
+        : `${lineCount} lines`
+
+      header.innerHTML = `<span class="collapse-label">${label}</span><svg class="collapse-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.293 6.293a1 1 0 0 1 1.414 0L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z" clip-rule="evenodd"/></svg>`
+
+      const panel = document.createElement('div')
+      panel.className = 'collapse-panel'
+
+      panelWrapper.appendChild(header)
+      panelWrapper.appendChild(panel)
+      collapseWrapper.appendChild(panelWrapper)
+
+      parent.insertBefore(collapseWrapper, codeBlock)
+      panel.appendChild(codeBlock)
+
+      function setExpanded(expanded) {
+        panelWrapper.classList.toggle('is-expanded', expanded)
+        panel.classList.toggle('is-expanded', expanded)
+        header.setAttribute('aria-expanded', expanded ? 'true' : 'false')
+        panel.style.maxHeight = expanded ? `${panel.scrollHeight}px` : '0px'
+      }
+
+      header.addEventListener('click', () => {
+        const expanded = panelWrapper.classList.contains('is-expanded')
+        setExpanded(!expanded)
+      })
+
+      setExpanded(Boolean(codeCollapseExpandDefault))
+    } catch (err) {
+      console.warn('[PrismMac] collapse code failed:', err)
     }
-
-    const code = codeBlock.querySelector('code')
-    if (!code) {
-      continue
-    }
-
-    const className = code.getAttribute('class') || ''
-    const languageMatch = className.match(/language-([\w-]+)/)
-    const language = languageMatch ? languageMatch[1] : ''
-
-    const text = code.textContent || ''
-    const lineCount = text ? text.split('\n').length : 0
-
-    // 方案 C：仅当代码行数超过阈值时才启用折叠
-    if (lineCount && lineCount < COLLAPSE_MIN_LINES) {
-      continue
-    }
-
-    const collapseWrapper = document.createElement('div')
-    collapseWrapper.className = 'collapse-wrapper w-full py-2'
-
-    const panelWrapper = document.createElement('div')
-    panelWrapper.className = 'collapse-panel-wrapper'
-
-    const header = document.createElement('button')
-    header.type = 'button'
-    header.className = 'collapse-header'
-
-    const label = language
-      ? `${language.toUpperCase()} · ${lineCount} lines`
-      : `${lineCount} lines`
-
-    header.innerHTML = `<span class="collapse-label">${label}</span><svg class="collapse-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.293 6.293a1 1 0 0 1 1.414 0L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z" clip-rule="evenodd"/></svg>`
-
-    const panel = document.createElement('div')
-    panel.className = 'collapse-panel'
-
-    panelWrapper.appendChild(header)
-    panelWrapper.appendChild(panel)
-    collapseWrapper.appendChild(panelWrapper)
-
-    codeBlock.parentNode.insertBefore(collapseWrapper, codeBlock)
-    panel.appendChild(codeBlock)
-
-    function setExpanded(expanded) {
-      panelWrapper.classList.toggle('is-expanded', expanded)
-      panel.classList.toggle('is-expanded', expanded)
-      header.setAttribute('aria-expanded', expanded ? 'true' : 'false')
-      panel.style.maxHeight = expanded ? `${panel.scrollHeight}px` : '0px'
-    }
-
-    header.addEventListener('click', () => {
-      const expanded = panelWrapper.classList.contains('is-expanded')
-      setExpanded(!expanded)
-    })
-
-    setExpanded(Boolean(codeCollapseExpandDefault))
   }
 }
 
@@ -236,13 +270,21 @@ const renderMermaid = mermaidCDN => {
 
   if (!hasMermaidBlocks) return
 
-  loadExternalResource(mermaidCDN, 'js').then(() => {
-    setTimeout(() => {
-      const mermaid = window.mermaid
-      if (!mermaid) return
-      mermaid?.contentLoaded()
-    }, 60)
-  })
+  loadExternalResource(mermaidCDN, 'js')
+    .then(() => {
+      setTimeout(() => {
+        try {
+          const mermaid = window.mermaid
+          if (!mermaid) return
+          mermaid?.contentLoaded()
+        } catch (err) {
+          console.warn('[PrismMac] mermaid render failed:', err)
+        }
+      }, 60)
+    })
+    .catch(err => {
+      console.warn('[PrismMac] mermaid load failed:', err)
+    })
 }
 
 function renderPrismMac(codeLineNumbers) {
@@ -263,29 +305,38 @@ function renderPrismMac(codeLineNumbers) {
   // 重新渲染之前检查所有的多余text
 
   try {
-    Prism.highlightAll()
+    if (container && typeof Prism.highlightAllUnder === 'function') {
+      Prism.highlightAllUnder(container)
+    } else {
+      Prism.highlightAll()
+    }
   } catch (err) {
-    console.log('代码渲染', err)
+    console.warn('[PrismMac] prism highlight failed:', err)
   }
 
   const codeToolBars = container?.getElementsByClassName('code-toolbar')
   // Add pre-mac element for Mac Style UI
   if (codeToolBars) {
     Array.from(codeToolBars).forEach(item => {
-      const existPreMac = item.getElementsByClassName('pre-mac')
-      if (existPreMac.length < codeToolBars.length) {
-        const preMac = document.createElement('div')
-        preMac.classList.add('pre-mac')
-        preMac.innerHTML = '<span></span><span></span><span></span>'
-        item?.appendChild(preMac, item)
+      try {
+        const existPreMac = item.getElementsByClassName('pre-mac')
+        if (existPreMac.length < 1) {
+          const preMac = document.createElement('div')
+          preMac.classList.add('pre-mac')
+          preMac.innerHTML = '<span></span><span></span><span></span>'
+          item.appendChild(preMac)
+        }
+      } catch (err) {
+        console.warn('[PrismMac] pre-mac failed:', err)
       }
     })
   }
 
   // 折叠代码行号bug
   if (codeLineNumbers) {
-    fixCodeLineStyle()
+    return fixCodeLineStyle()
   }
+  return () => {}
 }
 
 /**
@@ -294,14 +345,24 @@ function renderPrismMac(codeLineNumbers) {
  */
 const fixCodeLineStyle = () => {
   const article = getNotionArticle()
-  if (!article) return
+  if (!article) {
+    return () => {}
+  }
+
+  if (!Prism?.plugins?.lineNumbers?.resize) {
+    return () => {}
+  }
 
   const observer = new MutationObserver(mutationsList => {
     for (const m of mutationsList) {
       if (m.target.nodeName === 'DETAILS') {
         const preCodes = m.target.querySelectorAll('pre.notion-code')
         for (const preCode of preCodes) {
-          Prism.plugins.lineNumbers.resize(preCode)
+          try {
+            Prism.plugins.lineNumbers.resize(preCode)
+          } catch (e) {
+            /* ignore */
+          }
         }
       }
     }
@@ -310,12 +371,21 @@ const fixCodeLineStyle = () => {
     attributes: true,
     subtree: true
   })
-  setTimeout(() => {
+  const timeoutId = setTimeout(() => {
     const preCodes = article.querySelectorAll('pre.notion-code')
     for (const preCode of preCodes) {
-      Prism.plugins.lineNumbers.resize(preCode)
+      try {
+        Prism.plugins.lineNumbers.resize(preCode)
+      } catch (e) {
+        /* ignore */
+      }
     }
   }, 10)
+
+  return () => {
+    clearTimeout(timeoutId)
+    observer.disconnect()
+  }
 }
 
 export default PrismMac
