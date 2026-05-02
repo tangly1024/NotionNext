@@ -4,8 +4,8 @@
 
 ### 环境要求
 
-- Node.js >= 16.0.0
-- npm >= 8.0.0
+- Node.js = 20.20.0（使用 `.nvmrc` 保持一致）
+- Yarn = 1.22.22（使用 `package.json#packageManager` 保持一致）
 - Git
 
 ### 初始化开发环境
@@ -15,67 +15,140 @@
 git clone <repository-url>
 cd NotionNext
 
-# 初始化开发环境
-npm run init-dev
+# 切到统一 Node 版本
+nvm use
 
-# 启动开发服务器
-npm run dev
+# 安装依赖（你的日常习惯）
+yarn
+
+# 启动开发环境
+yarn dev
 ```
 
+### 多人协作依赖管理规则（必读）
+
+```bash
+# 进入项目后先切换到统一 Node 版本
+nvm use
+
+# 日常开发直接使用 yarn 即可
+yarn
+```
+
+约束说明：
+
+- 不要混用 `npm install` / `pnpm install`
+- 仓库只保留 `yarn.lock`，不允许提交 `package-lock.json`
+- 提交依赖变更时必须同时提交 `package.json` 和 `yarn.lock`
+- 如果 PR 修改了 `yarn.lock` 但未修改 `package.json`，需要在 PR 描述里说明原因
+- CI 会自动用 `yarn install --frozen-lockfile` 校验锁文件一致性（严格性放在 CI，不增加本地负担）
+- `.yarnrc.yml` 主要用于 CI/平台回退到 Yarn 4 时的兼容兜底，本地按 Yarn 1 流程即可
+
 ## 开发工具
+
+### package.json 脚本总览（完整）
+
+以下为仓库 `package.json` 中全部可运行脚本及用途说明：
+
+- `yarn dev`：启动本地开发服务（Next.js dev）。
+- `yarn build`：生产构建（含 `BUILD_MODE=true`）。
+- `yarn start`：启动生产服务（需先 `yarn build`）。
+- `yarn post-build`：构建后生成 sitemap。
+- `yarn export`：静态导出构建并生成 sitemap。
+- `yarn bundle-report`：构建并输出包体分析报告（`ANALYZE=true`）。
+- `yarn build-all-in-dev`：在开发环境模拟生产构建（`VERCEL_ENV=production`）。
+- `yarn version`：输出当前项目版本号。
+
+- `yarn lint`：执行 Next.js ESLint 检查。
+- `yarn lint:fix`：自动修复可修复的 ESLint 问题。
+- `yarn type-check`：TypeScript 类型检查（不输出产物）。
+- `yarn format`：使用 Prettier 格式化全仓库。
+- `yarn format:check`：检查格式是否符合 Prettier 规则。
+- `yarn quality`：执行项目质量检查脚本（聚合检查）。
+- `yarn pre-commit`：提交前检查（lint fix + format + type-check）。
+
+- `yarn dev-tools`：执行开发工具入口脚本。
+- `yarn init-dev`：初始化开发环境（dev-tools init）。
+- `yarn clean`：清理缓存与构建产物（dev-tools clean）。
+- `yarn docs`：生成或刷新文档（dev-tools docs）。
+- `yarn check-updates`：检查依赖可更新情况（dev-tools check-updates）。
+
+- `yarn deps:install`：按锁文件安装依赖（frozen-lockfile）。
+- `yarn deps:check-lockfile`：验证安装后 `yarn.lock` 无漂移。
+
+- `yarn setup-hooks`：安装 Git hooks。
+- `yarn remove-hooks`：移除 Git hooks。
+- `yarn check-hooks`：检查 hooks 安装状态。
+
+- `yarn test`：运行 Jest 单元测试。
+- `yarn test:watch`：监听模式运行 Jest。
+- `yarn test:coverage`：运行测试并生成覆盖率。
+- `yarn test:ci`：CI 模式运行测试（覆盖率+无 watch）。
+
+- `yarn health-check`：执行项目健康检查脚本。
+- `yarn validate`：执行验证入口（当前映射到 health-check）。
+- `yarn final-validation`：执行最终验证脚本。
+
+- `yarn perf:baseline`：记录基线性能数据（build/runtime）。
+- `yarn perf:compare`：与上次基线比较性能变化。
+- `yarn perf:lighthouse`：运行 Lighthouse CI 审计。
+- `yarn perf:audit:themes`：全主题性能审计（输出到 `docs/performance`）。
+- `yarn perf:compress-theme-previews`：批量生成主题预览 WebP 资源。
+
+- `yarn postinstall`：依赖安装后自动执行 `patch-package`。
 
 ### 代码质量工具
 
 ```bash
 # 代码格式化
-npm run format
+yarn format
 
 # 代码检查
-npm run lint
+yarn lint
 
 # 类型检查
-npm run type-check
+yarn type-check
 
 # 完整质量检查
-npm run quality
+yarn quality
 
 # 预提交检查
-npm run pre-commit
+yarn pre-commit
 ```
 
 ### 开发辅助工具
 
 ```bash
 # 查看所有开发工具命令
-npm run dev-tools
+yarn dev-tools
 
 # 清理项目文件
-npm run clean
+yarn clean
 
 # 生成组件模板
-npm run dev-tools generate:component MyComponent
+yarn dev-tools generate:component MyComponent
 
 # 分析包大小
-npm run dev-tools analyze
+yarn dev-tools analyze
 
 # 检查依赖更新
-npm run check-updates
+yarn check-updates
 
 # 生成项目文档
-npm run docs
+yarn docs
 ```
 
 ### Git Hooks
 
 ```bash
 # 安装Git钩子
-npm run setup-hooks
+yarn setup-hooks
 
 # 检查钩子状态
-npm run check-hooks
+yarn check-hooks
 
 # 移除Git钩子
-npm run remove-hooks
+yarn remove-hooks
 ```
 
 ## 项目结构
@@ -157,13 +230,13 @@ git checkout -b feature/your-feature-name
 
 ```bash
 # 启动开发服务器
-npm run dev
+yarn dev
 
 # 运行代码质量检查
-npm run quality
+yarn quality
 
 # 运行测试
-npm test
+yarn test
 ```
 
 ### 3. 提交代码
@@ -198,7 +271,7 @@ git push origin feature/your-feature-name
 
 ```bash
 # 启动调试模式
-npm run dev
+yarn dev
 
 # 在浏览器中打开开发者工具
 # 访问 http://localhost:3000
@@ -208,11 +281,36 @@ npm run dev
 
 ```bash
 # 分析包大小
-npm run bundle-report
+yarn bundle-report
 
 # 生成性能报告
-npm run analyze
+yarn analyze
 ```
+
+### 新主题性能准入（必做）
+
+新增或大改主题时，必须在生产模式下执行一次全主题审计，并把结果文件一并提交：
+
+```bash
+# 1) 生产构建与启动
+yarn build
+yarn start
+
+# 2) 另开一个终端执行主题性能审计
+yarn perf:audit:themes
+```
+
+提交前请确认以下文件已更新并纳入 commit：
+
+- `docs/performance/theme-audit-latest.md`
+- `docs/performance/theme-audit-latest.json`
+
+准入门槛（建议值，可逐步收紧）：
+
+- Performance >= 60（新主题目标）
+- SEO >= 90
+- LCP <= 4000ms
+- CLS <= 0.1
 
 ## 环境变量
 
@@ -231,7 +329,7 @@ npm run analyze
 
 ```bash
 # 验证环境变量配置
-npm run quality
+yarn quality
 ```
 
 ## 常见问题
@@ -240,29 +338,29 @@ npm run quality
 
 ```bash
 # 清理缓存
-npm run clean
-rm -rf node_modules package-lock.json
+yarn clean
+rm -rf node_modules
 
 # 重新安装
-npm install
+yarn deps:install
 ```
 
 ### 2. 构建失败
 
 ```bash
 # 检查代码质量
-npm run quality
+yarn quality
 
 # 清理并重新构建
-npm run clean
-npm run build
+yarn clean
+yarn build
 ```
 
 ### 3. 类型错误
 
 ```bash
 # 运行类型检查
-npm run type-check
+yarn type-check
 
 # 查看详细错误信息
 npx tsc --noEmit --pretty
@@ -272,7 +370,7 @@ npx tsc --noEmit --pretty
 
 ```bash
 # 自动修复ESLint错误
-npm run lint:fix
+yarn lint:fix
 
 # 查看所有ESLint规则
 npx eslint --print-config .
@@ -302,6 +400,6 @@ npx eslint --print-config .
 
 ## 获取帮助
 
-- 查看项目文档: `npm run docs`
-- 检查开发工具: `npm run dev-tools`
+- 查看项目文档: `yarn docs`
+- 检查开发工具: `yarn dev-tools`
 - 提交 Issue 或 Pull Request

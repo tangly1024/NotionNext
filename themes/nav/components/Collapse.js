@@ -5,7 +5,7 @@ import { useEffect, useImperativeHandle, useRef } from 'react'
  * @param {type:['horizontal','vertical'],isOpen} props
  * @returns
  */
-const Collapse = props => {
+const Collapse = ({ isOpen = false, ...props }) => {
   const { collapseRef } = props
   const ref = useRef(null)
   const type = props.type || 'vertical'
@@ -74,14 +74,14 @@ const Collapse = props => {
   }
 
   useEffect(() => {
-    if (props.isOpen) {
+    if (isOpen) {
       expandSection(ref.current)
     } else {
       collapseSection(ref.current)
     }
     // 通知父组件高度变化
-    props?.onHeightChange && props.onHeightChange({ height: ref.current.scrollHeight, increase: props.isOpen })
-  }, [props.isOpen])
+    props?.onHeightChange && props.onHeightChange({ height: ref.current.scrollHeight, increase: isOpen })
+  }, [isOpen])
 
   return (
         <div ref={ref} style={type === 'vertical' ? { height: '0px', willChange: 'height' } : { width: '0px', willChange: 'width' }} className={`${props.className || ''} overflow-hidden duration-200 `}>
@@ -89,6 +89,5 @@ const Collapse = props => {
         </div>
   )
 }
-Collapse.defaultProps = { isOpen: false }
 
 export default Collapse

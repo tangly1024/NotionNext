@@ -1,13 +1,17 @@
-import { useEffect } from 'react'
+﻿import { useEffect } from 'react'
 import Prism from 'prismjs'
 // 所有语言的prismjs 使用autoloader引入
 // import 'prismjs/plugins/autoloader/prism-autoloader'
+import 'prismjs/plugins/toolbar/prism-toolbar'
+import 'prismjs/plugins/toolbar/prism-toolbar.min.css'
+import 'prismjs/plugins/show-language/prism-show-language'
+import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
 import 'prismjs/plugins/line-numbers/prism-line-numbers'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 
 // mermaid图
 import { loadExternalResource } from '@/lib/utils'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { useGlobal } from '@/lib/global'
 import { siteConfig } from '@/lib/config'
 
@@ -17,7 +21,7 @@ import { siteConfig } from '@/lib/config'
  * @returns
  */
 const PrismMac = () => {
-  const router = useRouter()
+  const pathname = usePathname()
   const { isDarkMode } = useGlobal()
   const codeMacBar = siteConfig('CODE_MAC_BAR')
   const prismjsAutoLoader = siteConfig('PRISM_JS_AUTO_LOADER')
@@ -36,8 +40,12 @@ const PrismMac = () => {
 
   useEffect(() => {
     let isDisposed = false
-    let mermaidDispose = null
-    let fixLineNumberDispose = null
+    let stopLineNumbers = () => {}
+
+    const article = getNotionArticle()
+    if (!article) return
+    const hasCodeBlocks = Boolean(article.querySelector('pre.notion-code'))
+    if (!hasCodeBlocks) return
 
     if (codeMacBar) {
       loadExternalResource('/css/prism-mac-style.css', 'css')
@@ -54,22 +62,19 @@ const PrismMac = () => {
     loadExternalResource(prismjsAutoLoader, 'js')
       .then(() => {
         if (isDisposed) return
-
         try {
-          // prism autoloader 脚本依赖 window.Prism
           if (typeof window !== 'undefined' && !window.Prism) {
             window.Prism = Prism
           }
-
           if (window?.Prism?.plugins?.autoloader) {
             window.Prism.plugins.autoloader.languages_path = prismjsPath
           }
 
-          fixLineNumberDispose = renderPrismMac(codeLineNumbers)
-          mermaidDispose = renderMermaid(mermaidCDN, isDarkMode)
+          const dispose = renderPrismMac(codeLineNumbers)
+          stopLineNumbers = typeof dispose === 'function' ? dispose : () => {}
+          renderMermaid(mermaidCDN)
           renderCollapseCode(codeCollapse, codeCollapseExpandDefault)
         } catch (err) {
-          // 防止代码高亮/mermaid 渲染异常导致整页崩溃
           console.warn('[PrismMac] render failed:', err)
         }
       })
@@ -80,19 +85,40 @@ const PrismMac = () => {
     return () => {
       isDisposed = true
       try {
-        mermaidDispose?.()
-      } catch (err) {
-        console.warn('[PrismMac] mermaid cleanup failed:', err)
-      }
-      try {
-        fixLineNumberDispose?.()
-      } catch (err) {
-        console.warn('[PrismMac] lineNumbers cleanup failed:', err)
+        stopLineNumbers()
+      } catch (e) {
+        /* ignore */
       }
     }
-  }, [router.asPath, isDarkMode])
+  }, [pathname, isDarkMode])
 
   return <></>
+}
+
+const getNotionArticle = () => {
+  const inArticleWrapper = document.querySelector('#article-wrapper #notion-article')
+  if (inArticleWrapper) return inArticleWrapper
+
+  const candidates = Array.from(document.querySelectorAll('#notion-article'))
+  if (candidates.length <= 1) return candidates[0] || null
+
+  // 多主题并存时可能有多个 notion-article，优先选择正文内容更完整的节点
+  const score = el => {
+    const codeCount = el.querySelectorAll('pre.notion-code, .code-toolbar').length
+    const blockCount = el.querySelectorAll('.notion, .notion-page, .notion-text').length
+    return codeCount * 10 + blockCount
+  }
+
+  return candidates.sort((a, b) => score(b) - score(a))[0] || null
+}
+
+const getNotionArticles = () => {
+  const inArticleWrapper = Array.from(
+    document.querySelectorAll('#article-wrapper #notion-article')
+  )
+  if (inArticleWrapper.length > 0) return inArticleWrapper
+
+  return Array.from(document.querySelectorAll('#notion-article'))
 }
 
 /**
@@ -138,52 +164,77 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
   if (!codeCollapse) {
     return
   }
-  const container = document?.getElementById('notion-article')
-  if (!container) return
 
-  // 注意：不要移动 React 管理的节点（例如把 pre 包进新的 wrapper），否则后续动态组件挂载时可能触发
-  // `insertBefore` NotFoundError。这里只做“新增兄弟节点 + 控制 display”，不改变原有节点层级。
-  const codeBlocks = container.querySelectorAll('pre.notion-code')
-  for (const pre of codeBlocks) {
+  const COLLAPSE_MIN_LINES = Number(siteConfig('CODE_COLLAPSE_MIN_LINES', 20))
+  const codeBlocks = document.querySelectorAll('.code-toolbar')
+
+  for (const codeBlock of codeBlocks) {
     try {
-      if (pre.dataset?.ntnxCollapsed === 'inited') {
+      if (codeBlock.closest('.collapse-wrapper')) {
         continue
       }
-      pre.dataset.ntnxCollapsed = 'inited'
 
-      const code = pre.querySelector('code')
-      const className =
-        code?.getAttribute('class') || pre?.getAttribute('class') || ''
+      const code = codeBlock.querySelector('code')
+      if (!code) {
+        continue
+      }
+
+      const className = code.getAttribute('class') || ''
       const languageMatch = className.match(/language-([\w-]+)/)
-      const language = languageMatch?.[1] || ''
-      if (!language) {
+      const language = languageMatch ? languageMatch[1] : ''
+
+      const text = code.textContent || ''
+      const lineCount = text ? text.split('\n').length : 0
+
+      // 方案 C：仅当代码行数超过阈值时才启用折叠
+      if (lineCount && lineCount < COLLAPSE_MIN_LINES) {
         continue
       }
 
-      const parent = pre.parentNode
-      if (!parent) continue
+      const parent = codeBlock.parentNode
+      if (!parent || !parent.contains(codeBlock)) {
+        continue
+      }
 
-      const header = document.createElement('div')
-      header.className =
-        'collapse-header flex justify-between items-center px-4 py-2 cursor-pointer select-none border dark:border-gray-600 rounded-md hover:border-indigo-500 duration-200 transition-colors'
-      header.innerHTML = `<h3 class="text-lg font-medium">${language}</h3><svg class="transition-all duration-200 w-5 h-5 transform rotate-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.293 6.293a1 1 0 0 1 1.414 0L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z" clip-rule="evenodd"/></svg>`
+      const collapseWrapper = document.createElement('div')
+      collapseWrapper.className = 'collapse-wrapper w-full py-2'
 
-      // header 放在 pre 前面，pre 本身仅做 show/hide，不改层级
-      parent.insertBefore(header, pre)
+      const panelWrapper = document.createElement('div')
+      panelWrapper.className = 'collapse-panel-wrapper'
 
-      let isExpanded = !!codeCollapseExpandDefault
+      const header = document.createElement('button')
+      header.type = 'button'
+      header.className = 'collapse-header'
 
-      const apply = () => {
-        pre.style.display = isExpanded ? '' : 'none'
-        header.querySelector('svg')?.classList.toggle('rotate-180', isExpanded)
+      const label = language
+        ? `${language.toUpperCase()} · ${lineCount} lines`
+        : `${lineCount} lines`
+
+      header.innerHTML = `<span class="collapse-label">${label}</span><svg class="collapse-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.293 6.293a1 1 0 0 1 1.414 0L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z" clip-rule="evenodd"/></svg>`
+
+      const panel = document.createElement('div')
+      panel.className = 'collapse-panel'
+
+      panelWrapper.appendChild(header)
+      panelWrapper.appendChild(panel)
+      collapseWrapper.appendChild(panelWrapper)
+
+      parent.insertBefore(collapseWrapper, codeBlock)
+      panel.appendChild(codeBlock)
+
+      function setExpanded(expanded) {
+        panelWrapper.classList.toggle('is-expanded', expanded)
+        panel.classList.toggle('is-expanded', expanded)
+        header.setAttribute('aria-expanded', expanded ? 'true' : 'false')
+        panel.style.maxHeight = expanded ? `${panel.scrollHeight}px` : '0px'
       }
 
       header.addEventListener('click', () => {
-        isExpanded = !isExpanded
-        apply()
+        const expanded = panelWrapper.classList.contains('is-expanded')
+        setExpanded(!expanded)
       })
 
-      apply()
+      setExpanded(Boolean(codeCollapseExpandDefault))
     } catch (err) {
       console.warn('[PrismMac] collapse code failed:', err)
     }
@@ -193,127 +244,51 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
 /**
  * 将mermaid语言 渲染成图片
  */
-const renderMermaid = (mermaidCDN, isDarkMode) => {
-  const container = document?.getElementById('notion-article')
-  if (!container) {
-    return () => {}
-  }
+const renderMermaid = mermaidCDN => {
+  const articles = getNotionArticles()
+  if (!articles || articles.length === 0) return
 
-  let isDisposed = false
-  let debounceTimer = null
-  let isRendering = false
+  let hasMermaidBlocks = false
 
-  const ensureMermaidNodes = () => {
-    const mermaidBlocks = container.querySelectorAll(
-      'pre.notion-code[class*="language-mermaid"],pre[class*="language-mermaid"]'
+  for (const article of articles) {
+    const mermaidCodeBlocks = article.querySelectorAll(
+      '.notion-code.language-mermaid'
     )
-
-    const nodes = []
-    for (const block of mermaidBlocks) {
-      const sourceCode =
-        block.querySelector('code.language-mermaid') || block.querySelector('code')
-
-      const chart = sourceCode?.textContent?.trim()
-      if (!chart) {
-        continue
+    for (const codeBlock of mermaidCodeBlocks) {
+      const chart = codeBlock.querySelector('code')?.textContent
+      if (!chart) continue
+      hasMermaidBlocks = true
+      let mermaidChart = codeBlock.querySelector('.mermaid')
+      if (!mermaidChart) {
+        mermaidChart = document.createElement('pre')
+        mermaidChart.className = 'mermaid'
+        mermaidChart.textContent = chart
+        codeBlock.appendChild(mermaidChart)
       }
-
-      let target = block.querySelector('code.mermaid[data-ntnx-mermaid="true"]')
-      if (!target) {
-        target = document.createElement('code')
-        target.className = 'mermaid'
-        target.setAttribute('data-ntnx-mermaid', 'true')
-        target.style.display = 'block'
-        target.textContent = chart
-        block.appendChild(target)
-      }
-
-      nodes.push(target)
-    }
-
-    return nodes
-  }
-
-  const run = async () => {
-    if (isDisposed || isRendering) return
-    isRendering = true
-
-    try {
-      const nodes = ensureMermaidNodes()
-      if (!nodes.length) return
-
-      await loadExternalResource(mermaidCDN, 'js')
-      if (isDisposed) return
-
-      const mermaid = window?.mermaid
-      if (!mermaid) return
-
-      try {
-        mermaid.initialize({
-          startOnLoad: false,
-          theme: isDarkMode ? 'dark' : 'default'
-        })
-      } catch (err) {
-        // ignore initialize errors (might be called repeatedly)
-      }
-
-      if (typeof mermaid.run === 'function') {
-        await mermaid.run({ nodes })
-      } else if (typeof mermaid.init === 'function') {
-        mermaid.init(undefined, nodes)
-      } else if (typeof mermaid.contentLoaded === 'function') {
-        mermaid.contentLoaded()
-      }
-    } catch (err) {
-      console.warn('[PrismMac] mermaid render failed:', err)
-    } finally {
-      isRendering = false
     }
   }
 
-  const schedule = () => {
-    if (isDisposed) return
-    if (debounceTimer) clearTimeout(debounceTimer)
-    debounceTimer = setTimeout(run, 50)
-  }
+  if (!hasMermaidBlocks) return
 
-  // 首次尝试渲染（部分内容可能是动态加载，后续由 observer 触发补齐）
-  schedule()
-
-  const observer = new MutationObserver(mutationsList => {
-    for (const m of mutationsList) {
-      if (m.type !== 'childList') continue
-      for (const n of m.addedNodes) {
-        if (!n || n.nodeType !== 1) continue
-        const el = /** @type {Element} */ (n)
-        if (
-          el.matches('pre[class*="language-mermaid"],code.language-mermaid') ||
-          el.querySelector('pre[class*="language-mermaid"],code.language-mermaid')
-        ) {
-          schedule()
-          return
+  loadExternalResource(mermaidCDN, 'js')
+    .then(() => {
+      setTimeout(() => {
+        try {
+          const mermaid = window.mermaid
+          if (!mermaid) return
+          mermaid?.contentLoaded()
+        } catch (err) {
+          console.warn('[PrismMac] mermaid render failed:', err)
         }
-      }
-    }
-  })
-
-  observer.observe(container, {
-    childList: true,
-    subtree: true
-  })
-
-  return () => {
-    isDisposed = true
-    if (debounceTimer) clearTimeout(debounceTimer)
-    observer.disconnect()
-  }
+      }, 60)
+    })
+    .catch(err => {
+      console.warn('[PrismMac] mermaid load failed:', err)
+    })
 }
 
 function renderPrismMac(codeLineNumbers) {
-  const container = document?.getElementById('notion-article')
-  if (!container) {
-    return () => {}
-  }
+  const container = getNotionArticle()
 
   // Add line numbers
   if (codeLineNumbers) {
@@ -327,17 +302,40 @@ function renderPrismMac(codeLineNumbers) {
       })
     }
   }
+  // 重新渲染之前检查所有的多余text
+
   try {
-    Prism.highlightAllUnder(container)
+    if (container && typeof Prism.highlightAllUnder === 'function') {
+      Prism.highlightAllUnder(container)
+    } else {
+      Prism.highlightAll()
+    }
   } catch (err) {
-    console.log('代码渲染', err)
+    console.warn('[PrismMac] prism highlight failed:', err)
+  }
+
+  const codeToolBars = container?.getElementsByClassName('code-toolbar')
+  // Add pre-mac element for Mac Style UI
+  if (codeToolBars) {
+    Array.from(codeToolBars).forEach(item => {
+      try {
+        const existPreMac = item.getElementsByClassName('pre-mac')
+        if (existPreMac.length < 1) {
+          const preMac = document.createElement('div')
+          preMac.classList.add('pre-mac')
+          preMac.innerHTML = '<span></span><span></span><span></span>'
+          item.appendChild(preMac)
+        }
+      } catch (err) {
+        console.warn('[PrismMac] pre-mac failed:', err)
+      }
+    })
   }
 
   // 折叠代码行号bug
   if (codeLineNumbers) {
-    return fixCodeLineStyle(container)
+    return fixCodeLineStyle()
   }
-
   return () => {}
 }
 
@@ -345,8 +343,9 @@ function renderPrismMac(codeLineNumbers) {
  * 行号样式在首次渲染或被detail折叠后行高判断错误
  * 在此手动resize计算
  */
-const fixCodeLineStyle = container => {
-  if (!container) {
+const fixCodeLineStyle = () => {
+  const article = getNotionArticle()
+  if (!article) {
     return () => {}
   }
 
@@ -361,24 +360,24 @@ const fixCodeLineStyle = container => {
         for (const preCode of preCodes) {
           try {
             Prism.plugins.lineNumbers.resize(preCode)
-          } catch (err) {
-            // ignore
+          } catch (e) {
+            /* ignore */
           }
         }
       }
     }
   })
-  observer.observe(container, {
+  observer.observe(article, {
     attributes: true,
     subtree: true
   })
   const timeoutId = setTimeout(() => {
-    const preCodes = document.querySelectorAll('pre.notion-code')
+    const preCodes = article.querySelectorAll('pre.notion-code')
     for (const preCode of preCodes) {
       try {
         Prism.plugins.lineNumbers.resize(preCode)
-      } catch (err) {
-        // ignore
+      } catch (e) {
+        /* ignore */
       }
     }
   }, 10)

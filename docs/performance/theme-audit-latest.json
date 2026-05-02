@@ -1,0 +1,462 @@
+[
+  {
+    "theme": "claude",
+    "url": "http://localhost:3000/?theme=claude",
+    "scores": {
+      "performance": 38,
+      "seo": 100,
+      "accessibility": 91,
+      "bestPractices": 79
+    },
+    "metrics": {
+      "lcpMs": 5829,
+      "inpMs": null,
+      "cls": 1,
+      "fcpMs": 2413,
+      "tbtMs": 474,
+      "speedIndexMs": 3327,
+      "jsKb": 0,
+      "totalKb": 1038
+    }
+  },
+  {
+    "theme": "commerce",
+    "url": "http://localhost:3000/?theme=commerce",
+    "scores": {
+      "performance": 20,
+      "seo": 83,
+      "accessibility": 88,
+      "bestPractices": 79
+    },
+    "metrics": {
+      "lcpMs": 10709,
+      "inpMs": null,
+      "cls": 1.094845,
+      "fcpMs": 2660,
+      "tbtMs": 1271,
+      "speedIndexMs": 3987,
+      "jsKb": 0,
+      "totalKb": 1493
+    }
+  },
+  {
+    "theme": "example",
+    "url": "http://localhost:3000/?theme=example",
+    "scores": {
+      "performance": 36,
+      "seo": 100,
+      "accessibility": 91,
+      "bestPractices": 79
+    },
+    "metrics": {
+      "lcpMs": 8284,
+      "inpMs": null,
+      "cls": 1.000021,
+      "fcpMs": 2349,
+      "tbtMs": 455,
+      "speedIndexMs": 3382,
+      "jsKb": 0,
+      "totalKb": 1089
+    }
+  },
+  {
+    "theme": "fukasawa",
+    "url": "http://localhost:3000/?theme=fukasawa",
+    "scores": {
+      "performance": 15,
+      "seo": 92,
+      "accessibility": 95,
+      "bestPractices": 79
+    },
+    "metrics": {
+      "lcpMs": 7773,
+      "inpMs": null,
+      "cls": 1,
+      "fcpMs": 1832,
+      "tbtMs": 5567,
+      "speedIndexMs": 5880,
+      "jsKb": 0,
+      "totalKb": 1421
+    }
+  },
+  {
+    "theme": "fuwari",
+    "url": "http://localhost:3000/?theme=fuwari",
+    "scores": {
+      "performance": 18,
+      "seo": 83,
+      "accessibility": 76,
+      "bestPractices": 79
+    },
+    "metrics": {
+      "lcpMs": 7115,
+      "inpMs": null,
+      "cls": 1,
+      "fcpMs": 1801,
+      "tbtMs": 4426,
+      "speedIndexMs": 4145,
+      "jsKb": 0,
+      "totalKb": 2259
+    }
+  },
+  {
+    "theme": "game",
+    "url": "http://localhost:3000/?theme=game",
+    "scores": {
+      "performance": 30,
+      "seo": 100,
+      "accessibility": 84,
+      "bestPractices": 79
+    },
+    "metrics": {
+      "lcpMs": 10602,
+      "inpMs": null,
+      "cls": 1.001675,
+      "fcpMs": 1795,
+      "tbtMs": 716,
+      "speedIndexMs": 3555,
+      "jsKb": 0,
+      "totalKb": 1680
+    }
+  },
+  {
+    "theme": "gitbook",
+    "url": "http://localhost:3000/?theme=gitbook",
+    "scores": {
+      "performance": 14,
+      "seo": 92,
+      "accessibility": 90,
+      "bestPractices": 75
+    },
+    "metrics": {
+      "lcpMs": 9966,
+      "inpMs": null,
+      "cls": 1.4717919999999998,
+      "fcpMs": 1825,
+      "tbtMs": 3985,
+      "speedIndexMs": 6240,
+      "jsKb": 0,
+      "totalKb": 1403
+    }
+  },
+  {
+    "theme": "heo",
+    "url": "http://localhost:3000/?theme=heo",
+    "scores": {
+      "performance": 34,
+      "seo": 92,
+      "accessibility": 100,
+      "bestPractices": 79
+    },
+    "metrics": {
+      "lcpMs": 6786,
+      "inpMs": null,
+      "cls": 1.006132,
+      "fcpMs": 1794,
+      "tbtMs": 663,
+      "speedIndexMs": 3529,
+      "jsKb": 0,
+      "totalKb": 1499
+    }
+  },
+  {
+    "theme": "hexo",
+    "url": "http://localhost:3000/?theme=hexo",
+    "scores": {
+      "performance": 25,
+      "seo": 92,
+      "accessibility": 95,
+      "bestPractices": 79
+    },
+    "metrics": {
+      "lcpMs": 7567,
+      "inpMs": null,
+      "cls": 1.015376,
+      "fcpMs": 1790,
+      "tbtMs": 1228,
+      "speedIndexMs": 3801,
+      "jsKb": 0,
+      "totalKb": 1425
+    }
+  },
+  {
+    "theme": "landing",
+    "url": "http://localhost:3000/?theme=landing",
+    "scores": {
+      "performance": 62,
+      "seo": 100,
+      "accessibility": 98,
+      "bestPractices": 79
+    },
+    "metrics": {
+      "lcpMs": 2946,
+      "inpMs": null,
+      "cls": 1.1633749999999998,
+      "fcpMs": 1793,
+      "tbtMs": 308,
+      "speedIndexMs": 2810,
+      "jsKb": 0,
+      "totalKb": 1090
+    }
+  },
+  {
+    "theme": "magzine",
+    "url": "http://localhost:3000/?theme=magzine",
+    "scores": {
+      "performance": 31,
+      "seo": 92,
+      "accessibility": 89,
+      "bestPractices": 79
+    },
+    "metrics": {
+      "lcpMs": 6224,
+      "inpMs": null,
+      "cls": 1.013977,
+      "fcpMs": 1798,
+      "tbtMs": 845,
+      "speedIndexMs": 3377,
+      "jsKb": 0,
+      "totalKb": 1354
+    }
+  },
+  {
+    "theme": "matery",
+    "url": "http://localhost:3000/?theme=matery",
+    "scores": {
+      "performance": 72,
+      "seo": 100,
+      "accessibility": 90,
+      "bestPractices": 79
+    },
+    "metrics": {
+      "lcpMs": 3993,
+      "inpMs": null,
+      "cls": 0.0014019999999999998,
+      "fcpMs": 2433,
+      "tbtMs": 443,
+      "speedIndexMs": 3442,
+      "jsKb": 0,
+      "totalKb": 1182
+    }
+  },
+  {
+    "theme": "medium",
+    "url": "http://localhost:3000/?theme=medium",
+    "scores": {
+      "performance": 54,
+      "seo": 92,
+      "accessibility": 90,
+      "bestPractices": 82
+    },
+    "metrics": {
+      "lcpMs": 6306,
+      "inpMs": null,
+      "cls": 0.050975,
+      "fcpMs": 2063,
+      "tbtMs": 907,
+      "speedIndexMs": 3488,
+      "jsKb": 0,
+      "totalKb": 1275
+    }
+  },
+  {
+    "theme": "movie",
+    "url": "http://localhost:3000/?theme=movie",
+    "scores": {
+      "performance": 39,
+      "seo": 100,
+      "accessibility": 100,
+      "bestPractices": 82
+    },
+    "metrics": {
+      "lcpMs": 7835,
+      "inpMs": null,
+      "cls": 0.20054300000000003,
+      "fcpMs": 2368,
+      "tbtMs": 987,
+      "speedIndexMs": 4721,
+      "jsKb": 0,
+      "totalKb": 1106
+    }
+  },
+  {
+    "theme": "nav",
+    "url": "http://localhost:3000/?theme=nav",
+    "scores": {
+      "performance": 56,
+      "seo": 100,
+      "accessibility": 95,
+      "bestPractices": 79
+    },
+    "metrics": {
+      "lcpMs": 5661,
+      "inpMs": null,
+      "cls": 0.000009,
+      "fcpMs": 2065,
+      "tbtMs": 901,
+      "speedIndexMs": 3106,
+      "jsKb": 0,
+      "totalKb": 912
+    }
+  },
+  {
+    "theme": "next",
+    "url": "http://localhost:3000/?theme=next",
+    "scores": {
+      "performance": 75,
+      "seo": 92,
+      "accessibility": 95,
+      "bestPractices": 82
+    },
+    "metrics": {
+      "lcpMs": 4022,
+      "inpMs": null,
+      "cls": 0,
+      "fcpMs": 2074,
+      "tbtMs": 402,
+      "speedIndexMs": 2703,
+      "jsKb": 0,
+      "totalKb": 1261
+    }
+  },
+  {
+    "theme": "nobelium",
+    "url": "http://localhost:3000/?theme=nobelium",
+    "scores": {
+      "performance": 52,
+      "seo": 100,
+      "accessibility": 100,
+      "bestPractices": 79
+    },
+    "metrics": {
+      "lcpMs": 6473,
+      "inpMs": null,
+      "cls": 0.010607,
+      "fcpMs": 2054,
+      "tbtMs": 1026,
+      "speedIndexMs": 3730,
+      "jsKb": 0,
+      "totalKb": 1160
+    }
+  },
+  {
+    "theme": "photo",
+    "url": "http://localhost:3000/?theme=photo",
+    "scores": {
+      "performance": 47,
+      "seo": 100,
+      "accessibility": 90,
+      "bestPractices": 82
+    },
+    "metrics": {
+      "lcpMs": 6730,
+      "inpMs": null,
+      "cls": 0.17810600000000001,
+      "fcpMs": 2399,
+      "tbtMs": 731,
+      "speedIndexMs": 3487,
+      "jsKb": 0,
+      "totalKb": 1037
+    }
+  },
+  {
+    "theme": "plog",
+    "url": "http://localhost:3000/?theme=plog",
+    "scores": {
+      "performance": 50,
+      "seo": 100,
+      "accessibility": 100,
+      "bestPractices": 79
+    },
+    "metrics": {
+      "lcpMs": 8741,
+      "inpMs": null,
+      "cls": 0.016871,
+      "fcpMs": 2122,
+      "tbtMs": 994,
+      "speedIndexMs": 3786,
+      "jsKb": 0,
+      "totalKb": 1111
+    }
+  },
+  {
+    "theme": "proxio",
+    "url": "http://localhost:3000/?theme=proxio",
+    "scores": {
+      "performance": 45,
+      "seo": 92,
+      "accessibility": 85,
+      "bestPractices": 79
+    },
+    "metrics": {
+      "lcpMs": 5401,
+      "inpMs": null,
+      "cls": 0.003425,
+      "fcpMs": 2461,
+      "tbtMs": 1246,
+      "speedIndexMs": 7723,
+      "jsKb": 0,
+      "totalKb": 1105
+    }
+  },
+  {
+    "theme": "simple",
+    "url": "http://localhost:3000/?theme=simple",
+    "scores": {
+      "performance": 40,
+      "seo": 92,
+      "accessibility": 90,
+      "bestPractices": 75
+    },
+    "metrics": {
+      "lcpMs": 7012,
+      "inpMs": null,
+      "cls": 0.381928,
+      "fcpMs": 2347,
+      "tbtMs": 560,
+      "speedIndexMs": 3409,
+      "jsKb": 0,
+      "totalKb": 1165
+    }
+  },
+  {
+    "theme": "starter",
+    "url": "http://localhost:3000/?theme=starter",
+    "scores": {
+      "performance": 38,
+      "seo": 92,
+      "accessibility": 88,
+      "bestPractices": 79
+    },
+    "metrics": {
+      "lcpMs": 5096,
+      "inpMs": null,
+      "cls": 1.4528780000000001,
+      "fcpMs": 2457,
+      "tbtMs": 545,
+      "speedIndexMs": 3232,
+      "jsKb": 0,
+      "totalKb": 1634
+    }
+  },
+  {
+    "theme": "typography",
+    "url": "http://localhost:3000/?theme=typography",
+    "scores": {
+      "performance": 79,
+      "seo": 100,
+      "accessibility": 90,
+      "bestPractices": 82
+    },
+    "metrics": {
+      "lcpMs": 4002,
+      "inpMs": null,
+      "cls": 0.075396,
+      "fcpMs": 2071,
+      "tbtMs": 259,
+      "speedIndexMs": 2468,
+      "jsKb": 0,
+      "totalKb": 1026
+    }
+  }
+]

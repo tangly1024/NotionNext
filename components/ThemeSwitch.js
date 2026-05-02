@@ -111,7 +111,8 @@ const ThemeSwitch = () => {
                   {t}
                 </div>
                 <LazyImage
-                  src={`/images/themes-preview/${t}.png`}
+                  src={`/images/themes-preview/${t}.webp`}
+                  fallbackSrc={`/images/themes-preview/${t}.png`}
                   className='cursor-pointer shadow-lg rounded-xl hover:scale-110 duration-200'
                 />
               </div>
