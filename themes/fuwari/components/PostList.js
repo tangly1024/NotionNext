@@ -31,22 +31,35 @@ const getArchiveHref = (publishDay, router) => {
 
 const PostCard = ({ post }) => {
   const router = useRouter()
+  const coverColPx = Math.min(
+    360,
+    Math.max(200, Number(siteConfig('FUWARI_POST_LIST_COVER_COL_WIDTH', 280, CONFIG)) || 280)
+  )
   const coverSrc =
     post.pageCoverThumbnail ||
-    (siteConfig('FUWARI_POST_LIST_COVER_DEFAULT', true, CONFIG) &&
+    (siteConfig('FUWARI_POST_LIST_COVER_DEFAULT', false, CONFIG) &&
       siteConfig('HOME_BANNER_IMAGE'))
   const [coverFailed, setCoverFailed] = useState(false)
   const showCover = Boolean(coverSrc) && !coverFailed
   const showRail = !showCover
+  const listCoverOn = siteConfig('FUWARI_POST_LIST_COVER', true, CONFIG)
+  const showCoverBlock = listCoverOn && showCover
+
+  const gridTemplateColumns = (() => {
+    if (showCoverBlock) {
+      return `minmax(0, 1fr) ${coverColPx}px`
+    }
+    if (showRail) {
+      return `minmax(0, 1fr) 56px`
+    }
+    return 'minmax(0, 1fr)'
+  })()
 
   return (
     <article className='fuwari-card fuwari-card-hover p-4 relative w-full max-w-full min-w-0'>
       <div
-        className={`w-full min-w-0 md:grid md:gap-4 md:items-stretch min-h-[178px] ${
-          showRail
-            ? 'md:grid-cols-[minmax(0,1fr)_220px_56px]'
-            : 'md:grid-cols-[minmax(0,1fr)_220px]'
-        }`}>
+        className={`fuwari-post-card-grid w-full min-w-0 md:grid md:gap-4 md:items-stretch min-h-[178px]`}
+        style={{ gridTemplateColumns }}>
         <div className='min-w-0 flex-1 md:pr-1'>
           <h2 className='fuwari-post-title text-[2rem] font-bold mb-1.5 leading-tight'>
             <SmartLink href={post.href || `/${post.slug}`} className='hover:opacity-90 transition-opacity'>
@@ -88,23 +101,19 @@ const PostCard = ({ post }) => {
             </p>
           )}
         </div>
-        {siteConfig('FUWARI_POST_LIST_COVER', true, CONFIG) && (
+        {showCoverBlock && (
           <div className='mt-4 md:mt-0'>
-            {showCover ? (
-              <SmartLink href={post.href || `/${post.slug}`}>
-                <div
-                  className={`fuwari-cover-wrap h-full ${siteConfig('FUWARI_POST_LIST_COVER_HOVER_ENLARGE', true, CONFIG) ? 'fuwari-cover-enlarge' : ''}`}>
-                  <img
-                    src={coverSrc}
-                    alt={post.title}
-                    className='w-full h-40 md:h-full object-cover rounded-2xl'
-                    onError={() => setCoverFailed(true)}
-                  />
-                </div>
-              </SmartLink>
-            ) : (
-              <div className='hidden md:block h-full' />
-            )}
+            <SmartLink href={post.href || `/${post.slug}`}>
+              <div
+                className={`fuwari-cover-wrap h-full ${siteConfig('FUWARI_POST_LIST_COVER_HOVER_ENLARGE', true, CONFIG) ? 'fuwari-cover-enlarge' : ''}`}>
+                <img
+                  src={coverSrc}
+                  alt={post.title}
+                  className='w-full aspect-[2/1] max-h-52 md:aspect-auto md:max-h-none md:h-full md:min-h-[168px] object-cover rounded-2xl'
+                  onError={() => setCoverFailed(true)}
+                />
+              </div>
+            </SmartLink>
           </div>
         )}
         {showRail && (
