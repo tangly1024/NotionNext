@@ -3,8 +3,8 @@ import { AdSlot } from '@/components/GoogleAdsense'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
+import { debounce } from '@/lib/utils/debounce'
 import CONFIG from '@/themes/fukasawa/config'
-import { debounce } from 'lodash'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo, useState } from 'react'
 import Announcement from './Announcement'
@@ -85,7 +85,7 @@ function AsideLeft(props) {
         return 'left-80'
       }
     }
-  }, [isCollapsed])
+  }, [isCollapsed, isReverse])
 
   // 折叠侧边栏
   const toggleOpen = () => {
@@ -116,7 +116,7 @@ function AsideLeft(props) {
         window.removeEventListener('scroll', handleResize, { passive: true })
       }
     }
-  }, [])
+  }, [FUKASAWA_SIDEBAR_COLLAPSE_ON_SCROLL, post])
 
   return (
     <div

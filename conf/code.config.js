@@ -25,6 +25,8 @@ module.exports = {
   CODE_COLLAPSE: process.env.NEXT_PUBLIC_CODE_COLLAPSE || true, // 是否支持折叠代码框
   CODE_COLLAPSE_EXPAND_DEFAULT:
     process.env.NEXT_PUBLIC_CODE_COLLAPSE_EXPAND_DEFAULT || true, // 折叠代码默认是展开状态
+  CODE_COLLAPSE_MIN_LINES:
+    process.env.NEXT_PUBLIC_CODE_COLLAPSE_MIN_LINES || 20, // 只有超过该行数的代码块才显示折叠条
   // Mermaid 图表CDN
   MERMAID_CDN:
     process.env.NEXT_PUBLIC_MERMAID_CDN ||

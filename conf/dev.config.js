@@ -11,10 +11,13 @@ module.exports = {
   // Redis 缓存数据库地址
   REDIS_URL: process.env.REDIS_URL || '',
 
+  // 未设置 ENABLE_CACHE 时：build/export 默认开启；next dev 下 NODE_ENV=development 也默认开启，便于本地命中 file+memory 缓存。
+  // 若不想用缓存，请在 .env.local 中设置 ENABLE_CACHE=false（字符串即可）。
   ENABLE_CACHE:
     process.env.ENABLE_CACHE ||
     process.env.npm_lifecycle_event === 'build' ||
-    process.env.npm_lifecycle_event === 'export', // 在打包过程中默认开启缓存，开发或运行时开启此功能意义不大。
+    process.env.npm_lifecycle_event === 'export' ||
+    process.env.NODE_ENV === 'development',
   isProd: process.env.VERCEL_ENV === 'production' || process.env.EXPORT, // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
   BUNDLE_ANALYZER: process.env.ANALYZE === 'true' || false, // 是否展示编译依赖内容与大小
   VERSION: (() => {
