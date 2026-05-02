@@ -46,7 +46,29 @@ const MobileNav = ({ locale, customNav, customMenu }) => {
                       {link.name || link.title}
                     </SmartLink>
                   ) : (
-                    <span className='flex-1 px-3 py-2 rounded-lg font-semibold cursor-default select-none'>
+                    <span
+                      className={`flex-1 px-3 py-2 rounded-lg font-semibold hover:bg-[var(--fuwari-bg-soft)] select-none ${
+                        link.subMenus?.length ? 'cursor-pointer' : 'cursor-default'
+                      }`}
+                      role={link.subMenus?.length ? 'button' : undefined}
+                      tabIndex={link.subMenus?.length ? 0 : undefined}
+                      aria-expanded={
+                        link.subMenus?.length ? openSub === link.id : undefined
+                      }
+                      onClick={() => {
+                        if (link.subMenus?.length) {
+                          setOpenSub(prev => (prev === link.id ? '' : link.id))
+                        }
+                      }}
+                      onKeyDown={e => {
+                        if (
+                          link.subMenus?.length &&
+                          (e.key === 'Enter' || e.key === ' ')
+                        ) {
+                          e.preventDefault()
+                          setOpenSub(prev => (prev === link.id ? '' : link.id))
+                        }
+                      }}>
                       {link.name || link.title}
                     </span>
                   )}
