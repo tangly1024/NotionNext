@@ -6,7 +6,7 @@ import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
 import NotByAI from '@/components/NotByAI'
 
-export default function ArticleCopyright() {
+export default function ArticleCopyright({ post }) {
   const router = useRouter()
   const [path, setPath] = useState(siteConfig('LINK') + router.asPath)
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function ArticleCopyright() {
         </li>
         <li>
           <strong className='mr-2'>{locale.COMMON.COPYRIGHT}:</strong>
-          {locale.COMMON.COPYRIGHT_NOTICE}
+          {post.copyright || locale.COMMON.COPYRIGHT_NOTICE}
         </li>
         {siteConfig('HEXO_ARTICLE_NOT_BY_AI', false, CONFIG) && (
           <li>
