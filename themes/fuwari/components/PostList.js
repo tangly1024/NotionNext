@@ -40,9 +40,9 @@ const PostCard = ({ post }) => {
   const showRail = !showCover
 
   return (
-    <article className='fuwari-card fuwari-card-hover p-4 relative'>
+    <article className='fuwari-card fuwari-card-hover p-4 relative w-full max-w-full min-w-0'>
       <div
-        className={`md:grid md:gap-4 md:items-stretch min-h-[178px] ${
+        className={`w-full min-w-0 md:grid md:gap-4 md:items-stretch min-h-[178px] ${
           showRail
             ? 'md:grid-cols-[minmax(0,1fr)_220px_56px]'
             : 'md:grid-cols-[minmax(0,1fr)_220px]'
@@ -119,7 +119,7 @@ const PostCard = ({ post }) => {
 
 const PostList = ({ posts = [] }) => {
   return (
-    <div id='posts-wrapper' className='grid gap-4'>
+    <div id='posts-wrapper' className='grid gap-4 w-full min-w-0 max-w-full'>
       {posts.map(post => (
         <PostCard key={post.id} post={post} />
       ))}

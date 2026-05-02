@@ -338,6 +338,23 @@ const Style = () => {
       color: #8c9097;
       min-height: 1.5rem;
     }
+    @media (max-width: 1023px) {
+      #theme-fuwari .fuwari-meta-row {
+        flex-wrap: wrap;
+        white-space: normal;
+        overflow: visible;
+      }
+      #theme-fuwari .fuwari-meta-tags {
+        flex-wrap: wrap;
+        white-space: normal;
+        max-width: 100%;
+      }
+      #theme-fuwari .fuwari-post-title,
+      #theme-fuwari .fuwari-post-title a {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+    }
     #theme-fuwari .fuwari-meta-item {
       display: inline-flex;
       align-items: center;
@@ -549,8 +566,16 @@ const Style = () => {
       background: color-mix(in oklab, var(--fuwari-primary) 10%, var(--fuwari-surface));
       transform: translateX(1px);
     }
+    #theme-fuwari #posts-wrapper {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
     #theme-fuwari #posts-wrapper article {
       border-radius: 1.15rem;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
     }
     #theme-fuwari aside > section.fuwari-card {
       border-radius: 1.05rem;
