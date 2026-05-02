@@ -33,17 +33,17 @@ const PageNavDrawer = props => {
         {/* 侧边菜单 */}
         <div
           className={`${pageNavVisible ? 'animate__slideInLeft ' : '-ml-80 animate__slideOutLeft'} 
-                      overflow-y-hidden shadow-card w-72 duration-200 fixed left-1 bottom-16 rounded py-2 bg-white dark:bg-hexo-black-gray`}>
-          <div className='px-4 pb-2 flex justify-between items-center border-b font-bold'>
+                      overflow-y-hidden shadow-card w-72 duration-200 fixed left-2 bottom-20 rounded-xl py-2 bg-white dark:bg-hexo-black-gray dark:border dark:border-black`}>
+          <div className='px-4 pb-2 flex justify-between items-center border-b border-gray-200 dark:border-black font-bold text-gray-800 dark:text-gray-200'>
             <span>{locale.COMMON.ARTICLE_LIST}</span>
             <i
-              className='fas fa-times p-1 cursor-pointer'
+              className='fas fa-times p-1 cursor-pointer text-gray-500 dark:text-gray-400'
               onClick={() => {
                 changePageNavVisible(false)
               }}></i>
           </div>
           {/* 所有文章列表 */}
-          <div className='dark:text-gray-400 text-gray-600 h-96 overflow-y-scroll p-3'>
+          <div className='text-gray-600 dark:text-gray-400 h-96 overflow-y-scroll p-3'>
             <NavPostList filteredNavPages={filteredNavPages} />
           </div>
         </div>
@@ -52,7 +52,7 @@ const PageNavDrawer = props => {
       {/* 背景蒙版 */}
       <div
         id='left-drawer-background'
-        className={`${pageNavVisible ? 'block' : 'hidden'} fixed top-0 left-0 z-30 w-full h-full`}
+        className={`${pageNavVisible ? 'block' : 'hidden'} fixed top-0 left-0 z-30 w-full h-full bg-black/35 dark:bg-black/60`}
         onClick={switchVisible}
       />
     </>

@@ -1985,6 +1985,34 @@ svg + .notion-page-title-text {
   /* color: var(--notion-gray); */
 }
 
+/* 深色模式下优化 quote / callout 对比度与层次 */
+html.dark .notion-quote {
+  border-left-color: #60a5fa !important;
+  border-color: rgba(96, 165, 250, 0.45) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(37, 99, 235, 0.22),
+    rgba(30, 64, 175, 0.14)
+  ) !important;
+  color: #dbeafe !important;
+}
+
+html.dark .notion-callout {
+  border: 1px solid rgba(129, 140, 248, 0.38) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.18),
+    rgba(30, 41, 59, 0.5)
+  ) !important;
+  color: #e2e8f0 !important;
+  border-radius: 10px;
+}
+
+html.dark .notion-callout .notion-callout-text,
+html.dark .notion-callout .notion-text {
+  color: #e2e8f0 !important;
+}
+
 /* .notion-asset-wrapper-pdf > div {
   width: unset !important;
 } */
@@ -2067,11 +2095,11 @@ code.language-mermaid {
 .notion-simple-table-row {
 }
 
-/* 表格头 */
-.notion-simple-table tr:first-child td {
+/* 表格头 新版notion不用 */
+/* .notion-simple-table tr:first-child td {
   background-color: #f5f6f8;
   @apply text-center font-bold dark:bg-gray-800 !important;
-}
+} */
 
 .notion-simple-table td {
   border: 1px solid var(#eee) !important;

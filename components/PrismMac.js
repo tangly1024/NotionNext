@@ -11,7 +11,7 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 
 // mermaid图
 import { loadExternalResource } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useGlobal } from '@/lib/global'
 import { siteConfig } from '@/lib/config'
 
@@ -21,7 +21,7 @@ import { siteConfig } from '@/lib/config'
  * @returns
  */
 const PrismMac = () => {
-  const router = useRouter()
+  const pathname = usePathname()
   const { isDarkMode } = useGlobal()
   const codeMacBar = siteConfig('CODE_MAC_BAR')
   const prismjsAutoLoader = siteConfig('PRISM_JS_AUTO_LOADER')
@@ -39,6 +39,11 @@ const PrismMac = () => {
   const codeCollapseExpandDefault = siteConfig('CODE_COLLAPSE_EXPAND_DEFAULT')
 
   useEffect(() => {
+    const article = getNotionArticle()
+    if (!article) return
+    const hasCodeBlocks = Boolean(article.querySelector('pre.notion-code'))
+    if (!hasCodeBlocks) return
+
     if (codeMacBar) {
       loadExternalResource('/css/prism-mac-style.css', 'css')
     }
@@ -60,9 +65,35 @@ const PrismMac = () => {
       renderMermaid(mermaidCDN)
       renderCollapseCode(codeCollapse, codeCollapseExpandDefault)
     })
-  }, [router, isDarkMode])
+  }, [pathname, isDarkMode])
 
   return <></>
+}
+
+const getNotionArticle = () => {
+  const inArticleWrapper = document.querySelector('#article-wrapper #notion-article')
+  if (inArticleWrapper) return inArticleWrapper
+
+  const candidates = Array.from(document.querySelectorAll('#notion-article'))
+  if (candidates.length <= 1) return candidates[0] || null
+
+  // 多主题并存时可能有多个 notion-article，优先选择正文内容更完整的节点
+  const score = el => {
+    const codeCount = el.querySelectorAll('pre.notion-code, .code-toolbar').length
+    const blockCount = el.querySelectorAll('.notion, .notion-page, .notion-text').length
+    return codeCount * 10 + blockCount
+  }
+
+  return candidates.sort((a, b) => score(b) - score(a))[0] || null
+}
+
+const getNotionArticles = () => {
+  const inArticleWrapper = Array.from(
+    document.querySelectorAll('#article-wrapper #notion-article')
+  )
+  if (inArticleWrapper.length > 0) return inArticleWrapper
+
+  return Array.from(document.querySelectorAll('#notion-article'))
 }
 
 /**
@@ -108,30 +139,50 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
   if (!codeCollapse) {
     return
   }
+
+  const COLLAPSE_MIN_LINES = Number(siteConfig('CODE_COLLAPSE_MIN_LINES', 20))
   const codeBlocks = document.querySelectorAll('.code-toolbar')
+
   for (const codeBlock of codeBlocks) {
-    // 判断当前元素是否被包裹
     if (codeBlock.closest('.collapse-wrapper')) {
-      continue // 如果被包裹了，跳过当前循环
+      continue
     }
 
     const code = codeBlock.querySelector('code')
-    const language = code.getAttribute('class').match(/language-(\w+)/)[1]
+    if (!code) {
+      continue
+    }
+
+    const className = code.getAttribute('class') || ''
+    const languageMatch = className.match(/language-([\w-]+)/)
+    const language = languageMatch ? languageMatch[1] : ''
+
+    const text = code.textContent || ''
+    const lineCount = text ? text.split('\n').length : 0
+
+    // 方案 C：仅当代码行数超过阈值时才启用折叠
+    if (lineCount && lineCount < COLLAPSE_MIN_LINES) {
+      continue
+    }
 
     const collapseWrapper = document.createElement('div')
     collapseWrapper.className = 'collapse-wrapper w-full py-2'
-    const panelWrapper = document.createElement('div')
-    panelWrapper.className =
-      'border dark:border-gray-600 rounded-md hover:border-indigo-500 duration-200 transition-colors'
 
-    const header = document.createElement('div')
-    header.className =
-      'flex justify-between items-center px-4 py-2 cursor-pointer select-none'
-    header.innerHTML = `<h3 class="text-lg font-medium">${language}</h3><svg class="transition-all duration-200 w-5 h-5 transform rotate-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.293 6.293a1 1 0 0 1 1.414 0L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z" clip-rule="evenodd"/></svg>`
+    const panelWrapper = document.createElement('div')
+    panelWrapper.className = 'collapse-panel-wrapper'
+
+    const header = document.createElement('button')
+    header.type = 'button'
+    header.className = 'collapse-header'
+
+    const label = language
+      ? `${language.toUpperCase()} · ${lineCount} lines`
+      : `${lineCount} lines`
+
+    header.innerHTML = `<span class="collapse-label">${label}</span><svg class="collapse-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.293 6.293a1 1 0 0 1 1.414 0L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z" clip-rule="evenodd"/></svg>`
 
     const panel = document.createElement('div')
-    panel.className =
-      'invisible h-0 transition-transform duration-200 border-t border-gray-300'
+    panel.className = 'collapse-panel'
 
     panelWrapper.appendChild(header)
     panelWrapper.appendChild(panel)
@@ -140,20 +191,19 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
     codeBlock.parentNode.insertBefore(collapseWrapper, codeBlock)
     panel.appendChild(codeBlock)
 
-    function collapseCode() {
-      panel.classList.toggle('invisible')
-      panel.classList.toggle('h-0')
-      panel.classList.toggle('h-auto')
-      header.querySelector('svg').classList.toggle('rotate-180')
-      panelWrapper.classList.toggle('border-gray-300')
+    function setExpanded(expanded) {
+      panelWrapper.classList.toggle('is-expanded', expanded)
+      panel.classList.toggle('is-expanded', expanded)
+      header.setAttribute('aria-expanded', expanded ? 'true' : 'false')
+      panel.style.maxHeight = expanded ? `${panel.scrollHeight}px` : '0px'
     }
 
-    // 点击后折叠展开代码
-    header.addEventListener('click', collapseCode)
-    // 是否自动展开
-    if (codeCollapseExpandDefault) {
-      header.click()
-    }
+    header.addEventListener('click', () => {
+      const expanded = panelWrapper.classList.contains('is-expanded')
+      setExpanded(!expanded)
+    })
+
+    setExpanded(Boolean(codeCollapseExpandDefault))
   }
 }
 
@@ -161,47 +211,42 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
  * 将mermaid语言 渲染成图片
  */
 const renderMermaid = mermaidCDN => {
-  const observer = new MutationObserver(mutationsList => {
-    for (const m of mutationsList) {
-      if (m.target.className === 'notion-code language-mermaid') {
-        const chart = m.target.querySelector('code').textContent
-        if (chart && !m.target.querySelector('.mermaid')) {
-          const mermaidChart = document.createElement('pre')
-          mermaidChart.className = 'mermaid'
-          mermaidChart.innerHTML = chart
-          m.target.appendChild(mermaidChart)
-        }
+  const articles = getNotionArticles()
+  if (!articles || articles.length === 0) return
 
-        const mermaidsSvg = document.querySelectorAll('.mermaid')
-        if (mermaidsSvg) {
-          let needLoad = false
-          for (const e of mermaidsSvg) {
-            if (e?.firstChild?.nodeName !== 'svg') {
-              needLoad = true
-            }
-          }
-          if (needLoad) {
-            loadExternalResource(mermaidCDN, 'js').then(url => {
-              setTimeout(() => {
-                const mermaid = window.mermaid
-                mermaid?.contentLoaded()
-              }, 100)
-            })
-          }
-        }
+  let hasMermaidBlocks = false
+
+  for (const article of articles) {
+    const mermaidCodeBlocks = article.querySelectorAll(
+      '.notion-code.language-mermaid'
+    )
+    for (const codeBlock of mermaidCodeBlocks) {
+      const chart = codeBlock.querySelector('code')?.textContent
+      if (!chart) continue
+      hasMermaidBlocks = true
+      let mermaidChart = codeBlock.querySelector('.mermaid')
+      if (!mermaidChart) {
+        mermaidChart = document.createElement('pre')
+        mermaidChart.className = 'mermaid'
+        mermaidChart.textContent = chart
+        codeBlock.appendChild(mermaidChart)
       }
     }
-  })
-  if (document.querySelector('#notion-article')) {
-    observer.observe(document.querySelector('#notion-article'), {
-      attributes: true,
-      subtree: true
-    })
   }
+
+  if (!hasMermaidBlocks) return
+
+  loadExternalResource(mermaidCDN, 'js').then(() => {
+    setTimeout(() => {
+      const mermaid = window.mermaid
+      if (!mermaid) return
+      mermaid?.contentLoaded()
+    }, 60)
+  })
 }
 
 function renderPrismMac(codeLineNumbers) {
-  const container = document?.getElementById('notion-article')
+  const container = getNotionArticle()
 
   // Add line numbers
   if (codeLineNumbers) {
@@ -248,6 +293,9 @@ function renderPrismMac(codeLineNumbers) {
  * 在此手动resize计算
  */
 const fixCodeLineStyle = () => {
+  const article = getNotionArticle()
+  if (!article) return
+
   const observer = new MutationObserver(mutationsList => {
     for (const m of mutationsList) {
       if (m.target.nodeName === 'DETAILS') {
@@ -258,12 +306,12 @@ const fixCodeLineStyle = () => {
       }
     }
   })
-  observer.observe(document.querySelector('#notion-article'), {
+  observer.observe(article, {
     attributes: true,
     subtree: true
   })
   setTimeout(() => {
-    const preCodes = document.querySelectorAll('pre.notion-code')
+    const preCodes = article.querySelectorAll('pre.notion-code')
     for (const preCode of preCodes) {
       Prism.plugins.lineNumbers.resize(preCode)
     }

@@ -60,9 +60,10 @@ export const MenuItemCollapse = props => {
       {hasSubMenu && (
         <Collapse isOpen={isOpen} onHeightChange={props.onHeightChange}>
           {link.subMenus.map((sLink, index) => {
+            const subMenuKey = sLink?.href || sLink?.title || `submenu-${index}`
             return (
               <div
-                key={index}
+                key={subMenuKey}
                 className='dark:bg-black dark:text-gray-200 text-left px-10 justify-start bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200  py-3 pr-6'>
                 <SmartLink href={sLink.href} target={link?.target}>
                   <span className='text-sm ml-4 whitespace-nowrap'>
