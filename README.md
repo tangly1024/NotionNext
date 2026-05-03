@@ -66,6 +66,7 @@ yarn dev
 - [Docs Navigation (English)](./docs/README.en.md)
 - [主题迁移指南（中文）](./docs/THEME_MIGRATION_GUIDE.zh-CN.md)
 - [Theme Migration Guide (English)](./docs/THEME_MIGRATION_GUIDE.md)
+- [贡献入口（中文）](./CONTRIBUTING.zh-CN.md)
 - [贡献入口（英文）](./CONTRIBUTING.md)
 
 ## 预览效果

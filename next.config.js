@@ -1,4 +1,3 @@
-const { THEME } = require('./blog.config')
 const fs = require('node:fs')
 const path = require('node:path')
 const BLOG = require('./blog.config')
@@ -32,14 +31,35 @@ const locales = (function () {
   return langs
 })()
 
-// next dev 启动时提示：开发环境默认读/写 Notion 缓存（见 conf/dev.config.js 中 ENABLE_CACHE）
+// next dev 时配置可能被多个 worker 各自加载一次，globalThis 无法跨进程去重；用独占文件锁只打印一行。
 ;(function printDevCacheHint() {
   if (process.env.npm_lifecycle_event !== 'dev') return
+  const lockFile = path.join(__dirname, '.next', 'dev-cache-hint.lock')
+  const siblingWindowMs = 15_000 // 同一次 dev 内多 worker；间隔超过则视为新会话，删掉旧锁再提示
+  try {
+    fs.mkdirSync(path.dirname(lockFile), { recursive: true })
+    if (fs.existsSync(lockFile)) {
+      const age = Date.now() - fs.statSync(lockFile).mtimeMs
+      if (age < siblingWindowMs) {
+        return
+      }
+      try {
+        fs.unlinkSync(lockFile)
+      } catch (err) {
+        if (err && err.code !== 'ENOENT') return
+      }
+    }
+  } catch (_) {
+    return
+  }
+  try {
+    fs.closeSync(fs.openSync(lockFile, 'wx'))
+  } catch (e) {
+    if (e && e.code === 'EEXIST') return
+    return
+  }
   console.log(
-    '\n[NotionNext] 开发环境默认开启 Notion 数据缓存（ENABLE_CACHE），便于本地调试提速。'
-  )
-  console.log(
-    '若需关闭缓存、每次请求都从 Notion 获取实时数据：请复制仓库根目录的 .env.example 创建 .env.local，并配置 ENABLE_CACHE=false\n'
+    '[NotionNext] Dev cache ON (ENABLE_CACHE=true); live Notion data → ENABLE_CACHE=false in .env.local'
   )
 })()
 
@@ -158,16 +178,17 @@ const nextConfig = {
     // 图片尺寸优化
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    // 允许next/image加载的图片 域名
-    domains: [
-      'gravatar.com',
-      'www.notion.so',
-      'avatars.githubusercontent.com',
-      'images.unsplash.com',
-      'source.unsplash.com',
-      'p1.qhimg.com',
-      'webmention.io',
-      'ko-fi.com'
+    // NotionNext 站长图源不可控（任意外链），这里放开 http/https 远程图片来源
+    // 说明：这会显著降低“域名白名单漏配导致图片不显示”的概率
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**'
+      },
+      {
+        protocol: 'http',
+        hostname: '**'
+      }
     ],
     // 图片加载器优化
     loader: 'default',
@@ -311,9 +332,22 @@ const nextConfig = {
   webpack: (config, { dev, isServer }) => {
     // 动态主题：添加 resolve.alias 配置，将动态路径映射到实际路径
     config.resolve.alias['@'] = path.resolve(__dirname)
+    config.resolve.alias['lodash.throttle'] = path.resolve(
+      __dirname,
+      'lib/utils/throttle.js'
+    )
 
     if (!isServer) {
-      console.log('[默认主题]', path.resolve(__dirname, 'themes', THEME))
+      console.log(
+        '[ThemeResolver][webpack]',
+        JSON.stringify({
+          note:
+            'Layouts load via dynamic import(@/themes/<name>). Theme folder follows runtime NEXT_PUBLIC_THEME / Notion; no compile-time @theme-components alias.',
+          envTheme: process.env.NEXT_PUBLIC_THEME || null,
+          configTheme: BLOG.THEME,
+          themeFolderPath: path.resolve(__dirname, 'themes', BLOG.THEME)
+        })
+      )
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,
@@ -323,49 +357,6 @@ const nextConfig = {
         path: false
       }
     }
-    config.resolve.alias['@theme-components'] = path.resolve(
-      __dirname,
-      'themes',
-      THEME
-    )
-
-    // 性能优化配置
-    if (!dev) {
-      // 生产环境优化
-      config.optimization = {
-        ...config.optimization,
-        splitChunks: {
-          chunks: 'all',
-          cacheGroups: {
-            vendor: {
-              test: /[\\/]node_modules[\\/]/,
-              name: 'vendors',
-              chunks: 'all',
-            },
-            common: {
-              name: 'common',
-              minChunks: 2,
-              chunks: 'all',
-              enforce: true,
-            },
-          },
-        },
-      }
-    }
-
-    // Enable source maps in development mode
-    if (dev || process.env.NODE_ENV_API === 'development') {
-      // config.devtool = 'source-map'
-      config.devtool = 'eval-source-map'
-      // console.log('启动调试 nextjs.config.devtool ', config.devtool)
-    }
-
-    // 优化模块解析
-    config.resolve.modules = [
-      path.resolve(__dirname, 'node_modules'),
-      'node_modules'
-    ]
-
     return config
   }
   ,

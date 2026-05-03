@@ -46,6 +46,57 @@ yarn
 
 ## 开发工具
 
+### package.json 脚本总览（完整）
+
+以下为仓库 `package.json` 中全部可运行脚本及用途说明：
+
+- `yarn dev`：启动本地开发服务（Next.js dev）。
+- `yarn build`：生产构建（含 `BUILD_MODE=true`）。
+- `yarn start`：启动生产服务（需先 `yarn build`）。
+- `yarn post-build`：构建后生成 sitemap。
+- `yarn export`：静态导出构建并生成 sitemap。
+- `yarn bundle-report`：构建并输出包体分析报告（`ANALYZE=true`）。
+- `yarn build-all-in-dev`：在开发环境模拟生产构建（`VERCEL_ENV=production`）。
+- `yarn version`：输出当前项目版本号。
+
+- `yarn lint`：执行 Next.js ESLint 检查。
+- `yarn lint:fix`：自动修复可修复的 ESLint 问题。
+- `yarn type-check`：TypeScript 类型检查（不输出产物）。
+- `yarn format`：使用 Prettier 格式化全仓库。
+- `yarn format:check`：检查格式是否符合 Prettier 规则。
+- `yarn quality`：执行项目质量检查脚本（聚合检查）。
+- `yarn pre-commit`：提交前检查（lint fix + format + type-check）。
+
+- `yarn dev-tools`：执行开发工具入口脚本。
+- `yarn init-dev`：初始化开发环境（dev-tools init）。
+- `yarn clean`：清理缓存与构建产物（dev-tools clean）。
+- `yarn docs`：生成或刷新文档（dev-tools docs）。
+- `yarn check-updates`：检查依赖可更新情况（dev-tools check-updates）。
+
+- `yarn deps:install`：按锁文件安装依赖（frozen-lockfile）。
+- `yarn deps:check-lockfile`：验证安装后 `yarn.lock` 无漂移。
+
+- `yarn setup-hooks`：安装 Git hooks。
+- `yarn remove-hooks`：移除 Git hooks。
+- `yarn check-hooks`：检查 hooks 安装状态。
+
+- `yarn test`：运行 Jest 单元测试。
+- `yarn test:watch`：监听模式运行 Jest。
+- `yarn test:coverage`：运行测试并生成覆盖率。
+- `yarn test:ci`：CI 模式运行测试（覆盖率+无 watch）。
+
+- `yarn health-check`：执行项目健康检查脚本。
+- `yarn validate`：执行验证入口（当前映射到 health-check）。
+- `yarn final-validation`：执行最终验证脚本。
+
+- `yarn perf:baseline`：记录基线性能数据（build/runtime）。
+- `yarn perf:compare`：与上次基线比较性能变化。
+- `yarn perf:lighthouse`：运行 Lighthouse CI 审计。
+- `yarn perf:audit:themes`：全主题性能审计（输出到 `docs/performance`）。
+- `yarn perf:compress-theme-previews`：批量生成主题预览 WebP 资源。
+
+- `yarn postinstall`：依赖安装后自动执行 `patch-package`。
+
 ### 代码质量工具
 
 ```bash
@@ -235,6 +286,31 @@ yarn bundle-report
 # 生成性能报告
 yarn analyze
 ```
+
+### 新主题性能准入（必做）
+
+新增或大改主题时，必须在生产模式下执行一次全主题审计，并把结果文件一并提交：
+
+```bash
+# 1) 生产构建与启动
+yarn build
+yarn start
+
+# 2) 另开一个终端执行主题性能审计
+yarn perf:audit:themes
+```
+
+提交前请确认以下文件已更新并纳入 commit：
+
+- `docs/performance/theme-audit-latest.md`
+- `docs/performance/theme-audit-latest.json`
+
+准入门槛（建议值，可逐步收紧）：
+
+- Performance >= 60（新主题目标）
+- SEO >= 90
+- LCP <= 4000ms
+- CLS <= 0.1
 
 ## 环境变量
 

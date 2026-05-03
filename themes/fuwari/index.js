@@ -17,6 +17,7 @@ import ArticleHeader from './components/ArticleHeader'
 import ArticleLock from './components/ArticleLock'
 import Footer from './components/Footer'
 import Header from './components/Header'
+import ArticleHeroCover from './components/ArticleHeroCover'
 import HeroBanner from './components/HeroBanner'
 import Pagination from './components/Pagination'
 import PostList from './components/PostList'
@@ -60,12 +61,13 @@ const LayoutBase = props => {
 
       {showHomeHero && <HeroBanner siteInfo={props.siteInfo} />}
 
-      <main className={`max-w-6xl mx-auto px-3 md:px-4 pb-12 ${showHomeHero ? 'fuwari-main-overlap' : ''}`}>
-        <div className='grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-4 lg:gap-6 items-start'>
+      <main
+        className={`max-w-6xl mx-auto px-3 md:px-4 pb-12 min-w-0 w-full ${showHomeHero ? 'fuwari-main-overlap' : ''}`}>
+        <div className='grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-4 lg:gap-6 items-start min-w-0'>
           <div className='hidden lg:block sticky top-4'>
             <SidePanel {...props} />
           </div>
-          <section>
+          <section className='min-w-0 w-full max-w-full'>
             {children}
             <div className='lg:hidden mt-4'>
               <SidePanel {...props} />
@@ -113,12 +115,18 @@ const LayoutSlug = props => {
   if (!post) return null
   const showComments =
     siteConfig('FUWARI_ARTICLE_COMMENT', true, CONFIG) && isCommentServiceConfigured()
+  const articleCoverSrc =
+    siteConfig('FUWARI_ARTICLE_COVER_HERO', true, CONFIG) &&
+    (post.pageCover || post.pageCoverThumbnail)
   return (
     <>
       {lock ? (
         <ArticleLock validPassword={validPassword} />
       ) : (
-        <article className='fuwari-card p-6'>
+        <article className='fuwari-card p-6 overflow-hidden'>
+          {articleCoverSrc ? (
+            <ArticleHeroCover coverSrc={articleCoverSrc} title={post.title} />
+          ) : null}
           <ArticleHeader post={post} />
           <div id='article-wrapper' className='fuwari-prose'>
             <NotionPage post={post} />

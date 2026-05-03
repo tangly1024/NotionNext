@@ -54,3 +54,6 @@ package-lock.json
 
 .notion-api-lock
 .tmp/
+.perf/
+tsconfig.tsbuildinfo
+webpack-internal:/
