@@ -91,11 +91,11 @@ export async function getStaticProps(req) {
     // 生成robotTxt
     generateRobotsTxt(props)
     // 生成Feed订阅
-    generateRss(props)
+    await generateRss(props)
     // 生成
     generateSitemapXml(props)
     // 检查数据是否需要从algolia删除
-    checkDataFromAlgolia(props)
+    await checkDataFromAlgolia(props)
     if (siteConfig('UUID_REDIRECT', false, props?.NOTION_CONFIG)) {
       // 生成重定向 JSON
       generateRedirectJson(props)
