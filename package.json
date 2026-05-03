@@ -62,6 +62,7 @@
     "@headlessui/react": "^1.7.19",
     "@next/bundle-analyzer": "^12.3.7",
     "@supabase/supabase-js": "^2.57.4",
+    "@tabler/icons-react": "^3.36.1",
     "@vercel/analytics": "^1.5.0",
     "@vercel/functions": "^3.4.3",
     "algoliasearch": "^4.25.2",
@@ -80,7 +81,8 @@
     "react-facebook": "^8.1.4",
     "react-hotkeys-hook": "^4.6.2",
     "react-notion-x": "7.10.0",
-    "react-tweet-embed": "~2.0.0"
+    "react-tweet-embed": "~2.0.0",
+    "remixicon-react": "^1.0.0"
   },
   "devDependencies": {
     "@lhci/cli": "^0.15.1",
