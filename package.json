@@ -58,7 +58,7 @@
   },
   "dependencies": {
     "@clerk/localizations": "^3.17.1",
-    "@clerk/nextjs": "^5.7.5",
+    "@clerk/nextjs": "^5.7.6",
     "@headlessui/react": "^1.7.19",
     "@next/bundle-analyzer": "^12.3.7",
     "@supabase/supabase-js": "^2.57.4",
