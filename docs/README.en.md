@@ -26,6 +26,7 @@ This docs directory helps contributors and new developers understand the project
 
 - [Themes Documentation](./themes/README.en.md)
 - [Claude Theme](./themes/CLAUDE.en.md)
+- [Endspace Theme](./themes/ENDSPACE.en.md)
 - [Fuwari Theme](./themes/FUWARI.md)
 
 ## Relationship with Root Docs

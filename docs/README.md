@@ -19,6 +19,7 @@
 
 - [Themes Documentation](./themes/README.md)
 - [Claude Theme](./themes/CLAUDE.md)
+- [Endspace Theme](./themes/ENDSPACE.md)
 - [Fuwari Theme](./themes/FUWARI.md)
 
 ## 文档目标
