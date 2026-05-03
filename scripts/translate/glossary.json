@@ -1,0 +1,32 @@
+{
+  "comment": "此列表中的术语在翻译时原样保留。如遇到误译，请将相关术语补充到 preserve 数组中。",
+  "preserve": [
+    "Notion",
+    "NotionNext",
+    "LLM",
+    "API",
+    "SDK",
+    "CLI",
+    "React",
+    "Next.js",
+    "Remix",
+    "Hooks",
+    "TypeScript",
+    "JavaScript",
+    "Python",
+    "GitHub",
+    "Vercel",
+    "Cloudflare",
+    "Algolia",
+    "Giscus",
+    "Tailwind",
+    "DeepSeek",
+    "GLM",
+    "Claude",
+    "GPT",
+    "Anthropic",
+    "OpenAI"
+  ],
+  "zh_to_en": {},
+  "en_to_zh": {}
+}

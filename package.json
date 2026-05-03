@@ -54,6 +54,11 @@
     "perf:lighthouse": "lhci autorun",
     "perf:audit:themes": "node scripts/audit-theme-performance.js",
     "perf:compress-theme-previews": "node scripts/compress-theme-previews.js",
+    "translate": "node scripts/translate/index.js",
+    "translate:all": "node scripts/translate/index.js --batch",
+    "translate:check": "node scripts/translate/index.js --check-drift",
+    "translate:backfill": "node scripts/translate/index.js --backfill",
+    "translate:diagnose": "node scripts/translate/index.js --diagnose",
     "postinstall": "patch-package"
   },
   "dependencies": {
@@ -85,6 +90,7 @@
   "devDependencies": {
     "@lhci/cli": "^0.15.1",
     "@netlify/plugin-nextjs": "^5.15.8",
+    "@notionhq/client": "^2.2.15",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.1",

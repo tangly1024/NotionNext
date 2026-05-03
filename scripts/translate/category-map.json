@@ -1,0 +1,23 @@
+{
+  "_comment": "中英文数据库中 select / multi_select 类型属性的双向映射。两侧分类与标签的命名通常并不一致（例如英文库的 Knowledge 对应中文库的「知识」），翻译时若目标库不存在对应选项，写入会失败；因此在此手动登记映射关系。未登记的值会在翻译时打印警告并跳过，因此初次使用时映射可以为空。",
+  "_example": {
+    "category": {
+      "en_to_zh": {
+        "Knowledge": "知识",
+        "Technology": "技术"
+      },
+      "zh_to_en": {
+        "知识": "Knowledge",
+        "技术": "Technology"
+      }
+    }
+  },
+  "category": {
+    "en_to_zh": {},
+    "zh_to_en": {}
+  },
+  "tags": {
+    "en_to_zh": {},
+    "zh_to_en": {}
+  }
+}
