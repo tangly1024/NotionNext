@@ -2,6 +2,8 @@
 
 Endspace is a NotionNext theme inspired by the visual language of *Arknights: Endfield*’s official site, maintained by the community. Upstream repository: [cloud-oc/endspace](https://github.com/cloud-oc/endspace). Tracking issue: [#3990](https://github.com/tangly1024/NotionNext/issues/3990).
 
+**Original author / upstream**: [@cloud-oc](https://github.com/cloud-oc) ([cloud-oc/endspace](https://github.com/cloud-oc/endspace)).
+
 ## Enable
 
 1. Install dependencies at the repo root (`yarn install`):
