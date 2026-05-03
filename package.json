@@ -110,7 +110,7 @@
     "jest-junit": "^16.0.0",
     "next-sitemap": "^1.9.12",
     "patch-package": "^8.0.1",
-    "postcss": "^8.5.6",
+    "postcss": "^8.5.10",
     "prettier": "^3.6.2",
     "sharp": "^0.34.5",
     "tailwindcss": "^3.4.17",
