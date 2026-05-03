@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
+import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 
 /**
@@ -62,11 +62,12 @@ const WebmentionCount = ({ target }) => {
 
 const Avatar = ({ author }) => (
   <a className='avatar-wrapper' href={author.url} key={author.name}>
-    <Image
+    <LazyImage
       className="avatar"
       src={author.photo}
       alt={author.name}
-      fill
+      width={48}
+      height={48}
       sizes="(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
               33vw"

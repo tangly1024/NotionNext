@@ -46,9 +46,10 @@ export const MenuItemDrop = ({ link }) => {
           style={{ backdropFilter: 'blur(3px)' }}
           className={`${show ? 'visible opacity-100 shadow-lg' : 'invisible opacity-0'} overflow-hidden bg-white transition-all duration-300 z-20 absolute block  `}>
           {link.subMenus.map((sLink, index) => {
+            const subMenuKey = sLink?.href || sLink?.title || `submenu-${index}`
             return (
               <li
-                key={index}
+                key={subMenuKey}
                 className='cursor-pointer hover:bg-red-300 text-gray-900 hover:text-black tracking-widest transition-all duration-200 dark:border-gray-800  py-1 pr-6 pl-3'>
                 <SmartLink href={sLink.href} target={link?.target}>
                   <span className='text-sm text-nowrap font-extralight'>

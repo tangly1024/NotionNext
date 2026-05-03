@@ -4,7 +4,7 @@ import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
 import NotByAI from '@/components/NotByAI'
 
-export default function ArticleCopyright({ author, url }) {
+export default function ArticleCopyright({ author, url, post }) {
   const { locale } = useGlobal()
   if (!siteConfig('NEXT_ARTICLE_COPYRIGHT', null, CONFIG)) {
     return <></>
@@ -26,7 +26,7 @@ export default function ArticleCopyright({ author, url }) {
         </li>
         <li>
           <strong className='mr-2'>{locale.COMMON.COPYRIGHT}:</strong>
-          {locale.COMMON.COPYRIGHT_NOTICE}
+          {post.copyright || locale.COMMON.COPYRIGHT_NOTICE}
         </li>
         {siteConfig('NEXT_ARTICLE_NOT_BY_AI', false, CONFIG) && (
           <li>

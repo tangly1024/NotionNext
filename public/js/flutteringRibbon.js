@@ -126,7 +126,7 @@ function createFlutteringRibbon() {
           init: function () {
             try {
               ;(this._canvas = document.createElement('canvas')),
-                (this._canvas.id = id),
+                (this._canvas.id = 'flutteringRibbon'),
                 (this._canvas.style.display = 'block'),
                 (this._canvas.style.position = 'fixed'),
                 (this._canvas.style.margin = '0'),

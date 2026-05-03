@@ -1,10 +1,11 @@
 {
   "name": "notion-next",
-  "version": "4.9.5.0",
+  "version": "4.9.5.2",
+  "packageManager": "yarn@1.22.22",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "engines": {
-    "node": ">=20"
+    "node": ">=20 <25"
   },
   "repository": {
     "type": "git",
@@ -30,9 +31,11 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "quality": "node scripts/quality-check.js",
-    "pre-commit": "npm run lint:fix && npm run format && npm run type-check",
+    "pre-commit": "yarn lint:fix && yarn format && yarn type-check",
     "dev-tools": "node scripts/dev-tools.js",
     "init-dev": "node scripts/dev-tools.js init",
+    "deps:install": "yarn install --frozen-lockfile",
+    "deps:check-lockfile": "yarn install --frozen-lockfile && git diff --exit-code yarn.lock",
     "clean": "node scripts/dev-tools.js clean",
     "docs": "node scripts/dev-tools.js docs",
     "check-updates": "node scripts/dev-tools.js check-updates",
@@ -44,8 +47,13 @@
     "test:coverage": "jest --coverage",
     "test:ci": "jest --ci --coverage --watchAll=false",
     "health-check": "node scripts/health-check.js",
-    "validate": "npm run health-check",
+    "validate": "yarn health-check",
     "final-validation": "node scripts/final-validation.js",
+    "perf:baseline": "node scripts/perf-baseline.js",
+    "perf:compare": "node scripts/perf-baseline.js --mode=compare",
+    "perf:lighthouse": "lhci autorun",
+    "perf:audit:themes": "node scripts/audit-theme-performance.js",
+    "perf:compress-theme-previews": "node scripts/compress-theme-previews.js",
     "postinstall": "patch-package"
   },
   "dependencies": {
@@ -53,6 +61,7 @@
     "@clerk/nextjs": "^5.7.5",
     "@headlessui/react": "^1.7.19",
     "@next/bundle-analyzer": "^12.3.7",
+    "@supabase/supabase-js": "^2.57.4",
     "@vercel/analytics": "^1.5.0",
     "@vercel/functions": "^3.4.3",
     "algoliasearch": "^4.25.2",
@@ -61,7 +70,6 @@
     "feed": "^4.2.2",
     "ioredis": "^5.6.1",
     "js-md5": "^0.8.3",
-    "lodash.throttle": "^4.1.1",
     "memory-cache": "^0.2.0",
     "next": "^14.2.30",
     "notion-client": "7.10.0",
@@ -72,10 +80,11 @@
     "react-facebook": "^8.1.4",
     "react-hotkeys-hook": "^4.6.2",
     "react-notion-x": "7.10.0",
-    "react-share": "^5.2.2",
     "react-tweet-embed": "~2.0.0"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.15.1",
+    "@netlify/plugin-nextjs": "^5.15.8",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.1",
@@ -84,7 +93,6 @@
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "@waline/client": "^3.6.0",
-    "@netlify/plugin-nextjs": "^5.15.8",
     "autoprefixer": "^10.4.21",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
@@ -102,6 +110,7 @@
     "patch-package": "^8.0.1",
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
+    "sharp": "^0.34.5",
     "tailwindcss": "^3.4.17",
     "typescript": "5.6.2",
     "webpack-bundle-analyzer": "^4.5.0"

@@ -338,6 +338,23 @@ const Style = () => {
       color: #8c9097;
       min-height: 1.5rem;
     }
+    @media (max-width: 1023px) {
+      #theme-fuwari .fuwari-meta-row {
+        flex-wrap: wrap;
+        white-space: normal;
+        overflow: visible;
+      }
+      #theme-fuwari .fuwari-meta-tags {
+        flex-wrap: wrap;
+        white-space: normal;
+        max-width: 100%;
+      }
+      #theme-fuwari .fuwari-post-title,
+      #theme-fuwari .fuwari-post-title a {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+    }
     #theme-fuwari .fuwari-meta-item {
       display: inline-flex;
       align-items: center;
@@ -549,8 +566,16 @@ const Style = () => {
       background: color-mix(in oklab, var(--fuwari-primary) 10%, var(--fuwari-surface));
       transform: translateX(1px);
     }
+    #theme-fuwari #posts-wrapper {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
     #theme-fuwari #posts-wrapper article {
       border-radius: 1.15rem;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
     }
     #theme-fuwari aside > section.fuwari-card {
       border-radius: 1.05rem;
@@ -569,9 +594,14 @@ const Style = () => {
     #theme-fuwari #posts-wrapper > article {
       animation: fuwari-enter .28s ease both;
     }
+    /* Readmore 的 modal 使用 fixed 定位；文章主卡若保留 transform/animation 会把它困在卡片内 */
+    #theme-fuwari article.fuwari-card {
+      animation: none !important;
+      transform: none !important;
+    }
     @keyframes fuwari-enter {
       from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
+      to { opacity: 1; transform: none; }
     }
   `}</style>
 }

@@ -1,6 +1,5 @@
 'use client'
 
-import Comment from '@/components/Comment'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
@@ -18,6 +17,7 @@ import ArticleHeader from './components/ArticleHeader'
 import ArticleLock from './components/ArticleLock'
 import Footer from './components/Footer'
 import Header from './components/Header'
+import ArticleHeroCover from './components/ArticleHeroCover'
 import HeroBanner from './components/HeroBanner'
 import Pagination from './components/Pagination'
 import PostList from './components/PostList'
@@ -25,6 +25,9 @@ import RightFloatArea from './components/RightFloatArea'
 import SidePanel from './components/SidePanel'
 import CONFIG from './config'
 import { Style } from './style'
+import { isCommentServiceConfigured } from './utils/commentEnabled'
+
+const Comment = dynamic(() => import('@/components/Comment'), { ssr: false })
 
 const AlgoliaSearchModal = dynamic(
   () => import('@/components/AlgoliaSearchModal'),
@@ -58,12 +61,13 @@ const LayoutBase = props => {
 
       {showHomeHero && <HeroBanner siteInfo={props.siteInfo} />}
 
-      <main className={`max-w-6xl mx-auto px-3 md:px-4 pb-12 ${showHomeHero ? 'fuwari-main-overlap' : ''}`}>
-        <div className='grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-4 lg:gap-6 items-start'>
+      <main
+        className={`max-w-6xl mx-auto px-3 md:px-4 pb-12 min-w-0 w-full ${showHomeHero ? 'fuwari-main-overlap' : ''}`}>
+        <div className='grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-4 lg:gap-6 items-start min-w-0'>
           <div className='hidden lg:block sticky top-4'>
             <SidePanel {...props} />
           </div>
-          <section>
+          <section className='min-w-0 w-full max-w-full'>
             {children}
             <div className='lg:hidden mt-4'>
               <SidePanel {...props} />
@@ -109,12 +113,20 @@ const LayoutSlug = props => {
   const locale = getLocale()
   const { post, lock, validPassword, prev, next } = props
   if (!post) return null
+  const showComments =
+    siteConfig('FUWARI_ARTICLE_COMMENT', true, CONFIG) && isCommentServiceConfigured()
+  const articleCoverSrc =
+    siteConfig('FUWARI_ARTICLE_COVER_HERO', true, CONFIG) &&
+    (post.pageCover || post.pageCoverThumbnail)
   return (
     <>
       {lock ? (
         <ArticleLock validPassword={validPassword} />
       ) : (
-        <article className='fuwari-card p-6'>
+        <article className='fuwari-card p-6 overflow-hidden'>
+          {articleCoverSrc ? (
+            <ArticleHeroCover coverSrc={articleCoverSrc} title={post.title} />
+          ) : null}
           <ArticleHeader post={post} />
           <div id='article-wrapper' className='fuwari-prose'>
             <NotionPage post={post} />
@@ -122,7 +134,15 @@ const LayoutSlug = props => {
           </div>
           <ArticleCopyright post={post} />
           <ArticleAdjacent prev={prev} next={next} />
-          {siteConfig('FUWARI_ARTICLE_COMMENT', true, CONFIG) && <Comment frontMatter={post} />}
+          {showComments && (
+            <section className='mt-8 pt-6 border-t border-[var(--fuwari-border)]' aria-label={locale?.COMMON?.COMMENTS || 'Comments'}>
+              <h2 className='text-base font-semibold mb-4 text-[var(--fuwari-text)] flex items-center gap-2'>
+                <i className='far fa-comments text-[var(--fuwari-muted)]' aria-hidden='true' />
+                {locale?.COMMON?.COMMENTS || 'Comments'}
+              </h2>
+              <Comment frontMatter={post} className='fuwari-comment !mt-0' />
+            </section>
+          )}
         </article>
       )}
     </>

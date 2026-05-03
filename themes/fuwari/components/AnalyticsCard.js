@@ -1,12 +1,15 @@
+import SmartLink from '@/components/SmartLink'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
 
-const Item = ({ label, value }) => (
-  <div className='fuwari-card fuwari-analytics-item p-3 text-center min-w-0'>
-    <div className='text-lg font-semibold leading-none'>{value}</div>
+const Item = ({ label, value, href }) => (
+  <SmartLink
+    href={href}
+    className='fuwari-card fuwari-analytics-item fuwari-analytics-link p-3 text-center min-w-0 block no-underline text-inherit hover:opacity-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--fuwari-primary)]'>
+    <div className='text-lg font-semibold leading-none text-[var(--fuwari-text)]'>{value}</div>
     <div className='fuwari-analytics-label mt-1'>{label}</div>
-  </div>
+  </SmartLink>
 )
 
 const AnalyticsCard = ({ postCount = 0, categoryOptions = [], tagOptions = [] }) => {
@@ -28,9 +31,9 @@ const AnalyticsCard = ({ postCount = 0, categoryOptions = [], tagOptions = [] })
         {title}
       </h3>
       <div className='grid grid-cols-3 gap-2'>
-        <Item label={postsLabel} value={postCount || 0} />
-        <Item label={categoryLabel} value={categoryOptions?.length || 0} />
-        <Item label={tagsLabel} value={tagOptions?.length || 0} />
+        <Item label={postsLabel} value={postCount || 0} href='/archive' />
+        <Item label={categoryLabel} value={categoryOptions?.length || 0} href='/category' />
+        <Item label={tagsLabel} value={tagOptions?.length || 0} href='/tag' />
       </div>
     </section>
   )

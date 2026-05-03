@@ -7,6 +7,7 @@
 
 # testing
 /coverage
+/test-results
 
 # next.js
 /.next/
@@ -52,3 +53,7 @@ package-lock.json
 # yarn.lock
 
 .notion-api-lock
+.tmp/
+.perf/
+tsconfig.tsbuildinfo
+webpack-internal:/

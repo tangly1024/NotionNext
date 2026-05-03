@@ -16,6 +16,22 @@ const ContactCard = () => {
   const url = siteConfig('FUWARI_CONTACT_URL', '', CONFIG)
   const text = siteConfig('FUWARI_CONTACT_TEXT', 'Get in touch', CONFIG)
   const useFlip = siteConfig('FUWARI_CONTACT_FLIP_CARD', true, CONFIG)
+  const frontBadge = siteConfig(
+    'FUWARI_CONTACT_FRONT_BADGE',
+    'Community',
+    CONFIG
+  )
+  const backTitle = siteConfig(
+    'FUWARI_CONTACT_BACK_TITLE',
+    'How we respond',
+    CONFIG
+  )
+  const backDesc = siteConfig(
+    'FUWARI_CONTACT_BACK_DESCRIPTION',
+    'Share your idea, bug report, or collaboration request.',
+    CONFIG
+  )
+  const backText = siteConfig('FUWARI_CONTACT_BACK_TEXT', 'Open Contact', CONFIG)
   const openInNewTab = /^https?:\/\//i.test(url)
 
   const jumpToContact = () => {
@@ -29,30 +45,33 @@ const ContactCard = () => {
 
   const frontContent = (
     <div className='fuwari-card p-5 h-full'>
-      <h3 className='text-sm font-semibold mb-2 tracking-wide uppercase text-[var(--fuwari-muted)]'>
-        {title}
-      </h3>
-      {desc && <p className='text-sm leading-6 text-[var(--fuwari-muted)] mb-3'>{desc}</p>}
+      <div className='mb-3 flex items-center justify-between gap-2'>
+        <h3 className='text-sm font-semibold tracking-wide uppercase text-[var(--fuwari-muted)]'>
+          {title}
+        </h3>
+        {frontBadge && (
+          <span className='text-[11px] px-2 py-0.5 rounded-full bg-[var(--fuwari-primary-soft)] text-[var(--fuwari-primary)]'>
+            {frontBadge}
+          </span>
+        )}
+      </div>
+      {desc && (
+        <p className='text-sm leading-6 text-[var(--fuwari-muted)] mb-2 line-clamp-2'>
+          {desc}
+        </p>
+      )}
       {url && <p className='fuwari-link text-sm font-medium'>{text} →</p>}
     </div>
   )
 
   const backContent = (
     <div className='fuwari-card p-5 h-full bg-[var(--fuwari-bg-soft)]'>
-      <h4 className='text-base font-semibold mb-2'>
-        {siteConfig('FUWARI_CONTACT_BACK_TITLE', 'Keep in touch', CONFIG)}
-      </h4>
-      <p className='text-sm text-[var(--fuwari-muted)] leading-6 mb-3'>
-        {siteConfig(
-          'FUWARI_CONTACT_BACK_DESCRIPTION',
-          'Share your ideas, collaboration, and feedback anytime.',
-          CONFIG
-        )}
+      <h4 className='text-base font-semibold mb-2'>{backTitle}</h4>
+      <p className='text-sm text-[var(--fuwari-muted)] leading-6 mb-2 line-clamp-2'>
+        {backDesc}
       </p>
       {url && (
-        <p className='fuwari-link text-sm font-medium'>
-          {siteConfig('FUWARI_CONTACT_BACK_TEXT', 'Open Contact', CONFIG)} →
-        </p>
+        <p className='fuwari-link text-sm font-medium'>{backText} →</p>
       )}
     </div>
   )
