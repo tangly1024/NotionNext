@@ -23,7 +23,7 @@ Upstream theme is from [cloud-oc/endspace](https://github.com/cloud-oc/endspace)
 
 ## Preview asset
 
-`public/images/themes-preview/endspace.webp` is currently a placeholder; replace it with a representative preview when available (see `scripts/perf:compress-theme-previews.js`).
+Theme preview: `public/images/themes-preview/endspace.webp` (generated from `endspace.png` in the same folder). After updating the PNG, run `yarn perf:compress-theme-previews` to regenerate WebP.
 
 ## Maintenance
 

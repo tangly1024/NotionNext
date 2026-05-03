@@ -23,7 +23,7 @@ Endspace 是受《明日方舟：终末地》官网视觉风格启发的 NotionN
 
 ## 预览图
 
-`public/images/themes-preview/endspace.webp` 当前为占位图；欢迎后续替换为能代表主题风格的正式预览资源（可参考 `scripts/perf:compress-theme-previews.js`）。
+主题预览为 `public/images/themes-preview/endspace.webp`；源图为同目录 `endspace.png`。更新截图后可运行 `yarn perf:compress-theme-previews` 重新生成 webp。
 
 ## 维护注意
 
