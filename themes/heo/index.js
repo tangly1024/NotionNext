@@ -361,9 +361,33 @@ const LayoutSlug = props => {
  * @param {*} props
  * @returns
  */
+const ERROR_IMAGES = [
+  { src: '/images/404/404 (1).png', weight: 1 },
+  { src: '/images/404/404 (2).png', weight: 1 },
+  { src: '/images/404/404 (3).png', weight: 1 },
+  { src: '/images/404/404 (4).png', weight: 1 },
+  { src: '/images/404/404 (5).png', weight: 0.1 }
+]
+
+const pickRandomErrorImage = () => {
+  const total = ERROR_IMAGES.reduce((sum, item) => sum + item.weight, 0)
+  let random = Math.random() * total
+  for (const item of ERROR_IMAGES) {
+    random -= item.weight
+    if (random < 0) {
+      return item.src
+    }
+  }
+  return ERROR_IMAGES[ERROR_IMAGES.length - 1].src
+}
+
 const Layout404 = props => {
   // const { meta, siteInfo } = props
   const { onLoading, fullWidth } = useGlobal()
+  const [errorImage, setErrorImage] = useState(ERROR_IMAGES[0].src)
+  useEffect(() => {
+    setErrorImage(pickRandomErrorImage())
+  }, [])
   return (
     <>
       {/* 主区块 */}
@@ -385,10 +409,8 @@ const Layout404 = props => {
             <div className='error-content flex flex-col md:flex-row w-full mt-12 h-[30rem] md:h-96 justify-center items-center bg-white dark:bg-[#1B1C20] border dark:border-gray-800 rounded-3xl'>
               {/* 左侧动图 */}
               <LazyImage
-                className='error-img h-60 md:h-full p-4'
-                src={
-                  'https://bu.dusays.com/2023/03/03/6401a7906aa4a.gif'
-                }></LazyImage>
+                className='error-img h-60 md:h-full p-4 rounded-2xl'
+                src={errorImage}></LazyImage>
 
               {/* 右侧文字 */}
               <div className='error-info flex-1 flex flex-col justify-center items-center space-y-4'>
