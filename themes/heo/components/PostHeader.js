@@ -48,9 +48,11 @@ export default function PostHeader({ post, siteInfo, isDarkMode, lock }) {
         <div
           id='post-cover-wrapper'
           style={{
-            filter: 'blur(15px)'
+            filter: 'blur(8px)',
+            WebkitMaskImage: 'linear-gradient(to left, transparent 0%, black 30%)',
+            maskImage: 'linear-gradient(to left, transparent 0%, black 30%)'
           }}
-          className='coverdiv lg:opacity-50 lg:translate-x-96 lg:rotate-12'>
+          className='coverdiv lg:opacity-70 lg:translate-x-96 lg:rotate-12'>
           <LazyImage
             id='post-cover'
             className='w-full h-full object-cover max-h-[50rem] min-w-[50vw] min-h-[20rem]'

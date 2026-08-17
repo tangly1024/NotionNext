@@ -36,41 +36,35 @@ export default function LoadingCover() {
       <div className='mx-auto'>
         <style global>
           {`
-          .loader {
-            width: 20px;
-            aspect-ratio: 1;
-            border-radius: 50%;
-            background: #000;
-            box-shadow: 0 0 0 0 #0004;
-            animation: l2 1.5s infinite linear;
-            position: relative;
-          }
-          .loader:before,
-          .loader:after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            box-shadow: 0 0 0 0 #0004;
-            animation: inherit;
-            animation-delay: -0.5s;
-          }
-          .loader:after {
-            animation-delay: -1s;
-          }
-            /* 深色模式下的样式 */
-          .dark .loader {
-            background: #fff; /* 白色或灰色 */
-            box-shadow: 0 0 0 0 #fff4; /* 使用白色阴影 */
-          }
-          @keyframes l2 {
-            100% {
-              box-shadow: 0 0 0 40px #0000;
+            .loading-logo {
+              width: 104px;
+              height: 104px;
+              border-radius: 50%;
+              object-fit: cover;
+              border: 3px solid rgba(217, 119, 6, 0.35);
+              box-shadow: 0 0 24px rgba(217, 119, 6, 0.4);
+              animation: loading-logo-pulse 2.2s ease-in-out infinite;
             }
-          }
-      `}
+            @keyframes loading-logo-pulse {
+              0%,
+              100% {
+                transform: scale(1);
+                box-shadow: 0 0 24px rgba(217, 119, 6, 0.35);
+              }
+              50% {
+                transform: scale(1.06);
+                box-shadow: 0 0 52px rgba(217, 119, 6, 0.65);
+              }
+            }
+            @media (max-width: 640px) {
+              .loading-logo {
+                width: 88px;
+                height: 88px;
+              }
+            }
+          `}
         </style>
-        <div className='loader'></div>
+        <img src='/favicon.png' alt='logo' className='loading-logo' />
       </div>
     </div>
   ) : null
