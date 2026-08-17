@@ -406,14 +406,17 @@ const Layout404 = props => {
             leaveTo='opacity-0 -translate-y-16'
             unmount={false}>
             {/* 404卡牌 */}
-            <div className='error-content flex flex-col md:flex-row w-full mt-12 h-[30rem] md:h-96 justify-center items-center bg-white dark:bg-[#1B1C20] border dark:border-gray-800 rounded-3xl'>
+            <div className='error-content flex flex-col md:flex-row w-full mt-12 h-[30rem] md:h-96 justify-center items-center bg-white dark:bg-[#1B1C20] border dark:border-gray-800 rounded-xl'>
               {/* 左侧动图 */}
-              <LazyImage
-                className='error-img h-60 md:h-full p-4 rounded-2xl'
-                src={errorImage}></LazyImage>
+              <div className='error-img h-60 md:h-full py-4 pr-4 pl-3 w-full md:w-1/2 flex justify-start items-center'>
+                <LazyImage
+                  className='h-full aspect-square object-cover rounded-xl'
+                  src={errorImage}></LazyImage>
+              </div>
 
               {/* 右侧文字 */}
               <div className='error-info flex-1 flex flex-col justify-center items-center space-y-4'>
+                <div className='dark:text-white'>没有找到这个页面哦(´。＿。｀)</div>
                 <h1 className='error-title font-extrabold md:text-9xl text-7xl dark:text-white'>
                   404
                 </h1>
