@@ -43,23 +43,23 @@ export default function PostCopyright({ post }) {
   }
 
   return (
-    <section className='dark:text-gray-300 mt-6 mx-1 '>
-      <ul className='overflow-x-auto whitespace-nowrap text-sm dark:bg-gray-900 bg-gray-100 p-5 leading-8 border-l-2 border-[var(--heo-color-border)]'>
+    <section className='mt-6 mx-1 '>
+      <ul className='overflow-x-auto whitespace-nowrap text-sm p-5 leading-8 border-l-2 border-l-[#b45309] bg-[rgba(217,119,6,0.06)] dark:border-l-[#d97706] dark:bg-[#1a110a] dark:text-[#fef3c7]'>
         <li>
           <strong className='mr-2'>{locale.COMMON.AUTHOR}:</strong>
-          <SmartLink href={'/about'} className='hover:underline'>
+          <SmartLink href={'/about'} className='hover:underline text-[#b45309] dark:text-[#fbbf24]'>
             {siteConfig('AUTHOR')}
           </SmartLink>
         </li>
         <li>
           <strong className='mr-2'>{locale.COMMON.URL}:</strong>
           <button
-            className='whitespace-normal break-words hover:underline text-blue-500'
+            className='whitespace-normal break-words hover:underline text-[#b45309] dark:text-[#fbbf24]'
             onClick={handleCopy}
           >
-            {path} <span className='text-gray-500'>(单击复制链接)</span>
+            {path} <span className='text-gray-500 dark:text-gray-400'>(单击复制链接)</span>
           </button>
-          {copied && <span className='ml-2 text-green-500'>✅ 链接复制成功!</span>}
+          {copied && <span className='ml-2 text-[#b45309] dark:text-[#fbbf24]'>✅ 链接复制成功!</span>}
         </li>
         <li>
           <strong className='mr-2'>{locale.COMMON.COPYRIGHT}:</strong>
