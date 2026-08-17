@@ -80,7 +80,7 @@ function Banner(props) {
     <div
       id='banners'
       onClick={handleClickBanner}
-        className='hidden xl:flex xl:flex-col group h-full bg-[var(--heo-color-card)] dark:bg-[var(--heo-color-card-dark)] rounded-xl border dark:border-gray-700 mb-3 relative overflow-hidden'>
+        className='hidden xl:flex xl:flex-col group h-full bg-[var(--heo-color-card)] dark:bg-[var(--heo-color-card-dark)] rounded-xl hover:border hover:border-[var(--heo-color-border)] dark:hover:border-[var(--heo-color-border-dark)] mb-3 relative overflow-hidden'>
       <div
         id='banner-title'
         className='z-10 flex flex-col absolute top-10 left-10'>
