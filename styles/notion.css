@@ -693,7 +693,7 @@ svg.notion-page-icon {
 }
 
 .notion-inline-code {
-  color: #eb5757;
+  color: #d97706;
   padding: 0.2em 0.4em;
   background: var(--bg-color-2);
   border-radius: 3px;
@@ -987,12 +987,13 @@ code[class*='language-'] {
   padding: 16px 16px 16px 12px;
   display: inline-flex;
   width: 100%;
-  border-radius: 3px;
+  border-radius: 10px;
   border-width: 1px;
   align-items: center;
   box-sizing: border-box;
   margin: 4px 0;
-  border: 1px solid var(--fg-color-0);
+  border: 1px solid rgba(217, 119, 6, 0.4);
+  background-color: rgba(217, 119, 6, 0.06);
 }
 
 .dark-mode .notion-callout {
@@ -2036,13 +2037,12 @@ svg + .notion-page-title-text {
 .notion-quote {
   display: block;
   border-radius: 5px;
-  border-color: var(--notion-blue);
-  border-left-color: var(--notion-blue);
-  background-color: var(--notion-blue_background_co);
+  border-color: #b45309;
+  border-left: 10px solid #b45309;
+  background-color: rgba(217, 119, 6, 0.08);
   width: 100%;
   white-space: pre-wrap;
   word-break: break-word;
-  border-left: 10px solid;
   padding: 0.2em 0.9em;
   margin: 6px 0;
   font-size: 1em;
@@ -2051,30 +2051,30 @@ svg + .notion-page-title-text {
 
 /* 深色模式下优化 quote / callout 对比度与层次 */
 html.dark .notion-quote {
-  border-left-color: #60a5fa !important;
-  border-color: rgba(96, 165, 250, 0.45) !important;
+  border-left-color: #d97706 !important;
+  border-color: rgba(217, 119, 6, 0.45) !important;
   background: linear-gradient(
     135deg,
-    rgba(37, 99, 235, 0.22),
-    rgba(30, 64, 175, 0.14)
+    rgba(217, 119, 6, 0.22),
+    rgba(180, 83, 9, 0.14)
   ) !important;
-  color: #dbeafe !important;
+  color: #fef3c7 !important;
 }
 
 html.dark .notion-callout {
-  border: 1px solid rgba(129, 140, 248, 0.38) !important;
+  border: 1px solid rgba(217, 119, 6, 0.45) !important;
   background: linear-gradient(
     135deg,
-    rgba(99, 102, 241, 0.18),
-    rgba(30, 41, 59, 0.5)
+    rgba(217, 119, 6, 0.22),
+    rgba(180, 83, 9, 0.14)
   ) !important;
-  color: #e2e8f0 !important;
+  color: #fef3c7 !important;
   border-radius: 10px;
 }
 
 html.dark .notion-callout .notion-callout-text,
 html.dark .notion-callout .notion-text {
-  color: #e2e8f0 !important;
+  color: #fef3c7 !important;
 }
 
 /* .notion-asset-wrapper-pdf > div {
