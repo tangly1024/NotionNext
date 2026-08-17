@@ -134,11 +134,6 @@ const Style = () => {
         white-space: nowrap;
       }
 
-      .today-card-cover {
-        -webkit-mask-image: linear-gradient(to top, transparent 5%, black 70%);
-        mask-image: linear-gradient(to top, transparent 5%, black 70%);
-      }
-
       .recent-top-post-group::-webkit-scrollbar {
         display: none;
       }
@@ -171,4 +166,3 @@ const Style = () => {
 }
 
 export { Style }
-

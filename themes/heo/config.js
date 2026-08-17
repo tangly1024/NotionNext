@@ -29,7 +29,6 @@ const CONFIG = {
     { title: '你和你喜欢的人一起坐过摩天轮吗？'},
     { title: '放下助人情节，尊重他人命运。'},
     { title: '童话也是生活的一部分。'},
-    { title: '喝的多了兑了水的水也会醉。'},
     { title: '墨小菊天下第一！'},
     { title: '时间让你我越走越近，却越来越陌生。'},
     { title: '𝑲𝒆𝒆𝒑 𝒐𝒏 𝒌𝒆𝒆𝒑𝒊𝒏𝒈 𝒐𝒏.'},
@@ -46,11 +45,21 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '分享电子生活',
   HEO_HERO_TITLE_2: '尽己所能记录问题与解决方案',
   HEO_HERO_TITLE_3: 'from 2025',
-  HEO_HERO_TITLE_4: '新功能上线',
-  HEO_HERO_TITLE_5: '我的个人朋友圈上线啦！',
-  HEO_HERO_TITLE_LINK: 'https://www.barryzed.top/article/memos_brief',
+  HEO_HERO_TITLE_4: '每日一句', // 今日卡牌小标题
+  HEO_HERO_TITLE_5: '我的个人朋友圈上线啦！', // 保留，作为每日一句默认内容之一
+  HEO_HERO_TITLE_LINK: 'https://www.barryzed.top/article/memos_brief', // 点击今日卡牌跳转链接
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随便逛逛？',
+
+  // 今日卡牌：Steam 状态追踪，API_KEY 或 ID 留空则不显示
+  // Steam Web API Key 请配置在环境变量 HEO_STEAM_API_KEY 中（Vercel 项目设置 -> Environment Variables，本地用 .env.local），不要写进代码仓库
+  HEO_STEAM_ID: '76561199012533932', // 你的 SteamID64，可在 https://steamid.io 查询
+  HEO_STEAM_PROFILE_URL: 'https://steamcommunity.com/id/barryzed', // 可选，自定义 Steam 主页跳转链接；留空则使用 Steam 返回的 profileurl
+  HEO_STEAM_CACHE_SECONDS: 120, // Steam 状态缓存秒数，避免频繁请求 Steam API
+  // Steam 游戏中文名映射（appid -> 中文名），未收录的游戏会自动请求 Steam 商店中文接口，失败则显示英文名
+  HEO_STEAM_GAME_NAMES: {
+    '250900': '以撒的结合：重生'
+  },
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '教程', url: '/category/教程' },

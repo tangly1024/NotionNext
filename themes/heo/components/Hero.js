@@ -1,11 +1,11 @@
 // import Image from 'next/image'
-import { ArrowSmallRight, PlusSmall } from '@/components/HeroIcons'
+import { ArrowPath, ArrowSmallRight, PlusSmall } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
-import { useImperativeHandle, useRef, useState } from 'react'
+import { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import CONFIG from '../config'
 
 /**
@@ -263,7 +263,7 @@ function TopGroup(props) {
         })}
       </div>
       {/* 一个大的跳转文章卡片 */}
-      <TodayCard cRef={todayCardRef} siteInfo={siteInfo} />
+      <TodayCard cRef={todayCardRef} />
     </div>
   )
 }
@@ -319,14 +319,64 @@ function getTopPosts({ latestPosts, allNavPages }) {
  * 英雄区右侧，今日卡牌
  * @returns
  */
-function TodayCard({ cRef, siteInfo }) {
-  const router = useRouter()
-  const link = siteConfig('HEO_HERO_TITLE_LINK', null, CONFIG)
+function normalizeHeroQuotes(value) {
+  if (Array.isArray(value)) {
+    return value.map(item => String(item).trim()).filter(Boolean)
+  }
+
+  if (typeof value !== 'string') {
+    return []
+  }
+
+  const trimmed = value.trim()
+  if (!trimmed) {
+    return []
+  }
+
+  if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+    try {
+      const parsed = JSON.parse(trimmed.replace(/'/g, '"'))
+      return normalizeHeroQuotes(parsed)
+    } catch {
+      return trimmed
+        .slice(1, -1)
+        .split(',')
+        .map(item => item.trim().replace(/^['"]|['"]$/g, ''))
+        .filter(Boolean)
+    }
+  }
+
+  return [trimmed]
+}
+
+/**
+ * 英雄区右侧，今日卡牌
+ * 每日一句 + Steam 状态，保留推荐文章遮罩入口
+ * @returns
+ */
+function TodayCard({ cRef }) {
+  const steamProfileUrl = siteConfig('HEO_STEAM_PROFILE_URL', null, CONFIG)
   const { locale } = useGlobal()
   // 获取遮罩控制配置
   const coverEnable = siteConfig('HEO_HERO_RECOMMEND_COVER_ENABLE', true, CONFIG)
   // 卡牌是否盖住下层，如果配置为false则默认不盖住
   const [isCoverUp, setIsCoverUp] = useState(coverEnable)
+
+  // 每日一句
+  const quoteList = normalizeHeroQuotes(
+    siteConfig('HEO_HERO_QUOTES', null, CONFIG)
+  )
+  const fallbackQuote = siteConfig('HEO_HERO_TITLE_5', '', CONFIG)
+  const sentences =
+    quoteList.length > 0 ? quoteList : fallbackQuote ? [fallbackQuote] : []
+  const [quoteIndex, setQuoteIndex] = useState(() =>
+    sentences.length > 0 ? Math.floor(Math.random() * sentences.length) : -1
+  )
+
+  // Steam 状态：是否显示加载占位，用公开的 SteamID 判断；API Key 只在服务端环境变量里
+  const steamConfigured = Boolean(siteConfig('HEO_STEAM_ID', null, CONFIG))
+  const [steam, setSteam] = useState(null)
+  const [steamError, setSteamError] = useState(false)
 
   /**
    * 外部可以调用此方法
@@ -351,16 +401,71 @@ function TodayCard({ cRef, siteInfo }) {
   }
 
   /**
-   * 点击卡片跳转的链接
+   * 随机切换下一句
    * @param {*} e
    */
-  function handleCardClick(e) {
-    router.push(link)
+  function handleNextQuote(e) {
+    e.stopPropagation()
+    if (sentences.length < 2) {
+      return
+    }
+    let next = quoteIndex
+    while (next === quoteIndex) {
+      next = Math.floor(Math.random() * sentences.length)
+    }
+    setQuoteIndex(next)
   }
+
+  /**
+   * 拉取 Steam 状态
+   */
+  useEffect(() => {
+    if (!steamConfigured) {
+      return
+    }
+    const controller = new AbortController()
+    fetch('/api/steam-status', { signal: controller.signal })
+      .then(res => (res.ok ? res.json() : Promise.reject(new Error(res.status))))
+      .then(data => {
+        if (!controller.signal.aborted) {
+          setSteam(data)
+        }
+      })
+      .catch(err => {
+        if (!controller.signal.aborted && err.name !== 'AbortError') {
+          setSteamError(true)
+        }
+      })
+    return () => controller.abort()
+  }, [steamConfigured])
 
   // 如果配置为不显示遮罩，则不渲染TodayCard
   if (!coverEnable) {
     return null
+  }
+
+  const currentQuote = sentences[quoteIndex] || ''
+  const player = steam?.player
+  const showSteamLoading = steamConfigured && !steam && !steamError
+
+  // Steam 状态文案
+  let steamStatusText = ''
+  if (player?.inGame) {
+    const gameName = player.gameNameCn || player.gameextrainfo
+    steamStatusText =
+      player.numFriendsInGame > 0
+      ? `在和${player.numFriendsInGame}个朋友遨游「${gameName}」的世界`
+      : `在「${gameName}」的世界中`
+  } else if (player && player.personastate === 0) {
+    const lastGame =
+      player.lastPlayedGameNameCn ||
+      player.lastPlayedGameName ||
+      '某款游戏'
+    steamStatusText = player.lastlogoff
+      ? `${formatRelativeTime(player.lastlogoff)}玩了${lastGame}`
+      : '离线'
+  } else if (player) {
+    steamStatusText = '正沉浸在自己的世界中'
   }
 
   return (
@@ -371,52 +476,114 @@ function TodayCard({ cRef, siteInfo }) {
       } overflow-hidden absolute hidden xl:flex flex-1 flex-col h-full top-0 w-full`}>
       <div
         id='card-body'
-        onClick={handleCardClick}
         className={`${
           isCoverUp
             ? 'opacity-100 cursor-pointer'
             : 'opacity-0 transform scale-110 pointer-events-none'
-        } shadow transition-all duration-200 today-card h-full bg-black rounded-xl relative overflow-hidden flex items-end`}>
-        {/* 卡片文字信息 */}
-        <div
-          id='today-card-info'
-          className='flex justify-between w-full relative text-white p-10 items-end'>
-          <div className='flex flex-col'>
-            <div className='text-xs font-light'>
-              {siteConfig('HEO_HERO_TITLE_4', null, CONFIG)}
-            </div>
-            <div className='text-3xl font-bold'>
-              {siteConfig('HEO_HERO_TITLE_5', null, CONFIG)}
-            </div>
-          </div>
-          {/* 查看更多的按钮 */}
-          <div
-            onClick={handleClickShowMore}
-            className={`'${isCoverUp ? '' : 'hidden pointer-events-none'} z-10 group flex items-center px-3 h-10 justify-center  rounded-3xl
-            glassmorphism transition-colors duration-100 `}>
-            <PlusSmall
-              className={
-                'group-hover:rotate-180 duration-500 transition-all w-6 h-6 mr-2 bg-white rounded-full stroke-black'
-              }
+        } shadow transition-all duration-200 today-card h-full w-full rounded-xl relative overflow-hidden flex flex-col`}>
+          {/* 背景图 + 暗色遮罩，保证文字可读 */}
+          <div className='absolute inset-0'>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src='/bg_image.jpg'
+              alt=''
+              className='w-full h-full object-cover'
             />
-            <div id='more' className='select-none'>
-              {locale.COMMON.RECOMMEND_POSTS}
+            <div className='absolute inset-0 bg-black/60' />
+          </div>
+
+          {/* 上半部分：按钮 + 每日一句 */}
+          <div className='relative z-10 flex flex-col flex-1 p-5 pb-2 gap-3 min-h-0 text-white'>
+            <div className='flex items-center justify-between gap-2'>
+              {sentences.length > 1 && (
+                <button
+                  type='button'
+                  onClick={handleNextQuote}
+                  className='group flex items-center gap-1.5 px-3 h-9 rounded-full border border-white/40 text-sm hover:bg-white/10 transition-colors whitespace-nowrap'>
+                  <ArrowPath className='w-4 h-4 group-hover:rotate-180 duration-500 transition-all' />
+                  <span className='select-none'>换一个</span>
+                </button>
+              )}
+              <button
+                type='button'
+                onClick={handleClickShowMore}
+                className='group flex items-center gap-1.5 px-3 h-9 rounded-full border border-white/40 text-sm hover:bg-white/10 transition-colors whitespace-nowrap'>
+                <PlusSmall className='group-hover:rotate-180 duration-500 transition-all w-4 h-4' />
+                <span className='select-none'>{locale.COMMON.RECOMMEND_POSTS}</span>
+              </button>
+            </div>
+            <div className='flex-1 flex items-center min-h-0'>
+              <div className='min-w-0'>
+                <div className='text-xs font-light mb-2 text-white/70'>
+                  {siteConfig('HEO_HERO_TITLE_4', null, CONFIG)}
+                </div>
+                <div className='text-xl xl:text-2xl font-bold leading-snug line-clamp-3'>
+                  {currentQuote}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* 封面图 */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={siteInfo?.pageCover}
-          id='today-card-cover'
-          className={`${
-            isCoverUp ? '' : ' pointer-events-none'
-          } hover:scale-110 duration-1000 object-cover cursor-pointer today-card-cover absolute w-full h-full top-0`}
-        />
+          {/* 下半部分：Steam 状态 */}
+          <div className='relative z-10 p-5 pt-3 border-t border-orange-700 flex justify-end'>
+            {showSteamLoading && (
+              <div className='flex items-center gap-2 text-sm text-white/70'>
+                <span className='w-8 h-8 rounded-full bg-white/20 animate-pulse' />
+                <span>🔁正在获取 Steam 状态…</span>
+              </div>
+            )}
+            {player && (
+              <a
+                href={steamProfileUrl || player.profileurl}
+                target='_blank'
+                rel='noreferrer'
+                className='group/steam flex items-center gap-3 hover:opacity-80 transition-opacity'>
+                <div className='leading-snug min-w-0 text-right'>
+                  <div className='text-sm font-medium text-white'>
+                    {steamStatusText}
+                  </div>
+                  <div className='text-xs text-white/60 truncate'>
+                    {player.personaname} · 点击查看 Steam 主页
+                  </div>
+                </div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={player.avatarfull}
+                  alt={player.personaname}
+                  className='w-10 h-10 rounded-full object-cover shrink-0'
+                />
+              </a>
+            )}
+          </div>
       </div>
     </div>
   )
+}
+
+/**
+ * 将时间戳格式化为相对时间（用于离线状态）
+ */
+function formatRelativeTime(timestamp) {
+  if (!timestamp) {
+    return '很久以'
+  }
+  const diff = Math.max(0, Math.floor(Date.now() / 1000 - timestamp))
+  const minute = 60
+  const hour = 60 * minute
+  const day = 24 * hour
+  if (diff < minute) {
+    return '刚刚'
+  }
+  if (diff < hour) {
+    return `${Math.floor(diff / minute)}分钟前`
+  }
+  if (diff < day) {
+    return `${Math.floor(diff / hour)}小时前`
+  }
+  if (diff < 30 * day) {
+    return `${Math.floor(diff / day)}天前`
+  }
+  return `${Math.floor(diff / (30 * day))}个月前`
 }
 
 export default Hero

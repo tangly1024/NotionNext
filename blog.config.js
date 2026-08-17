@@ -20,7 +20,7 @@ const BLOG = {
   BIO: process.env.NEXT_PUBLIC_BIO || '专注于眼前的事物吧。', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.barryzed.top', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '游戏,编程,个人', // 网站关键词 英文逗号隔开
-  
+
   BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/favicon.ico', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '黑ICP备2025035555', // 备案号 闽ICP备XXXXXX
   PWA_ENABLE: process.env.NEXT_PUBLIC_PWA_ENABLE || false, // 是否启用 PWA 安装入口；也可在 Notion_Config 中配置 PWA_ENABLE=true
@@ -96,7 +96,14 @@ const BLOG = {
 
   // 内嵌 Notion 子页面 URL 跟随父级文章路径，例如 /article/post/{pageId}
   INNER_PAGE_URL_PARENT_PATH:
-    process.env.NEXT_PUBLIC_INNER_PAGE_URL_PARENT_PATH || false
+    process.env.NEXT_PUBLIC_INNER_PAGE_URL_PARENT_PATH || false,
+
+  // HEO 主题：今日卡牌「每日一句」句子列表（点击「换一个」随机切换）
+  HEO_HERO_QUOTES:
+    process.env.NEXT_PUBLIC_HEO_HERO_QUOTES?.split(',') || [
+      '我的个人朋友圈上线啦！',
+      '喝的多了兑了水的水也会醉。'
+    ]
 }
 
 module.exports = BLOG
