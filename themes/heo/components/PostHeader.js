@@ -4,6 +4,8 @@ import NotionIcon from '@/components/NotionIcon'
 import WordCount from '@/components/WordCount'
 import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/utils/formatDate'
+import { useGlobal } from '@/lib/global'
+import { buildSlugMap, toSlug } from '@/lib/utils/slugMap'
 import SmartLink from '@/components/SmartLink'
 import WavesArea from './WavesArea'
 
@@ -13,6 +15,8 @@ import WavesArea from './WavesArea'
  * @returns
  */
 export default function PostHeader({ post, siteInfo, isDarkMode, lock }) {
+  const { tagOptions } = useGlobal()
+  const tagSlugMap = buildSlugMap(tagOptions?.map(t => t.name) || [])
   if (!post) {
     return <></>
   }
@@ -85,7 +89,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode, lock }) {
                 {post.tagItems.map((tag, index) => (
                   <SmartLink
                     key={index}
-                    href={`/tag/${encodeURIComponent(tag.name)}`}
+                    href={`/tag/${encodeURIComponent(toSlug(tag.name, tagSlugMap))}`}
                     passHref
                     className={
                       'cursor-pointer inline-block text-gray-50 hover:text-white duration-200 py-0.5 px-1 whitespace-nowrap '

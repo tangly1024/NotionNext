@@ -19,6 +19,7 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
 import { isBrowser } from '@/lib/utils'
+import { buildSlugMap, toSlug } from '@/lib/utils/slugMap'
 import { Transition } from '@headlessui/react'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
@@ -448,6 +449,7 @@ const Layout404 = props => {
 const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
+  const slugMap = buildSlugMap(categoryOptions?.map(c => c.name) || [])
 
   return (
     <div id='category-outer-wrapper' className='mt-8 px-5 md:px-0'>
@@ -461,7 +463,7 @@ const LayoutCategoryIndex = props => {
           return (
             <SmartLink
               key={category.name}
-              href={`/category/${category.name}`}
+              href={`/category/${encodeURIComponent(toSlug(category.name, slugMap))}`}
               passHref
               legacyBehavior>
               <div
@@ -490,6 +492,7 @@ const LayoutCategoryIndex = props => {
 const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
+  const slugMap = buildSlugMap(tagOptions?.map(t => t.name) || [])
 
   return (
     <div id='tag-outer-wrapper' className='px-5 mt-8 md:px-0'>
@@ -503,7 +506,7 @@ const LayoutTagIndex = props => {
           return (
             <SmartLink
               key={tag.name}
-              href={`/tag/${tag.name}`}
+              href={`/tag/${encodeURIComponent(toSlug(tag.name, slugMap))}`}
               passHref
               legacyBehavior>
               <div

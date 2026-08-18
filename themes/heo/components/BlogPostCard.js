@@ -1,11 +1,15 @@
 import LazyImage from '@/components/LazyImage'
 import NotionIcon from './NotionIcon'
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
+import { buildSlugMap, toSlug } from '@/lib/utils/slugMap'
 import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
+  const { categoryOptions } = useGlobal()
+  const categorySlugMap = buildSlugMap(categoryOptions?.map(c => c.name) || [])
   const showPreview =
     siteConfig('HEO_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
   if (
@@ -67,7 +71,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 className={`flex mb-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-300 text-gray-600 hover:text-[var(--heo-color-primary)] dark:hover:text-[var(--heo-color-accent)]`}>
                 <SmartLink
                   passHref
-                  href={`/category/${post.category}`}
+                  href={`/category/${encodeURIComponent(toSlug(post.category, categorySlugMap))}`}
                   className='cursor-pointer text-xs font-normal menu-link '>
                   {post.category}
                 </SmartLink>

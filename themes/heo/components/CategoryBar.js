@@ -2,6 +2,7 @@ import { ChevronDoubleLeft, ChevronDoubleRight } from '@/components/HeroIcons'
 import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
+import { buildSlugMap, fromSlug, toSlug } from '@/lib/utils/slugMap'
 import { useRef, useState } from 'react'
 
 /**
@@ -12,6 +13,9 @@ import { useRef, useState } from 'react'
 export default function CategoryBar(props) {
   const { categoryOptions, border = true } = props
   const { locale } = useGlobal()
+  const router = useRouter()
+  const categorySlugMap = buildSlugMap(categoryOptions?.map(c => c.name) || [])
+  const currentCategory = fromSlug(router.query.category, categorySlugMap)
   const [scrollRight, setScrollRight] = useState(false)
   // 创建一个ref引用
   const categoryBarItemsRef = useRef(null)
@@ -38,9 +42,14 @@ export default function CategoryBar(props) {
         id='category-bar-items'
         ref={categoryBarItemsRef}
         className='scroll-smooth max-w-4xl rounded-lg scroll-hidden flex justify-start flex-nowrap items-center overflow-x-scroll'>
-        <MenuItem href='/' name={locale.NAV.INDEX} />
+        <MenuItem href='/' name={locale.NAV.INDEX} selected={false} />
         {categoryOptions?.map((c, index) => (
-          <MenuItem key={index} href={`/category/${c.name}`} name={c.name} />
+          <MenuItem
+            key={index}
+            href={`/category/${encodeURIComponent(toSlug(c.name, categorySlugMap))}`}
+            name={c.name}
+            selected={currentCategory === c.name}
+          />
         ))}
       </div>
 
@@ -70,10 +79,7 @@ export default function CategoryBar(props) {
  * @param {*} param0
  * @returns
  */
-const MenuItem = ({ href, name }) => {
-  const router = useRouter()
-  const { category } = router.query
-  const selected = category === name
+const MenuItem = ({ href, name, selected = false }) => {
   return (
     <div
       className={`whitespace-nowrap mr-2 duration-200 transition-all font-bold px-2 py-0.5 rounded-md text-gray-900 dark:text-white hover:text-[var(--heo-color-primary-text)] hover:bg-[var(--heo-color-primary)] dark:hover:bg-[var(--heo-color-accent)] ${selected ? 'text-[var(--heo-color-primary-text)] bg-[var(--heo-color-primary)] dark:bg-[var(--heo-color-accent)]' : ''}`}>

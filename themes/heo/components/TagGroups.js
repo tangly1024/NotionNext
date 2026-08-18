@@ -1,5 +1,6 @@
 import SmartLink from '@/components/SmartLink'
 import { siteConfig } from '@/lib/config'
+import { buildSlugMap, fromSlug, toSlug } from '@/lib/utils/slugMap'
 import { useRouter } from 'next/router'
 
 /**
@@ -11,7 +12,8 @@ import { useRouter } from 'next/router'
  */
 const TagGroups = ({ tags, className }) => {
   const router = useRouter()
-  const { tag: currentTag } = router.query
+  const slugMap = buildSlugMap(tags?.map(t => t.name) || [])
+  const currentTag = fromSlug(router.query.tag, slugMap)
   if (!tags) return <></>
 
   return (
@@ -19,7 +21,7 @@ const TagGroups = ({ tags, className }) => {
       {tags.map((tag, index) => {
         const selected = currentTag === tag.name
         return (
-          <SmartLink passHref key={index} href={`/tag/${encodeURIComponent(tag.name)}`}
+          <SmartLink passHref key={index} href={`/tag/${encodeURIComponent(toSlug(tag.name, slugMap))}`}
             className={'cursor-pointer inline-block  whitespace-nowrap'}
           >
             <div className={`${className || ''} 

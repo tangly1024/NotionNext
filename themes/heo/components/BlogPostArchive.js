@@ -1,5 +1,7 @@
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
+import { buildSlugMap, toSlug } from '@/lib/utils/slugMap'
 import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
@@ -12,6 +14,8 @@ import TagItemMini from './TagItemMini'
  * @constructor
  */
 const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
+  const { categoryOptions } = useGlobal()
+  const categorySlugMap = buildSlugMap(categoryOptions?.map(c => c.name) || [])
   if (!posts || posts.length === 0) {
     return <></>
   } else {
@@ -62,7 +66,7 @@ const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
                         className={`flex items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-500 text-gray-600 `}>
                         <SmartLink
                           passHref
-                          href={`/category/${post.category}`}
+                          href={`/category/${encodeURIComponent(toSlug(post.category, categorySlugMap))}`}
                           className='cursor-pointer text-xs font-normal menu-link hover:text-[var(--heo-color-primary)] dark:text-gray-600 transform'>
                           {post.category}
                         </SmartLink>
