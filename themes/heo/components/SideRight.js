@@ -29,8 +29,8 @@ const FaceBookPage = dynamic(
 export default function SideRight(props) {
   const { post, lock, tagOptions, currentTag, rightAreaSlot } = props
 
-  // 只摘取标签的前60个，防止右侧过长
-  const sortedTags = tagOptions?.slice(0, 60) || []
+  // 只摘取标签的前10个，防止右侧过长
+  const sortedTags = tagOptions?.slice(0, 10) || []
 
   return (
     <div id='sideRight' className='hidden xl:block w-72 space-y-4 h-full'>
