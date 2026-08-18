@@ -26,6 +26,10 @@ export default function PostCopyright({ post }) {
     locale,
     mode: siteConfig('HEO_ARTICLE_COPYRIGHT', null, CONFIG)
   })
+  // 文章带「原创」标签时第一行显示作者，否则显示整理
+  const isOriginalPost =
+    post?.tags?.includes('原创') ||
+    post?.tagItems?.some(tag => tag.name === '原创')
 
   if (!copyrightText) {
     return <></>
@@ -46,7 +50,9 @@ export default function PostCopyright({ post }) {
     <section className='mt-6 mx-1 '>
       <ul className='overflow-x-auto whitespace-nowrap text-sm p-5 leading-8 border-l-2 border-l-[#b45309] bg-[rgba(217,119,6,0.06)] dark:border-l-[#d97706] dark:bg-[#1a110a] dark:text-[#fef3c7]'>
         <li>
-          <strong className='mr-2'>{locale.COMMON.AUTHOR}:</strong>
+          <strong className='mr-2'>
+            {isOriginalPost ? locale.COMMON.AUTHOR : locale.COMMON.COMPILER || '整理'}:
+          </strong>
           <SmartLink href={'/about'} className='hover:underline text-[#b45309] dark:text-[#fbbf24]'>
             {siteConfig('AUTHOR')}
           </SmartLink>
