@@ -455,20 +455,49 @@ const Layout404 = props => {
  * @param {*} props
  * @returns
  */
+// 分类卡片循环使用的渐变色
+const CATEGORY_GRADIENTS = [
+  'from-orange-400 to-amber-300',
+  'from-sky-400 to-cyan-300',
+  'from-emerald-400 to-teal-300',
+  'from-violet-400 to-purple-300',
+  'from-rose-400 to-pink-300',
+  'from-indigo-400 to-blue-300'
+]
+
 const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
   const slugMap = buildSlugMap(categoryOptions?.map(c => c.name) || [])
+  // 按文章数量从多到少排序
+  const categories = [...(categoryOptions || [])].sort(
+    (a, b) => (b.count || 0) - (a.count || 0)
+  )
 
   return (
     <div id='category-outer-wrapper' className='mt-8 px-5 md:px-0'>
-      <div className='text-4xl font-extrabold dark:text-gray-200 mb-5'>
-        {locale.COMMON.CATEGORY}
+      {/* 标题 + 分类总数 */}
+      <div className='mb-5 flex items-center gap-3'>
+        <i className='fas fa-folder-open text-2xl text-[var(--heo-color-primary)] dark:text-[var(--heo-color-accent)]' />
+        <div className='text-4xl font-extrabold dark:text-gray-200'>
+          {locale.COMMON.CATEGORY}
+          <span className='ml-3 text-sm font-normal text-gray-400 dark:text-gray-500'>
+            {categories.length} 个分类
+          </span>
+        </div>
       </div>
+
+      {/* 分类卡片网格 */}
       <div
         id='category-list'
-        className='duration-200 flex flex-wrap m-10 justify-center'>
-        {categoryOptions?.map(category => {
+        className='duration-200 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4'>
+        {categories.length === 0 && (
+          <div className='col-span-full py-10 text-center text-sm text-gray-400 dark:text-gray-500'>
+            还没有分类
+          </div>
+        )}
+        {categories.map((category, index) => {
+          const gradient = CATEGORY_GRADIENTS[index % CATEGORY_GRADIENTS.length]
           return (
             <SmartLink
               key={category.name}
@@ -476,13 +505,27 @@ const LayoutCategoryIndex = props => {
               passHref
               legacyBehavior>
               <div
-                className={
-                  'group mr-5 mb-5 flex flex-nowrap items-center border bg-[var(--heo-color-card)] dark:bg-[var(--heo-color-card-dark)] dark:border-gray-700 text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-[var(--heo-color-primary-text)] hover:bg-[var(--heo-color-primary)] transition-all hover:scale-110 duration-150'
-                }>
-                <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
-                {category.name}
-                <div className='bg-[var(--heo-color-card-muted)] dark:bg-white/10 ml-1 px-2 rounded-lg group-hover:text-[var(--heo-color-primary)] '>
-                  {category.count}
+                className='group relative overflow-hidden cursor-pointer rounded-2xl border border-gray-200 dark:border-gray-700 bg-[var(--heo-color-card)] dark:bg-[var(--heo-color-card-dark)] p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-[var(--heo-color-primary)] dark:hover:border-[var(--heo-color-accent)]'>
+                {/* 顶部渐变装饰条 */}
+                <div
+                  className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${gradient}`}
+                />
+                <div className='flex items-center gap-3'>
+                  <div
+                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${gradient} text-white shadow-md`}>
+                    <i className='fas fa-folder text-lg' />
+                  </div>
+                  <div className='min-w-0'>
+                    <div className='truncate text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-[var(--heo-color-primary)] dark:group-hover:text-[var(--heo-color-accent)]'>
+                      {category.name}
+                    </div>
+                    <div className='text-xs text-gray-400 dark:text-gray-500'>
+                      {category.count || 0} {locale.COMMON.POSTS}
+                    </div>
+                  </div>
+                </div>
+                <div className='mt-3 text-right text-xs text-gray-300 dark:text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity duration-200'>
+                  查看分类 →
                 </div>
               </div>
             </SmartLink>
@@ -502,16 +545,54 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
   const slugMap = buildSlugMap(tagOptions?.map(t => t.name) || [])
+  const [keyword, setKeyword] = useState('')
+
+  // 按文章数量从多到少排序，并支持关键词过滤
+  const tags = (tagOptions || [])
+    .filter(
+      tag =>
+        !keyword ||
+        tag.name.toLowerCase().includes(keyword.toLowerCase())
+    )
+    .sort((a, b) => (b.count || 0) - (a.count || 0))
 
   return (
     <div id='tag-outer-wrapper' className='px-5 mt-8 md:px-0'>
-      <div className='text-4xl font-extrabold dark:text-gray-200 mb-5'>
-        {locale.COMMON.TAGS}
+      {/* 标题 + 标签总数 */}
+      <div className='flex flex-wrap items-end justify-between gap-3 mb-5'>
+        <div className='text-4xl font-extrabold dark:text-gray-200'>
+          {locale.COMMON.TAGS}
+          <span className='ml-3 text-sm font-normal text-gray-400 dark:text-gray-500'>
+            {tagOptions?.length || 0} 个标签
+          </span>
+        </div>
       </div>
+
+      {/* 标签搜索 */}
+      <div className='mb-6 max-w-md'>
+        <div className='relative'>
+          <i className='fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-400 dark:text-gray-500' />
+          <input
+            type='text'
+            value={keyword}
+            onChange={e => setKeyword(e.target.value)}
+            placeholder='搜索标签…'
+            className='w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-[var(--heo-color-card)] dark:bg-[var(--heo-color-card-dark)] py-2 pl-9 pr-3 text-sm text-gray-900 dark:text-gray-100 outline-none transition-colors focus:border-[var(--heo-color-primary)] dark:focus:border-[var(--heo-color-accent)]'
+          />
+        </div>
+      </div>
+
+      {/* 标签列表 */}
       <div
         id='tag-list'
-        className='duration-200 flex flex-wrap space-x-5 space-y-5 m-10 justify-center'>
-        {tagOptions.map(tag => {
+        className='duration-200 flex flex-wrap gap-3'>
+        {tags.length === 0 && (
+          <div className='w-full py-10 text-center text-sm text-gray-400 dark:text-gray-500'>
+            没有找到匹配的标签
+          </div>
+        )}
+        {tags.map((tag, index) => {
+          const hot = index < 3
           return (
             <SmartLink
               key={tag.name}
@@ -519,14 +600,16 @@ const LayoutTagIndex = props => {
               passHref
               legacyBehavior>
               <div
-                className={
-                  'group flex flex-nowrap items-center border bg-[var(--heo-color-card)] dark:bg-[var(--heo-color-card-dark)] dark:border-gray-700 text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-[var(--heo-color-primary-text)] hover:bg-[var(--heo-color-primary)] transition-all hover:scale-110 duration-150'
-                }>
-                <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
-                {tag.name}
-                <div className='bg-[var(--heo-color-card-muted)] dark:bg-white/10 ml-1 px-2 rounded-lg group-hover:text-[var(--heo-color-primary)] '>
+                className={`group flex flex-nowrap items-center gap-1.5 rounded-full border bg-[var(--heo-color-card)] dark:bg-[var(--heo-color-card-dark)] px-4 py-1.5 cursor-pointer transition-all duration-150 hover:scale-105 border-gray-200 dark:border-gray-700 hover:border-[var(--heo-color-primary)] dark:hover:border-[var(--heo-color-accent)] hover:bg-[var(--heo-color-primary)] dark:hover:bg-[var(--heo-color-accent)] hover:text-[var(--heo-color-primary-text)] ${
+                  hot
+                    ? 'text-base font-bold'
+                    : 'text-sm font-normal'
+                }`}>
+                <HashTag className='w-3.5 h-3.5 stroke-gray-500 group-hover:stroke-[var(--heo-color-primary-text)]' />
+                <span>{tag.name}</span>
+                <span className='rounded-full bg-[var(--heo-color-card-muted)] dark:bg-white/10 px-2 text-xs leading-5 group-hover:bg-black/10 dark:group-hover:bg-black/30 group-hover:text-white'>
                   {tag.count}
-                </div>
+                </span>
               </div>
             </SmartLink>
           )
