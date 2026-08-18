@@ -7,7 +7,7 @@ import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
 
-const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
+const BlogPostCard = ({ index, post, showSummary, siteInfo, compact = false }) => {
   const { categoryOptions } = useGlobal()
   const categorySlugMap = buildSlugMap(categoryOptions?.map(c => c.name) || [])
   const showPreview =
@@ -37,8 +37,12 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
       <div
         data-wow-delay='.2s'
         className={
-          (POST_TWO_COLS ? '2xl:h-96 2xl:flex-col' : '') +
-          ' wow fadeInUp bg-[var(--heo-color-card)] dark:bg-[var(--heo-color-card-dark)] flex mb-4 flex-col h-[23rem] md:h-52 md:flex-row  group w-full hover:border hover:border-[var(--heo-color-border)] dark:hover:border-[var(--heo-color-border-dark)] duration-300 transition-colors justify-between overflow-hidden rounded-xl'
+          (POST_TWO_COLS
+            ? (compact ? '2xl:h-80 2xl:flex-col' : '2xl:h-96 2xl:flex-col')
+            : '') +
+          ` wow fadeInUp bg-[var(--heo-color-card)] dark:bg-[var(--heo-color-card-dark)] flex mb-4 flex-col ${
+            compact ? 'h-[17rem] md:h-40' : 'h-[23rem] md:h-52'
+          } md:flex-row  group w-full hover:border hover:border-[var(--heo-color-border)] dark:hover:border-[var(--heo-color-border-dark)] duration-300 transition-colors justify-between overflow-hidden rounded-xl`
         }>
         {/* 图片封面 */}
         {showPageCover && (
@@ -62,7 +66,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
         <div
           className={
             (POST_TWO_COLS ? '2xl:p-4 2xl:h-48 2xl:w-full' : '') +
-            ' flex p-6  flex-col justify-between h-48 md:h-full w-full md:w-7/12'
+            ` flex ${compact ? 'p-4' : 'p-6'} flex-col justify-between h-48 md:h-full w-full md:w-7/12`
           }>
           <header>
             {/* 分类 */}
@@ -83,7 +87,9 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
               href={post?.href}
               passHref
               className={
-                ' group-hover:text-[var(--heo-color-primary)] dark:hover:text-[var(--heo-color-accent)] dark:group-hover:text-[var(--heo-color-accent)] text-black dark:text-gray-100  line-clamp-2 replace cursor-pointer text-xl font-extrabold leading-tight'
+                ` group-hover:text-[var(--heo-color-primary)] dark:hover:text-[var(--heo-color-accent)] dark:group-hover:text-[var(--heo-color-accent)] text-black dark:text-gray-100  line-clamp-2 replace cursor-pointer ${
+                  compact ? 'text-lg' : 'text-xl'
+                } font-extrabold leading-tight`
               }>
               {siteConfig('POST_TITLE_ICON') && (
                 <NotionIcon

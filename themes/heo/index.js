@@ -24,7 +24,7 @@ import { Transition } from '@headlessui/react'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import BlogPostArchive from './components/BlogPostArchive'
+import BlogPostCard from './components/BlogPostCard'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import CategoryBar from './components/CategoryBar'
@@ -222,7 +222,7 @@ const LayoutSearch = props => {
  * @returns
  */
 const LayoutArchive = props => {
-  const { archivePosts } = props
+  const { archivePosts, siteInfo } = props
 
   // 归档页顶部显示条，如果是默认归档则不显示。分类详情页显示分类列表，标签详情页显示当前标签
 
@@ -233,11 +233,20 @@ const LayoutArchive = props => {
 
       <div className='px-3'>
         {Object.keys(archivePosts).map(archiveTitle => (
-          <BlogPostArchive
-            key={archiveTitle}
-            posts={archivePosts[archiveTitle]}
-            archiveTitle={archiveTitle}
-          />
+          <div key={archiveTitle}>
+            <div className='pb-4 dark:text-gray-300' id={archiveTitle}>
+              {archiveTitle}
+            </div>
+            {archivePosts[archiveTitle]?.map((post, index) => (
+              <BlogPostCard
+                key={post.id}
+                index={index}
+                post={post}
+                siteInfo={siteInfo}
+                compact
+              />
+            ))}
+          </div>
         ))}
       </div>
     </div>
