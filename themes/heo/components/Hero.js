@@ -354,6 +354,9 @@ function normalizeHeroQuotes(value) {
  * 每日一句 + Steam 状态，保留推荐文章遮罩入口
  * @returns
  */
+// 每日一句可随机切换的入场动画
+const QUOTE_ANIMS = ['flip', 'glitch', 'slide', 'zoom']
+
 function TodayCard({ cRef }) {
   const steamProfileUrl = siteConfig('HEO_STEAM_PROFILE_URL', null, CONFIG)
   const { locale } = useGlobal()
@@ -372,6 +375,42 @@ function TodayCard({ cRef }) {
   const [quoteIndex, setQuoteIndex] = useState(() =>
     sentences.length > 0 ? Math.floor(Math.random() * sentences.length) : -1
   )
+  // 每日一句切换：5 秒冷却 + 随机入场动画
+  const [cooldown, setCooldown] = useState(0)
+  const [quotePhase, setQuotePhase] = useState('idle')
+  const [quoteAnim, setQuoteAnim] = useState(() =>
+    QUOTE_ANIMS[Math.floor(Math.random() * QUOTE_ANIMS.length)]
+  )
+  const prevAnimRef = useRef(null)
+  const quoteTimeoutRef = useRef(null)
+
+  /**
+   * 随机挑选一种入场动画，避免连续两次相同
+   */
+  function pickRandomAnim() {
+    const candidates = QUOTE_ANIMS.filter(a => a !== prevAnimRef.current)
+    const anim = candidates[Math.floor(Math.random() * candidates.length)]
+    prevAnimRef.current = anim
+    return anim
+  }
+
+  /**
+   * 冷却倒计时：每秒减 1
+   */
+  useEffect(() => {
+    if (cooldown <= 0) {
+      return
+    }
+    const timer = setTimeout(() => setCooldown(c => Math.max(0, c - 1)), 1000)
+    return () => clearTimeout(timer)
+  }, [cooldown])
+
+  /**
+   * 组件卸载时清理切换动画定时器
+   */
+  useEffect(() => {
+    return () => clearTimeout(quoteTimeoutRef.current)
+  }, [])
 
   // Steam 状态：是否显示加载占位，用公开的 SteamID 判断；API Key 只在服务端环境变量里
   const steamConfigured = Boolean(siteConfig('HEO_STEAM_ID', null, CONFIG))
@@ -401,19 +440,26 @@ function TodayCard({ cRef }) {
   }
 
   /**
-   * 随机切换下一句
+   * 随机切换下一句：带 5 秒冷却与随机入场动画
    * @param {*} e
    */
   function handleNextQuote(e) {
     e.stopPropagation()
-    if (sentences.length < 2) {
+    if (sentences.length < 2 || cooldown > 0 || quotePhase === 'leave') {
       return
     }
-    let next = quoteIndex
-    while (next === quoteIndex) {
-      next = Math.floor(Math.random() * sentences.length)
-    }
-    setQuoteIndex(next)
+    setCooldown(5)
+    // 先快速淡出，再切换内容并按随机动画入场
+    setQuoteAnim(pickRandomAnim())
+    setQuotePhase('leave')
+    quoteTimeoutRef.current = setTimeout(() => {
+      let next = quoteIndex
+      while (next === quoteIndex) {
+        next = Math.floor(Math.random() * sentences.length)
+      }
+      setQuoteIndex(next)
+      setQuotePhase('enter')
+    }, 200)
   }
 
   /**
@@ -445,6 +491,13 @@ function TodayCard({ cRef }) {
   }
 
   const currentQuote = sentences[quoteIndex] || ''
+  // 根据切换阶段生成动画 class
+  const quoteAnimClass =
+    quotePhase === 'leave'
+      ? 'quote-switch-leave'
+      : quotePhase === 'enter'
+        ? `quote-switch-enter quote-switch-enter-${quoteAnim}`
+        : ''
   const player = steam?.player
   const showSteamLoading = steamConfigured && !steam && !steamError
 
@@ -462,7 +515,7 @@ function TodayCard({ cRef }) {
       player.lastPlayedGameName ||
       '某款游戏'
     steamStatusText = player.lastlogoff
-      ? `${formatRelativeTime(player.lastlogoff)}玩了${lastGame}`
+      ? `${formatRelativeTime(player.lastlogoff)}玩了「${lastGame}」`
       : '离线'
   } else if (player) {
     steamStatusText = '正沉浸在自己的世界中'
@@ -489,7 +542,7 @@ function TodayCard({ cRef }) {
               alt=''
               className='w-full h-full object-cover'
             />
-            <div className='absolute inset-0 bg-black/60' />
+            <div className='absolute inset-0 bg-black/35 dark:bg-black/75' />
           </div>
 
           {/* 上半部分：按钮 + 每日一句 */}
@@ -499,9 +552,23 @@ function TodayCard({ cRef }) {
                 <button
                   type='button'
                   onClick={handleNextQuote}
-                  className='group flex items-center gap-1.5 px-3 h-9 rounded-full border border-white/40 text-sm hover:bg-white/10 transition-colors whitespace-nowrap'>
-                  <ArrowPath className='w-4 h-4 group-hover:rotate-180 duration-500 transition-all' />
+                  disabled={cooldown > 0}
+                  className={`group flex items-center gap-1.5 px-3 h-9 rounded-full border border-white/40 text-sm whitespace-nowrap transition-all ${
+                    cooldown > 0
+                      ? 'opacity-60 cursor-not-allowed'
+                      : 'hover:bg-white/10'
+                  }`}>
+                  <ArrowPath
+                    className={`w-4 h-4 transition-all duration-500 ${
+                      cooldown > 0 ? 'animate-spin' : 'group-hover:rotate-180'
+                    }`}
+                  />
                   <span className='select-none'>换一个</span>
+                  {cooldown > 0 && (
+                    <span className='w-6 h-6 flex items-center justify-center rounded-full bg-white/25 text-xs tabular-nums'>
+                      {cooldown}
+                    </span>
+                  )}
                 </button>
               )}
               <button
@@ -517,15 +584,21 @@ function TodayCard({ cRef }) {
                 <div className='text-xs font-light mb-2 text-white/70'>
                   {siteConfig('HEO_HERO_TITLE_4', null, CONFIG)}
                 </div>
-                <div className='text-xl xl:text-2xl font-bold leading-snug line-clamp-3'>
+                <div
+                  aria-live='polite'
+                  className={`quote-switch relative overflow-hidden text-xl xl:text-2xl font-bold leading-snug line-clamp-3 ${
+                    quoteAnimClass
+                  }`}>
                   {currentQuote}
+                  <span className='quote-burst' aria-hidden='true' />
+                  <span className='quote-streak' aria-hidden='true' />
                 </div>
               </div>
             </div>
           </div>
 
           {/* 下半部分：Steam 状态 */}
-          <div className='relative z-10 p-5 pt-3 border-t border-orange-700 flex justify-end'>
+          <div className='relative z-10 p-5 pt-3 border-t border-orange-700 dark:border-orange-400 flex justify-end'>
             {showSteamLoading && (
               <div className='flex items-center gap-2 text-sm text-white/70'>
                 <span className='w-8 h-8 rounded-full bg-white/20 animate-pulse' />
@@ -556,6 +629,196 @@ function TodayCard({ cRef }) {
             )}
           </div>
       </div>
+      <style>{`
+        .quote-switch {
+          transform-origin: 50% 50%;
+        }
+        .quote-switch-leave {
+          animation: quoteLeave 0.2s ease-in both;
+        }
+        .quote-switch-enter {
+          animation: quoteEnterFlip 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .quote-switch-enter-glitch {
+          animation-name: quoteEnterGlitch;
+        }
+        .quote-switch-enter-slide {
+          animation-name: quoteEnterSlide;
+        }
+        .quote-switch-enter-zoom {
+          animation-name: quoteEnterZoom;
+        }
+        .quote-burst {
+          position: absolute;
+          inset: -50% -20%;
+          background: radial-gradient(
+            ellipse at center,
+            rgba(255, 255, 255, 0.28) 0%,
+            rgba(124, 231, 255, 0.16) 35%,
+            transparent 70%
+          );
+          opacity: 0;
+          pointer-events: none;
+        }
+        .quote-switch-enter .quote-burst {
+          animation: quoteBurst 0.55s ease-out both;
+        }
+        .quote-streak {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          width: 45%;
+          background: linear-gradient(
+            105deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.5) 45%,
+            rgba(124, 231, 255, 0.55) 55%,
+            transparent 100%
+          );
+          transform: translateX(-160%);
+          opacity: 0;
+          pointer-events: none;
+        }
+        .quote-switch-enter .quote-streak {
+          animation: quoteStreak 0.65s 0.15s ease-in-out both;
+        }
+        @keyframes quoteLeave {
+          to {
+            opacity: 0;
+            transform: translateX(-14px) scale(0.9);
+            filter: blur(5px);
+          }
+        }
+        @keyframes quoteEnterFlip {
+          0% {
+            opacity: 0;
+            transform: perspective(800px) rotateY(-80deg) scale(0.75);
+            filter: blur(6px);
+          }
+          55% {
+            opacity: 1;
+            transform: perspective(800px) rotateY(8deg) scale(1.04);
+            filter: blur(0);
+          }
+          75% {
+            transform: perspective(800px) rotateY(-3deg) scale(0.99);
+          }
+          100% {
+            opacity: 1;
+            transform: perspective(800px) rotateY(0deg) scale(1);
+            filter: blur(0);
+          }
+        }
+        @keyframes quoteEnterGlitch {
+          0% {
+            opacity: 0;
+            transform: translateX(48px) scale(0.7) skewX(-10deg);
+            filter: blur(8px);
+            text-shadow: 6px 0 rgba(255, 0, 80, 0.9),
+              -6px 0 rgba(0, 229, 255, 0.9);
+          }
+          30% {
+            opacity: 1;
+            transform: translateX(-14px) scale(1.06) skewX(7deg);
+            filter: blur(0);
+          }
+          45% {
+            transform: translateX(9px) skewX(-5deg);
+            text-shadow: -4px 0 rgba(255, 0, 80, 0.7),
+              4px 0 rgba(0, 229, 255, 0.7);
+          }
+          60% {
+            transform: translateX(-5px) skewX(3deg);
+          }
+          75% {
+            transform: translateX(2px) scale(1.02) skewX(-1deg);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(0) scale(1) skewX(0);
+            filter: blur(0);
+            text-shadow: none;
+          }
+        }
+        @keyframes quoteEnterSlide {
+          0% {
+            opacity: 0;
+            transform: translateX(70px) skewX(-14deg);
+            filter: blur(4px);
+          }
+          55% {
+            opacity: 1;
+            transform: translateX(-10px) skewX(4deg);
+            filter: blur(0);
+          }
+          75% {
+            transform: translateX(3px) skewX(-1deg);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(0) skewX(0);
+            filter: blur(0);
+          }
+        }
+        @keyframes quoteEnterZoom {
+          0% {
+            opacity: 0;
+            transform: scale(0.4);
+            filter: blur(12px);
+          }
+          55% {
+            opacity: 1;
+            transform: scale(1.08);
+            filter: blur(0);
+          }
+          75% {
+            transform: scale(0.98);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+            filter: blur(0);
+          }
+        }
+        @keyframes quoteBurst {
+          0% {
+            opacity: 0;
+            transform: scale(0.25);
+          }
+          25% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+            transform: scale(1.7);
+          }
+        }
+        @keyframes quoteStreak {
+          0% {
+            transform: translateX(-160%);
+            opacity: 1;
+          }
+          100% {
+            transform: translateX(320%);
+            opacity: 0;
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .quote-switch-leave,
+          .quote-switch-enter,
+          .quote-switch-enter-glitch,
+          .quote-switch-enter-slide,
+          .quote-switch-enter-zoom {
+            animation: none;
+          }
+          .quote-burst,
+          .quote-streak {
+            display: none;
+          }
+        }
+      `}</style>
     </div>
   )
 }

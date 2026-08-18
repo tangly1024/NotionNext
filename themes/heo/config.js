@@ -45,7 +45,7 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '分享电子生活',
   HEO_HERO_TITLE_2: '尽己所能记录问题与解决方案',
   HEO_HERO_TITLE_3: 'from 2025',
-  HEO_HERO_TITLE_4: '每日一句', // 今日卡牌小标题
+  HEO_HERO_TITLE_4: 'Fun Facts:', // 今日卡牌小标题
   HEO_HERO_TITLE_5: '我的个人朋友圈上线啦！', // 保留，作为每日一句默认内容之一
   HEO_HERO_TITLE_LINK: 'https://www.barryzed.top/article/memos_brief', // 点击今日卡牌跳转链接
   // 英雄区遮罩文字
