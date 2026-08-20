@@ -32,7 +32,7 @@
 
 本项目在长期维护更新中，不时将修复一些bug和增加新特性。新版本中对页面样式以及加载速度都做了大量的优化，因此推荐您更新到最新版。
 
-您可以在[NotionNext的Github仓库](https://github.com/tangly1024/NotionNext)右上角点击Star，以便关注项目动态，您将第一时间收到新版本发布的消息。
+您可以在[NotionNext的Github仓库](https://github.com/notionnext-org/NotionNext)右上角点击Star，以便关注项目动态，您将第一时间收到新版本发布的消息。
 
 ![Untitled](/legacy/5c03aa929431ec11.png)
 
@@ -200,11 +200,11 @@ NotionNext更新冲突？网上教程还要VS code和git?通通不需要，马�
 
 ## Github 自动化（高阶方法，需要一定知识）
 
-除了手动点击 `Fetch upstream` / `Sync fork` 按钮，仓库内置了一个 GitHub Actions workflow（[`.github/workflows/sync.yaml`](https://github.com/tangly1024/NotionNext/blob/main/.github/workflows/sync.yaml)），可以自动帮你完成每日同步上游最新代码的工作。
+除了手动点击 `Fetch upstream` / `Sync fork` 按钮，仓库内置了一个 GitHub Actions workflow（[`.github/workflows/sync.yaml`](https://github.com/notionnext-org/NotionNext/blob/main/.github/workflows/sync.yaml)），可以自动帮你完成每日同步上游最新代码的工作。
 
 ### 功能说明
 
-该 workflow 每天 UTC 0点（对应北京时间早上8点）自动运行一次，将上游仓库 `tangly1024/NotionNext` 的 `main` 分支同步合并到你 fork 仓库的 `main` 分支，不需要每天手动点击更新按钮。
+该 workflow 每天 UTC 0点（对应北京时间早上8点）自动运行一次，将上游仓库 `notionnext-org/NotionNext` 的 `main` 分支同步合并到你 fork 仓库的 `main` 分支，不需要每天手动点击更新按钮。
 
 关键配置如下：
 
@@ -220,7 +220,7 @@ jobs:
     steps:
       - uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
         with:
-          upstream_sync_repo: tangly1024/NotionNext
+          upstream_sync_repo: notionnext-org/NotionNext
           upstream_sync_branch: main
           target_sync_branch: main
 ```

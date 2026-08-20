@@ -7,7 +7,7 @@
 ::: warning 注意
 ~~OpenWrite停止此项服务，公众号引流的方案失效了，因此以下文章内容已过期。~~
 新版本引入 TechGrow方案进行验证码解锁：
-感謝[大佬](https://github.com/yunhe-dev)的[https://yunhe.dev/](https://yunhe.dev/)提交：[https://github.com/tangly1024/NotionNext/pull/3826](https://github.com/tangly1024/NotionNext/pull/3826)
+感謝[大佬](https://github.com/yunhe-dev)的[https://yunhe.dev/](https://yunhe.dev/)提交：[https://github.com/notionnext-org/NotionNext/pull/3826](https://github.com/notionnext-org/NotionNext/pull/3826)
 使用体验和OpenWrite一致，页面显示查看更多按钮，用户点击后需要关注公众号查看内容：
 ![05059467ede12063fcbfb0d7bb619f58.png](/legacy/1babe0067f81a105.png)
 ![image.png](/legacy/17f98076ad7a917b.png)

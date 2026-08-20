@@ -23,7 +23,7 @@
 
 ## Github开发者社区
 
-软件BUG和新需求，请在Github发布公开 [Issue](https://github.com/tangly1024/NotionNext/issues) 进行反馈；
+软件BUG和新需求，请在Github发布公开 [Issue](https://github.com/notionnext-org/NotionNext/issues) 进行反馈；
 
 - Issue请**严格按照模板填写**，否则**将被直接关闭**。
 
@@ -31,9 +31,9 @@
 
 > **https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2c6cb87d-0e8f-451f-b40b-913fbe8165e6/%E4%B8%8B%E8%BD%BD_(1).png** Github
 >
-  - [反馈 BUG](https://github.com/tangly1024/NotionNext/issues/new?assignees=tangly1024&labels=bug&projects=&template=bug_report.md&title=)
->   - [新功能建议](https://github.com/tangly1024/NotionNext/issues/new?assignees=tangly1024&labels=enhancement&projects=&template=feature_request.md&title=)
->   - [Discussions](https://github.com/tangly1024/NotionNext/discussions) 开帖讨论
+  - [反馈 BUG](https://github.com/notionnext-org/NotionNext/issues/new?assignees=tangly1024&labels=bug&projects=&template=bug_report.md&title=)
+>   - [新功能建议](https://github.com/notionnext-org/NotionNext/issues/new?assignees=tangly1024&labels=enhancement&projects=&template=feature_request.md&title=)
+>   - [Discussions](https://github.com/notionnext-org/NotionNext/discussions) 开帖讨论
 
 
 ## 本站评论区

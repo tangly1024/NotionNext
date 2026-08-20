@@ -8,7 +8,7 @@
 这是一个临时的配置，用于解决4.9.0→4.9.1版本由于notion接口变化产生站点无法编译的异常。并非每一个人都遇到，若你的站点能够正常部署，并且没有出现530异常，则可以忽略此文。
 :::
 
-相关提交与说明可参考：[https://github.com/tangly1024/NotionNext/pull/3632](https://github.com/tangly1024/NotionNext/pull/3632)
+相关提交与说明可参考：[https://github.com/notionnext-org/NotionNext/pull/3632](https://github.com/notionnext-org/NotionNext/pull/3632)
 
 
 ## 配置的作用

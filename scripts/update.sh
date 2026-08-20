@@ -61,7 +61,7 @@ check_prerequisites() {
     # 检查upstream远程仓库是否存在
     if ! git remote | grep -q "^upstream$"; then
         print_warning "未找到upstream远程仓库，正在添加..."
-        git remote add upstream https://github.com/tangly1024/NotionNext.git
+        git remote add upstream https://github.com/notionnext-org/NotionNext.git
         print_success "upstream远程仓库已添加"
     fi
     

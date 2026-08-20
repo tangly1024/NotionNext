@@ -1,6 +1,6 @@
 ﻿# Endspace 主题（NotionNext）
 
-Endspace 是受《明日方舟：终末地》官网视觉风格启发的 NotionNext 主题，由社区作者维护；上游仓库见 [cloud-oc/endspace](https://github.com/cloud-oc/endspace)。收录相关讨论见 [Issue #3990](https://github.com/tangly1024/NotionNext/issues/3990)。
+Endspace 是受《明日方舟：终末地》官网视觉风格启发的 NotionNext 主题，由社区作者维护；上游仓库见 [cloud-oc/endspace](https://github.com/cloud-oc/endspace)。收录相关讨论见 [Issue #3990](https://github.com/notionnext-org/NotionNext/issues/3990)。
 
 **原作者 / 上游**：[@cloud-oc](https://github.com/cloud-oc)（仓库 [cloud-oc/endspace](https://github.com/cloud-oc/endspace)）。
 

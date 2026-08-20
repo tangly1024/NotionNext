@@ -67,7 +67,7 @@ Valine和Waline两个插件均要借助LeanCloud提供的云函数，云数据�
 ![Untitled](/legacy/476b942890765788.png)
 ::: tip 提示
 注意：
-如果你使用 LeanCloud 国内版，请额外配置 `LEAN_SERVER` 环境变量，值为你绑定好的域名。否则可能会提示错误：”`serverURL option is required for apps from CN region`“，[详见此ISSUE](https://github.com/tangly1024/NotionNext/issues/308#issuecomment-1157330084)。
+如果你使用 LeanCloud 国内版，请额外配置 `LEAN_SERVER` 环境变量，值为你绑定好的域名。否则可能会提示错误：”`serverURL option is required for apps from CN region`“，[详见此ISSUE](https://github.com/notionnext-org/NotionNext/issues/308#issuecomment-1157330084)。
     - 最后要`redeploy`这个项目使配置生效。
 ![Untitled](/legacy/4ef8e75bf93a31c6.png)
 :::

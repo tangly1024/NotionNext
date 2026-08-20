@@ -22,7 +22,7 @@
 
 ### 1. 站点信息
 
-网站的社交地址，站点域名，作者信息，以及默认主题在站点的配置文件 [blog.config.js ](https://github.com/tangly1024/NotionNext/blob/fd29df3b26211aad04a9e6462cae038d7006e826/blog.config.js#L20-L34)中可以找到，您可以在配置文件中修改配置。
+网站的社交地址，站点域名，作者信息，以及默认主题在站点的配置文件 [blog.config.js ](https://github.com/notionnext-org/NotionNext/blob/fd29df3b26211aad04a9e6462cae038d7006e826/blog.config.js#L20-L34)中可以找到，您可以在配置文件中修改配置。
 
 ```JavaScript
 AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || 'NotionNext', // 您的昵称 例如 tangly1024
@@ -69,7 +69,7 @@ LINK: process.env.NEXT_PUBLIC_LINK || '/user-guide/intro', // 网站地址
 
 #### 自定义社交图标按钮
 
-hexo主题的图标按钮在[此处修改](https://github.com/tangly1024/NotionNext/blob/main/themes/hexo/components/SocialButton.js),
+hexo主题的图标按钮在[此处修改](https://github.com/notionnext-org/NotionNext/blob/main/themes/hexo/components/SocialButton.js),
 
 例如github的图标是： `fab fa-github` ，可访问[fontawesome获取](https://fontawesome.com/search?o=r&m=free)其他图标
 
@@ -162,7 +162,7 @@ favicon在线制作,icon制作,网站图标,网站图标制作,ico图标制作
 您可以自行决定站点的样式和执行的脚本，NotionNext支持两种方式引入您的css 和 js ：
 
 - 方法一：外部文件引入
-[blog.config.js](https://github.com/tangly1024/NotionNext/blob/main/blog.config.js#L34-L35) 中 配置:`CUSTOM_EXTERNAL_JS `和`CUSTOM_EXTERNAL_CSS `即可
+[blog.config.js](https://github.com/notionnext-org/NotionNext/blob/main/blog.config.js#L34-L35) 中 配置:`CUSTOM_EXTERNAL_JS `和`CUSTOM_EXTERNAL_CSS `即可
 ```Bash
 // 自定义外部脚本，外部样式
 CUSTOM_EXTERNAL_JS: [''], // e.g. ['http://xx.com/script.js','http://xx.com/script.js']
@@ -170,8 +170,8 @@ CUSTOM_EXTERNAL_CSS: [''], // e.g. ['http://xx.com/style.css','http://xx.com/sty
 ```
 
 - 方法二：内部自定义
-  - [/public/css/custom.css](https://github.com/tangly1024/NotionNext/blob/main/public/css/custom.css) 文件可以直接自定义样式。
-  - [/public/js/custom.js](https://github.com/tangly1024/NotionNext/blob/main/public/js/custom.js) 文件中编写脚本将被自动引入页面。
+  - [/public/css/custom.css](https://github.com/notionnext-org/NotionNext/blob/main/public/css/custom.css) 文件可以直接自定义样式。
+  - [/public/js/custom.js](https://github.com/notionnext-org/NotionNext/blob/main/public/js/custom.js) 文件中编写脚本将被自动引入页面。
   - 每个主题的自定义css文件，例如 /public/css/theme-hexo.css
 
 ::: info 问题
@@ -366,7 +366,7 @@ STARRY_SKY: process.env.NEXT_PUBLIC_STARRY_SKY || false, // 开关
 
 您共享的Notion页，他人只有查看权限，除非你手动开启编辑和评论的权限。
 
-另外，若您不希望别人访问到你的源Notion页面，可选择关闭Noton页面共享，然后通过Notion的[access_token](https://github.com/tangly1024/NotionNext/issues/116#issuecomment-1081260413)进行数据访问。
+另外，若您不希望别人访问到你的源Notion页面，可选择关闭Noton页面共享，然后通过Notion的[access_token](https://github.com/notionnext-org/NotionNext/issues/116#issuecomment-1081260413)进行数据访问。
 
 ![Untitled](/legacy/e39a99d8b73be154.png)
 

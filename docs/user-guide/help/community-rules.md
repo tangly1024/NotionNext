@@ -76,7 +76,7 @@ NotionNext提供了博客文档，社群交流，评论留言、邮件等渠道�
 
 我希望切换站点的主题为`example`，因此我在 GitHub 上修改了配置文件 `blog.config.js` 的`THEME`这个参数的配置，但在网页上并没有看到生效，我使用的部署方案是 Vercel 。以下是相关信息，请帮我看一下，非常感谢！
 
-1. 【代码地址】 [https://github.com/tangly1024/NotionNext](https://github.com/tangly1024/NotionNext) （这里贴你自己的仓库）
+1. 【代码地址】 `https://github.com/username/NotionNext` （这里贴你自己的仓库）
 
 1. 【NotionID】02ab3b8678004aa69e9e415905ef32a5 (这里可以贴你的页面ID)
 

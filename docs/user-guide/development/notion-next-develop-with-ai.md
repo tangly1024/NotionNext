@@ -74,7 +74,7 @@ Firebase会自动导入项目代码并进行环境安装。
 
 不建议直接修改原先的主题，否则后续如果我也同步修改了这个主题文件夹，在更新的过程可能会产生大量的冲突。
 
-在themes 目录，找到你较喜欢的主题，或者和你预期的新主题结构比较类似的主题，例如example主题文件夹。各主题的补充说明见仓库 [docs/themes](https://github.com/tangly1024/NotionNext/tree/main/docs/themes)（如 Fuwari、Claude 等）。点击右键copy复制这个文件夹。
+在themes 目录，找到你较喜欢的主题，或者和你预期的新主题结构比较类似的主题，例如example主题文件夹。各主题的补充说明见仓库 [docs/themes](https://github.com/notionnext-org/NotionNext/tree/main/docs/themes)（如 Fuwari、Claude 等）。点击右键copy复制这个文件夹。
 
 ![image.png](/legacy/0a4be92d0f2060f3.png)
 

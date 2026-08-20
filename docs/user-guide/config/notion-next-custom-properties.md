@@ -43,7 +43,7 @@ type，status，title，summary，slug，category，date，tags，icon，passwor
 
 ### 前提是
 
-你要在NotionNext的 [blog.config.js](https://github.com/tangly1024/NotionNext/blob/main/blog.config.js#L133-L144) 代码中做一些小小的配置：找到[以下代码](https://github.com/tangly1024/NotionNext/blob/abc4a32409c9efb7a9fe527eea37c3fdba69a453/blog.config.js#L126-L135)，代码左侧是系统的默认字段名，右边则是你的Notion数据库中对应的字段名。修改代码后，你的站点就会重新生效，按照中文表头读取Notion数据库。
+你要在NotionNext的 [blog.config.js](https://github.com/notionnext-org/NotionNext/blob/main/blog.config.js#L133-L144) 代码中做一些小小的配置：找到[以下代码](https://github.com/notionnext-org/NotionNext/blob/abc4a32409c9efb7a9fe527eea37c3fdba69a453/blog.config.js#L126-L135)，代码左侧是系统的默认字段名，右边则是你的Notion数据库中对应的字段名。修改代码后，你的站点就会重新生效，按照中文表头读取Notion数据库。
 
 ![Untitled](/legacy/8a095c2234a52d84.png)
 
@@ -68,7 +68,7 @@ NEXT_PUBLIC_NOTION_PROPERTY_ICON=图标
 
 ## 结语
 
-感谢网友们对此项目的贡献，有遇到问题，或者新想法欢迎[提交issue](https://github.com/tangly1024/NotionNext/issues/new/choose)。
+感谢网友们对此项目的贡献，有遇到问题，或者新想法欢迎[提交issue](https://github.com/notionnext-org/NotionNext/issues/new/choose)。
 
 ## 原文链接
 

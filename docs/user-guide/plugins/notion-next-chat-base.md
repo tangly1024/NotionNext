@@ -23,7 +23,7 @@ Chatbase.co 是**一款为网站构建自定义ChatGPT 界面的工具**，用�
 
 ## 配置方法
 
-用环境变量或修改代码的方式，在[blog.config.js](https://github.com/tangly1024/NotionNext/blob/48cb3ee6779c117bcb6b61e5cb89fbd1c541a115/blog.config.js#L156)中添加您的chatbase-id即可。
+用环境变量或修改代码的方式，在[blog.config.js](https://github.com/notionnext-org/NotionNext/blob/48cb3ee6779c117bcb6b61e5cb89fbd1c541a115/blog.config.js#L156)中添加您的chatbase-id即可。
 
 ```YAML
 //   ********挂件组件相关********

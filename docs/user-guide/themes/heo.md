@@ -25,7 +25,7 @@
 
 将代码版本更新到4.0以后
 
-将您的默认主题设置为HEO，相关的所有配置都可以在[ /themes/heo/config.js ](https://github.com/tangly1024/NotionNext/blob/main/themes/heo/config.js)文件中找到。接下来我会介绍这个主题的功能区。
+将您的默认主题设置为HEO，相关的所有配置都可以在[ /themes/heo/config.js ](https://github.com/notionnext-org/NotionNext/blob/main/themes/heo/config.js)文件中找到。接下来我会介绍这个主题的功能区。
 
 ![Untitled](/legacy/c18a66ba4b1525db.png)
 
@@ -82,7 +82,7 @@ HEO_COLOR_ACCENT: '#f59e0b'
 
 ### 英雄区左侧
 
-1. **左上角的卡牌**点击是随机跳转到一篇文章，此功能无法修改配置，但是可以在源代码[themes/heo/components/Hero.js](https://github.com/tangly1024/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/components/Hero.js#L58)中看到。
+1. **左上角的卡牌**点击是随机跳转到一篇文章，此功能无法修改配置，但是可以在源代码[themes/heo/components/Hero.js](https://github.com/notionnext-org/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/components/Hero.js#L58)中看到。
 ```JavaScript
 // 跳转到任意文章
   function handleClickBanner() {
@@ -92,7 +92,7 @@ HEO_COLOR_ACCENT: '#f59e0b'
   }
 ```
 
-1. **左上卡牌大标题** [themes/heo/config.js](https://github.com/tangly1024/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L12C1-L15C34)
+1. **左上卡牌大标题** [themes/heo/config.js](https://github.com/notionnext-org/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L12C1-L15C34)
 ![Untitled](/legacy/9db05c53471e735b.png)
 ```JavaScript
 // 英雄区(首页顶部大卡)
@@ -101,7 +101,7 @@ HERO_TITLE_2: '与思维认知',
 HERO_TITLE_3: 'TANGLY1024.COM',
 ```
 
-1. **左上角卡牌背景滚动图**，会循环展示一些技能的图标，可以在 [themes/heo/config.js](https://github.com/tangly1024/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L38)中配置
+1. **左上角卡牌背景滚动图**，会循环展示一些技能的图标，可以在 [themes/heo/config.js](https://github.com/notionnext-org/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L38)中配置
 <details>
 <summary>展开相关代码</summary>
 
@@ -170,7 +170,7 @@ HERO_TITLE_3: 'TANGLY1024.COM',
 </details>
 ![Untitled](/legacy/447da302a4673a35.png)
 
-1. **左下角三个导航标签**，点击跳到特定页面，可以在 [themes/heo/configs.js](https://github.com/tangly1024/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L20-L23) 中配置
+1. **左下角三个导航标签**，点击跳到特定页面，可以在 [themes/heo/configs.js](https://github.com/notionnext-org/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L20-L23) 中配置
 ![Untitled](/legacy/e35b224d4c228111.png)
 ```JavaScript
 // 英雄区显示三个置顶分类
@@ -185,7 +185,7 @@ HERO_CATEGORY_3: { title: '实用教程', url: '/tag/实用教程' },
 ![Untitled](/legacy/9907a9bffcfe3c0c.png)
 
 ### 英雄区右侧
-显示置顶文章的标题文字，以及跳转链接， 配置方式 [themes/heo/config.js](https://github.com/tangly1024/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L16-L18)
+显示置顶文章的标题文字，以及跳转链接， 配置方式 [themes/heo/config.js](https://github.com/notionnext-org/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L16-L18)
 ![Untitled](/legacy/965acb63a2b281e2.png)
 ```JavaScript
 HERO_TITLE_4: '新版上线',
@@ -211,7 +211,7 @@ HERO_RECOMMEND_POST_TAG: '推荐',
 ![Untitled](/legacy/ca196d12d53b0565.png)
 https://notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F4ff9b53a-b204-4696-8d8c-b4c01bc05e50%2FUntitled.mp4?table=block&id=74bfbeea-9fb8-4208-9399-4b7034d14741
   1. 个人资料卡牌**欢迎语**
-此处的文字点击会发生变化，在 [themes/heo/config.js](https://github.com/tangly1024/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L26-L34) 中配置
+此处的文字点击会发生变化，在 [themes/heo/config.js](https://github.com/notionnext-org/NotionNext/blob/b9f52f386c1a7110a15ba5bf005c8eccb190b1f3/themes/heo/config.js#L26-L34) 中配置
 ![Untitled](/legacy/9221764faff2cd6d.png)
 ```JavaScript
 INFOCARD_GREETINGS: [

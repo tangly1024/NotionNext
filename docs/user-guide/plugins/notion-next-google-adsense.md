@@ -21,13 +21,13 @@
 
 ## 配置方式
 
-1. 获取谷歌账号的 PUB_ID 填写到[站点配置](https://github.com/tangly1024/NotionNext/blob/9197b3c6bbcefc02e253b6c13b8c0abdc9cdb84f/blog.config.js#L331)
+1. 获取谷歌账号的 PUB_ID 填写到[站点配置](https://github.com/notionnext-org/NotionNext/blob/9197b3c6bbcefc02e253b6c13b8c0abdc9cdb84f/blog.config.js#L331)
 ![Untitled](/legacy/24c727d62c3c04c5.png)
 
 1. 在谷歌后台创建四种类型的广告单元，获取广告单元的ID
 ![Untitled](/legacy/450a125a54560154.png)
 
-1. 在[代码中配置](https://github.com/tangly1024/NotionNext/blob/9197b3c6bbcefc02e253b6c13b8c0abdc9cdb84f/blog.config.js#L333-L336)广告单元ID
+1. 在[代码中配置](https://github.com/notionnext-org/NotionNext/blob/9197b3c6bbcefc02e253b6c13b8c0abdc9cdb84f/blog.config.js#L333-L336)广告单元ID
 ![Untitled](/legacy/1cada855df1a7c22.png)
 
 
@@ -35,10 +35,10 @@
 
 需要改动代码，而且不能嵌入到文章的指定段落。
 
-1. 在你需要引入特定自定义广告的地方添加组件代码 &lt;AdSlot /&gt; 即可 相关[AdSlot源码](https://github.com/tangly1024/NotionNext/blob/9197b3c6bbcefc02e253b6c13b8c0abdc9cdb84f/components/GoogleAdsense.js#L51-L95)
+1. 在你需要引入特定自定义广告的地方添加组件代码 &lt;AdSlot /&gt; 即可 相关[AdSlot源码](https://github.com/notionnext-org/NotionNext/blob/9197b3c6bbcefc02e253b6c13b8c0abdc9cdb84f/components/GoogleAdsense.js#L51-L95)
 ![Untitled](/legacy/2243297ab514eb6b.png)
 
-1. 相关使用案例 , [Simple主题首页](https://github.com/tangly1024/NotionNext/blob/9197b3c6bbcefc02e253b6c13b8c0abdc9cdb84f/themes/simple/index.js#L74)加入了一个原生广告单元
+1. 相关使用案例 , [Simple主题首页](https://github.com/notionnext-org/NotionNext/blob/9197b3c6bbcefc02e253b6c13b8c0abdc9cdb84f/themes/simple/index.js#L74)加入了一个原生广告单元
 ![Untitled](/legacy/555bcf37a684b39e.png)
 
 

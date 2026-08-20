@@ -27,7 +27,7 @@
 
 - 将NotionNext当前主题配置为proxio即可
 
-- 主题所有的配置文件可以在 [/themes/proxio/config.js](https://github.com/tangly1024/NotionNext/blob/main/themes/proxio/config.js) 中找到。
+- 主题所有的配置文件可以在 [/themes/proxio/config.js](https://github.com/notionnext-org/NotionNext/blob/main/themes/proxio/config.js) 中找到。
 
 ## Proxio 主题调色
 

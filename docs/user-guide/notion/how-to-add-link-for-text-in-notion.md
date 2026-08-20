@@ -19,7 +19,7 @@ Notion支持在文本上添加链接，从而实现点击文字跳转到任意�
 ## Notion内链
 
 ::: tip 提示
-在 [v4.5.2](https://github.com/tangly1024/NotionNext/releases/tag/v4.5.2) 之前的版本中，添加博客文章的内链，需要在网页中打开你的博客并复制完整url，再粘贴到你的notion中。
+在 [v4.5.2](https://github.com/notionnext-org/NotionNext/releases/tag/v4.5.2) 之前的版本中，添加博客文章的内链，需要在网页中打开你的博客并复制完整url，再粘贴到你的notion中。
 :::
 
 例如：浏览器中复制 [https://blog.tangly1024.com/article/the-ai-era](https://blog.tangly1024.com/article/the-ai-era) ，然后将URL粘贴在Notion的文字上，从而实现文字点击跳转 →《[文字链接](https://blog.tangly1024.com/article/the-ai-era)》 。

@@ -42,7 +42,7 @@ Algolia是一家提供全文搜索和实时搜索解决方案的云服务提供�
 ~~所有主题已支持Algolia
 :::
 
-只需在部署平台的环境变量中添加以下四项配置即可开启，相关配置可参考仓库 [conf/plugin.config.js](https://github.com/tangly1024/NotionNext/blob/main/conf/plugin.config.js)。
+只需在部署平台的环境变量中添加以下四项配置即可开启，相关配置可参考仓库 [conf/plugin.config.js](https://github.com/notionnext-org/NotionNext/blob/main/conf/plugin.config.js)。
 
 在algolia后台可以查询到 apikey相关参数，[https://dashboard.algolia.com/account/api-keys/](https://dashboard.algolia.com/account/api-keys/)
 

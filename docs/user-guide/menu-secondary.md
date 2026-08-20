@@ -102,7 +102,7 @@ Menu,SubMenu 这两个类型本质只是菜单，唯一功能是跳转到slug指
 
 ::: tip 提示
 **特别提醒：**
-在V3.13版本中 ，不要在您的数据库中添加多个视图，这将会导致您的菜单乱序。如需添加视图以便分类整理文章，建议另外新建一个视图单页，参考下文： [https://github.com/tangly1024/NotionNext/issues/1056](https://github.com/tangly1024/NotionNext/issues/1056)
+在V3.13版本中 ，不要在您的数据库中添加多个视图，这将会导致您的菜单乱序。如需添加视图以便分类整理文章，建议另外新建一个视图单页，参考下文： [https://github.com/notionnext-org/NotionNext/issues/1056](https://github.com/notionnext-org/NotionNext/issues/1056)
 :::
 
 在V4.0之后的新版本可以忽略此问题。

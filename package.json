@@ -2,14 +2,14 @@
   "name": "notion-next",
   "version": "4.10.10",
   "packageManager": "yarn@1.22.22",
-  "homepage": "https://github.com/tangly1024/NotionNext.git",
+  "homepage": "https://github.com/notionnext-org/NotionNext.git",
   "license": "MIT",
   "engines": {
     "node": ">=22 <25"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tangly1024/NotionNext.git"
+    "url": "https://github.com/notionnext-org/NotionNext.git"
   },
   "author": {
     "name": "tangly",
@@ -71,10 +71,10 @@
     "@headlessui/react": "^1.7.19",
     "@next/bundle-analyzer": "^12.3.7",
     "@notionhq/client": "^2.2.15",
-    "@supabase/supabase-js": "^2.112.2",
+    "@supabase/supabase-js": "^2.112.3",
     "@tabler/icons-react": "^3.36.1",
     "@vercel/analytics": "^1.6.1",
-    "@vercel/functions": "^3.8.0",
+    "@vercel/functions": "^3.9.3",
     "algoliasearch": "^4.25.2",
     "axios": "^1.19.0",
     "critters": "^0.0.23",
@@ -85,25 +85,25 @@
     "js-sha256": "^0.11.1",
     "memory-cache": "^0.2.0",
     "next": "^15.5.23",
-    "notion-client": "7.10.0",
-    "notion-utils": "7.10.0",
+    "notion-client": "7.12.0",
+    "notion-utils": "7.11.1",
     "p-limit": "^7.3.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-facebook": "^8.1.4",
     "react-hotkeys-hook": "^4.6.2",
-    "react-notion-x": "7.10.0",
+    "react-notion-x": "7.11.1",
     "react-tweet-embed": "~2.0.0",
     "remixicon-react": "^1.0.0"
   },
   "devDependencies": {
-    "@ai-sdk/google": "^4.0.37",
-    "@ai-sdk/vue": "^4.0.56",
+    "@ai-sdk/google": "^4.0.44",
+    "@ai-sdk/vue": "^4.0.65",
     "@lhci/cli": "^0.15.1",
     "@netlify/plugin-nextjs": "^5.15.13",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^14.1.2",
-    "@testing-library/user-event": "^14.6.3",
+    "@testing-library/user-event": "^14.6.4",
     "@types/node": "22.20.1",
     "@types/react": "18.3.10",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
@@ -120,7 +120,7 @@
     "eslint-plugin-prettier": "^5.5.6",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "highlight.js": "^11.11.1",
+    "highlight.js": "^11.12.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-junit": "^16.0.0",
@@ -150,7 +150,7 @@
     "uuid": "^11.1.1"
   },
   "bugs": {
-    "url": "https://github.com/tangly/NotionNext/issues",
+    "url": "https://github.com/notionnext-org/NotionNext/issues",
     "email": "tlyong1992@hotmail.com"
   }
 }

@@ -143,7 +143,7 @@ Complete!
 cd ~
 
 # 将Git上的代码下载到服务器中 ;
-git clone https://github.com/tangly1024/NotionNext &&
+git clone https://github.com/notionnext-org/NotionNext &&
 
 # 若您的服务器因为网络问题，无法访问github，可手动下载NotionNext代码 上传至服务器
 ```
@@ -676,14 +676,14 @@ nohup yarn start &gt;/dev/null 2&gt;&1 &
 删除环境变量可用以下命令： `unset NOTION_PAGE_ID`
 :::
 
-- 支持环境变量的配置可参考[blog.config.js](https://github.com/tangly1024/NotionNext/blob/main/blog.config.js) 文件
+- 支持环境变量的配置可参考[blog.config.js](https://github.com/notionnext-org/NotionNext/blob/main/blog.config.js) 文件
 
 
 ### 2.修改代码
 
 - 如果修改blog.config.js或其他代码文件，NodeJS环境需要重新执行 `yarn build` 才可 生效，Docker环境重新执行前面的docker build 相关命令即可重新构建镜像。
 
-- 您可以在项目根目录的[`.env.local`](https://github.com/tangly1024/NotionNext/blob/main/.env.local)文件中配置您的环境变量
+- 您可以在项目根目录的[`.env.local`](https://github.com/notionnext-org/NotionNext/blob/main/.env.local)文件中配置您的环境变量
 
 - 重新编译后需要先关闭旧进程，再用 `yarn start` 重启服务 。
 
@@ -753,7 +753,7 @@ sudo systemctl reload nginx
 cd NotionNext
 
 # 从仓库更新拉取最新代码
-git pull https://github.com/tangly1024/NotionNext
+git pull https://github.com/notionnext-org/NotionNext
 
 # 编译新版代码
 yarn build

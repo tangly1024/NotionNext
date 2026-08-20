@@ -33,7 +33,7 @@
 为维护良好的交流环境，微信群需要您支付**￥29.9**的入群费（请小助理喝一杯咖啡）。
 :::
 
-对NotionNext代码做出[贡献](https://github.com/tangly1024/NotionNext/graphs/contributors)，或对《NotionNext帮助手册》有特别贡献的成员，可以免费入群。
+对NotionNext代码做出[贡献](https://github.com/notionnext-org/NotionNext/graphs/contributors)，或对《NotionNext帮助手册》有特别贡献的成员，可以免费入群。
 请添加小助理微信，并在申请原因中备注：`**付费入群-您的称呼**`** ， **助理会给您发一个收款码，支付成功后，助理会拉您进群❤
 ![image.png](/legacy/ada2c3f35445f279.png)
 #### 助理微信 （点击展开）
@@ -65,7 +65,7 @@
 - 我们只有**站长社群**，没有另外建立开发者社群，**开发者们通常在issue中进行留言沟通**。站长社群需要付费加入，但对于NotionNext的开发者们可免费入群。
 
 - 您可以通过以下方式成为开发者：
-  - 您需要自行通过**issue讨论区**或其它方式，定位到需要改动的代码，并且提交一个**解决问题的PR**，PR成功通过合并后即可成为[NotionNext的开发者](https://github.com/tangly1024/NotionNext/graphs/contributors)。
+  - 您需要自行通过**issue讨论区**或其它方式，定位到需要改动的代码，并且提交一个**解决问题的PR**，PR成功通过合并后即可成为[NotionNext的开发者](https://github.com/notionnext-org/NotionNext/graphs/contributors)。
 
 - 开发者们请联系小助理加群或与我对接。
 

@@ -25,7 +25,7 @@
 
 ```
 GitHub Fork Repository
-├── main (同步 tangly1024/NotionNext)
+├── main (同步 notionnext-org/NotionNext)
 ├── deploy (生产分支 → Vercel)
 └── feature/* (开发分支)
 ```
@@ -49,7 +49,7 @@ GitHub Fork Repository
 
 ```bash
 # 添加上游仓库
-git remote add upstream https://github.com/tangly1024/NotionNext.git
+git remote add upstream https://github.com/notionnext-org/NotionNext.git
 
 # 验证配置
 git remote -v
@@ -59,8 +59,8 @@ git remote -v
 ```
 origin    https://github.com/[你的用户名]/NotionNext.git (fetch)
 origin    https://github.com/[你的用户名]/NotionNext.git (push)
-upstream  https://github.com/tangly1024/NotionNext.git (fetch)
-upstream  https://github.com/tangly1024/NotionNext.git (push)
+upstream  https://github.com/notionnext-org/NotionNext.git (fetch)
+upstream  https://github.com/notionnext-org/NotionNext.git (push)
 ```
 
 > ⚠️ 如果没有看到 upstream 行，说明上游仓库未成功添加
@@ -264,7 +264,7 @@ git push origin deploy
 
 ## 相关资源
 
-- [NotionNext 官方仓库](https://github.com/tangly1024/NotionNext)
+- [NotionNext 官方仓库](https://github.com/notionnext-org/NotionNext)
 - [NotionNext 文档](/user-guide/intro)
 - [Vercel 文档](https://vercel.com/docs)
 

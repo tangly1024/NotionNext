@@ -43,7 +43,7 @@ NotionNext操作手册中，有关于自定义脚本和样式的引入方式；�
 
 ## 自行开发
 
-如果上述的配置方式，不能满足您的需要，例如新增组件、深度定制等等。您可以选择在github上[发起issue](https://github.com/tangly1024/NotionNext/issues/new/choose)，提出改进页面的建议，或者遵循此教程，进行您的开发之旅。
+如果上述的配置方式，不能满足您的需要，例如新增组件、深度定制等等。您可以选择在github上[发起issue](https://github.com/notionnext-org/NotionNext/issues/new/choose)，提出改进页面的建议，或者遵循此教程，进行您的开发之旅。
 
 ::: tip 提示
 可选Codespaces云开发，以及本地开发两种方案。
