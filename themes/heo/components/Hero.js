@@ -48,7 +48,7 @@ function BannerGroup(props) {
     // 左侧英雄区
     <div
       id='bannerGroup'
-      className='flex flex-col justify-between flex-1 mr-2 max-w-[42rem]'>
+      className='hidden xl:flex flex-col justify-between flex-1 mr-2 max-w-[42rem]'>
       {/* 动图 */}
       <Banner {...props} />
       {/* 导航分类 */}
@@ -235,7 +235,7 @@ function TopGroup(props) {
     <div
       id='hero-right-wrapper'
       onMouseLeave={handleMouseLeave}
-      className='flex-1 relative w-full'>
+      className='flex-1 relative w-full h-64 xl:h-[342px]'>
       {/* 置顶推荐文章 */}
       <div
         id='top-group'
@@ -526,7 +526,7 @@ function TodayCard({ cRef }) {
       id='today-card'
       className={`${
         isCoverUp ? ' ' : 'pointer-events-none'
-      } overflow-hidden absolute hidden xl:flex flex-1 flex-col h-full top-0 w-full`}>
+      } overflow-hidden absolute flex flex-1 flex-col h-full top-0 w-full`}>
       <div
         id='card-body'
         className={`${
