@@ -29,7 +29,12 @@ const Search = props => {
     filteredPosts = []
   }
 
-  props = { ...props, posts: filteredPosts }
+  props = {
+    ...props,
+    posts: filteredPosts,
+    postCount: filteredPosts.length,
+    keyword: keyword || ''
+  }
 
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
   return <DynamicLayout theme={theme} layoutName='LayoutSearch' {...props} />

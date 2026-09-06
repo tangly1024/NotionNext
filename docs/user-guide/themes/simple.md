@@ -1,7 +1,7 @@
 # Simple主题
 > 迁移自：[Simple主题](https://docs.tangly1024.com/article/notionnext-simple)
 > 发布日期：2024-3-19
-> 最后编辑：2025-7-7
+> 最后编辑：2026-8-27
 > 原栏目：⭐ 主题参数
 
 
@@ -54,6 +54,21 @@ const CONFIG = {
 }
 export default CONFIG
 ```
+
+
+### 不蒜子访问统计
+
+Simple 主题支持复用全局 `ANALYTICS_BUSUANZI_ENABLE` 配置展示不蒜子访问统计。
+
+开启后：
+
+- Header 显示站点访问量和访客数：`访问量 xxx · 访客数 xxx`
+- Footer 显示图标形式的站点访问量和访客数
+- Header 和 Footer 均使用站点级的 `site_pv` 和 `site_uv` 数据
+
+关闭 `ANALYTICS_BUSUANZI_ENABLE` 后，Header 和 Footer 均不展示上述统计信息。
+
+更多统计配置见 [站点统计相关](../analytics/overview.md)。
 
 
 ## FAQ

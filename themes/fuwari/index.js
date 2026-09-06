@@ -23,10 +23,12 @@ import Pagination from './components/Pagination'
 import PostList from './components/PostList'
 import PostListScroll from './components/PostListScroll'
 import RightFloatArea from './components/RightFloatArea'
+import SearchInput from './components/SearchInput'
 import SidePanel from './components/SidePanel'
 import CONFIG from './config'
 import { Style } from './style'
 import { isCommentServiceConfigured } from './utils/commentEnabled'
+import { shouldHideFuwariSidebar } from './utils/sidebarVisibility'
 
 const Comment = dynamic(() => import('@/components/Comment'), { ssr: false })
 
@@ -38,6 +40,8 @@ const Lenis = dynamic(() => import('@/components/Lenis'), { ssr: false })
 const CursorDot = dynamic(() => import('@/components/CursorDot'), { ssr: false })
 const getLocale = () => generateLocaleDict(siteConfig('LANG', 'zh-CN'))
 
+const shouldShowSidePanel = props => !shouldHideFuwariSidebar(props?.post)
+
 const LayoutBase = props => {
   const { children } = props
   const locale = getLocale()
@@ -46,6 +50,7 @@ const LayoutBase = props => {
   const showHomeHero =
     !props.post &&
     (router.pathname === '/' || router.pathname === '/page/[page]')
+  const showSidePanel = shouldShowSidePanel(props)
 
   return (
     <div
@@ -64,15 +69,24 @@ const LayoutBase = props => {
 
       <main
         className={`max-w-6xl mx-auto px-3 md:px-4 pb-12 min-w-0 w-full ${showHomeHero ? 'fuwari-main-overlap' : ''}`}>
-        <div className='grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-4 lg:gap-6 items-start min-w-0'>
-          <div className='hidden lg:block sticky top-4'>
-            <SidePanel {...props} />
-          </div>
-          <section className='min-w-0 w-full max-w-full'>
-            {children}
-            <div className='lg:hidden mt-4'>
+        <div
+          className={
+            showSidePanel
+              ? 'grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-4 lg:gap-6 items-start min-w-0'
+              : 'min-w-0 w-full'
+          }>
+          {showSidePanel && (
+            <div className='hidden lg:block sticky top-4'>
               <SidePanel {...props} />
             </div>
+          )}
+          <section className='min-w-0 w-full max-w-full'>
+            {children}
+            {showSidePanel && (
+              <div className='lg:hidden mt-4'>
+                <SidePanel {...props} />
+              </div>
+            )}
           </section>
         </div>
       </main>
@@ -157,23 +171,65 @@ const LayoutSlug = props => {
 }
 
 const LayoutSearch = props => {
-  const { keyword } = props
+  const locale = getLocale()
   const router = useRouter()
+  const keyword =
+    props.keyword || router?.query?.s || router?.query?.keyword || ''
+  const currentSearch = Array.isArray(keyword) ? keyword[0] : keyword
+  const posts = props.posts || []
 
   useEffect(() => {
-    if (isBrowser && keyword) {
+    if (isBrowser && currentSearch) {
       replaceSearchResult({
         doms: document.getElementById('posts-wrapper'),
-        search: keyword,
+        search: currentSearch,
         target: {
           element: 'span',
           className: 'text-red-500 border-b border-dashed'
         }
       })
     }
-  }, [router, keyword])
+  }, [router, currentSearch])
 
-  return <LayoutPostList {...props} />
+  return (
+    <>
+      <div className='fuwari-card p-5 mb-4'>
+        <p className='text-sm uppercase tracking-widest text-[var(--fuwari-muted)] mb-2'>
+          {locale?.NAV?.SEARCH || '搜索'}
+        </p>
+        <h1 className='fuwari-section-title text-2xl font-bold mb-4'>
+          {currentSearch
+            ? `${locale?.SEARCH?.RESULT || '搜索结果'}：${currentSearch}`
+            : locale?.NAV?.SEARCH || '搜索'}
+        </h1>
+        <SearchInput keyword={currentSearch} />
+      </div>
+
+      {currentSearch ? (
+        posts.length > 0 ? (
+          <div id='posts-wrapper'>
+            {siteConfig('POST_LIST_STYLE', 'page', props.NOTION_CONFIG) ===
+            'page' ? (
+              <>
+                <PostList posts={posts} />
+                <Pagination page={props.page || 1} postCount={posts.length} />
+              </>
+            ) : (
+              <PostListScroll posts={posts} />
+            )}
+          </div>
+        ) : (
+          <div className='fuwari-card p-8 text-center text-sm text-[var(--fuwari-muted)]'>
+            {locale?.COMMON?.NO_MORE || '没有找到相关内容'}
+          </div>
+        )
+      ) : (
+        <div className='fuwari-card p-8 text-center text-sm text-[var(--fuwari-muted)]'>
+          {locale?.SEARCH?.ARTICLES || '输入关键词后回车搜索文章'}
+        </div>
+      )}
+    </>
+  )
 }
 
 const LayoutArchive = props => {

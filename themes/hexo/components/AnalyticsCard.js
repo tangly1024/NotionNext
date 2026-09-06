@@ -13,10 +13,10 @@ export function AnalyticsCard (props) {
           <div>{postCount}</div>
         </div>
       </div>
-      <div className='hidden busuanzi_container_page_pv ml-2'>
+      <div className='hidden busuanzi_container_site_pv ml-2'>
         <div className='flex justify-between'>
           <div>访问量:</div>
-          <div className='busuanzi_value_page_pv' />
+          <div className='busuanzi_value_site_pv' />
         </div>
       </div>
       <div className='hidden busuanzi_container_site_uv ml-2'>

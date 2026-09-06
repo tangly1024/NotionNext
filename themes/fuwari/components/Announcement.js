@@ -8,7 +8,7 @@ const Announcement = ({ post, className = '', title = 'Announcement' }) => {
   return (
     <section className={`fuwari-card ${className}`}>
       <h2 className='text-sm font-semibold mb-2 tracking-wide uppercase text-[var(--fuwari-muted)]'>
-        {title}
+        {post?.title || title}
       </h2>
       <div id='announcement-content' className='text-sm'>
         <NotionPage post={post} />

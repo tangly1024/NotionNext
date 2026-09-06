@@ -11,7 +11,7 @@ const Announcement = ({ post, className }) => {
   return <>
         <div className="text-sm pb-1 px-2 flex flex-nowrap justify-between">
             <div className="font-light text-gray-600  dark:text-gray-200">
-                <i className="mr-2 fas fa-bullhorn" />{locale.COMMON.ANNOUNCEMENT}
+                <i className="mr-2 fas fa-bullhorn" />{post?.title || locale.COMMON.ANNOUNCEMENT}
             </div>
         </div>
         {post && (<div id="announcement-content">

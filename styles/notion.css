@@ -2203,12 +2203,13 @@ figure.notion-asset-wrapper.notion-asset-wrapper-video > div {
 }
 
 /* Respect Notion Gallery's "Show page icon" view setting. */
-.notion-gallery-hide-page-icons .notion-page-title-icon {
+.notion-gallery-hide-page-icons .notion-gallery .notion-page-title-icon {
   display: none;
 }
 
 /* Respect the Gallery title property's visibility setting. */
 .notion-gallery-hide-titles
+  .notion-gallery
   .notion-collection-card-body
   > .notion-collection-card-property:first-child {
   display: none;

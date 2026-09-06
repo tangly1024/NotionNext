@@ -10,6 +10,7 @@ import SocialButton from './SocialButton'
  */
 export default function Header(props) {
   const { siteInfo } = props
+  const ANALYTICS_BUSUANZI_ENABLE = siteConfig('ANALYTICS_BUSUANZI_ENABLE')
 
   return (
     <header className='text-center justify-between items-center px-6 bg-white h-80 dark:bg-black relative z-10'>
@@ -41,6 +42,18 @@ export default function Header(props) {
             </div>
           </div>
         </SmartLink>
+
+        {ANALYTICS_BUSUANZI_ENABLE && (
+          <div className='flex justify-center mt-2 text-sm text-gray-500 dark:text-gray-300'>
+            <span className='hidden busuanzi_container_site_pv whitespace-nowrap'>
+              访问量 <span className='busuanzi_value_site_pv' />
+            </span>
+            <span className='hidden busuanzi_container_site_uv whitespace-nowrap'>
+              <span className='mx-1'>·</span>
+              访客数 <span className='busuanzi_value_site_uv' />
+            </span>
+          </div>
+        )}
 
         <div className='flex justify-center'>
           <SocialButton />

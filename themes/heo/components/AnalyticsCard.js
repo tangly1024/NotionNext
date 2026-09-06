@@ -31,10 +31,10 @@ export function AnalyticsCard(props) {
                     <div>{diffDays} 天</div>
                 </div>
             </div>
-            <div className='hidden busuanzi_container_page_pv'>
+            <div className='hidden busuanzi_container_site_pv'>
                 <div className='flex justify-between'>
                     <div>{siteVisitTitle}</div>
-                    <div className='busuanzi_value_page_pv' />
+                    <div className='busuanzi_value_site_pv' />
                 </div>
             </div>
             <div className='hidden busuanzi_container_site_uv'>

@@ -36,6 +36,15 @@
 配置文件：[`themes/fuwari/config.js`](https://github.com/notionnext-org/NotionNext/blob/main/themes/fuwari/config.js)  
 也可在 **Notion Config** 表中填写同名键（对象/数组用 JSON）。
 
+### 单页隐藏侧栏（SidePanel）
+
+只影响你指定的那一页，不影响其它 Page：
+
+1. **Notion 页面 Full width**（页面右上角 `···` → Full width）
+2. 或在数据库加复选框/文本字段 **`HIDE_SIDEBAR`**，该页勾选或填 `true`
+3. 或字段 **`SIDEBAR`** 填 `false` / `否`
+4. 或已有 **`ext`** 字段写 JSON：`{"HIDE_SIDEBAR":true}`
+
 ### Fuwari 主题调色
 
 Fuwari 使用单主色色相模型，推荐通过 `FUWARI_THEME_COLOR_HUE` 调整主色：

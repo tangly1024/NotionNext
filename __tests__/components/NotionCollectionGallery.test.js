@@ -17,7 +17,7 @@ jest.mock('react-notion-x/build/third-party/collection', () => {
   }
 })
 
-const galleryView = format => ({ type: 'gallery', format })
+const galleryView = format => ({ id: 'gallery_view', type: 'gallery', format })
 
 const galleryRecordMap = {
   block: {
@@ -40,6 +40,43 @@ const galleryRecordMap = {
   },
   collection_query: {},
   signed_urls: {}
+}
+
+const nestedGalleryRecordMap = format => ({
+  ...galleryRecordMap,
+  collection_view: {
+    gallery_view: {
+      spaceId: 'space',
+      value: {
+        role: 'reader',
+        value: galleryView(format)
+      }
+    }
+  }
+})
+
+const nestedGalleryAfterTableRecordMap = format => {
+  const recordMap = nestedGalleryRecordMap(format)
+  return {
+    ...recordMap,
+    block: {
+      collection_view: {
+        value: {
+          ...recordMap.block.collection_view.value,
+          view_ids: ['table_view', 'gallery_view']
+        }
+      }
+    },
+    collection_view: {
+      table_view: {
+        value: {
+          role: 'reader',
+          value: { id: 'table_view', type: 'table', format: {} }
+        }
+      },
+      ...recordMap.collection_view
+    }
+  }
 }
 
 const renderCollectionPropsScript = `
@@ -88,6 +125,51 @@ describe('Notion Gallery visibility settings', () => {
     expect(markup).toContain(
       'class="notion-gallery-hide-page-icons notion-gallery-hide-titles"'
     )
+  })
+
+  it('unwraps the nested collection-view record returned by Notion', () => {
+    const recordMap = nestedGalleryRecordMap({
+      gallery_properties: [{ property: 'title', visible: false }]
+    })
+    const markup = renderToStaticMarkup(
+      React.createElement(NotionCollection, {
+        block: recordMap.block.collection_view.value,
+        ctx: { recordMap }
+      })
+    )
+
+    expect(markup).toContain(
+      'class="notion-gallery-hide-page-icons notion-gallery-hide-titles"'
+    )
+  })
+
+  it('keeps a visible title from the nested collection-view record', () => {
+    const recordMap = nestedGalleryRecordMap({
+      gallery_properties: [{ property: 'title', visible: true }]
+    })
+    const markup = renderToStaticMarkup(
+      React.createElement(NotionCollection, {
+        block: recordMap.block.collection_view.value,
+        ctx: { recordMap }
+      })
+    )
+
+    expect(markup).toContain('class="notion-gallery-hide-page-icons"')
+    expect(markup).not.toContain('notion-gallery-hide-titles')
+  })
+
+  it('uses Gallery settings when Gallery is not the first collection view', () => {
+    const recordMap = nestedGalleryAfterTableRecordMap({
+      gallery_properties: [{ property: 'title', visible: true }]
+    })
+    const markup = renderToStaticMarkup(
+      React.createElement(NotionCollection, {
+        block: recordMap.block.collection_view.value,
+        ctx: { recordMap }
+      })
+    )
+
+    expect(markup).toContain('class="notion-gallery-hide-page-icons"')
   })
 
   it('hides omitted page icons and an explicitly hidden title', () => {

@@ -1,14 +1,13 @@
 import { useGlobal } from '@/lib/global'
-import { saveDarkModeToLocalStorage } from '@/themes/theme'
 import { Moon, Sun } from '@/components/HeroIcons'
 import { useImperativeHandle } from 'react'
 
 /**
  * 深色模式按钮
  */
-const DarkModeButton = (props) => {
+const DarkModeButton = props => {
   const { cRef, className } = props
-  const { isDarkMode, updateDarkMode } = useGlobal()
+  const { isDarkMode, toggleDarkMode } = useGlobal()
 
   /**
    * 对外暴露方法
@@ -21,18 +20,31 @@ const DarkModeButton = (props) => {
     }
   })
 
-  // 用户手动设置主题
   const handleChangeDarkMode = () => {
-    const newStatus = !isDarkMode
-    saveDarkModeToLocalStorage(newStatus)
-    updateDarkMode(newStatus)
-    const htmlElement = document.getElementsByTagName('html')[0]
-    htmlElement.classList?.remove(newStatus ? 'light' : 'dark')
-    htmlElement.classList?.add(newStatus ? 'dark' : 'light')
+    toggleDarkMode()
   }
 
-  return <div onClick={handleChangeDarkMode} className={`${className || ''} cursor-pointer hover: scale-100 hover:bg-black hover:bg-opacity-10 rounded-full w-10 h-10 flex justify-center items-center duration-200 transition-all`}>
-    <div id='darkModeButton' className=' cursor-pointer hover: scale-50 w-10 h-10 '> {isDarkMode ? <Sun /> : <Moon />}</div>
-  </div>
+  return (
+    <button
+      type='button'
+      id='darkModeButton'
+      aria-label={
+        isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'
+      }
+      aria-pressed={isDarkMode}
+      onClick={handleChangeDarkMode}
+      className={`${className || ''} relative flex h-8 w-16 shrink-0 cursor-pointer items-center overflow-hidden rounded-full border border-black/10 bg-gray-200 p-2 shadow-sm transition-colors duration-300 dark:border-white/10 dark:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--heo-color-primary)] focus-visible:ring-offset-2`}
+    >
+      <span
+        aria-hidden='true'
+        className={`absolute flex h-5 w-5 items-center justify-center rounded-full bg-white shadow-md transition-transform duration-300 motion-reduce:transition-none ${
+          isDarkMode ? 'translate-x-6' : 'translate-x-0'
+        }`}
+      >
+        {isDarkMode ? <Moon /> : <Sun />}
+      </span>
+    </button>
+  )
 }
+
 export default DarkModeButton

@@ -57,6 +57,7 @@ When migrating a new theme, verify all of these:
 
 2. **Notice/announcement block**
    - Render Notion content using `NotionPage`.
+   - If a separate announcement title is rendered, prefer the Notice page `title` and preserve the theme's existing title as a fallback.
    - Switchable in theme config.
 
 3. **Notion cover as Hero**
