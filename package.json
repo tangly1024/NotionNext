@@ -84,7 +84,7 @@
     "js-md5": "^0.9.2",
     "js-sha256": "^0.11.1",
     "memory-cache": "^0.2.0",
-    "next": "^15.5.24",
+    "next": "^15.5.25",
     "notion-client": "7.12.1",
     "notion-utils": "7.12.1",
     "p-limit": "^7.3.1",
