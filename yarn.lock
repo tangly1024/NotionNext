@@ -7104,10 +7104,10 @@ p-limit@^3.0.2, p-limit@^3.1.0:
   dependencies:
     yocto-queue "^0.1.0"
 
-p-limit@^7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-7.3.1.tgz#ded48cbfa10b161a9928120261fa82c9a282eb3f"
-  integrity sha512-0trZaiG7Y7kN/Egy9a8j47t9osC0Tch4PaIWd9yGF6bvmlk7muExRvGNYb8sXBwEKMoNKsbNN9P8EefuQekE4Q==
+p-limit@^7.3.2:
+  version "7.3.2"
+  resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-7.3.2.tgz#accbb6255c23b8b4fd6802a1bcb3062d94469021"
+  integrity sha512-Ll0w3fU24vYpXoZmjjZIee6bJQDgG0oAyo1PdmFYI8UDwJJddaHAypxIH9avUu+t+lSsAwKVsb1jDCMIIChliw==
   dependencies:
     yocto-queue "^1.2.1"
 
