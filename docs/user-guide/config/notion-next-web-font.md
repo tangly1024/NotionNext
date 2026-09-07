@@ -15,7 +15,9 @@
 
 ## 默认字体
 
-系统默认是无衬线字体，您可以在`blog.config.js` 中自定义字体 ，相关配置如下：
+系统默认是无衬线字体，并优先使用系统内置中文字体（如 macOS 的 `PingFang SC`、Windows 的 `Microsoft YaHei`），不会默认请求第三方中文 Web Font。这样可以减少首屏请求数量和字体文件体积。
+
+如果需要使用自定义 Web Font，您可以在 `blog.config.js`、环境变量或 Notion Config 中显式配置 `FONT_URL`。相关配置如下：
 
 ```JavaScript
 // START ************网站字体*****************
@@ -24,13 +26,8 @@
 FONT_STYLE: process.env.NEXT_PUBLIC_FONT_STYLE || 'font-sans font-light',
 
 // 字体CSS 例如 https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css
-// 如果需要引入第三方字体，可以在此添加URL
-FONT_URL: [
-  // 'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css',
-  'https://fonts.googleapis.com/css?family=Bitter&display=swap',
-  'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap',
-  'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&display=swap'
-],
+// 默认不加载第三方 Web Font；如需自定义字体，可通过 NEXT_PUBLIC_FONT_URL 或 Notion Config 的 FONT_URL 显式开启。
+FONT_URL: process.env.NEXT_PUBLIC_FONT_URL || '',
 
 // 无衬线字体 例如'"LXGW WenKai"' , 如果字体有包含空格，需要用 "双 引 号" 包起来。
 FONT_SANS: [
@@ -70,6 +67,22 @@ FONT_AWESOME: process.env.NEXT_PUBLIC_FONT_AWESOME_PATH || 'https://cdnjs.cloudf
 
 // END ************网站字体*****************
 ```
+
+::: warning 性能提示
+中文 Web Font 通常会被拆分成多个字体分片。尤其是 `Noto Sans SC`、`Noto Serif SC` 这类覆盖大量中文字符的字体，可能带来较多 `fonts.gstatic.com` 请求。中文博客如无强制品牌字体需求，建议优先使用系统字体。
+:::
+
+### 如何选择字体加载方式
+
+字体配置会直接影响站点性能。系统字体不需要额外网络请求，通常是中文博客的推荐默认选择；Web Font 可以让不同设备显示更统一，但会增加第三方 CSS、字体文件请求和下载体积，中文字体的影响尤其明显。站长可以按站点定位自行选择：
+
+| 方案 | 性能影响 | 适合场景 |
+| --- | --- | --- |
+| 使用默认系统字体 | 无额外字体请求，首屏加载更快 | 普通博客、内容站、移动端访问较多的站点 |
+| 配置轻量英文字体 Web Font | 增加少量字体请求 | 英文内容较多，且需要统一品牌视觉 |
+| 配置中文 Web Font | 可能产生较多字体分片请求，首屏体积明显增加 | 对字体风格有强品牌要求，且能接受加载成本 |
+
+如果开启 Web Font 后发现 WebPageTest、Lighthouse 或浏览器 Network 面板中字体请求明显增多，可以先清空 `FONT_URL`，改用系统字体对比 FCP、LCP 和总请求数。
 
 
 ## 字体使用说明
@@ -113,9 +126,6 @@ FONT_STYLE: process.env.NEXT_PUBLIC_FONT_STYLE || 'font-sans', // ['font-serif',
 // 字体CSS 例如 https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css
 FONT_URL: [
   **'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css',**
-  'https://fonts.googleapis.com/css?family=Bitter&display=swap',
-  'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap',
-  'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&display=swap'
 ],
 // 无衬线字体 例如'"LXGW WenKai"'
 FONT_SANS: [
