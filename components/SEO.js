@@ -27,6 +27,7 @@ const SEO = props => {
   const hasWebFontUrl = Array.isArray(webFontUrl)
     ? webFontUrl.filter(Boolean).length > 0
     : Boolean(webFontUrl)
+  const hasGoogleFontsUrl = containsGoogleFontsUrl(webFontUrl)
 
   useEffect(() => {
     if (!hasWebFontUrl) return
@@ -249,10 +250,12 @@ const SEO = props => {
       />
 
       {/* DNS预取和预连接 */}
-      {hasWebFontUrl && <link rel='dns-prefetch' href='//fonts.googleapis.com' />}
+      {hasGoogleFontsUrl && (
+        <link rel='dns-prefetch' href='//fonts.googleapis.com' />
+      )}
       <link rel='dns-prefetch' href='//www.google-analytics.com' />
       <link rel='dns-prefetch' href='//www.googletagmanager.com' />
-      {hasWebFontUrl && (
+      {hasGoogleFontsUrl && (
         <link
           rel='preconnect'
           href='https://fonts.gstatic.com'
@@ -335,6 +338,18 @@ export const generateStructuredData = (
   }
 
   return baseData
+}
+
+const containsGoogleFontsUrl = fontUrl => {
+  const urls = Array.isArray(fontUrl) ? fontUrl : [fontUrl]
+
+  return urls.filter(Boolean).some(url => {
+    try {
+      return new URL(url).hostname === 'fonts.googleapis.com'
+    } catch {
+      return false
+    }
+  })
 }
 
 const getAbsoluteImageUrl = (image, siteUrl) => {

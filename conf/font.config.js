@@ -8,12 +8,7 @@ module.exports = {
   // 后面空格隔开的font-light的字体粗细，留空是默认粗细；参考 https://www.tailwindcss.cn/docs/font-weight
   FONT_STYLE: process.env.NEXT_PUBLIC_FONT_STYLE || 'font-sans font-light',
   // 字体CSS 例如 https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css
-  FONT_URL: process.env.NEXT_PUBLIC_FONT_URL || [
-    // 'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css',
-    'https://fonts.googleapis.com/css?family=Bitter:300,400,700&display=swap',
-    'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap',
-    'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;700&display=swap'
-  ],
+  FONT_URL: process.env.NEXT_PUBLIC_FONT_URL || '',
 
   // 字体优化配置
   FONT_DISPLAY: process.env.NEXT_PUBLIC_FONT_DISPLAY || 'swap',
