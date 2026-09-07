@@ -15,6 +15,8 @@ module.exports = {
   CONTACT_TELEGRAM: process.env.NEXT_PUBLIC_CONTACT_TELEGRAM || '', // 你的telegram 地址 例如 https://t.me/tangly_1024
   CONTACT_LINKEDIN: process.env.NEXT_PUBLIC_CONTACT_LINKEDIN || '', // 你的linkedIn 首页
   CONTACT_ORCID: process.env.NEXT_PUBLIC_CONTACT_ORCID || '', // ORCID 主页，例如 https://orcid.org/1234-1234-1234-1234
+  CONTACT_CSDN: process.env.NEXT_PUBLIC_CONTACT_CSDN || '', // CSDN 主页，例如 https://blog.csdn.net/username
+  CONTACT_JUEJIN: process.env.NEXT_PUBLIC_CONTACT_JUEJIN || '', // 稀土掘金主页，例如 https://juejin.cn/user/1234567890
   CONTACT_INSTAGRAM: process.env.NEXT_PUBLIC_CONTACT_INSTAGRAM || '', // 您的instagram地址
   CONTACT_BILIBILI: process.env.NEXT_PUBLIC_CONTACT_BILIBILI || '', // B站主页
   CONTACT_YOUTUBE: process.env.NEXT_PUBLIC_CONTACT_YOUTUBE || '', // Youtube主页

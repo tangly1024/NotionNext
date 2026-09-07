@@ -15,6 +15,8 @@ const SocialButton = () => {
 
   const CONTACT_LINKEDIN = siteConfig('CONTACT_LINKEDIN')
   const CONTACT_ORCID = siteConfig('CONTACT_ORCID')
+  const CONTACT_CSDN = siteConfig('CONTACT_CSDN')
+  const CONTACT_JUEJIN = siteConfig('CONTACT_JUEJIN')
   const CONTACT_WEIBO = siteConfig('CONTACT_WEIBO')
   const CONTACT_INSTAGRAM = siteConfig('CONTACT_INSTAGRAM')
   const CONTACT_EMAIL = siteConfig('CONTACT_EMAIL')
@@ -83,6 +85,24 @@ const SocialButton = () => {
             href={CONTACT_ORCID}
             title={'ORCID'}>
             <i className='transform hover:scale-125 duration-150 fab fa-orcid dark:hover:text-indigo-400 hover:text-indigo-600' />
+          </a>
+        )}
+        {CONTACT_CSDN && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            href={CONTACT_CSDN}
+            title={'CSDN'}>
+            <i className='transform hover:scale-125 duration-150 fab fa-csdn dark:hover:text-indigo-400 hover:text-indigo-600' />
+          </a>
+        )}
+        {CONTACT_JUEJIN && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            href={CONTACT_JUEJIN}
+            title={'稀土掘金'}>
+            <i className='transform hover:scale-125 duration-150 fab fa-juejin dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}
 

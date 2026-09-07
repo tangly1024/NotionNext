@@ -10,6 +10,8 @@ import { handleEmailClick } from '@/lib/plugins/mailEncrypt'
 const SocialButton = () => {
   const CONTACT_GITHUB = siteConfig('CONTACT_GITHUB')
   const CONTACT_ORCID = siteConfig('CONTACT_ORCID')
+  const CONTACT_CSDN = siteConfig('CONTACT_CSDN')
+  const CONTACT_JUEJIN = siteConfig('CONTACT_JUEJIN')
   const CONTACT_TWITTER = siteConfig('CONTACT_TWITTER')
   const CONTACT_TELEGRAM = siteConfig('CONTACT_TELEGRAM')
   const CONTACT_LINKEDIN = siteConfig('CONTACT_LINKEDIN')
@@ -38,6 +40,24 @@ const SocialButton = () => {
           title={'ORCID'}
           href={CONTACT_ORCID}>
           <i className='fab fa-orcid transform hover:scale-125 duration-150 hover:text-green-600' />
+        </a>
+      )}
+      {CONTACT_CSDN && (
+        <a
+          target='_blank'
+          rel='noreferrer'
+          title={'CSDN'}
+          href={CONTACT_CSDN}>
+          <i className='fab fa-csdn transform hover:scale-125 duration-150 hover:text-green-600' />
+        </a>
+      )}
+      {CONTACT_JUEJIN && (
+        <a
+          target='_blank'
+          rel='noreferrer'
+          title={'稀土掘金'}
+          href={CONTACT_JUEJIN}>
+          <i className='fab fa-juejin transform hover:scale-125 duration-150 hover:text-green-600' />
         </a>
       )}
       {CONTACT_TWITTER && (

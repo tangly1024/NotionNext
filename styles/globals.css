@@ -2,6 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom brand icons that are not included in Font Awesome. */
+.fa-csdn,
+.fa-juejin {
+  display: inline-block;
+  width: 1.25em;
+  min-width: 1.25em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.fa-csdn {
+  -webkit-mask-image: url('/svg/csdn.svg');
+  mask-image: url('/svg/csdn.svg');
+}
+
+.fa-juejin {
+  -webkit-mask-image: url('/svg/juejin.svg');
+  mask-image: url('/svg/juejin.svg');
+}
+
+.fa-csdn::before,
+.fa-juejin::before {
+  content: '';
+}
+
 html {
   overflow-x: hidden;
 }

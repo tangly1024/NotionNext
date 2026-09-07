@@ -58,6 +58,14 @@ export function InfoCard(props) {
   const icon2 = siteConfig('HEO_INFO_CARD_ICON2', null, CONFIG)
   const orcidUrl = siteConfig('CONTACT_ORCID')
   const orcidIcon = siteConfig('HEO_INFO_CARD_ICON_ORCID', 'fab fa-orcid', CONFIG)
+  const csdnUrl = siteConfig('CONTACT_CSDN')
+  const csdnIcon = siteConfig('HEO_INFO_CARD_ICON_CSDN', 'fab fa-csdn', CONFIG)
+  const juejinUrl = siteConfig('CONTACT_JUEJIN')
+  const juejinIcon = siteConfig(
+    'HEO_INFO_CARD_ICON_JUEJIN',
+    'fab fa-juejin',
+    CONFIG
+  )
   const avatarBlurEnabled = siteConfig(
     'HEO_INFO_CARD_AVATAR_BLUR',
     false,
@@ -95,8 +103,8 @@ export function InfoCard(props) {
       {/* 公告栏 */}
       <Announcement post={notice} style={{ color: 'white !important' }} />
 
-      <div className='flex justify-between'>
-        <div className='flex space-x-3  hover:text-black dark:hover:text-white'>
+      <div className='flex flex-wrap gap-3 justify-between'>
+        <div className='flex flex-wrap gap-3 hover:text-black dark:hover:text-white'>
           {/* 社交按钮 */}
           {url1 && (
             <div className='w-10 text-center bg-[var(--heo-color-primary-hover)] p-2 rounded-full  transition-colors duration-200 dark:bg-[var(--heo-color-accent)] dark:hover:bg-black hover:bg-white'>
@@ -116,6 +124,20 @@ export function InfoCard(props) {
             <div className='bg-[var(--heo-color-primary-hover)] p-2 rounded-full w-10 items-center flex justify-center transition-colors duration-200 dark:bg-[var(--heo-color-accent)] dark:hover:bg-black hover:bg-white'>
               <SmartLink href={orcidUrl} title='ORCID' aria-label='ORCID'>
                 <i className={orcidIcon} />
+              </SmartLink>
+            </div>
+          )}
+          {csdnUrl && (
+            <div className='bg-[var(--heo-color-primary-hover)] p-2 rounded-full w-10 items-center flex justify-center transition-colors duration-200 dark:bg-[var(--heo-color-accent)] dark:hover:bg-black hover:bg-white'>
+              <SmartLink href={csdnUrl} title='CSDN' aria-label='CSDN'>
+                <i className={csdnIcon} />
+              </SmartLink>
+            </div>
+          )}
+          {juejinUrl && (
+            <div className='bg-[var(--heo-color-primary-hover)] p-2 rounded-full w-10 items-center flex justify-center transition-colors duration-200 dark:bg-[var(--heo-color-accent)] dark:hover:bg-black hover:bg-white'>
+              <SmartLink href={juejinUrl} title='稀土掘金' aria-label='稀土掘金'>
+                <i className={juejinIcon} />
               </SmartLink>
             </div>
           )}
