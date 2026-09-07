@@ -11,6 +11,32 @@
 
 /** @type {Record<string, { name?: string, summary?: string, cover?: string, coverWebp?: string, rootId?: string, tier?: 'free' | 'paid', settings?: Array<{ key: string, label: string, type: 'boolean' | 'text' | 'number' | 'select', defaultValue: string | number | boolean, options?: Array<{ label: string, value: string | number | boolean }> }>, palette?: Array<{ key: string, cssVar: string, label: string, defaultValue: string }> }>} */
 export const THEME_SWITCH_MANIFEST = {
+  editorial: {
+    name: 'Editorial',
+    summary: '暖纸张色调、衬线大标题与杂志式留白，适合长文和独立博客。',
+    settings: [
+      { key: 'EDITORIAL_KICKER', label: '首页眉题', type: 'text', defaultValue: 'ESSAYS · NOTES · IDEAS' },
+      { key: 'EDITORIAL_HERO_TITLE', label: '首页主标题', type: 'text', defaultValue: '' },
+      { key: 'EDITORIAL_HERO_DESCRIPTION', label: '首页引言', type: 'text', defaultValue: '' },
+      { key: 'EDITORIAL_SHOW_HERO', label: '显示首页导语', type: 'boolean', defaultValue: true },
+      { key: 'EDITORIAL_POST_LIST_COVER', label: '显示文章封面', type: 'boolean', defaultValue: true },
+      { key: 'EDITORIAL_TOC_ENABLE', label: '显示文章目录', type: 'boolean', defaultValue: true }
+    ],
+    palette: [
+      { key: 'EDITORIAL_COLOR_PRIMARY', cssVar: '--editorial-color-primary', label: '陶土强调色', defaultValue: '#c96442' },
+      { key: 'EDITORIAL_COLOR_BG', cssVar: '--editorial-color-bg', label: '纸张背景', defaultValue: '#f5f4ed' },
+      { key: 'EDITORIAL_COLOR_CARD', cssVar: '--editorial-color-card', label: '内容表面', defaultValue: '#faf9f5' },
+      { key: 'EDITORIAL_COLOR_TEXT', cssVar: '--editorial-color-text', label: '正文颜色', defaultValue: '#1d1b18' },
+      { key: 'EDITORIAL_COLOR_TEXT_SECONDARY', cssVar: '--editorial-color-text-secondary', label: '次要文字', defaultValue: '#6b6560' },
+      { key: 'EDITORIAL_COLOR_BORDER', cssVar: '--editorial-color-border', label: '分隔线', defaultValue: '#e3e0d5' },
+      { key: 'EDITORIAL_COLOR_PRIMARY_DARK', cssVar: '--editorial-color-primary-dark', label: '深色模式：强调色', defaultValue: '#dc8a68' },
+      { key: 'EDITORIAL_COLOR_BG_DARK', cssVar: '--editorial-color-bg-dark', label: '深色模式：背景', defaultValue: '#141413' },
+      { key: 'EDITORIAL_COLOR_CARD_DARK', cssVar: '--editorial-color-card-dark', label: '深色模式：内容表面', defaultValue: '#1d1c19' },
+      { key: 'EDITORIAL_COLOR_TEXT_DARK', cssVar: '--editorial-color-text-dark', label: '深色模式：正文', defaultValue: '#ece9df' },
+      { key: 'EDITORIAL_COLOR_TEXT_SECONDARY_DARK', cssVar: '--editorial-color-text-secondary-dark', label: '深色模式：次要文字', defaultValue: '#aaa59b' },
+      { key: 'EDITORIAL_COLOR_BORDER_DARK', cssVar: '--editorial-color-border-dark', label: '深色模式：分隔线', defaultValue: '#34322d' }
+    ]
+  },
   endspace: {
     name: 'Endspace',
     summary: '轻工业终末风，侧栏导航、悬浮控件与加载动画。',
@@ -359,6 +385,7 @@ const THEME_CONFIGS = {
   claude: claudeConfig,
   commerce: commerceConfig,
   endspace: endspaceConfig,
+  editorial: editorialConfig,
   example: exampleConfig,
   fukasawa: fukasawaConfig,
   fuwari: fuwariConfig,
@@ -601,6 +628,7 @@ export function formatThemeId(id) {
 import claudeConfig from '@/themes/claude/config'
 import commerceConfig from '@/themes/commerce/config'
 import endspaceConfig from '@/themes/endspace/config'
+import editorialConfig from '@/themes/editorial/config'
 import exampleConfig from '@/themes/example/config'
 import fukasawaConfig from '@/themes/fukasawa/config'
 import fuwariConfig from '@/themes/fuwari/config'
