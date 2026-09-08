@@ -97,13 +97,13 @@
     "remixicon-react": "^1.0.0"
   },
   "devDependencies": {
-    "@ai-sdk/google": "^4.0.57",
-    "@ai-sdk/vue": "^4.0.84",
+    "@ai-sdk/google": "^4.0.63",
+    "@ai-sdk/vue": "^4.0.92",
     "@lhci/cli": "^0.15.1",
     "@netlify/plugin-nextjs": "^5.15.13",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^14.1.2",
-    "@testing-library/user-event": "^14.6.6",
+    "@testing-library/user-event": "^14.6.7",
     "@types/node": "22.20.1",
     "@types/react": "18.3.10",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
@@ -127,7 +127,7 @@
     "marked": "^18.0.11",
     "marked-highlight": "^2.2.4",
     "next-sitemap": "^1.9.12",
-    "postcss": "^8.5.26",
+    "postcss": "^8.5.28",
     "prettier": "^3.9.6",
     "sharp": "^0.35.4",
     "tailwindcss": "^3.4.19",
@@ -135,7 +135,7 @@
     "vitepress": "^1.6.3",
     "vitepress-chat": "^0.0.5",
     "webpack-bundle-analyzer": "^4.5.0",
-    "zod": "^4.5.2"
+    "zod": "^4.5.4"
   },
   "resolutions": {
     "axios": ">=0.21.1",
