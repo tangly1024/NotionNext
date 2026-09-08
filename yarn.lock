@@ -1962,17 +1962,17 @@
   resolved "https://registry.npmmirror.com/@standard-schema/spec/-/spec-1.1.0.tgz#a79b55dbaf8604812f52d140b2c9ab41bc150bb8"
   integrity sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==
 
-"@supabase/auth-js@2.112.4":
-  version "2.112.4"
-  resolved "https://registry.yarnpkg.com/@supabase/auth-js/-/auth-js-2.112.4.tgz#033e739f6b5beb1acc03ba2ea00f91a19e76e822"
-  integrity sha512-z8DesgwLzKM5PiT0yNmJU8VJyh1zAhYi+20Z7drdJQLXg/wWW4yGt/un+He5ERYUo94Vz66t5aeyr1DIDemI5A==
+"@supabase/auth-js@2.115.0":
+  version "2.115.0"
+  resolved "https://registry.yarnpkg.com/@supabase/auth-js/-/auth-js-2.115.0.tgz#59eb3dbf3d7f3ca0a7b890dcea202b006686753c"
+  integrity sha512-YNQlQWm1H0gsXHSY8Jd/xepBhjO0Zhwx04iW17A83/joQ5kFiUin6iPj9s9kZZvupnwLjXVP/diTFiLz2jUbwQ==
   dependencies:
     tslib "2.8.1"
 
-"@supabase/functions-js@2.112.4":
-  version "2.112.4"
-  resolved "https://registry.yarnpkg.com/@supabase/functions-js/-/functions-js-2.112.4.tgz#19166f5150e5a1115cf566f5a92ce54fb93689ee"
-  integrity sha512-DQ0aVH8wSQAccVqNoEkec62qCu2QRNyoGN53RqsVZ1k6F1zq4/v8scrlR6LNT2RJmT97apiTmORijPVhErCS2g==
+"@supabase/functions-js@2.115.0":
+  version "2.115.0"
+  resolved "https://registry.yarnpkg.com/@supabase/functions-js/-/functions-js-2.115.0.tgz#dccd4493acb8c0e7b1aa096ed8671233e9e6b20e"
+  integrity sha512-p97V6/YFcdp+zblFDVJaE8f9rGKTNz0PRzyJ2d1w/EYIU5lwidKuc3l/wM+u27ACmAC62albvoGiUGzLPSg7Aw==
   dependencies:
     tslib "2.8.1"
 
@@ -1981,39 +1981,39 @@
   resolved "https://registry.yarnpkg.com/@supabase/phoenix/-/phoenix-0.4.5.tgz#28f6a0dc020f53f171899b9c6021eecfe2a112d1"
   integrity sha512-aAn9H9ovVyeApKy11OWOrrOGq8DV68yWeH4ud2lN9fzn4aO8Zb5GLL9m1pUg9nLqIcT+ZDfAcsZe0E/nqdv2lw==
 
-"@supabase/postgrest-js@2.112.4":
-  version "2.112.4"
-  resolved "https://registry.yarnpkg.com/@supabase/postgrest-js/-/postgrest-js-2.112.4.tgz#9a2be7749507094bdf0b7e6f55522932e17fb8d1"
-  integrity sha512-uaubtPSeg2TR4wrtfQoQWgkTAe+a0qWX2KhmwvTfNl5mGN9+U7owiJt6abk3o/V6O899PSRD1yzxs5RlF4xTug==
+"@supabase/postgrest-js@2.115.0":
+  version "2.115.0"
+  resolved "https://registry.yarnpkg.com/@supabase/postgrest-js/-/postgrest-js-2.115.0.tgz#f7858eabec36688c039a0e9e370e40063b532dce"
+  integrity sha512-DdERcurLh5t84pgSywDg2LjLR5le7XAzl52/iQhC7FdboWDqGfDPMfaWJV3MHvhyxSlSNzbpSQG+RiQOBSn/4w==
   dependencies:
     tslib "2.8.1"
 
-"@supabase/realtime-js@2.112.4":
-  version "2.112.4"
-  resolved "https://registry.yarnpkg.com/@supabase/realtime-js/-/realtime-js-2.112.4.tgz#8a6cbee7cad0cad9f62bfc24a1810d0207b6b7a3"
-  integrity sha512-vZ+j079SKrM0Xiq7MJCvQKLDpaH2kfKfLY68xuQE1sqsCsMmx1CyrDBJHsxZ3cX01VOs5SI9igmoZAF3BmdZxw==
+"@supabase/realtime-js@2.115.0":
+  version "2.115.0"
+  resolved "https://registry.yarnpkg.com/@supabase/realtime-js/-/realtime-js-2.115.0.tgz#21ce950be88b383dc291bdd5456b3780c39fda73"
+  integrity sha512-5HyBkvlA/IUV2v8jX3uLTdy15jmTPRVXwXKoxvH2SKw5jZMNURxCxt+VpCEukscXQlY7pUpH8Cy4NH6io4iaRw==
   dependencies:
     "@supabase/phoenix" "0.4.5"
     tslib "2.8.1"
 
-"@supabase/storage-js@2.112.4":
-  version "2.112.4"
-  resolved "https://registry.yarnpkg.com/@supabase/storage-js/-/storage-js-2.112.4.tgz#b8b67708b8568ca33a371cbe997ae88b7954a625"
-  integrity sha512-lQ0JemuTlMIXVKgSci1qez8yPnM5hyDngeAfEBjZS2Om4D+Cus0EE5BE6glFobrxdyii1OF4UzWfF0zcQgDq5A==
+"@supabase/storage-js@2.115.0":
+  version "2.115.0"
+  resolved "https://registry.yarnpkg.com/@supabase/storage-js/-/storage-js-2.115.0.tgz#735e93a6ddb78ec968424f65c776e4f379362d72"
+  integrity sha512-dLyIxzbO+MCcKHhcce8rVUCQX1iyqXqQ8ytgkOVYJ7D+Zp0qKylPtQH3hamgxrGSxtDjaw47Urpzw2iK9PsKdA==
   dependencies:
     iceberg-js "^0.8.1"
     tslib "2.8.1"
 
-"@supabase/supabase-js@^2.112.4":
-  version "2.112.4"
-  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.112.4.tgz#a9f987cced71b7a4dda52d37f915a31c6fa265c9"
-  integrity sha512-UiCX1udlFY1fQQrO7Z3GU7obQsju0w5Vk9mOOwalfo/+Gy+tahWVenSSuu5E/GTy/q//HxvGv2IrCdW66/61kw==
+"@supabase/supabase-js@^2.115.0":
+  version "2.115.0"
+  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.115.0.tgz#26820d188f9f1cacf634afd6424abe6d7649227b"
+  integrity sha512-PYJSxtCo37R7tTZW6pAqsxUeSx/dlhA7zn8RzKEUSCqyTxCUhG+iHrDTb04UyVBYbttaUbhwkNTvb8h5HW+uZA==
   dependencies:
-    "@supabase/auth-js" "2.112.4"
-    "@supabase/functions-js" "2.112.4"
-    "@supabase/postgrest-js" "2.112.4"
-    "@supabase/realtime-js" "2.112.4"
-    "@supabase/storage-js" "2.112.4"
+    "@supabase/auth-js" "2.115.0"
+    "@supabase/functions-js" "2.115.0"
+    "@supabase/postgrest-js" "2.115.0"
+    "@supabase/realtime-js" "2.115.0"
+    "@supabase/storage-js" "2.115.0"
 
 "@swc/helpers@0.5.15":
   version "0.5.15"
