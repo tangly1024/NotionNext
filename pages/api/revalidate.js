@@ -1,5 +1,8 @@
 import BLOG from '@/blog.config'
 import { cleanCache } from '@/lib/cache/local_file_cache'
+import { timingSafeEqual } from 'node:crypto'
+
+const MAX_REVALIDATION_PATHS = 50
 
 /**
  * On-Demand Revalidation API
@@ -35,10 +38,10 @@ export default async function handler(req, res) {
 
   const authHeader = req.headers.authorization || ''
   const receivedToken = authHeader.startsWith('Bearer ')
-    ? authHeader.slice(7)
-    : req.body?.token || ''
+    ? authHeader.slice(7).trim()
+    : ''
 
-  if (receivedToken !== token) {
+  if (!tokensMatch(receivedToken, token)) {
     return res.status(401).json({ ok: false, message: 'Unauthorized' })
   }
 
@@ -63,7 +66,23 @@ export default async function handler(req, res) {
     }
 
     // 批量刷新
-    const targetPaths = paths || (path ? [path] : ['/'])
+    const targetPaths = Array.isArray(paths)
+      ? paths
+      : path
+        ? [path]
+        : ['/']
+
+    if (
+      targetPaths.length === 0 ||
+      targetPaths.length > MAX_REVALIDATION_PATHS ||
+      targetPaths.some(item => !isValidPath(item))
+    ) {
+      return res.status(400).json({
+        ok: false,
+        message: `paths must contain 1-${MAX_REVALIDATION_PATHS} site paths`
+      })
+    }
+
     const results = []
 
     for (const p of targetPaths) {
@@ -102,4 +121,23 @@ function normalizePath(p) {
     normalized = normalized.slice(0, -1)
   }
   return normalized
+}
+
+function isValidPath(pathname) {
+  return (
+    typeof pathname === 'string' &&
+    pathname.startsWith('/') &&
+    !pathname.startsWith('//') &&
+    !/[\r\n]/.test(pathname)
+  )
+}
+
+function tokensMatch(receivedToken, expectedToken) {
+  if (!receivedToken || !expectedToken) return false
+
+  const received = Buffer.from(receivedToken)
+  const expected = Buffer.from(expectedToken)
+
+  if (received.length !== expected.length) return false
+  return timingSafeEqual(received, expected)
 }
