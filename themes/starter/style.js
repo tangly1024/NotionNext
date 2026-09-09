@@ -114,6 +114,11 @@ const Style = () => {
     color: rgb(17 25 40 / var(--tw-text-opacity));
   }
 
+  #theme-starter .sticky #navbarCollapse li > button:hover{
+    color: var(--starter-color-primary);
+    opacity: 1;
+  }
+
   :is(.dark #theme-starter .sticky #navbarCollapse li > a){
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -126,6 +131,10 @@ const Style = () => {
   :is(.dark #theme-starter .sticky #navbarCollapse li > button){
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
+  }
+
+  :is(.dark #theme-starter .sticky #navbarCollapse li > button:hover){
+    color: var(--starter-color-primary);
   }
 
   #navbarCollapse li .ud-menu-scroll.active{

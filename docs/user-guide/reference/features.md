@@ -185,11 +185,13 @@
 
 `CONTACT_EMAIL`、`CONTACT_GITHUB`、`CONTACT_TWITTER` 等配置用于在主题的个人资料区或侧栏显示站长联系方式。
 
-| 配置键 | 环境变量 | 说明                                                                |
-| --- | --- |-------------------------------------------------------------------|
+| 配置键 | 环境变量 | 说明 |
+| --- | --- | --- |
 | `CONTACT_ORCID` | `NEXT_PUBLIC_CONTACT_ORCID` | ORCID 主页完整 URL，例如 `https://orcid.org/1234-1234-1234-1234`。留空时不显示。 |
+| `CONTACT_CSDN` | `NEXT_PUBLIC_CONTACT_CSDN` | CSDN 主页完整 URL，例如 `https://blog.csdn.net/username`。留空时不显示。 |
+| `CONTACT_JUEJIN` | `NEXT_PUBLIC_CONTACT_JUEJIN` | 稀土掘金主页完整 URL，例如 `https://juejin.cn/user/1234567890`。留空时不显示。 |
 
-支持读取 Notion Config 中的同名键 `CONTACT_ORCID`，配置优先级为 Notion Config、环境变量、本地配置文件。
+支持读取 Notion Config 中的同名键，配置优先级为 Notion Config、环境变量、本地配置文件。
 
 ## 右键菜单（conf/right-click-menu.js）
 

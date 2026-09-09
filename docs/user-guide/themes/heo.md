@@ -230,6 +230,10 @@ INFOCARD_GREETINGS: [
 
 `HEO_INFO_CARD_ICON_ORCID` 用于覆盖该按钮的 Font Awesome 图标类名，默认值为 `fab fa-orcid`。通常无需修改；如需自定义，可在 Notion Config 中设置同名键，或直接修改 `themes/heo/config.js`。
 
+`CONTACT_CSDN` 和 `CONTACT_JUEJIN` 分别用于控制 HEO 信息卡中的 CSDN、稀土掘金按钮。填写对应个人主页的完整 URL 后显示，留空时不会渲染。
+
+`HEO_INFO_CARD_ICON_CSDN` 和 `HEO_INFO_CARD_ICON_JUEJIN` 可分别覆盖两个按钮的图标类名，默认值为 `fab fa-csdn` 和 `fab fa-juejin`。
+
 
 下方的 Tangly是显示作者名字，在blog.config.js中配置
   1. **公告栏**， 卡牌中间的文字是公告内容

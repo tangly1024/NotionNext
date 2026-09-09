@@ -23,6 +23,8 @@ const SocialButton = () => {
 
   const CONTACT_GITHUB = siteConfig('CONTACT_GITHUB')
   const CONTACT_ORCID = siteConfig('CONTACT_ORCID')
+  const CONTACT_CSDN = siteConfig('CONTACT_CSDN')
+  const CONTACT_JUEJIN = siteConfig('CONTACT_JUEJIN')
   const CONTACT_TWITTER = siteConfig('CONTACT_TWITTER')
   const CONTACT_TELEGRAM = siteConfig('CONTACT_TELEGRAM')
   const CONTACT_LINKEDIN = siteConfig('CONTACT_LINKEDIN')
@@ -67,6 +69,26 @@ const SocialButton = () => {
               href={CONTACT_ORCID}
               className={iconWrapperCls}>
               <i className='transform hover:scale-125 duration-150 fab fa-orcid' />
+            </a>
+          )}
+          {CONTACT_CSDN && (
+            <a
+              target='_blank'
+              rel='noreferrer'
+              title={'CSDN'}
+              href={CONTACT_CSDN}
+              className={iconWrapperCls}>
+              <i className='transform hover:scale-125 duration-150 fab fa-csdn' />
+            </a>
+          )}
+          {CONTACT_JUEJIN && (
+            <a
+              target='_blank'
+              rel='noreferrer'
+              title={'稀土掘金'}
+              href={CONTACT_JUEJIN}
+              className={iconWrapperCls}>
+              <i className='transform hover:scale-125 duration-150 fab fa-juejin' />
             </a>
           )}
           {CONTACT_TWITTER && (

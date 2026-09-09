@@ -60,6 +60,24 @@ const SocialButton = () => {
             <i className='fab fa-orcid transform hover:scale-125 duration-150' />
           </a>
         )}
+        {siteConfig('CONTACT_CSDN') && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            href={siteConfig('CONTACT_CSDN')}
+            title={'CSDN'}>
+            <i className='fab fa-csdn transform hover:scale-125 duration-150' />
+          </a>
+        )}
+        {siteConfig('CONTACT_JUEJIN') && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            href={siteConfig('CONTACT_JUEJIN')}
+            title={'稀土掘金'}>
+            <i className='fab fa-juejin transform hover:scale-125 duration-150' />
+          </a>
+        )}
 
         {siteConfig('CONTACT_WEIBO') && (
           <a
