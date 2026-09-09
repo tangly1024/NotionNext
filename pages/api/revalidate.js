@@ -1,8 +1,12 @@
 import BLOG from '@/blog.config'
 import { cleanCache } from '@/lib/cache/local_file_cache'
-import { timingSafeEqual } from 'node:crypto'
-
-const MAX_REVALIDATION_PATHS = 50
+import {
+  extractBearerToken,
+  isValidRevalidationPath,
+  MAX_REVALIDATION_PATHS,
+  normalizeRevalidationPath,
+  tokensMatch
+} from '@/lib/revalidation'
 
 /**
  * On-Demand Revalidation API
@@ -37,9 +41,7 @@ export default async function handler(req, res) {
   }
 
   const authHeader = req.headers.authorization || ''
-  const receivedToken = authHeader.startsWith('Bearer ')
-    ? authHeader.slice(7).trim()
-    : ''
+  const receivedToken = extractBearerToken(authHeader)
 
   if (!tokensMatch(receivedToken, token)) {
     return res.status(401).json({ ok: false, message: 'Unauthorized' })
@@ -75,7 +77,7 @@ export default async function handler(req, res) {
     if (
       targetPaths.length === 0 ||
       targetPaths.length > MAX_REVALIDATION_PATHS ||
-      targetPaths.some(item => !isValidPath(item))
+      targetPaths.some(item => !isValidRevalidationPath(item))
     ) {
       return res.status(400).json({
         ok: false,
@@ -86,7 +88,7 @@ export default async function handler(req, res) {
     const results = []
 
     for (const p of targetPaths) {
-      const normalizedPath = normalizePath(p)
+      const normalizedPath = normalizeRevalidationPath(p)
       try {
         await res.revalidate(normalizedPath)
         results.push({ path: normalizedPath, revalidated: true })
@@ -108,36 +110,4 @@ export default async function handler(req, res) {
       error: error.message
     })
   }
-}
-
-/**
- * 标准化路径：确保以 / 开头，去掉尾部 /
- */
-function normalizePath(p) {
-  if (!p || typeof p !== 'string') return '/'
-  let normalized = p.trim()
-  if (!normalized.startsWith('/')) normalized = '/' + normalized
-  if (normalized.length > 1 && normalized.endsWith('/')) {
-    normalized = normalized.slice(0, -1)
-  }
-  return normalized
-}
-
-function isValidPath(pathname) {
-  return (
-    typeof pathname === 'string' &&
-    pathname.startsWith('/') &&
-    !pathname.startsWith('//') &&
-    !/[\r\n]/.test(pathname)
-  )
-}
-
-function tokensMatch(receivedToken, expectedToken) {
-  if (!receivedToken || !expectedToken) return false
-
-  const received = Buffer.from(receivedToken)
-  const expected = Buffer.from(expectedToken)
-
-  if (received.length !== expected.length) return false
-  return timingSafeEqual(received, expected)
 }

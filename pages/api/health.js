@@ -19,6 +19,7 @@ export default function handler(req, res) {
     revalidationConfigured: Boolean(
       process.env.REVALIDATION_TOKEN || BLOG.REVALIDATION_TOKEN
     ),
+    cronConfigured: Boolean(process.env.CRON_SECRET),
     theme: BLOG.THEME,
     timestamp: new Date().toISOString()
   })
