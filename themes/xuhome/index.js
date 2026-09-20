@@ -25,6 +25,7 @@ import ShareBar from './components/ShareBar'
 import SearchInput from './components/SearchInput'
 import RecommendPosts from './components/RecommendPosts'
 import JumpToTopButton from './components/JumpToTopButton'
+import NotionAudioEnhancer from './components/NotionAudioEnhancer'
 import HeroSection from './components/HeroSection'
 
 const Comment = dynamic(() => import('@/components/Comment'), { ssr: false })
@@ -198,6 +199,7 @@ const LayoutSlug = props => {
             className='border-2 border-[#0284c7] rounded-sm shadow-[4px_4px_0px_0px_#0284c7] bg-[#ffffff] dark:bg-slate-800 p-6 md:p-10 mt-6'
           >
             <NotionPage post={post} />
+            <NotionAudioEnhancer post={post} />
           </div>
 
           <ShareBar post={post} />

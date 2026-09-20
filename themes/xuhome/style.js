@@ -38,6 +38,10 @@ const Style = () => {
 
   return (
     <style jsx global>{`
+      html {
+        scroll-behavior: smooth;
+      }
+
       #theme-xuhome {
         --xuhome-color-primary-hover: ${siteConfig('XUHOME_COLOR_PRIMARY_HOVER', CONFIG.XUHOME_COLOR_PRIMARY_HOVER, CONFIG)};
         --xuhome-color-accent: ${siteConfig('XUHOME_COLOR_ACCENT', CONFIG.XUHOME_COLOR_ACCENT, CONFIG)};

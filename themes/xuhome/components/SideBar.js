@@ -1,6 +1,7 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
+import { uuidToId } from 'notion-utils'
 import { useRouter } from 'next/router'
 import Announcement from './Announcement'
 import Uptime from './Uptime'
@@ -44,7 +45,7 @@ export default function SideBar(props) {
             {post.toc.map(item => (
               <a
                 key={item.id}
-                href={`#${item.id}`}
+                href={`#${uuidToId(item.id)}`}
                 className='block text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-[#0284c7] py-0.5'
                 style={{ paddingLeft: `${(item.indentLevel || 0) * 12 + 4}px` }}
               >
