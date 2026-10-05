@@ -7,48 +7,48 @@
   resolved "https://registry.npmjs.org/@adobe/css-tools/-/css-tools-4.4.4.tgz"
   integrity sha512-Elp+iwUx5rN5+Y8xLt5/GRoG20WGoDCQ/1Fb+1LiGtvwbDavuSk0jhD/eZdckHAuzcDzccnkv+rEjyWfRx18gg==
 
-"@ai-sdk/gateway@4.0.78":
-  version "4.0.78"
-  resolved "https://registry.yarnpkg.com/@ai-sdk/gateway/-/gateway-4.0.78.tgz#b654fdca7de8c5fc260247d327ebb3f6ed33428f"
-  integrity sha512-fcamzmFlcy+c/tIc7QcATLe/kArgSVGQ1QxaddMjhOSX8zypc2hmD5sHB2bp1DSFcSxDD32d6usF9a7xLCTULg==
+"@ai-sdk/gateway@4.0.86":
+  version "4.0.86"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/gateway/-/gateway-4.0.86.tgz#c08aa2429353982a908baabfd4a212945293a285"
+  integrity sha512-sPqb9+Uparn18A7zf6GDXXIx/+tsdA7V43NyL+HaHMBl7wrFaO9fBEf4/FoiKn1D/zv0Cc3PgpJX9JsuG7MKeg==
   dependencies:
-    "@ai-sdk/provider" "4.0.13"
-    "@ai-sdk/provider-utils" "5.0.39"
+    "@ai-sdk/provider" "4.0.17"
+    "@ai-sdk/provider-utils" "5.0.44"
     "@vercel/oidc" "3.2.0"
 
-"@ai-sdk/google@^4.0.67":
-  version "4.0.67"
-  resolved "https://registry.yarnpkg.com/@ai-sdk/google/-/google-4.0.67.tgz#ff6143ff600c17cebb86f4ca9cb2199062009358"
-  integrity sha512-F+o3bRDz0ua2hJbpnuEsoNsKR11NT+nAhq1eZfaRJr2rzs5eKi/E9wJw8ZXeJx7NlYeBF6il5/+itTBdkM1kJg==
+"@ai-sdk/google@^4.0.75":
+  version "4.0.75"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/google/-/google-4.0.75.tgz#2db34c02ef52c2405c5fc4dd72e1a67129d1a16e"
+  integrity sha512-OhPsdbZwep3jlb8iaoB5FVxzsnTXqcHs+Gec2HmBLKttZNpdZErC8UKp8PcSQw2sXrI9g+ChkrGsMF0siklb9A==
   dependencies:
-    "@ai-sdk/provider" "4.0.13"
-    "@ai-sdk/provider-utils" "5.0.39"
+    "@ai-sdk/provider" "4.0.17"
+    "@ai-sdk/provider-utils" "5.0.44"
 
-"@ai-sdk/provider-utils@5.0.39":
-  version "5.0.39"
-  resolved "https://registry.yarnpkg.com/@ai-sdk/provider-utils/-/provider-utils-5.0.39.tgz#532a8a6fa4032d4fe35aec2cd5444989c4acdef6"
-  integrity sha512-VIFp4Qv3j+V941crFB1y2VG5yeGbeLOFRxiPaZJETkkpo1H5WviLx6H5yRkFkrXIGxnTGygKsPgCAJG0X61Auw==
+"@ai-sdk/provider-utils@5.0.44":
+  version "5.0.44"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/provider-utils/-/provider-utils-5.0.44.tgz#1892f4e78490ee296a390837f69b1e36fea42f71"
+  integrity sha512-TZGr0Al1mMnRh7Wd+3qTnSdWvBDIst2Abl8mglkob8rbXF1TG5xoeVLV19rD/AtB+NL/LUPITdbQ0EFGHRBcSw==
   dependencies:
-    "@ai-sdk/provider" "4.0.13"
+    "@ai-sdk/provider" "4.0.17"
     "@standard-schema/spec" "^1.1.0"
     "@workflow/serde" "4.1.0"
     eventsource-parser "^3.0.8"
     undici "^7.29.0"
 
-"@ai-sdk/provider@4.0.13":
-  version "4.0.13"
-  resolved "https://registry.yarnpkg.com/@ai-sdk/provider/-/provider-4.0.13.tgz#455b0575daa7b1bb1d4e9196e1b0150cffcd4294"
-  integrity sha512-sJvnbFIFLzmKFXIjfwS8XCOAj6puHCawItwvA9PBZgk2f/l/TiC4OSfK3ueDbUVXfRCOn5eJN97EIF10toIOmQ==
+"@ai-sdk/provider@4.0.17":
+  version "4.0.17"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/provider/-/provider-4.0.17.tgz#23c55190cdc3c52c94ea5fbf50ac2072593feab1"
+  integrity sha512-VYMBxIQdcHqbIf1j+YZlI9Ati6LZ4wJe0GGd4z4a5H/KxTggjeOiyaVYTnfF7LHZK5jMQ+rofmzz4QPqf++NUw==
   dependencies:
     json-schema "^0.4.0"
 
-"@ai-sdk/vue@^4.0.97":
-  version "4.0.97"
-  resolved "https://registry.yarnpkg.com/@ai-sdk/vue/-/vue-4.0.97.tgz#ab3d9b8931bc7fe5ea885312a8b991d421db5d9b"
-  integrity sha512-QqtA+WhpI2eSArjqht0a3NplnZrNokKN5BszHxvJuWGfQxkSFiJFRbky9MwvNQDopiafc6nGK0l62PW5AsgOsQ==
+"@ai-sdk/vue@^4.0.106":
+  version "4.0.106"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/vue/-/vue-4.0.106.tgz#ea93082059267c8e8db847fd2cfd8593b4510082"
+  integrity sha512-HALg4k/15kMEJ4jskQ9Hx6MUeCBf7KxRgaLeKIwmdlZgt5pDC46Rtlj2Bu+f2REXf7QkmZElHCGDnJA8eixHjw==
   dependencies:
-    "@ai-sdk/provider-utils" "5.0.39"
-    ai "7.0.97"
+    "@ai-sdk/provider-utils" "5.0.44"
+    ai "7.0.106"
     swrv "^1.2.0"
 
 "@algolia/abtesting@1.18.1":
@@ -1555,10 +1555,10 @@
     "@napi-rs/canvas-win32-arm64-msvc" "0.1.100"
     "@napi-rs/canvas-win32-x64-msvc" "0.1.100"
 
-"@netlify/plugin-nextjs@^5.15.13":
-  version "5.15.13"
-  resolved "https://registry.yarnpkg.com/@netlify/plugin-nextjs/-/plugin-nextjs-5.15.13.tgz#1e439fa3d20eb7db2cd6f66110934ae34706647a"
-  integrity sha512-gBmWtgG13ZW4ytNMCvacfwZemtdtV/Ekc+6RBYvI5fndjmDvKxgFHylsw7oli+PHMGAtNqaJrN8QccGnDReu6A==
+"@netlify/plugin-nextjs@^5.16.0":
+  version "5.16.0"
+  resolved "https://registry.yarnpkg.com/@netlify/plugin-nextjs/-/plugin-nextjs-5.16.0.tgz#37a5c2d915cbd12f5d7a3c95d7e891d2b223a6bd"
+  integrity sha512-ys9G34vifslRRy1VwbOMVNFSKU/vuWdNGcYqvAsCAB8VlDFnZDUBM1WUDjDjXOnNXb8kLXA3hX5LgISEONAhAA==
 
 "@next/bundle-analyzer@^12.3.7":
   version "12.3.7"
@@ -2219,10 +2219,10 @@
     "@types/node" "*"
     form-data "^4.0.4"
 
-"@types/node@*", "@types/node@22.20.2":
-  version "22.20.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.20.2.tgz#daae777b5f5965a587f50cc80d5364c2ddf27e36"
-  integrity sha512-xlvWf4Vs9n1PEVYwP1n4vvG07M6y8WgvJ2t0vbrWTmijsIHp1cS+uJ2kMIRdY3nHZK0nCYKrPeD171+SzF4/zw==
+"@types/node@*", "@types/node@22.20.3":
+  version "22.20.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.20.3.tgz#f77d48b4cb336b4e6dc44850ddb6da69caade396"
+  integrity sha512-DZmzkmwHzXrLPAXPyKNDzlIwMMUZCVacoD25ywdy5YTKGbOx/2ld+Q38Im2zJ0vBuZP5Prd3VZutKZyXwkOS8A==
   dependencies:
     undici-types "~6.21.0"
 
@@ -2420,10 +2420,10 @@
   resolved "https://registry.yarnpkg.com/@vercel/analytics/-/analytics-1.6.1.tgz#b4e16daf445cf6cd365a91e43d86e9e5b3428ddc"
   integrity sha512-oH9He/bEM+6oKlv3chWuOOcp8Y6fo6/PSro8hEkgCW3pu9/OiCXiUpRUogDh3Fs3LH2sosDrx8CxeOLBEE+afg==
 
-"@vercel/cli-config@0.2.6":
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/@vercel/cli-config/-/cli-config-0.2.6.tgz#2ab47f4cff8f09a83dc372a5eb593b83c5012c20"
-  integrity sha512-2AsKCf6gE/Eniq09ARm1RK9rQMV5pcAHU7BFcR9MISO+4/RsjjkaYbQN6G85/xi9pYZ5CJNXvYn4TI6p1jKBcg==
+"@vercel/cli-config@0.2.7":
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/@vercel/cli-config/-/cli-config-0.2.7.tgz#11b1bd0c8e6d619f6ed91e56d8888ad49aa22f08"
+  integrity sha512-KeSN2HBp8puZrj7kVjSEneDi9yBqW4nAD9AnhGhdYjGNpHl7IkXZVb3HnNe0WWc5+20RlUtmAGWNPQ8qP5QBhQ==
   dependencies:
     xdg-app-paths "5"
     zod "4.1.11"
@@ -2435,24 +2435,24 @@
   dependencies:
     execa "5.1.1"
 
-"@vercel/functions@^3.9.7":
-  version "3.9.7"
-  resolved "https://registry.yarnpkg.com/@vercel/functions/-/functions-3.9.7.tgz#02d951c420a40bb71ff7cdcb3da6e9bec9362fd2"
-  integrity sha512-ICLzHbVZs10igkVMW/ovEMIXFa5ctpEjTa+VWRCOQbIqg9ALZcQcRjcfDuQZ/g2XtPS08EvHjzm538YJU9WsXA==
+"@vercel/functions@^3.9.8":
+  version "3.9.8"
+  resolved "https://registry.yarnpkg.com/@vercel/functions/-/functions-3.9.8.tgz#45055f4d4600728c3ecd5e3f7496d7d3bc917c10"
+  integrity sha512-ISnh/3ACFkWZhtwvRz7H1uG+A/7nr6lY1H9bd7s1SQv9GU0aBpBraI5hnmylUumperdwL+9QGme2s4L06VRw9g==
   dependencies:
-    "@vercel/oidc" "3.8.7"
+    "@vercel/oidc" "3.8.8"
 
 "@vercel/oidc@3.2.0":
   version "3.2.0"
   resolved "https://registry.npmmirror.com/@vercel/oidc/-/oidc-3.2.0.tgz#5782a4d4904443f015808705b5537cf9c3b68528"
   integrity sha512-UycprH3T6n3jH0k44NHMa7pnFHGu/N05MjojYr+Mc6I7obkoLIJujSWwin1pCvdy/eOxrI/l3uDLQsmcrOb4ug==
 
-"@vercel/oidc@3.8.7":
-  version "3.8.7"
-  resolved "https://registry.yarnpkg.com/@vercel/oidc/-/oidc-3.8.7.tgz#5c15dbac02d34169d9cf8102e0b5781ecadebd17"
-  integrity sha512-fRu59npOu+1vsV570tiLKskfuRyOJ1MqceAkXbTIfWPnM+c9ve1tSK81oj4umKKirymlGUss3V60Lm5I38rKDw==
+"@vercel/oidc@3.8.8":
+  version "3.8.8"
+  resolved "https://registry.yarnpkg.com/@vercel/oidc/-/oidc-3.8.8.tgz#9f2b8fa5d964cd1ccc74d088e564b18596163b35"
+  integrity sha512-aeq4/sgVh80zO6j2H+7FRfsG6NOXBrvzV1EEO8IdXPEJgwHIPakP+BFq3QmprsEQ18bIimds07kvaYhm2lehtg==
   dependencies:
-    "@vercel/cli-config" "0.2.6"
+    "@vercel/cli-config" "0.2.7"
     "@vercel/cli-exec" "1.0.1"
     jose "^5.9.6"
 
@@ -2702,14 +2702,14 @@ agent-base@^7.1.0, agent-base@^7.1.2:
   resolved "https://registry.npmmirror.com/agent-base/-/agent-base-7.1.4.tgz"
   integrity sha512-MnA+YT8fwfJPgBx3m60MNqakm30XOkyIoH1y6huTQvC0PwZG7ki8NacLBcrPbNoo8vEZy7Jpuk7+jMO+CUovTQ==
 
-ai@7.0.97, ai@^7.0.19:
-  version "7.0.97"
-  resolved "https://registry.yarnpkg.com/ai/-/ai-7.0.97.tgz#0c4bc0c80863a769aa5e1153ba69147cb7c303de"
-  integrity sha512-tQGZ234p/bk5X/LNQdB43a5/z1Bve7wK0EOR1AwN6xrosZih4MIC/3pXhcnytcpBJHMbhLISW6J1dFTd/tnwPA==
+ai@7.0.106, ai@^7.0.19:
+  version "7.0.106"
+  resolved "https://registry.yarnpkg.com/ai/-/ai-7.0.106.tgz#deec00567e6933106b0054955f805a76e54d76bd"
+  integrity sha512-0W9AlZfyhOlPyE9ZXCFisg0uxxrmQMGdoVUz0ewRg5J+xAhVBomSspktqYeGWABFbQrYyWRVibnvSf24pTeE2w==
   dependencies:
-    "@ai-sdk/gateway" "4.0.78"
-    "@ai-sdk/provider" "4.0.13"
-    "@ai-sdk/provider-utils" "5.0.39"
+    "@ai-sdk/gateway" "4.0.86"
+    "@ai-sdk/provider" "4.0.17"
+    "@ai-sdk/provider-utils" "5.0.44"
 
 ajv@^6.12.4:
   version "6.12.6"
@@ -2988,10 +2988,10 @@ asynckit@^0.4.0:
   resolved "https://registry.npmmirror.com/asynckit/-/asynckit-0.4.0.tgz"
   integrity sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
 
-autoprefixer@^10.5.6:
-  version "10.5.6"
-  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.5.6.tgz#b613978f41eb58f0b3719ff1e21f993875e86a75"
-  integrity sha512-HiH4oYNc5+DQEx/b8FPfMj+WHH/WWUBmbN5r1Uf/ixtfyFkk+wGIlfJT/RD5eAyzlwkeYRtZUCI8qrEi26pl2g==
+autoprefixer@^10.6.1:
+  version "10.6.1"
+  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.6.1.tgz#437cea1a0b96cedc4065c05327b728b1594faf27"
+  integrity sha512-cL1Qz6ADZhcEbny/8HPfe99J6HhNoYtpX2LFLIbhgGE7Q1hlQVkYFdetDN7Id3KiQxhDrHwzlHr/YQCnZ8+xSA==
   dependencies:
     browserslist "^4.28.9"
     caniuse-lite "^1.0.30001810"
@@ -6532,10 +6532,10 @@ marked-highlight@^2.2.4:
   resolved "https://registry.yarnpkg.com/marked-highlight/-/marked-highlight-2.2.4.tgz#e8d9a3b9ab8cdba8c255a5bcca9d922716befa5e"
   integrity sha512-PZxisNMJDduSjc0q6uvjsnqqHCXc9s0eyzxDO9sB1eNGJnd/H1/Fu+z6g/liC1dfJdFW4SftMwMlLvsBhUPrqQ==
 
-marked@^18.0.12, marked@^18.0.4:
-  version "18.0.12"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-18.0.12.tgz#25840ec9ea7b22f2da48b9260ff5d8c2a6048997"
-  integrity sha512-LEm4ga2YeI2T3GVHj9b0BaDPPk93LLTHMFeMyQbNIzPxc8vCI0y/scy0ZA6z6lXKyT9j9Nhl/OC6ZYKYGuFScA==
+marked@^18.0.13, marked@^18.0.4:
+  version "18.0.13"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-18.0.13.tgz#f642286759fcd640b29c1ea7b0d964a63afc01e3"
+  integrity sha512-xTxVzZsBFwunP6HDmtBkabUQEYArnP7/rMDGmPj9SlrKlQ4i8MdYVow+nJL0eOqwpUqhzBoTBRADGN6uYwPyOw==
 
 marky@^1.2.0, marky@^1.2.2:
   version "1.3.0"
@@ -7384,10 +7384,10 @@ prettier-linter-helpers@^1.0.1:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^3.9.6:
-  version "3.9.6"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.9.6.tgz#b3ea5146515d40fc53f18aa63f74dfab1e10dbf6"
-  integrity sha512-OpN0zzVdiaiAhxpuuj5efpIS4sY9j7bY6uR5mnj5yPzGkdkjNKSJeUThPb60Jw29QuAZgA4o+/iB49kFiaBX6g==
+prettier@^3.9.8:
+  version "3.9.8"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.9.8.tgz#54e81128584538c81d85fce9d5fd77a410c385c5"
+  integrity sha512-WRFq3Wn3WId7LLROfMLdH7xaFr2jR62wU8nLO6rQUOLOxNZUviyJQs1M0iIhLexSFy+L+w0ch66wtoO2jRjG0A==
 
 pretty-format@^27.0.2:
   version "27.5.1"
@@ -9512,10 +9512,10 @@ zod@^3.24.1:
   resolved "https://registry.npmmirror.com/zod/-/zod-3.25.76.tgz"
   integrity sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==
 
-zod@^4.6.2:
-  version "4.6.2"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-4.6.2.tgz#91b2ce79ec994eaa42675499166587d3d223c961"
-  integrity sha512-lh5RCAGFa1Cm2hjtNwLQhSs/AsqdWnTQaBER9fEwN/88pSh7KOtJavtBx/0VlkN/uFd61SwYmljLMDAsHlvzBQ==
+zod@^4.6.5:
+  version "4.6.5"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-4.6.5.tgz#e3af3edbdc260239c52f73caad05dbbffe6e82cd"
+  integrity sha512-v5l/aFXZQeai4awLbOpSoHecE9UiMrnfx75tEXLjNonXVARxQ5mOeipTjROUchszUNCqnE+hqAMujRsRHsut2Q==
 
 zwitch@^2.0.4:
   version "2.0.4"

@@ -1,4 +1,5 @@
 import { siteConfig } from '@/lib/config'
+import AnalyticsBusuanzi from '@/components/AnalyticsBusuanzi'
 import DarkModeButton from './DarkModeButton'
 import CONFIG from '../config'
 
@@ -18,6 +19,9 @@ export default function Footer(props) {
       <DarkModeButton className='mb-3' />
       <div>
         {customCopyright || `© ${copyrightDate} ${siteConfig('AUTHOR')}`}
+      </div>
+      <div className='mt-2 flex justify-center'>
+        <AnalyticsBusuanzi />
       </div>
     </footer>
   )

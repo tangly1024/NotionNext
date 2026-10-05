@@ -76,7 +76,7 @@ const THEME_COLOR_DEFAULTS = {
     BG: '#f8fafc',
     CARD: '#ffffff',
     TEXT: '#111827',
-    TEXT_SECONDARY: '#64748b',
+    TEXT_SECONDARY: '#556070',
     BORDER: '#e2e8f0',
     PRIMARY_DARK: '#60a5fa',
     BG_DARK: '#020617',

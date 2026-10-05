@@ -28,16 +28,14 @@ const Style = () => {
         background: #4e4e4e;
       }
 
-      #theme-magzine .cta a:hover {
-        color: #111827;
-      }
-
-      .dark #theme-magzine .cta a:hover {
-        color: #ffffff;
-      }
-
       ${themeConsoleStyle('magzine', CONFIG)}
       ${buildThemePrimaryCss('#theme-magzine', '--magzine-console-primary')}
+
+      #theme-magzine .cta a:hover,
+      #theme-magzine .cta a:focus-visible {
+        color: #111827 !important;
+      }
+
   `}</style>
   )
 }

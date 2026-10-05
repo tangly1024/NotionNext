@@ -42,7 +42,7 @@ export default function ArticleInfo(props) {
       </div>
 
       {post?.type && post?.type !== 'Page' && post?.pageCover && (
-        <div className='w-full aspect-video relative md:flex-shrink-0 overflow-hidden'>
+        <div className='w-full aspect-video max-h-[60vh] relative md:flex-shrink-0 overflow-hidden'>
           <LazyImage
             priority
             alt={post?.title}

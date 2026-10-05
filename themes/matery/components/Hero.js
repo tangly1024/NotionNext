@@ -3,7 +3,7 @@ import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { loadExternalResource } from '@/lib/utils'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import CONFIG from '../config'
 
 let wrapperTop = 0
@@ -14,36 +14,41 @@ let wrapperTop = 0
  * @returns 头图
  */
 const Hero = props => {
-  const [typed, changeType] = useState()
   const { siteInfo } = props
   const { locale } = useGlobal()
-  const GREETING_WORDS = siteConfig('GREETING_WORDS').split(',')
-  const GREETING_WORDS_TYPE_SPEED = Number(siteConfig('GREETING_WORDS_TYPE_SPEED')) || 200
-  const GREETING_WORDS_BACK_SPEED = Number(siteConfig('GREETING_WORDS_BACK_SPEED')) || 100
+  const GREETING_WORDS = siteConfig('GREETING_WORDS')
+  const GREETING_WORDS_TYPE_SPEED =
+    Number(siteConfig('GREETING_WORDS_TYPE_SPEED')) || 200
+  const GREETING_WORDS_BACK_SPEED =
+    Number(siteConfig('GREETING_WORDS_BACK_SPEED')) || 100
   useEffect(() => {
+    let disposed = false
+    let typedInstance
     updateHeaderHeight()
-    if (!typed && window && document.getElementById('typed')) {
-      loadExternalResource('/js/typed.min.js', 'js').then(() => {
-        if (window.Typed) {
-          changeType(
-            new window.Typed('#typed', {
-              strings: GREETING_WORDS,
+    if (document.getElementById('typed')) {
+      loadExternalResource('/js/typed.min.js', 'js')
+        .then(() => {
+          if (!disposed && window.Typed) {
+            typedInstance = new window.Typed('#typed', {
+              strings: GREETING_WORDS.split(','),
               typeSpeed: GREETING_WORDS_TYPE_SPEED,
               backSpeed: GREETING_WORDS_BACK_SPEED,
               backDelay: 400,
               showCursor: true,
               smartBackspace: true
             })
-          )
-        }
-      })
+          }
+        })
+        .catch(() => {})
     }
 
     window.addEventListener('resize', updateHeaderHeight)
     return () => {
+      disposed = true
+      typedInstance?.destroy()
       window.removeEventListener('resize', updateHeaderHeight)
     }
-  }, [])
+  }, [GREETING_WORDS, GREETING_WORDS_TYPE_SPEED, GREETING_WORDS_BACK_SPEED])
 
   function updateHeaderHeight() {
     requestAnimationFrame(() => {
@@ -56,7 +61,8 @@ const Hero = props => {
     <header
       id='header'
       style={{ zIndex: 1 }}
-      className=' w-full h-screen relative bg-black'>
+      className=' w-full h-screen relative bg-black'
+    >
       <div className='text-white absolute flex flex-col h-full items-center justify-center w-full '>
         {/* 站点标题 */}
         <div className='text-4xl md:text-5xl shadow-text'>
@@ -71,7 +77,8 @@ const Hero = props => {
           onClick={() => {
             window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
           }}
-          className='glassmorphism mt-12 border cursor-pointer w-40 text-center pt-4 pb-3 text-md text-white hover:bg-orange-600 duration-300 rounded-3xl z-40'>
+          className='glassmorphism mt-12 border cursor-pointer w-40 text-center pt-4 pb-3 text-md text-white hover:bg-orange-600 duration-300 rounded-3xl z-40'
+        >
           <i className='animate-bounce fas fa-angle-double-down' />{' '}
           <span>
             {siteConfig('MATERY_SHOW_START_READING', null, CONFIG) &&

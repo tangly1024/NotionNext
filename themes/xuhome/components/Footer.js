@@ -1,4 +1,5 @@
 import { siteConfig } from '@/lib/config'
+import AnalyticsBusuanzi from '@/components/AnalyticsBusuanzi'
 import PoweredBy from '@/components/PoweredBy'
 
 export default function Footer(props) {
@@ -8,9 +9,9 @@ export default function Footer(props) {
         <span>
           {'\u00A9'} {new Date().getFullYear()} {siteConfig('AUTHOR')}
         </span>
-        <span className='text-slate-500 dark:text-slate-400 font-semibold normal-case tracking-normal'>
+        <span className='text-slate-500 dark:text-slate-400 font-semibold normal-case tracking-normal flex items-center gap-x-2'>
           <PoweredBy />
-          <span className='mx-2 text-slate-300 dark:text-slate-600'>|</span>
+          <span className='text-slate-300 dark:text-slate-600'>|</span>
           <a
             href='https://github.com/govmoe/XuHome-Theme'
             target='_blank'
@@ -19,6 +20,8 @@ export default function Footer(props) {
           >
             XuHome Theme
           </a>
+          <span className='text-slate-300 dark:text-slate-600'>|</span>
+          <AnalyticsBusuanzi />
         </span>
       </div>
     </footer>
