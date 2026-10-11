@@ -58,6 +58,7 @@
 | 🛠 站点配置 | `notion-next-mulity-languages` | [config/notion-next-mulity-languages.md](./config/notion-next-mulity-languages.md) |
 | 🛠 站点配置 | `notion-next-site-combine` | [config/notion-next-site-combine.md](./config/notion-next-site-combine.md) |
 | 🛠 站点配置 | `notion-next-api_base_url` | [config/notion-next-api_base_url.md](./config/notion-next-api_base_url.md) |
+| 🛠 站点配置 | `notion-workspace-id` | [config/notion-workspace-id.md](./config/notion-workspace-id.md) |
 | ⭐ 主题参数 | `notion-next-themes` | [themes/overview.md](./themes/overview.md) |
 | ⭐ 主题参数 | `notion-next-theme-console` | [themes/theme-console.md](./themes/theme-console.md) |
 | ⭐ 主题参数 | `notion-next-typography` | [themes/typography.md](./themes/typography.md) |
