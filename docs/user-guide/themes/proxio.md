@@ -61,6 +61,20 @@ PROXIO_BLOG_AUTO_SHOW_COVER: true
 
 ![image.png](/legacy/f7b6781a59d0c099.png)
 
+## 文章目录
+
+文章详情页支持在正文右侧显示目录侧边栏（桌面端 ≥1280px），支持滚动联动高亮当前章节、点击条目平滑跳转；移动端以浮动按钮 + 抽屉形式提供（滚动过首屏后出现，抽屉覆盖式弹出，不挤压正文）。
+
+在 Notion Config 表或 `themes/proxio/config.js` 中开启：
+
+```js
+PROXIO_POST_CATALOG_ENABLE: true, // 默认 false，不开启时页面与原版完全一致
+PROXIO_POST_CATALOG_SHOW_LEVEL3: false, // 目录是否显示第三级标题
+PROXIO_POST_CATALOG_SCROLL_BEHAVIOR: 'instant', // 点击目录滚动行为 smooth | instant
+```
+
+桌面端与移动端共用 `PROXIO_POST_CATALOG_ENABLE` 开关，`xl` 以上由侧边栏接管、浮动入口自动隐藏。
+
 ## 原文链接
 
 https://docs.tangly1024.com/article/notion-next-proxio

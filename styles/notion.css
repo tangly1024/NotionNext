@@ -2323,3 +2323,14 @@ html.dark .notion-tabs-tab[aria-selected='true'] {
 html.dark .notion-tabs-panel {
   color: #e5e7eb;
 }
+
+/* The gallery visibility wrapper (components/NotionCollection.js) is a flex
+   item inside react-notion-x's column flex layout. Without stretching, it
+   shrinks to its content and Notion's `.notion-collection { min-width: 100% }`
+   resolves against the wrapper instead of the page, collapsing the Gallery
+   grid into a single column. */
+.notion-gallery-visibility-wrapper {
+  align-self: stretch;
+  width: 100%;
+  min-width: 100%;
+}
