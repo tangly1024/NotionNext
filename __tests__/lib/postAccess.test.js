@@ -90,7 +90,7 @@ beforeEach(() => {
     latestPosts: [],
     tagOptions: []
   })
-  fetchNotionPageBlocks.mockImplementation(async () => body())
+  fetchNotionPageBlocks.mockImplementation(() => Promise.resolve(body()))
 })
 
 it.each([undefined, 'wrong password'])(
@@ -163,9 +163,9 @@ it('keeps compatibility with precomputed uppercase SHA256 and legacy MD5', () =>
   expect(verifyPostPassword({ password: digest.toUpperCase() }, secret)).toBe(
     true
   )
-  const legacy = createHash('md5')
-    .update('protected' + secret)
-    .digest('hex')
+  // Historical fixture for slug "protected" and password "regression-password".
+  // Read compatibility must not require generating new legacy password hashes.
+  const legacy = '9a311a7d5436c9dd57f43f36fe6b6354'
   expect(
     verifyPostPassword({ slug: 'protected', password: legacy }, secret)
   ).toBe(true)
