@@ -14,9 +14,9 @@ export const PostLock = props => {
   const [showError, setShowError] = useState(false)
   const passwordInputRef = useRef(null)
 
-  const submitPassword = () => {
+  const submitPassword = async () => {
     const value = passwordInputRef.current?.value
-    if (!validPassword(value)) {
+    if (!(await validPassword(value))) {
       // 触发抖动动画：先取消再加上，让 CSS 动画重新跑
       setShowError(false)
       // 下一帧再设 true，确保动画重启

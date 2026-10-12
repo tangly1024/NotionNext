@@ -18,10 +18,10 @@ export const ArticleLock = props => {
   /**
    * 输入提交密码
    */
-  const submitPassword = () => {
+  const submitPassword = async () => {
     const p = document.getElementById('password')
     // 验证失败提示
-    if (!validPassword(p?.value)) {
+    if (!(await validPassword(p?.value))) {
       const tips = document.getElementById('tips')
       if (tips) {
         tips.innerHTML = ''

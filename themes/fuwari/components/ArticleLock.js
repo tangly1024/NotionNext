@@ -11,9 +11,9 @@ const ArticleLock = ({ validPassword }) => {
     inputRef.current?.focus()
   }, [])
 
-  const submitPassword = () => {
+  const submitPassword = async () => {
     if (typeof validPassword !== 'function') return
-    const ok = validPassword(password)
+    const ok = await validPassword(password)
     if (!ok) {
       setError(locale?.COMMON?.PASSWORD_ERROR || '密码错误')
     }

@@ -8,14 +8,13 @@ export const PostLock = ({ validPassword }) => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(false)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (password === '') {
       setError(true)
       return
     }
-    validPassword(password)
-    setError(false)
+    setError(!(await validPassword(password)))
   }
 
   return (
