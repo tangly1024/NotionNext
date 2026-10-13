@@ -1,5 +1,6 @@
 import Tabs from '@/components/Tabs'
 import { siteConfig } from '@/lib/config'
+import { hasEnabledComments } from '@/lib/utils/comments'
 import { isBrowser, isSearchEngineBot } from '@/lib/utils'
 import { stripTransientQueryParamsFromAsPath } from '@/lib/utils/stripTransientUrlParams'
 import dynamic from 'next/dynamic'
@@ -79,7 +80,7 @@ const Comment = ({ frontMatter, className }) => {
     }
   }, [router.isReady, router.asPath, router.query])
 
-  if (!frontMatter) {
+  if (!frontMatter || !hasEnabledComments(siteConfig)) {
     return null
   }
 
