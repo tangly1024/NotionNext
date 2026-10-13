@@ -67,8 +67,7 @@ Notion笔记中上方封面图的右侧，点击`Change cover`
 
 
 #### unsplash 随机api
-
-我将每个封面图设置为： [https://source.unsplash.com/random](https://source.unsplash.com/random) ； 这是**unsplash**提供的随机图片链接，每次打开都会跳到不同的图片。（您可以点击访问尝试一下）
+我将每个封面图设置为： [https://source.unsplash.com/random](https://source.unsplash.com/random) ； 这是**unsplash**提供的随机图片链接，每次打开都会跳到不同的图片。（接口已于 2024-06-11 下线，如需使用请移步 [Unsplash API](https://unsplash.com/developers)）
 
 ::: tip 提示
 **unsplash** 可以任意指定图片的风格类型、作者等，更多帮助可以参考此文：[https://zhuanlan.zhihu.com/p/139132649](https://zhuanlan.zhihu.com/p/139132649)
