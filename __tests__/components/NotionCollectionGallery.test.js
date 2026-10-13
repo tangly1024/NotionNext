@@ -1,6 +1,9 @@
 /** @jest-environment node */
 
 import NotionCollection from '@/components/NotionCollection'
+import {
+  GALLERY_VISIBILITY_WRAPPER_CLASS
+} from '@/components/NotionCollection'
 import { galleryVisibilityClassName } from '@/lib/notion/galleryVisibilityClassName'
 import { execFileSync } from 'child_process'
 import React from 'react'
@@ -123,7 +126,7 @@ describe('Notion Gallery visibility settings', () => {
     )
 
     expect(markup).toContain(
-      'class="notion-gallery-hide-page-icons notion-gallery-hide-titles"'
+      `class="${GALLERY_VISIBILITY_WRAPPER_CLASS} notion-gallery-hide-page-icons notion-gallery-hide-titles"`
     )
   })
 
@@ -139,7 +142,7 @@ describe('Notion Gallery visibility settings', () => {
     )
 
     expect(markup).toContain(
-      'class="notion-gallery-hide-page-icons notion-gallery-hide-titles"'
+      `class="${GALLERY_VISIBILITY_WRAPPER_CLASS} notion-gallery-hide-page-icons notion-gallery-hide-titles"`
     )
   })
 
@@ -154,7 +157,9 @@ describe('Notion Gallery visibility settings', () => {
       })
     )
 
-    expect(markup).toContain('class="notion-gallery-hide-page-icons"')
+    expect(markup).toContain(
+      `class="${GALLERY_VISIBILITY_WRAPPER_CLASS} notion-gallery-hide-page-icons"`
+    )
     expect(markup).not.toContain('notion-gallery-hide-titles')
   })
 
@@ -169,7 +174,9 @@ describe('Notion Gallery visibility settings', () => {
       })
     )
 
-    expect(markup).toContain('class="notion-gallery-hide-page-icons"')
+    expect(markup).toContain(
+      `class="${GALLERY_VISIBILITY_WRAPPER_CLASS} notion-gallery-hide-page-icons"`
+    )
   })
 
   it('hides omitted page icons and an explicitly hidden title', () => {

@@ -1,4 +1,5 @@
 import { siteConfig } from '@/lib/config'
+import AnalyticsBusuanzi from '@/components/AnalyticsBusuanzi'
 
 /**
  * Footer Component - Dark Industrial / Endfield Style
@@ -63,6 +64,11 @@ export const Footer = ({ title }) => {
             © {siteConfig('SINCE') && siteConfig('SINCE') !== y ? `${siteConfig('SINCE')}-${y}` : y} {siteConfig('AUTHOR')}
             <span className="hidden sm:inline">. All Rights Reserved.</span>
           </div>
+        </div>
+
+        {/* Row 4: Visitor stats */}
+        <div className="flex justify-center items-center text-xs font-mono text-gray-500 md:-ml-10">
+          <AnalyticsBusuanzi />
         </div>
       </div>
       

@@ -1,6 +1,9 @@
 import { galleryVisibilityClassName } from '@/lib/notion/galleryVisibilityClassName'
 import { Collection } from 'react-notion-x/build/third-party/collection'
 
+export const GALLERY_VISIBILITY_WRAPPER_CLASS =
+  'notion-gallery-visibility-wrapper'
+
 export default function NotionCollection(props) {
   const collectionView = props.block?.view_ids
     ?.map(viewId => {
@@ -13,7 +16,7 @@ export default function NotionCollection(props) {
   if (!className) return <Collection {...props} />
 
   return (
-    <div className={className}>
+    <div className={`${GALLERY_VISIBILITY_WRAPPER_CLASS} ${className}`}>
       <Collection {...props} />
     </div>
   )

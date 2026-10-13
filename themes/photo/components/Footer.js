@@ -1,5 +1,6 @@
 import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import DarkModeButton from '@/components/DarkModeButton'
+import AnalyticsBusuanzi from '@/components/AnalyticsBusuanzi'
 import { siteConfig } from '@/lib/config'
 /**
  * 页脚
@@ -32,6 +33,9 @@ export const Footer = props => {
               {siteConfig('BEI_AN')}
             </a>
           )}
+          <span className='ml-4'>
+            <AnalyticsBusuanzi />
+          </span>
           <BeiAnGongAn />
           <span className='dark:text-gray-200 no-underline ml-4'>
             Powered by

@@ -31,6 +31,8 @@
 
 1. [Clarity](/user-guide/analytics/clarity)统计：最近我才发现的、微软推出的统计工具，很好用，而且在国内访问体验很好。
 
+1. [不蒜子 / Busuanzi](/user-guide/analytics/busuanzi)：轻量的 PV/UV 计数，默认开启；2024 年起官方服务不稳定，已切换到社区维护的 Vercount，详见专页。
+
 这些统计方案在功能和报告类型上略有不同，你可以根据自己的需求选择最适合你的方案。无论你选择哪种方案，站点统计功能都将帮助你更好地了解和优化你的网站。
 
 
@@ -38,12 +40,18 @@
 
 ```JavaScript
 // ----&gt; 站点统计
-ANALYTICS_BUSUANZI_ENABLE: true, // 展示网站阅读量、访问数 see http://busuanzi.ibruce.info/
+ANALYTICS_BUSUANZI_ENABLE: true, // 展示网站阅读量、访问数；2024 年起官方服务不稳定，默认改走社区兼容实现 Vercount，详见 /user-guide/analytics/busuanzi
 ANALYTICS_BAIDU_ID: process.env.NEXT_PUBLIC_ANALYTICS_BAIDU_ID || '', // e.g 只需要填写百度统计的id，[baidu_id] -&gt; https://hm.baidu.com/hm.js?[baidu_id]
 ANALYTICS_CNZZ_ID: process.env.NEXT_PUBLIC_ANALYTICS_CNZZ_ID || '', // 只需要填写站长统计的id, [cnzz_id] -&gt; https://s9.cnzz.com/z_stat.php?id=[cnzz_id]&web_id=[cnzz_id]
 ANALYTICS_GOOGLE_ID: process.env.NEXT_PUBLIC_ANALYTICS_GOOGLE_ID || '', // 谷歌Analytics的id e.g: G-XXXXXXXXXX
 ```
 
+::: tip 不蒜子站点的处理建议
+如果你之前一直用不蒜子、现在发现 PV/UV 数字为空，请直接阅读 [不蒜子统计专页](/user-guide/analytics/busuanzi)：
+- 默认走 Vercount，升级后会自动从 `busuanzi.ibruce.info` 同步历史 PV/UV，无需手动操作
+- 自托管 Vercount / 切回原版不蒜子 / 关闭开关都有明确步骤
+- 新增 `NEXT_PUBLIC_BUSUANZI_SCRIPT_URL` 用于自定义脚本地址
+:::
 
 ### 开启 谷歌统计（GA）
 
