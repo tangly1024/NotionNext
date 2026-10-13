@@ -66,7 +66,7 @@
     "translate:diagnose": "node scripts/translate/index.js --diagnose"
   },
   "dependencies": {
-    "@clerk/localizations": "^3.37.8",
+    "@clerk/localizations": "^3.37.9",
     "@clerk/nextjs": "^5.7.6",
     "@headlessui/react": "^1.7.19",
     "@next/bundle-analyzer": "^15.5.27",

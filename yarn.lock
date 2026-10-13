@@ -692,12 +692,12 @@
     "@clerk/types" "4.26.0"
     tslib "2.4.1"
 
-"@clerk/localizations@^3.37.8":
-  version "3.37.8"
-  resolved "https://registry.yarnpkg.com/@clerk/localizations/-/localizations-3.37.8.tgz#fd4f62c795ea01553e50513560071447a053c7a2"
-  integrity sha512-ib/8WciLkflXsg72IM9BjMZgENUv3nfXx1BrygKkpDqFPb1Dshron1+u+sG7dD+quQpZOLn6iie2Vno5YJy3zQ==
+"@clerk/localizations@^3.37.9":
+  version "3.37.9"
+  resolved "https://registry.yarnpkg.com/@clerk/localizations/-/localizations-3.37.9.tgz#e56e4738ab714823b51334a2bcc1d15df08aed70"
+  integrity sha512-f5cZZy9CdmBl4/sY34YJNFqktZnWlal9qDBlEzl92nT5R6M21Ru/5R6vvoOg0G6+Zd2n07sQ3oBZANvBfMEy8g==
   dependencies:
-    "@clerk/types" "^4.101.26"
+    "@clerk/types" "^4.101.27"
 
 "@clerk/nextjs@^5.7.6":
   version "5.7.6"
@@ -723,10 +723,10 @@
     std-env "^3.7.0"
     swr "^2.2.0"
 
-"@clerk/shared@^3.47.8":
-  version "3.47.8"
-  resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-3.47.8.tgz#b9177f28af96324f71893b8baed4e0fb3efaba83"
-  integrity sha512-cPURU1it/Eal4uXO9SOcHzw9sfE6Opi21W8EJUg+Ri80Q6JKtK8qBmyOpIyqgf09EanexhTzS4xrmYlvn2p7Iw==
+"@clerk/shared@^3.48.0":
+  version "3.48.0"
+  resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-3.48.0.tgz#35380731d05dc8a0539b9eafadb2df85c5f9157f"
+  integrity sha512-4VBHItiLUZJGptWNwLazcOvz4yAFBzrjuJaf1yF35KGZWSNg3FrDCNsn8PZdPs5l4kJjx6aIGSmoRZmbOruuSg==
   dependencies:
     csstype "3.1.3"
     dequal "2.0.3"
@@ -742,12 +742,12 @@
   dependencies:
     csstype "3.1.1"
 
-"@clerk/types@^4.101.26":
-  version "4.101.26"
-  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-4.101.26.tgz#4a22cd21c907bcaaebdf8c7b470dc52336236e56"
-  integrity sha512-tUeiElAZoXu9Dxom9t6IjkEfsfP7aWSVf5x5mCoHnSr2w+wV4EtEwoLl9vexT5LL0di4qidROSfcrOnorzczIQ==
+"@clerk/types@^4.101.27":
+  version "4.101.27"
+  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-4.101.27.tgz#2736db2f337f607b3ce0dcdaadac4dbbb5521b19"
+  integrity sha512-nTZ9XCvjY6X13itkakAw3RRB2hgATAGWR57Mjk6+Ov0cyhs5qFN7oYQcs6NLd40wP8Zuo7dI9QqaprlB+LHYUA==
   dependencies:
-    "@clerk/shared" "^3.47.8"
+    "@clerk/shared" "^3.48.0"
 
 "@corex/deepmerge@^2.6.148":
   version "2.6.148"
