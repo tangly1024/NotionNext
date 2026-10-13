@@ -71,7 +71,7 @@
     "@headlessui/react": "^1.7.19",
     "@next/bundle-analyzer": "^15.5.27",
     "@notionhq/client": "^2.2.15",
-    "@supabase/supabase-js": "^2.116.0",
+    "@supabase/supabase-js": "^2.117.3",
     "@tabler/icons-react": "^3.36.1",
     "@vercel/analytics": "^1.6.1",
     "@vercel/functions": "^3.9.8",
