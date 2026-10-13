@@ -56,3 +56,15 @@ it('uses the internal locale route for on-demand ISR', async () => {
   ])
   expect(results.every(value => value.revalidated)).toBe(true)
 })
+it('stops scheduling new paths after the request budget expires', async () => {
+  let now = 0
+  jest.spyOn(Date, 'now').mockImplementation(() => now)
+  const res = {
+    revalidate: jest.fn(async () => {
+      now = 100
+    })
+  }
+  const results = await revalidatePaths(res, ['/one', '/two', '/three'], 1, 50)
+  expect(res.revalidate).toHaveBeenCalledTimes(1)
+  expect(results).toEqual([{ path: '/one', revalidated: true }])
+})
