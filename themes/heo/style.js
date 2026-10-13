@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import CONFIG from './config'
+import { siteConfig } from '@/lib/config'
 import { themeConsoleStyle } from '@/lib/themeConsoleStyle'
 /**
  * 此处样式只对当前主题生效
@@ -7,6 +8,13 @@ import { themeConsoleStyle } from '@/lib/themeConsoleStyle'
  * @returns
  */
 const Style = () => {
+  const bgColor = siteConfig('HEO_COLOR_BG', CONFIG.HEO_COLOR_BG, CONFIG)
+  const bgDarkColor = siteConfig(
+    'HEO_COLOR_BG_DARK',
+    CONFIG.HEO_COLOR_BG_DARK,
+    CONFIG
+  )
+
   return (
     <style jsx global>{`
       #theme-heo {
@@ -14,8 +22,8 @@ const Style = () => {
         --heo-color-primary-hover: #4f46e5;
         --heo-color-primary-text: #ffffff;
         --heo-color-accent: #ca8a04;
-        --heo-color-bg: #f7f9fe;
-        --heo-color-bg-dark: #18171d;
+        --heo-color-bg: ${bgColor};
+        --heo-color-bg-dark: ${bgDarkColor};
         --heo-color-card: #ffffff;
         --heo-color-card-dark: #1e1e1e;
         --heo-color-card-muted: #f1f3f8;
@@ -111,7 +119,11 @@ const Style = () => {
       }
 
       body {
-        background-color: #f7f9fe;
+        background-color: ${bgColor};
+      }
+
+      html.dark body {
+        background-color: ${bgDarkColor};
       }
 
       // 公告栏中的字体固定白色
@@ -171,4 +183,3 @@ const Style = () => {
 }
 
 export { Style }
-
