@@ -77,7 +77,8 @@ describe('staticPaths build helpers', () => {
     fetchGlobalAllData.mockResolvedValue({
       allPages: [
         { id: '1', slug: 'about', type: 'Page', status: 'Published' },
-        { id: '2', slug: 'post/hello', type: 'Post', status: 'Published' }
+        { id: '2', slug: 'post/hello', type: 'Post', status: 'Published' },
+        { id: '3', slug: 'locked', type: 'Post', status: 'Published', password: 'protected' }
       ]
     })
 
@@ -94,7 +95,7 @@ describe('staticPaths build helpers', () => {
         { id: '2', slug: 'post/hello', type: 'Post', status: 'Published' }
       ])
       expect(result).toEqual({
-        paths: [{ params: { prefix: 'about' } }],
+        paths: [{ params: { prefix: 'about' } }, { params: { prefix: 'locked' } }],
         fallback: false
       })
     })

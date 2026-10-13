@@ -25,7 +25,7 @@ function response() {
 const request = () => ({
   method: 'POST',
   headers: { host: 'example.com', origin: 'https://example.com' },
-  socket: { remoteAddress: '127.0.0.1' },
+  socket: { remoteAddress: '127.0.0.1', encrypted: true },
   body: { postId: id, password: 'secret', locale: 'zh-CN' }
 })
 

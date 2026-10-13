@@ -4,6 +4,8 @@ import { resolvePostProps, fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { getOrSetDataWithCache } from '@/lib/cache/cache_manager'
 import { fetchNotionPageBlocks } from '@/lib/db/notion/getPostBlocks'
 import { fetchPageFromNotion } from '@/lib/db/notion/getNotionPost'
+import { processPostData } from '@/lib/utils/post'
+import { adapterNotionBlockMap } from '@/lib/utils/notion.util'
 import {
   redactProtectedBlocks,
   verifyPostPassword
@@ -31,7 +33,11 @@ jest.mock('@/lib/db/notion/getPostBlocks', () => ({
   formatNotionBlock: block => block
 }))
 jest.mock('@/lib/utils/notion.util', () => ({
-  adapterNotionBlockMap: raw => raw
+  adapterNotionBlockMap: jest.fn(raw => raw)
+}))
+jest.mock('@/lib/utils/post', () => ({
+  ...jest.requireActual('@/lib/utils/post'),
+  processPostData: jest.fn((...args) => jest.requireActual('@/lib/utils/post').processPostData(...args))
 }))
 jest.mock('@/lib/plugins/algolia', () => ({ uploadDataToAlgolia: jest.fn() }))
 jest.mock('@/lib/utils/originalityProofManifest', () => ({
@@ -148,15 +154,71 @@ it('propagates an upstream failure so ISR can keep its successful version', asyn
   ).rejects.toThrow('Unable to load article body')
 })
 
-it('rejects static export of protected content rather than exposing it', async () => {
+it.each([undefined, secret])('exports only a safe lock page even with a valid password (%s)', async password => {
   process.env.EXPORT = 'true'
   try {
-    await expect(resolvePostProps(options)).rejects.toThrow(
-      'require a Next.js server'
-    )
+    const props = await resolvePostProps({ ...options, password })
+    expect(props.postUnlockUnavailable).toBe(true)
+    expect(props.post.password).toBe('protected')
+    expect(props.post.blockMap).toBeUndefined()
+    expect(JSON.stringify(props)).not.toContain(marker)
+    expect(JSON.stringify(props)).not.toContain(digest)
+    expect(fetchNotionPageBlocks).not.toHaveBeenCalled()
   } finally {
     delete process.env.EXPORT
   }
+})
+
+it('exports public content while removing a nested protected article', async () => {
+  process.env.EXPORT = 'true'
+  const publicId = 'cccccccc-cccc-cccc-cccc-cccccccccccc'
+  const publicTextId = 'dddddddd-dddd-dddd-dddd-dddddddddddd'
+  const cached = await getOrSetDataWithCache()
+  cached.allPages.push({ id: publicId, title: 'Public article', slug: 'public', type: 'Post', status: 'Published', tags: [] })
+  const blocks = body()
+  blocks.block[publicId] = { value: { id: publicId, type: 'page', content: [id, publicTextId], properties: { title: [['Public article']] } } }
+  blocks.block[id].value.parent_id = publicId
+  blocks.block[publicTextId] = { value: { id: publicTextId, type: 'text', parent_id: publicId, properties: { title: [['PUBLIC_EXPORT_BODY']] } } }
+  fetchNotionPageBlocks.mockResolvedValueOnce(blocks)
+  try {
+    const props = await resolvePostProps({ prefix: 'public' })
+    expect(JSON.stringify(props.post)).toContain('PUBLIC_EXPORT_BODY')
+    expect(JSON.stringify(props)).not.toContain(marker)
+    expect(JSON.stringify(props)).not.toContain(digest)
+    expect(props.postUnlockUnavailable).toBeUndefined()
+  } finally {
+    delete process.env.EXPORT
+  }
+})
+
+it.each(['fetch', 'adapt', 'process'])(
+  'renders a safe public summary after a %s failure',
+  async failure => {
+    const cached = await getOrSetDataWithCache()
+    cached.allPages[0].password = ''
+    if (failure === 'fetch') fetchNotionPageBlocks.mockRejectedValueOnce(new Error('timeout'))
+    if (failure === 'adapt') adapterNotionBlockMap.mockImplementationOnce(() => { throw new Error('bad blocks') })
+    if (failure === 'process') processPostData.mockImplementationOnce(async props => {
+      props.post.aiSummary = marker
+      props.prev = { password: digest, blockMap: body() }
+      throw new Error('summary failure')
+    })
+    const props = await resolvePostProps(options)
+    expect(props.post.title).toBe('Title')
+    expect(props.post.blockMap).toBeUndefined()
+    expect(JSON.stringify(props)).not.toContain(marker)
+    expect(JSON.stringify(props)).not.toContain(digest)
+  }
+)
+
+it('keeps protected processing failures closed', async () => {
+  processPostData.mockRejectedValueOnce(new Error('processing failed'))
+  await expect(resolvePostProps({ ...options, password: secret })).rejects.toThrow('processing failed')
+})
+
+it('turns failed UUID fetches into not-found without exposing a partial body', async () => {
+  fetchPageFromNotion.mockRejectedValueOnce(new Error('Notion unavailable'))
+  expect((await resolvePostProps({ prefix: textId })).post).toBeNull()
 })
 
 it('keeps compatibility with precomputed uppercase SHA256 and legacy MD5', () => {

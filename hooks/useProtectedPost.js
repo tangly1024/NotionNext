@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import enUS from '@/lib/lang/en-US'
 
-export default function useProtectedPost(initialPost, router) {
+export default function useProtectedPost(initialPost, router, locale = enUS, unlockUnavailable = false) {
+  const rateLimitMessage = locale.COMMON.POST_UNLOCK_RATE_LIMIT || enUS.COMMON.POST_UNLOCK_RATE_LIMIT
+  const unavailableMessage = locale.COMMON.POST_UNLOCK_UNAVAILABLE || enUS.COMMON.POST_UNLOCK_UNAVAILABLE
+  const networkMessage = locale.COMMON.POST_UNLOCK_NETWORK_ERROR || enUS.COMMON.POST_UNLOCK_NETWORK_ERROR
   const [unlocked, setUnlocked] = useState(null)
   const [unlocking, setUnlocking] = useState(false)
   const [unlockError, setUnlockError] = useState('')
@@ -12,7 +16,7 @@ export default function useProtectedPost(initialPost, router) {
 
   const validPassword = useCallback(
     async password => {
-      if (!initialPost?.id || typeof password !== 'string' || !password)
+      if (unlockUnavailable || !initialPost?.id || typeof password !== 'string' || !password)
         return false
       request.current?.abort()
       const controller = new AbortController()
@@ -44,8 +48,8 @@ export default function useProtectedPost(initialPost, router) {
         if (!response.ok)
           throw new Error(
             response.status === 429
-              ? '尝试次数过多，请一分钟后重试。'
-              : '文章暂时无法加载，请稍后重试。'
+              ? 'RATE_LIMITED'
+              : 'UNAVAILABLE'
           )
         const { post, prev, next, recommendPosts } = await response.json()
         if (
@@ -54,7 +58,7 @@ export default function useProtectedPost(initialPost, router) {
         )
           return false
         if (post?.id !== initialPost.id || !post.blockMap?.block)
-          throw new Error('文章暂时无法加载，请稍后重试。')
+          throw new Error('UNAVAILABLE')
         setUnlocked({ identity, post, prev, next, recommendPosts })
         return true
       } catch (error) {
@@ -64,9 +68,11 @@ export default function useProtectedPost(initialPost, router) {
           identityRef.current === identity
         ) {
           setUnlockError(
-            error.message === 'Failed to fetch'
-              ? '网络连接失败，请稍后重试。'
-              : error.message
+            error.message === 'RATE_LIMITED'
+              ? rateLimitMessage
+              : error instanceof TypeError
+                ? networkMessage
+                : unavailableMessage
           )
         }
         return false
@@ -78,7 +84,7 @@ export default function useProtectedPost(initialPost, router) {
           setUnlocking(false)
       }
     },
-    [identity, initialPost?.id, router.locale, router.basePath]
+    [identity, initialPost?.id, router.locale, router.basePath, unlockUnavailable, rateLimitMessage, unavailableMessage, networkMessage]
   )
 
   useEffect(() => {

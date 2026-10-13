@@ -5,6 +5,7 @@ import { siteConfig } from '@/lib/config'
 import { resolvePostProps } from '@/lib/db/SiteDataApi'
 import { useGlobal } from '@/lib/global'
 import useProtectedPost from '@/hooks/useProtectedPost'
+import ArticleLock from '@/components/ArticleLock'
 import { checkSlugHasNoSlash } from '@/lib/utils/post'
 import { DynamicLayout } from '@/themes/theme'
 import { useRouter } from 'next/router'
@@ -23,7 +24,7 @@ const isStaticExport = process.env.EXPORT === 'true'
 const Slug = props => {
   const router = useRouter()
   const { locale } = useGlobal()
-  const access = useProtectedPost(props.post, router)
+  const access = useProtectedPost(props.post, router, locale, props.postUnlockUnavailable)
   const { showNotification, Notification } = useNotification()
   const validPassword = async password => {
     const valid = await access.validPassword(password)
@@ -34,7 +35,9 @@ const Slug = props => {
   return (
     <>
       {access.unlockError && <p role='alert' className='p-4 text-center text-red-600'>{access.unlockError}</p>}
-      <DynamicLayout theme={theme} layoutName='LayoutSlug' {...props} {...access} validPassword={validPassword} />
+      {props.postUnlockUnavailable
+        ? <ArticleLock unavailable post={props.post} />
+        : <DynamicLayout theme={theme} layoutName='LayoutSlug' {...props} {...access} validPassword={validPassword} />}
       {props.post?.password && !access.lock && <Notification />}
       <TechGrow lock={access.lock} />
     </>
