@@ -58,9 +58,13 @@ export default function AlgoliaSearchModal({ cRef }) {
   }, [])
   const inputRef = useRef(null)
   const router = useRouter()
+  const appId = siteConfig('ALGOLIA_APP_ID')
+  const searchKey = siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY')
+  const indexName = siteConfig('ALGOLIA_INDEX')
 
   function openSearch() {
-    if (!siteConfig('ALGOLIA_APP_ID') || !siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY') || !siteConfig('ALGOLIA_INDEX')) {
+    if (!appId) return
+    if (!searchKey || !indexName) {
       void router.push('/search')
       return
     }
@@ -70,10 +74,14 @@ export default function AlgoliaSearchModal({ cRef }) {
   /**
    * 快捷键设置
    */
-  useHotkeys('ctrl+k', e => {
-    e.preventDefault()
-    openSearch()
-  })
+  useHotkeys(
+    'ctrl+k',
+    e => {
+      e.preventDefault()
+      openSearch()
+    },
+    { enabled: Boolean(appId) }
+  )
   // 修改快捷键的使用逻辑
   useHotkeys(
     'down',
@@ -105,7 +113,7 @@ export default function AlgoliaSearchModal({ cRef }) {
     e => {
       if (isInputFocused) {
         e.preventDefault()
-        setIsModalOpen(false)
+        closeModal()
       }
     },
     { enableOnFormTags: true }
@@ -169,9 +177,6 @@ export default function AlgoliaSearchModal({ cRef }) {
     }
   })
 
-  const appId = siteConfig('ALGOLIA_APP_ID')
-  const searchKey = siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY')
-  const indexName = siteConfig('ALGOLIA_INDEX')
   const index = useMemo(() => appId && searchKey && indexName
     ? algoliasearch(appId, searchKey).initIndex(indexName) : null,
   [appId, searchKey, indexName])
