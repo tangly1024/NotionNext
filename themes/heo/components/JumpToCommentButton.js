@@ -1,3 +1,4 @@
+import { hasEnabledComments } from '@/lib/utils/comments'
 import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
 
@@ -6,8 +7,8 @@ import { siteConfig } from '@/lib/config'
  * @returns {JSX.Element}
  * @constructor
  */
-const JumpToCommentButton = () => {
-  if (!siteConfig('HEO_WIDGET_TO_COMMENT', null, CONFIG)) {
+const JumpToCommentButton = ({ post }) => {
+  if (post?.comment === 'Hide' || !hasEnabledComments(siteConfig) || !siteConfig('HEO_WIDGET_TO_COMMENT', null, CONFIG)) {
     return <></>
   }
 
