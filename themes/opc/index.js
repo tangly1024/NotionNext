@@ -1,4 +1,5 @@
 import Comment from '@/components/Comment'
+import ArticleLock from '@/components/ArticleLock'
 import LazyImage from '@/components/LazyImage'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
@@ -1158,7 +1159,9 @@ const LayoutSlug = props => {
         {meta && <span className='opc-muted text-xs'>{meta}</span>}
       </div>
       <article id='article-wrapper'>
-        {post ? (
+        {props.lock ? (
+          <ArticleLock {...props} />
+        ) : post ? (
           <>
             <NotionPage {...props} />
             <ShareBar post={post} />

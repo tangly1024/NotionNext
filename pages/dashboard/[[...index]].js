@@ -19,11 +19,12 @@ const Dashboard = props => {
   return <DynamicLayout theme={theme} layoutName='LayoutDashboard' {...props} />
 }
 
-export async function getStaticProps({ locale }) {
+export async function getStaticProps({ locale, revalidateReason }) {
   const prefix = 'dashboard'
   const props = await resolvePostProps({
     prefix,
     locale,
+    revalidateReason,
   })
 
   return {
