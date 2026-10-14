@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 export default function NotionOAuthResult() {
@@ -21,12 +20,12 @@ export default function NotionOAuthResult() {
             ? '你可以关闭此页面或返回首页。'
             : '授权可能已过期，请重新开始。'}
         </p>
-        <Link
+        <a
           href={success ? '/' : '/api/auth/notion'}
           className='inline-block underline'
         >
           {success ? '返回首页' : '重新授权'}
-        </Link>
+        </a>
       </div>
     </main>
   )

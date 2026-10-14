@@ -86,7 +86,7 @@ const LayoutBase = props => {
           />
         </div>
       )}
-      {post && <ButtonJumpToComment />}
+      {post && <ButtonJumpToComment post={post} />}
       {showRandomButton && <ButtonRandomPostMini {...props} />}
     </>
   )

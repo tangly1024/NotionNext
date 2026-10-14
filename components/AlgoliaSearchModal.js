@@ -2,11 +2,12 @@ import replaceSearchResult from '@/components/Mark'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import algoliasearch from 'algoliasearch'
-import throttle from 'lodash/throttle'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import {
   Fragment,
+  useCallback,
+  useMemo,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -46,16 +47,41 @@ export default function AlgoliaSearchModal({ cRef }) {
   const [isLoading, setIsLoading] = useState(false)
   const [isInputFocused, setIsInputFocused] = useState(false)
 
+  const [searchError, setSearchError] = useState('')
+  const searchTimer = useRef(null)
+  const highlightTimer = useRef(null)
+  const requestVersion = useRef(0)
+  const invalidateSearch = useCallback(() => {
+    requestVersion.current++
+    clearTimeout(searchTimer.current)
+    clearTimeout(highlightTimer.current)
+  }, [])
   const inputRef = useRef(null)
   const router = useRouter()
+  const appId = siteConfig('ALGOLIA_APP_ID')
+  const searchKey = siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY')
+  const indexName = siteConfig('ALGOLIA_INDEX')
+
+  function openSearch() {
+    if (!appId) return
+    if (!searchKey || !indexName) {
+      void router.push('/search')
+      return
+    }
+    setIsModalOpen(true)
+  }
 
   /**
    * 快捷键设置
    */
-  useHotkeys('ctrl+k', e => {
-    e.preventDefault()
-    setIsModalOpen(true)
-  })
+  useHotkeys(
+    'ctrl+k',
+    e => {
+      e.preventDefault()
+      openSearch()
+    },
+    { enabled: Boolean(appId) }
+  )
   // 修改快捷键的使用逻辑
   useHotkeys(
     'down',
@@ -87,7 +113,7 @@ export default function AlgoliaSearchModal({ cRef }) {
     e => {
       if (isInputFocused) {
         e.preventDefault()
-        setIsModalOpen(false)
+        closeModal()
       }
     },
     { enableOnFormTags: true }
@@ -96,20 +122,24 @@ export default function AlgoliaSearchModal({ cRef }) {
     'enter',
     e => {
       if (isInputFocused && searchResults.length > 0) {
-        onJumpSearchResult(index)
+        onJumpSearchResult()
       }
     },
     { enableOnFormTags: true }
   )
   // 跳转Search结果
-  const onJumpSearchResult = () => {
-    if (searchResults.length > 0) {
-      const searchResult = searchResults[activeIndex]
+  const onJumpSearchResult = (targetIndex) => {
+    const i = targetIndex !== undefined ? targetIndex : activeIndex
+    if (searchResults.length > 0 && searchResults[i]) {
+      const searchResult = searchResults[i]
       window.location.href = `${siteConfig('SUB_PATH', '')}/${searchResult.slug || searchResult.objectID}`
     }
   }
 
-  const resetSearch = () => {
+  const resetSearch = useCallback(() => {
+    invalidateSearch()
+    setIsLoading(false)
+    setSearchError('')
     setActiveIndex(0)
     setKeyword('')
     setSearchResults([])
@@ -117,129 +147,99 @@ export default function AlgoliaSearchModal({ cRef }) {
     setTotalPage(0)
     setTotalHit(0)
     if (inputRef.current) inputRef.current.value = ''
-  }
+  }, [invalidateSearch])
 
   /**
    * 页面路径变化后，自动关闭此modal
    */
   useEffect(() => {
     setIsModalOpen(false)
-  }, [router])
+  }, [router.asPath])
 
   /**
    * 自动聚焦搜索框
    */
   useEffect(() => {
     if (isModalOpen) {
-      setTimeout(() => {
-        inputRef.current?.focus()
-      }, 100)
+      const timer = setTimeout(() => inputRef.current?.focus(), 100)
+      return () => clearTimeout(timer)
     } else {
       resetSearch()
     }
-  }, [isModalOpen])
+  }, [isModalOpen, resetSearch])
 
   /**
    * 对外暴露方法
    **/
   useImperativeHandle(cRef, () => {
     return {
-      openSearch: () => {
-        setIsModalOpen(true)
-      }
+      openSearch
     }
   })
 
-  const client = algoliasearch(
-    siteConfig('ALGOLIA_APP_ID'),
-    siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY')
-  )
-  const index = client.initIndex(siteConfig('ALGOLIA_INDEX'))
+  const index = useMemo(() => appId && searchKey && indexName
+    ? algoliasearch(appId, searchKey).initIndex(indexName) : null,
+  [appId, searchKey, indexName])
 
-  /**
-   * 搜索
-   * @param {*} query
-   */
-  const handleSearch = async (query, page) => {
+  useEffect(() => invalidateSearch, [invalidateSearch, index])
+
+  const handleSearch = async (query, page = 0) => {
+    invalidateSearch()
+    const version = requestVersion.current
     setKeyword(query)
     setPage(page)
     setSearchResults([])
+    setSearchError('')
     setUseTime(0)
     setTotalPage(0)
     setTotalHit(0)
     setActiveIndex(0)
-    if (!query || query === '') {
-      return
-    }
-    setIsLoading(true)
+    setIsLoading(Boolean(query && index))
+    if (!query || !index) return
     try {
-      const res = await index.search(query, { page, hitsPerPage: 10 })
-      const { hits, nbHits, nbPages, processingTimeMS } = res
+      const { hits, nbHits, nbPages, processingTimeMS } = await index.search(query, { page, hitsPerPage: 10 })
+      if (version !== requestVersion.current) return
       setUseTime(processingTimeMS)
       setTotalPage(nbPages)
       setTotalHit(nbHits)
       setSearchResults(hits)
-      setIsLoading(false)
-      const doms = document
-        .getElementById('search-wrapper')
-        .getElementsByClassName('replace')
-
-      setTimeout(() => {
-        replaceSearchResult({
-          doms,
-          search: query,
-          target: {
-            element: 'span',
-            className: 'font-bold border-b border-dashed'
-          }
-        })
-      }, 200) // 延时高亮
-    } catch (error) {
-      console.error('Algolia search error:', error)
+      highlightTimer.current = setTimeout(() => {
+        if (version !== requestVersion.current) return
+        const doms = document.getElementById('search-wrapper')?.getElementsByClassName('replace')
+        if (doms) replaceSearchResult({ doms, search: query, target: { element: 'span', className: 'font-bold border-b border-dashed' } })
+      }, 0)
+    } catch {
+      if (version === requestVersion.current) setSearchError('搜索暂时不可用，请重试。')
+    } finally {
+      if (version === requestVersion.current) setIsLoading(false)
     }
   }
 
-  // 定义节流函数，确保在用户停止输入一段时间后才会调用处理搜索的方法
-  const throttledHandleInputChange = useRef(
-    throttle((query, page = 0) => {
-      handleSearch(query, page)
-    }, 1000)
-  )
-
-  // 用于存储搜索延迟的计时器
-  const searchTimer = useRef(null)
-
-  // 修改input的onChange事件处理函数
-  const handleInputChange = e => {
-    const query = e.target.value
-
-    // 如果已经有计时器在等待搜索，先清除之前的计时器
-    if (searchTimer.current) {
-      clearTimeout(searchTimer.current)
+  const handleInputChange = event => {
+    const query = event.target.value
+    invalidateSearch() // Invalidate immediately, including the debounce window.
+    setKeyword(query)
+    setSearchResults([])
+    setSearchError('')
+    setIsLoading(Boolean(query))
+    if (!query) {
+      resetSearch()
+      return
     }
-
-    // 设置新的计时器，在用户停止输入一段时间后触发搜索
-    searchTimer.current = setTimeout(() => {
-      throttledHandleInputChange.current(query)
-    }, 800)
+    searchTimer.current = setTimeout(() => { void handleSearch(query) }, 600)
   }
 
-  /**
-   * 切换页码
-   * @param {*} page
-   */
-  const switchPage = page => {
-    throttledHandleInputChange.current(keyword, page)
-  }
+  const switchPage = page => handleSearch(keyword, page)
 
   /**
    * 关闭弹窗
    */
   const closeModal = () => {
+    invalidateSearch()
     setIsModalOpen(false)
   }
 
-  if (!siteConfig('ALGOLIA_APP_ID')) {
+  if (!index) {
     return <></>
   }
   return (
@@ -258,9 +258,9 @@ export default function AlgoliaSearchModal({ cRef }) {
             搜索
           </div>
           <div>
-            <i
+            <button type='button' aria-label='关闭搜索'
               className='text-gray-600 fa-solid fa-xmark p-1 cursor-pointer hover:text-blue-600'
-              onClick={closeModal}></i>
+              onClick={closeModal} />
           </div>
         </div>
 
@@ -278,7 +278,9 @@ export default function AlgoliaSearchModal({ cRef }) {
         <div className='mb-4'>
           <TagGroups />
         </div>
-        {searchResults.length === 0 && keyword && !isLoading && (
+        {isLoading && <p role='status' className='text-center text-gray-500'>正在搜索…</p>}
+        {searchError && <p role='alert' className='text-center text-red-600'>{searchError} <button type='button' className='underline' onClick={() => { void handleSearch(keyword, page) }}>重试</button></p>}
+        {searchResults.length === 0 && keyword && !isLoading && !searchError && (
           <div>
             <p className=' text-slate-600 text-center my-4 text-base'>
               {' '}

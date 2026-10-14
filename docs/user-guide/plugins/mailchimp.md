@@ -56,6 +56,8 @@ MailChimp 为您提供一个免费帐户，最多可拥有 2000 个电子邮件�
 
 只需要在Vercel环境变量中添加两项配置，就可以实现网站的邮件订阅功能
 
+新订阅请求需要邮箱持有人通过 Mailchimp 确认邮件完成订阅。页面显示“Subscription request received…”表示请求已经处理；为保护邮箱隐私，重复提交也会显示相同提示，不会自动恢复已退订成员。未收到确认邮件时，请检查垃圾邮件目录，或通过站点所有者提供的 Mailchimp 订阅表单重新订阅。
+
 ## 原文链接
 
 https://docs.tangly1024.com/article/notion-next-mailchimp
