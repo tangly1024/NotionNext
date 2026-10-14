@@ -26,7 +26,7 @@
 
 ### 安全与接口
 
-- `/api/revalidate` 的单页请求默认只重建指定页；清理数据须显式传入 `invalidateData: true`，全站请求使用 `all: true`。批量重建默认每次最多 25 页，HTTP 202 返回剩余路径供调用方续传。多实例或 Serverless 部署要实现同步失效，必须配置所有实例共用的 Redis。
+- `/api/revalidate` 的单页请求默认只重建指定页；清理数据须显式传入 `invalidateData: true`，全站请求使用 `all: true`。批量重建默认每次最多 25 页，约 45 秒后停止启动新页面并以 HTTP 202 返回剩余路径供调用方续传，兼容未启用 Fluid Compute 的 Vercel Hobby 项目。多实例或 Serverless 部署要实现同步失效，必须配置所有实例共用的 Redis。
 - Notion OAuth 改为服务端授权流程：授权结果不再携带原始 token 或用户资料进入 URL、页面 props 和日志，回调绑定授权发起时的随机 state cookie。
 - 修复任意公开 Notion 块 id 可被渲染到本站域名下的问题（见升级须知 5）。
 - Mailchimp 订阅结果处理、Algolia 搜索请求生命周期的问题已修复；依赖安全审计补丁已合入。
