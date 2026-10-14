@@ -8,7 +8,8 @@ import {
 
 export const config = {
   api: { bodyParser: { sizeLimit: '32kb' } },
-  maxDuration: 300
+  // Keep compatible with Hobby projects using legacy compute (60s limit).
+  maxDuration: 60
 }
 
 /** Explicit data invalidation precedes page regeneration when requested. */
@@ -74,7 +75,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const deadline = Date.now() + 240000
+    const deadline = Date.now() + 45000
     // Keep old slugs in the plan so removed pages are regenerated to a 404.
     const previousPaths = all ? await collectRevalidationPaths() : []
     const stores = all || invalidateData ? await clearDataCache() : []
