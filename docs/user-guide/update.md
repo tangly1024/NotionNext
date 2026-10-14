@@ -42,6 +42,15 @@
 
 NotionNext教程
 
+## 4.11.0 升级提示
+
+`4.11.0` 包含两项不兼容变更，升级前请先确认：
+
+- 调用 `/api/cache` 清理缓存的脚本，需要在部署平台配置 `CACHE_REVALIDATION_TOKEN`，并在请求头携带 `Authorization: Bearer <令牌>`；未配置时接口返回 503。详见 [数据缓存与页面重建](../developer/CACHE_MAINTENANCE.zh-CN.md)。
+- 使用 Notion OAuth 授权的站点，必须从本站 `/api/auth/notion` 发起授权。详见 [Notion OAuth 授权入口](../developer/NOTION_OAUTH.zh-CN.md)。
+
+另外，默认不再加载第三方中文 Web Font，之前为解决图片过期而设置 `API_BASE_URL=https://www.notion.so/api/v3` 的站点升级后不再需要该设置。其余普通站点同步最新 `main` 后重新部署即可。完整发布说明见 [最新版本更新日志](./changelog/latest.md)。
+
 ## 4.10.10 升级提示
 
 `4.10.10` 是一次小版本维护发布。普通站点同步最新 `main` 后重新部署即可，不需要新增必填环境变量。

@@ -1,7 +1,7 @@
 # 图片/封面管理
 > 迁移自：[图片/封面管理](https://docs.tangly1024.com/article/notion-next-image-cover)
 > 发布日期：2023-11-9
-> 最后编辑：2024-9-20
+> 最后编辑：2026-10-14
 > 原栏目：🛠 站点配置
 > 摘要：NotionNext 修改封面图背景图等
 
@@ -68,18 +68,24 @@ Notion笔记中上方封面图的右侧，点击`Change cover`
 
 #### unsplash 随机api
 
-我将每个封面图设置为： [https://source.unsplash.com/random](https://source.unsplash.com/random) ； 这是**unsplash**提供的随机图片链接，每次打开都会跳到不同的图片。（您可以点击访问尝试一下）
+Unsplash Source（`https://source.unsplash.com/random`）已于 2021 年 11 月 25 日宣布弃用，并于 2024 年 6 月 11 日发布最终下线公告。目前该接口已不再受官方支持，也不建议继续使用，详见 [Unsplash API Changelog](https://unsplash.com/documentation/changelog)。
 
-::: tip 提示
-**unsplash** 可以任意指定图片的风格类型、作者等，更多帮助可以参考此文：[https://zhuanlan.zhihu.com/p/139132649](https://zhuanlan.zhihu.com/p/139132649)
-:::
+现在更推荐使用 Notion 原生 Unsplash：打开页面后点击 `添加封面（Add cover）`，再点击封面右上角的 `更改（Change）`，在弹出面板最右侧选择 `Unsplash`，搜索并选择图片即可。
 
-![image](/legacy/dea5b128580f4605.png)
+如需通过 API 使用 Unsplash 图片，请使用官方 [Unsplash API](https://unsplash.com/developers) 获取图片 URL（需要申请 Access Key），再将返回的图片地址设置为 Notion 封面。对于普通博客，也可以直接上传封面，或使用固定图片 URL、自有存储/CDN，以保证封面稳定。
 
-在网站中看到的图片效果，刷新页面后封面图重新生成。
-
-![image](/legacy/4f466eb1e78dbb6e.png)
-![image](/legacy/7ae027b6040b432c.png)
+> 以下为接口下线前的原有说明，仅作历史记录：
+>
+> 我将每个封面图设置为：[https://source.unsplash.com/random](https://source.unsplash.com/random)；这是 **Unsplash** 提供的随机图片链接，每次打开都会跳转到不同的图片。（当前接口已停止服务）
+>
+> **Unsplash** 当时可以指定图片的风格类型、作者等，更多帮助可以参考此文：[https://zhuanlan.zhihu.com/p/139132649](https://zhuanlan.zhihu.com/p/139132649)
+>
+> ![image](/legacy/dea5b128580f4605.png)
+>
+> 在网站中看到的图片效果，刷新页面后封面图会重新生成。
+>
+> ![image](/legacy/4f466eb1e78dbb6e.png)
+> ![image](/legacy/7ae027b6040b432c.png)
 
 除了unsplash的api，也支持任意随机图片的api，例如这个国人开发的[图片api](https://tuapi.eees.cc/)
 
