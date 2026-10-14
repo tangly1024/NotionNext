@@ -17,6 +17,7 @@ export async function getStaticProps(req) {
   const { locale } = req
 
   const props = (await fetchGlobalAllData({ from: '404', locale })) || {}
+  delete props.allPages
   return { props }
 }
 

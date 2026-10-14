@@ -212,4 +212,65 @@ describe('按 ID 兜底访问的工作区归属校验', () => {
     mod.fetchNotionPageBlocks.mockResolvedValue(null)
     await expect(mod.fetchPageFromNotion('c'.repeat(32))).resolves.toBeNull()
   })
+
+  test('运行时重试耗尽返回空数据时抛错，而不是覆盖现有 UUID 页面', async () => {
+    const mod = freshLoad()
+    mod.fetchNotionPageBlocks.mockResolvedValue(null)
+    await expect(mod.fetchPageFromNotion('c'.repeat(32), {
+      throwOnUnavailable: true
+    })).rejects.toThrow('Notion page is temporarily unavailable')
+    await expect(mod.fetchPageFromNotion('c'.repeat(32))).resolves.toBeNull()
+  })
+
+  test('运行时工作区暂不可用时抛错，恢复后可重试', async () => {
+    const mod = freshLoad()
+    setupNotion({
+      BLOG: mod.BLOG,
+      fetchNotionPageBlocks: mod.fetchNotionPageBlocks,
+      rootPageIds: ['1'.repeat(32)],
+      rootError: true
+    })
+    const pageId = 'c'.repeat(32)
+    await expect(mod.fetchPageFromNotion(pageId, {
+      throwOnUnavailable: true
+    })).rejects.toThrow('Notion workspace is temporarily unavailable')
+    mod.fetchNotionPageBlocks.mockImplementation(id => Promise.resolve(buildRecordMap(id, WORKSPACE_A)))
+    await expect(mod.fetchPageFromNotion(pageId, {
+      throwOnUnavailable: true
+    })).resolves.not.toBeNull()
+  })
+
+  test('运行时确认属于其他工作区的页面仍返回不可访问', async () => {
+    const mod = freshLoad()
+    process.env.NOTION_WORKSPACE_ID = WORKSPACE_A
+    mod.fetchNotionPageBlocks.mockResolvedValue(buildRecordMap('c'.repeat(32), WORKSPACE_B))
+    await expect(mod.fetchPageFromNotion('c'.repeat(32), {
+      throwOnUnavailable: true
+    })).resolves.toBeNull()
+  })
+
+  test('多根页面仅部分推导成功时不会把另一站点子页当作外部页面，也不缓存部分结果', async () => {
+    const mod = freshLoad()
+    const rootA = '1'.repeat(32)
+    const rootB = '2'.repeat(32)
+    mod.BLOG.NOTION_PAGE_ID = `${rootA},${rootB}`
+    mod.fetchNotionPageBlocks.mockImplementation((id, from) => {
+      if (from === 'blog-space-id') {
+        if (id.replaceAll('-', '') === rootB) return Promise.resolve(null)
+        return Promise.resolve(buildRecordMap(id, WORKSPACE_A))
+      }
+      return Promise.resolve(buildRecordMap(id, WORKSPACE_B))
+    })
+    await expect(mod.fetchPageFromNotion('c'.repeat(32), {
+      throwOnUnavailable: true
+    })).rejects.toThrow('Notion workspace is temporarily unavailable')
+    setupNotion({
+      BLOG: mod.BLOG,
+      fetchNotionPageBlocks: mod.fetchNotionPageBlocks,
+      rootPageIds: [rootA, rootB]
+    })
+    await expect(mod.fetchPageFromNotion('c'.repeat(32), {
+      throwOnUnavailable: true
+    })).resolves.not.toBeNull()
+  })
 })

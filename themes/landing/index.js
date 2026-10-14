@@ -7,6 +7,7 @@
  * 3. 您可在此网站找到更多喜欢的组件 https://www.tailwind-kit.com/
  */
 import Loading from '@/components/Loading'
+import ArticleLock from '@/components/ArticleLock'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { isBrowser } from '@/lib/utils'
@@ -124,7 +125,7 @@ const LayoutSlug = props => {
     <>
       <div id='container-inner' className='mx-auto max-w-screen-lg p-12'>
         <div id='article-wrapper'>
-          <NotionPage {...props} />
+          {props.lock ? <ArticleLock {...props} /> : <NotionPage {...props} />}
         </div>
       </div>
     </>

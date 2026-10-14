@@ -1,3 +1,4 @@
+import { getPublicPostBlockMap } from '@/lib/utils/publicPost'
 import BLOG from '@/blog.config'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
 import { siteConfig } from '@/lib/config'
@@ -115,7 +116,7 @@ async function filterByMemCache(allPosts, keyword) {
   }
   for (const post of allPosts) {
     const cacheKey = getPageBlockCacheKey(post.id, post.lastEditedDate)
-    const page = await getDataFromCache(cacheKey, true)
+    const page = getPublicPostBlockMap(post, await getDataFromCache(cacheKey, true), allPosts)
     const tagContent =
       post?.tags && Array.isArray(post?.tags) ? post?.tags.join(' ') : ''
     const categoryContent =
