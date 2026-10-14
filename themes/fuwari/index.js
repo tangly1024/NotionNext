@@ -27,7 +27,7 @@ import SearchInput from './components/SearchInput'
 import SidePanel from './components/SidePanel'
 import CONFIG from './config'
 import { Style } from './style'
-import { isCommentServiceConfigured } from './utils/commentEnabled'
+import { shouldShowFuwariComments } from './utils/commentEnabled'
 import { shouldHideFuwariSidebar } from './utils/sidebarVisibility'
 
 const Comment = dynamic(() => import('@/components/Comment'), { ssr: false })
@@ -92,7 +92,7 @@ const LayoutBase = props => {
         </div>
       </main>
       <Footer />
-      <RightFloatArea post={props.post} />
+      {(!props.post || props.postUnlockUnavailable) && <RightFloatArea />}
       {siteConfig('FUWARI_EFFECT_LENIS', false, CONFIG) && <Lenis />}
       {siteConfig('FUWARI_EFFECT_CURSOR_DOT', false, CONFIG) && <CursorDot />}
     </div>
@@ -135,8 +135,7 @@ const LayoutSlug = props => {
   const locale = getLocale()
   const { post, lock, validPassword, prev, next } = props
   if (!post) return null
-  const showComments =
-    siteConfig('FUWARI_ARTICLE_COMMENT', true, CONFIG) && isCommentServiceConfigured()
+  const showComments = shouldShowFuwariComments({ post, lock })
   const articleCoverSrc =
     siteConfig('FUWARI_ARTICLE_COVER_HERO', true, CONFIG) &&
     (post.pageCover || post.pageCoverThumbnail)
@@ -167,6 +166,8 @@ const LayoutSlug = props => {
           )}
         </article>
       )}
+      {/* The slug route owns the current post and lock state, not LayoutBase. */}
+      <RightFloatArea post={post} lock={lock} />
     </>
   )
 }

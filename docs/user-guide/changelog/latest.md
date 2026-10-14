@@ -12,7 +12,7 @@
 2. **Notion OAuth 授权入口变更（不兼容）**：升级后必须从本站 `/api/auth/notion` 发起授权；旧的直接携带 code 访问回调的方式不再接受。详见 [Notion OAuth 授权入口](../../developer/NOTION_OAUTH.zh-CN.md)。
 3. **Notion 图片**：新版 Notion 接口返回的 `file.notion.com` 图片链接已适配图片反代和签名刷新，之前为解决图片过期而临时设置 `API_BASE_URL=https://www.notion.so/api/v3` 的站点，升级后不再需要该设置。外链（http/https）图片现在也会经 `NEXT_PUBLIC_NOTION_HOST` 的图片中转端点加载，使用自定义反代地址的站点请确认中转端可用。
 4. **字体**：默认不再加载 `Noto Sans SC`、`Noto Serif SC` 等第三方中文 Web Font，未配置自定义字体的站点会改用系统字体，外观会有变化。需要品牌字体请显式配置 `NEXT_PUBLIC_FONT_URL`（或 Notion Config 的 `FONT_URL`）。
-5. **非本站工作区的页面会返回 404**：通过页面 id 兜底渲染时会校验页面是否属于本站 Notion 工作区，工作区 id 默认自动推导，也可用 `NOTION_WORKSPACE_ID` 指定（多站点用逗号分隔）。见 [NOTION_WORKSPACE_ID](../config/notion-workspace-id.md)。
+5. **非本站工作区的页面会返回 404**：通过页面 id 兜底渲染时会校验页面是否属于本站 Notion 工作区，工作区 id 默认自动推导，也可用 `NOTION_WORKSPACE_ID` 指定（多站点用逗号分隔）。注意页面网址中的 id 不是工作区 id，无法确认时应留空以自动推导。见 [NOTION_WORKSPACE_ID](../config/notion-workspace-id.md)。
 6. **访问统计默认端点**：不蒜子默认脚本已切换为社区维护的 Vercount（`https://events.vercount.one/js`），可用 `NEXT_PUBLIC_BUSUANZI_SCRIPT_URL` 覆盖。见 [不蒜子统计](../analytics/busuanzi.md)。
 7. **Mailchimp 新订阅需要确认邮件**：新建成员由直接 `subscribed` 改为 `pending`，收件人确认后才完成订阅。页面显示“Subscription request received…”只表示请求已处理，重复邮箱使用同一提示，也不会自动恢复已退订成员。详见 [Mailchimp 邮件订阅](../plugins/mailchimp.md)。
 8. **页面重建失败与重试**：`/api/revalidate` 部分页面失败时由 HTTP 200 改为 500；仍需读取 `results` 和 `remainingPaths`，仅用普通 `paths` 请求重试失败页并续传未尝试页。不要为 `all: true` 或 `invalidateData: true` 配置自动重试，否则会再次全清数据。详见 [数据缓存与页面重建](../../developer/CACHE_MAINTENANCE.zh-CN.md)。
@@ -21,6 +21,7 @@
 
 - 恢复 `NEXT_PUBLIC_NOTION_HOST` 图片反代与签名刷新，适配 `file.notion.com` 新图片 CDN（#4476、#4473）。
 - 外链图片经图片中转端点加载，避免防盗链图床拒绝带本站 Referer 的请求；反代图片支持高清缩放与随机图替换。
+- 正文图片放大时通过图片库的打开事件加载高清来源，修复放大副本移到正文外后未触发高清替换的问题。
 - 数据库的 Created time / Last edited time 系统属性不再丢失；嵌套 Gallery 视图设置、Gallery 单列显示问题已修复。
 - 内嵌页面链接解析会先去掉 query 与 hash 再提取页面 ID。
 
@@ -44,8 +45,8 @@
 ### 主题
 
 - opc：首页围绕任务流水线重做，归档卡片与新手引导优化。
-- Proxio：侧栏目录与加锁文章显示。
-- Fuwari：NotionComments 评论、`FUWARI_HERO_ENABLE` 关闭 Hero 后的布局、移动端菜单、按页面隐藏侧栏、搜索页改进。
+- Proxio：侧栏目录与加锁文章显示，切换文章后收起上一页的目录抽屉。
+- Fuwari：NotionComments 评论、`FUWARI_HERO_ENABLE` 关闭 Hero 后的布局、移动端菜单、按页面隐藏侧栏、搜索页改进；文章评论区域和浮动入口统一遵循评论开关、隐藏设置和锁定状态。
 - heo：昼夜切换、控件与评论、回弹背景修复。
 - XuHome 同步上游目录与音频更新；Magzine 封面间距；starter 导航栏 hover 配色；hero 打字脚本初始化时机。
 

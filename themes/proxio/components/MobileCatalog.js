@@ -15,6 +15,10 @@ export default function MobileCatalog({ post }) {
   const buttonRef = useRef(null)
   const drawerRef = useRef(null)
 
+  useEffect(() => {
+    setDrawerOpen(false)
+  }, [post?.id])
+
   // 与主题既有浮动元素一致：滚动一段距离后才出现
   useEffect(() => {
     const onScroll = () => setShowButton(window.scrollY > 180)

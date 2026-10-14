@@ -23,6 +23,7 @@ const NotionPage = ({ post, className }) => {
   const SPOILER_TEXT_TAG = siteConfig('SPOILER_TEXT_TAG')
 
   const zoomRef = useRef(null)
+  const articleRef = useRef(null)
   const IMAGE_ZOOM_IN_WIDTH = siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)
   // 页面首次打开时执行的勾子
   useEffect(() => {
@@ -48,50 +49,42 @@ const NotionPage = ({ post, className }) => {
     if (POST_DISABLE_DATABASE_CLICK) {
       processDisableDatabaseUrl()
     }
+  }, [post, POST_DISABLE_GALLERY_CLICK, POST_DISABLE_DATABASE_CLICK])
 
-    /**
-     * 放大查看图片时替换成高清图像
-     */
-    const articleRoot =
-      document.getElementById('notion-article') || document.body
-    const hasAnyImage = Boolean(articleRoot.querySelector('img'))
-    if (!hasAnyImage) {
-      return
+  useEffect(() => {
+    const articleRoot = articleRef.current
+    if (!articleRoot) return
+    const zoomSources = new Map()
+    const prepareZoomSource = event => {
+      const image = event.target
+      if (image.tagName !== 'IMG' || image.hasAttribute('data-zoom-src')) return
+      const source = image.currentSrc || image.getAttribute('src')
+      const hdSource = compressImage(source, IMAGE_ZOOM_IN_WIDTH)
+      if (!hdSource || hdSource === source) return
+      zoomSources.set(image, hdSource)
+      image.setAttribute('data-zoom-src', hdSource)
     }
+    const restoreZoomSource = image => {
+      if (!zoomSources.has(image)) return
+      if (image.getAttribute('data-zoom-src') === zoomSources.get(image)) {
+        image.removeAttribute('data-zoom-src')
+      }
+      zoomSources.delete(image)
+    }
+    const onZoomClosed = event => restoreZoomSource(event.target)
 
-    const observer = new MutationObserver((mutationsList, observer) => {
-      mutationsList.forEach(mutation => {
-        if (
-          mutation.type === 'attributes' &&
-          mutation.attributeName === 'class'
-        ) {
-          if (mutation.target.classList.contains('medium-zoom-image--opened')) {
-            // 等待动画完成后替换为更高清的图像
-            setTimeout(() => {
-              // 获取该元素的 src 属性
-              const src = mutation?.target?.getAttribute('src')
-              //   替换为更高清的图像
-              mutation?.target?.setAttribute(
-                'src',
-                compressImage(src, IMAGE_ZOOM_IN_WIDTH)
-              )
-            }, 800)
-          }
-        }
-      })
-    })
-
-    // 监视正文容器，避免对整个 document.body 做高开销监听
-    observer.observe(articleRoot, {
-      attributes: true,
-      subtree: true,
-      attributeFilter: ['class']
-    })
+    // medium-zoom dispatches a non-bubbling open event on the original image
+    // before cloning it into document.body. Supply HD there so its own loader
+    // can fall back to the thumbnail if the HD request fails.
+    articleRoot.addEventListener('medium-zoom:open', prepareZoomSource, true)
+    articleRoot.addEventListener('medium-zoom:closed', onZoomClosed, true)
 
     return () => {
-      observer.disconnect()
+      articleRoot.removeEventListener('medium-zoom:open', prepareZoomSource, true)
+      articleRoot.removeEventListener('medium-zoom:closed', onZoomClosed, true)
+      zoomSources.forEach((_source, image) => restoreZoomSource(image))
     }
-  }, [post])
+  }, [post, IMAGE_ZOOM_IN_WIDTH])
 
   useEffect(() => {
     // Spoiler文本功能
@@ -114,6 +107,7 @@ const NotionPage = ({ post, className }) => {
   return (
     <div
       id='notion-article'
+      ref={articleRef}
       className={`mx-auto overflow-hidden ${className || ''}`}>
       <NotionRenderer
         recordMap={post?.blockMap}

@@ -37,7 +37,7 @@ const toc = [
   { id: uuid('h1'), text: '第一章', indentLevel: 0 },
   { id: uuid('h2'), text: '第一节', indentLevel: 1 }
 ]
-const post = { toc }
+const post = { id: 'article-a', toc }
 
 // 正文中的标题锚点，供 scrollToSection 查找
 const mountHeadings = () => {
@@ -143,5 +143,51 @@ describe('MobileCatalog 抽屉关闭态不进入 Tab 顺序', () => {
 
     expect(container.querySelectorAll('nav a').length).toBe(0)
     expect(document.activeElement).toBe(button)
+  })
+
+  it('切换文章后收起抽屉，新文章需要主动打开目录', () => {
+    const { container, rerender } = render(<MobileCatalog post={post} />)
+    openDrawer(container)
+
+    const nextPost = {
+      id: 'article-b',
+      toc: [{ id: uuid('h3'), text: '第二篇文章', indentLevel: 0 }]
+    }
+    rerender(<MobileCatalog post={nextPost} />)
+
+    expect(getParts(container).button.getAttribute('aria-expanded')).toBe('false')
+    expect(container.querySelector('nav a')).toBeNull()
+
+    openDrawer(container)
+    expect(container.querySelector('nav a')).toHaveTextContent('第二篇文章')
+  })
+
+  it('切换文章时回到顶部，再次滚动不会恢复旧文章的展开状态', () => {
+    const { container, rerender } = render(<MobileCatalog post={post} />)
+    openDrawer(container)
+
+    act(() => {
+      window.scrollY = 0
+      window.dispatchEvent(new Event('scroll'))
+    })
+    rerender(<MobileCatalog post={{ ...post, id: 'article-b' }} />)
+    expect(getParts(container).button).toBeNull()
+
+    act(() => {
+      window.scrollY = 200
+      window.dispatchEvent(new Event('scroll'))
+    })
+    expect(getParts(container).button.getAttribute('aria-expanded')).toBe('false')
+    expect(container.querySelector('nav a')).toBeNull()
+  })
+
+  it('同一文章的数据更新不打断已展开的目录', () => {
+    const { container, rerender } = render(<MobileCatalog post={post} />)
+    openDrawer(container)
+
+    rerender(<MobileCatalog post={{ ...post, title: 'Updated title' }} />)
+
+    expect(getParts(container).button.getAttribute('aria-expanded')).toBe('true')
+    expect(container.querySelectorAll('nav a')).toHaveLength(2)
   })
 })

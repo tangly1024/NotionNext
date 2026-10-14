@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
-import { isCommentServiceConfigured } from '../utils/commentEnabled'
+import { shouldShowFuwariComments } from '../utils/commentEnabled'
 import Toc from './Toc'
 
-const RightFloatArea = ({ post }) => {
+const RightFloatArea = ({ post, lock }) => {
   const [visible, setVisible] = useState(false)
   const [showTocDrawer, setShowTocDrawer] = useState(false)
   const { isDarkMode, toggleDarkMode, locale } = useGlobal()
@@ -52,9 +52,8 @@ const RightFloatArea = ({ post }) => {
             <i className='fas fa-list-ul' />
           </button>
         )}
-        {post && post.comment !== 'Hide' &&
-          siteConfig('FUWARI_WIDGET_TO_COMMENT', true, CONFIG) &&
-          isCommentServiceConfigured() && (
+        {shouldShowFuwariComments({ post, lock }) &&
+          siteConfig('FUWARI_WIDGET_TO_COMMENT', true, CONFIG) && (
           <button
             type='button'
             className='fuwari-float-btn'
