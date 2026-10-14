@@ -31,11 +31,12 @@ export async function getStaticPaths() {
   })
 }
 
-export async function getStaticProps({ params: { prefix, slug }, locale }) {
+export async function getStaticProps({ params: { prefix, slug }, locale, revalidateReason }) {
   const props = await resolvePostProps({
     prefix,
     slug,
     locale,
+    revalidateReason,
   })
 
   return {

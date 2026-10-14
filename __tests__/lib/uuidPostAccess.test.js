@@ -75,9 +75,9 @@ it('follows a nested collection to a published catalog page', async () => {
   })
 })
 
-it('allows a public catalog descendant when ids use different UUID formats', async () => {
+it.each(['Published', 'Invisible'])('allows a %s catalog descendant when ids use different UUID formats', async status => {
   const publicCatalog = [
-    { id: ancestor.replaceAll('-', '').toUpperCase(), status: 'Published' }
+    { id: ancestor.replaceAll('-', '').toUpperCase(), status }
   ]
   expect(await resolveUuidPostAccess(page(ancestor), publicCatalog)).toEqual({
     allowed: true,
@@ -93,11 +93,11 @@ it('does not expose an unlisted sibling merely because a token can read its work
   expect(notionAPI.getBlocks).not.toHaveBeenCalled()
 })
 
-it('rejects a descendant of an unpublished catalog page', async () => {
+it.each(['Draft', 'Archived', undefined])('rejects a descendant of a non-public catalog page (%s)', async status => {
   expect(
     (
       await resolveUuidPostAccess(page(ancestor), [
-        { id: ancestor, status: 'Draft' }
+        { id: ancestor, status }
       ])
     ).allowed
   ).toBe(false)
@@ -130,7 +130,7 @@ it.each(['missing', 'deleted', 'cycle', 'foreign-space', 'foreign-id'])(
 
 it('bounds long ancestor chains', async () => {
   const post = page('00000000000000000000000000000001')
-  notionAPI.getBlocks.mockImplementation(async ([id]) => ({
+  notionAPI.getBlocks.mockImplementation(([id]) => ({
     recordMap: {
       block: {
         [id]: {

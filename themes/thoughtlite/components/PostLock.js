@@ -43,7 +43,7 @@ export const PostLock = props => {
           />
           <button
             type='button'
-            onClick={submitPassword}
+            onClick={() => { void submitPassword() }}
             className='border-l border-[var(--tl-border)] bg-[var(--tl-accent-soft)] px-4 text-sm font-medium text-[var(--tl-accent)] hover:opacity-90'>
             <i className='fas fa-key mr-1' aria-hidden='true' />
             {locale.COMMON.SUBMIT}

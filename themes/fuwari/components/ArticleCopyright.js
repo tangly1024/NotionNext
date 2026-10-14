@@ -78,7 +78,7 @@ const ArticleCopyright = ({ post }) => {
         {licenseText}
       </div>
       <div className='mt-3'>
-        <button type='button' onClick={handleCopy} className='fuwari-copy-btn'>
+        <button type='button' onClick={() => { void handleCopy() }} className='fuwari-copy-btn'>
           <i className='far fa-copy mr-1' />
           {copied
             ? locale?.COMMON?.COPIED || 'Copied'

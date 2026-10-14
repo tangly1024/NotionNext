@@ -191,19 +191,18 @@ it('exports public content while removing a nested protected article', async () 
   }
 })
 
-it.each(['fetch', 'adapt', 'process'])(
-  'renders a safe public summary after a %s failure',
-  async failure => {
+it.each([
+  ['build', 'fetch'], ['build', 'adapt'],
+  ['export', 'fetch'], ['export', 'adapt']
+])(
+  'renders a safe public summary during %s after a %s failure',
+  async (phase, failure) => {
+    if (phase === 'export') process.env.EXPORT = 'true'
     const cached = await getOrSetDataWithCache()
     cached.allPages[0].password = ''
     if (failure === 'fetch') fetchNotionPageBlocks.mockRejectedValueOnce(new Error('timeout'))
     if (failure === 'adapt') adapterNotionBlockMap.mockImplementationOnce(() => { throw new Error('bad blocks') })
-    if (failure === 'process') processPostData.mockImplementationOnce(async props => {
-      props.post.aiSummary = marker
-      props.prev = { password: digest, blockMap: body() }
-      throw new Error('summary failure')
-    })
-    const props = await resolvePostProps(options)
+    const props = await resolvePostProps({ ...options, revalidateReason: phase === 'build' ? 'build' : undefined })
     expect(props.post.title).toBe('Title')
     expect(props.post.blockMap).toBeUndefined()
     expect(JSON.stringify(props)).not.toContain(marker)
@@ -211,14 +210,85 @@ it.each(['fetch', 'adapt', 'process'])(
   }
 )
 
+it.each(['build', 'export'])('retains only filtered public body data after post-processing fails during %s', async phase => {
+  if (phase === 'export') process.env.EXPORT = 'true'
+  const publicId = 'cccccccc-cccc-cccc-cccc-cccccccccccc'
+  const publicTextId = 'dddddddd-dddd-dddd-dddd-dddddddddddd'
+  const cached = await getOrSetDataWithCache()
+  cached.allPages.push({ id: publicId, title: 'Public', slug: 'public', type: 'Post', status: 'Published', tags: [] })
+  const blocks = body()
+  blocks.block[publicId] = { value: { id: publicId, type: 'page', content: [id, publicTextId], properties: { title: [['Public']], privateColumn: [[secret]] } } }
+  blocks.block[id].value.parent_id = publicId
+  blocks.block[publicTextId] = { value: { id: publicTextId, type: 'text', parent_id: publicId, properties: { title: [['SAFE_PUBLIC_BODY']] } } }
+  fetchNotionPageBlocks.mockResolvedValueOnce(blocks)
+  processPostData.mockImplementationOnce(props => {
+    props.post.aiSummary = 'PARTIAL_AI_SUMMARY'
+    props.post.blockMap.block[publicTextId].value.properties.title = [['PARTIAL_BODY']]
+    props.prev = { password: digest, blockMap: body() }
+    throw new Error('summary failure')
+  })
+  const props = await resolvePostProps({ prefix: 'public', revalidateReason: phase === 'build' ? 'build' : undefined })
+  const serialized = JSON.stringify(props)
+  expect(serialized).toContain('SAFE_PUBLIC_BODY')
+  for (const value of [marker, digest, secret, 'PARTIAL_AI_SUMMARY', 'PARTIAL_BODY']) {
+    expect(serialized).not.toContain(value)
+  }
+})
+
+it.each([
+  ['stale', 'fetch'], ['stale', 'adapt'], ['stale', 'process'],
+  ['on-demand', 'fetch'], ['on-demand', 'adapt'], ['on-demand', 'process'],
+  [undefined, 'fetch']
+])('propagates a public %s regeneration %s failure instead of replacing the successful page', async (revalidateReason, failure) => {
+  const cached = await getOrSetDataWithCache()
+  cached.allPages[0].password = ''
+  if (failure === 'fetch') fetchNotionPageBlocks.mockRejectedValueOnce(new Error('timeout'))
+  if (failure === 'adapt') adapterNotionBlockMap.mockImplementationOnce(() => { throw new Error('bad blocks') })
+  if (failure === 'process') processPostData.mockRejectedValueOnce(new Error('processing failed'))
+  const previousBuildMode = process.env.BUILD_MODE
+  process.env.BUILD_MODE = 'true'
+  try {
+    await expect(resolvePostProps({ ...options, revalidateReason })).rejects.toThrow()
+  } finally {
+    if (previousBuildMode === undefined) delete process.env.BUILD_MODE
+    else process.env.BUILD_MODE = previousBuildMode
+  }
+})
+
 it('keeps protected processing failures closed', async () => {
   processPostData.mockRejectedValueOnce(new Error('processing failed'))
   await expect(resolvePostProps({ ...options, password: secret })).rejects.toThrow('processing failed')
 })
 
-it('turns failed UUID fetches into not-found without exposing a partial body', async () => {
+it('turns failed build-time UUID fetches into not-found without exposing a partial body', async () => {
   fetchPageFromNotion.mockRejectedValueOnce(new Error('Notion unavailable'))
-  expect((await resolvePostProps({ prefix: textId })).post).toBeNull()
+  expect((await resolvePostProps({ prefix: textId, revalidateReason: 'build' })).post).toBeNull()
+})
+
+it('propagates runtime UUID fetch failures so ISR retains an existing child page', async () => {
+  fetchPageFromNotion.mockRejectedValueOnce(new Error('Notion unavailable'))
+  await expect(resolvePostProps({ prefix: textId, revalidateReason: 'stale' })).rejects.toThrow('Notion unavailable')
+})
+
+it.each(['fetch-error', 'empty-response', 'invalid-database'])(
+  'does not turn an unavailable site catalog (%s) into a successful runtime 404',
+  async failure => {
+    getOrSetDataWithCache.mockImplementation((_key, loader) => loader())
+    if (failure === 'fetch-error') fetchNotionPageBlocks.mockRejectedValue(new Error('timeout'))
+    else fetchNotionPageBlocks.mockResolvedValue(failure === 'empty-response' ? null : { block: {} })
+    await expect(resolvePostProps({ ...options, revalidateReason: 'stale' })).rejects.toThrow('Site catalog is temporarily unavailable')
+    const fallback = await resolvePostProps({ ...options, revalidateReason: 'build' })
+    expect(fallback.post).toBeNull()
+    expect(fallback.__notionDataUnavailable).toBeUndefined()
+  }
+)
+
+it('keeps cached catalog failures distinguishable without exposing the internal flag', async () => {
+  const cached = { __notionDataUnavailable: true, allPages: [], latestPosts: [] }
+  getOrSetDataWithCache.mockResolvedValue(cached)
+  expect((await fetchGlobalAllData({})).__notionDataUnavailable).toBeUndefined()
+  expect(cached.__notionDataUnavailable).toBe(true)
+  await expect(resolvePostProps({ ...options, revalidateReason: 'on-demand' })).rejects.toThrow('Site catalog is temporarily unavailable')
 })
 
 it('keeps compatibility with precomputed uppercase SHA256 and legacy MD5', () => {
@@ -273,7 +343,9 @@ it('denies unknown UUID pages without a catalogued ancestor', async () => {
   expect((await resolvePostProps({ prefix: unknown })).post).toBeNull()
 })
 
-it('allows a nested page only after verifying its protected catalog ancestor', async () => {
+it.each(['Published', 'Invisible'])('allows a nested page only after verifying its protected %s catalog ancestor', async status => {
+  const cached = await getOrSetDataWithCache()
+  cached.allPages[0].status = status
   const child = 'cccccccc-cccc-cccc-cccc-cccccccccccc'
   const blocks = body()
   blocks.block[child] = { value: { id: child, type: 'page', parent_id: id, content: [textId], properties: { title: [['Child']] } } }
@@ -282,8 +354,28 @@ it('allows a nested page only after verifying its protected catalog ancestor', a
   fetchPageFromNotion.mockResolvedValue({ id: child, title: 'Child', slug: child, type: 'Page', tags: [], blockMap: blocks })
   const locked = await resolvePostProps({ prefix: child })
   expect(locked.post.blockMap).toBeUndefined()
+  expect(locked.post.password).toBe('protected')
+  expect(JSON.stringify(locked)).not.toContain(marker)
+  expect(JSON.stringify(locked)).not.toContain(digest)
   const unlocked = await resolvePostProps({ prefix: child, password: secret })
   expect(JSON.stringify(unlocked.post)).toContain(marker)
   expect(unlocked.post.blockMap.block[child]).toBeDefined()
   expect(unlocked.post.blockMap.block[id]).toBeUndefined()
+  expect(JSON.stringify(unlocked)).not.toContain(digest)
+  expect(JSON.stringify(unlocked)).not.toContain(secret)
+})
+
+it('allows an unprotected child of an Invisible catalog page without a password', async () => {
+  const cached = await getOrSetDataWithCache()
+  cached.allPages[0].status = 'Invisible'
+  cached.allPages[0].password = ''
+  const child = 'cccccccc-cccc-cccc-cccc-cccccccccccc'
+  const blocks = body()
+  blocks.block[child] = { value: { id: child, type: 'page', parent_id: id, content: [textId], properties: { title: [['Child']] } } }
+  blocks.block[textId].value.parent_id = child
+  fetchPageFromNotion.mockResolvedValueOnce({ id: child, title: 'Child', slug: child, type: 'Page', tags: [], blockMap: blocks })
+  const props = await resolvePostProps({ prefix: child })
+  expect(props.post.blockMap.block[child]).toBeDefined()
+  expect(props.post.password).toBeFalsy()
+  expect(JSON.stringify(props.post)).toContain(marker)
 })

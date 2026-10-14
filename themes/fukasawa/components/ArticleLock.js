@@ -46,7 +46,7 @@ const ArticleLock = props => {
               className="outline-none flex-1 min-w-0 text-sm pl-5 rounded-l transition focus:shadow-lg  font-light leading-10 bg-gray-100 dark:bg-gray-500"
             ></input>
             <div
-              onClick={submitPassword}
+              onClick={() => { void submitPassword() }}
               className="flex items-center justify-center whitespace-nowrap cursor-pointer px-4 leading-10 bg-gray-700 hover:bg-gray-400 text-white rounded-r duration-300 select-none"
             >
               <i className={'duration-200 cursor-pointer fas fa-key'} />
