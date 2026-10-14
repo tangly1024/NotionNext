@@ -182,6 +182,12 @@ To deploy a new Project, import an existing Git Repository or get started with o
 1. 点击`Deploy`按钮，静候两分钟等待部署。
 ![1.点击Deploy进行自动部署](/legacy/9a881298d4a9b142.png)
 
+### 可选：开启 Fluid Compute
+
+NotionNext 默认兼容未开启 Fluid Compute 的 Vercel Hobby 项目，部署时无需为此更改设置。若希望 Vercel Functions 复用运行实例、改善冷启动并提升并发处理能力，可在项目的 **Settings → Functions → Fluid Compute** 中开启，然后重新部署使设置生效；也可在 `vercel.json` 显式设置 `"fluid": true`，将选择随仓库配置。两种方式选其一即可。
+
+Fluid Compute 是可选的性能优化，不是 NotionNext 的部署前提。不开启时，Hobby 旧计算模式的函数时长上限为 60 秒；NotionNext 的缓存维护函数兼容此限制，`/api/revalidate` 每批运行约 45 秒后通过 HTTP 202 和 `remainingPaths` 续传。开启后 Hobby 函数时长上限为 300 秒，Fluid Compute 可优化函数实例复用与并发，但 NotionNext 仍采用较短批次预算以便及时返回续传结果。其他套餐的限制请以 Vercel 当前方案文档为准：[Functions 最大执行时间](https://vercel.com/docs/functions/limitations#max-duration)、[Fluid Compute](https://vercel.com/docs/fluid-compute)。
+
 
 ## 四、完成🎉🎉🎉
 

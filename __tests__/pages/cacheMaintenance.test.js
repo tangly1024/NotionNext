@@ -1,6 +1,8 @@
 /** @jest-environment node */
-import cacheHandler from '@/pages/api/cache'
-import revalidateHandler from '@/pages/api/revalidate'
+import cacheHandler, { config as cacheConfig } from '@/pages/api/cache'
+import revalidateHandler, {
+  config as revalidateConfig
+} from '@/pages/api/revalidate'
 import { clearDataCache } from '@/lib/cache/cache_manager'
 import { collectRevalidationPaths } from '@/lib/server/revalidation'
 jest.mock('@/blog.config', () => ({}))
@@ -21,6 +23,10 @@ const res = () => ({
     this.body = body
     return this
   }
+})
+it('keeps cache maintenance functions within legacy Hobby duration limits', () => {
+  expect(cacheConfig.maxDuration).toBeLessThanOrEqual(60)
+  expect(revalidateConfig.maxDuration).toBeLessThanOrEqual(60)
 })
 beforeEach(() => {
   delete process.env.CACHE_REVALIDATION_TOKEN

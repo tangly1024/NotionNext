@@ -1,5 +1,7 @@
 import { clearDataCache } from '@/lib/cache/cache_manager'
 
+export const config = { maxDuration: 60 }
+
 /**
  * 清理缓存
  * @param {*} req
