@@ -168,7 +168,7 @@ export default defineConfig({
           ]
         },
         {
-          text: '参考（4.9.x）',
+          text: '参考（4.11.x）',
           items: [
             { text: '全站配置索引', link: '/user-guide/reference/features' },
             { text: 'Notion 4.x', link: '/user-guide/reference/notion-4x' }
