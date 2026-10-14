@@ -33,6 +33,11 @@ describe('isCommentServiceConfigured', () => {
     expect(isCommentServiceConfigured()).toBe(false)
   })
 
+  it('keeps string false providers disabled', () => {
+    siteConfig.mockReturnValue('false')
+    expect(isCommentServiceConfigured()).toBe(false)
+  })
+
   it.each(serviceKeys)(
     'returns true when %s is configured',
     (key, value) => {

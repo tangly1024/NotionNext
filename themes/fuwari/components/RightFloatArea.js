@@ -52,7 +52,7 @@ const RightFloatArea = ({ post }) => {
             <i className='fas fa-list-ul' />
           </button>
         )}
-        {post &&
+        {post && post.comment !== 'Hide' &&
           siteConfig('FUWARI_WIDGET_TO_COMMENT', true, CONFIG) &&
           isCommentServiceConfigured() && (
           <button
