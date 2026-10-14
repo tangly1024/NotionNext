@@ -260,7 +260,7 @@ const LayoutSlug = props => {
     setHasCode(hasCode)
   }, [])
 
-  const commentEnable = hasEnabledComments(siteConfig)
+  const commentEnable = post?.comment !== 'Hide' && hasEnabledComments(siteConfig)
 
   const router = useRouter()
   const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
