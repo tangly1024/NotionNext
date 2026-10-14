@@ -202,8 +202,24 @@ test('a failed HD request falls back to the thumbnail and can retry on the next 
   await retry.close()
 })
 
-test('images outside the article do not receive its HD settings', async () => {
+test('an HD image that becomes complete before its error event leaves no orphan copy', async () => {
+  jest.spyOn(console, 'warn').mockImplementation(() => {})
   render(<NotionPage post={imagePost()} />)
+  const session = openZoom(screen.getByAltText('photo'))
+  // Browsers also report complete=true for broken images. The library can append
+  // its HD copy from the 10 ms poll before handling the pending error event.
+  Object.defineProperty(session.hd, 'complete', { configurable: true, value: true })
+  act(() => jest.advanceTimersByTime(20))
+  expect(session.hd).toBeInTheDocument()
+  act(() => fireEvent.error(session.hd))
+  await session.finish()
+  await session.close()
+  expect(session.hd).not.toBeInTheDocument()
+  expect(document.querySelector('.medium-zoom-image--opened')).toBeNull()
+})
+
+test('images outside the article do not receive its HD settings', async () => {
+  const { unmount } = render(<NotionPage post={imagePost()} />)
   const outside = document.createElement('img')
   outside.src = proxyImage('outside')
   document.body.appendChild(outside)
@@ -211,5 +227,59 @@ test('images outside the article do not receive its HD settings', async () => {
   expect(session.hd).toBeUndefined()
   expect(sourceWidth(session.thumbnail.src)).toBe('400')
   await session.finish()
+  unmount()
+  expect(session.thumbnail).toHaveClass('medium-zoom-image--opened')
+  expect(document.body).toHaveClass('medium-zoom--opened')
   await session.close()
+})
+
+test('unmount closes the body-level zoom copies and overlay', async () => {
+  const { unmount } = render(<NotionPage post={imagePost()} />)
+  const image = screen.getByAltText('photo')
+  const session = openZoom(image)
+  await session.finish()
+  unmount()
+  expect(image).not.toHaveAttribute('data-zoom-src')
+  expect(document.body).not.toHaveClass('medium-zoom--opened')
+  act(() => fireEvent.transitionEnd(session.thumbnail))
+  expect(document.querySelector('.medium-zoom-image--opened')).toBeNull()
+  expect(document.querySelector('.medium-zoom-overlay')).toBeNull()
+})
+
+test('unmount during opening waits for the library before closing its zoom', async () => {
+  const { unmount } = render(<NotionPage post={imagePost()} />)
+  const session = openZoom(screen.getByAltText('photo'))
+  unmount()
+  await session.finish()
+  expect(document.body).not.toHaveClass('medium-zoom--opened')
+  act(() => fireEvent.transitionEnd(session.thumbnail))
+  expect(document.querySelector('.medium-zoom-image--opened')).toBeNull()
+  expect(document.querySelector('.medium-zoom-overlay')).toBeNull()
+})
+
+test('switching articles closes the old zoom and leaves the next image zoomable', async () => {
+  const { rerender } = render(<NotionPage post={imagePost()} />)
+  const session = openZoom(screen.getByAltText('photo'))
+  await session.finish()
+  rerender(<NotionPage post={imagePost(proxyImage('next-photo'))} />)
+  act(() => fireEvent.transitionEnd(session.thumbnail))
+  expect(document.querySelector('.medium-zoom-overlay')).toBeNull()
+  const next = openZoom(screen.getByAltText('photo'))
+  expect(decodeURIComponent(next.hd.src)).toContain('next-photo')
+  await next.finish()
+  await next.close()
+})
+
+test.each(['explicit', 'unrecognized'])('unmount also closes an image with a %s HD source policy', async policy => {
+  const post = imagePost()
+  if (policy === 'explicit') post.blockMap.images[0].zoomSrc = 'https://cdn.example/original.jpg'
+  else post.blockMap.images[0].src = 'https://cdn.example/photo.jpg'
+  const { unmount } = render(<NotionPage post={post} />)
+  const image = screen.getByAltText('photo')
+  const session = openZoom(image)
+  await session.finish()
+  unmount()
+  act(() => fireEvent.transitionEnd(session.thumbnail))
+  expect(document.querySelector('.medium-zoom-overlay')).toBeNull()
+  if (policy === 'explicit') expect(image).toHaveAttribute('data-zoom-src', 'https://cdn.example/original.jpg')
 })

@@ -6,7 +6,7 @@ import { isBrowser, loadExternalResource } from '@/lib/utils'
 import mediumZoom from '@fisch0920/medium-zoom'
 import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
-import { useEffect, useRef } from 'react'
+import { useEffect, useId, useRef } from 'react'
 import { NotionRenderer } from 'react-notion-x'
 import OriginalityProof from './OriginalityProof'
 
@@ -24,6 +24,8 @@ const NotionPage = ({ post, className }) => {
 
   const zoomRef = useRef(null)
   const articleRef = useRef(null)
+  const zoomOwnerId = useId()
+  const zoomSequence = useRef(0)
   const IMAGE_ZOOM_IN_WIDTH = siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)
   // 页面首次打开时执行的勾子
   useEffect(() => {
@@ -55,9 +57,29 @@ const NotionPage = ({ post, className }) => {
     const articleRoot = articleRef.current
     if (!articleRoot) return
     const zoomSources = new Map()
+    const activeZooms = new Map()
+    const markerAttribute = 'data-notionnext-zoom-id'
+    const finishZoom = (image, entry) => {
+      // A broken image can become complete before its error event. medium-zoom
+      // may already have appended that HD copy, then lose its reference on error.
+      document.querySelectorAll(
+        `.medium-zoom-image--opened[${markerAttribute}="${entry.marker}"]`
+      ).forEach(copy => copy.remove())
+      if (image.getAttribute(markerAttribute) === entry.marker) {
+        if (entry.previousMarker === null) image.removeAttribute(markerAttribute)
+        else image.setAttribute(markerAttribute, entry.previousMarker)
+      }
+    }
     const prepareZoomSource = event => {
       const image = event.target
-      if (image.tagName !== 'IMG' || image.hasAttribute('data-zoom-src')) return
+      if (image.tagName !== 'IMG') return
+      const zoom = event.detail?.zoom
+      if (zoom) {
+        const marker = `${zoomOwnerId}-${++zoomSequence.current}`
+        activeZooms.set(image, { zoom, marker, previousMarker: image.getAttribute(markerAttribute) })
+        image.setAttribute(markerAttribute, marker)
+      }
+      if (image.hasAttribute('data-zoom-src')) return
       const source = image.currentSrc || image.getAttribute('src')
       const hdSource = compressImage(source, IMAGE_ZOOM_IN_WIDTH)
       if (!hdSource || hdSource === source) return
@@ -71,20 +93,52 @@ const NotionPage = ({ post, className }) => {
       }
       zoomSources.delete(image)
     }
-    const onZoomClosed = event => restoreZoomSource(event.target)
+    const onZoomClosed = event => {
+      restoreZoomSource(event.target)
+      const entry = activeZooms.get(event.target)
+      if (entry) finishZoom(event.target, entry)
+      activeZooms.delete(event.target)
+    }
+    const onZoomImageError = event => {
+      const image = event.target
+      if (!image.classList?.contains('medium-zoom-image--opened')) return
+      const marker = image.getAttribute(markerAttribute)
+      if ([...activeZooms.values()].some(entry => entry.marker === marker)) image.remove()
+    }
 
     // medium-zoom dispatches a non-bubbling open event on the original image
     // before cloning it into document.body. Supply HD there so its own loader
     // can fall back to the thumbnail if the HD request fails.
     articleRoot.addEventListener('medium-zoom:open', prepareZoomSource, true)
     articleRoot.addEventListener('medium-zoom:closed', onZoomClosed, true)
+    document.addEventListener('error', onZoomImageError, true)
 
     return () => {
       articleRoot.removeEventListener('medium-zoom:open', prepareZoomSource, true)
       articleRoot.removeEventListener('medium-zoom:closed', onZoomClosed, true)
+      document.removeEventListener('error', onZoomImageError, true)
       zoomSources.forEach((_source, image) => restoreZoomSource(image))
+      activeZooms.forEach((entry, image) => {
+        const { zoom } = entry
+        if (zoom.getZoomedImage() !== image) {
+          finishZoom(image, entry)
+          return
+        }
+        const closeZoom = () => {
+          if (zoom.getZoomedImage() === image) void zoom.close()
+        }
+        // close() is ignored while opening. The original may already be detached,
+        // so listen on it directly and close as soon as that animation finishes.
+        image.addEventListener('medium-zoom:opened', closeZoom, { once: true })
+        image.addEventListener('medium-zoom:closed', () => {
+          image.removeEventListener('medium-zoom:opened', closeZoom)
+          finishZoom(image, entry)
+        }, { once: true })
+        closeZoom()
+      })
+      activeZooms.clear()
     }
-  }, [post, IMAGE_ZOOM_IN_WIDTH])
+  }, [post, IMAGE_ZOOM_IN_WIDTH, zoomOwnerId])
 
   useEffect(() => {
     // Spoiler文本功能
