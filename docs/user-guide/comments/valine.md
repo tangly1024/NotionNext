@@ -123,8 +123,6 @@ valine没有自带后台，可以借助 [Valine-Admin](https://github.com/Desert
 
 NotionNext添加Cusdis/Giscus/Gitalk/Utterance的步骤教程
 
-[https://source.unsplash.com/random/720x480/?encryption](https://source.unsplash.com/random/720x480/?encryption)
-
 ## 原文链接
 
 https://docs.tangly1024.com/article/notionnext-valine

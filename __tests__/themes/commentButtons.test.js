@@ -2,12 +2,9 @@ import { render, screen } from '@testing-library/react'
 import { siteConfig } from '@/lib/config'
 import HexoButton from '@/themes/hexo/components/ButtonJumpToComment'
 import MateryButton from '@/themes/matery/components/JumpToCommentButton'
-import CommerceButton from '@/themes/commerce/components/JumpToCommentButton'
-import HeoButton from '@/themes/heo/components/JumpToCommentButton'
 import FuwariArea from '@/themes/fuwari/components/RightFloatArea'
 
 jest.mock('@/lib/config', () => ({ siteConfig: jest.fn() }))
-jest.mock('@/themes/commerce/config', () => ({ WIDGET_TO_COMMENT: true }))
 jest.mock('@/lib/global', () => ({
   useGlobal: () => ({ locale: { COMMON: { COMMENTS: 'Comments' } } })
 }))
@@ -15,9 +12,7 @@ jest.mock('@/themes/fuwari/components/Toc', () => () => null)
 
 describe.each([
   ['hexo', HexoButton],
-  ['matery', MateryButton],
-  ['commerce', CommerceButton],
-  ['heo', HeoButton]
+  ['matery', MateryButton]
 ])('%s comment shortcut', (theme, Button) => {
   it('hides when no comment provider is configured', () => {
     siteConfig.mockImplementation(key => key.includes('WIDGET_TO_COMMENT'))

@@ -14,6 +14,8 @@
 4. **字体**：默认不再加载 `Noto Sans SC`、`Noto Serif SC` 等第三方中文 Web Font，未配置自定义字体的站点会改用系统字体，外观会有变化。需要品牌字体请显式配置 `NEXT_PUBLIC_FONT_URL`（或 Notion Config 的 `FONT_URL`）。
 5. **非本站工作区的页面会返回 404**：通过页面 id 兜底渲染时会校验页面是否属于本站 Notion 工作区，工作区 id 默认自动推导，也可用 `NOTION_WORKSPACE_ID` 指定（多站点用逗号分隔）。见 [NOTION_WORKSPACE_ID](../config/notion-workspace-id.md)。
 6. **访问统计默认端点**：不蒜子默认脚本已切换为社区维护的 Vercount（`https://events.vercount.one/js`），可用 `NEXT_PUBLIC_BUSUANZI_SCRIPT_URL` 覆盖。见 [不蒜子统计](../analytics/busuanzi.md)。
+7. **Mailchimp 新订阅需要确认邮件**：新建成员由直接 `subscribed` 改为 `pending`，收件人确认后才完成订阅。页面显示“Subscription request received…”只表示请求已处理，重复邮箱使用同一提示，也不会自动恢复已退订成员。详见 [Mailchimp 邮件订阅](../plugins/mailchimp.md)。
+8. **页面重建失败与重试**：`/api/revalidate` 部分页面失败时由 HTTP 200 改为 500；仍需读取 `results` 和 `remainingPaths`，仅用普通 `paths` 请求重试失败页并续传未尝试页。不要为 `all: true` 或 `invalidateData: true` 配置自动重试，否则会再次全清数据。详见 [数据缓存与页面重建](../../developer/CACHE_MAINTENANCE.zh-CN.md)。
 
 ### 图片与 Notion 数据
 
@@ -30,6 +32,7 @@
 - Notion OAuth 改为服务端授权流程：授权结果不再携带原始 token 或用户资料进入 URL、页面 props 和日志，回调绑定授权发起时的随机 state cookie。
 - 修复任意公开 Notion 块 id 可被渲染到本站域名下的问题（见升级须知 5）。
 - Mailchimp 订阅结果处理、Algolia 搜索请求生命周期的问题已修复；依赖安全审计补丁已合入。
+- 全量数据失效也会清理 `ai_summary_*`；配置 `AI_SUMMARY_API` 的站点可能在后续重建或访问时重新调用付费摘要服务，长 `AI_SUMMARY_CACHE_TIME` 不能避免此次失效。高频 webhook 宜使用默认的单页或 `paths` 刷新，按需集中执行数据清理。
 
 ### 新功能与可选配置
 

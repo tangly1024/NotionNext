@@ -2,6 +2,7 @@
 import CONFIG from './config'
 import { siteConfig } from '@/lib/config'
 import { themeConsoleStyle } from '@/lib/themeConsoleStyle'
+import { useEffect } from 'react'
 /**
  * 此处样式只对当前主题生效
  * 此处不支持tailwindCSS的 @apply 语法
@@ -14,6 +15,22 @@ const Style = () => {
     CONFIG.HEO_COLOR_BG_DARK,
     CONFIG
   )
+
+  useEffect(() => {
+    const rootStyle = document.documentElement.style
+    const previous = ['--heo-color-bg', '--heo-color-bg-dark'].map(name => ({
+      name,
+      value: rootStyle.getPropertyValue(name),
+      priority: rootStyle.getPropertyPriority(name)
+    }))
+    // Keep previews after closing the palette, but reset them on theme changes.
+    return () => {
+      previous.forEach(({ name, value, priority }) => {
+        if (value) rootStyle.setProperty(name, value, priority)
+        else rootStyle.removeProperty(name)
+      })
+    }
+  }, [])
 
   return (
     <style jsx global>{`
@@ -119,11 +136,11 @@ const Style = () => {
       }
 
       body {
-        background-color: ${bgColor};
+        background-color: var(--heo-color-bg, ${bgColor});
       }
 
       html.dark body {
-        background-color: ${bgDarkColor};
+        background-color: var(--heo-color-bg-dark, ${bgDarkColor});
       }
 
       // 公告栏中的字体固定白色
