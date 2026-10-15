@@ -1,6 +1,6 @@
 # Notion 数据与 4.x 能力
 
-> 对应 `conf/notion.config.js`、`lib/db/SiteDataApi.js` · 版本 **4.10.2**
+> 对应 `conf/notion.config.js`、`lib/db/SiteDataApi.js` · 版本 **4.11.0**
 
 ## 必需环境
 
