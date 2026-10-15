@@ -11,9 +11,9 @@ const ArticleLock = ({ validPassword }) => {
     inputRef.current?.focus()
   }, [])
 
-  const submitPassword = () => {
+  const submitPassword = async () => {
     if (typeof validPassword !== 'function') return
-    const ok = validPassword(password)
+    const ok = await validPassword(password)
     if (!ok) {
       setError(locale?.COMMON?.PASSWORD_ERROR || '密码错误')
     }
@@ -35,13 +35,13 @@ const ArticleLock = ({ validPassword }) => {
           type='password'
           value={password}
           onChange={e => setPassword(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && submitPassword()}
+          onKeyDown={e => { if (e.key === 'Enter') void submitPassword() }}
           className='flex-1 rounded-l-xl border border-[var(--fuwari-border)] bg-[var(--fuwari-bg-soft)] px-4 py-2 text-sm outline-none focus:border-[var(--fuwari-primary)]'
           placeholder={locale?.COMMON?.INPUT_PASSWORD || '请输入访问密码'}
         />
         <button
           type='button'
-          onClick={submitPassword}
+          onClick={() => { void submitPassword() }}
           className='rounded-r-xl px-4 py-2 text-sm font-semibold text-white bg-[var(--fuwari-primary)] hover:opacity-90'>
           {locale?.COMMON?.SUBMIT || '提交'}
         </button>

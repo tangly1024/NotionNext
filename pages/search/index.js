@@ -52,6 +52,7 @@ export async function getStaticProps({ locale }) {
   props.posts = allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
+  delete props.allPages
   return {
     props,
     revalidate: process.env.EXPORT
