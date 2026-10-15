@@ -1,4 +1,25 @@
-# V4.0 → V4.9.0
+# V4 发布历史
+
+以下为 v4.10.0 之后的发布记录；较新的版本要点见[最新版本更新日志](./latest.md)。旧版 V4.9.0 及更早版本见本页归档。
+
+| 版本 | 发布日期 | 发布说明 |
+| --- | --- | --- |
+| [v4.11.0](https://github.com/notionnext-org/NotionNext/releases/tag/v4.11.0) | 2026-10-14 | [功能与升级须知](./latest.md#_4-11-0-发布要点) · [完整变更](https://github.com/notionnext-org/NotionNext/compare/v4.10.10...v4.11.0) |
+| [v4.10.10](https://github.com/notionnext-org/NotionNext/releases/tag/v4.10.10) | 2026-08-13 | [发布要点](./latest.md#_4-10-10-发布要点) · [完整变更](https://github.com/notionnext-org/NotionNext/compare/v4.10.9...v4.10.10) |
+| [v4.10.9](https://github.com/notionnext-org/NotionNext/releases/tag/v4.10.9) | 2026-08-10 | [发布要点](./latest.md#_4-10-9-发布要点) · [完整变更](https://github.com/notionnext-org/NotionNext/compare/v4.10.8...v4.10.9) |
+| [v4.10.8](https://github.com/notionnext-org/NotionNext/releases/tag/v4.10.8) | 2026-07-22 | [发布要点](./latest.md#_4-10-8-发布要点) · [完整变更](https://github.com/notionnext-org/NotionNext/compare/v4.10.7...v4.10.8) |
+| [v4.10.7](https://github.com/notionnext-org/NotionNext/releases/tag/v4.10.7) | 2026-07-18 | [发布要点](./latest.md#_4-10-7-发布要点) · [完整变更](https://github.com/notionnext-org/NotionNext/compare/v4.10.6...v4.10.7) |
+| [v4.10.6](https://github.com/notionnext-org/NotionNext/releases/tag/v4.10.6) | 2026-07-15 | [GitHub Release](https://github.com/notionnext-org/NotionNext/releases/tag/v4.10.6) · [完整变更](https://github.com/notionnext-org/NotionNext/compare/v4.10.5...v4.10.6) |
+| [v4.10.5](https://github.com/notionnext-org/NotionNext/releases/tag/v4.10.5) | 2026-07-09 | [发布要点](./latest.md#_4-10-5-发布要点) · [完整变更](https://github.com/notionnext-org/NotionNext/compare/v4.10.4...v4.10.5) |
+| [v4.10.4](https://github.com/notionnext-org/NotionNext/releases/tag/v4.10.4) | 2026-07-06 | [GitHub Release](https://github.com/notionnext-org/NotionNext/releases/tag/v4.10.4) · [完整变更](https://github.com/notionnext-org/NotionNext/compare/v4.10.3...v4.10.4) |
+| [v4.10.3](https://github.com/notionnext-org/NotionNext/releases/tag/v4.10.3) | 2026-06-25 | [发布要点](./latest.md#_4-10-3-发布要点) · [完整变更](https://github.com/notionnext-org/NotionNext/compare/v4.10.2...v4.10.3) |
+| [v4.10.2](https://github.com/notionnext-org/NotionNext/releases/tag/v4.10.2) | 2026-06-08 | [GitHub Release](https://github.com/notionnext-org/NotionNext/releases/tag/v4.10.2) · [完整变更](https://github.com/notionnext-org/NotionNext/compare/v4.10.1...v4.10.2) |
+| [v4.10.1](https://github.com/notionnext-org/NotionNext/releases/tag/v4.10.1) | 2026-06-04 | [GitHub Release](https://github.com/notionnext-org/NotionNext/releases/tag/v4.10.1) · [完整变更](https://github.com/notionnext-org/NotionNext/compare/v4.10.0...v4.10.1) |
+| [v4.10.0](https://github.com/notionnext-org/NotionNext/releases/tag/v4.10.0) | 2026-06-03 | [GitHub Release](https://github.com/notionnext-org/NotionNext/releases/tag/v4.10.0) |
+
+---
+
+# V4.9.0 及更早版本归档
 > 迁移自：[V4.0 → V4.9.0](https://docs.tangly1024.com/article/v4.0)
 > 发布日期：2023-7-8
 > 最后编辑：2025-10-11
