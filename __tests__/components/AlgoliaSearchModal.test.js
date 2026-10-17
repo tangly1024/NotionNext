@@ -1,4 +1,5 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import replaceSearchResult from '@/components/Mark'
 import React, { createRef } from 'react'
@@ -17,10 +18,11 @@ const mockConfig = {
 }
 jest.mock('@/lib/global', () => ({
   useGlobal: () => ({
-    tagOptions: [],
+    tagOptions: mockTagOptions,
     locale: { PAGINATION: { NEXT: 'Next', PREV: 'Prev' } }
   })
 }))
+let mockTagOptions = []
 jest.mock('@/components/Mark', () => ({ __esModule: true, default: jest.fn() }))
 jest.mock('next/router', () => ({ useRouter: () => mockRouter }))
 const mockRouter = {
@@ -52,6 +54,7 @@ function result(title) {
 
 beforeEach(() => {
   mockSearch.mockReset()
+  mockTagOptions = []
   mockRouter.asPath = '/'
   Object.assign(mockConfig, {
     ALGOLIA_APP_ID: 'audit-app',
@@ -244,6 +247,143 @@ test('Escape closes the modal and discards a pending search', async () => {
   expect(screen.queryByRole('status')).not.toBeInTheDocument()
 })
 
+test.each(['关闭搜索', 'topic', '第 2 页'])(
+  'Escape closes search while %s has focus and restores the opener',
+  async name => {
+    jest.useFakeTimers()
+    mockTagOptions = [{ name: 'topic' }]
+    mockSearch.mockResolvedValue({ ...result('RESULT'), nbPages: 2 })
+    const ref = createRef()
+    render(<><button>Open search</button><AlgoliaSearchModal cRef={ref} /></>)
+    const opener = screen.getByRole('button', { name: 'Open search' })
+    act(() => opener.focus())
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    act(() => ref.current.openSearch())
+    expect(screen.getByRole('dialog', { name: '搜索' })).toHaveAttribute('aria-modal', 'true')
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'query' } })
+    await flushUpdates(() => jest.advanceTimersByTime(700))
+    const target = screen.getByRole(name === 'topic' ? 'link' : 'button', { name })
+    act(() => target.focus())
+    expect(target).toHaveFocus()
+    fireEvent.keyDown(target, { key: 'Escape', code: 'Escape' })
+    fireEvent.keyUp(target, { key: 'Escape', code: 'Escape' })
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(opener).toHaveFocus()
+  }
+)
+
+test('Escape also closes search from the retry button', async () => {
+  jest.useFakeTimers()
+  mockSearch.mockRejectedValue(new Error('offline'))
+  const ref = createRef()
+  render(<AlgoliaSearchModal cRef={ref} />)
+  act(() => ref.current.openSearch())
+  fireEvent.change(screen.getByRole('textbox'), { target: { value: 'query' } })
+  await flushUpdates(() => jest.advanceTimersByTime(700))
+  const retry = screen.getByRole('button', { name: '重试' })
+  act(() => retry.focus())
+  fireEvent.keyDown(retry, { key: 'Escape', code: 'Escape' })
+  fireEvent.keyUp(retry, { key: 'Escape', code: 'Escape' })
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  expect(document.getElementById('search-wrapper')).toHaveClass('invisible')
+})
+
+test('Tab stays inside search, includes new results, and releases focus after closing', async () => {
+  jest.useFakeTimers()
+  const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+  mockTagOptions = [{ name: 'topic' }]
+  mockSearch.mockResolvedValue({ ...result('RESULT'), nbPages: 2 })
+  const ref = createRef()
+  render(<><button>Open search</button><button>Outside</button><AlgoliaSearchModal cRef={ref} /></>)
+  const opener = screen.getByRole('button', { name: 'Open search' })
+  const outside = screen.getByRole('button', { name: 'Outside' })
+  act(() => opener.focus())
+  act(() => ref.current.openSearch())
+  await flushUpdates(() => jest.advanceTimersByTime(100))
+  const input = screen.getByRole('textbox')
+  const close = screen.getByRole('button', { name: '关闭搜索' })
+  expect(input).toHaveFocus()
+  await user.tab({ shift: true })
+  expect(close).toHaveFocus()
+  await user.tab({ shift: true })
+  expect(screen.getByRole('link', { name: 'topic' })).toHaveFocus()
+  await user.tab()
+  expect(close).toHaveFocus()
+  await user.tab()
+  expect(input).toHaveFocus()
+  fireEvent.change(input, { target: { value: 'query' } })
+  await flushUpdates(() => jest.advanceTimersByTime(600))
+  await user.tab()
+  expect(screen.getByRole('link', { name: 'topic' })).toHaveFocus()
+  await user.tab()
+  expect(screen.getByRole('link', { name: 'RESULT' })).toHaveFocus()
+  await user.tab()
+  expect(screen.getByRole('button', { name: '第 1 页' })).toHaveFocus()
+  await user.tab()
+  expect(screen.getByRole('button', { name: '第 2 页' })).toHaveFocus()
+  await user.tab()
+  expect(close).toHaveFocus()
+  act(() => outside.focus())
+  expect(input).toHaveFocus()
+  await user.click(close)
+  expect(opener).toHaveFocus()
+  await user.tab()
+  expect(outside).toHaveFocus()
+  expect(document.getElementById('search-wrapper')).toHaveAttribute('inert')
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  expect(input).not.toHaveFocus()
+})
+
+test('changing the index invalidates pending results without losing the focus return target', async () => {
+  jest.useFakeTimers()
+  const pending = deferred()
+  mockSearch.mockReturnValue(pending.promise)
+  const ref = createRef()
+  const view = <><button>Open search</button><AlgoliaSearchModal cRef={ref} /></>
+  const { rerender } = render(view)
+  const opener = screen.getByRole('button', { name: 'Open search' })
+  act(() => opener.focus())
+  act(() => ref.current.openSearch())
+  fireEvent.change(screen.getByRole('textbox'), { target: { value: 'query' } })
+  await flushUpdates(() => jest.advanceTimersByTime(600))
+  mockConfig.ALGOLIA_INDEX = 'another-index'
+  rerender(<><button>Open search</button><AlgoliaSearchModal cRef={ref} /></>)
+  await flushUpdates(() => pending.resolve(result('STALE_RESULT')))
+  expect(screen.queryByText('STALE_RESULT')).not.toBeInTheDocument()
+  fireEvent.click(screen.getByRole('button', { name: '关闭搜索' }))
+  expect(opener).toHaveFocus()
+})
+
+test.each(['route', 'configuration', 'unmount'])(
+  'restores and releases focus when search closes because of %s',
+  reason => {
+    const ref = createRef()
+    const view = showModal => <>
+      <button>Open search</button><button>Outside</button>
+      {showModal && <AlgoliaSearchModal cRef={ref} />}
+    </>
+    const { rerender } = render(view(true))
+    const opener = screen.getByRole('button', { name: 'Open search' })
+    const outside = screen.getByRole('button', { name: 'Outside' })
+    act(() => opener.focus())
+    act(() => ref.current.openSearch())
+    expect(screen.getByRole('textbox')).toHaveFocus()
+    if (reason === 'route') mockRouter.asPath = '/another-page'
+    if (reason === 'configuration') delete mockConfig.ALGOLIA_INDEX
+    rerender(view(reason !== 'unmount'))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(opener).toHaveFocus()
+    act(() => outside.focus())
+    expect(outside).toHaveFocus()
+    if (reason === 'configuration') {
+      mockConfig.ALGOLIA_INDEX = 'restored-index'
+      rerender(view(true))
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+      expect(outside).toHaveFocus()
+    }
+  }
+)
+
 test('fetches the selected page using the current keyword', async () => {
   jest.useFakeTimers()
   mockSearch
@@ -281,7 +421,7 @@ test('route changes close the modal and invalidate pending results', async () =>
   expect(document.getElementById('search-wrapper')).toHaveClass('invisible')
   await flushUpdates(() => pending.resolve(result('STALE_RESULT')))
   expect(screen.queryByText('STALE_RESULT')).not.toBeInTheDocument()
-  expect(screen.getByRole('textbox')).toHaveValue('')
+  expect(screen.getByRole('textbox', { hidden: true })).toHaveValue('')
 })
 
 test('does not update state or highlight results after unmount', async () => {
