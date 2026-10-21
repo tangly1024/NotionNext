@@ -74,7 +74,7 @@
     "@supabase/supabase-js": "^2.118.0",
     "@tabler/icons-react": "^3.49.0",
     "@vercel/analytics": "^1.6.1",
-    "@vercel/functions": "^3.9.11",
+    "@vercel/functions": "^3.10.1",
     "algoliasearch": "^4.25.2",
     "axios": "^1.20.0",
     "critters": "^0.0.23",
