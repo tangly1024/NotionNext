@@ -69,7 +69,7 @@
     "@clerk/localizations": "^3.37.9",
     "@clerk/nextjs": "^5.7.6",
     "@headlessui/react": "^1.7.19",
-    "@next/bundle-analyzer": "^15.5.27",
+    "@next/bundle-analyzer": "^15.5.28",
     "@notionhq/client": "^2.2.15",
     "@supabase/supabase-js": "^2.117.3",
     "@tabler/icons-react": "^3.49.0",
