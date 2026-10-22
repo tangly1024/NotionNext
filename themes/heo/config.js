@@ -167,7 +167,7 @@ const CONFIG = {
   HEO_POST_LIST_IMG_CROSSOVER: true, // 博客列表图片左右交错
 
   HEO_ARTICLE_ADJACENT: true, // 显示上一篇下一篇文章推荐
-  HEO_ARTICLE_COPYRIGHT: true, // 文章版权声明：true 全部显示；false 全部关闭；custom 仅填写 copyright 时显示
+  HEO_ARTICLE_COPYRIGHT: true, // 文章版权声明：true 全部显示；false 全部关闭；'custom'（字符串）仅当文章填写了 copyright（版权声明）时显示，用法见 docs/user-guide/config/article-copyright.md
   HEO_ARTICLE_NOT_BY_AI: false, // 显示非AI写作
   HEO_ARTICLE_RECOMMEND: true, // 文章关联推荐
 
