@@ -47,4 +47,45 @@ describe('adjustPageProperties', () => {
     expect(plainPage.slug).toBe('a-book')
     expect(plainPage.href).toBe('/a-book')
   })
+
+  it('keeps date segments for mapped pages that have a Date', () => {
+    const NOTION_CONFIG = {
+      POST_URL_PREFIX: '%category%/%year%/%month%/%day%',
+      POST_URL_PREFIX_MAPPING_CATEGORY: { Guide: 'manual' },
+      PSEUDO_STATIC: false
+    }
+    const page = {
+      id: 'page-id',
+      type: 'Page',
+      slug: 'a-manual',
+      category: 'Guide',
+      date: { start_date: '2026-08-01' },
+      publishDay: '2026-08-01'
+    }
+
+    adjustPageProperties(page, NOTION_CONFIG)
+
+    expect(page.slug).toBe('manual/2026/08/01/a-manual')
+    expect(page.href).toBe('/manual/2026/08/01/a-manual')
+  })
+
+  it('falls back to /category/slug for mapped pages without a Date even when publishDay came from created_time', () => {
+    const NOTION_CONFIG = {
+      POST_URL_PREFIX: '%category%/%year%/%month%/%day%',
+      POST_URL_PREFIX_MAPPING_CATEGORY: { Guide: 'manual' },
+      PSEUDO_STATIC: false
+    }
+    const page = {
+      id: 'page-id',
+      type: 'Page',
+      slug: 'a-manual',
+      category: 'Guide',
+      publishDay: '2026-08-01'
+    }
+
+    adjustPageProperties(page, NOTION_CONFIG)
+
+    expect(page.slug).toBe('manual/a-manual')
+    expect(page.href).toBe('/manual/a-manual')
+  })
 })
