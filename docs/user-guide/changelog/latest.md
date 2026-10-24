@@ -39,7 +39,7 @@
 
 - **PWA 安装入口**：新增可选配置 `PWA_ENABLE=true`，开启后 Android Chrome 可将博客安装到桌面；主题色可通过 `PWA_THEME_COLOR` 配置，manifest 使用固定路径 `/manifest.json`；默认关闭，不影响未开启站点。使用方法见 [PWA 安装入口](../config/pwa-install.md)。
 - **NotionNext Content MCP**（可选）：内置零依赖 MCP 服务器，让 Claude Code、Codex、Cursor 等 AI 助手按 NotionNext 数据契约管理 Notion 内容。见 [NotionNext Content MCP](../../developer/NOTIONNEXT_CONTENT_MCP.md)。
-- RSS 可通过 `RSS_FULL_CONTENT=false` 只输出摘要（默认仍输出全文）。
+- RSS：`RSS_FULL_CONTENT=false` 时只输出摘要（默认全文）。订阅地址统一为 `/rss/feed.xml`（另有 `/rss/atom.xml`、`/rss/feed.json`），页面 `<head>` 已输出 `rel="alternate"` 自动发现声明，浏览器和 Feedly 等阅读器可直接识别；旧地址 `/feed` 仍以 308 跳转到它。
 - 多个主题新增 CSDN、稀土掘金联系入口（`NEXT_PUBLIC_CONTACT_CSDN`、`NEXT_PUBLIC_CONTACT_JUEJIN`）；公告改用 Notion 页面标题；simple 主题页头页脚新增站点访问统计；统计卡片改用站点 PV，与页脚口径一致。
 
 ### 主题

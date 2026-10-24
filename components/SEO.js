@@ -68,6 +68,15 @@ const SEO = props => {
   const title = meta?.title || TITLE
   const description = meta?.description || `${siteInfo?.description}`
   const type = meta?.type === 'Post' ? 'article' : meta?.type || 'website'
+  const ENABLE_RSS = siteConfig('ENABLE_RSS')
+  // 订阅文件的绝对地址，与 lib/utils/rss.js 的静态输出路径保持一致
+  const rssSubPath = String(SUB_PATH || '')
+    .trim()
+    .replace(/^\/+|\/+$/g, '')
+  const rssUrl = createSiteUrl(
+    rssSubPath ? `${LINK}/${rssSubPath}` : LINK,
+    'rss/feed.xml'
+  )
   const language =
     router?.locale || siteConfig('LANG', 'zh-CN', NOTION_CONFIG)
   const lang = String(language).replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
@@ -165,6 +174,15 @@ const SEO = props => {
 
       {/* 基础SEO元数据 */}
       <link rel='canonical' href={url} />
+      {/* RSS 自动发现：浏览器地址栏与阅读器依赖此声明 */}
+      {ENABLE_RSS && rssUrl && (
+        <link
+          rel='alternate'
+          type='application/rss+xml'
+          title={`${TITLE} RSS`}
+          href={rssUrl}
+        />
+      )}
       <meta name='keywords' content={keywords} />
       <meta name='description' content={description} />
       <meta name='author' content={AUTHOR} />
