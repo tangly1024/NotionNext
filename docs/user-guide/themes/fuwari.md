@@ -59,6 +59,10 @@ FUWARI_THEME_COLOR_HUE: 52
 FUWARI_THEME_COLOR_FIXED: true
 ```
 
+### 文章版权声明
+
+`FUWARI_ARTICLE_COPYRIGHT` 支持 `true` 全部显示、`false` 全部关闭、`'custom'`（字符串）仅在文章填写了 `copyright` 时显示。`custom` 模式的具体配置方式请参考[文章版权声明文档](../config/article-copyright.md)（`docs/user-guide/config/article-copyright.md`）。
+
 <!-- theme-config-table -->
 
 ### 主要配置项

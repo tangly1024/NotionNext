@@ -135,7 +135,10 @@ const CONFIG = {
   FUWARI_ARTICLE_META: true,
   /** 分享条 */
   FUWARI_ARTICLE_SHARE: true,
-  /** 文章版权声明：true 全部显示；false 全部关闭；custom 仅填写 copyright 时显示 */
+  /**
+   * 文章版权声明：true 全部显示；false 全部关闭；'custom'（字符串）仅当文章填写了 copyright（版权声明）时显示
+   * custom 用法见：https://github.com/notionnext-org/NotionNext/blob/main/docs/user-guide/config/article-copyright.md
+   */
   FUWARI_ARTICLE_COPYRIGHT: true,
   /** 文末评论区（需在 `blog.config.js` 配置任一种评论服务，如 COMMENT_GISCUS_REPO / COMMENT_TWIKOO_ENV_ID 等，否则不渲染） */
   FUWARI_ARTICLE_COMMENT: true,
