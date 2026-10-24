@@ -1,7 +1,6 @@
 import BLOG from '@/blog.config'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
-import { generateRss, shouldGenerateRssForLocale } from '@/lib/utils/rss'
-import { Feed } from 'feed'
+import { createFeed } from '@/lib/utils/rss'
 
 /**
  * In-memory RSS cache to avoid regenerating on every request.
@@ -42,48 +41,23 @@ async function generateRssContent() {
 
   const { siteInfo, allPages, NOTION_CONFIG } = props
 
-  // Filter published posts only
-  const latestPosts = allPages
-    .filter(p => p.type === 'Post' && p.status === 'Published')
-    .sort((a, b) => {
-      const dateA = new Date(a.publishDay || a.publishDate || 0)
-      const dateB = new Date(b.publishDay || b.publishDate || 0)
-      return dateB - dateA
-    })
-    .slice(0, 20)
+  // 复用构建时同一份文章列表，保证兜底 feed 与静态 feed 的条数与顺序一致
+  const latestPosts = (props.latestPosts || []).filter(
+    post => post.type === 'Post' && post.status === 'Published'
+  )
 
   if (latestPosts.length === 0) {
     return null
   }
 
-  const TITLE = siteInfo?.title || BLOG.AUTHOR
-  const DESCRIPTION = siteInfo?.description || BLOG.BIO
-  const LINK = siteInfo?.link || BLOG.LINK
-  const AUTHOR = NOTION_CONFIG?.AUTHOR || BLOG.AUTHOR
-  const LANG = NOTION_CONFIG?.LANG || BLOG.LANG
-  const year = new Date().getFullYear()
-
-  const feed = new Feed({
-    title: TITLE,
-    description: DESCRIPTION,
-    link: LINK,
-    language: LANG,
-    favicon: `${LINK}/favicon.png`,
-    copyright: `All rights reserved ${year}, ${AUTHOR}`,
-    author: {
-      name: AUTHOR,
-      link: LINK
-    }
+  // 与构建时的静态 feed 共用同一套渲染逻辑，保证兜底输出与静态文件内容一致
+  const feed = await createFeed({
+    siteInfo,
+    NOTION_CONFIG,
+    posts: latestPosts,
+    allPages,
+    subPath: NOTION_CONFIG?.SUB_PATH || BLOG.SUB_PATH
   })
-
-  for (const post of latestPosts) {
-    feed.addItem({
-      title: post.title,
-      link: `${LINK}/${post.slug}`,
-      description: post.summary || '',
-      date: new Date(post?.publishDay || post?.publishDate || Date.now())
-    })
-  }
 
   return {
     xml: feed.rss2(),
